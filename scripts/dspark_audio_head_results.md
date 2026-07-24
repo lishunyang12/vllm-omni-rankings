@@ -6,24 +6,29 @@ the **audio (ASR)** input modality, trained in the
 servable in vLLM, no conversion). This is a self-contained profile of the run — dataset,
 pipeline, and training metrics.
 
-> **⚠️ These are training / validation metrics (teacher-forced), not deployed speedup.**
-> Measured end-to-end in vLLM speculative serving, this head currently accepts
-> ~1.1 tokens/step (accept_rate ~1.4%, no speedup). The gap is a **vLLM bug, not the
-> training**: the DFlash/DSpark spec-decode proposer does not thread MRoPE positions, so
-> the draft (trained with Qwen3-Omni's 3D MRoPE) is fed 1D positions at serve time and
-> its rotary embedding is wrong. This affects *all* MRoPE targets (Qwen3-Omni, Qwen-VL)
-> and both the image and audio heads identically; text-only targets (e.g. GLM) are
-> unaffected. Report these numbers as validation only until MRoPE support lands in the
-> proposer. (Consistent with RedHat's GLM DSpark card noting "inference support is landing".)
+> **✅ Deployed speedup confirmed (fixed): ~4.4× faster end-to-end in real vLLM serving.**
+> This head initially accepted only ~1.1 tokens/step in serving (no speedup). We traced it
+> to a **one-line vLLM config-loader bug**: `speculators/algos.py` (`update_dspark`)
+> hardcoded `dspark_bonus_anchor=True`, forcing the *1+N fill-in* block layout and ignoring
+> the checkpoint's `sample_from_anchor` field. The head trains with `sample_from_anchor=True`
+> (anchor-as-first), so the forced layout shifted the draft block by one position and
+> collapsed acceptance. Fix: `dspark_bonus_anchor = not sample_from_anchor`. After the fix,
+> **accepted length 1.41→6.84, throughput 31→136 tok/s, TPOT 32.5→7.3 ms, end-to-end 4.4×**
+> (1×B300, greedy, identical output). Affects all `sample_from_anchor=True` speculators
+> DSpark heads (incl. the image head). An earlier MRoPE hypothesis was disproven — serving
+> feeds correct arange positions; the layout mismatch was the actual cause.
+
+![serving speedup](dspark_serving_speedup.png)
 
 ![pipeline](dspark_audio_pipeline.png)
 
 ![convergence](dspark_audio_convergence.png)
 ![per-position](dspark_audio_perposition.png)
 
-Figures (one per file, PDF vector + PNG): `dspark_audio_pipeline`,
-`dspark_audio_dataset`, `dspark_audio_convergence`, `dspark_audio_perposition`. Regenerate all with
-`python scripts/plot_dspark_audio_profile.py`.
+Figures (one per file, PDF vector + PNG): `dspark_serving_speedup` (deployed speedup;
+regenerate with `python scripts/plot_dspark_serving_speedup.py`), `dspark_audio_pipeline`,
+`dspark_audio_dataset`, `dspark_audio_convergence`, `dspark_audio_perposition`
+(training profile; regenerate with `python scripts/plot_dspark_audio_profile.py`).
 
 ## Pipeline (built for this run)
 
