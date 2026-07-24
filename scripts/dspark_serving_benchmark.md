@@ -9,7 +9,7 @@ server; output is verified **identical token-for-token** with and without the dr
 - Hardware: 1×B300, tensor-parallel 2 · vLLM 0.25.0
 - Requires the speculators config-loader fix (see bottom).
 
-## Table 1 — Throughput & latency at concurrency 8
+## Table 1 — Audio head: throughput & latency at concurrency 8
 
 24 requests per run, streamed. Reported as **mean ± std over 4 runs** (a warm-up run is dropped).
 
@@ -30,7 +30,31 @@ server; output is verified **identical token-for-token** with and without the dr
 draft adds overhead to the first token, and speculative decoding emits tokens in bursts, so the
 *visible* inter-token gap widens even though the true per-token cost (TPOT) drops sharply.
 
-## Table 2 — Concurrency sweep
+## Table 2 — Image head (same fix, same benefit)
+
+The colleague's **DSpark image draft head** (`feizhai123/...-DSpark-Thinker-Image`, block 7,
+`sample_from_anchor=True`) has the identical config pattern, so the same one-line fix restores it.
+Image-VQA benchmark, 24 distinct images per run, concurrency 8, **mean ± std over 4 runs**.
+
+| Metric | Without DSpark | With DSpark | Delta |
+|---|--:|--:|:--|
+| Benchmark duration (s) | 14.1 ± 0.8 | 5.9 ± 0.1 | ↓ 58.4% |
+| Request throughput (req/s) | 1.71 ± 0.1 | 4.10 ± 0.1 | ↑ 140% |
+| Output token throughput (tok/s) | 218.6 ± 11.2 | 524.5 ± 6.7 | ↑ 140% |
+| Mean E2EL (ms) | 4690 ± 252 | 1850 ± 29 | ↓ 60.6% |
+| Mean TTFT (ms) | 131.1 ± 58.2 | 138.0 ± 41.4 | ↑ 5.3% (flat) |
+| Mean TPOT (ms) | 35.9 ± 2.2 | 13.5 ± 0.4 | ↓ 62.5% |
+| Mean ITL (ms) | 35.9 ± 2.2 | 37.9 ± 1.5 | ↑ 5.7% (worse) |
+| Accepted length τ (/8) | 1.00 | 2.85 | — |
+
+**~2.4× throughput, TPOT ↓62%, E2EL ↓61%.** The speedup is smaller than the audio head (~4.8×)
+because image VQA is far less deterministic than transcription, so the draft's acceptance is
+naturally lower (accepted length 2.85 vs 7.07; training teacher-forced τ was 3.16 vs 6.19). Per-
+position acceptance is a healthy decay (29/19/14/10/6/4/3 accepted across the block) rather than the
+pos-0-only collapse seen before the fix — confirming the same layout bug and the same one-line cure
+apply to **every `sample_from_anchor=True` DSpark head**, empirically, not just by inference.
+
+## Table 3 — Concurrency sweep (audio head)
 
 Single fixed batch of 32 requests replayed at each concurrency level.
 
