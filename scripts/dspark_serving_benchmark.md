@@ -1,4 +1,24 @@
-# DSpark audio head — vLLM serving benchmark (with vs without draft)
+# DSpark Qwen3-Omni draft heads — vLLM serving benchmark
+
+## Per-modality summary
+
+Modality-specialized DSpark draft heads for the Qwen3-Omni-30B-A3B Thinker. Accepted length
+(τ, max 8) measured in real greedy serving with the config-loader fix applied.
+
+| Head | Training τ (val) | Serving τ | Notes |
+|---|--:|--:|---|
+| **Audio** (ASR) | 6.19 | **6.84** | transcription is near-deterministic → highest acceptance |
+| **Image** (VQA) | 3.16 | **2.85** | |
+| **Text** (dialogue) | 2.43 | **1.75** | open-ended generation is hardest; trained on only 5.7k samples incl. 30% multilingual — expected to rise with more data |
+| Video | — | — | (training in progress) |
+
+All heads share the same config (`sample_from_anchor=True`, block 7) and are unblocked by the same
+one-line config-loader fix. Per-position acceptance is a healthy decay for every head (no pos-0-only
+collapse). Full with/without benchmarks for the audio and image heads follow.
+
+---
+
+## Audio head — vLLM serving benchmark (with vs without draft)
 
 End-to-end serving benchmark of the block-7 DSpark audio draft head in front of the
 **Qwen3-Omni-30B-A3B** Thinker on LibriSpeech transcription. Measured against a live vLLM
