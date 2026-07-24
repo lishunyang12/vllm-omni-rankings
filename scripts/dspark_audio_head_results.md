@@ -6,17 +6,20 @@ the **audio (ASR)** input modality, trained in the
 servable in vLLM, no conversion). This is a self-contained profile of the run — dataset,
 pipeline, and training metrics.
 
-> **✅ Deployed speedup confirmed (fixed): ~4.4× faster end-to-end in real vLLM serving.**
-> This head initially accepted only ~1.1 tokens/step in serving (no speedup). We traced it
-> to a **one-line vLLM config-loader bug**: `speculators/algos.py` (`update_dspark`)
-> hardcoded `dspark_bonus_anchor=True`, forcing the *1+N fill-in* block layout and ignoring
-> the checkpoint's `sample_from_anchor` field. The head trains with `sample_from_anchor=True`
-> (anchor-as-first), so the forced layout shifted the draft block by one position and
-> collapsed acceptance. Fix: `dspark_bonus_anchor = not sample_from_anchor`. After the fix,
-> **accepted length 1.41→6.84, throughput 31→136 tok/s, TPOT 32.5→7.3 ms, end-to-end 4.4×**
-> (1×B300, greedy, identical output). Affects all `sample_from_anchor=True` speculators
-> DSpark heads (incl. the image head). An earlier MRoPE hypothesis was disproven — serving
-> feeds correct arange positions; the layout mismatch was the actual cause.
+> **✅ Deployed speedup confirmed: ~5.1× faster than plain autoregressive decoding.**
+> Measured end-to-end in real vLLM serving (Qwen3-Omni Thinker, LibriSpeech ASR, greedy,
+> 1×B300, identical 669-token output), the DSpark audio draft head delivers **accepted
+> length τ 6.84/8, throughput 26.7→136 tok/s, TPOT 37.5→7.3 ms, end-to-end 5.1×** vs the
+> same model without a draft.
+>
+> This required fixing a **one-line vLLM config-loader bug**: `speculators/algos.py`
+> (`update_dspark`) hardcoded `dspark_bonus_anchor=True`, forcing the *1+N fill-in* block
+> layout and ignoring the checkpoint's `sample_from_anchor`. The head trains with
+> `sample_from_anchor=True` (anchor-as-first), so the forced layout shifted the draft block
+> by one position and collapsed serving acceptance to ~1.1 tokens/step (no speedup). Fix:
+> `dspark_bonus_anchor = not sample_from_anchor`. Affects all `sample_from_anchor=True`
+> speculators DSpark heads (incl. the image head). An earlier MRoPE hypothesis was
+> disproven — serving feeds correct arange positions; the layout mismatch was the cause.
 
 ![serving speedup](dspark_serving_speedup.png)
 

@@ -1,13 +1,12 @@
-"""DSpark audio head — real vLLM serving speedup from the config-loader fix.
+"""DSpark audio head — real vLLM serving speedup vs plain autoregressive decoding.
 
-Before/after the fix, measured end-to-end against a live vLLM server (Qwen3-Omni
-Thinker + DSpark audio draft) on LibriSpeech ASR, greedy, identical output. Data
-in dspark_serving_speedup_data.json. Emits PNG + PDF.
+With vs without the DSpark audio draft head, measured end-to-end against a live
+vLLM server (Qwen3-Omni Thinker) on LibriSpeech ASR, greedy, identical output.
+Data in dspark_serving_speedup_data.json. Emits PNG + PDF.
 
-Root cause: vllm/transformers_utils/configs/speculators/algos.py hardcoded the
-1+N fill-in block layout (dspark_bonus_anchor=True), ignoring the checkpoint's
-sample_from_anchor. That shifts the draft block by one position, collapsing
-acceptance. Fix: dspark_bonus_anchor = not sample_from_anchor.
+The draft head only delivers this once the speculators config-loader honors the
+checkpoint's sample_from_anchor layout (algos.py was hardcoding dspark_bonus_anchor
+=True, forcing the 1+N block and shifting the draft by one position).
 
 Run: python scripts/plot_dspark_serving_speedup.py
 """
@@ -38,8 +37,10 @@ metrics = [
     ("End-to-end\nlatency (s, 12 utts)", bk["total_latency_s"], fx["total_latency_s"], "{:.1f}", True),
 ]
 
-fig, axes = plt.subplots(1, 4, figsize=(8.6, 2.9))
-fig.suptitle("DSpark audio head — real vLLM serving speedup from the config-loader fix",
+lbl_b = d.get("before_label", "before")
+lbl_a = d.get("after_label", "after")
+fig, axes = plt.subplots(1, 4, figsize=(8.8, 2.9))
+fig.suptitle("DSpark audio head — real vLLM serving speedup vs plain autoregressive decoding",
              fontsize=11.5, fontweight="bold", color=INK, y=1.06)
 for ax, (name, vb, vf, fmt, lower_better) in zip(axes, metrics):
     bars = ax.bar([0, 1], [vb, vf], width=0.62, color=[C_bad, C_good],
@@ -49,7 +50,7 @@ for ax, (name, vb, vf, fmt, lower_better) in zip(axes, metrics):
     for s in ("left", "bottom"):
         ax.spines[s].set_color(MUTED)
     ax.tick_params(colors=MUTED, length=2.5, width=0.6)
-    ax.set_xticks([0, 1]); ax.set_xticklabels(["before", "after"])
+    ax.set_xticks([0, 1]); ax.set_xticklabels([lbl_b, lbl_a], fontsize=8)
     ax.set_ylim(0, max(vb, vf) * 1.28)
     for b, v in zip(bars, [vb, vf]):
         ax.text(b.get_x() + b.get_width() / 2, v, " " + fmt.format(v), ha="center",

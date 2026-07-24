@@ -1,14 +1,14 @@
 {
   "before": {
-    "label": "broken",
+    "label": "nospec",
     "n": 12,
-    "total_latency_s": 21.74,
+    "total_latency_s": 25.09,
     "total_out_tokens": 669,
-    "mean_latency_s": 1.812,
-    "tpot_ms": 32.5,
-    "out_tok_per_s": 30.8,
-    "accept_len": 1.41,
-    "verify_steps": 466
+    "mean_latency_s": 2.091,
+    "tpot_ms": 37.5,
+    "out_tok_per_s": 26.7,
+    "accept_len": 1.0,
+    "verify_steps": 0
   },
   "after": {
     "label": "fixed",
@@ -21,6 +21,8 @@
     "accept_len": 6.84,
     "verify_steps": 96
   },
-  "note": "Qwen3-Omni-30B-A3B Thinker + DSpark audio draft (block 7), LibriSpeech ASR, greedy, 1xB300, 12 utts, identical 669 output tokens",
-  "fix": "vllm/transformers_utils/configs/speculators/algos.py update_dspark: dspark_bonus_anchor = not config_dict.get(\"sample_from_anchor\", True) (was hardcoded True)"
+  "before_label": "without DSpark",
+  "after_label": "with DSpark",
+  "note": "Qwen3-Omni-30B-A3B Thinker, LibriSpeech ASR, greedy, 1xB300, 12 utts, identical 669 output tokens. Baseline = plain autoregressive (no draft); DSpark = block-7 audio draft head",
+  "fix": "requires the speculators config-loader fix (algos.py: dspark_bonus_anchor = not sample_from_anchor)"
 }
