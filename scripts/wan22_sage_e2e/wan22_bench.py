@@ -42,6 +42,7 @@ def main():
     p.add_argument("--calib-a", type=float, default=None, help="manual calibration a (needs sage-skip-calib branch)")
     p.add_argument("--calib-b", type=float, default=None, help="manual calibration b")
     p.add_argument("--skip-until", type=float, default=0.0, help="disabled_until_timestep (0 = always on)")
+    p.add_argument("--prompt", default="A serene lakeside sunrise with mist over the water.")
     p.add_argument("--save", default=None)
     a = p.parse_args()
 
@@ -70,7 +71,7 @@ def main():
         guidance_scale=a.guidance, guidance_scale_2=a.guidance2,
         generator=torch.Generator(device="cpu").manual_seed(0),
     )
-    prompt = {"prompt": "A serene lakeside sunrise with mist over the water.", "negative_prompt": NEG}
+    prompt = {"prompt": a.prompt, "negative_prompt": NEG}
 
     t0 = time.perf_counter()
     out = omni.generate(prompt, sp)
