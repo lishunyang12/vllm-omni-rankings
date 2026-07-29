@@ -12,7 +12,7 @@ cd "$(dirname "$0")"
 export CUDA_VISIBLE_DEVICES="${GPU:-0}"
 
 IMG="${IMG:-i2v_input.png}"
-PROMPT="The puppy blinks and gently turns its head, breathing softly, warm natural light."
+PROMPT="The puppy suddenly leaps up and shakes its whole body, ears flapping and fur flying, then bounds toward the camera - fast, dynamic motion."
 PY=python
 
 [ -f "$IMG" ] || { echo "missing $IMG — run the curl download first"; exit 1; }
