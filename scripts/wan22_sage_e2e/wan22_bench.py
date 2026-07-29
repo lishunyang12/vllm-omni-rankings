@@ -37,6 +37,11 @@ def main():
     p.add_argument("--w", type=int, default=1280)
     p.add_argument("--guidance", type=float, default=4.0)
     p.add_argument("--guidance2", type=float, default=4.0)
+    p.add_argument("--skip-threshold", type=float, default=None, help="Skip-Softmax, calibration-free threshold path")
+    p.add_argument("--target-sparsity", type=float, default=None, help="Skip-Softmax via a*exp(b*sparsity) curve")
+    p.add_argument("--calib-a", type=float, default=None, help="manual calibration a (needs sage-skip-calib branch)")
+    p.add_argument("--calib-b", type=float, default=None, help="manual calibration b")
+    p.add_argument("--skip-until", type=float, default=0.0, help="disabled_until_timestep (0 = always on)")
     p.add_argument("--save", default=None)
     a = p.parse_args()
 
@@ -44,8 +49,17 @@ def main():
     if a.mode != "dense":
         dtype_qk = "fp8_e4m3" if a.mode == "fp8" else "int8"
         attn["default"]["quant"] = {"dtype_qk": dtype_qk, "q_block_size": 1, "k_block_size": 16}
-
-    print(f"[bench] mode={a.mode} {a.w}x{a.h} {a.frames}f {a.steps}steps compile=ON "
+    if a.skip_threshold is not None:
+        attn["default"]["skip_softmax"] = {"threshold": a.skip_threshold, "disabled_until_timestep": a.skip_until}
+        skip_str = f"skip@thr={a.skip_threshold}(until={a.skip_until})"
+    elif a.target_sparsity is not None:
+        attn["default"]["skip_softmax"] = {"target_sparsity": a.target_sparsity, "disabled_until_timestep": a.skip_until}
+        if a.calib_a is not None and a.calib_b is not None:
+            attn["default"]["skip_calibration"] = {"a": a.calib_a, "b": a.calib_b}
+        skip_str = f"skip@sparsity={a.target_sparsity}(a={a.calib_a},b={a.calib_b},until={a.skip_until})"
+    else:
+        skip_str = "no-skip"
+    print(f"[bench] mode={a.mode} {skip_str} {a.w}x{a.h} {a.frames}f {a.steps}steps compile=ON "
           f"CFG guidance={a.guidance}/{a.guidance2} (both experts)", flush=True)
     t_load = time.perf_counter()
     omni = Omni(model=a.model, enforce_eager=False, diffusion_attention_config=attn)
