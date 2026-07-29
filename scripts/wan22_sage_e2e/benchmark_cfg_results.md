@@ -38,18 +38,37 @@ image is supplied. LPIPS/PSNR vs the same-machine dense output. Scripts: `wan22_
 | **fp8 SAGE** | **401.24 s** | 8.025 s | **1.20×** | 0.0998 | 20.40 dB | 0.03811 |
 | int8 SAGE | 416.98 s | 8.340 s | 1.16× | 0.0966 | 20.38 dB | 0.03896 |
 
-### B300 (SM103) — ⚠️ concurrent run, absolute times inflated (clean re-run in progress)
+### B300 (SM103) — clean sequential re-run, image-anchored (gentle motion)
 
-| mode | generation | per step | vs dense | LPIPS ↓ | PSNR ↑ |
-|---|---|---|---|---|---|
-| dense (BF16) | 591.0 s | 11.82 s | — | — | — |
-| **fp8 SAGE** | **507.6 s** | 10.15 s | **1.16×** | 0.036 | — |
+Condition image = frame 0 of the B300 T2V dense output (lakeside sunrise); prompt "The scene comes
+to life with smooth, natural motion."
 
-> These B300 I2V numbers were measured with dense and fp8 running **concurrently**, which inflates
-> the absolute seconds (dense here is 11.82 s/step vs 9.5 s/step for the same machine on T2V). The
-> **1.16× ratio** still holds (both halves were slowed together), but the wall-clock is not
-> comparable to B200. A clean sequential re-run is underway; this table will be replaced.
-> Also note the B200/B300 I2V LPIPS use different condition images, so they are not cross-comparable.
+| mode | generation | per step | vs dense | LPIPS all 81f ↓ | LPIPS first 16f ↓ | PSNR ↑ |
+|---|---|---|---|---|---|---|
+| dense (BF16) | 498.45 s | 9.969 s | — | — | — | — |
+| **fp8 SAGE** | **451.60 s** | 9.032 s | **1.10×** | 0.0362 | 0.0275 | 29.84 dB |
+| int8 SAGE | — | — | — | — | — | no SM103 kernel (SM100 only) |
+
+> Supersedes an earlier concurrent B300 I2V run (dense 591 s / fp8 507.6 s) whose absolute times were
+> inflated by contention. Clean fp8 I2V here is very faithful (first-16 LPIPS 0.028) — a gentle
+> image-anchored prompt gives quantization little room to diverge.
+
+### B200 / GB200 (SM100) — high-motion I2V (Ruqing protocol: fp8 vs int8, first-16 frames)
+
+Condition image = picsum id237 (puppy); aggressive-motion prompt _"The puppy suddenly leaps up and
+shakes its whole body, ears flapping and fur flying, then bounds toward the camera — fast, dynamic
+motion."_ Same image + seed across all three modes. First-16-frame LPIPS is the fidelity metric
+(early frames are most image-anchored, so it isolates quality from content drift).
+
+| mode | generation | vs dense | LPIPS all 81f ↓ | LPIPS first 16f ↓ |
+|---|---|---|---|---|
+| dense (BF16) | 482.9 s | — | — | — |
+| fp8 SAGE | 405.0 s | 1.19× | 0.2506 | 0.0905 |
+| **int8 SAGE** | 417.5 s | 1.16× | **0.1631** | **0.0576** |
+
+> **int8 is closer to dense on BOTH metrics** (all-frames 0.163 < 0.251, first-16 0.058 < 0.091).
+> Under strong motion, fp8's blur/distortion drives its LPIPS up while int8 stays sharper and more
+> faithful — the reverse of the T2V all-frames ranking. See Videos / compare frames below.
 
 ## Findings
 
@@ -70,20 +89,33 @@ video. The large arch gap claimed earlier was a measurement artifact, not a kern
 the run finished; int8 kernels exist only for SM100 (SM103/B300 has none). int8 is always slightly
 slower than fp8 (the fp8 `Sm100fKernel` pipeline is more mature), so it never wins on speed.
 
-**int8's quality gap vs fp8 is content-dependent, not fixed.** On unconstrained **T2V**, int8 is
-much worse than fp8 (LPIPS **0.304 vs 0.120**): int8's uniform grid quantizes attention Q/K
-outliers poorly while fp8_e4m3's wider dynamic range fits activation distributions better, and that
-error compounds over 50 free-running steps. On **I2V**, where the first-frame image anchors the
-trajectory, both stay close to dense and the gap collapses to a tie (LPIPS **0.0966 vs 0.0998**,
-PSNR/MSE each marginally favoring the other — all noise-level). So int8's penalty is *exposed* by
-free generation and *masked* by strong conditioning. **fp8 is still the recommended mode
-everywhere**: equal-or-better quality, faster, and it has kernels on both B200 and B300 (int8 is
-SM100-only, so it has no portability upside either).
+**int8 vs fp8: which is "more accurate" depends entirely on the metric, and all-frames T2V LPIPS
+is misleading.** Three same-machine (B200) measurements:
 
-**I2V is easier to quantize than T2V.** fp8 vs dense is ~0.04–0.10 (I2V) vs 0.12–0.14 (T2V) on the
-same machines. The condition image pins the generation, leaving quantization error much less room
-to diverge — the more constrained the task, the closer quant tracks dense. _(B300 I2V clean
-sequential re-run pending; the earlier 0.036 used a different input image and a concurrent run.)_
+| protocol | fp8 LPIPS | int8 LPIPS | apparent winner |
+|---|---|---|---|
+| T2V, all 81 frames | 0.120 | 0.304 | fp8 — but this is a **confound** |
+| I2V gentle, all 81 frames | 0.0998 | 0.0966 | tie |
+| **I2V high-motion, first 16 frames** | 0.0905 | **0.0576** | **int8** |
+
+LPIPS conflates two different errors: **content divergence** (a different-but-equally-valid sample)
+and **quality degradation** (blur/distortion). In free-running **T2V**, a text prompt is ambiguous,
+so int8 drifts to different-but-good content (e.g. a different breed of the same animal) — that
+inflates its all-frames LPIPS without any loss of quality. fp8 stays on the reference's content but
+adds blur, which LPIPS scores *lower* even though it looks worse. So the T2V "fp8 wins" is about
+content-tracking, not fidelity. Removing the ambiguity with **image-anchored I2V** and reading the
+**first-16 frames** isolates fidelity — and there **int8 is clearly closer to dense**, especially
+under strong motion where fp8's blur is most visible (int8 0.058 vs fp8 0.091; all-frames 0.163 vs
+0.251). This matches the kernel author's report that fp8 SAGE tends to blur while int8 stays sharp.
+**Neither mode is universally "more accurate"; pick by need** — int8 for maximum per-frame fidelity
+to a dense reference (SM100 only), fp8 for content-tracking, portability (B200 **and** B300), and a
+small speed edge.
+
+**Motion matters as much as the task.** A gentle image-anchored I2V is the easiest case for
+quantization — clean B300 fp8 first-16 LPIPS is just **0.028**, and gentle B200 fp8/int8 are ~0.10.
+But a **high-motion** I2V prompt stresses fp8 hard: fp8 all-frames LPIPS jumps to **0.25** (int8
+only 0.16). So "I2V quantizes more faithfully than T2V" holds only for calm scenes; fast motion
+re-opens a real fp8 quality gap that int8 does not suffer.
 
 **CFG does improve fp8 fidelity (clean same-machine).** On B300, same 720p/81f/50-step load,
 fp8-vs-dense LPIPS drops from **0.284 without CFG** to **0.142 with CFG** — CFG roughly halves the
@@ -93,3 +125,23 @@ step down to B200's 0.12 is the arch/kernel difference.) Both effects are real; 
 
 **Determinism.** The pipeline is bit-reproducible (dense-vs-dense LPIPS = 0.0 on B300), so these
 LPIPS values are real signal, not sampling noise; re-running the same config reproduces them.
+
+## Videos & compare frames
+
+B200 high-motion I2V (puppy), dense vs fp8 vs int8 — visual evidence for the fidelity ranking above
+(fp8 blur vs int8 sharpness on flapping ears / flying fur). _Clips to be attached after scp from the
+B200 cluster; placeholders below._
+
+| clip | file | status |
+|---|---|---|
+| dense (BF16 ref) | `videos/b200_i2v_dense.mp4` | ⏳ pending scp |
+| fp8 SAGE | `videos/b200_i2v_fp8.mp4` | ⏳ pending scp |
+| int8 SAGE | `videos/b200_i2v_int8.mp4` | ⏳ pending scp |
+| ref \| fp8 \| int8 stills (f0/4/8/15) | `videos/i2v_cmp_f*.png` | ⏳ pending scp |
+
+B300 T2V (CFG) clips already in-repo: `videos/b300_t2v_dense.mp4`, `videos/b300_t2v_fp8_sage.mp4`.
+
+<!-- TODO after scp of b200_i2v_out/:
+     mv b200_i2v_out/b200_i2v_*.mp4 b200_i2v_out/i2v_cmp_f*.png videos/
+     then replace the ⏳ rows above with embedded links / observations. -->
+
