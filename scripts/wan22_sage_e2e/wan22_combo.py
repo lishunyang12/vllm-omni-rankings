@@ -43,6 +43,7 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--mode", choices=["dense", "int8", "skip", "combo"], required=True)
     p.add_argument("--sparsity", type=float, default=0.5)
+    p.add_argument("--until", type=float, default=0.0, help="disabled_until_timestep in [0,1]; skip turns on once timestep<=until (0=always on)")
     p.add_argument("--model", default="Wan-AI/Wan2.2-T2V-A14B-Diffusers")
     p.add_argument("--steps", type=int, default=50)
     p.add_argument("--frames", type=int, default=81)
@@ -58,10 +59,10 @@ def main():
     if a.mode in ("int8", "combo"):
         attn["default"]["quant"] = {"dtype_qk": "int8"}
     if a.mode in ("skip", "combo"):
-        attn["default"]["skip_softmax"] = {"target_sparsity": a.sparsity}
+        attn["default"]["skip_softmax"] = {"target_sparsity": a.sparsity, "disabled_until_timestep": a.until}
         attn["default"]["skip_calibration"] = CALIB
 
-    tag = f"{a.mode}" + (f"@s{a.sparsity}" if a.mode in ("skip", "combo") else "")
+    tag = f"{a.mode}" + (f"@s{a.sparsity}u{a.until}" if a.mode in ("skip", "combo") else "")
     print(f"[combo] {tag} {a.w}x{a.h} {a.frames}f {a.steps}steps compile=ON CFG={a.guidance}/{a.guidance2}", flush=True)
 
     t_load = time.perf_counter()
