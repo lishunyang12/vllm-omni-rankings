@@ -1,7 +1,7 @@
 #!/bin/bash
-# Three Wan2.2 I2V examples (fixed condition image + motion prompt) x {dense, fp8, int8} on B200.
-# Deliberately spans motion levels (high / medium / gentle) to show fp8's quality gap growing
-# with motion while int8 stays faithful. Per example: LPIPS (all + first16), compare frames, mp4s.
+# Three OFFICIAL vLLM-Omni I2V examples (cherry_blossom / astronaut / bird — image URLs + prompts
+# from examples/offline_inference/image_to_video/README.md) x {dense, fp8, int8} on B200.
+# Per example: LPIPS (all + first16), compare frames, mp4s.
 # Standard load 1280x720 / 81f / 50 steps / compile / CFG 4.0-4.0. int8 SAGE = SM100 only.
 set -e
 cd "$(dirname "$0")"
@@ -11,17 +11,18 @@ PY="${PY:-$HOME/omni-env/bin/python}"
 H="${H:-720}"; W="${W:-1280}"; STEPS="${STEPS:-50}"; FRAMES="${FRAMES:-81}"
 OUT="${OUT:-i2v_examples_out}"; mkdir -p "$OUT"
 
-# name | picsum-id | motion prompt        (motion: high / medium / gentle)
+# Official vLLM-Omni I2V examples (image URL + prompt from examples/offline_inference/image_to_video/README.md).
+# name | image-url | prompt
 EXAMPLES=(
-  "dog|237|The dog suddenly shakes its whole body and bounds toward the camera, fur flying, fast dynamic motion."
-  "street|1076|The scene comes alive: people walk and traffic flows past, lights flicker, lively handheld camera motion."
-  "nature|1018|Clouds drift slowly across the sky and water ripples gently, soft breeze, slow cinematic camera push-in."
+  "cherry|https://vllm-public-assets.s3.us-west-2.amazonaws.com/vision_model_images/cherry_blossom.jpg|Cherry blossoms swaying gently in the breeze, petals falling, smooth motion"
+  "astronaut|https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/astronaut.jpg|An astronaut emerging from a cracked, otherworldly egg on the surface of the moon"
+  "bird|https://huggingface.co/datasets/huggingface/documentation-images/resolve/main/diffusers/flf2v_input_first_frame.png|CG animation style, a small blue bird takes off from a branch and lands on another branch"
 )
 
 for entry in "${EXAMPLES[@]}"; do
-  IFS='|' read -r NAME PID PROMPT <<< "$entry"
+  IFS='|' read -r NAME URL PROMPT <<< "$entry"
   IMG="img_${NAME}.png"
-  [ -f "$IMG" ] || curl -L -o "$IMG" "https://picsum.photos/id/${PID}/${W}/${H}"
+  [ -f "$IMG" ] || curl -L -o "$IMG" "$URL"
   cp -f "$IMG" "$OUT/$IMG"
   echo "############################## $NAME (picsum id$PID) ##############################"
   echo "prompt=$PROMPT"
