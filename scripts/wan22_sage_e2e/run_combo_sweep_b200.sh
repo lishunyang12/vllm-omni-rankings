@@ -11,8 +11,11 @@ export CUDA_VISIBLE_DEVICES="${GPU:-0}"
 export CUDA_HOME="${CUDA_HOME:-$HOME/cuda13}"; export PATH="$CUDA_HOME/bin:$PATH"
 PY="${PY:-$HOME/omni-env/bin/python}"
 STEPS="${STEPS:-20}"; H="${H:-720}"; W="${W:-1280}"; FRAMES="${FRAMES:-81}"
-# grid of "sparsity:until" points (both in [0,1]). Override with PAIRS="0.5:0.0 0.7:0.2 ...".
-PAIRS="${PAIRS:-0.5:0.0 0.5:0.2 0.7:0.0 0.7:0.2}"
+# grid of "sparsity:until" points (both in [0,1]). until = disabled_until_timestep:
+#   until=1.0 skips ALL steps (max speed, riskiest); lowering until keeps the first (1-until)
+#   fraction of high-noise steps dense (safer). Speedup peaks near s=0.9 / until=1.0 (~1.18x).
+# We already know the speedup landscape; this sweep adds the LPIPS (quality) axis on the fast corner.
+PAIRS="${PAIRS:-0.5:0.94 0.7:1.0 0.7:0.94 0.9:1.0 0.9:0.94 0.9:0.88}"
 OUT="${OUT:-combo_out}"; mkdir -p "$OUT"
 
 RAW=https://raw.githubusercontent.com/lishunyang12/vllm-omni-rankings/main/scripts/wan22_sage_e2e
