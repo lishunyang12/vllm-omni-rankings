@@ -102,21 +102,6 @@ L.append(f"First-16-frame LPIPS: **{b} is closer to dense** "
 open(f"{out}/results.md", "w").write("\n".join(L))
 print("\n".join(L))
 PY
-echo "########## ALL DONE -> $OUT/ ##########"
+echo "########## ALL DONE ##########"
+echo "Outputs in $(pwd)/$OUT/ — scp this folder back and push from the rankings repo:"
 ls -lh "$OUT"
-
-echo "########## PUSH TO vllm-omni-rankings ##########"
-REPO="$(git rev-parse --show-toplevel 2>/dev/null || true)"
-if [ -n "$REPO" ]; then
-  cd "$REPO"
-  git add "scripts/wan22_sage_e2e/$OUT" scripts/wan22_sage_e2e/.gitignore
-  if git -c user.name="lishunyang12" -c user.email="lishunyang12@163.com" \
-        commit -m "B200 I2V high-motion SAGE results (dense/fp8/int8) + videos + frames"; then
-    git push origin HEAD && echo "PUSHED to $(git remote get-url origin)" \
-      || echo "PUSH FAILED — run: gh auth login  (or set a git credential), then: git push origin HEAD"
-  else
-    echo "nothing new to commit"
-  fi
-else
-  echo "not inside a git repo — outputs are in $OUT/ ; copy them into the rankings repo and push manually"
-fi
