@@ -34,7 +34,11 @@ if ! flock -n 9; then
   exit 1
 fi
 
-OMNI_ROOT="$("$PY" -c 'import pathlib, vllm_omni; print(pathlib.Path(vllm_omni.__file__).resolve().parents[1])')"
+OMNI_ROOT="$(git rev-parse --show-toplevel)"
+if [[ ! -d "$OMNI_ROOT/vllm_omni" ]]; then
+  echo "run this script from the root of the vllm-omni checkout" >&2
+  exit 1
+fi
 OMNI_HEAD="$(git -C "$OMNI_ROOT" rev-parse HEAD)"
 SAGE_GRAPH_FIX="4197b9d565d2481b98b0ef59131c6b7ff1cb6269"
 if ! git -C "$OMNI_ROOT" merge-base --is-ancestor "$SAGE_GRAPH_FIX" "$OMNI_HEAD"; then
