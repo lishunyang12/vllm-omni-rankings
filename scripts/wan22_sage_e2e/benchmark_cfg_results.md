@@ -145,3 +145,26 @@ B300 T2V (CFG) clips already in-repo: `videos/b300_t2v_dense.mp4`, `videos/b300_
      mv b200_i2v_out/b200_i2v_*.mp4 b200_i2v_out/i2v_cmp_f*.png videos/
      then replace the ⏳ rows above with embedded links / observations. -->
 
+## Skip-softmax on I2V — calibration-free threshold sweep (B300 / SM103)
+
+I2V has no per-expert skip calibration handy, so skip-softmax is driven by the calibration-free
+`skip_softmax_threshold` path (`factor = threshold × seqlen`, no `a`/`b` needed). `disabled_until_timestep`
+is held at the sweet-spot **0.94** (first ~6% high-noise steps stay dense). Wan2.2-I2V-A14B, cherry_blossom
+condition image, 1280×720 / 81f / 30 steps / `torch.compile` / CFG 4.0/4.0, seed 0. LPIPS(alex) vs same-machine dense.
+
+| config | s/step | vs dense | LPIPS all ↓ | LPIPS first16 ↓ |
+|---|---|---|---|---|
+| dense | 9.696 | — | — | — |
+| skip thr=0.2 / u=0.94 | 9.017 | 1.075× | 0.0392 | 0.0234 |
+| **skip thr=0.5 / u=0.94** | 8.898 | **1.090×** | 0.0624 | **0.0357** |
+| skip thr=1.0 / u=0.94 | 8.681 | 1.117× | 0.0873 | 0.0698 |
+| skip thr=2.0 / u=0.94 | 8.628 | 1.124× | 0.3298 | 0.2526 |
+
+- **The threshold path works on I2V without any calibration.** `disabled_until_timestep=0.94` is applied
+  in both the threshold and calibrated paths (the gate in `resolve_factor` is independent of the factor formula).
+- **Sweet spot: `threshold=0.5`, `until=0.94`** — 1.09× at near-lossless quality (first-16 LPIPS 0.036).
+  `threshold=1.0` trades a little quality (0.070) for 1.12×; `threshold=2.0` collapses quality (0.25) for
+  no extra speed (saturation, same trap as sparsity=1.0 / until=1.0 on T2V).
+- **I2V skip is far more forgiving than T2V skip** (best T2V skip first-16 LPIPS was 0.127; I2V hits 0.036),
+  matching the image-anchoring effect seen with SAGE quantization.
+
