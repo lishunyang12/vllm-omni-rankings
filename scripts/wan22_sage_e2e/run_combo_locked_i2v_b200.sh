@@ -54,13 +54,15 @@ def lp(B,lo,hi):
     with torch.no_grad(): return float(np.mean([loss(D[i:i+1].to(dev),B[i:i+1].to(dev)).item() for i in range(lo,hi)]))
 rows=[("SDPA (baseline)","sdpa"),("dense (trtllm)","dense"),(f"skip @thr{S}/u{U}","skip"),
       ("int8 SAGE","int8"),(f"int8+skip @thr{S}/u{U}","combo")]
-print(f"\n| config | s/step | vs dense | LPIPS |")
-print("|---|---|---|---|")
+ts=gt("sdpa")
+print(f"\n| config | s/step | vs dense | vs SDPA | LPIPS |")
+print("|---|---|---|---|---|")
 for name,lab in rows:
-    t=gt(lab); B=to_t(load(f"{lab}.npy"))
-    if lab=="dense":
-        print(f"| {name} | {t/steps:.3f} | — | — |"); continue
-    print(f"| {name} | {t/steps:.3f} | {td/t:.3f}× | {lp(B,0,n):.4f} |")
+    t=gt(lab)
+    vd = "—" if lab=="dense" else f"{td/t:.3f}×"
+    vs = "—" if lab=="sdpa" else (f"{ts/t:.3f}×" if ts else "—")
+    lp_s = "—" if lab=="dense" else f"{lp(to_t(load(f'{lab}.npy')),0,n):.4f}"
+    print(f"| {name} | {t/steps:.3f} | {vd} | {vs} | {lp_s} |")
 try:
     import imageio.v2 as imageio
     for _,lab in rows:
