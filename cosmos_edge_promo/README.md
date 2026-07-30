@@ -14,3 +14,9 @@ VO script (~20s, for Qwen3-TTS):
 Understand, simulate, and interact with the physical world — from text, image, and video to
 robot action, in one compact checkpoint. The smallest, fastest Cosmos — built for the edge,
 from Jetson to RTX. Accelerated today with FP8 and SAGE. Online and offline. Available now."
+
+## v2 (with VO)
+`cosmos_edge_promo_v2.mp4` — 25.5s, English narration (piper `en_US-lessac-medium`).
+Qwen3-TTS was attempted first but its vLLM-Omni engine core crashed in this env
+(`OmniEngineDeadError`); fell back to piper (offline neural TTS) to deliver the VO.
+Re-timed to 25.5s so the video matches the narration. `vo.wav` is the raw narration.
