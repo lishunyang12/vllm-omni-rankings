@@ -1,10 +1,26 @@
-# Cosmos3-Edge promo — v4 (current)
+# Cosmos3-Edge promo — v5 (current)
 
-`cosmos_edge_promo_v4.mp4` — 1280×720, ~37.5s, English VO, no presenter.
-**Every demo clip is real Cosmos3-Edge output generated locally via vLLM-Omni**,
-using the **official Edge recipe** (832×480 · 121f · steps 50 · gs 5.0 ·
-flow_shift 3.0 · seed 0 · official `negative_prompt`). Verified to reproduce
-NVIDIA's official `edge_i2v_output.mp4` frame-for-frame.
+`cosmos_edge_promo_v5.mp4` — 1280×720, ~61s, English VO, no presenter.
+**Capability/architecture-forward cut.** A 4B model has a video-quality ceiling,
+so v5 leads with what's genuinely strong instead of free-generated video:
+
+- **Fact-cards** (public facts from the NVIDIA model card): omni-modal I/O, the
+  Mixture-of-Transformers architecture, and Edge 4B vs Nano 16B vs Super 64B.
+- **Official Physical-AI material, clearly attributed** ("Source: NVIDIA
+  Cosmos3-Edge"): the forward-dynamics UMI action rollout + the benchmark table.
+- **Our real contribution**: the FP8-on-vLLM-Omni comparison (same-seed coastal
+  I2V dense vs fp8, LPIPS 0.094) — the one segment that is genuinely our output.
+
+Nothing generated is faked or unattributed: on-screen material is either real
+Cosmos3-Edge output produced here (fp8 clips) or official NVIDIA assets with a
+visible source caption.
+
+> **v4** (below) is the all-real-generated cut using the official Edge recipe
+> (832×480 · 121f · steps 50 · gs 5.0 · flow_shift 3.0 · seed 0 · official
+> `negative_prompt`), verified to reproduce NVIDIA's `edge_i2v_output.mp4`.
+> Kept as the "everything we generated" reference; v5 is the shippable cut.
+
+`cosmos_edge_promo_v4.mp4` — 1280×720, ~37.5s, all-real-generated footage.
 
 ## What changed vs v3
 - **Official-recipe footage.** v3 used ad-hoc params (steps 35, no negative
