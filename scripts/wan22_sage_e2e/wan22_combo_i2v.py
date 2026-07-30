@@ -62,7 +62,7 @@ def main():
     p.add_argument("--save", default=None)
     a = p.parse_args()
 
-    attn = {"default": {"backend": "SDPA" if a.mode == "sdpa" else "TRTLLM_ATTN"}}
+    attn = {"default": {"backend": "TORCH_SDPA" if a.mode == "sdpa" else "TRTLLM_ATTN"}}
     if a.mode in ("int8", "combo"):
         attn["default"]["quant"] = {"dtype_qk": "int8"}
     if a.mode in ("skip", "combo"):
