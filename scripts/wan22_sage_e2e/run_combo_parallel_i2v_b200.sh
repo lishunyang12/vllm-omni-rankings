@@ -1,13 +1,8 @@
 #!/bin/bash
-# Run Wan2.2 I2V dense/int8/skip/combo on four B200 GPUs in parallel, then launch SDPA on the
-# first GPU that becomes free. Produces isolated logs/NPYs, LPIPS(all/first16), and MP4s.
+# Run Wan2.2 I2V SDPA alone first, then run dense/int8/skip/combo on four B200 GPUs in parallel.
+# Produces isolated logs/NPYs, LPIPS(all/first16), and MP4s.
 set -euo pipefail
 cd "$(dirname "$0")"
-
-if ((BASH_VERSINFO[0] < 5 || (BASH_VERSINFO[0] == 5 && BASH_VERSINFO[1] < 1))); then
-  echo "Bash >= 5.1 is required for wait -n -p." >&2
-  exit 1
-fi
 
 export CUDA_HOME="${CUDA_HOME:-$HOME/cuda13}"
 export PATH="$CUDA_HOME/bin:$PATH"
@@ -58,10 +53,8 @@ echo "GPUs=${GPU_IDS[*]} output=$OUT"
 echo "image=$IMG prompt=$PROMPT"
 
 declare -a ALL_PIDS=()
-declare -a INITIAL_MODES=(dense int8 skip combo)
+declare -a PARALLEL_MODES=(dense int8 skip combo)
 declare -A PID_BY_MODE=()
-declare -A GPU_BY_PID=()
-SDPA_PID=""
 
 launch() {
   local label="$1"
@@ -81,7 +74,6 @@ launch() {
   local pid=$!
   ALL_PIDS+=("$pid")
   PID_BY_MODE["$label"]="$pid"
-  GPU_BY_PID["$pid"]="$gpu"
 }
 
 stop_children() {
@@ -92,49 +84,25 @@ stop_children() {
 }
 trap 'stop_children; exit 130' INT TERM
 
+echo "running SDPA first on GPU ${GPU_IDS[0]}"
+launch sdpa "${GPU_IDS[0]}" --mode sdpa
+if wait "${PID_BY_MODE[sdpa]}"; then
+  echo "sdpa finished; launching the remaining four modes in parallel"
+else
+  rc=$?
+  echo "sdpa failed (rc=$rc); inspect $OUT/gen_sdpa.log" >&2
+  exit "$rc"
+fi
+
+ALL_PIDS=()
 launch dense "${GPU_IDS[0]}" --mode dense
 launch int8 "${GPU_IDS[1]}" --mode int8
 launch skip "${GPU_IDS[2]}" --mode skip --threshold "$THR" --until "$U"
 launch combo "${GPU_IDS[3]}" --mode combo --threshold "$THR" --until "$U"
 
-echo "waiting for the first GPU to become free..."
-if wait -n -p FIRST_PID "${ALL_PIDS[@]}"; then
-  rc=0
-else
-  rc=$?
-fi
-if ((rc != 0)); then
-  echo "the first completed task failed (rc=$rc); inspect $OUT/gen_*.log" >&2
-  stop_children
-  wait || true
-  exit "$rc"
-fi
-
-FIRST_MODE=""
-for mode in "${INITIAL_MODES[@]}"; do
-  if [[ "${PID_BY_MODE[$mode]}" == "$FIRST_PID" ]]; then
-    FIRST_MODE="$mode"
-    break
-  fi
-done
-if [[ -z "$FIRST_MODE" ]]; then
-  echo "could not map completed PID $FIRST_PID to a mode" >&2
-  stop_children
-  wait || true
-  exit 1
-fi
-
-FREE_GPU="${GPU_BY_PID[$FIRST_PID]}"
-echo "$FIRST_MODE finished first; launching SDPA on freed GPU $FREE_GPU"
-launch sdpa "$FREE_GPU" --mode sdpa
-SDPA_PID="${PID_BY_MODE[sdpa]}"
-
 failed=0
-for mode in "${INITIAL_MODES[@]}"; do
+for mode in "${PARALLEL_MODES[@]}"; do
   pid="${PID_BY_MODE[$mode]}"
-  if [[ "$pid" == "$FIRST_PID" ]]; then
-    continue
-  fi
   if wait "$pid"; then
     echo "$mode finished"
   else
@@ -142,12 +110,6 @@ for mode in "${INITIAL_MODES[@]}"; do
     failed=1
   fi
 done
-if wait "$SDPA_PID"; then
-  echo "sdpa finished"
-else
-  echo "sdpa failed; inspect $OUT/gen_sdpa.log" >&2
-  failed=1
-fi
 trap - INT TERM
 if ((failed)); then
   exit 1
