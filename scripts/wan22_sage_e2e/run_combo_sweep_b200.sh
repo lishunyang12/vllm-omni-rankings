@@ -13,9 +13,11 @@ PY="${PY:-$HOME/omni-env/bin/python}"
 STEPS="${STEPS:-20}"; H="${H:-720}"; W="${W:-1280}"; FRAMES="${FRAMES:-81}"
 # grid of "sparsity:until" points (both in [0,1]). until = disabled_until_timestep:
 #   until=1.0 skips ALL steps (max speed, riskiest); lowering until keeps the first (1-until)
-#   fraction of high-noise steps dense (safer). Speedup peaks near s=0.9 / until=1.0 (~1.18x).
-# We already know the speedup landscape; this sweep adds the LPIPS (quality) axis on the fast corner.
-PAIRS="${PAIRS:-0.5:0.94 0.7:1.0 0.7:0.94 0.9:1.0 0.9:0.94 0.9:0.88}"
+#   fraction of high-noise steps dense (safer).
+# B300 clean verify showed speedup SATURATES at s~=0.8 (~1.19x ceiling; s=0.9/1.0 add <1.5% and only
+# cost quality). So we pin sparsity at 0.8 and mainly sweep the until (D) axis for the quality knee,
+# with a 0.7 line for comparison.
+PAIRS="${PAIRS:-0.8:1.0 0.8:0.94 0.8:0.88 0.7:0.94 0.7:1.0}"
 OUT="${OUT:-combo_out}"; mkdir -p "$OUT"
 
 RAW=https://raw.githubusercontent.com/lishunyang12/vllm-omni-rankings/main/scripts/wan22_sage_e2e
