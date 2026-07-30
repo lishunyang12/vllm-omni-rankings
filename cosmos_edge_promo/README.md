@@ -1,13 +1,31 @@
-# Cosmos3-Edge promo — v3 (current)
+# Cosmos3-Edge promo — v4 (current)
 
-`cosmos_edge_promo_v3.mp4` — 1280×720, ~41.5s, English VO, no presenter.
-**Every demo clip is real Cosmos3-Edge output generated locally via vLLM-Omni**
-(B300, `cosmos-venv` = vllm 0.26.0 + vllm-omni). Style follows the official
-NVIDIA Cosmos launch: full-screen demo + bottom caption/provenance bar, an
-FP8 side-by-side with speed/LPIPS, and Edge spec cards.
+`cosmos_edge_promo_v4.mp4` — 1280×720, ~37.5s, English VO, no presenter.
+**Every demo clip is real Cosmos3-Edge output generated locally via vLLM-Omni**,
+using the **official Edge recipe** (832×480 · 121f · steps 50 · gs 5.0 ·
+flow_shift 3.0 · seed 0 · official `negative_prompt`). Verified to reproduce
+NVIDIA's official `edge_i2v_output.mp4` frame-for-frame.
 
-> v1/v2 (below) are superseded: they used official NVIDIA demo assets (Nano-era)
-> and generic footage. v3 replaces ALL footage with real Edge-checkpoint output.
+## What changed vs v3
+- **Official-recipe footage.** v3 used ad-hoc params (steps 35, no negative
+  prompt) → blocky/oversaturated. v4 aligns every param with the official Edge
+  model card; the missing lever was the structured `negative_prompt`.
+- **Hero = image-anchored I2V** (coastal drive) — the reliably photoreal path;
+  free-T2V on a 4B model stays stylized, so it's brief b-roll only.
+- **FP8 split is apples-to-apples** — same coastal scene, same seed, dense vs
+  fp8: **LPIPS 0.094** (first-16 0.064), 1.07× at 121f.
+
+## One-command recipe
+`v4_build/edge_gen.sh <t2i|t2v|i2v> "prompt" [--image img]` — everything defaults
+to the official perfect recipe (auto-downloads the official `negative_prompt`).
+
+## v4 clips
+`v4_clips/`: `coastal_i2v_dense.mp4` (hero), `coastal_i2v_fp8.mp4` (fp8 pair),
+`v4_t2v_warehouse.mp4`, `v4_t2v_robot.mp4`. Build: `v4_build/` (gen scripts,
+`make_cards.py`, `assemble_v4.sh`, cards).
+
+> v1/v2/v3 (below) are superseded. v1/v2 used official NVIDIA (Nano-era) assets;
+> v3 was the first all-real-Edge cut but with pre-recipe (lower-quality) params.
 
 ## Segments
 
