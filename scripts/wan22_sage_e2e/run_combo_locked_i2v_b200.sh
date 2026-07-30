@@ -10,7 +10,10 @@ export CUDA_VISIBLE_DEVICES="${GPU:-0}"
 export CUDA_HOME="${CUDA_HOME:-$HOME/cuda13}"; export PATH="$CUDA_HOME/bin:$PATH"
 PY="${PY:-$HOME/omni-env/bin/python}"
 STEPS="${STEPS:-50}"; H="${H:-720}"; W="${W:-1280}"; FRAMES="${FRAMES:-81}"
-S="${S:-0.7}"; U="${U:-0.94}"
+# I2V has no per-expert skip calibration, so use the calibration-free threshold path.
+# THR/U come from the B300 I2V threshold sweep: thr=0.5/u=0.94 is near-lossless (LPIPS first16 0.036,
+# 1.09x); set THR=1.0 for a bit more speed (1.12x, LPIPS 0.070).
+THR="${THR:-0.5}"; U="${U:-0.94}"
 IMG="${IMG:-i2v_input.png}"
 IMG_URL="${IMG_URL:-https://vllm-public-assets.s3.us-west-2.amazonaws.com/vision_model_images/cherry_blossom.jpg}"
 PROMPT="${PROMPT:-Cherry blossoms swaying gently in the breeze, petals falling, smooth motion}"
@@ -28,14 +31,14 @@ run() { local label="$1"; shift; echo "########## $label ##########"
 
 run sdpa  --mode sdpa
 run dense --mode dense
-run skip  --mode skip  --sparsity "$S" --until "$U"
+run skip  --mode skip  --threshold "$THR" --until "$U"
 run int8  --mode int8
-run combo --mode combo --sparsity "$S" --until "$U"
+run combo --mode combo --threshold "$THR" --until "$U"
 
 echo "########## RESULTS (vs dense) ##########"
-OUT="$OUT" STEPS="$STEPS" S="$S" U="$U" $PY - <<'PY'
+OUT="$OUT" STEPS="$STEPS" THR="$THR" U="$U" $PY - <<'PY'
 import os, re, numpy as np, torch, lpips
-out=os.environ["OUT"]; steps=int(os.environ["STEPS"]); S=os.environ["S"]; U=os.environ["U"]
+out=os.environ["OUT"]; steps=int(os.environ["STEPS"]); S=os.environ["THR"]; U=os.environ["U"]
 def load(p):
     a=np.load(p).squeeze()
     if a.dtype!=np.uint8 and float(a.max())<=1.0+1e-3: a=a*255.0
@@ -49,8 +52,8 @@ loss=lpips.LPIPS(net="alex").to(dev).eval()
 D=to_t(load("dense.npy")); n=D.shape[0]; td=gt("dense")
 def lp(B,lo,hi):
     with torch.no_grad(): return float(np.mean([loss(D[i:i+1].to(dev),B[i:i+1].to(dev)).item() for i in range(lo,hi)]))
-rows=[("SDPA (baseline)","sdpa"),("dense (trtllm)","dense"),(f"skip @s{S}/u{U}","skip"),
-      ("int8 SAGE","int8"),(f"int8+skip @s{S}/u{U}","combo")]
+rows=[("SDPA (baseline)","sdpa"),("dense (trtllm)","dense"),(f"skip @thr{S}/u{U}","skip"),
+      ("int8 SAGE","int8"),(f"int8+skip @thr{S}/u{U}","combo")]
 print(f"\n| config | s/step | vs dense | LPIPS all | LPIPS first16 |")
 print("|---|---|---|---|---|")
 for name,lab in rows:
