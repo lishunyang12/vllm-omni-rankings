@@ -11,11 +11,12 @@ PY="${PY:-$HOME/omni-env/bin/python}"
 H="${H:-720}"; W="${W:-1280}"; STEPS="${STEPS:-50}"; FRAMES="${FRAMES:-81}"
 OUT="${OUT:-t2v_examples_out}"; mkdir -p "$OUT"
 
-# name|prompt  (classic boxing cats + two new high-motion examples)
+# Official vLLM-Omni T2V prompts (from examples/offline_inference/text_to_video/text_to_video.md
+# and run_curl_text_to_video.sh). Spans low / medium / high motion.
 EXAMPLES=(
+  "robot|A sleek, humanoid robot stands in a vast warehouse filled with neatly stacked cardboard boxes on industrial shelves."
+  "dog|A dog running across a field of golden wheat."
   "cats|Two anthropomorphic cats in comfy boxing gear and bright gloves fight intensely on a spotlighted stage."
-  "pandas|A group of anthropomorphic red pandas in tiny chef uniforms frantically cook in a cramped ramen kitchen, steam rising, flames leaping from woks, quick handheld camera, warm cinematic lighting."
-  "surfer|A lone surfer carves down the face of a massive turquoise wave at sunrise, spray exploding behind the board, slow-motion barrel forming, golden backlight, aerial tracking shot."
 )
 
 for entry in "${EXAMPLES[@]}"; do
