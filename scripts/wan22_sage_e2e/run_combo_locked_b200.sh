@@ -19,6 +19,7 @@ run() { local label="$1"; shift; echo "########## $label ##########"
   $PY wan22_combo.py "$@" --steps "$STEPS" --h "$H" --w "$W" --frames "$FRAMES" \
       --save "${label}.npy" 2>&1 | tee "$OUT/gen_${label}.log"; }
 
+run sdpa  --mode sdpa
 run dense --mode dense
 run skip  --mode skip  --sparsity "$S" --until "$U"
 run int8  --mode int8
@@ -41,13 +42,26 @@ loss=lpips.LPIPS(net="alex").to(dev).eval()
 D=to_t(load("dense.npy")); n=D.shape[0]; td=gt("dense")
 def lp(B,lo,hi):
     with torch.no_grad(): return float(np.mean([loss(D[i:i+1].to(dev),B[i:i+1].to(dev)).item() for i in range(lo,hi)]))
-rows=[("dense","dense.npy"),(f"skip @s{S}/u{U}","skip.npy"),("int8 SAGE","int8.npy"),(f"int8+skip @s{S}/u{U}","combo.npy")]
+rows=[("SDPA (baseline)","sdpa"),("dense (trtllm)","dense"),(f"skip @s{S}/u{U}","skip"),
+      ("int8 SAGE","int8"),(f"int8+skip @s{S}/u{U}","combo")]
 print(f"\n| config | s/step | vs dense | LPIPS all | LPIPS first16 |")
 print("|---|---|---|---|---|")
-for name,f in rows:
-    t=gt(f.split('.')[0]); B=to_t(load(f))
-    if name=="dense":
+for name,lab in rows:
+    t=gt(lab); B=to_t(load(f"{lab}.npy"))
+    if lab=="dense":
         print(f"| {name} | {t/steps:.3f} | — | — | — |"); continue
     print(f"| {name} | {t/steps:.3f} | {td/t:.3f}× | {lp(B,0,n):.4f} | {lp(B,0,min(16,n)):.4f} |")
+
+# videos for every config (best-effort)
+try:
+    import imageio.v2 as imageio
+    for _,lab in rows:
+        a=load(f"{lab}.npy")
+        w=imageio.get_writer(f"{out}/{lab}.mp4", fps=16, codec="libx264", quality=6,
+                             macro_block_size=8, ffmpeg_params=["-crf","26","-pix_fmt","yuv420p"])
+        for fr in a: w.append_data(fr)
+        w.close(); print("wrote", f"{out}/{lab}.mp4")
+except Exception as e:
+    print("VIDEO SKIPPED (pip install imageio-ffmpeg):", e)
 PY
 echo "########## DONE -> $OUT/ ##########"

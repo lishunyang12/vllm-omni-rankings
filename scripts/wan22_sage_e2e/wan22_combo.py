@@ -41,7 +41,7 @@ def extract_frames(out):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--mode", choices=["dense", "int8", "skip", "combo"], required=True)
+    p.add_argument("--mode", choices=["dense", "sdpa", "int8", "skip", "combo"], required=True)
     p.add_argument("--sparsity", type=float, default=0.5)
     p.add_argument("--until", type=float, default=0.0, help="disabled_until_timestep in [0,1]; skip turns on once timestep<=until (0=always on)")
     p.add_argument("--model", default="Wan-AI/Wan2.2-T2V-A14B-Diffusers")
@@ -55,7 +55,7 @@ def main():
     p.add_argument("--save", default=None)
     a = p.parse_args()
 
-    attn = {"default": {"backend": "TRTLLM_ATTN"}}
+    attn = {"default": {"backend": "SDPA" if a.mode == "sdpa" else "TRTLLM_ATTN"}}
     if a.mode in ("int8", "combo"):
         attn["default"]["quant"] = {"dtype_qk": "int8"}
     if a.mode in ("skip", "combo"):
