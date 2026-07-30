@@ -1,12 +1,13 @@
 #!/bin/bash
 # B200 I2V locked combo experiment at skip sweet spot (target_sparsity=0.7, until=0.94).
-# Five configs vs dense: SDPA | dense(trtllm) | skip-only | int8 SAGE-only | int8 SAGE + skip.
+# Five configs vs dense: dense(trtllm) | int8 SAGE-only | skip-only | int8 SAGE + skip | SDPA.
 # Emits per-config mp4 videos + LPIPS(all/first16) vs dense. int8 = SM100 only. Run from ~/vllm-omni.
 # NOTE: skip calibration in wan22_combo_i2v.py is a T2V-derived PLACEHOLDER; for a faithful I2V
 # skip run, replace CALIB with the I2V checkpoint's sparse_attention_config coefficients.
-set -e
+set -euo pipefail
 cd "$(dirname "$0")"
-export CUDA_VISIBLE_DEVICES="${GPU:-0}"
+GPU="${GPU:-0}"
+export CUDA_VISIBLE_DEVICES="$GPU"
 export CUDA_HOME="${CUDA_HOME:-$HOME/cuda13}"; export PATH="$CUDA_HOME/bin:$PATH"
 PY="${PY:-$HOME/omni-env/bin/python}"
 STEPS="${STEPS:-50}"; H="${H:-720}"; W="${W:-1280}"; FRAMES="${FRAMES:-81}"
@@ -17,7 +18,26 @@ THR="${THR:-0.5}"; U="${U:-0.94}"
 IMG="${IMG:-i2v_input.png}"
 IMG_URL="${IMG_URL:-https://vllm-public-assets.s3.us-west-2.amazonaws.com/vision_model_images/cherry_blossom.jpg}"
 PROMPT="${PROMPT:-Cherry blossoms swaying gently in the breeze, petals falling, smooth motion}"
-OUT="${OUT:-combo_locked_i2v_out}"; mkdir -p "$OUT"
+RUN_TAG="$(date -u +%Y%m%dT%H%M%SZ)"
+OUT="${OUT:-combo_locked_i2v_out_${RUN_TAG}}"; mkdir -p "$OUT"
+
+LOCK_FILE="${TMPDIR:-/tmp}/${USER}_wan22_combo_i2v_gpu${GPU}.lock"
+exec 9>"$LOCK_FILE"
+if ! flock -n 9; then
+  echo "another Wan2.2 combo benchmark is already using GPU=$GPU on this node (lock: $LOCK_FILE)" >&2
+  exit 1
+fi
+
+OMNI_ROOT="$("$PY" -c 'import pathlib, vllm_omni; print(pathlib.Path(vllm_omni.__file__).resolve().parents[1])')"
+OMNI_HEAD="$(git -C "$OMNI_ROOT" rev-parse HEAD)"
+SAGE_GRAPH_FIX="4197b9d565d2481b98b0ef59131c6b7ff1cb6269"
+if ! git -C "$OMNI_ROOT" merge-base --is-ancestor "$SAGE_GRAPH_FIX" "$OMNI_HEAD"; then
+  echo "installed vLLM-Omni source is missing the SAGE Dynamo graph-break fix" >&2
+  echo "source=$OMNI_ROOT head=$OMNI_HEAD required=$SAGE_GRAPH_FIX" >&2
+  exit 1
+fi
+echo "vllm-omni source=$OMNI_ROOT head=$OMNI_HEAD"
+echo "output=$OUT gpu=$GPU"
 
 RAW=https://raw.githubusercontent.com/lishunyang12/vllm-omni-rankings/main/scripts/wan22_sage_e2e
 [ -f wan22_combo_i2v.py ] || curl -sL "$RAW/wan22_combo_i2v.py" -o wan22_combo_i2v.py
@@ -27,13 +47,13 @@ echo "image=$IMG  prompt=$PROMPT"
 
 run() { local label="$1"; shift; echo "########## $label ##########"
   $PY wan22_combo_i2v.py "$@" --image "$IMG" --prompt "$PROMPT" --steps "$STEPS" --h "$H" --w "$W" --frames "$FRAMES" \
-      --save "${label}.npy" 2>&1 | tee "$OUT/gen_${label}.log"; }
+      --save "$OUT/${label}.npy" 2>&1 | tee "$OUT/gen_${label}.log"; }
 
-run sdpa  --mode sdpa
 run dense --mode dense
-run skip  --mode skip  --threshold "$THR" --until "$U"
 run int8  --mode int8
+run skip  --mode skip  --threshold "$THR" --until "$U"
 run combo --mode combo --threshold "$THR" --until "$U"
+run sdpa  --mode sdpa
 
 echo "########## RESULTS (vs dense) ##########"
 OUT="$OUT" STEPS="$STEPS" THR="$THR" U="$U" $PY - <<'PY'
@@ -49,24 +69,29 @@ def gt(l):
     except: return None
 dev="cuda" if torch.cuda.is_available() else "cpu"
 loss=lpips.LPIPS(net="alex").to(dev).eval()
-D=to_t(load("dense.npy")); n=D.shape[0]; td=gt("dense")
+D=to_t(load(f"{out}/dense.npy")); n=D.shape[0]; td=gt("dense")
 def lp(B,lo,hi):
     with torch.no_grad(): return float(np.mean([loss(D[i:i+1].to(dev),B[i:i+1].to(dev)).item() for i in range(lo,hi)]))
 rows=[("SDPA (baseline)","sdpa"),("dense (trtllm)","dense"),(f"skip @thr{S}/u{U}","skip"),
       ("int8 SAGE","int8"),(f"int8+skip @thr{S}/u{U}","combo")]
 ts=gt("sdpa")
-print(f"\n| config | s/step | vs dense | vs SDPA | LPIPS |")
-print("|---|---|---|---|---|")
+print(f"\n| config | s/step | vs dense | vs SDPA | LPIPS all | LPIPS first16 |")
+print("|---|---|---|---|---|---|")
 for name,lab in rows:
     t=gt(lab)
     vd = "—" if lab=="dense" else f"{td/t:.3f}×"
     vs = "—" if lab=="sdpa" else (f"{ts/t:.3f}×" if ts else "—")
-    lp_s = "—" if lab=="dense" else f"{lp(to_t(load(f'{lab}.npy')),0,n):.4f}"
-    print(f"| {name} | {t/steps:.3f} | {vd} | {vs} | {lp_s} |")
+    if lab=="dense":
+        lp_all=lp_f16="—"
+    else:
+        B=to_t(load(f"{out}/{lab}.npy"))
+        lp_all=f"{lp(B,0,n):.4f}"
+        lp_f16=f"{lp(B,0,min(16,n)):.4f}"
+    print(f"| {name} | {t/steps:.3f} | {vd} | {vs} | {lp_all} | {lp_f16} |")
 try:
     import imageio.v2 as imageio
     for _,lab in rows:
-        a=load(f"{lab}.npy")
+        a=load(f"{out}/{lab}.npy")
         w=imageio.get_writer(f"{out}/{lab}.mp4", fps=16, codec="libx264", quality=6,
                              macro_block_size=8, ffmpeg_params=["-crf","26","-pix_fmt","yuv420p"])
         for fr in a: w.append_data(fr)
