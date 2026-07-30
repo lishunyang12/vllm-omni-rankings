@@ -48,6 +48,8 @@ def main():
     p.add_argument("--mode", choices=["dense", "sdpa", "int8", "skip", "combo"], required=True)
     p.add_argument("--sparsity", type=float, default=0.7)
     p.add_argument("--until", type=float, default=0.94)
+    p.add_argument("--threshold", type=float, default=None,
+                   help="calibration-free skip: use skip_softmax_threshold instead of target_sparsity (no a/b needed)")
     p.add_argument("--model", default="Wan-AI/Wan2.2-I2V-A14B-Diffusers")
     p.add_argument("--image", required=True)
     p.add_argument("--prompt", default="The scene comes to life with smooth, natural motion.")
@@ -64,10 +66,17 @@ def main():
     if a.mode in ("int8", "combo"):
         attn["default"]["quant"] = {"dtype_qk": "int8"}
     if a.mode in ("skip", "combo"):
-        attn["default"]["skip_softmax"] = {"target_sparsity": a.sparsity, "disabled_until_timestep": a.until}
-        attn["default"]["skip_calibration"] = CALIB
+        if a.threshold is not None:
+            attn["default"]["skip_softmax"] = {"threshold": a.threshold, "disabled_until_timestep": a.until}
+        else:
+            attn["default"]["skip_softmax"] = {"target_sparsity": a.sparsity, "disabled_until_timestep": a.until}
+            attn["default"]["skip_calibration"] = CALIB
 
-    tag = f"{a.mode}" + (f"@s{a.sparsity}u{a.until}" if a.mode in ("skip", "combo") else "")
+    if a.mode in ("skip", "combo"):
+        skip_tag = f"t{a.threshold}" if a.threshold is not None else f"s{a.sparsity}"
+        tag = f"{a.mode}@{skip_tag}u{a.until}"
+    else:
+        tag = a.mode
     print(f"[i2v-combo] {tag} {a.w}x{a.h} {a.frames}f {a.steps}steps compile=ON CFG={a.guidance}/{a.guidance2}", flush=True)
 
     img = Image.open(a.image).convert("RGB").resize((a.w, a.h), Image.Resampling.LANCZOS)
