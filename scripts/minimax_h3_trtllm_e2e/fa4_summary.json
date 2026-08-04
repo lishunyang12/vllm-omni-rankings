@@ -1,0 +1,106 @@
+{
+  "mode": "recipe_flash",
+  "model": "/home/zjy/code/lsy/bench_inputs/MiniMax-H3/FL2VA",
+  "hardware": [
+    {
+      "logical_index": 0,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    },
+    {
+      "logical_index": 1,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    },
+    {
+      "logical_index": 2,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    },
+    {
+      "logical_index": 3,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    }
+  ],
+  "torch_version": "2.11.0+cu130",
+  "flashinfer_version": "0.6.16.post1",
+  "parallel_config": "tp1_ulysses4_ring1_text_encoder_tp1_vae_tile4",
+  "attention_config": {
+    "default": {
+      "backend": "FLASH_ATTN"
+    }
+  },
+  "regional_compile": true,
+  "prompt": "In a snowy blue-purple forest, Ori carefully walks past a sleeping giant; footsteps crunch in the snow while the creature breathes and softly snorts.",
+  "seed": 1101,
+  "height": 768,
+  "width": 1248,
+  "duration_seconds": 8.7,
+  "num_inference_steps": 50,
+  "runs": [
+    {
+      "run": 1,
+      "warmup": true,
+      "wall_time_s": 145.33338260906748,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 33.051126520032994,
+        "MiniMaxH3Pipeline.diffuse": 103.37291325302795,
+        "MiniMaxH3Pipeline.decode": 3.4819591459818184,
+        "queue_wait_ms": 0.33598404843360186,
+        "stage_0_gen_ms": 145330.9805393219
+      },
+      "worker_peak_memory_mb": 137878.0,
+      "frames_shape": [
+        209,
+        768,
+        1248,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        278400
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "708bbb89218fe21eedada84c4e2d20cef06e33d9b369835ac8aa6a3da8595a22",
+      "audio_sha256": "167414a692ab0b000b4c8576590928a6343c7efd86fa442c7b5adf6167a09ddb",
+      "mp4": "/home/zjy/code/lsy/tmp/minimax-h3-current-ab/recipe_flash/t2va_recipe_flash_run1.mp4"
+    },
+    {
+      "run": 2,
+      "warmup": false,
+      "wall_time_s": 88.5578386709094,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.1800725080538541,
+        "MiniMaxH3Pipeline.diffuse": 83.85419396695215,
+        "MiniMaxH3Pipeline.decode": 2.414559685974382,
+        "queue_wait_ms": 0.2610379597172141,
+        "stage_0_gen_ms": 88555.80925941467
+      },
+      "worker_peak_memory_mb": 137878.0,
+      "frames_shape": [
+        209,
+        768,
+        1248,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        278400
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "fb737a72e477cf3a1efda9ae399b5be2fc580d726c19e4b09d8c73c5524b2d98",
+      "audio_sha256": "201d0d0a698ff7638b60c19bc69a7127b7701f9859fe7b768067eb8bd9fb6470",
+      "mp4": "/home/zjy/code/lsy/tmp/minimax-h3-current-ab/recipe_flash/t2va_recipe_flash_run2.mp4"
+    }
+  ],
+  "steady_output_deterministic": true
+}
