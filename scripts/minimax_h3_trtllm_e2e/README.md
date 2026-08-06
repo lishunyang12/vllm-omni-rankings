@@ -101,6 +101,7 @@ than a full-video quality metric.
 | 0.06 | 0.95 | 30/49 | 0.1710 | [MP4](./b300_skip_softmax_fidelity_20260806/skip_softmax_006_gate095.mp4) | [JSON](./b300_skip_softmax_fidelity_20260806/skip_softmax_006_gate095.json) |
 | 0.06 | 0.96 | 32/49 | 0.1872 | [MP4](./b300_skip_softmax_fidelity_20260806/skip_softmax_006_gate096.mp4) | [JSON](./b300_skip_softmax_fidelity_20260806/skip_softmax_006_gate096.json) |
 | 0.075 | 0.95 | 30/49 | 0.2234 | [MP4](./b300_skip_softmax_fidelity_20260806/skip_softmax_0075_gate095.mp4) | [JSON](./b300_skip_softmax_fidelity_20260806/skip_softmax_0075_gate095.json) |
+| 0.05 | 0.98 | 39/49 | 0.2445 | [MP4](./b300_skip_softmax_fidelity_20260806/skip_softmax_005_gate098.mp4) | [JSON](./b300_skip_softmax_fidelity_20260806/skip_softmax_005_gate098.json) |
 
 Increasing the gate from 0.95 to 0.96 preserves the last frame better than
 increasing the threshold from 0.05 to 0.06. The complete LPIPS output is

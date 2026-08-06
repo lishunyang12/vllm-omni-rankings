@@ -39,6 +39,11 @@
       "video": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_skip_lpips_20260806_v2/skip_softmax_006_gate096/t2va_skip_softmax_006_gate096_run2.mp4",
       "last_frame_index": 208,
       "lpips": 0.18722966313362122
+    },
+    "skip_softmax_005_gate098": {
+      "video": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_skip_fidelity_gate098_20260806/skip_softmax_005_gate098/t2va_skip_softmax_005_gate098_run2.mp4",
+      "last_frame_index": 208,
+      "lpips": 0.24451379477977753
     }
   }
 }

@@ -164,6 +164,7 @@ for threshold_name, threshold in {
         "095": 0.95,
         "096": 0.96,
         "097": 0.97,
+        "098": 0.98,
         "099": 0.99,
     }.items():
         suffix = f"{threshold_name}_gate{gate_name}"
