@@ -207,6 +207,14 @@ def main() -> None:
     model_dir = Path(os.environ["MODEL_DIR"])
     output_root = Path(os.environ["OUTPUT_ROOT"])
     output_root.mkdir(parents=True, exist_ok=True)
+    prompt_file = os.environ.get("PROMPT_FILE")
+    prompt = (
+        Path(prompt_file).read_text(encoding="utf-8").strip()
+        if prompt_file
+        else os.environ.get("PROMPT", PROMPT)
+    )
+    if not prompt:
+        raise ValueError("Prompt must not be empty")
     height = int(os.environ.get("HEIGHT", "768"))
     width = int(os.environ.get("WIDTH", "1248"))
     duration = float(os.environ.get("DURATION_SECONDS", "8.7"))
@@ -279,7 +287,7 @@ def main() -> None:
         for run_index in range(num_runs):
             started = time.perf_counter()
             outputs = engine.generate(
-                PROMPT,
+                prompt,
                 OmniDiffusionSamplingParams(
                     height=height,
                     width=width,
@@ -372,7 +380,7 @@ def main() -> None:
         ),
         "attention_config": attention_config,
         "regional_compile": not enforce_eager,
-        "prompt": PROMPT,
+        "prompt": prompt,
         "seed": seed,
         "height": height,
         "width": width,

@@ -107,6 +107,28 @@ Increasing the gate from 0.95 to 0.96 preserves the last frame better than
 increasing the threshold from 0.05 to 0.06. The complete LPIPS output is
 available as [JSON](./b300_skip_softmax_fidelity_20260806/last_frame_lpips.json).
 
+## B300 official starship prompt
+
+This session uses the official reproducible MiniMax H3
+[starship prompt](./prompts/minimax_h3_official_starship.txt): 1344x768,
+243 frames, 10 seconds, 24 FPS, 50 denoise steps, and seed 0. Each mode starts
+one engine and runs serially on physical GPUs 0, 1, 4, and 5, with one regional
+compile warmup followed by five measured requests. The token refiner remains
+dense in every optimized mode.
+
+| Backend | SAGE | Skip-Softmax | Median diffuse | Speedup vs dense | CV | Video | Raw record |
+|---|---|---|---:|---:|---:|---|---|
+| `TRTLLM_ATTN` | — | — | 109.347 s | 1.000× | 0.12% | [MP4](./b300_starship_strict_20260806/trtllm_dense.mp4) | [JSON](./b300_starship_strict_20260806/trtllm_dense.json) |
+| `TRTLLM_ATTN` | FP8 | — | 90.014 s | 1.215× | 0.17% | [MP4](./b300_starship_strict_20260806/sage_fp8.mp4) | [JSON](./b300_starship_strict_20260806/sage_fp8.json) |
+| `TRTLLM_ATTN` | — | threshold 0.05, `disabled_until_timestep=0.97` (35/49 steps) | 101.734 s | 1.075× | 0.10% | [MP4](./b300_starship_strict_20260806/skip_softmax_005_gate097.mp4) | [JSON](./b300_starship_strict_20260806/skip_softmax_005_gate097.json) |
+| `TRTLLM_ATTN` | FP8 | threshold 0.05, `disabled_until_timestep=0.97` (35/49 steps) | 86.983 s | 1.257× | 0.13% | [MP4](./b300_starship_strict_20260806/sage_fp8_skip_005_gate097.mp4) | [JSON](./b300_starship_strict_20260806/sage_fp8_skip_005_gate097.json) |
+
+All four modes passed the strict timing gate: five deterministic measured
+outputs, CV below 2%, span/median below 5%, and no thermal slowdown. The maximum
+observed CV was 0.17%, the maximum span/median was 0.46%, and the maximum GPU
+temperature was 79°C. See the complete [timing results](./b300_starship_strict_20260806/results.json)
+and [thermal audit](./b300_starship_strict_20260806/thermal_audit.json).
+
 ## B200 INT8 results
 
 These runs use four NVIDIA B200 GPUs and the same prompt, seed, output shape,

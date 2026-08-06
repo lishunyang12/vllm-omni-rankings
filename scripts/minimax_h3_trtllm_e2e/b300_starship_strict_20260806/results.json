@@ -1,0 +1,85 @@
+{
+  "criteria": {
+    "minimum_measured_runs": 5,
+    "maximum_cv": 0.02,
+    "maximum_span_over_median": 0.05,
+    "deterministic_output": true,
+    "thermal_audit": "pass"
+  },
+  "thermal_accepted": true,
+  "accepted": true,
+  "results": {
+    "trtllm_dense": {
+      "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_starship_strict_20260806_v2/trtllm_dense/summary.json",
+      "values_s": [
+        109.32897120993584,
+        109.3287271456793,
+        109.34681876283139,
+        109.51242067851126,
+        109.6250012787059
+      ],
+      "count": 5,
+      "mean_s": 109.42838781513274,
+      "median_s": 109.34681876283139,
+      "cv": 0.0012276424502148738,
+      "span_over_median": 0.0027094901925698075,
+      "deterministic": true,
+      "stable": true,
+      "speedup": 1.0
+    },
+    "sage_fp8": {
+      "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_starship_strict_20260806_v2/sage_fp8/summary.json",
+      "values_s": [
+        89.96754071582109,
+        89.82445474434644,
+        90.08152811881155,
+        90.01427553221583,
+        90.24196996726096
+      ],
+      "count": 5,
+      "mean_s": 90.02595381569117,
+      "median_s": 90.01427553221583,
+      "cv": 0.0017019206162414478,
+      "span_over_median": 0.004638322315498607,
+      "deterministic": true,
+      "stable": true,
+      "speedup": 1.2147719694049695
+    },
+    "skip_softmax_005_gate097": {
+      "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_starship_strict_20260806_v2/skip_softmax_005_gate097/summary.json",
+      "values_s": [
+        101.63686126191169,
+        101.71570400055498,
+        101.7344632530585,
+        101.82719711307436,
+        101.89490190148354
+      ],
+      "count": 5,
+      "mean_s": 101.7618255060166,
+      "median_s": 101.7344632530585,
+      "cv": 0.0009885008681413687,
+      "span_over_median": 0.002536413240122815,
+      "deterministic": true,
+      "stable": true,
+      "speedup": 1.0748257303018114
+    },
+    "sage_fp8_skip_005_gate097": {
+      "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_starship_strict_20260806_v2/sage_fp8_skip_005_gate097/summary.json",
+      "values_s": [
+        86.75315120629966,
+        86.8977018315345,
+        87.01499291416258,
+        86.9825795609504,
+        87.00322252139449
+      ],
+      "count": 5,
+      "mean_s": 86.93032960686833,
+      "median_s": 86.9825795609504,
+      "cv": 0.0012557767888235088,
+      "span_over_median": 0.0030102775657444834,
+      "deterministic": true,
+      "stable": true,
+      "speedup": 1.257111703455632
+    }
+  }
+}
