@@ -1,0 +1,33 @@
+{
+  "criteria": {
+    "minimum_measured_runs": 5,
+    "maximum_cv": 0.02,
+    "maximum_span_over_median": 0.05,
+    "maximum_isolated_median_s": 85.0
+  },
+  "runs": {
+    "isolated_g1": {
+      "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/qualification/isolated_g1/summary.json",
+      "mode": "trtllm_dense",
+      "values_s": [
+        75.69395339488983,
+        76.20212969370186,
+        76.2745892861858,
+        76.27908092178404,
+        76.277423880063
+      ],
+      "count": 5,
+      "min_s": 75.69395339488983,
+      "max_s": 76.27908092178404,
+      "mean_s": 76.14543543532491,
+      "median_s": 76.2745892861858,
+      "stdev_s": 0.2544666257860789,
+      "cv": 0.0033418500312105163,
+      "span_over_median": 0.0076713297622460624,
+      "stable": true
+    }
+  },
+  "isolated_group_delta": null,
+  "concurrent_delta": {},
+  "decision": "serial_g1"
+}

@@ -13,7 +13,7 @@ curl -sS --fail-with-body -X POST "${API_URL}" \
   -F 'num_inference_steps=50' \
   -F 'flow_shift=12' \
   -F 'seed=1101' \
-  -F 'extra_params={"task":"t2va","duration":8.7,"audio_flow_shift":3.0}' \
+  -F 'extra_params={"task":"t2va","aspect_ratio":"16:9","duration":8.7,"audio_flow_shift":3.0}' \
   -o "${OUTPUT}"
 
 echo "Wrote ${OUTPUT}"

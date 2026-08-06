@@ -1,0 +1,166 @@
+{
+  "profile_scope": "second diffuse request after one warmup",
+  "notes": [
+    "Rank-0 projected diffuse time comes from the steady_diffusion NVTX range.",
+    "Attention totals aggregate CUDA kernel time across all four GPU processes.",
+    "Nsight profiling is separate from the uninstrumented E2E timing matrix."
+  ],
+  "results": [
+    {
+      "mode": "trtllm_dense",
+      "artifacts": {
+        "cuda_kernel_summary": "kernel_profiles/trtllm_dense/cuda_gpu_kern_sum.csv",
+        "nvtx_gpu_projection": "kernel_profiles/trtllm_dense/nvtx_gpu_proj_sum.csv"
+      },
+      "rank0_projected_diffuse_gpu_s": 75.383040893,
+      "attention_gpu_s_four_gpu_total": 161.746938837,
+      "attention_gpu_time_percent": 55.0,
+      "primary_fmha_average_gpu_ms": 15.8793382,
+      "primary_fmha_instances": 10186,
+      "kernels": [
+        {
+          "kind": "FMHA",
+          "name": "fmhaSm103aKernel_QkvBfloat16OBfloat16H128SeparateQkvDenseVarSeqQ128Kv128PersistentContext",
+          "instances": 10186,
+          "total_gpu_s": 161.746938837,
+          "average_gpu_ms": 15.8793382,
+          "gpu_time_percent": 55.0
+        }
+      ],
+      "attention_speedup_vs_dense": 1.0
+    },
+    {
+      "mode": "sage_fp8",
+      "artifacts": {
+        "cuda_kernel_summary": "kernel_profiles/sage_fp8/cuda_gpu_kern_sum.csv",
+        "nvtx_gpu_projection": "kernel_profiles/sage_fp8/nvtx_gpu_proj_sum.csv"
+      },
+      "rank0_projected_diffuse_gpu_s": 63.054437369,
+      "attention_gpu_s_four_gpu_total": 121.497883904,
+      "attention_gpu_time_percent": 50.0,
+      "primary_fmha_average_gpu_ms": 12.062104699999999,
+      "primary_fmha_instances": 9800,
+      "kernels": [
+        {
+          "kind": "FMHA",
+          "name": "fmhaSm103aKernel_QkvE4m3OBfloat16H128SeparateQkvDenseVarSeqQ128Kv128SageQ1SageK16SageV1PersistentContext",
+          "instances": 9800,
+          "total_gpu_s": 118.208626541,
+          "average_gpu_ms": 12.062104699999999,
+          "gpu_time_percent": 48.6
+        },
+        {
+          "kind": "SAGE quantization",
+          "name": "void flashinfer::trtllm::sageQuantQkvKernel<cutlass::bfloat16_t, cutlass::float_e4m3_t, (int)1, (int)128, (bool)0, (int)1>(int, const void *, void *, float *, float *, int, int, const void *, void *, float *)",
+          "instances": 9800,
+          "total_gpu_s": 1.664710408,
+          "average_gpu_ms": 0.1698684,
+          "gpu_time_percent": 0.7
+        },
+        {
+          "kind": "SAGE quantization",
+          "name": "void flashinfer::trtllm::sageQuantQkvKernel<cutlass::bfloat16_t, cutlass::float_e4m3_t, (int)16, (int)128, (bool)0, (int)2>(int, const void *, void *, float *, float *, int, int, const void *, void *, float *)",
+          "instances": 9800,
+          "total_gpu_s": 1.621856767,
+          "average_gpu_ms": 0.1654956,
+          "gpu_time_percent": 0.7
+        },
+        {
+          "kind": "FMHA",
+          "name": "fmhaSm103aKernel_QkvBfloat16OBfloat16H128SeparateQkvDenseVarSeqQ128Kv128PersistentContext",
+          "instances": 386,
+          "total_gpu_s": 0.002690188,
+          "average_gpu_ms": 0.0069694,
+          "gpu_time_percent": 0.0
+        }
+      ],
+      "attention_speedup_vs_dense": 1.331273711440129
+    },
+    {
+      "mode": "skip_softmax_05_gate099",
+      "artifacts": {
+        "cuda_kernel_summary": "kernel_profiles/skip_softmax_05_gate099/cuda_gpu_kern_sum.csv",
+        "nvtx_gpu_projection": "kernel_profiles/skip_softmax_05_gate099/nvtx_gpu_proj_sum.csv"
+      },
+      "rank0_projected_diffuse_gpu_s": 65.796650115,
+      "attention_gpu_s_four_gpu_total": 132.495274777,
+      "attention_gpu_time_percent": 52.199999999999996,
+      "primary_fmha_average_gpu_ms": 13.1174163,
+      "primary_fmha_instances": 8600,
+      "kernels": [
+        {
+          "kind": "FMHA",
+          "name": "fmhaSm103aKernel_QkvBfloat16OBfloat16H128SeparateQkvDenseVarSeqSkipsSoftmaxQ128Kv128PersistentContext",
+          "instances": 8600,
+          "total_gpu_s": 112.80977983,
+          "average_gpu_ms": 13.1174163,
+          "gpu_time_percent": 44.4
+        },
+        {
+          "kind": "FMHA",
+          "name": "fmhaSm103aKernel_QkvBfloat16OBfloat16H128SeparateQkvDenseVarSeqQ128Kv128PersistentContext",
+          "instances": 1586,
+          "total_gpu_s": 19.685494947,
+          "average_gpu_ms": 12.4120397,
+          "gpu_time_percent": 7.8
+        }
+      ],
+      "attention_speedup_vs_dense": 1.2207751492212295
+    },
+    {
+      "mode": "sage_fp8_skip_05_gate099",
+      "artifacts": {
+        "cuda_kernel_summary": "kernel_profiles/sage_fp8_skip_05_gate099/cuda_gpu_kern_sum.csv",
+        "nvtx_gpu_projection": "kernel_profiles/sage_fp8_skip_05_gate099/nvtx_gpu_proj_sum.csv"
+      },
+      "rank0_projected_diffuse_gpu_s": 58.072489639,
+      "attention_gpu_s_four_gpu_total": 105.465538217,
+      "attention_gpu_time_percent": 47.4,
+      "primary_fmha_average_gpu_ms": 10.2200434,
+      "primary_fmha_instances": 8600,
+      "kernels": [
+        {
+          "kind": "FMHA",
+          "name": "fmhaSm103aKernel_QkvE4m3OBfloat16H128SeparateQkvDenseVarSeqSkipsSoftmaxQ128Kv128SageQ1SageK16SageV1PersistentContext",
+          "instances": 8600,
+          "total_gpu_s": 87.89237367,
+          "average_gpu_ms": 10.2200434,
+          "gpu_time_percent": 39.5
+        },
+        {
+          "kind": "FMHA",
+          "name": "fmhaSm103aKernel_QkvE4m3OBfloat16H128SeparateQkvDenseVarSeqQ128Kv128SageQ1SageK16SageV1PersistentContext",
+          "instances": 1200,
+          "total_gpu_s": 14.398502114,
+          "average_gpu_ms": 11.9987518,
+          "gpu_time_percent": 6.5
+        },
+        {
+          "kind": "SAGE quantization",
+          "name": "void flashinfer::trtllm::sageQuantQkvKernel<cutlass::bfloat16_t, cutlass::float_e4m3_t, (int)1, (int)128, (bool)0, (int)1>(int, const void *, void *, float *, float *, int, int, const void *, void *, float *)",
+          "instances": 9800,
+          "total_gpu_s": 1.597754312,
+          "average_gpu_ms": 0.16303620000000002,
+          "gpu_time_percent": 0.7
+        },
+        {
+          "kind": "SAGE quantization",
+          "name": "void flashinfer::trtllm::sageQuantQkvKernel<cutlass::bfloat16_t, cutlass::float_e4m3_t, (int)16, (int)128, (bool)0, (int)2>(int, const void *, void *, float *, float *, int, int, const void *, void *, float *)",
+          "instances": 9800,
+          "total_gpu_s": 1.574439215,
+          "average_gpu_ms": 0.1606571,
+          "gpu_time_percent": 0.7
+        },
+        {
+          "kind": "FMHA",
+          "name": "fmhaSm103aKernel_QkvBfloat16OBfloat16H128SeparateQkvDenseVarSeqQ128Kv128PersistentContext",
+          "instances": 386,
+          "total_gpu_s": 0.002468906,
+          "average_gpu_ms": 0.0063961,
+          "gpu_time_percent": 0.0
+        }
+      ],
+      "attention_speedup_vs_dense": 1.533647308604243
+    }
+  ]
+}

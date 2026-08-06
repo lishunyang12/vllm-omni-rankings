@@ -1,0 +1,47 @@
+{
+  "criteria": {
+    "thermal_slowdown_counter_delta_us": 0,
+    "thermal_slowdown_active_samples": 0,
+    "minimum_loaded_samples": 1
+  },
+  "gpus": {
+    "0": {
+      "sample_count": 4180,
+      "loaded_sample_count": 2228,
+      "maximum_temperature_c": 77,
+      "minimum_loaded_sm_clock_mhz": 1395,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    },
+    "1": {
+      "sample_count": 4180,
+      "loaded_sample_count": 2214,
+      "maximum_temperature_c": 77,
+      "minimum_loaded_sm_clock_mhz": 1342,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    },
+    "4": {
+      "sample_count": 4180,
+      "loaded_sample_count": 2217,
+      "maximum_temperature_c": 75,
+      "minimum_loaded_sm_clock_mhz": 1365,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    },
+    "5": {
+      "sample_count": 4180,
+      "loaded_sample_count": 2217,
+      "maximum_temperature_c": 76,
+      "minimum_loaded_sm_clock_mhz": 1350,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    }
+  },
+  "accepted": true,
+  "decision": "pass"
+}
