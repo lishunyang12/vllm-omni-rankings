@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "status": "preliminary_topology_screen",
+  "source": {
+    "pull_request": "https://github.com/vllm-project/vllm-omni/pull/5852",
+    "commit": "6f8e151443496b51abc9c6e051ae333bb1c71ef2"
+  },
+  "environment": {
+    "gpu": "4x NVIDIA RTX PRO 5000 Blackwell",
+    "gpu_memory_mib": 73415,
+    "driver": "580.95.05",
+    "cuda": "13.0",
+    "torch": "2.11.0+cu130",
+    "vllm": "0.26.0",
+    "interconnect": "PCIe only; no NVLink",
+    "numa_node": 1
+  },
+  "configuration": {
+    "checkpoint": "MiniMax-H3/FL2VA",
+    "precision": "BF16",
+    "attention_backend": "CUDNN_ATTN",
+    "height": 768,
+    "width": 1344,
+    "frames": 124,
+    "requested_steps": 5,
+    "executed_denoise_updates": 4,
+    "parallelism": "TP2 x Ulysses2 x Ring1; text encoder TP4; VAE tile4",
+    "physical_gpu_order": [4, 6, 5, 7],
+    "logical_to_physical": {"0": 4, "1": 6, "2": 5, "3": 7},
+    "placement": "Ulysses groups on PXB-local physical pairs"
+  },
+  "non_profile_screen": {
+    "physical_gpu_order": [0, 2, 1, 3],
+    "t2v": {
+      "wall_time_s": 32.9934,
+      "encode_prompt_s": 0.03440402296837419,
+      "denoise_s": 27.914958706940524,
+      "vae_decode_s": 4.306984785012901,
+      "per_executed_update_ms": 6978.739676735131
+    },
+    "first_frame_i2v": {
+      "wall_time_s": 30.1299,
+      "encode_prompt_s": 0.2764635069761425,
+      "denoise_s": 24.396339889033698,
+      "vae_decode_s": 4.339060799102299,
+      "per_executed_update_ms": 6099.084972258424
+    }
+  },
+  "nsight_profile": {
+    "report_size_human": "168M (ls -lh)",
+    "physical_gpu_order": [4, 6, 5, 7],
+    "t2v": {
+      "nccl_allgather_percent": 0.93,
+      "nccl_sendrecv_percent": 8.53,
+      "nccl_other_percent": 14.63,
+      "nccl_total_percent": 24.09,
+      "dense_attention_percent": 31.15,
+      "other_percent": 44.76,
+      "max_deviation_percent": 0.56,
+      "max_min_over_mean_percent": 1.11,
+      "aggregate_kernel_time_ms": 108048.32
+    },
+    "first_frame_i2v": {
+      "nccl_allgather_percent": 0.89,
+      "nccl_sendrecv_percent": 7.26,
+      "nccl_other_percent": 15.76,
+      "nccl_total_percent": 23.91,
+      "dense_attention_percent": 32.53,
+      "other_percent": 43.56,
+      "max_deviation_percent": 0.09,
+      "max_min_over_mean_percent": 0.13,
+      "aggregate_kernel_time_ms": 115716.52
+    },
+    "peak_memory_mib": {"4": 67701, "6": 69155, "5": 69219, "7": 69219}
+  }
+}
