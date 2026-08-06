@@ -61,6 +61,11 @@ slowdown flag nor counter changed. See the [timing audit](./b300_20260805_v6/tim
 [kernel profile summary](./b300_20260805_v6/kernel_profiles.md). All 27 clips
 also passed a [full ffmpeg decode audit](./b300_20260805_v6/media_audit.json).
 
+Earlier simultaneous runs were not comparable because they competed for host
+CPU resources, while physical GPUs 2, 3, 6, and 7 had accumulated software
+thermal-slowdown time. The final matrix therefore runs modes serially, pins the
+container to the CPU set listed below, and uses GPUs 0, 1, 4, and 5 only.
+
 ### B300 kernel-level profiles
 
 Nsight Systems profiled the second `diffuse` request in separate runs, so the
