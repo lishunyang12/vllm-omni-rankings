@@ -84,6 +84,28 @@ sparse calls (43 steps × 50 blocks × 4 GPUs) and 1,586 dense calls (six main
 steps plus the refiner). The exact kernel names and raw CSV paths are available
 with the [kernel profile artifacts](./b300_20260805_v6/kernel_profiles.json).
 
+## B300 Skip-Softmax fidelity exploration
+
+This follow-up compares small steps beyond threshold 0.05 with
+`disabled_until_timestep=0.95`. LPIPS is measured between the last decoded RGB
+frame of each clip and the dense `TRTLLM_ATTN` reference. Every row uses the
+same prompt and seed, with SAGE disabled. This is a last-frame signal rather
+than a full-video quality metric.
+
+| Threshold | `disabled_until_timestep` | Enabled steps | Last-frame LPIPS | Video | Raw record |
+|---:|---:|---:|---:|---|---|
+| — | — | 0/49 | 0.0000 | [MP4](./b300_skip_softmax_fidelity_20260806/trtllm_dense.mp4) | [JSON](./b300_skip_softmax_fidelity_20260806/trtllm_dense.json) |
+| 0.05 | 0.95 | 30/49 | 0.1224 | [MP4](./b300_skip_softmax_fidelity_20260806/skip_softmax_005_gate095.mp4) | [JSON](./b300_skip_softmax_fidelity_20260806/skip_softmax_005_gate095.json) |
+| 0.05 | 0.96 | 32/49 | 0.1367 | [MP4](./b300_skip_softmax_fidelity_20260806/skip_softmax_005_gate096.mp4) | [JSON](./b300_skip_softmax_fidelity_20260806/skip_softmax_005_gate096.json) |
+| 0.05 | 0.97 | 35/49 | 0.1681 | [MP4](./b300_skip_softmax_fidelity_20260806/skip_softmax_005_gate097.mp4) | [JSON](./b300_skip_softmax_fidelity_20260806/skip_softmax_005_gate097.json) |
+| 0.06 | 0.95 | 30/49 | 0.1710 | [MP4](./b300_skip_softmax_fidelity_20260806/skip_softmax_006_gate095.mp4) | [JSON](./b300_skip_softmax_fidelity_20260806/skip_softmax_006_gate095.json) |
+| 0.06 | 0.96 | 32/49 | 0.1872 | [MP4](./b300_skip_softmax_fidelity_20260806/skip_softmax_006_gate096.mp4) | [JSON](./b300_skip_softmax_fidelity_20260806/skip_softmax_006_gate096.json) |
+| 0.075 | 0.95 | 30/49 | 0.2234 | [MP4](./b300_skip_softmax_fidelity_20260806/skip_softmax_0075_gate095.mp4) | [JSON](./b300_skip_softmax_fidelity_20260806/skip_softmax_0075_gate095.json) |
+
+Increasing the gate from 0.95 to 0.96 preserves the last frame better than
+increasing the threshold from 0.05 to 0.06. The complete LPIPS output is
+available as [JSON](./b300_skip_softmax_fidelity_20260806/last_frame_lpips.json).
+
 ## B200 INT8 results
 
 These runs use four NVIDIA B200 GPUs and the same prompt, seed, output shape,

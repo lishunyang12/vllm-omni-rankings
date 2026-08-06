@@ -153,11 +153,19 @@ def _skip_softmax_mode_config(
 
 for threshold_name, threshold in {
     "005": 0.05,
+    "006": 0.06,
+    "0075": 0.075,
     "010": 0.10,
     "03": 0.30,
     "05": 0.50,
 }.items():
-    for gate_name, gate in {"090": 0.90, "095": 0.95, "099": 0.99}.items():
+    for gate_name, gate in {
+        "090": 0.90,
+        "095": 0.95,
+        "096": 0.96,
+        "097": 0.97,
+        "099": 0.99,
+    }.items():
         suffix = f"{threshold_name}_gate{gate_name}"
         MODE_CONFIGS[f"skip_softmax_{suffix}"] = _skip_softmax_mode_config(
             threshold=threshold,
