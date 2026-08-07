@@ -86,8 +86,23 @@ functional smoke test for online FP8 with distributed layerwise offload. It
 uses four GPUs and the no-AllGather path. The smoke video is not included in
 the 50-step performance or fidelity aggregates.
 
-Stage all 27 matrix videos, the DLO smoke artifacts, measurements, aggregate
-tables, and checksums into this directory before committing:
+## Distributed layerwise offload cold-start memory
+
+`dlo_streaming_memory/` validates quantize-and-offload streaming in the DiT
+loader with the same four-GPU, no-AllGather DLO configuration. It contains the
+official 5-second T2VA output, 200 ms GPU telemetry, the direct-engine summary,
+and a compact before/after report in `memory_summary.json`.
+
+The original loader retained all 208 processed FP8 DiT linear layers on the
+accelerator until loading finished. Its full-lifecycle peak was 58,696 MiB per
+GPU. Streaming each completed layer to CPU and releasing the completed
+quantization cache reduced that peak to 37,938 MiB per GPU: 20,758 MiB (35.4%)
+lower. The serving-request peak remained 26,098 MiB per GPU. Three streaming
+validation runs produced identical raw frame and audio SHA256 values.
+
+Stage all 27 matrix videos, the DLO smoke and streaming-memory artifacts,
+measurements, aggregate tables, and checksums into this directory before
+committing:
 
 ```bash
 bash scripts/minimax_h3_online_fp8/stage_results.sh /path/to/results

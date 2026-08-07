@@ -14,6 +14,24 @@ compare decoded video frames with the matching BF16 output at seed 0.
   end-to-end speed or peak-memory benefit on this workload.
 - Quantization quality is not monotonic for a single diffusion seed. Inspect the
   linked videos rather than treating any one fidelity metric as a hard gate.
+- For DLO deployments, stream completed online-FP8 DiT layers to CPU during
+  checkpoint loading. This changes cold-start peak memory, not generation
+  numerics: the measured peak fell from 58,696 to 37,938 MiB/GPU while three
+  streaming runs retained identical raw frame and audio hashes.
+
+## DLO cold-start memory
+
+| Loader | Full-lifecycle peak MiB/GPU | Saved vs. original | Request peak MiB/GPU |
+|---|---:|---:|---:|
+| Original online FP8, bulk CPU offload after load | 58,696 | - | 27,974 |
+| Stream processed DiT FP8 layers to CPU | 39,884 | 18,812 MiB (32.1%) | 26,098 |
+| Stream layers and release completed quantization cache | 37,938 | 20,758 MiB (35.4%) | 26,098 |
+
+The original cold-start peak was the complete processed FP8 DiT residency plus
+loading/offload state; it was not a BF16-and-FP8 duplicate of the whole DiT.
+The final remaining peak includes checkpoint-precision components during their
+CPU transfer. See [the 5-second output](dlo_streaming_memory/t2va.mp4) and
+`dlo_streaming_memory/memory_summary.json` for the reproducible configuration.
 
 ## Aggregate results
 

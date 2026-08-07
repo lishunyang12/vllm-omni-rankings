@@ -1,0 +1,30 @@
+{
+  "scope": "MiniMax-H3 online FP8 with distributed layerwise offload",
+  "hardware": "4x NVIDIA B300",
+  "parallel_config": "tp1_dp1_ulysses4_ring1_text_encoder_tp4_vae_tile4",
+  "dlo_use_allgather": false,
+  "duration_seconds": 5.0,
+  "num_inference_steps": 2,
+  "seed": 0,
+  "sample_interval_ms": 200,
+  "online_fp8_dit_layers_streamed_per_rank": 208,
+  "cold_start_peak_mib_per_gpu": {
+    "original_bulk_offload": 58696,
+    "streaming_before_cache_release": 39884,
+    "streaming_final": 37938
+  },
+  "cold_start_reduction_vs_original": {
+    "mib_per_gpu": 20758,
+    "gib_per_gpu": 20.271,
+    "percent": 35.365
+  },
+  "request_peak_mib_per_gpu": 26098,
+  "output": {
+    "frames_shape": [124, 768, 1344, 3],
+    "audio_shape": [1, 2, 165600],
+    "fps": 24,
+    "audio_sample_rate": 32000,
+    "frames_sha256": "bf609ae1482d4ee0547a7f1fe3667aa29a0daf600fac74b17f718714d99cbc27",
+    "audio_sha256": "1fb75ea9908fa15a8b7ae8e5ce006596c4bf272d2a8727690d6df29908b05884"
+  }
+}
