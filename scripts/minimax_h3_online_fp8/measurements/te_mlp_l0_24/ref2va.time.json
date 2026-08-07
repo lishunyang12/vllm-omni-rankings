@@ -1,0 +1,9 @@
+{
+  "case": "te_mlp_l0_24",
+  "task": "ref2va",
+  "gpus": "4,5,6,7",
+  "started_ns": 1786110740511725979,
+  "finished_ns": 1786110970932440089,
+  "wall_time_s": 230.420713984,
+  "exit_status": 0
+}

@@ -1,0 +1,9 @@
+{
+  "case": "bf16",
+  "task": "t2va",
+  "gpus": "0,1,2,3",
+  "started_ns": 1786112554835154942,
+  "finished_ns": 1786112620439040309,
+  "wall_time_s": 65.603885312,
+  "exit_status": 0
+}

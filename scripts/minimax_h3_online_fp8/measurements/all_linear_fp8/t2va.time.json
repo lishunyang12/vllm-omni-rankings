@@ -1,0 +1,7 @@
+{
+  "case": "all_linear_fp8",
+  "task": "t2va",
+  "wall_time_s": 59.00,
+  "exit_status": 0,
+  "source": "legacy_serving_run1"
+}

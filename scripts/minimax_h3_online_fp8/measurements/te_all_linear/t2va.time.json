@@ -1,0 +1,9 @@
+{
+  "case": "te_all_linear",
+  "task": "t2va",
+  "gpus": "0,1,2,3",
+  "started_ns": 1786111854697189755,
+  "finished_ns": 1786111918886581690,
+  "wall_time_s": 64.189391872,
+  "exit_status": 0
+}

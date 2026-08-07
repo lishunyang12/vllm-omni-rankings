@@ -1,0 +1,101 @@
+[
+  {
+    "case": "bf16",
+    "tasks": 3,
+    "mean_speedup_vs_bf16": 1.0,
+    "max_peak_gpu_memory_mib": 105278.0,
+    "mean_memory_reduction_vs_bf16_pct": 0.0,
+    "mean_psnr_avg_db_vs_bf16": null,
+    "mean_ssim_vs_bf16": 1.0,
+    "mean_audio_snr_db_vs_bf16": null,
+    "mean_audio_corr_vs_bf16": 1.0
+  },
+  {
+    "case": "dit_fp8",
+    "tasks": 3,
+    "mean_speedup_vs_bf16": 1.0544041385381488,
+    "max_peak_gpu_memory_mib": 73720.0,
+    "mean_memory_reduction_vs_bf16_pct": 30.33765845675502,
+    "mean_psnr_avg_db_vs_bf16": 29.587570666666664,
+    "mean_ssim_vs_bf16": 0.8851283333333333,
+    "mean_audio_snr_db_vs_bf16": 8.652755379869248,
+    "mean_audio_corr_vs_bf16": 0.9309017482172602
+  },
+  {
+    "case": "te_mlp_l0_9",
+    "tasks": 3,
+    "mean_speedup_vs_bf16": 0.9990483076691858,
+    "max_peak_gpu_memory_mib": 107092.0,
+    "mean_memory_reduction_vs_bf16_pct": -0.7104780070057982,
+    "mean_psnr_avg_db_vs_bf16": 37.240339,
+    "mean_ssim_vs_bf16": 0.95128,
+    "mean_audio_snr_db_vs_bf16": 17.073846726818704,
+    "mean_audio_corr_vs_bf16": 0.9903946300194134
+  },
+  {
+    "case": "te_mlp_l0_24",
+    "tasks": 3,
+    "mean_speedup_vs_bf16": 1.0000354321809688,
+    "max_peak_gpu_memory_mib": 107220.0,
+    "mean_memory_reduction_vs_bf16_pct": -0.7297382372580726,
+    "mean_psnr_avg_db_vs_bf16": 36.90070566666667,
+    "mean_ssim_vs_bf16": 0.9541343333333333,
+    "mean_audio_snr_db_vs_bf16": 15.961183269268874,
+    "mean_audio_corr_vs_bf16": 0.9889273831083711
+  },
+  {
+    "case": "te_mlp_all",
+    "tasks": 3,
+    "mean_speedup_vs_bf16": 0.9777490473259421,
+    "max_peak_gpu_memory_mib": 107092.0,
+    "mean_memory_reduction_vs_bf16_pct": -0.6471536024135124,
+    "mean_psnr_avg_db_vs_bf16": 36.543332666666664,
+    "mean_ssim_vs_bf16": 0.949211,
+    "mean_audio_snr_db_vs_bf16": 15.466694366526772,
+    "mean_audio_corr_vs_bf16": 0.9866849072080636
+  },
+  {
+    "case": "te_mlp_o_all",
+    "tasks": 3,
+    "mean_speedup_vs_bf16": 0.9773289217560679,
+    "max_peak_gpu_memory_mib": 107102.0,
+    "mean_memory_reduction_vs_bf16_pct": -0.656771747240358,
+    "mean_psnr_avg_db_vs_bf16": 35.65723633333334,
+    "mean_ssim_vs_bf16": 0.943401,
+    "mean_audio_snr_db_vs_bf16": 17.275727198250447,
+    "mean_audio_corr_vs_bf16": 0.9909477464564939
+  },
+  {
+    "case": "te_all_linear",
+    "tasks": 3,
+    "mean_speedup_vs_bf16": 0.9878170526062902,
+    "max_peak_gpu_memory_mib": 107104.0,
+    "mean_memory_reduction_vs_bf16_pct": -0.6599763977271316,
+    "mean_psnr_avg_db_vs_bf16": 35.588874000000004,
+    "mean_ssim_vs_bf16": 0.9518606666666667,
+    "mean_audio_snr_db_vs_bf16": 16.28598032881556,
+    "mean_audio_corr_vs_bf16": 0.9881734861684218
+  },
+  {
+    "case": "dit_te_mlp_all",
+    "tasks": 3,
+    "mean_speedup_vs_bf16": 1.0354119757143108,
+    "max_peak_gpu_memory_mib": 75546.0,
+    "mean_memory_reduction_vs_bf16_pct": 29.696779044537177,
+    "mean_psnr_avg_db_vs_bf16": 29.71206533333333,
+    "mean_ssim_vs_bf16": 0.88876,
+    "mean_audio_snr_db_vs_bf16": 8.651097145174091,
+    "mean_audio_corr_vs_bf16": 0.9347982338845865
+  },
+  {
+    "case": "all_linear_fp8",
+    "tasks": 3,
+    "mean_speedup_vs_bf16": 1.0660888899191234,
+    "max_peak_gpu_memory_mib": 77042.0,
+    "mean_memory_reduction_vs_bf16_pct": 29.217389697973037,
+    "mean_psnr_avg_db_vs_bf16": 30.499730666666665,
+    "mean_ssim_vs_bf16": 0.888003,
+    "mean_audio_snr_db_vs_bf16": 8.77924794915835,
+    "mean_audio_corr_vs_bf16": 0.9434693830763403
+  }
+]

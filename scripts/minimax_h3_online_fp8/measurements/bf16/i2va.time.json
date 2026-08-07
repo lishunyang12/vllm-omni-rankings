@@ -1,0 +1,7 @@
+{
+  "case": "bf16",
+  "task": "i2va",
+  "wall_time_s": 71.57,
+  "exit_status": 0,
+  "source": "legacy_serving_run1"
+}

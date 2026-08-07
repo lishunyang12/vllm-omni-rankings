@@ -1,0 +1,9 @@
+{
+  "case": "dit_te_mlp_all",
+  "task": "i2va",
+  "gpus": "4,5,6,7",
+  "started_ns": 1786113068355391365,
+  "finished_ns": 1786113139383277455,
+  "wall_time_s": 71.02788608,
+  "exit_status": 0
+}

@@ -1,0 +1,23 @@
+{
+    "programs": [
+
+    ],
+    "streams": [
+        {
+            "codec_type": "video",
+            "width": 1344,
+            "height": 768,
+            "r_frame_rate": "24/1"
+        },
+        {
+            "codec_type": "audio",
+            "sample_rate": "32000",
+            "channels": 2,
+            "r_frame_rate": "0/0"
+        }
+    ],
+    "format": {
+        "duration": "5.207000",
+        "size": "2285134"
+    }
+}

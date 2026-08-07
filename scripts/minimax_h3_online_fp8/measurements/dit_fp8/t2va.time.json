@@ -1,0 +1,9 @@
+{
+  "case": "dit_fp8",
+  "task": "t2va",
+  "gpus": "0,1,2,3",
+  "started_ns": 1786113006709368772,
+  "finished_ns": 1786113067720559527,
+  "wall_time_s": 61.011190784,
+  "exit_status": 0
+}
