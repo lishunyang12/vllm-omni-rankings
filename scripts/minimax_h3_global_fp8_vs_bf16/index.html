@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MiniMax-H3 · BF16 vs Global FP8</title>
-  <meta name="description" content="MiniMax-H3 BF16 与 default global FP8 的 T2VA、I2VA、Ref2VA 五秒视频对比。">
+  <meta name="description" content="MiniMax-H3 BF16 与 default global FP8 的视频质量、速度与 peak memory 对比。">
   <style>
     :root {
       color-scheme: dark;
@@ -62,6 +62,89 @@
       background: rgba(20, 25, 35, 0.72);
       color: #d5dce7;
       font-size: 0.82rem;
+    }
+    .performance-overview {
+      margin: 0 0 30px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: rgba(20, 25, 35, 0.94);
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.22);
+    }
+    .performance-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 22px;
+      border-bottom: 1px solid var(--line);
+    }
+    .performance-label {
+      margin: 0 0 4px;
+      color: var(--accent);
+      font-size: 0.76rem;
+      font-weight: 750;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .performance-head h2 { font-size: 1.45rem; }
+    .performance-kpi {
+      margin: 0;
+      color: var(--muted);
+      text-align: right;
+      white-space: nowrap;
+    }
+    .performance-kpi strong {
+      color: var(--text);
+      font-size: 1.25rem;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      outline: none;
+    }
+    .table-wrap:focus-visible {
+      box-shadow: inset 0 0 0 2px var(--accent);
+    }
+    .perf-table {
+      width: 100%;
+      min-width: 780px;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+    .perf-table th,
+    .perf-table td {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      white-space: nowrap;
+    }
+    .perf-table th:first-child,
+    .perf-table td:first-child {
+      text-align: left;
+    }
+    .perf-table th {
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 650;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .perf-table tbody tr:last-child td { border-bottom: 0; }
+    .perf-table td { color: #dce3ee; }
+    .perf-table .better {
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .performance-note {
+      margin: 0;
+      padding: 12px 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    .video-stats {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
     }
     .task {
       margin-top: 24px;
@@ -129,6 +212,9 @@
       main { width: min(100% - 20px, 1200px); padding-top: 34px; }
       .task { padding: 14px; border-radius: 16px; }
       .task-head { align-items: start; flex-direction: column; gap: 4px; }
+      .performance-head { align-items: start; flex-direction: column; gap: 8px; padding: 16px; }
+      .performance-kpi { text-align: left; white-space: normal; }
+      figcaption { align-items: start; flex-direction: column; gap: 4px; }
       .pair { grid-template-columns: 1fr; }
     }
   </style>
@@ -150,6 +236,65 @@
         <span>4× NVIDIA B300</span>
       </div>
     </header>
+    <section class="performance-overview" aria-labelledby="performance-title">
+      <div class="performance-head">
+        <div>
+          <p class="performance-label">Measured performance</p>
+          <h2 id="performance-title">Speed and request peak memory</h2>
+        </div>
+        <p class="performance-kpi">
+          <strong>1.066×</strong> average speedup · <strong>29.2%</strong> lower peak
+        </p>
+      </div>
+      <div class="table-wrap" role="region" aria-label="Performance comparison table" tabindex="0">
+        <table class="perf-table">
+          <thead>
+            <tr>
+              <th scope="col">Task</th>
+              <th scope="col">BF16 wall</th>
+              <th scope="col">Global FP8 wall</th>
+              <th scope="col">Speedup</th>
+              <th scope="col">BF16 peak/GPU</th>
+              <th scope="col">Global FP8 peak/GPU</th>
+              <th scope="col">Peak saved</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>T2VA</td>
+              <td>65.60 s</td>
+              <td class="better">59.00 s</td>
+              <td class="better">1.112×</td>
+              <td>102,916 MiB</td>
+              <td class="better">71,038 MiB</td>
+              <td class="better">31.0%</td>
+            </tr>
+            <tr>
+              <td>I2VA</td>
+              <td>71.57 s</td>
+              <td class="better">67.38 s</td>
+              <td class="better">1.062×</td>
+              <td>103,744 MiB</td>
+              <td class="better">77,042 MiB</td>
+              <td class="better">25.7%</td>
+            </tr>
+            <tr>
+              <td>Ref2VA</td>
+              <td>229.41 s</td>
+              <td class="better">224.00 s</td>
+              <td class="better">1.024×</td>
+              <td>105,278 MiB</td>
+              <td class="better">72,706 MiB</td>
+              <td class="better">30.9%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="performance-note">
+        Four-GPU B300 runs. Wall time excludes the shape-matched warmup. Peak is
+        the highest sampled request memory on one GPU in each run.
+      </p>
+    </section>
 
     <section class="task">
       <div class="task-head">
@@ -159,11 +304,11 @@
       <div class="pair">
         <figure>
           <video controls playsinline preload="metadata" src="./bf16/t2va.mp4" aria-label="T2VA BF16 output"></video>
-          <figcaption><span class="precision">BF16</span><span>1344×768</span></figcaption>
+          <figcaption><span class="precision">BF16</span><span class="video-stats">65.60 s · 102,916 MiB peak/GPU</span></figcaption>
         </figure>
         <figure>
           <video controls playsinline preload="metadata" src="./global_fp8/t2va.mp4" aria-label="T2VA global FP8 output"></video>
-          <figcaption><span class="precision fp8">Global FP8</span><span>1344×768</span></figcaption>
+          <figcaption><span class="precision fp8">Global FP8</span><span class="video-stats">59.00 s · 71,038 MiB peak/GPU</span></figcaption>
         </figure>
       </div>
     </section>
@@ -176,11 +321,11 @@
       <div class="pair">
         <figure>
           <video controls playsinline preload="metadata" src="./bf16/i2va.mp4" aria-label="I2VA BF16 output"></video>
-          <figcaption><span class="precision">BF16</span><span>1376×768</span></figcaption>
+          <figcaption><span class="precision">BF16</span><span class="video-stats">71.57 s · 103,744 MiB peak/GPU</span></figcaption>
         </figure>
         <figure>
           <video controls playsinline preload="metadata" src="./global_fp8/i2va.mp4" aria-label="I2VA global FP8 output"></video>
-          <figcaption><span class="precision fp8">Global FP8</span><span>1376×768</span></figcaption>
+          <figcaption><span class="precision fp8">Global FP8</span><span class="video-stats">67.38 s · 77,042 MiB peak/GPU</span></figcaption>
         </figure>
       </div>
     </section>
@@ -193,11 +338,11 @@
       <div class="pair">
         <figure>
           <video controls playsinline preload="metadata" src="./bf16/ref2va.mp4" aria-label="Ref2VA BF16 output"></video>
-          <figcaption><span class="precision">BF16</span><span>1344×768</span></figcaption>
+          <figcaption><span class="precision">BF16</span><span class="video-stats">229.41 s · 105,278 MiB peak/GPU</span></figcaption>
         </figure>
         <figure>
           <video controls playsinline preload="metadata" src="./global_fp8/ref2va.mp4" aria-label="Ref2VA global FP8 output"></video>
-          <figcaption><span class="precision fp8">Global FP8</span><span>1344×768</span></figcaption>
+          <figcaption><span class="precision fp8">Global FP8</span><span class="video-stats">224.00 s · 72,706 MiB peak/GPU</span></figcaption>
         </figure>
       </div>
     </section>

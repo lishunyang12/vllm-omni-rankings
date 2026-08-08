@@ -23,6 +23,19 @@ norm、embedding、RoPE 和 mixed-precision input/output heads 保留原精度�
 门槛。扩散轨迹可能因很小的数值变化而分岔，请同时观察 motion、prompt
 adherence、subject consistency、visual artifacts 和 audio。
 
+## Speed and peak memory
+
+同一批 4×B300 measured runs；wall time 不包含 shape-matched warmup，peak
+是每次请求中单张 GPU 的最高采样显存。
+
+| Task | BF16 wall | Global FP8 wall | Speedup | BF16 peak/GPU | Global FP8 peak/GPU | Peak saved |
+|---|---:|---:|---:|---:|---:|---:|
+| T2VA | 65.60 s | 59.00 s | **1.112×** | 102,916 MiB | 71,038 MiB | **31.0%** |
+| I2VA | 71.57 s | 67.38 s | **1.062×** | 103,744 MiB | 77,042 MiB | **25.7%** |
+| Ref2VA | 229.41 s | 224.00 s | **1.024×** | 105,278 MiB | 72,706 MiB | **30.9%** |
+
+三项任务平均为 **1.066× speedup** 和 **29.2% lower request peak memory**。
+
 ## Media information
 
 - T2VA / Ref2VA：1344×768
