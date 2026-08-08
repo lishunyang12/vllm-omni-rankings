@@ -2,6 +2,9 @@
 
 本目录用于直接观看 MiniMax-H3 BF16 与默认 global FP8 的五秒输出。
 
+▶ [打开 BF16 / global FP8 并排在线播放器](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_global_fp8_vs_bf16/)
+
+
 所有配对结果使用相同的官方输入、seed 0、50 denoising steps、24 FPS 和
 32 kHz stereo audio。global FP8 对应用户 API `--quantization fp8`：
 量化 eligible DiT 与 Qwen3-VL text-decoder linears；vision tower、VAE、
