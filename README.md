@@ -6,6 +6,13 @@ download counts.
 
 **Live page:** `https://lishunyang12.github.io/vllm-omni-rankings/`
 
+## Research reports
+
+- **Topology-Aware Distributed Layerwise Offloading for MiniMax-H3 on Eight
+  NVIDIA B300 GPUs:** [HTML](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_b300_dlo_industrial_report/) ·
+  [PDF](scripts/minimax_h3_b300_dlo_industrial_report/minimax_h3_b300_dlo_study.pdf) ·
+  [artifacts](scripts/minimax_h3_b300_dlo_industrial_report/)
+
 ## How it works
 
 A GitHub Actions workflow runs every 6 hours (`.github/workflows/update-rankings.yml`):

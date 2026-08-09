@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A topology-aware empirical study of MiniMax-H3 distributed layerwise offloading on eight NVIDIA B300 GPUs.">
+  <title>Topology-Aware DLO for MiniMax-H3 on 8×B300</title>
+  <style>
+    :root {
+      --ink: #17202a;
+      --muted: #5f6b76;
+      --paper: #ffffff;
+      --canvas: #eef1f3;
+      --rule: #d6dce1;
+      --accent: #527f00;
+      --accent-soft: #edf5df;
+      --blue: #1f5a94;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 17px;
+      line-height: 1.62;
+    }
+    a { color: var(--blue); text-underline-offset: 0.16em; }
+    main {
+      width: min(980px, calc(100% - 32px));
+      margin: 34px auto 64px;
+      padding: 64px 76px;
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      box-shadow: 0 16px 50px rgba(26, 37, 47, 0.09);
+    }
+    .paper-head { text-align: center; border-bottom: 1px solid var(--rule); padding-bottom: 26px; }
+    .venue {
+      margin: 0 0 16px;
+      color: var(--accent);
+      font: 700 0.76rem/1.2 system-ui, sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    h1 {
+      max-width: 820px;
+      margin: 0 auto;
+      font-size: clamp(2rem, 5vw, 3.35rem);
+      line-height: 1.08;
+      letter-spacing: -0.028em;
+    }
+    .author { margin: 24px 0 2px; font-size: 1.08rem; }
+    .affiliation, .date { margin: 0; color: var(--muted); font-size: 0.9rem; }
+    .downloads { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+    .downloads a {
+      padding: 7px 12px;
+      border: 1px solid var(--rule);
+      border-radius: 4px;
+      color: var(--ink);
+      font: 650 0.78rem/1.2 system-ui, sans-serif;
+      text-decoration: none;
+    }
+    .downloads a.primary { border-color: var(--accent); background: var(--accent); color: white; }
+    .abstract {
+      margin: 34px 0 26px;
+      padding: 22px 26px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+    }
+    .abstract h2 { margin-top: 0; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.04em; }
+    .abstract p { margin-bottom: 0; text-align: justify; }
+    .keywords { color: var(--muted); font-size: 0.9rem; }
+    nav {
+      margin: 28px 0 36px;
+      padding: 16px 20px;
+      border: 1px solid var(--rule);
+      font: 0.85rem/1.55 system-ui, sans-serif;
+      columns: 2;
+    }
+    nav strong { display: block; margin-bottom: 4px; column-span: all; }
+    nav a { display: block; color: var(--ink); text-decoration: none; }
+    section { scroll-margin-top: 18px; }
+    h2 {
+      margin: 42px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--rule);
+      font-size: 1.48rem;
+      line-height: 1.2;
+    }
+    h3 { margin: 26px 0 8px; font-size: 1.08rem; }
+    p { margin: 0.6em 0; }
+    .lead { font-size: 1.05rem; }
+    .equation {
+      margin: 18px auto;
+      padding: 12px;
+      text-align: center;
+      font-size: 1.05rem;
+      overflow-x: auto;
+    }
+    .table-wrap { margin: 19px 0 8px; overflow-x: auto; }
+    table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      font: 0.79rem/1.35 system-ui, sans-serif;
+      font-variant-numeric: tabular-nums;
+    }
+    th, td { padding: 8px 9px; border-bottom: 1px solid var(--rule); text-align: right; }
+    th { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); font-weight: 700; }
+    tbody tr:last-child td { border-bottom: 2px solid var(--ink); }
+    th:first-child, td:first-child { text-align: left; }
+    td.route, th.route { text-align: left; }
+    .best { color: var(--accent); font-weight: 750; }
+    .caption { margin: 7px 0 20px; color: var(--muted); font-size: 0.84rem; }
+    figure { margin: 30px auto; }
+    figure img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); }
+    figcaption { margin-top: 9px; color: var(--muted); font-size: 0.86rem; text-align: justify; }
+    .result-box {
+      margin: 20px 0;
+      padding: 16px 20px;
+      border: 1px solid #c9d8af;
+      background: #f8fbf3;
+      font-family: system-ui, sans-serif;
+      font-size: 0.9rem;
+    }
+    code, pre { font-family: "SFMono-Regular", Consolas, monospace; }
+    code { font-size: 0.86em; }
+    pre {
+      padding: 15px 17px;
+      overflow-x: auto;
+      border: 1px solid var(--rule);
+      background: #f6f8fa;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    ul { padding-left: 1.35em; }
+    li { margin: 0.35em 0; }
+    .references { padding-left: 1.55em; }
+    .references li { margin-bottom: 0.75em; }
+    footer {
+      margin-top: 44px;
+      padding-top: 18px;
+      border-top: 1px solid var(--rule);
+      color: var(--muted);
+      font: 0.78rem/1.5 system-ui, sans-serif;
+    }
+    @media (max-width: 760px) {
+      main { width: 100%; margin: 0; padding: 34px 18px 50px; border: 0; }
+      nav { columns: 1; }
+      body { font-size: 16px; }
+    }
+    @media print {
+      body { background: white; font-size: 10pt; }
+      main { width: 100%; margin: 0; padding: 0; border: 0; box-shadow: none; }
+      .downloads, nav { display: none; }
+      a { color: inherit; text-decoration: none; }
+      figure, table, .abstract, .result-box { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="paper-head">
+      <p class="venue">Empirical Systems Research Note · vLLM-Omni</p>
+      <h1>Topology-Aware Distributed Layerwise Offloading for MiniMax-H3 on Eight NVIDIA B300 GPUs</h1>
+      <p class="author">Shunyang Li</p>
+      <p class="affiliation">vLLM-Omni Systems Benchmark</p>
+      <p class="date">9 August 2026</p>
+      <div class="downloads" aria-label="Report downloads">
+        <a class="primary" href="minimax_h3_b300_dlo_study.pdf">Download paper (PDF)</a>
+        <a href="industrial_results.csv">Formal results (CSV)</a>
+        <a href="t2va_soak_n20.csv">T2VA n=20 (CSV)</a>
+        <a href="wave_samples.csv">Wave samples (CSV)</a>
+      </div>
+    </header>
+
+    <aside class="abstract">
+      <h2>Abstract</h2>
+      <p>We study how data parallelism (DP), sequence parallelism (SP), and distributed layerwise offloading (DLO) interact for MiniMax-H3 video–audio generation on one eight-GPU NVIDIA B300 node. Three production-relevant routes are evaluated with 20 measured 50-step T2VA waves across two engine lifecycles. DP1×SP8 with AllGather minimizes wave latency (P50/P95: 34.55/35.25 s), DP4×SP2 with AllGather is the balanced point (151.89 videos/h at P95 95.31 s), and DP8×SP1 with rank-local DLO maximizes throughput and minimizes energy (183.78 videos/h, 43.97 Wh/video). The central result is topology dependence: AllGather improves DP1 throughput by 129.4%, offers only 2.2% at DP4, and reduces DP8 throughput by 4.1% while increasing the observed per-GPU memory peak from 20.03 to 94.03 GiB. FL2VA and Ref2VA preserve the same latency–throughput ordering. These measurements reject a single global DLO policy.</p>
+    </aside>
+    <p class="keywords"><strong>Keywords:</strong> diffusion inference; video generation; distributed layerwise offload; data parallelism; sequence parallelism; B300; vLLM-Omni</p>
+
+    <nav aria-label="Contents">
+      <strong>Contents</strong>
+      <a href="#introduction">1. Introduction</a>
+      <a href="#method">2. System and Method</a>
+      <a href="#results">3. Results</a>
+      <a href="#correctness">4. Correctness and Reliability</a>
+      <a href="#validity">5. Threats to Validity</a>
+      <a href="#guidance">6. Discussion and Deployment Policy</a>
+      <a href="#artifacts">7. Artifact Availability</a>
+      <a href="#references">References</a>
+    </nav>
+
+    <section id="introduction">
+      <h2>1. Introduction</h2>
+      <p class="lead">Diffusion-transformer serving on a fixed multi-GPU node admits two competing uses of parallel capacity. SP reduces the latency of one request by partitioning sequence work, while DP serves independent requests concurrently. DLO adds a third choice: weights may advance in collective waves or be maintained independently by each DP replica.</p>
+      <p>This study asks three questions: <strong>RQ1</strong>, which DP×SP configurations lie on the latency–throughput frontier; <strong>RQ2</strong>, where AllGather outperforms rank-local DLO; and <strong>RQ3</strong>, whether the frontier persists under image- and audio-conditioned generation. vLLM-Omni extends vLLM to diffusion and heterogeneous multimodal outputs [1]. Recent changes hardened collective DP waves [3] and enabled independent rank-local DP requests [4].</p>
+      <p><strong>Contributions.</strong> We provide a full-step, two-lifecycle T2VA frontier with latency, throughput, energy, and memory; a paired AllGather/rank-local comparison; and FL2VA/Ref2VA transfer measurements with preserved wave-level data.</p>
+    </section>
+
+    <section id="method">
+      <h2>2. System and Method</h2>
+      <h3>2.1 Hardware, software, and workload</h3>
+      <p>Experiments use one x86_64 host with eight NVIDIA B300 SXM6 AC GPUs, an NV18 full-mesh interconnect, and one NUMA domain. Each GPU reports 275,040 MiB of memory and a 1,100 W board limit. The model is MiniMax-H3 FL2VA or Ref2VA in BF16 with <code>CUDNN_ATTN</code>, <code>enforce_eager=True</code>, and <code>dlo_resident_layers=0</code>. Outputs contain 124 frames at 768×1344 and stereo audio with shape <code>[1,2,165600]</code>. A request specifies 50 inference steps; the tested scheduler executes 49 denoising updates.</p>
+      <p>The source is commit <a href="https://github.com/vllm-project/vllm-omni/commit/9e73ee1a50ce247c638052011914d8027d717f28"><code>9e73ee1</code></a> plus a recorded local subgroup-broadcast repair. PyTorch is <code>2.11.0+cu130</code>. The runtime warned that vLLM-Omni <code>0.26.0rc2.dev11</code> was paired with vLLM <code>0.24.0</code>; all reported workloads passed, but this is not evidence that arbitrary mismatched versions are supported.</p>
+
+      <h3>2.2 Experimental design</h3>
+      <p>Each selected T2VA route runs one complete 50-step warmup and measured 50-step waves. Five waves are collected in the first engine lifecycle and fifteen in a second, yielding <em>n</em>=20 while avoiding a result tied to one initialization. DP1, DP4, and DP8 produce one, four, and eight videos per wave. FL2VA first-frame I2VA and Ref2VA image+audio use <em>n</em>=5 measured waves per route after a complete warmup.</p>
+      <p>External <code>nvidia-smi</code> telemetry targets a 0.5 s interval; the realized median and P95 intervals are 0.758 s and 1.134 s. Power is summed over eight GPUs. Gaps above 2 s are not interpolated. Coverage for the three T2VA soak cases is 99.89–100%.</p>
+
+      <h3>2.3 Metrics and uncertainty</h3>
+      <div class="equation">throughput = 3600 × DP / T<sub>wave</sub> &nbsp; videos/hour</div>
+      <div class="equation">E<sub>video</sub> = ∫ Σ<sub>g=1…8</sub> P<sub>g</sub>(t) dt / (3600 × DP) &nbsp; Wh/video</div>
+      <p>Board energy is integrated by the trapezoidal rule without subtracting an idle baseline. We report empirical P50/P95 and coefficient of variation. The 95% t-intervals over 20 waves are descriptive because samples are clustered within only two engine lifecycles; they are not production-SLA confidence bounds.</p>
+    </section>
+
+    <section id="results">
+      <h2>3. Results</h2>
+      <h3>3.1 RQ1: T2VA Pareto frontier</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="route">Route</th><th>P50 (s)</th><th>P95 (s)</th><th>Videos/h</th><th>CV</th><th>Peak/GPU</th><th>Wh/video</th></tr></thead>
+          <tbody>
+            <tr><td class="route">DP1×SP8 / AllGather</td><td class="best">34.55</td><td class="best">35.25</td><td>103.84</td><td>1.38%</td><td>26.37 GiB</td><td>68.08</td></tr>
+            <tr><td class="route">DP4×SP2 / AllGather</td><td>94.73</td><td>95.31</td><td>151.89</td><td>0.35%</td><td>25.11 GiB</td><td>51.76</td></tr>
+            <tr><td class="route">DP8×SP1 / rank-local</td><td>156.74</td><td>157.03</td><td class="best">183.78</td><td class="best">0.15%</td><td class="best">20.05 GiB</td><td class="best">43.97</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption"><strong>Table 1.</strong> Recommended T2VA routes. Twenty measured 50-step waves per row.</p>
+      <p>The three routes form a latency–throughput Pareto frontier. DP4 increases throughput by 46.3% over DP1, while DP8 adds a further 21.0% over DP4. The descriptive mean-latency 95% t-intervals are [34.440, 34.899] s, [94.646, 94.960] s, and [156.594, 156.824] s.</p>
+      <figure>
+        <img src="figures/pareto_frontier.png" alt="Latency-throughput Pareto frontier for DP1, DP4, and DP8 routes">
+        <figcaption><strong>Figure 1.</strong> Latency–throughput frontier for selected T2VA routes. Labels include measured eight-GPU board energy per generated video.</figcaption>
+      </figure>
+
+      <h3>3.2 RQ2: DLO mode is topology-dependent</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="route">Topology / mode</th><th>P50 (s)</th><th>P95 (s)</th><th>Videos/h</th><th>Peak/GPU</th><th>Wh/video</th></tr></thead>
+          <tbody>
+            <tr><td class="route">DP1×SP8 / rank-local</td><td>78.92</td><td>78.98</td><td>45.62</td><td>26.26</td><td>94.06</td></tr>
+            <tr><td class="route">DP1×SP8 / AllGather</td><td class="best">34.24</td><td class="best">34.78</td><td class="best">104.64</td><td class="best">23.53</td><td class="best">67.75</td></tr>
+            <tr><td class="route">DP4×SP2 / rank-local</td><td>96.53</td><td>96.78</td><td>149.23</td><td class="best">23.91</td><td>51.87</td></tr>
+            <tr><td class="route">DP4×SP2 / AllGather</td><td class="best">94.38</td><td class="best">94.69</td><td class="best">152.53</td><td>24.97</td><td class="best">51.67</td></tr>
+            <tr><td class="route">DP8×SP1 / rank-local</td><td class="best">156.92</td><td class="best">157.17</td><td class="best">183.55</td><td class="best">20.03</td><td class="best">43.97</td></tr>
+            <tr><td class="route">DP8×SP1 / AllGather</td><td>162.84</td><td>165.51</td><td>176.05</td><td>94.03</td><td>45.08</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption"><strong>Table 2.</strong> Paired DLO-mode comparison, five measured 50-step T2VA waves per row.</p>
+      <div class="result-box"><strong>Topology-dependent result.</strong> AllGather at DP1 improves throughput by 129.4%, reduces median latency by 56.6%, and reduces energy by 28.0%. At DP4 it offers a modest 2.2% throughput gain. At DP8 it is dominated: throughput falls 4.1%, P50 grows 3.8%, and one GPU reaches a 94.03 GiB memory peak.</div>
+      <figure>
+        <img src="figures/allgather_ranklocal.png" alt="Bar charts comparing rank-local and AllGather throughput, latency, and peak memory">
+        <figcaption><strong>Figure 2.</strong> Paired throughput, latency, and measured per-GPU peak memory. The preferred DLO mode changes with topology.</figcaption>
+      </figure>
+
+      <h3>3.3 RQ3: Transfer to conditioned generation</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th class="route">Workload / route</th><th>P50/P95 (s)</th><th>Videos/h</th><th>Lifecycle/measured peak</th><th>Wh/video</th></tr></thead>
+          <tbody>
+            <tr><td class="route">FL2VA · DP1×SP8 / AG</td><td>37.92/38.32</td><td>94.97</td><td>34.67/23.59 GiB</td><td>73.87</td></tr>
+            <tr><td class="route">FL2VA · DP4×SP2 / AG</td><td>102.90/103.13</td><td>139.91</td><td>25.16/25.16 GiB</td><td>55.98</td></tr>
+            <tr><td class="route">FL2VA · DP8×SP1 / RL</td><td>170.22/178.90</td><td>165.93</td><td>93.84/31.14 GiB</td><td>46.88</td></tr>
+            <tr><td class="route">Ref2VA · DP1×SP8 / AG</td><td>55.44/56.29</td><td>64.65</td><td>102.18/97.21 GiB</td><td>103.67</td></tr>
+            <tr><td class="route">Ref2VA · DP4×SP2 / AG</td><td>167.01/174.78</td><td>85.26</td><td>98.29/98.29 GiB</td><td>85.52</td></tr>
+            <tr><td class="route">Ref2VA · DP8×SP1 / RL</td><td>287.62/289.60</td><td>100.07</td><td>21.00/19.36 GiB</td><td>74.06</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption"><strong>Table 3.</strong> Multimodal frontier results, five measured 50-step waves per row.</p>
+      <p>Conditioning changes absolute scale but preserves the direction of the frontier: SP buys latency, while DP buys throughput and energy efficiency. Memory cannot be extrapolated from T2VA. Ref2VA AllGather approaches 100 GiB/GPU, whereas DP8 rank-local remains near 20 GiB measured peak.</p>
+      <figure>
+        <img src="figures/multimodal_frontiers.png" alt="FL2VA and Ref2VA latency-throughput frontiers">
+        <figcaption><strong>Figure 3.</strong> FL2VA first-frame I2VA and Ref2VA image+audio frontiers.</figcaption>
+      </figure>
+    </section>
+
+    <section id="correctness">
+      <h2>4. Correctness and Reliability Audit</h2>
+      <p>The first DP4×SP2 Ref2VA warmup failed because subgroup collectives used global <code>src=0</code> even when a DiT subgroup did not contain global rank 0. The preserved failure contains 702 error lines and a group-rank error, with no OOM. Eight MiniMax-H3 subgroup broadcast sites were changed locally to map subgroup-local rank zero to its global rank:</p>
+      <pre><code>src = dist.get_global_rank(group, 0)</code></pre>
+      <p>The repair covers tensor shape/output, standalone audio length/tensor, reference-video object/shape, video audio lengths, and <code>has_audio</code>. A DP4×SP2 two-step Ref2VA image+audio smoke passed before the full five-wave 50-step rerun. The failure, smoke, and full rerun remain separate artifacts. This local diff is not claimed to be part of PR #5911.</p>
+      <p>Across 15 successful formal cases and three additional 15-wave soak lifecycles, every output passed shape checks. No OOM, worker death, segfault, attention operation-creation failure, or group-rank error occurred after the repair. Seven cases logged a post-output 30 s orchestrator-stop timeout. These were teardown delays rather than inference failures; the final external check found all GPUs at zero memory and utilization.</p>
+    </section>
+
+    <section id="validity">
+      <h2>5. Threats to Validity</h2>
+      <ul>
+        <li>The study uses one B300 node, one prompt/input set, BF16, batch size one per replica, and a fixed 768×1344/124-frame output. Results do not automatically generalize to PCIe systems, other resolutions, or queue mixes.</li>
+        <li>Twenty T2VA waves span only two engine lifecycles; samples within a lifecycle can be autocorrelated. P50/P95 and t-intervals are descriptive.</li>
+        <li>Board energy includes idle power and excludes CPU, DRAM, storage, and facility overhead. It supports route comparison, not total-cost accounting.</li>
+        <li>Shape validation establishes the output contract, not perceptual quality. VBench, CLIP-style metrics, and blinded human evaluation are absent.</li>
+        <li>The local subgroup repair and software-version mismatch must be resolved in a supported build before production qualification.</li>
+      </ul>
+    </section>
+
+    <section id="guidance">
+      <h2>6. Discussion and Deployment Policy</h2>
+      <p>Use <strong>DP1×SP8 with AllGather</strong> for latency-sensitive, low-queue-depth traffic. Use <strong>DP4×SP2 with AllGather</strong> as the balanced default. Use <strong>DP8×SP1 rank-local</strong> when the queue can continuously fill eight replicas and throughput or energy dominates latency. Do not globally enable AllGather without topology-specific validation; the measured DP8 case is both slower and more memory-intensive.</p>
+    </section>
+
+    <section id="artifacts">
+      <h2>7. Artifact Availability</h2>
+      <p>The report directory includes the <a href="report.tex">LaTeX source</a>, <a href="generate_figures.py">deterministic figure generator</a>, <a href="industrial_results.csv">15-case summary</a>, <a href="t2va_soak_n20.csv">two-lifecycle T2VA summary</a>, <a href="wave_samples.csv">105 wave-level measurements</a>, <a href="environment.json.txt">environment and hash manifest</a>, and both benchmark runners (<a href="run_dp_sp_point.py">T2VA</a>, <a href="run_multimodal_dp_sp_point.py">multimodal</a>).</p>
+      <p>Core command shape:</p>
+      <pre><code>source /home/zjy/code/lsy/vllm-omni/.venv/bin/activate
+PYTHONPATH=/path/to/vllm-omni \
+DLO_USE_ALLGATHER=1 \
+CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 \
+VLLM_WORKER_MULTIPROC_METHOD=spawn \
+python run_dp_sp_point.py \
+  --model /path/to/MiniMax-H3/FL2VA \
+  --dp 4 --sp 2 --num-gpus 8 \
+  --steps 50 --warmup-steps 50 --repeats 15 \
+  --output summary.json</code></pre>
+    </section>
+
+    <section id="references">
+      <h2>References</h2>
+      <ol class="references">
+        <li>P. Yin et al., “vLLM-Omni: Fully Disaggregated Serving for Any-to-Any Multimodal Models,” <em>arXiv:2602.02204</em>, 2026. <a href="https://github.com/vllm-project/vllm-omni">Project repository</a>.</li>
+        <li>MiniMaxAI, “MiniMax-H3 model card,” 2026. <a href="https://huggingface.co/MiniMaxAI/MiniMax-H3">Hugging Face</a>.</li>
+        <li>S. Li, “Fix DLO DP concurrent request execution,” vLLM-Omni pull request <a href="https://github.com/vllm-project/vllm-omni/pull/5864">#5864</a>, 2026.</li>
+        <li>S. Li, “Enable independent requests for rank-local DLO DP,” vLLM-Omni pull request <a href="https://github.com/vllm-project/vllm-omni/pull/5911">#5911</a>, 2026.</li>
+        <li>NVIDIA, “NVIDIA Blackwell Ultra AI Factory Platform,” 2026. <a href="https://www.nvidia.com/en-us/data-center/blackwell-ultra/">Product overview</a>.</li>
+      </ol>
+    </section>
+
+    <footer>
+      Archival report generated from preserved benchmark artifacts. Requested 50-step generations execute 49 denoising updates in the tested MiniMax-H3 scheduler. Last updated 9 August 2026.
+    </footer>
+  </main>
+</body>
+</html>

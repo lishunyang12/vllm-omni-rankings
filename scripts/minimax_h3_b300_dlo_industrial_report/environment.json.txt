@@ -1,0 +1,43 @@
+{
+  "captured_at_utc": "2026-08-09T01:25:10.068279+00:00",
+  "gpu_query": "0, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02, 1100.00 W, 10.3\n1, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02, 1100.00 W, 10.3\n2, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02, 1100.00 W, 10.3\n3, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02, 1100.00 W, 10.3\n4, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02, 1100.00 W, 10.3\n5, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02, 1100.00 W, 10.3\n6, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02, 1100.00 W, 10.3\n7, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02, 1100.00 W, 10.3",
+  "gpu_topology": "\u001b[4mGPU0\tGPU1\tGPU2\tGPU3\tGPU4\tGPU5\tGPU6\tGPU7\tCPU Affinity\tNUMA Affinity\tGPU NUMA ID\u001b[0m\nGPU0\t X \tNV18\tNV18\tNV18\tNV18\tNV18\tNV18\tNV18\t0-239\t0\t\tN/A\nGPU1\tNV18\t X \tNV18\tNV18\tNV18\tNV18\tNV18\tNV18\t0-239\t0\t\tN/A\nGPU2\tNV18\tNV18\t X \tNV18\tNV18\tNV18\tNV18\tNV18\t0-239\t0\t\tN/A\nGPU3\tNV18\tNV18\tNV18\t X \tNV18\tNV18\tNV18\tNV18\t0-239\t0\t\tN/A\nGPU4\tNV18\tNV18\tNV18\tNV18\t X \tNV18\tNV18\tNV18\t0-239\t0\t\tN/A\nGPU5\tNV18\tNV18\tNV18\tNV18\tNV18\t X \tNV18\tNV18\t0-239\t0\t\tN/A\nGPU6\tNV18\tNV18\tNV18\tNV18\tNV18\tNV18\t X \tNV18\t0-239\t0\t\tN/A\nGPU7\tNV18\tNV18\tNV18\tNV18\tNV18\tNV18\tNV18\t X \t0-239\t0\t\tN/A\n\nLegend:\n\n  X    = Self\n  SYS  = Connection traversing PCIe as well as the SMP interconnect between NUMA nodes (e.g., QPI/UPI)\n  NODE = Connection traversing PCIe as well as the interconnect between PCIe Host Bridges within a NUMA node\n  PHB  = Connection traversing PCIe as well as a PCIe Host Bridge (typically the CPU)\n  PXB  = Connection traversing multiple PCIe bridges (without traversing the PCIe Host Bridge)\n  PIX  = Connection traversing at most a single PCIe bridge\n  NV#  = Connection traversing a bonded set of # NVLinks",
+  "hostname": "vllm-inference",
+  "inputs": {
+    "audio": {
+      "path": "/home/zjy/code/lsy/results/minimax-h3-b300-resident-50step-20260807/g8-tp4-u2/t2va_reference_audio.wav",
+      "sha256": "c947b102a553f031c976dae189b677260e5dd435caa925aee66daf8bce5488e7"
+    },
+    "fl2va_model_index_sha256": "d1113e0f123c69f79cd0de35ca1771606ebc3ec924270d257b771f96f584aa6b",
+    "image": {
+      "path": "/home/zjy/code/lsy/results/minimax-h3-b300-resident-50step-20260807/g8-tp4-u2/t2va_first_frame.png",
+      "sha256": "8dce101bca198d0539f0f4613ea0caf631b544137b19de914fd4c11d2486400a"
+    },
+    "ref2va_model_index_sha256": "b160b13700bf08aea7fce1bc3dd0d3a49ea15036298c50082ec107f87843b90c"
+  },
+  "packages": {
+    "torch": "2.11.0+cu130",
+    "vllm": "0.24.0",
+    "vllm_omni": "0.26.0rc2.dev11+g6607f4a7f"
+  },
+  "platform": "Linux-6.8.0-90-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "runners": {
+    "multimodal": {
+      "path": "/home/zjy/code/lsy/results/minimax-h3-b300-dlo-industrial-20260808/run_multimodal_dp_sp_point.py",
+      "sha256": "72cfbecae14e069e5f98112b24eb0a01c234227199ec0065f9c808dc64e698d3"
+    },
+    "t2va": {
+      "path": "/home/zjy/code/lsy/results/minimax-h3-b300-dlo-rank-local-pareto-20260808/run_dp_sp_point.py",
+      "sha256": "84b1c2fbaff9828cd461fa1c56b62189b46b0bc625787768702231d904cf25b5"
+    }
+  },
+  "source": {
+    "branch": "",
+    "commit": "9e73ee1a50ce247c638052011914d8027d717f28",
+    "local_diff": "diff --git a/vllm_omni/diffusion/models/minimax_h3/pipeline_minimax_h3.py b/vllm_omni/diffusion/models/minimax_h3/pipeline_minimax_h3.py\nindex 610e1925..3633ffd1 100644\n--- a/vllm_omni/diffusion/models/minimax_h3/pipeline_minimax_h3.py\n+++ b/vllm_omni/diffusion/models/minimax_h3/pipeline_minimax_h3.py\n@@ -434,14 +434,22 @@ def _broadcast_tensor(\n             tensor.shape,\n             device=device,\n         )\n-    dist.broadcast(shape, src=0, group=group)\n+    dist.broadcast(\n+        shape,\n+        src=dist.get_global_rank(group, 0),\n+        group=group,\n+    )\n     ndim = int(shape[0].item())\n     tensor_shape = tuple(int(v) for v in shape[1 : ndim + 1].tolist())\n     if rank == 0:\n         output = tensor.to(device=device, dtype=dtype).contiguous()\n     else:\n         output = torch.empty(tensor_shape, device=device, dtype=dtype)\n-    dist.broadcast(output, src=0, group=group)\n+    dist.broadcast(\n+        output,\n+        src=dist.get_global_rank(group, 0),\n+        group=group,\n+    )\n     return output\n \n \n@@ -1190,7 +1198,11 @@ class MiniMaxH3Pipeline(\n         )\n         group, _, world_size = _dit_rank_world()\n         if world_size > 1:\n-            dist.broadcast(audio_t_tensor, src=0, group=group)\n+            dist.broadcast(\n+                audio_t_tensor,\n+                src=dist.get_global_rank(group, 0),\n+                group=group,\n+            )\n         rows = _broadcast_tensor(\n             rows,\n             dtype=torch.float32,\n@@ -1217,7 +1229,11 @@ class MiniMaxH3Pipeline(\n             )\n         group, _, world_size = _dit_rank_world()\n         if world_size > 1:\n-            dist.broadcast(lengths, src=0, group=group)\n+            dist.broadcast(\n+                lengths,\n+                src=dist.get_global_rank(group, 0),\n+                group=group,\n+            )\n         return (\n             _broadcast_tensor(rows, dtype=torch.float32, device=self.device),\n             [int(value) for value in lengths.tolist()],\n@@ -1246,7 +1262,7 @@ class MiniMaxH3Pipeline(\n             prepared_videos_list = [prepared_videos]\n             dist.broadcast_object_list(\n                 prepared_videos_list,\n-                src=0,\n+                src=dist.get_global_rank(group, 0),\n                 group=group,\n                 device=self.device,\n             )\n@@ -1273,7 +1289,11 @@ class MiniMaxH3Pipeline(\n             )\n \n         if world_size > 1:\n-            dist.broadcast(shapes, src=0, group=group)\n+            dist.broadcast(\n+                shapes,\n+                src=dist.get_global_rank(group, 0),\n+                group=group,\n+            )\n         return (\n             _broadcast_tensor(rows, dtype=torch.float32, device=self.device),\n             [tuple(int(value) for value in item) for item in shapes.tolist()],\n@@ -1322,7 +1342,11 @@ class MiniMaxH3Pipeline(\n             )\n         group, _, world_size = _dit_rank_world()\n         if world_size > 1:\n-            dist.broadcast(lengths, src=0, group=group)\n+            dist.broadcast(\n+                lengths,\n+                src=dist.get_global_rank(group, 0),\n+                group=group,\n+            )\n         return (\n             _broadcast_tensor(rows, dtype=torch.float32, device=self.device),\n             [int(value) for value in lengths.tolist()],\n@@ -1662,7 +1686,7 @@ class MiniMaxH3Pipeline(\n                 if world_size > 1:\n                     dist.broadcast(\n                         has_audio_tensor,\n-                        src=0,\n+                        src=dist.get_global_rank(get_dit_group(), 0),\n                         group=get_dit_group(),\n                     )\n                 has_audio = [bool(value) for value in has_audio_tensor.tolist()]",
+    "local_diff_sha256": "e4ff438fe4683f83daad1f9fd743209c8fee47f4654c9f39cc176fca923e60b5",
+    "path": "/home/zjy/code/lsy/worktree/dlo-dp-sp-benchmark-fix",
+    "status_short": "M vllm_omni/diffusion/models/minimax_h3/pipeline_minimax_h3.py"
+  }
+}
