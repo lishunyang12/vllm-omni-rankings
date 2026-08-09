@@ -1023,6 +1023,19 @@ html&gt;body{padding:0}&lt;/style&gt;
       background: light-dark(#f3f5f9, #0a1020); color: light-dark(#22304c, #d8e2f7);
       font: 10px/1.62 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: pre-wrap;
     }
+    #h3-recipe-comparison .h3-panel { min-height: 245px; padding: 14px 15px 18px; background: light-dark(#f8f9fc, #0a1020); }
+    #h3-recipe-comparison .h3-panel[hidden], #h3-recipe-comparison pre[hidden] { display: none; }
+    #h3-recipe-comparison .h3-panel-title { margin: 0 0 10px; font-size: 12px; }
+    #h3-recipe-comparison .h3-fact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 7px; }
+    #h3-recipe-comparison .h3-fact { padding: 9px 10px; border: 1px solid light-dark(#dce4ef, #29364f); border-radius: 8px; background: light-dark(#ffffff, #131c30); }
+    #h3-recipe-comparison .h3-fact span { display: block; color: light-dark(#748099, #98a6bf); font-size: 9px; }
+    #h3-recipe-comparison .h3-fact strong { display: block; margin-top: 3px; font-size: 10px; font-weight: 700; }
+    #h3-recipe-comparison .h3-context { margin-top: 8px; padding: 9px 10px; border-left: 3px solid #4263eb; background: light-dark(#eef2ff, #151f3d); color: light-dark(#4d5a73, #bcc8dc); font-size: 10px; line-height: 1.48; }
+    #h3-recipe-comparison .h3-context strong { color: inherit; }
+    #h3-recipe-comparison .h3-evidence-table { width: 100%; border-collapse: collapse; font-size: 9px; }
+    #h3-recipe-comparison .h3-evidence-table th, #h3-recipe-comparison .h3-evidence-table td { padding: 7px 5px; border-top: 1px solid light-dark(#dfe6f0, #27334b); text-align: left; }
+    #h3-recipe-comparison .h3-evidence-table th { color: light-dark(#748099, #99a7bf); font-weight: 650; }
+    #h3-recipe-comparison .h3-state-path { margin-top: 9px; color: light-dark(#77839a, #96a3bc); font: 9px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; word-break: break-all; }
     #h3-recipe-comparison .h3-output-foot {
       display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 13px;
       background: light-dark(#ffffff, #11182b); font-size: 9px; color: light-dark(#69758d, #99a6bf);
@@ -1030,24 +1043,6 @@ html&gt;body{padding:0}&lt;/style&gt;
     #h3-recipe-comparison .h3-copy {
       border: 0; border-radius: 6px; background: #4263eb; color: white; padding: 6px 10px; font-size: 9px; font-weight: 720;
     }
-    #h3-recipe-comparison .h3-guide-grid { display: grid; grid-template-columns: 170px 1fr; gap: 14px; }
-    #h3-recipe-comparison .h3-toc {
-      background: light-dark(#ffffff, #11182b); border: 1px solid light-dark(#d7e0ed, #2c3852); border-radius: 11px;
-      padding: 10px;
-    }
-    #h3-recipe-comparison .h3-toc div { padding: 7px 8px; border-radius: 6px; font-size: 10px; color: light-dark(#66738d, #9eabc3); }
-    #h3-recipe-comparison .h3-toc div:first-child { background: light-dark(#eef2ff, #1a2850); color: light-dark(#283fa8, #d8e1ff); font-weight: 720; }
-    #h3-recipe-comparison .h3-guide-content { display: grid; gap: 9px; }
-    #h3-recipe-comparison .h3-guide-block {
-      padding: 13px 15px; background: light-dark(#ffffff, #11182b); border: 1px solid light-dark(#d7e0ed, #2c3852); border-radius: 11px;
-    }
-    #h3-recipe-comparison .h3-guide-block h3 { margin: 0 0 6px; font-size: 12px; }
-    #h3-recipe-comparison .h3-guide-block p { margin: 0; font-size: 10px; color: light-dark(#65728b, #a5b1c8); line-height: 1.5; }
-    #h3-recipe-comparison .h3-guide-block strong { color: inherit; }
-    #h3-recipe-comparison .h3-mini-table { width: 100%; margin-top: 9px; border-collapse: collapse; font-size: 9px; }
-    #h3-recipe-comparison .h3-mini-table th,
-    #h3-recipe-comparison .h3-mini-table td { padding: 6px 4px; border-top: 1px solid light-dark(#e4eaf3, #27324a); text-align: left; }
-    #h3-recipe-comparison .h3-mini-table th { color: light-dark(#79859d, #98a5be); font-weight: 650; }
     @media (max-width: 780px) {
       #h3-recipe-comparison .h3-nav { display: none; }
       #h3-recipe-comparison .h3-shell { padding: 20px 14px 34px; }
@@ -1055,9 +1050,7 @@ html&gt;body{padding:0}&lt;/style&gt;
       #h3-recipe-comparison .h3-primary-link { margin-top: 12px; }
       #h3-recipe-comparison .h3-builder { grid-template-columns: 1fr; }
       #h3-recipe-comparison .h3-output { position: static; }
-      #h3-recipe-comparison .h3-guide-grid { grid-template-columns: 1fr; }
-      #h3-recipe-comparison .h3-toc { display: flex; overflow-x: auto; }
-      #h3-recipe-comparison .h3-toc div { white-space: nowrap; }
+      #h3-recipe-comparison .h3-fact-grid { grid-template-columns: 1fr; }
       #h3-recipe-comparison .h3-before-shell { padding: 20px 14px 34px; }
       #h3-recipe-comparison .h3-before-layout { grid-template-columns: 1fr; }
       #h3-recipe-comparison .h3-before-toc { position: static; display: flex; gap: 10px; overflow-x: auto; border-left: 0; border-top: 1px solid light-dark(#dde4ee, #2d3850); padding: 10px 0 0; }
@@ -1185,8 +1178,8 @@ vllm serve /path/to/MiniMax-H3 \
         &lt;div class=&quot;h3-row&quot;&gt;
           &lt;div class=&quot;h3-row-head&quot;&gt;&lt;span class=&quot;h3-row-label&quot;&gt;2 · Deployment goal&lt;/span&gt;&lt;span class=&quot;h3-row-value&quot; id=&quot;h3-profile-value&quot;&gt;Resident · recommended&lt;/span&gt;&lt;/div&gt;
           &lt;div class=&quot;h3-options&quot;&gt;
-            &lt;button class=&quot;h3-option&quot; id=&quot;h3-profile-primary&quot; type=&quot;button&quot; aria-pressed=&quot;true&quot;&gt;&lt;span&gt;Fastest validated&lt;/span&gt;&lt;small id=&quot;h3-profile-primary-sub&quot;&gt;Resident · no offload&lt;/small&gt;&lt;/button&gt;
-            &lt;button class=&quot;h3-option&quot; id=&quot;h3-profile-secondary&quot; type=&quot;button&quot; disabled&gt;&lt;span&gt;Lower memory&lt;/span&gt;&lt;small id=&quot;h3-profile-secondary-sub&quot;&gt;No promoted B300 profile&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option h3-profile&quot; id=&quot;h3-profile-primary&quot; type=&quot;button&quot; data-profile=&quot;primary&quot; aria-pressed=&quot;true&quot;&gt;&lt;span&gt;Fastest validated&lt;/span&gt;&lt;small id=&quot;h3-profile-primary-sub&quot;&gt;Resident · no offload&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option h3-profile&quot; id=&quot;h3-profile-secondary&quot; type=&quot;button&quot; data-profile=&quot;secondary&quot; aria-pressed=&quot;false&quot;&gt;&lt;span&gt;Lower memory&lt;/span&gt;&lt;small id=&quot;h3-profile-secondary-sub&quot;&gt;DLO · 20 resident blocks&lt;/small&gt;&lt;/button&gt;
           &lt;/div&gt;
           &lt;div class=&quot;h3-why&quot; id=&quot;h3-why&quot;&gt;The complete pipeline fits. Keep weights resident and spend bandwidth on Ulysses and tiled VAE decode.&lt;/div&gt;
         &lt;/div&gt;
@@ -1220,46 +1213,32 @@ vllm serve /path/to/MiniMax-H3 \
           &lt;div class=&quot;h3-evidence&quot; id=&quot;h3-evidence&quot;&gt;&lt;span&gt;4 GPUs used&lt;/span&gt;&lt;span&gt;50-step evidence&lt;/span&gt;&lt;span&gt;all task families loaded&lt;/span&gt;&lt;/div&gt;
         &lt;/div&gt;
         &lt;div class=&quot;h3-tabs&quot;&gt;
-          &lt;button class=&quot;h3-tab&quot; type=&quot;button&quot; data-tab=&quot;serve&quot; aria-selected=&quot;true&quot;&gt;Serve&lt;/button&gt;
+          &lt;button class=&quot;h3-tab&quot; type=&quot;button&quot; data-tab=&quot;overview&quot; aria-selected=&quot;true&quot;&gt;Overview&lt;/button&gt;
+          &lt;button class=&quot;h3-tab&quot; type=&quot;button&quot; data-tab=&quot;serve&quot; aria-selected=&quot;false&quot;&gt;Serve&lt;/button&gt;
           &lt;button class=&quot;h3-tab&quot; type=&quot;button&quot; data-tab=&quot;request&quot; aria-selected=&quot;false&quot;&gt;Request&lt;/button&gt;
-          &lt;button class=&quot;h3-tab&quot; type=&quot;button&quot; data-tab=&quot;verify&quot; aria-selected=&quot;false&quot;&gt;Verify output&lt;/button&gt;
+          &lt;button class=&quot;h3-tab&quot; type=&quot;button&quot; data-tab=&quot;evidence&quot; aria-selected=&quot;false&quot;&gt;Evidence&lt;/button&gt;
         &lt;/div&gt;
-        &lt;pre id=&quot;h3-code&quot;&gt;&lt;/pre&gt;
-        &lt;div class=&quot;h3-output-foot&quot;&gt;&lt;span id=&quot;h3-footnote&quot;&gt;Generated from the exact verified cell · pip&lt;/span&gt;&lt;button class=&quot;h3-copy&quot; type=&quot;button&quot;&gt;Copy command&lt;/button&gt;&lt;/div&gt;
+        &lt;div id=&quot;h3-panel&quot; class=&quot;h3-panel&quot;&gt;&lt;/div&gt;
+        &lt;pre id=&quot;h3-code&quot; hidden&gt;&lt;/pre&gt;
+        &lt;div class=&quot;h3-output-foot&quot;&gt;&lt;span id=&quot;h3-footnote&quot;&gt;One state owns every deployment fact&lt;/span&gt;&lt;button class=&quot;h3-copy&quot; id=&quot;h3-output-action&quot; type=&quot;button&quot;&gt;Copy state&lt;/button&gt;&lt;/div&gt;
       &lt;/div&gt;
     &lt;/div&gt;
 
-    &lt;div class=&quot;h3-section-title&quot;&gt;&lt;strong&gt;Guide&lt;/strong&gt;&lt;span&gt;Reference material follows the deployment workflow instead of repeating generated commands.&lt;/span&gt;&lt;/div&gt;
-    &lt;div class=&quot;h3-guide-grid&quot;&gt;
-      &lt;div class=&quot;h3-toc&quot;&gt;&lt;div&gt;Quick start&lt;/div&gt;&lt;div&gt;Requests&lt;/div&gt;&lt;div&gt;Benchmarks&lt;/div&gt;&lt;div&gt;Advanced tuning&lt;/div&gt;&lt;div&gt;Limits &amp; fixes&lt;/div&gt;&lt;div&gt;Architecture&lt;/div&gt;&lt;/div&gt;
-      &lt;div class=&quot;h3-guide-content&quot;&gt;
-        &lt;div class=&quot;h3-guide-block&quot;&gt;
-          &lt;h3&gt;Why this profile&lt;/h3&gt;
-          &lt;p id=&quot;h3-guide-why&quot;&gt;&lt;strong&gt;Resident on B300&lt;/strong&gt; is the latency-oriented default. The selected command loads both task families and avoids per-step host transfers.&lt;/p&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;h3-guide-block&quot;&gt;
-          &lt;h3&gt;Evidence for the selected cell&lt;/h3&gt;
-          &lt;p&gt;Measurements are shown only when hardware, profile, precision, task family, shape, and step count match. Similar GPUs do not inherit “verified” automatically.&lt;/p&gt;
-          &lt;table class=&quot;h3-mini-table&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Workload&lt;/th&gt;&lt;th&gt;Config&lt;/th&gt;&lt;th&gt;Observed&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id=&quot;h3-benchmark&quot;&gt;&lt;tr&gt;&lt;td&gt;FL2VA · 209 frames&lt;/td&gt;&lt;td&gt;4×B300 · resident&lt;/td&gt;&lt;td&gt;86.96 s E2E&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Global FP8 · 5 s T2VA&lt;/td&gt;&lt;td&gt;1×B300 · resident&lt;/td&gt;&lt;td&gt;30.8% lower peak&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
-        &lt;/div&gt;
-        &lt;div class=&quot;h3-guide-block&quot;&gt;
-          &lt;h3&gt;Known limits are contextual&lt;/h3&gt;
-          &lt;p id=&quot;h3-limit&quot;&gt;Unsupported reference combinations, approximate precision, and topology constraints appear beside the control that triggers them—not at the bottom of a 500-line guide.&lt;/p&gt;
-        &lt;/div&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
   &lt;/div&gt;
 
   &lt;script&gt;
     (() =&gt; {
       const root = document.getElementById(&#x27;h3-recipe-comparison&#x27;);
       const code = root.querySelector(&#x27;#h3-code&#x27;);
+      const panel = root.querySelector(&#x27;#h3-panel&#x27;);
+      const outputAction = root.querySelector(&#x27;#h3-output-action&#x27;);
       const hardwareButtons = [...root.querySelectorAll(&#x27;.h3-hardware&#x27;)];
+      const profileButtons = [...root.querySelectorAll(&#x27;.h3-profile&#x27;)];
       const taskButtons = [...root.querySelectorAll(&#x27;.h3-task&#x27;)];
       const precisionButtons = [...root.querySelectorAll(&#x27;.h3-precision&#x27;)];
       const tabButtons = [...root.querySelectorAll(&#x27;.h3-tab&#x27;)];
       const viewButtons = [...root.querySelectorAll(&#x27;.h3-view-button&#x27;)];
-      const state = { hardware: &#x27;b300&#x27;, task: &#x27;t2va&#x27;, precision: &#x27;bf16&#x27;, tab: &#x27;serve&#x27; };
+      const state = { hardware: &#x27;b300&#x27;, profile: &#x27;primary&#x27;, task: &#x27;t2va&#x27;, precision: &#x27;bf16&#x27;, tab: &#x27;overview&#x27; };
 
       const taskLabels = { t2va: &#x27;T2VA&#x27;, first: &#x27;FL2VA · first frame&#x27;, last: &#x27;FL2VA · last frame&#x27;, firstlast: &#x27;FL2VA · first + last&#x27;, image: &#x27;Ref2VA · image&#x27;, ref: &#x27;Ref2VA · image + audio&#x27;, video: &#x27;Ref2VA · video&#x27; };
       const continuation = String.fromCharCode(92);
@@ -1346,64 +1325,65 @@ vllm serve /path/to/MiniMax-H3 \
         const isB300 = state.hardware === &#x27;b300&#x27;;
         const isRTX = state.hardware === &#x27;rtx5090&#x27;;
         const isFp8 = state.precision === &#x27;fp8&#x27;;
-        const profiles = {
+        const catalog = {
           b300: {
-            hardware: &#x27;4 of 8 × B300&#x27;, label: &#x27;B300&#x27;, profile: &#x27;Resident · recommended&#x27;, profileName: &#x27;Resident&#x27;,
-            primary: &#x27;Fastest validated&#x27;, primarySub: &#x27;Resident · no offload&#x27;, secondary: &#x27;No promoted B300 profile&#x27;,
-            why: &#x27;The complete pipeline fits. Keep weights resident and spend bandwidth on Ulysses and tiled VAE decode.&#x27;,
-            evidence: &#x27;&lt;span&gt;4 GPUs used&lt;/span&gt;&lt;span&gt;5 s · 50-step evidence&lt;/span&gt;&lt;span&gt;BF16 and FP8 compared&lt;/span&gt;&#x27;,
-            guide: &#x27;&lt;strong&gt;Resident on B300&lt;/strong&gt; is the latency-oriented default. Precision changes in place without changing the request contract.&#x27;,
-            benchmark: &#x27;&lt;tr&gt;&lt;td&gt;BF16 · 5 s T2VA&lt;/td&gt;&lt;td&gt;Resident&lt;/td&gt;&lt;td&gt;162.30 s · 133,110 MiB&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Global FP8 · same case&lt;/td&gt;&lt;td&gt;Resident&lt;/td&gt;&lt;td&gt;151.58 s · 92,146 MiB&lt;/td&gt;&lt;/tr&gt;&#x27;,
-            limit: &#x27;Online FP8 is approximate and appears only with B300 evidence. The same prompt and seed must be reviewed for both video and audio quality.&#x27;
+            label: &#x27;B300&#x27;, hardware: &#x27;4 GPUs on 8-GPU host&#x27;, fp8: true,
+            primary: { option: &#x27;Fastest validated&#x27;, sub: &#x27;Resident · USP4&#x27;, title: &#x27;Resident latency&#x27;, status: &#x27;Verified&#x27;, topology: &#x27;4 GPU · USP4&#x27;, dit: &#x27;Resident&#x27;, encoder: &#x27;TP4 resident&#x27;, vae: &#x27;Tiled · PP4&#x27;, reason: &#x27;The complete pipeline fits, so the latency path avoids host transfers.&#x27;, badges: [&#x27;4 GPUs used&#x27;, &#x27;5 s · 50 steps&#x27;, &#x27;BF16 + FP8&#x27;], rows: &#x27;&lt;tr&gt;&lt;td&gt;BF16 · 5 s T2VA&lt;/td&gt;&lt;td&gt;162.30 s&lt;/td&gt;&lt;td&gt;133,110 MiB&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Global FP8 · same case&lt;/td&gt;&lt;td&gt;151.58 s&lt;/td&gt;&lt;td&gt;92,146 MiB&lt;/td&gt;&lt;/tr&gt;&#x27;, limit: &#x27;FP8 is approximate. Review both video and audio for the same prompt and seed.&#x27;, flags: [] },
+            secondary: { option: &#x27;Lower memory&#x27;, sub: &#x27;DLO · 20 resident blocks&#x27;, title: &#x27;DLO capacity&#x27;, status: &#x27;Industrial validation&#x27;, topology: &#x27;4 GPU · USP4 + DLO&#x27;, dit: &#x27;20 blocks resident&#x27;, encoder: &#x27;Rank-local staged&#x27;, vae: &#x27;Tiled · PP4&#x27;, reason: &#x27;Use DLO when capacity margin matters more than PCIe transfer overhead.&#x27;, badges: [&#x27;Rank-local shards&#x27;, &#x27;DLO compatible&#x27;, &#x27;Target evidence&#x27;], rows: &#x27;&lt;tr&gt;&lt;td&gt;Placement suite&lt;/td&gt;&lt;td&gt;DLO 20 blocks&lt;/td&gt;&lt;td&gt;Passed&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Latency / peak&lt;/td&gt;&lt;td&gt;Workload-specific&lt;/td&gt;&lt;td&gt;Re-benchmark&lt;/td&gt;&lt;/tr&gt;&#x27;, limit: &#x27;DLO performance depends on PCIe and host memory bandwidth; do not inherit resident latency.&#x27;, flags: [&#x27;--enable-distributed-layerwise-offload&#x27;, &#x27;--dlo-resident-layers 20&#x27;] }
           },
           rtx5090: {
-            hardware: &#x27;2 × RTX 5090&#x27;, label: &#x27;RTX 5090&#x27;, profile: &#x27;DLO capacity · recommended&#x27;, profileName: &#x27;DLO&#x27;,
-            primary: &#x27;Fits 32 GiB/GPU&#x27;, primarySub: &#x27;TP2 + rank-local DLO&#x27;, secondary: &#x27;Resident does not fit&#x27;,
-            why: &#x27;Stream rank-local TP shards and keep 20 DiT blocks resident. Host RAM is part of the capacity plan.&#x27;,
-            evidence: &#x27;&lt;span&gt;2 GPUs&lt;/span&gt;&lt;span&gt;BF16 lossless&lt;/span&gt;&lt;span&gt;host RAM ≥384 GiB&lt;/span&gt;&lt;span&gt;FL2VA service&lt;/span&gt;&#x27;,
-            guide: &#x27;&lt;strong&gt;DLO on two RTX 5090s&lt;/strong&gt; is a capacity profile. It preserves BF16/FP32 math but spends PCIe bandwidth streaming weights.&#x27;,
-            benchmark: &#x27;&lt;tr&gt;&lt;td&gt;5 s T2VA · 50 steps&lt;/td&gt;&lt;td&gt;2×RTX 5090 · DLO&lt;/td&gt;&lt;td&gt;Valid H.264 + stereo AAC&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Placement&lt;/td&gt;&lt;td&gt;20 resident DiT blocks&lt;/td&gt;&lt;td&gt;384 GiB host class&lt;/td&gt;&lt;/tr&gt;&#x27;,
-            limit: &#x27;This capacity service loads FL2VA. Ref2VA choices stay visible but disabled until the service is restarted with the reference partition.&#x27;
+            label: &#x27;RTX 5090&#x27;, hardware: &#x27;2 × 32 GiB&#x27;, fp8: false,
+            primary: { option: &#x27;Balanced capacity&#x27;, sub: &#x27;DLO · 20 resident blocks&#x27;, title: &#x27;DLO balanced&#x27;, status: &#x27;Verified capacity path&#x27;, topology: &#x27;TP2 · USP1&#x27;, dit: &#x27;20 blocks resident&#x27;, encoder: &#x27;TP2 staged&#x27;, vae: &#x27;Decoder streamed&#x27;, reason: &#x27;This is the measured balance between GPU headroom and transfer frequency.&#x27;, badges: [&#x27;2 GPUs&#x27;, &#x27;BF16&#x27;, &#x27;Host RAM ≥384 GiB&#x27;], rows: &#x27;&lt;tr&gt;&lt;td&gt;5 s · 50-step output&lt;/td&gt;&lt;td&gt;H.264 + stereo AAC&lt;/td&gt;&lt;td&gt;Passed&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Host capacity&lt;/td&gt;&lt;td&gt;384 GiB class&lt;/td&gt;&lt;td&gt;Required&lt;/td&gt;&lt;/tr&gt;&#x27;, limit: &#x27;This service loads FL2VA. Restart with the Ref2VA partition for reference tasks.&#x27;, flags: [] },
+            secondary: { option: &#x27;Maximum headroom&#x27;, sub: &#x27;DLO · 10 resident blocks&#x27;, title: &#x27;DLO low-memory&#x27;, status: &#x27;Candidate profile&#x27;, topology: &#x27;TP2 · USP1&#x27;, dit: &#x27;10 blocks resident&#x27;, encoder: &#x27;TP2 staged&#x27;, vae: &#x27;Decoder streamed&#x27;, reason: &#x27;Keep fewer DiT blocks resident when activation headroom is the first constraint.&#x27;, badges: [&#x27;2 GPUs&#x27;, &#x27;More PCIe traffic&#x27;, &#x27;Needs target run&#x27;], rows: &#x27;&lt;tr&gt;&lt;td&gt;Capacity intent&lt;/td&gt;&lt;td&gt;10 resident blocks&lt;/td&gt;&lt;td&gt;Lower residency&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Latency / quality&lt;/td&gt;&lt;td&gt;Not inherited&lt;/td&gt;&lt;td&gt;Validate&lt;/td&gt;&lt;/tr&gt;&#x27;, limit: &#x27;Lower residency increases weight traffic. Promote only after a full target-workload run.&#x27;, flags: [], resident: 10 }
           },
           mi300x: {
-            hardware: &#x27;4 × MI300X&#x27;, label: &#x27;MI300X&#x27;, profile: &#x27;Resident · ROCm&#x27;, profileName: &#x27;Resident&#x27;,
-            primary: &#x27;Resident ROCm profile&#x27;, primarySub: &#x27;USP4 + tiled VAE&#x27;, secondary: &#x27;FP8 not promoted&#x27;,
-            why: &#x27;Keep BF16 weights resident and use the ROCm-native parallel recipe. Precision support remains hardware-scoped.&#x27;,
-            evidence: &#x27;&lt;span&gt;4 GPUs&lt;/span&gt;&lt;span&gt;ROCm recipe&lt;/span&gt;&lt;span&gt;BF16&lt;/span&gt;&lt;span&gt;all request modes&lt;/span&gt;&#x27;,
-            guide: &#x27;&lt;strong&gt;Resident on MI300X&lt;/strong&gt; keeps the request workflow identical while the generated environment and device visibility change for ROCm.&#x27;,
-            benchmark: &#x27;&lt;tr&gt;&lt;td&gt;Deployment&lt;/td&gt;&lt;td&gt;4×MI300X · resident&lt;/td&gt;&lt;td&gt;BF16 profile&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Validation&lt;/td&gt;&lt;td&gt;Video + stereo audio&lt;/td&gt;&lt;td&gt;Target run required&lt;/td&gt;&lt;/tr&gt;&#x27;,
-            limit: &#x27;Online FP8 is not promoted for this hardware cell. The control is disabled with a reason instead of silently emitting an unvalidated command.&#x27;
+            label: &#x27;MI300X&#x27;, hardware: &#x27;192 GiB per GPU&#x27;, fp8: false,
+            primary: { option: &#x27;Single-node default&#x27;, sub: &#x27;4 GPU · USP4&#x27;, title: &#x27;Resident 4-GPU&#x27;, status: &#x27;Documented profile&#x27;, topology: &#x27;4 GPU · USP4&#x27;, dit: &#x27;Resident BF16&#x27;, encoder: &#x27;Folded resident&#x27;, vae: &#x27;Tiled · PP4&#x27;, reason: &#x27;Use the smaller resident ROCm topology when one request fits comfortably.&#x27;, badges: [&#x27;4 GPUs&#x27;, &#x27;ROCm&#x27;, &#x27;BF16&#x27;], rows: &#x27;&lt;tr&gt;&lt;td&gt;Deployment&lt;/td&gt;&lt;td&gt;4×MI300X resident&lt;/td&gt;&lt;td&gt;Documented&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Media validation&lt;/td&gt;&lt;td&gt;Video + stereo audio&lt;/td&gt;&lt;td&gt;Target run&lt;/td&gt;&lt;/tr&gt;&#x27;, limit: &#x27;Online FP8 is not promoted for this hardware cell.&#x27;, flags: [] },
+            secondary: { option: &#x27;Scale-out throughput&#x27;, sub: &#x27;8 GPU · USP8&#x27;, title: &#x27;Resident 8-GPU&#x27;, status: &#x27;Candidate profile&#x27;, topology: &#x27;8 GPU · USP8&#x27;, dit: &#x27;Resident BF16&#x27;, encoder: &#x27;Folded resident&#x27;, vae: &#x27;Tiled · PP8&#x27;, reason: &#x27;Use all eight GPUs when shorter denoise time matters more than allocation cost.&#x27;, badges: [&#x27;8 GPUs&#x27;, &#x27;ROCm&#x27;, &#x27;Target benchmark&#x27;], rows: &#x27;&lt;tr&gt;&lt;td&gt;Scale-out intent&lt;/td&gt;&lt;td&gt;USP4 → USP8&lt;/td&gt;&lt;td&gt;Lower latency target&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Measured gain&lt;/td&gt;&lt;td&gt;Not inherited&lt;/td&gt;&lt;td&gt;Benchmark&lt;/td&gt;&lt;/tr&gt;&#x27;, limit: &#x27;Do not infer scaling efficiency without the same prompt, shape, and step count.&#x27;, flags: [], scale8: true }
           }
         };
-        const profile = profiles[state.hardware];
-        root.querySelector(&#x27;#h3-hardware-value&#x27;).textContent = profile.hardware;
-        root.querySelector(&#x27;#h3-profile-value&#x27;).textContent = profile.profile;
-        root.querySelector(&#x27;#h3-profile-primary&#x27;).querySelector(&#x27;span&#x27;).textContent = profile.primary;
-        root.querySelector(&#x27;#h3-profile-primary-sub&#x27;).textContent = profile.primarySub;
-        root.querySelector(&#x27;#h3-profile-secondary-sub&#x27;).textContent = profile.secondary;
-        root.querySelector(&#x27;#h3-why&#x27;).textContent = profile.why;
+        const hardware = catalog[state.hardware];
+        const deployment = hardware[state.profile];
+        const modelPartition = [&#x27;image&#x27;, &#x27;ref&#x27;, &#x27;video&#x27;].includes(state.task) ? &#x27;Ref2VA&#x27; : &#x27;FL2VA&#x27;;
+        const precisionLabel = isFp8 ? &#x27;Global FP8 · approximate&#x27; : &#x27;BF16 · reference&#x27;;
+        root.querySelector(&#x27;#h3-hardware-value&#x27;).textContent = hardware.hardware;
+        root.querySelector(&#x27;#h3-profile-value&#x27;).textContent = deployment.title;
+        root.querySelector(&#x27;#h3-profile-primary&#x27;).querySelector(&#x27;span&#x27;).textContent = hardware.primary.option;
+        root.querySelector(&#x27;#h3-profile-primary-sub&#x27;).textContent = hardware.primary.sub;
+        root.querySelector(&#x27;#h3-profile-secondary&#x27;).querySelector(&#x27;span&#x27;).textContent = hardware.secondary.option;
+        root.querySelector(&#x27;#h3-profile-secondary-sub&#x27;).textContent = hardware.secondary.sub;
+        root.querySelector(&#x27;#h3-why&#x27;).textContent = deployment.reason;
         root.querySelector(&#x27;#h3-task-value&#x27;).textContent = taskLabels[state.task];
-        root.querySelector(&#x27;#h3-precision-value&#x27;).textContent = isFp8 ? &#x27;FP8 · approximate&#x27; : &#x27;BF16 · lossless&#x27;;
+        root.querySelector(&#x27;#h3-precision-value&#x27;).textContent = precisionLabel;
         const fp8 = root.querySelector(&#x27;#h3-fp8&#x27;);
-        fp8.disabled = !isB300;
-        root.querySelector(&#x27;#h3-fp8-sub&#x27;).textContent = isB300 ? &#x27;B300 validated&#x27; : &#x27;Not promoted on this hardware&#x27;;
+        fp8.disabled = !hardware.fp8;
+        root.querySelector(&#x27;#h3-fp8-sub&#x27;).textContent = hardware.fp8 ? &#x27;B300 validated&#x27; : &#x27;Not promoted on this hardware&#x27;;
         root.querySelectorAll(&#x27;.h3-ref-task&#x27;).forEach((button) =&gt; {
           button.disabled = isRTX;
           button.title = isRTX ? &#x27;Restart this capacity service with --task-type ref2va&#x27; : &#x27;&#x27;;
         });
-        root.querySelector(&#x27;#h3-summary&#x27;).textContent = `${profile.label} · ${profile.profileName} · ${state.precision.toUpperCase()} · ${taskLabels[state.task]}`;
-        root.querySelector(&#x27;#h3-evidence&#x27;).innerHTML = profile.evidence;
-        root.querySelector(&#x27;#h3-status&#x27;).textContent = isFp8 ? &#x27;Validated on B300&#x27; : isRTX ? &#x27;Verified capacity path&#x27; : &#x27;Documented profile&#x27;;
-        root.querySelector(&#x27;#h3-guide-why&#x27;).innerHTML = profile.guide;
-        root.querySelector(&#x27;#h3-benchmark&#x27;).innerHTML = profile.benchmark;
-        root.querySelector(&#x27;#h3-limit&#x27;).textContent = profile.limit;
-        const baseServe = isFp8 ? serveCommands[state.hardware] + &#x27; &#x27; + continuation + String.fromCharCode(10) + &#x27;  --quantization fp8&#x27; : serveCommands[state.hardware];
-        const selectedCode = state.tab === &#x27;serve&#x27; ? baseServe : state.tab === &#x27;request&#x27; ? requestCommands[state.task] : verifyCommand;
-        code.textContent = selectedCode.replace(/^\+/gm, &#x27;&#x27;);
-        root.querySelector(&#x27;#h3-footnote&#x27;).textContent = state.tab === &#x27;serve&#x27;
-          ? &#x27;Generated from the selected hardware evidence cell&#x27;
-          : state.tab === &#x27;request&#x27; ? &#x27;Payload follows the selected request mode&#x27; : &#x27;Checks both video and audio streams&#x27;;
+        root.querySelector(&#x27;#h3-summary&#x27;).textContent = `${hardware.label} · ${deployment.title} · ${state.precision.toUpperCase()} · ${taskLabels[state.task]}`;
+        root.querySelector(&#x27;#h3-evidence&#x27;).innerHTML = deployment.badges.map((badge) =&gt; `&lt;span&gt;${badge}&lt;/span&gt;`).join(&#x27;&#x27;);
+        root.querySelector(&#x27;#h3-status&#x27;).textContent = isFp8 ? &#x27;Validated online FP8&#x27; : deployment.status;
+        let baseServe = serveCommands[state.hardware];
+        if (deployment.resident) baseServe = baseServe.replace(&#x27;--dlo-resident-layers 20&#x27;, `--dlo-resident-layers ${deployment.resident}`);
+        if (deployment.scale8) baseServe = baseServe.replace(&#x27;0,1,2,3&#x27;, &#x27;0,1,2,3,4,5,6,7&#x27;).replace(&#x27;--num-gpus 4 --usp 4&#x27;, &#x27;--num-gpus 8 --usp 8&#x27;).replace(&#x27;--vae-patch-parallel-size 4&#x27;, &#x27;--vae-patch-parallel-size 8&#x27;);
+        const extraFlags = [...deployment.flags, ...(isFp8 ? [&#x27;--quantization fp8&#x27;] : [])];
+        if (extraFlags.length) baseServe += &#x27; &#x27; + continuation + String.fromCharCode(10) + extraFlags.map((flag, index) =&gt; `  ${flag}${index &lt; extraFlags.length - 1 ? &#x27; &#x27; + continuation : &#x27;&#x27;}`).join(String.fromCharCode(10));
+        const selectedCode = state.tab === &#x27;serve&#x27; ? baseServe : requestCommands[state.task];
+        const codeTab = state.tab === &#x27;serve&#x27; || state.tab === &#x27;request&#x27;;
+        code.hidden = !codeTab;
+        panel.hidden = codeTab;
+        code.textContent = selectedCode;
+        if (state.tab === &#x27;overview&#x27;) {
+          panel.innerHTML = `&lt;h3 class=&quot;h3-panel-title&quot;&gt;Selected deployment&lt;/h3&gt;&lt;div class=&quot;h3-fact-grid&quot;&gt;&lt;div class=&quot;h3-fact&quot;&gt;&lt;span&gt;Hardware / topology&lt;/span&gt;&lt;strong&gt;${hardware.label} · ${deployment.topology}&lt;/strong&gt;&lt;/div&gt;&lt;div class=&quot;h3-fact&quot;&gt;&lt;span&gt;Model partition&lt;/span&gt;&lt;strong&gt;${modelPartition} · ${taskLabels[state.task]}&lt;/strong&gt;&lt;/div&gt;&lt;div class=&quot;h3-fact&quot;&gt;&lt;span&gt;DiT placement&lt;/span&gt;&lt;strong&gt;${deployment.dit}&lt;/strong&gt;&lt;/div&gt;&lt;div class=&quot;h3-fact&quot;&gt;&lt;span&gt;Text encoder&lt;/span&gt;&lt;strong&gt;${deployment.encoder}&lt;/strong&gt;&lt;/div&gt;&lt;div class=&quot;h3-fact&quot;&gt;&lt;span&gt;VAE&lt;/span&gt;&lt;strong&gt;${deployment.vae}&lt;/strong&gt;&lt;/div&gt;&lt;div class=&quot;h3-fact&quot;&gt;&lt;span&gt;Precision / status&lt;/span&gt;&lt;strong&gt;${precisionLabel} · ${deployment.status}&lt;/strong&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;h3-context&quot;&gt;&lt;strong&gt;Why:&lt;/strong&gt; ${deployment.reason}&lt;/div&gt;&lt;div class=&quot;h3-state-path&quot;&gt;#hw=${state.hardware}&amp;profile=${state.profile}&amp;task=${state.task}&amp;precision=${state.precision}&lt;/div&gt;`;
+        } else if (state.tab === &#x27;evidence&#x27;) {
+          panel.innerHTML = `&lt;h3 class=&quot;h3-panel-title&quot;&gt;Evidence for this exact state&lt;/h3&gt;&lt;table class=&quot;h3-evidence-table&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Workload&lt;/th&gt;&lt;th&gt;Observed&lt;/th&gt;&lt;th&gt;Peak / result&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;${deployment.rows}&lt;/tbody&gt;&lt;/table&gt;&lt;div class=&quot;h3-context&quot;&gt;&lt;strong&gt;Constraint:&lt;/strong&gt; ${deployment.limit}&lt;/div&gt;&lt;div class=&quot;h3-state-path&quot;&gt;Evidence scope: ${hardware.label} · ${deployment.title} · ${precisionLabel} · ${modelPartition}&lt;/div&gt;`;
+        }
+        root.querySelector(&#x27;#h3-footnote&#x27;).textContent = state.tab === &#x27;overview&#x27; ? &#x27;One state owns topology, placement, precision, task and status&#x27; : state.tab === &#x27;serve&#x27; ? &#x27;Exact serve command for this state&#x27; : state.tab === &#x27;request&#x27; ? &#x27;Exact request payload for this task&#x27; : &#x27;Only evidence matching this state is shown&#x27;;
+        outputAction.textContent = state.tab === &#x27;overview&#x27; ? &#x27;Copy state&#x27; : state.tab === &#x27;serve&#x27; ? &#x27;Copy command&#x27; : state.tab === &#x27;request&#x27; ? &#x27;Copy request&#x27; : &#x27;Copy evidence&#x27;;
         setPressed(hardwareButtons, state.hardware, &#x27;hardware&#x27;);
+        setPressed(profileButtons, state.profile, &#x27;profile&#x27;);
         setPressed(taskButtons, state.task, &#x27;task&#x27;);
         setPressed(precisionButtons, state.precision, &#x27;precision&#x27;);
       }
@@ -1416,10 +1396,16 @@ vllm serve /path/to/MiniMax-H3 \
 
       hardwareButtons.forEach((button) =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
         state.hardware = button.dataset.hardware;
+        state.profile = &#x27;primary&#x27;;
         if (state.hardware !== &#x27;b300&#x27;) state.precision = &#x27;bf16&#x27;;
         if (state.hardware === &#x27;rtx5090&#x27; &amp;&amp; [&#x27;image&#x27;, &#x27;ref&#x27;, &#x27;video&#x27;].includes(state.task)) state.task = &#x27;t2va&#x27;;
         render();
       }));
+      profileButtons.forEach((button) =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+        state.profile = button.dataset.profile;
+        render();
+      }));
+
       taskButtons.forEach((button) =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
         if (button.disabled) return;
         state.task = button.dataset.task;
@@ -1436,6 +1422,17 @@ vllm serve /path/to/MiniMax-H3 \
         render();
       }));
       render();
+      outputAction.addEventListener(&#x27;click&#x27;, async () =&gt; {
+        const statePath = `#hw=${state.hardware}&amp;profile=${state.profile}&amp;task=${state.task}&amp;precision=${state.precision}`;
+        const value = state.tab === &#x27;overview&#x27; ? statePath : code.hidden ? panel.textContent : code.textContent;
+        try {
+          await navigator.clipboard.writeText(value);
+          outputAction.textContent = &#x27;Copied&#x27;;
+        } catch (_) {
+          outputAction.textContent = &#x27;Copy unavailable&#x27;;
+        }
+        setTimeout(render, 1000);
+      });
     })();
   &lt;/script&gt;
 &lt;/div&gt;
