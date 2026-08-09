@@ -197,8 +197,8 @@
     <section id="introduction">
       <h2>1. Introduction</h2>
       <p class="lead">Diffusion-transformer serving on a fixed multi-GPU node admits two competing uses of parallel capacity. SP reduces the latency of one request by partitioning sequence work, while DP serves independent requests concurrently. DLO adds a third choice: weights may advance in collective waves or be maintained independently by each DP replica.</p>
-      <p>This study asks three questions: <strong>RQ1</strong>, which DP×SP configurations lie on the latency–throughput frontier; <strong>RQ2</strong>, where AllGather outperforms rank-local DLO; and <strong>RQ3</strong>, whether the frontier persists under image- and audio-conditioned generation. vLLM-Omni extends vLLM to diffusion and heterogeneous multimodal outputs [1]. Recent changes hardened collective DP waves [3] and enabled independent rank-local DP requests [4].</p>
-      <p><strong>Contributions.</strong> We provide a full-step, two-lifecycle T2VA frontier with latency, throughput, energy, and memory; a paired AllGather/rank-local comparison; and FL2VA/Ref2VA transfer measurements with preserved wave-level data.</p>
+      <p>This study asks three questions: <strong>RQ1</strong>, which evaluated DP×SP configurations lie on the latency–throughput frontier; <strong>RQ2</strong>, where AllGather outperforms rank-local DLO; and <strong>RQ3</strong>, whether the frontier persists under image- and audio-conditioned generation. vLLM-Omni extends vLLM to diffusion and heterogeneous multimodal outputs [1]. Recent changes hardened collective DP waves [3] and enabled independent rank-local DP requests [4].</p>
+      <p><strong>Contributions.</strong> We provide a full-step, two-lifecycle selected-route T2VA frontier with latency, throughput, energy, and memory; a paired AllGather/rank-local comparison; and FL2VA/Ref2VA transfer measurements with preserved wave-level data.</p>
     </section>
 
     <section id="method">
@@ -206,8 +206,14 @@
       <h3>2.1 Hardware, software, and workload</h3>
       <p>Experiments use one x86_64 host with eight NVIDIA B300 SXM6 AC GPUs, an NV18 full-mesh interconnect, and one NUMA domain. Each GPU reports 275,040 MiB of memory and a 1,100 W board limit. The model is MiniMax-H3 FL2VA or Ref2VA in BF16 with <code>CUDNN_ATTN</code>, <code>enforce_eager=True</code>, and <code>dlo_resident_layers=0</code>. Outputs contain 124 frames at 768×1344 and stereo audio with shape <code>[1,2,165600]</code>. A request specifies 50 inference steps; the tested scheduler executes 49 denoising updates.</p>
       <p>The source is commit <a href="https://github.com/vllm-project/vllm-omni/commit/9e73ee1a50ce247c638052011914d8027d717f28"><code>9e73ee1</code></a> plus a recorded local subgroup-broadcast repair. PyTorch is <code>2.11.0+cu130</code>. The runtime warned that vLLM-Omni <code>0.26.0rc2.dev11</code> was paired with vLLM <code>0.24.0</code>; all reported workloads passed, but this is not evidence that arbitrary mismatched versions are supported.</p>
+      <p>The execution path follows the upstream distributed layerwise-offload design [5].</p>
+      <figure>
+        <img src="figures/dlo_architecture.png" alt="Architecture diagram showing the DP and SP process grid, AllGather DLO double buffering, and independent rank-local DLO execution">
+        <figcaption><strong>Figure 1.</strong> MiniMax-H3 DLO topology and dynamics. In the DP4×SP2 example, horizontal groups exchange SP activations while vertical groups reconstruct streamed weights. With <code>resident_layers=0</code>, block N computes as block N+1 is prefetched into the alternate buffer. Rank-local DLO removes the additional weight collective and allows independent replica progress.</figcaption>
+      </figure>
 
       <h3>2.2 Experimental design</h3>
+      <p>The long-run protocol covers DP1×SP8, DP4×SP2, and DP8×SP1. DP2×SP4 was omitted when the requested long-run protocol was narrowed to three recommended routes; it was not measured and is not claimed to be dominated. All frontier statements are therefore conditional on the evaluated set.</p>
       <p>Each selected T2VA route runs one complete 50-step warmup and measured 50-step waves. Five waves are collected in the first engine lifecycle and fifteen in a second, yielding <em>n</em>=20 while avoiding a result tied to one initialization. DP1, DP4, and DP8 produce one, four, and eight videos per wave. FL2VA first-frame I2VA and Ref2VA image+audio use <em>n</em>=5 measured waves per route after a complete warmup.</p>
       <p>External <code>nvidia-smi</code> telemetry targets a 0.5 s interval; the realized median and P95 intervals are 0.758 s and 1.134 s. Power is summed over eight GPUs. Gaps above 2 s are not interpolated. Coverage for the three T2VA soak cases is 99.89–100%.</p>
 
@@ -219,7 +225,7 @@
 
     <section id="results">
       <h2>3. Results</h2>
-      <h3>3.1 RQ1: T2VA Pareto frontier</h3>
+      <h3>3.1 RQ1: Selected-route T2VA Pareto frontier</h3>
       <div class="table-wrap">
         <table>
           <thead><tr><th class="route">Route</th><th>P50 (s)</th><th>P95 (s)</th><th>Videos/h</th><th>CV</th><th>Peak/GPU</th><th>Wh/video</th></tr></thead>
@@ -231,10 +237,10 @@
         </table>
       </div>
       <p class="caption"><strong>Table 1.</strong> Recommended T2VA routes. Twenty measured 50-step waves per row.</p>
-      <p>The three routes form a latency–throughput Pareto frontier. DP4 increases throughput by 46.3% over DP1, while DP8 adds a further 21.0% over DP4. The descriptive mean-latency 95% t-intervals are [34.440, 34.899] s, [94.646, 94.960] s, and [156.594, 156.824] s.</p>
+      <p>The three measured routes form a latency–throughput Pareto frontier within the evaluated set. DP2×SP4 remains an unmeasured candidate and could alter the hull or the location of the knee. DP4 increases throughput by 46.3% over DP1, while DP8 adds a further 21.0% over DP4. The descriptive mean-latency 95% t-intervals are [34.440, 34.899] s, [94.646, 94.960] s, and [156.594, 156.824] s.</p>
       <figure>
         <img src="figures/pareto_frontier.png" alt="Latency-throughput Pareto frontier for DP1, DP4, and DP8 routes">
-        <figcaption><strong>Figure 1.</strong> Latency–throughput frontier for selected T2VA routes. Labels include measured eight-GPU board energy per generated video.</figcaption>
+        <figcaption><strong>Figure 2.</strong> Latency–throughput frontier for selected T2VA routes. Labels include measured eight-GPU board energy per generated video.</figcaption>
       </figure>
 
       <h3>3.2 RQ2: DLO mode is topology-dependent</h3>
@@ -255,7 +261,7 @@
       <div class="result-box"><strong>Topology-dependent result.</strong> AllGather at DP1 improves throughput by 129.4%, reduces median latency by 56.6%, and reduces energy by 28.0%. At DP4 it offers a modest 2.2% throughput gain. At DP8 it is dominated: throughput falls 4.1%, P50 grows 3.8%, and one GPU reaches a 94.03 GiB memory peak.</div>
       <figure>
         <img src="figures/allgather_ranklocal.png" alt="Bar charts comparing rank-local and AllGather throughput, latency, and peak memory">
-        <figcaption><strong>Figure 2.</strong> Paired throughput, latency, and measured per-GPU peak memory. The preferred DLO mode changes with topology.</figcaption>
+        <figcaption><strong>Figure 3.</strong> Paired throughput, latency, and measured per-GPU peak memory. The preferred DLO mode changes with topology.</figcaption>
       </figure>
 
       <h3>3.3 RQ3: Transfer to conditioned generation</h3>
@@ -276,7 +282,7 @@
       <p>Conditioning changes absolute scale but preserves the direction of the frontier: SP buys latency, while DP buys throughput and energy efficiency. Memory cannot be extrapolated from T2VA. Ref2VA AllGather approaches 100 GiB/GPU, whereas DP8 rank-local remains near 20 GiB measured peak.</p>
       <figure>
         <img src="figures/multimodal_frontiers.png" alt="FL2VA and Ref2VA latency-throughput frontiers">
-        <figcaption><strong>Figure 3.</strong> FL2VA first-frame I2VA and Ref2VA image+audio frontiers.</figcaption>
+        <figcaption><strong>Figure 4.</strong> FL2VA first-frame I2VA and Ref2VA image+audio frontiers.</figcaption>
       </figure>
     </section>
 
@@ -291,7 +297,8 @@
     <section id="validity">
       <h2>5. Threats to Validity</h2>
       <ul>
-        <li>The study uses one B300 node, one prompt/input set, BF16, batch size one per replica, and a fixed 768×1344/124-frame output. Results do not automatically generalize to PCIe systems, other resolutions, or queue mixes.</li>
+        <li>DP2×SP4 was not measured. The reported Pareto frontier covers three selected candidates rather than all four natural eight-GPU DP×SP factorizations.</li>
+        <li>The study otherwise uses one B300 node, one prompt/input set, BF16, batch size one per replica, and a fixed 768×1344/124-frame output. Results do not automatically generalize to PCIe systems, other resolutions, or queue mixes.</li>
         <li>Twenty T2VA waves span only two engine lifecycles; samples within a lifecycle can be autocorrelated. P50/P95 and t-intervals are descriptive.</li>
         <li>Board energy includes idle power and excludes CPU, DRAM, storage, and facility overhead. It supports route comparison, not total-cost accounting.</li>
         <li>Shape validation establishes the output contract, not perceptual quality. VBench, CLIP-style metrics, and blinded human evaluation are absent.</li>
@@ -327,6 +334,7 @@ python run_dp_sp_point.py \
         <li>MiniMaxAI, “MiniMax-H3 model card,” 2026. <a href="https://huggingface.co/MiniMaxAI/MiniMax-H3">Hugging Face</a>.</li>
         <li>S. Li, “Fix DLO DP concurrent request execution,” vLLM-Omni pull request <a href="https://github.com/vllm-project/vllm-omni/pull/5864">#5864</a>, 2026.</li>
         <li>S. Li, “Enable independent requests for rank-local DLO DP,” vLLM-Omni pull request <a href="https://github.com/vllm-project/vllm-omni/pull/5911">#5911</a>, 2026.</li>
+        <li>vLLM-Omni contributors, “Distributed Layerwise Offload,” design note, 2026. <a href="https://github.com/vllm-project/vllm-omni/blob/main/docs/design/feature/distributed_layerwise_offload.md">Source</a>.</li>
         <li>NVIDIA, “NVIDIA Blackwell Ultra AI Factory Platform,” 2026. <a href="https://www.nvidia.com/en-us/data-center/blackwell-ultra/">Product overview</a>.</li>
       </ol>
     </section>

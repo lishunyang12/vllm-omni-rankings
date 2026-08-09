@@ -1,6 +1,6 @@
 # Topology-Aware MiniMax-H3 DLO on 8xB300
 
-This directory contains the archival HTML and four-page academic research note
+This directory contains the archival HTML and five-page academic research note
 for the MiniMax-H3 distributed layerwise offload (DLO) study on one
 8x NVIDIA B300 node.
 

@@ -54,7 +54,7 @@ state and execute independent requests.  Communication, host-to-device
 transfer, activation memory, and concurrency therefore change together.
 
 This note asks three questions:
-\textbf{RQ1}: Which DP$\times$SP configurations lie on the
+\textbf{RQ1}: Which evaluated DP$\times$SP configurations lie on the
 latency--throughput frontier?
 \textbf{RQ2}: At which topology does AllGather outperform rank-local DLO?
 \textbf{RQ3}: Does the frontier persist under image- and audio-conditioned
@@ -64,8 +64,8 @@ vLLM-Omni supports diffusion and heterogeneous multimodal outputs
 enable independent rank-local DP requests \cite{pr5911}.
 
 \paragraph{Contributions.}
-We provide (i) a full-step, two-lifecycle T2VA frontier with latency,
-throughput, energy, and memory; (ii) a paired AllGather/rank-local comparison;
+We provide (i) a full-step, two-lifecycle selected-route T2VA frontier with
+latency, throughput, energy, and memory; (ii) a paired AllGather/rank-local comparison;
 and (iii) FL2VA/Ref2VA transfer measurements with preserved wave-level data.
 
 \section{Method}
@@ -91,13 +91,37 @@ Telemetry & External \texttt{nvidia-smi}; 0.758 s median interval \\
 \end{tabular}
 \end{table}
 
-DP1, DP4, and DP8 generate one, four, and eight outputs per wave.  Throughput
+The long-run protocol evaluates DP1$\times$SP8, DP4$\times$SP2, and
+DP8$\times$SP1.  DP2$\times$SP4 was omitted when the requested long-run protocol
+was narrowed to three recommended routes; it was not measured and is not
+claimed to be dominated.  Consequently, frontier statements are conditional
+on the evaluated set.  DP1, DP4, and DP8 generate one, four, and eight outputs
+per wave.  Throughput
 is measured outputs divided by measured wave time.  Per-video energy is the
 trapezoidal integral of summed eight-GPU board power divided by output count;
 no idle baseline is subtracted.  We report empirical P50/P95 and CV.
 The $n=20$ mean-latency t-intervals are descriptive because samples are
 clustered within two engine lifecycles, not independent production trials.
 Output video and audio shapes are validated for every measured request.
+
+Figure~\ref{fig:architecture} summarizes the execution dynamics described by
+the DLO design~\cite{dlodesign}.  DP and SP
+form a two-dimensional process grid: SP exchanges activations within a request,
+whereas DLO AllGather reconstructs the next block across the DP group (or the
+SP group when DP=1).  With \texttt{resident\_layers=0}, two device buffers
+alternate while block $N$ computes and block $N+1$ is prefetched.  Rank-local
+DLO removes this weight collective and permits replicas to progress
+independently, but retains full rank-local host tensors.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.99\linewidth]{figures/dlo_architecture.pdf}
+\caption{MiniMax-H3 DLO topology and per-block dynamics.  The DP4$\times$SP2
+example exposes the orthogonal SP activation and DLO weight-collective groups;
+the two right panels contrast synchronized AllGather waves with independent
+rank-local execution.}
+\label{fig:architecture}
+\end{figure}
 
 The tested source is
 \href{https://github.com/vllm-project/vllm-omni/commit/9e73ee1a50ce247c638052011914d8027d717f28}{\texttt{9e73ee1}}
@@ -107,7 +131,7 @@ vLLM \texttt{0.24.0} were not release-aligned.
 
 \section{Results}
 
-\subsection{RQ1: Latency--throughput frontier}
+\subsection{RQ1: Selected-route latency--throughput frontier}
 
 \begin{table}[ht]
 \centering
@@ -126,7 +150,9 @@ DP8$\times$SP1 / RL & 156.74 & 157.03 & \best{183.78} & \best{0.15} & \best{20.0
 \end{tabular}
 \end{table}
 
-All three routes are Pareto-optimal (Fig.~\ref{fig:pareto}).  Relative to DP1,
+All three measured routes are Pareto-optimal within the evaluated set
+(Fig.~\ref{fig:pareto}).  DP2$\times$SP4 remains an unmeasured candidate and
+could change the hull or the location of the knee.  Relative to DP1,
 DP4 gains 46.3\% throughput; relative to DP4, DP8 gains another 21.0\% but
 raises P50 latency by 65.5\%.  Descriptive 95\% t-intervals for mean wave
 latency are [34.440, 34.899] s, [94.646, 94.960] s, and
@@ -231,8 +257,10 @@ segfault, attention operation-creation failure, or post-fix group-rank error.
 Seven cases exhibited a non-fatal 30 s orchestrator-stop delay after output;
 the final external check found all GPUs at zero memory and utilization.
 
-The study is limited to one B300 node, one input set, BF16, one resolution and
-frame count, and batch size one per replica.  Board energy excludes host and
+The study is limited to three of the four natural eight-GPU DP$\times$SP
+factorizations: DP2$\times$SP4 is unmeasured, so the reported Pareto frontier is
+not a complete topology sweep.  It also covers one B300 node, one input set,
+BF16, one resolution and frame count, and batch size one per replica.  Board energy excludes host and
 facility power.  Shape checks do not establish perceptual quality.  Twenty
 T2VA waves across two lifecycles characterize steady state but do not
 constitute a long-duration SLA or failure-injection campaign.  The local fix
@@ -249,6 +277,10 @@ hashes, local source diff, and benchmark runners are archived at
 P. Yin et al., \emph{vLLM-Omni: Fully Disaggregated Serving for Any-to-Any
 Multimodal Models}, arXiv:2602.02204, 2026.
 \url{https://github.com/vllm-project/vllm-omni}.
+
+\bibitem{dlodesign}
+vLLM-Omni contributors, \emph{Distributed Layerwise Offload}, design note,
+2026. \url{https://github.com/vllm-project/vllm-omni/blob/main/docs/design/feature/distributed_layerwise_offload.md}.
 
 \bibitem{minimaxh3}
 MiniMaxAI, \emph{MiniMax-H3 model card}, 2026.

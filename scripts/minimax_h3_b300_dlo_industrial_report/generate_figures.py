@@ -46,6 +46,248 @@ def configure() -> None:
     )
 
 
+def architecture_figure() -> None:
+    """Show the DP/SP process grid and the two DLO weight-flow modes."""
+    from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+
+    fig, axes = plt.subplots(
+        1, 3, figsize=(10.6, 3.9), gridspec_kw={"width_ratios": [1.25, 1, 1]}
+    )
+    for ax in axes:
+        ax.set_xlim(0, 10)
+        ax.set_ylim(0, 10)
+        ax.axis("off")
+
+    def box(ax, x, y, width, height, label, *, face="#FFFFFF", edge=GRAY, size=8.0):
+        patch = FancyBboxPatch(
+            (x, y),
+            width,
+            height,
+            boxstyle="round,pad=0.06,rounding_size=0.10",
+            facecolor=face,
+            edgecolor=edge,
+            linewidth=1.0,
+        )
+        ax.add_patch(patch)
+        ax.text(
+            x + width / 2,
+            y + height / 2,
+            label,
+            ha="center",
+            va="center",
+            fontsize=size,
+        )
+
+    def arrow(ax, start, end, *, color=GRAY, style="-|>", width=1.2):
+        ax.add_patch(
+            FancyArrowPatch(
+                start,
+                end,
+                arrowstyle=style,
+                mutation_scale=9,
+                color=color,
+                linewidth=width,
+            )
+        )
+
+    topology = axes[0]
+    topology.set_title("(a) DP4 x SP2 process grid", loc="left", fontweight="bold")
+    topology.text(
+        5.6, 9.05, "SP rank within replica", ha="center", fontsize=8.0, color=GRAY
+    )
+    topology.text(3.75, 8.55, "0", ha="center", fontsize=8.0, color=GRAY)
+    topology.text(7.35, 8.55, "1", ha="center", fontsize=8.0, color=GRAY)
+    for dp_rank, y in enumerate([6.9, 5.25, 3.6, 1.95]):
+        topology.text(
+            0.05,
+            y + 0.55,
+            f"Req. {chr(65 + dp_rank)}\nDP{dp_rank}",
+            ha="left",
+            va="center",
+            fontsize=7.7,
+        )
+        for sp_rank, x in enumerate([2.7, 6.3]):
+            box(
+                topology,
+                x,
+                y,
+                2.1,
+                1.1,
+                f"GPU {dp_rank * 2 + sp_rank}\nSP{sp_rank}",
+                face=["#E8F0F8", "#FDF0E5"][sp_rank],
+            )
+        arrow(
+            topology,
+            (4.82, y + 0.55),
+            (6.27, y + 0.55),
+            color=BLUE,
+            style="<->",
+            width=1.35,
+        )
+    for x in [3.75, 7.35]:
+        arrow(topology, (x, 7.0), (x, 2.0), color=ORANGE, style="<->", width=1.55)
+    topology.text(
+        5.55,
+        0.92,
+        "horizontal: SP activation exchange",
+        ha="center",
+        fontsize=7.5,
+        color=BLUE,
+    )
+    topology.text(
+        5.55,
+        0.40,
+        "vertical: DLO weight AllGather over DP",
+        ha="center",
+        fontsize=7.5,
+        color=ORANGE,
+    )
+
+    allgather = axes[1]
+    allgather.set_title("(b) DLO + AllGather", loc="left", fontweight="bold")
+    allgather.text(
+        5.0,
+        9.18,
+        "synchronized compatible request wave",
+        ha="center",
+        fontsize=7.8,
+        color=ORANGE,
+    )
+    host_shards = [
+        ("rank 0\nhost 1/G", 0.35),
+        ("...", 2.70),
+        ("rank G-1\nhost 1/G", 4.20),
+    ]
+    for label, x in host_shards:
+        box(
+            allgather, x, 7.18, 1.80, 1.02, label, face="#FDF0E5", edge=ORANGE, size=7.0
+        )
+    arrow(allgather, (6.10, 7.68), (7.55, 7.68), color=ORANGE)
+    box(
+        allgather,
+        7.65,
+        6.95,
+        1.95,
+        1.45,
+        "full block\nN+1",
+        face="#FDF0E5",
+        edge=ORANGE,
+    )
+    allgather.text(7.0, 8.28, "H2D + AG", ha="center", fontsize=7.2, color=ORANGE)
+    box(
+        allgather,
+        0.55,
+        4.15,
+        3.15,
+        1.20,
+        "slot A: block N\nCOMPUTE",
+        face="#EAF4D7",
+        edge=ACCENT,
+    )
+    box(
+        allgather,
+        5.15,
+        4.15,
+        3.35,
+        1.20,
+        "slot B: block N+1\nPREFETCH",
+        face="#FDF0E5",
+        edge=ORANGE,
+    )
+    arrow(allgather, (3.8, 4.75), (5.05, 4.75))
+    arrow(allgather, (8.58, 6.88), (7.35, 5.42), color=ORANGE)
+    allgather.text(
+        4.95,
+        3.47,
+        "overlap on compute / copy / comm streams",
+        ha="center",
+        fontsize=7.5,
+        color=GRAY,
+    )
+    arrow(allgather, (2.25, 2.65), (7.55, 2.65), color=ACCENT, width=2.0)
+    allgather.text(2.25, 2.05, "compute N", ha="center", fontsize=7.2, color=ACCENT)
+    arrow(allgather, (3.70, 1.45), (8.75, 1.45), color=ORANGE, width=2.0)
+    allgather.text(6.15, 0.84, "H2D + AG N+1", ha="center", fontsize=7.2, color=ORANGE)
+    allgather.text(
+        5.0,
+        0.18,
+        "swap slots; repeat for every block and update",
+        ha="center",
+        fontsize=7.3,
+    )
+
+    local = axes[2]
+    local.set_title("(c) Rank-local DLO", loc="left", fontweight="bold")
+    local.text(
+        5.0,
+        9.18,
+        "heterogeneous and partial waves allowed",
+        ha="center",
+        fontsize=7.8,
+        color=BLUE,
+    )
+    box(
+        local,
+        0.55,
+        7.08,
+        3.20,
+        1.35,
+        "full rank-local\nhost block N+1",
+        face="#E8F0F8",
+        edge=BLUE,
+    )
+    arrow(local, (3.90, 7.75), (5.15, 7.75), color=BLUE)
+    local.text(4.55, 8.22, "H2D", ha="center", fontsize=7.2, color=BLUE)
+    box(
+        local,
+        5.30,
+        7.08,
+        3.65,
+        1.35,
+        "slot B: block N+1\n(no DLO collective)",
+        face="#E8F0F8",
+        edge=BLUE,
+    )
+    box(
+        local,
+        0.55,
+        4.30,
+        3.20,
+        1.20,
+        "slot A: block N\nCOMPUTE",
+        face="#EAF4D7",
+        edge=ACCENT,
+    )
+    arrow(local, (7.10, 7.0), (3.80, 5.55), color=BLUE)
+    local.text(
+        5.0,
+        3.60,
+        "each replica owns its transfer schedule",
+        ha="center",
+        fontsize=7.5,
+        color=GRAY,
+    )
+    lanes = [
+        (2.60, "Req. A:  step k / block N+1", ACCENT, 9.0),
+        (1.55, "Req. B:  step j / block M", BLUE, 7.65),
+        (0.50, "idle replica:  no duplicated work", GRAY, 5.8),
+    ]
+    for y, label, color, end in lanes:
+        local.text(
+            0.25, y + 0.22, label, ha="left", va="bottom", fontsize=7.1, color=color
+        )
+        arrow(local, (0.30, y), (end, y), color=color, width=1.7)
+
+    fig.suptitle(
+        "MiniMax-H3 distributed layerwise offload dynamics (resident_layers=0)",
+        y=1.02,
+        fontsize=11.2,
+        fontweight="bold",
+    )
+    fig.tight_layout(w_pad=1.05)
+    save(fig, "dlo_architecture")
+
+
 def pareto_figure(soak: list[dict[str, str]]) -> None:
     if len(soak) != 3:
         raise ValueError(f"expected 3 T2VA soak rows, found {len(soak)}")
@@ -78,7 +320,7 @@ def pareto_figure(soak: list[dict[str, str]]) -> None:
         )
     ax.set_xlabel("Wave latency P50 (s) -- lower is better")
     ax.set_ylabel("Sustained throughput (videos/hour) -- higher is better")
-    ax.set_title("Latency--throughput Pareto frontier (T2VA, 50-step, n=20)")
+    ax.set_title("Selected-route latency--throughput frontier (T2VA, 50-step, n=20)")
     ax.set_xlim(20, 172)
     ax.set_ylim(90, 193)
     fig.tight_layout()
@@ -87,9 +329,7 @@ def pareto_figure(soak: list[dict[str, str]]) -> None:
 
 def collective_figure(formal: list[dict[str, str]]) -> None:
     t2va = {
-        (row["topology"], row["mode"]): row
-        for row in formal
-        if row["task"] == "t2va"
+        (row["topology"], row["mode"]): row for row in formal if row["task"] == "t2va"
     }
     topologies = ["dp1-sp8", "dp4-sp2", "dp8-sp1"]
     labels = ["DP1 x SP8", "DP4 x SP2", "DP8 x SP1"]
@@ -166,10 +406,11 @@ def main() -> None:
     FIGURES.mkdir(exist_ok=True)
     formal = read_csv("industrial_results.csv")
     soak = read_csv("t2va_soak_n20.csv")
+    architecture_figure()
     pareto_figure(soak)
     collective_figure(formal)
     multimodal_figure(formal)
-    print("generated 3 figures in PDF and PNG formats")
+    print("generated 4 figures in PDF and PNG formats")
 
 
 if __name__ == "__main__":
