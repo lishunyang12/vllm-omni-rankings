@@ -1,0 +1,1686 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src 'unsafe-inline' blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Minimax H3 Before After</title>
+<style>:root{color-scheme:light dark;background:light-dark(rgb(255 255 255), rgb(24 24 24))}html,body{margin:0}body{box-sizing:border-box;padding:1rem;background:inherit}iframe{display:block;width:100%;height:calc(100vh - 2rem);margin:0 auto;border:0}</style>
+</head>
+<body>
+<iframe sandbox="allow-scripts" referrerpolicy="no-referrer" title="Minimax H3 Before After" srcdoc="&lt;!doctype html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;
+&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &#x27;none&#x27;; script-src &#x27;unsafe-inline&#x27; &#x27;unsafe-eval&#x27; &#x27;wasm-unsafe-eval&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; style-src &#x27;unsafe-inline&#x27; blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; img-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; font-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; media-src blob: data: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://esm.sh https://fonts.bunny.net https://fonts.googleapis.com https://fonts.gstatic.com https://unpkg.com; worker-src blob:; connect-src blob: data:; frame-src &#x27;none&#x27;; object-src &#x27;none&#x27;; base-uri &#x27;none&#x27;; form-action &#x27;none&#x27;&quot;&gt;
+&lt;title&gt;Minimax H3 Before After&lt;/title&gt;
+&lt;style&gt;:root {
+  color-scheme: light dark;
+  background-color: var(
+    --background,
+    var(--color-background-primary, light-dark(rgb(255 255 255), rgb(24 24 24)))
+  ) !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --color-background-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --card: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  --card-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --popover: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255), rgb(45 45 45))
+  );
+  --popover-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --primary: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --primary-foreground: var(
+    --color-text-inverse,
+    light-dark(rgb(255 255 255), rgb(13 13 13))
+  );
+  --secondary: var(
+    --color-background-secondary,
+    light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%))
+  );
+  --secondary-foreground: var(
+    --color-text-primary,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: var(
+    --color-text-secondary,
+    light-dark(rgb(26 28 31 / 49.4%), rgb(255 255 255 / 49.8%))
+  );
+  --accent: var(
+    --color-background-info,
+    light-dark(rgb(229 242 255), rgb(13 39 63))
+  );
+  --accent-foreground: var(
+    --color-text-info,
+    light-dark(rgb(51 156 255), rgb(131 195 255))
+  );
+  --destructive: var(
+    --color-text-warning,
+    light-dark(rgb(226 85 7), rgb(255 133 73))
+  );
+  --border: var(
+    --color-border-secondary,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+  --input: var(
+    --color-border-primary,
+    light-dark(
+      rgb(26 28 31 / 11.8%),
+      color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+    )
+  );
+  --ring: var(
+    --color-ring-primary,
+    light-dark(rgb(51 156 255), rgb(131 195 255 / 76%))
+  );
+  --font-size-base: var(--font-text-md-size, 14px);
+  --blue: light-dark(rgb(51 156 255), rgb(51 156 255));
+  --orange: light-dark(rgb(226 85 7), rgb(251 106 34));
+  --green: light-dark(rgb(0 162 64), rgb(64 201 119));
+  --red: light-dark(rgb(224 46 42), rgb(255 103 100));
+  --purple: light-dark(rgb(146 79 247), rgb(173 123 249));
+  --yellow: light-dark(rgb(255 195 0), rgb(255 210 64));
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(rgb(243 136 59), rgb(245 154 86));
+  --viz-series-3: light-dark(rgb(93 201 119), rgb(116 213 139));
+  --viz-series-4: light-dark(rgb(235 119 177), rgb(240 143 192));
+  --viz-series-5: light-dark(rgb(155 121 236), rgb(170 145 239));
+  --viz-series-6: light-dark(rgb(58 185 177), rgb(90 203 194));
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, &quot;Segoe UI&quot;, sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, &quot;SF Mono&quot;, Menlo, Consolas, &quot;Liberation Mono&quot;,
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: var(--border-radius-lg, 12.5px);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url(&quot;data:image/svg+xml,%3Csvg xmlns=&#x27;http://www.w3.org/2000/svg&#x27; viewBox=&#x27;0 0 17 17&#x27;%3E%3Cpath d=&#x27;M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z&#x27;/%3E%3C/svg%3E&quot;);
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+}
+
+:root[data-theme=&quot;light&quot;] {
+  color-scheme: light;
+}
+
+:root[data-theme=&quot;dark&quot;] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html &gt; body {
+  /* Preserve MCP aliases for older inline renderers without creating :root cycles. */
+  --color-background-primary: var(
+    --background,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --color-text-primary: var(
+    --foreground,
+    light-dark(rgb(26 28 31), rgb(255 255 255))
+  );
+  --color-border-secondary: var(
+    --border,
+    light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%))
+  );
+
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--font-weight-medium, 500);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--foreground);
+  font: inherit;
+  text-align: start;
+}
+
+.table :is(th, td) {
+  padding-block: 10px;
+  padding-inline: 0 24px;
+  overflow-wrap: anywhere;
+  border-bottom: 1px solid var(--border);
+  text-align: start;
+  vertical-align: top;
+}
+
+.table-responsive &gt; .table :is(th, td) {
+  overflow-wrap: break-word;
+}
+
+.table :is(th, td):last-child {
+  padding-inline-end: 0;
+}
+
+.table :is(caption, thead th) {
+  font-weight: 600;
+}
+
+.table thead th {
+  padding-block: 8px;
+  border-bottom-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+}
+
+.table tbody tr:last-child :is(th, td) {
+  border-bottom: 0;
+}
+
+.table.table-sm :is(th, td) {
+  padding-block: 6px;
+}
+
+.table.table-sm :is(th, td):not(:last-child) {
+  padding-inline-end: 16px;
+}
+
+.table :is(.text-end, [align=&quot;right&quot;]) {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
+}
+
+.table :is(.text-center, [align=&quot;center&quot;]) {
+  text-align: center;
+}
+
+.table .text-nowrap {
+  white-space: nowrap;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  corner-shape: superellipse(1.5);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget &gt; :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls &gt; .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls &gt; .form-label &gt; :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.btn:is(.btn-block, .viz-tile) {
+  inline-size: 100%;
+}
+
+.btn.viz-tile {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary .text-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 50%, transparent);
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+.form-control[type=&quot;file&quot;] {
+  padding: 0;
+  overflow: hidden;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control[type=&quot;file&quot;]::file-selector-button {
+  min-height: 26px;
+  margin-right: 8px;
+  padding: 0 8px;
+  border: 0;
+  border-right: 1px solid var(--input);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: inherit;
+  font: inherit;
+}
+
+.form-control[type=&quot;file&quot;]:not(:disabled):hover::file-selector-button {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-control-color[type=&quot;color&quot;] {
+  width: 40px;
+  height: 28px;
+  padding: 3px;
+  cursor: var(--cursor-interaction, pointer);
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.form-control-color[type=&quot;color&quot;]::-webkit-color-swatch {
+  border: 0;
+  border-radius: calc(var(--radius-lg) - 4px);
+  corner-shape: superellipse(1.5);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  corner-shape: superellipse(1.5);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  corner-shape: superellipse(1.5);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type=&quot;checkbox&quot;]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type=&quot;checkbox&quot;]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: &quot;&quot;;
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type=&quot;radio&quot;] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type=&quot;radio&quot;]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: &quot;&quot;;
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed=&quot;true&quot;],
+    [aria-selected=&quot;true&quot;],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed=&quot;true&quot;], [aria-selected=&quot;true&quot;], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget &gt; svg {
+  width: 100%;
+}
+
+/* Model-authored chart rules can otherwise stretch icons after these styles load. */
+svg.lucide {
+  display: block;
+  width: 16px !important;
+  height: 16px !important;
+  flex: none;
+  margin: 0 !important;
+  stroke-width: 1.6;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+
+html&gt;body{padding:0}&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id=&quot;h3-recipe-comparison&quot;&gt;
+  &lt;style&gt;
+    #h3-recipe-comparison {
+      color-scheme: light dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;
+      color: light-dark(#14213d, #eef4ff);
+      background: light-dark(#f7f9fc, #0b1020);
+      border: 1px solid light-dark(#dbe3f0, #28334c);
+      border-radius: 16px;
+      overflow: hidden;
+      min-height: 760px;
+    }
+    #h3-recipe-comparison * { box-sizing: border-box; }
+    #h3-recipe-comparison button { font: inherit; }
+    #h3-recipe-comparison .h3-viewbar { display: flex; align-items: center; justify-content: center; gap: 3px; padding: 8px 16px; background: light-dark(#eef2f8, #0d1425); border-bottom: 1px solid light-dark(#d6deea, #263149); }
+    #h3-recipe-comparison .h3-view-label { margin-right: 7px; color: light-dark(#68758c, #9ba8bf); font-size: 11px; }
+    #h3-recipe-comparison .h3-view-button { border: 1px solid transparent; border-radius: 7px; padding: 6px 11px; background: transparent; color: light-dark(#526078, #aab5ca); font-size: 11px; cursor: pointer; }
+    #h3-recipe-comparison .h3-view-button[aria-pressed=&quot;true&quot;] { border-color: light-dark(#cad5e5, #394761); background: light-dark(#ffffff, #182238); color: light-dark(#223b99, #e3e9ff); box-shadow: 0 1px 2px light-dark(#cad3df, #070b14); }
+    #h3-recipe-comparison .h3-before-shell { display: none; max-width: 1120px; margin: 0 auto; padding: 25px 24px 42px; }
+    #h3-recipe-comparison[data-view=&quot;before&quot;] .h3-before-shell { display: block; }
+    #h3-recipe-comparison[data-view=&quot;before&quot;] &gt; .h3-shell { display: none; }
+    #h3-recipe-comparison .h3-before-heading { margin-bottom: 22px; }
+    #h3-recipe-comparison .h3-before-heading h1 { margin: 0; }
+    #h3-recipe-comparison .h3-before-heading p { margin: 7px 0 0; color: light-dark(#69758c, #a6b2c8); font-size: 12px; }
+    #h3-recipe-comparison .h3-before-layout { display: grid; grid-template-columns: minmax(0, 1fr) 175px; gap: 26px; }
+    #h3-recipe-comparison .h3-before-main { min-width: 0; }
+    #h3-recipe-comparison .h3-before-section { margin-bottom: 24px; }
+    #h3-recipe-comparison .h3-before-section h2 { margin: 0 0 9px; font-size: 16px; }
+    #h3-recipe-comparison .h3-before-section p { margin: 0 0 10px; color: light-dark(#626e84, #a6b2c8); font-size: 11px; line-height: 1.55; }
+    #h3-recipe-comparison .h3-before-code { margin: 0; min-height: 0; padding: 13px 15px; border: 1px solid light-dark(#d7e0ed, #2c3852); border-radius: 9px; background: light-dark(#f1f4f8, #0b1120); font-size: 10px; line-height: 1.55; }
+    #h3-recipe-comparison .h3-before-builder { margin-top: 12px; border: 1px solid light-dark(#d7e0ed, #2c3852); border-radius: 10px; background: light-dark(#ffffff, #11182b); overflow: hidden; }
+    #h3-recipe-comparison .h3-before-command-head { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid light-dark(#e2e8f1, #273249); font-size: 10px; }
+    #h3-recipe-comparison .h3-before-command { min-height: 175px; border-radius: 0; border: 0; }
+    #h3-recipe-comparison .h3-before-fields { padding: 12px; display: grid; gap: 12px; }
+    #h3-recipe-comparison .h3-before-field strong { display: block; margin-bottom: 6px; font-size: 10px; }
+    #h3-recipe-comparison .h3-before-choices { display: flex; flex-wrap: wrap; gap: 5px; }
+    #h3-recipe-comparison .h3-before-choice { border: 1px solid light-dark(#ccd7e5, #37445f); border-radius: 5px; padding: 6px 8px; background: light-dark(#ffffff, #151e33); color: inherit; font-size: 9px; }
+    #h3-recipe-comparison .h3-before-choice:first-child { border-color: #4263eb; color: light-dark(#2f49bd, #dce4ff); }
+    #h3-recipe-comparison .h3-before-note { padding: 9px 11px; border: 1px solid light-dark(#ecd99a, #705821); border-radius: 8px; background: light-dark(#fff9df, #251f10); color: light-dark(#715c15, #ecd57e); font-size: 10px; line-height: 1.45; }
+    #h3-recipe-comparison .h3-before-toc { position: sticky; top: 12px; align-self: start; border-left: 1px solid light-dark(#dde4ee, #2d3850); padding-left: 15px; }
+    #h3-recipe-comparison .h3-before-toc strong { display: block; margin-bottom: 8px; font-size: 10px; }
+    #h3-recipe-comparison .h3-before-toc span { display: block; padding: 5px 0; color: light-dark(#717d92, #9ba8bf); font-size: 9px; }
+    #h3-recipe-comparison .h3-before-matrix { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+    #h3-recipe-comparison .h3-before-cell { padding: 8px; border: 1px solid light-dark(#dce3ec, #2b364d); border-radius: 7px; background: light-dark(#ffffff, #121a2d); font-size: 9px; color: light-dark(#637088, #a8b4c9); }
+    #h3-recipe-comparison .h3-topbar {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 22px;
+      background: light-dark(#ffffff, #10172a);
+      border-bottom: 1px solid light-dark(#dbe3f0, #28334c);
+    }
+    #h3-recipe-comparison .h3-brand { display: flex; align-items: center; gap: 10px; font-weight: 760; font-size: 14px; }
+    #h3-recipe-comparison .h3-mark {
+      width: 25px; height: 25px; border-radius: 7px; display: grid; place-items: center;
+      color: white; background: #4263eb; font-weight: 850; font-size: 12px;
+    }
+    #h3-recipe-comparison .h3-nav { display: flex; gap: 18px; color: light-dark(#5c6780, #9eabc6); font-size: 12px; }
+    #h3-recipe-comparison .h3-shell { max-width: 1120px; margin: 0 auto; padding: 25px 24px 42px; }
+    #h3-recipe-comparison .h3-breadcrumb { font-size: 11px; color: light-dark(#6b7690, #9eabc6); margin-bottom: 10px; }
+    #h3-recipe-comparison .h3-title-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; }
+    #h3-recipe-comparison h1 { margin: 0; font-size: 27px; letter-spacing: -0.035em; line-height: 1.15; }
+    #h3-recipe-comparison .h3-provider { color: light-dark(#74809a, #9eabc6); font-weight: 520; }
+    #h3-recipe-comparison .h3-subtitle { margin: 7px 0 0; max-width: 700px; color: light-dark(#5c6780, #aebad1); font-size: 13px; line-height: 1.5; }
+    #h3-recipe-comparison .h3-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    #h3-recipe-comparison .h3-tag {
+      padding: 4px 8px; border: 1px solid light-dark(#d4deed, #35415c); border-radius: 6px;
+      background: light-dark(#ffffff, #141d32); font-size: 10px; color: light-dark(#56627b, #b6c1d6);
+    }
+    #h3-recipe-comparison .h3-primary-link {
+      border: 1px solid light-dark(#cdd8e8, #3b4865); background: light-dark(#ffffff, #151e33);
+      color: inherit; border-radius: 8px; padding: 8px 11px; font-size: 11px; white-space: nowrap;
+    }
+    #h3-recipe-comparison .h3-section-title { margin: 25px 0 10px; display: flex; align-items: baseline; gap: 9px; }
+    #h3-recipe-comparison .h3-section-title strong { font-size: 16px; }
+    #h3-recipe-comparison .h3-section-title span { font-size: 11px; color: light-dark(#6b7690, #99a6bf); }
+    #h3-recipe-comparison .h3-builder {
+      display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(380px, 1.08fr); gap: 14px; align-items: start;
+    }
+    #h3-recipe-comparison .h3-config,
+    #h3-recipe-comparison .h3-output {
+      background: light-dark(#ffffff, #11182b); border: 1px solid light-dark(#d7e0ed, #2c3852); border-radius: 12px;
+    }
+    #h3-recipe-comparison .h3-config { padding: 4px 16px; }
+    #h3-recipe-comparison .h3-row { padding: 13px 0; border-bottom: 1px solid light-dark(#e7ecf4, #242f47); }
+    #h3-recipe-comparison .h3-row:last-child { border-bottom: 0; }
+    #h3-recipe-comparison .h3-row-head { display: flex; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+    #h3-recipe-comparison .h3-row-label { font-size: 11px; font-weight: 720; }
+    #h3-recipe-comparison .h3-row-value { font-size: 10px; color: #4263eb; }
+    #h3-recipe-comparison .h3-options { display: flex; flex-wrap: wrap; gap: 6px; }
+    #h3-recipe-comparison .h3-option {
+      border: 1px solid light-dark(#cfd9e8, #37445f); background: light-dark(#fbfcfe, #151e33);
+      color: inherit; border-radius: 7px; padding: 7px 9px; text-align: left; cursor: pointer; min-height: 33px;
+      font-size: 10px;
+    }
+    #h3-recipe-comparison .h3-option span { display: block; font-weight: 680; }
+    #h3-recipe-comparison .h3-option small { display: block; margin-top: 2px; color: light-dark(#738099, #9aa8c1); font-size: 9px; }
+    #h3-recipe-comparison .h3-option[aria-pressed=&quot;true&quot;] {
+      border-color: #4263eb; background: light-dark(#eef2ff, #1a2850); color: light-dark(#243ba6, #dce4ff);
+      box-shadow: inset 0 0 0 1px #4263eb;
+    }
+    #h3-recipe-comparison .h3-option:disabled { opacity: 0.43; cursor: not-allowed; }
+    #h3-recipe-comparison .h3-why {
+      margin-top: 8px; padding: 8px 9px; border-left: 3px solid #4263eb;
+      background: light-dark(#f4f6ff, #151f3d); color: light-dark(#4f5c76, #bdc8dd); font-size: 10px; line-height: 1.45;
+    }
+    #h3-recipe-comparison .h3-advanced {
+      width: 100%; border: 0; background: transparent; color: light-dark(#586680, #aeb9d0);
+      text-align: left; padding: 10px 0 12px; font-size: 10px; cursor: pointer;
+    }
+    #h3-recipe-comparison .h3-output { overflow: hidden; position: sticky; top: 10px; }
+    #h3-recipe-comparison .h3-output-head { padding: 12px 14px 10px; border-bottom: 1px solid light-dark(#d7e0ed, #2c3852); }
+    #h3-recipe-comparison .h3-status-row { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; }
+    #h3-recipe-comparison .h3-verified {
+      display: inline-flex; align-items: center; gap: 5px; color: light-dark(#15713d, #71daa0); font-size: 10px; font-weight: 750;
+    }
+    #h3-recipe-comparison .h3-dot { width: 7px; height: 7px; border-radius: 50%; background: #20a45b; }
+    #h3-recipe-comparison .h3-summary { font-size: 11px; font-weight: 680; }
+    #h3-recipe-comparison .h3-evidence { margin-top: 7px; display: flex; flex-wrap: wrap; gap: 6px; }
+    #h3-recipe-comparison .h3-evidence span {
+      font-size: 9px; padding: 3px 6px; border-radius: 5px; background: light-dark(#f1f4f9, #1a2338);
+      color: light-dark(#68748d, #a7b4cc);
+    }
+    #h3-recipe-comparison .h3-tabs { display: flex; padding: 0 13px; border-bottom: 1px solid light-dark(#d7e0ed, #2c3852); }
+    #h3-recipe-comparison .h3-tab {
+      border: 0; border-bottom: 2px solid transparent; background: transparent; color: light-dark(#6c7890, #a4b0c8);
+      padding: 9px 10px 7px; font-size: 10px; cursor: pointer;
+    }
+    #h3-recipe-comparison .h3-tab[aria-selected=&quot;true&quot;] { color: light-dark(#263d9b, #dbe4ff); border-bottom-color: #4263eb; font-weight: 720; }
+    #h3-recipe-comparison pre {
+      margin: 0; min-height: 245px; padding: 14px 15px 18px; overflow: auto;
+      background: light-dark(#f3f5f9, #0a1020); color: light-dark(#22304c, #d8e2f7);
+      font: 10px/1.62 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; white-space: pre-wrap;
+    }
+    #h3-recipe-comparison .h3-output-foot {
+      display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 13px;
+      background: light-dark(#ffffff, #11182b); font-size: 9px; color: light-dark(#69758d, #99a6bf);
+    }
+    #h3-recipe-comparison .h3-copy {
+      border: 0; border-radius: 6px; background: #4263eb; color: white; padding: 6px 10px; font-size: 9px; font-weight: 720;
+    }
+    #h3-recipe-comparison .h3-guide-grid { display: grid; grid-template-columns: 170px 1fr; gap: 14px; }
+    #h3-recipe-comparison .h3-toc {
+      background: light-dark(#ffffff, #11182b); border: 1px solid light-dark(#d7e0ed, #2c3852); border-radius: 11px;
+      padding: 10px;
+    }
+    #h3-recipe-comparison .h3-toc div { padding: 7px 8px; border-radius: 6px; font-size: 10px; color: light-dark(#66738d, #9eabc3); }
+    #h3-recipe-comparison .h3-toc div:first-child { background: light-dark(#eef2ff, #1a2850); color: light-dark(#283fa8, #d8e1ff); font-weight: 720; }
+    #h3-recipe-comparison .h3-guide-content { display: grid; gap: 9px; }
+    #h3-recipe-comparison .h3-guide-block {
+      padding: 13px 15px; background: light-dark(#ffffff, #11182b); border: 1px solid light-dark(#d7e0ed, #2c3852); border-radius: 11px;
+    }
+    #h3-recipe-comparison .h3-guide-block h3 { margin: 0 0 6px; font-size: 12px; }
+    #h3-recipe-comparison .h3-guide-block p { margin: 0; font-size: 10px; color: light-dark(#65728b, #a5b1c8); line-height: 1.5; }
+    #h3-recipe-comparison .h3-guide-block strong { color: inherit; }
+    #h3-recipe-comparison .h3-mini-table { width: 100%; margin-top: 9px; border-collapse: collapse; font-size: 9px; }
+    #h3-recipe-comparison .h3-mini-table th,
+    #h3-recipe-comparison .h3-mini-table td { padding: 6px 4px; border-top: 1px solid light-dark(#e4eaf3, #27324a); text-align: left; }
+    #h3-recipe-comparison .h3-mini-table th { color: light-dark(#79859d, #98a5be); font-weight: 650; }
+    @media (max-width: 780px) {
+      #h3-recipe-comparison .h3-nav { display: none; }
+      #h3-recipe-comparison .h3-shell { padding: 20px 14px 34px; }
+      #h3-recipe-comparison .h3-title-row { display: block; }
+      #h3-recipe-comparison .h3-primary-link { margin-top: 12px; }
+      #h3-recipe-comparison .h3-builder { grid-template-columns: 1fr; }
+      #h3-recipe-comparison .h3-output { position: static; }
+      #h3-recipe-comparison .h3-guide-grid { grid-template-columns: 1fr; }
+      #h3-recipe-comparison .h3-toc { display: flex; overflow-x: auto; }
+      #h3-recipe-comparison .h3-toc div { white-space: nowrap; }
+      #h3-recipe-comparison .h3-before-shell { padding: 20px 14px 34px; }
+      #h3-recipe-comparison .h3-before-layout { grid-template-columns: 1fr; }
+      #h3-recipe-comparison .h3-before-toc { position: static; display: flex; gap: 10px; overflow-x: auto; border-left: 0; border-top: 1px solid light-dark(#dde4ee, #2d3850); padding: 10px 0 0; }
+      #h3-recipe-comparison .h3-before-toc strong { display: none; }
+      #h3-recipe-comparison .h3-before-toc span { white-space: nowrap; }
+      #h3-recipe-comparison .h3-before-matrix { grid-template-columns: repeat(2, 1fr); }
+    }
+  &lt;/style&gt;
+
+  &lt;div class=&quot;h3-topbar&quot;&gt;
+    &lt;div class=&quot;h3-brand&quot;&gt;&lt;span class=&quot;h3-mark&quot;&gt;V&lt;/span&gt;&lt;span&gt;vLLM Recipes&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;h3-nav&quot;&gt;&lt;span&gt;Models&lt;/span&gt;&lt;span&gt;Hardware&lt;/span&gt;&lt;span&gt;Benchmarks&lt;/span&gt;&lt;span&gt;Docs&lt;/span&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;h3-viewbar&quot; aria-label=&quot;Recipe design comparison&quot;&gt;
+    &lt;span class=&quot;h3-view-label&quot;&gt;Design comparison&lt;/span&gt;
+    &lt;button class=&quot;h3-view-button&quot; type=&quot;button&quot; data-view=&quot;before&quot; aria-pressed=&quot;false&quot;&gt;Before&lt;/button&gt;
+    &lt;button class=&quot;h3-view-button&quot; type=&quot;button&quot; data-view=&quot;after&quot; aria-pressed=&quot;true&quot;&gt;Fully refactored&lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;h3-before-shell&quot;&gt;
+    &lt;div class=&quot;h3-breadcrumb&quot;&gt;Recipes / MiniMaxAI / MiniMax-H3&lt;/div&gt;
+    &lt;div class=&quot;h3-before-heading&quot;&gt;
+      &lt;h1&gt;&lt;span class=&quot;h3-provider&quot;&gt;MiniMaxAI/&lt;/span&gt;MiniMax-H3&lt;/h1&gt;
+      &lt;p&gt;Generate video and audio with MiniMax-H3 on vLLM-Omni.&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;h3-before-layout&quot;&gt;
+      &lt;div class=&quot;h3-before-main&quot;&gt;
+        &lt;section class=&quot;h3-before-section&quot;&gt;
+          &lt;h2&gt;Installation&lt;/h2&gt;
+          &lt;pre class=&quot;h3-before-code&quot;&gt;uv pip install vllm-omni
+hf download MiniMaxAI/MiniMax-H3 --local-dir /models/MiniMax-H3&lt;/pre&gt;
+        &lt;/section&gt;
+
+        &lt;section class=&quot;h3-before-section&quot;&gt;
+          &lt;h2&gt;Start the server&lt;/h2&gt;
+          &lt;p&gt;Select a request, hardware profile, and model variant. The command updates after the selection.&lt;/p&gt;
+          &lt;div class=&quot;h3-before-builder&quot;&gt;
+            &lt;div class=&quot;h3-before-command-head&quot;&gt;&lt;strong&gt;Generated command&lt;/strong&gt;&lt;span&gt;Verified recipe&lt;/span&gt;&lt;/div&gt;
+            &lt;pre class=&quot;h3-before-code h3-before-command&quot;&gt;CUDA_VISIBLE_DEVICES=0,1,2,3 \
+VLLM_WORKER_MULTIPROC_METHOD=spawn \
+vllm serve /path/to/MiniMax-H3 \
+  --omni --host 0.0.0.0 --port 8000 \
+  --num-gpus 4 --usp 4 --ring 1 \
+  --vae-patch-parallel-size 4 \
+  --vae-parallel-mode tile --vae-use-tiling&lt;/pre&gt;
+            &lt;div class=&quot;h3-before-fields&quot;&gt;
+              &lt;div class=&quot;h3-before-field&quot;&gt;
+                &lt;strong&gt;Request Mode&lt;/strong&gt;
+                &lt;div class=&quot;h3-before-choices&quot;&gt;&lt;button class=&quot;h3-before-choice&quot; type=&quot;button&quot;&gt;T2VA&lt;/button&gt;&lt;button class=&quot;h3-before-choice&quot; type=&quot;button&quot;&gt;FL2VA&lt;/button&gt;&lt;button class=&quot;h3-before-choice&quot; type=&quot;button&quot;&gt;Ref2VA&lt;/button&gt;&lt;/div&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;h3-before-field&quot;&gt;
+                &lt;strong&gt;Hardware&lt;/strong&gt;
+                &lt;div class=&quot;h3-before-choices&quot;&gt;&lt;button class=&quot;h3-before-choice&quot; type=&quot;button&quot;&gt;B300&lt;/button&gt;&lt;button class=&quot;h3-before-choice&quot; type=&quot;button&quot;&gt;RTX 5090&lt;/button&gt;&lt;button class=&quot;h3-before-choice&quot; type=&quot;button&quot;&gt;MI300X&lt;/button&gt;&lt;/div&gt;
+              &lt;/div&gt;
+              &lt;div class=&quot;h3-before-field&quot;&gt;
+                &lt;strong&gt;Variant&lt;/strong&gt;
+                &lt;div class=&quot;h3-before-choices&quot;&gt;&lt;button class=&quot;h3-before-choice&quot; type=&quot;button&quot;&gt;FL2VA&lt;/button&gt;&lt;button class=&quot;h3-before-choice&quot; type=&quot;button&quot;&gt;Ref2VA&lt;/button&gt;&lt;/div&gt;
+              &lt;/div&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/section&gt;
+
+        &lt;section class=&quot;h3-before-section&quot;&gt;
+          &lt;h2&gt;Hardware configurations&lt;/h2&gt;
+          &lt;p&gt;Profiles, topology choices, and memory behavior are explained in separate sections below the command builder.&lt;/p&gt;
+          &lt;div class=&quot;h3-before-matrix&quot;&gt;
+            &lt;div class=&quot;h3-before-cell&quot;&gt;B300&lt;br&gt;4 GPUs&lt;br&gt;Resident&lt;/div&gt;
+            &lt;div class=&quot;h3-before-cell&quot;&gt;B300&lt;br&gt;Online FP8&lt;br&gt;Approximate&lt;/div&gt;
+            &lt;div class=&quot;h3-before-cell&quot;&gt;RTX 5090&lt;br&gt;2 GPUs&lt;br&gt;DLO&lt;/div&gt;
+            &lt;div class=&quot;h3-before-cell&quot;&gt;MI300X&lt;br&gt;4 GPUs&lt;br&gt;Resident&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/section&gt;
+
+        &lt;section class=&quot;h3-before-section&quot;&gt;
+          &lt;h2&gt;Usage examples&lt;/h2&gt;
+          &lt;p&gt;T2VA, first-frame, first-and-last-frame, image reference, image plus audio, and video reference each have a separate command block.&lt;/p&gt;
+          &lt;div class=&quot;h3-before-note&quot;&gt;The reader must connect the serve topology, model partition, request payload, FP8 limits, and benchmark evidence across distant sections.&lt;/div&gt;
+        &lt;/section&gt;
+
+        &lt;section class=&quot;h3-before-section&quot;&gt;
+          &lt;h2&gt;Benchmarks&lt;/h2&gt;
+          &lt;p&gt;Latency and memory tables appear later in the guide and are not filtered by the currently selected deployment.&lt;/p&gt;
+          &lt;div class=&quot;h3-before-matrix&quot;&gt;
+            &lt;div class=&quot;h3-before-cell&quot;&gt;Load time&lt;br&gt;per profile&lt;/div&gt;
+            &lt;div class=&quot;h3-before-cell&quot;&gt;Peak memory&lt;br&gt;per GPU&lt;/div&gt;
+            &lt;div class=&quot;h3-before-cell&quot;&gt;Denoise&lt;br&gt;50 steps&lt;/div&gt;
+            &lt;div class=&quot;h3-before-cell&quot;&gt;Video quality&lt;br&gt;BF16 vs FP8&lt;/div&gt;
+          &lt;/div&gt;
+        &lt;/section&gt;
+      &lt;/div&gt;
+
+      &lt;aside class=&quot;h3-before-toc&quot; aria-label=&quot;Before table of contents&quot;&gt;
+        &lt;strong&gt;On this page&lt;/strong&gt;
+        &lt;span&gt;Installation&lt;/span&gt;&lt;span&gt;Start the server&lt;/span&gt;&lt;span&gt;Hardware configurations&lt;/span&gt;&lt;span&gt;B300&lt;/span&gt;&lt;span&gt;RTX 5090&lt;/span&gt;&lt;span&gt;Request examples&lt;/span&gt;&lt;span&gt;T2VA&lt;/span&gt;&lt;span&gt;FL2VA&lt;/span&gt;&lt;span&gt;Ref2VA&lt;/span&gt;&lt;span&gt;Online FP8&lt;/span&gt;&lt;span&gt;DLO&lt;/span&gt;&lt;span&gt;Benchmarks&lt;/span&gt;&lt;span&gt;Troubleshooting&lt;/span&gt;&lt;span&gt;Architecture&lt;/span&gt;
+      &lt;/aside&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;h3-shell&quot;&gt;
+    &lt;div class=&quot;h3-breadcrumb&quot;&gt;Recipes / MiniMaxAI / MiniMax-H3&lt;/div&gt;
+    &lt;div class=&quot;h3-title-row&quot;&gt;
+      &lt;div&gt;
+        &lt;h1&gt;&lt;span class=&quot;h3-provider&quot;&gt;MiniMaxAI/&lt;/span&gt;MiniMax-H3&lt;/h1&gt;
+        &lt;p class=&quot;h3-subtitle&quot;&gt;Generate 24 FPS video with synchronized stereo audio from text, keyframes, and multimodal references.&lt;/p&gt;
+        &lt;div class=&quot;h3-meta&quot;&gt;
+          &lt;span class=&quot;h3-tag&quot;&gt;33B DiT + 32B encoder&lt;/span&gt;&lt;span class=&quot;h3-tag&quot;&gt;7 request presets&lt;/span&gt;&lt;span class=&quot;h3-tag&quot;&gt;vLLM-Omni&lt;/span&gt;&lt;span class=&quot;h3-tag&quot;&gt;Evidence-scoped&lt;/span&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;button class=&quot;h3-primary-link&quot; type=&quot;button&quot;&gt;Model card ↗&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;h3-section-title&quot;&gt;&lt;strong&gt;Configure and run&lt;/strong&gt;&lt;span&gt;Only combinations with target-hardware evidence are promoted as verified.&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;h3-builder&quot;&gt;
+      &lt;div class=&quot;h3-config&quot;&gt;
+        &lt;div class=&quot;h3-row&quot;&gt;
+          &lt;div class=&quot;h3-row-head&quot;&gt;&lt;span class=&quot;h3-row-label&quot;&gt;1 · Hardware&lt;/span&gt;&lt;span class=&quot;h3-row-value&quot; id=&quot;h3-hardware-value&quot;&gt;4 of 8 × B300&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;h3-options&quot;&gt;
+            &lt;button class=&quot;h3-option h3-hardware&quot; type=&quot;button&quot; data-hardware=&quot;b300&quot; aria-pressed=&quot;true&quot;&gt;&lt;span&gt;B300&lt;/span&gt;&lt;small&gt;4 GPUs on 8-GPU host&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option h3-hardware&quot; type=&quot;button&quot; data-hardware=&quot;rtx5090&quot; aria-pressed=&quot;false&quot;&gt;&lt;span&gt;RTX 5090&lt;/span&gt;&lt;small&gt;2 × 32 GiB&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option h3-hardware&quot; type=&quot;button&quot; data-hardware=&quot;mi300x&quot; aria-pressed=&quot;false&quot;&gt;&lt;span&gt;MI300X&lt;/span&gt;&lt;small&gt;4 × 192 GiB&lt;/small&gt;&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;h3-row&quot;&gt;
+          &lt;div class=&quot;h3-row-head&quot;&gt;&lt;span class=&quot;h3-row-label&quot;&gt;2 · Deployment goal&lt;/span&gt;&lt;span class=&quot;h3-row-value&quot; id=&quot;h3-profile-value&quot;&gt;Resident · recommended&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;h3-options&quot;&gt;
+            &lt;button class=&quot;h3-option&quot; id=&quot;h3-profile-primary&quot; type=&quot;button&quot; aria-pressed=&quot;true&quot;&gt;&lt;span&gt;Fastest validated&lt;/span&gt;&lt;small id=&quot;h3-profile-primary-sub&quot;&gt;Resident · no offload&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option&quot; id=&quot;h3-profile-secondary&quot; type=&quot;button&quot; disabled&gt;&lt;span&gt;Lower memory&lt;/span&gt;&lt;small id=&quot;h3-profile-secondary-sub&quot;&gt;No promoted B300 profile&lt;/small&gt;&lt;/button&gt;
+          &lt;/div&gt;
+          &lt;div class=&quot;h3-why&quot; id=&quot;h3-why&quot;&gt;The complete pipeline fits. Keep weights resident and spend bandwidth on Ulysses and tiled VAE decode.&lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;h3-row&quot;&gt;
+          &lt;div class=&quot;h3-row-head&quot;&gt;&lt;span class=&quot;h3-row-label&quot;&gt;3 · Request mode&lt;/span&gt;&lt;span class=&quot;h3-row-value&quot; id=&quot;h3-task-value&quot;&gt;T2VA&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;h3-options&quot;&gt;
+            &lt;button class=&quot;h3-option h3-task&quot; type=&quot;button&quot; data-task=&quot;t2va&quot; aria-pressed=&quot;true&quot;&gt;&lt;span&gt;Text&lt;/span&gt;&lt;small&gt;T2VA&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option h3-task&quot; type=&quot;button&quot; data-task=&quot;first&quot; aria-pressed=&quot;false&quot;&gt;&lt;span&gt;First frame&lt;/span&gt;&lt;small&gt;FL2VA&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option h3-task&quot; type=&quot;button&quot; data-task=&quot;last&quot; aria-pressed=&quot;false&quot;&gt;&lt;span&gt;Last frame&lt;/span&gt;&lt;small&gt;FL2VA&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option h3-task&quot; type=&quot;button&quot; data-task=&quot;firstlast&quot; aria-pressed=&quot;false&quot;&gt;&lt;span&gt;First + last&lt;/span&gt;&lt;small&gt;FL2VA&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option h3-task h3-ref-task&quot; type=&quot;button&quot; data-task=&quot;image&quot; aria-pressed=&quot;false&quot;&gt;&lt;span&gt;Image ref&lt;/span&gt;&lt;small&gt;Ref2VA&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option h3-task h3-ref-task&quot; type=&quot;button&quot; data-task=&quot;ref&quot; aria-pressed=&quot;false&quot;&gt;&lt;span&gt;Image + audio&lt;/span&gt;&lt;small&gt;Ref2VA&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option h3-task h3-ref-task&quot; type=&quot;button&quot; data-task=&quot;video&quot; aria-pressed=&quot;false&quot;&gt;&lt;span&gt;Video reference&lt;/span&gt;&lt;small&gt;Ref2VA&lt;/small&gt;&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+
+        &lt;div class=&quot;h3-row&quot;&gt;
+          &lt;div class=&quot;h3-row-head&quot;&gt;&lt;span class=&quot;h3-row-label&quot;&gt;4 · Precision&lt;/span&gt;&lt;span class=&quot;h3-row-value&quot; id=&quot;h3-precision-value&quot;&gt;BF16 · lossless&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;h3-options&quot;&gt;
+            &lt;button class=&quot;h3-option h3-precision&quot; type=&quot;button&quot; data-precision=&quot;bf16&quot; aria-pressed=&quot;true&quot;&gt;&lt;span&gt;BF16&lt;/span&gt;&lt;small&gt;Reference path&lt;/small&gt;&lt;/button&gt;
+            &lt;button class=&quot;h3-option h3-precision&quot; id=&quot;h3-fp8&quot; type=&quot;button&quot; data-precision=&quot;fp8&quot; aria-pressed=&quot;false&quot;&gt;&lt;span&gt;Online FP8&lt;/span&gt;&lt;small id=&quot;h3-fp8-sub&quot;&gt;B300 validated&lt;/small&gt;&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;button class=&quot;h3-advanced&quot; type=&quot;button&quot;&gt;▸ Advanced topology · resolved automatically (TP, Ulysses, encoder TP, VAE parallel)&lt;/button&gt;
+      &lt;/div&gt;
+
+      &lt;div class=&quot;h3-output&quot;&gt;
+        &lt;div class=&quot;h3-output-head&quot;&gt;
+          &lt;div class=&quot;h3-status-row&quot;&gt;&lt;span class=&quot;h3-verified&quot;&gt;&lt;i class=&quot;h3-dot&quot;&gt;&lt;/i&gt;&lt;span id=&quot;h3-status&quot;&gt;Verified&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;h3-summary&quot; id=&quot;h3-summary&quot;&gt;B300 · Resident · BF16 · T2VA&lt;/span&gt;&lt;/div&gt;
+          &lt;div class=&quot;h3-evidence&quot; id=&quot;h3-evidence&quot;&gt;&lt;span&gt;4 GPUs used&lt;/span&gt;&lt;span&gt;50-step evidence&lt;/span&gt;&lt;span&gt;all task families loaded&lt;/span&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;h3-tabs&quot;&gt;
+          &lt;button class=&quot;h3-tab&quot; type=&quot;button&quot; data-tab=&quot;serve&quot; aria-selected=&quot;true&quot;&gt;Serve&lt;/button&gt;
+          &lt;button class=&quot;h3-tab&quot; type=&quot;button&quot; data-tab=&quot;request&quot; aria-selected=&quot;false&quot;&gt;Request&lt;/button&gt;
+          &lt;button class=&quot;h3-tab&quot; type=&quot;button&quot; data-tab=&quot;verify&quot; aria-selected=&quot;false&quot;&gt;Verify output&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;pre id=&quot;h3-code&quot;&gt;&lt;/pre&gt;
+        &lt;div class=&quot;h3-output-foot&quot;&gt;&lt;span id=&quot;h3-footnote&quot;&gt;Generated from the exact verified cell · pip&lt;/span&gt;&lt;button class=&quot;h3-copy&quot; type=&quot;button&quot;&gt;Copy command&lt;/button&gt;&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;h3-section-title&quot;&gt;&lt;strong&gt;Guide&lt;/strong&gt;&lt;span&gt;Reference material follows the deployment workflow instead of repeating generated commands.&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;h3-guide-grid&quot;&gt;
+      &lt;div class=&quot;h3-toc&quot;&gt;&lt;div&gt;Quick start&lt;/div&gt;&lt;div&gt;Requests&lt;/div&gt;&lt;div&gt;Benchmarks&lt;/div&gt;&lt;div&gt;Advanced tuning&lt;/div&gt;&lt;div&gt;Limits &amp; fixes&lt;/div&gt;&lt;div&gt;Architecture&lt;/div&gt;&lt;/div&gt;
+      &lt;div class=&quot;h3-guide-content&quot;&gt;
+        &lt;div class=&quot;h3-guide-block&quot;&gt;
+          &lt;h3&gt;Why this profile&lt;/h3&gt;
+          &lt;p id=&quot;h3-guide-why&quot;&gt;&lt;strong&gt;Resident on B300&lt;/strong&gt; is the latency-oriented default. The selected command loads both task families and avoids per-step host transfers.&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;h3-guide-block&quot;&gt;
+          &lt;h3&gt;Evidence for the selected cell&lt;/h3&gt;
+          &lt;p&gt;Measurements are shown only when hardware, profile, precision, task family, shape, and step count match. Similar GPUs do not inherit “verified” automatically.&lt;/p&gt;
+          &lt;table class=&quot;h3-mini-table&quot;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Workload&lt;/th&gt;&lt;th&gt;Config&lt;/th&gt;&lt;th&gt;Observed&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody id=&quot;h3-benchmark&quot;&gt;&lt;tr&gt;&lt;td&gt;FL2VA · 209 frames&lt;/td&gt;&lt;td&gt;4×B300 · resident&lt;/td&gt;&lt;td&gt;86.96 s E2E&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Global FP8 · 5 s T2VA&lt;/td&gt;&lt;td&gt;1×B300 · resident&lt;/td&gt;&lt;td&gt;30.8% lower peak&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;&lt;/table&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;h3-guide-block&quot;&gt;
+          &lt;h3&gt;Known limits are contextual&lt;/h3&gt;
+          &lt;p id=&quot;h3-limit&quot;&gt;Unsupported reference combinations, approximate precision, and topology constraints appear beside the control that triggers them—not at the bottom of a 500-line guide.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;script&gt;
+    (() =&gt; {
+      const root = document.getElementById(&#x27;h3-recipe-comparison&#x27;);
+      const code = root.querySelector(&#x27;#h3-code&#x27;);
+      const hardwareButtons = [...root.querySelectorAll(&#x27;.h3-hardware&#x27;)];
+      const taskButtons = [...root.querySelectorAll(&#x27;.h3-task&#x27;)];
+      const precisionButtons = [...root.querySelectorAll(&#x27;.h3-precision&#x27;)];
+      const tabButtons = [...root.querySelectorAll(&#x27;.h3-tab&#x27;)];
+      const viewButtons = [...root.querySelectorAll(&#x27;.h3-view-button&#x27;)];
+      const state = { hardware: &#x27;b300&#x27;, task: &#x27;t2va&#x27;, precision: &#x27;bf16&#x27;, tab: &#x27;serve&#x27; };
+
+      const taskLabels = { t2va: &#x27;T2VA&#x27;, first: &#x27;FL2VA · first frame&#x27;, last: &#x27;FL2VA · last frame&#x27;, firstlast: &#x27;FL2VA · first + last&#x27;, image: &#x27;Ref2VA · image&#x27;, ref: &#x27;Ref2VA · image + audio&#x27;, video: &#x27;Ref2VA · video&#x27; };
+      const continuation = String.fromCharCode(92);
+      const shellJoin = (lines) =&gt; lines.join(String.fromCharCode(10));
+      const serveCommands = {
+        b300: shellJoin([
+          &#x27;CUDA_VISIBLE_DEVICES=0,1,2,3 &#x27; + continuation,
+          &#x27;VLLM_WORKER_MULTIPROC_METHOD=spawn &#x27; + continuation,
+          &#x27;vllm serve /path/to/MiniMax-H3 &#x27; + continuation,
+          &#x27;  --omni --host 0.0.0.0 --port 8000 &#x27; + continuation,
+          &#x27;  --num-gpus 4 --usp 4 --ring 1 &#x27; + continuation,
+          &#x27;  --vae-patch-parallel-size 4 &#x27; + continuation,
+          &#x27;  --vae-parallel-mode tile --vae-use-tiling&#x27;
+        ]),
+        rtx5090: shellJoin([
+          &#x27;CUDA_VISIBLE_DEVICES=0,1 &#x27; + continuation,
+          &#x27;VLLM_OMNI_VIDEO_SYNC_TIMEOUT=14400 &#x27; + continuation,
+          &#x27;vllm serve /path/to/MiniMax-H3 &#x27; + continuation,
+          &#x27;  --omni --task-type fl2va --port 8000 &#x27; + continuation,
+          &#x27;  --num-gpus 2 --tensor-parallel-size 2 &#x27; + continuation,
+          &#x27;  --text-encoder-tp-size 2 --usp 1 &#x27; + continuation,
+          &#x27;  --enable-distributed-layerwise-offload &#x27; + continuation,
+          &#x27;  --dlo-no-use-allgather --dlo-resident-layers 20 &#x27; + continuation,
+          &#x27;  --enforce-eager&#x27;
+        ]),
+        mi300x: shellJoin([
+          &#x27;HIP_VISIBLE_DEVICES=0,1,2,3 &#x27; + continuation,
+          &#x27;VLLM_WORKER_MULTIPROC_METHOD=spawn &#x27; + continuation,
+          &#x27;vllm serve /path/to/MiniMax-H3 &#x27; + continuation,
+          &#x27;  --omni --host 0.0.0.0 --port 8000 &#x27; + continuation,
+          &#x27;  --num-gpus 4 --usp 4 --ring 1 &#x27; + continuation,
+          &#x27;  --vae-patch-parallel-size 4 &#x27; + continuation,
+          &#x27;  --vae-parallel-mode tile --vae-use-tiling&#x27;
+        ])
+      };
+      const requestCommands = {
+        t2va: shellJoin([
+          &#x27;curl --fail-with-body -X POST http://127.0.0.1:8000/v1/videos/sync &#x27; + continuation,
+          `  -F &#x27;prompt=Three cats march through a moonlit room with tiny brass instruments.&#x27; ${continuation}`,
+          `  -F &#x27;width=1344&#x27; -F &#x27;height=768&#x27; -F &#x27;fps=24&#x27; ${continuation}`,
+          `  -F &#x27;num_inference_steps=50&#x27; ${continuation}`,
+          `  -F &#x27;extra_params={&quot;task&quot;:&quot;t2va&quot;,&quot;duration&quot;:5.0,&quot;audio_flow_shift&quot;:3.0}&#x27; ${continuation}`,
+          &#x27;  -o minimax-h3.mp4&#x27;
+        ]),
+        first: shellJoin([&#x27;export FIRST_FRAME=/path/to/first-frame.png&#x27;, &#x27;&#x27;,
+          &#x27;curl --fail-with-body -X POST http://127.0.0.1:8000/v1/videos/sync &#x27; + continuation,
+          `  -F &#x27;extra_params={&quot;task&quot;:&quot;fl2va&quot;,&quot;duration&quot;:5.0,&quot;frame_indices&quot;:[0]}&#x27; ${continuation}`,
+          `  -F &quot;input_references=@$FIRST_FRAME;type=image/png&quot; ${continuation}`, &#x27;  -o minimax-h3.mp4&#x27;]),
+        last: shellJoin([&#x27;export LAST_FRAME=/path/to/last-frame.png&#x27;, &#x27;&#x27;,
+          &#x27;curl --fail-with-body -X POST http://127.0.0.1:8000/v1/videos/sync &#x27; + continuation,
+          `  -F &#x27;extra_params={&quot;task&quot;:&quot;fl2va&quot;,&quot;duration&quot;:5.0,&quot;frame_indices&quot;:[-1]}&#x27; ${continuation}`,
+          `  -F &quot;input_references=@$LAST_FRAME;type=image/png&quot; ${continuation}`, &#x27;  -o minimax-h3.mp4&#x27;]),
+        firstlast: shellJoin([&#x27;export FIRST_FRAME=/path/to/first.png&#x27;, &#x27;export LAST_FRAME=/path/to/last.png&#x27;, &#x27;&#x27;,
+          &#x27;curl --fail-with-body -X POST http://127.0.0.1:8000/v1/videos/sync &#x27; + continuation,
+          `  -F &#x27;extra_params={&quot;task&quot;:&quot;fl2va&quot;,&quot;duration&quot;:5.0,&quot;frame_indices&quot;:[0,-1]}&#x27; ${continuation}`,
+          `  -F &quot;input_references=@$FIRST_FRAME;type=image/png&quot; ${continuation}`,
+          `  -F &quot;input_references=@$LAST_FRAME;type=image/png&quot; ${continuation}`, &#x27;  -o minimax-h3.mp4&#x27;]),
+        image: shellJoin([&#x27;export IMAGE=/path/to/reference.png&#x27;, &#x27;&#x27;,
+          &#x27;curl --fail-with-body -X POST http://127.0.0.1:8000/v1/videos/sync &#x27; + continuation,
+          `  -F &#x27;extra_params={&quot;task&quot;:&quot;ref2va&quot;,&quot;duration&quot;:5.0}&#x27; ${continuation}`,
+          `  -F &quot;input_references=@$IMAGE;type=image/png&quot; ${continuation}`, &#x27;  -o minimax-h3.mp4&#x27;]),
+        ref: shellJoin([&#x27;export IMAGE=/path/to/reference.png&#x27;, &#x27;export AUDIO=/path/to/reference.wav&#x27;, &#x27;&#x27;,
+          &#x27;curl --fail-with-body -X POST http://127.0.0.1:8000/v1/videos/sync &#x27; + continuation,
+          `  -F &#x27;extra_params={&quot;task&quot;:&quot;ref2va&quot;,&quot;duration&quot;:5.0}&#x27; ${continuation}`,
+          `  -F &quot;input_references=@$IMAGE;type=image/png&quot; ${continuation}`,
+          `  -F &quot;audio_reference=@$AUDIO;type=audio/wav&quot; ${continuation}`, &#x27;  -o minimax-h3.mp4&#x27;]),
+        video: shellJoin([&#x27;export VIDEO=/path/to/reference.mp4&#x27;, &#x27;&#x27;,
+          &#x27;curl --fail-with-body -X POST http://127.0.0.1:8000/v1/videos/sync &#x27; + continuation,
+          `  -F &#x27;extra_params={&quot;task&quot;:&quot;ref2va&quot;,&quot;duration&quot;:5.0}&#x27; ${continuation}`,
+          `  -F &quot;input_references=@$VIDEO;type=video/mp4&quot; ${continuation}`, &#x27;  -o minimax-h3.mp4&#x27;])
+      };
+      const verifyCommand = shellJoin([&#x27;curl --fail http://127.0.0.1:8000/health&#x27;, &#x27;&#x27;,
+        &#x27;ffprobe -v error -show_entries &#x27; + continuation,
+        &#x27;  stream=codec_name,width,height,r_frame_rate,sample_rate,channels &#x27; + continuation,
+        &#x27;  -of json minimax-h3.mp4&#x27;, &#x27;&#x27;,
+        &#x27;ffmpeg -v error -i minimax-h3.mp4 &#x27; + continuation,
+        &#x27;  -map 0:v:0 -map 0:a:0 -f null -&#x27;]);
+
+      function setPressed(buttons, value, attr) {
+        buttons.forEach((button) =&gt; button.setAttribute(&#x27;aria-pressed&#x27;, String(button.dataset[attr] === value)));
+      }
+
+      function render() {
+        const isB300 = state.hardware === &#x27;b300&#x27;;
+        const isRTX = state.hardware === &#x27;rtx5090&#x27;;
+        const isFp8 = state.precision === &#x27;fp8&#x27;;
+        const profiles = {
+          b300: {
+            hardware: &#x27;4 of 8 × B300&#x27;, label: &#x27;B300&#x27;, profile: &#x27;Resident · recommended&#x27;, profileName: &#x27;Resident&#x27;,
+            primary: &#x27;Fastest validated&#x27;, primarySub: &#x27;Resident · no offload&#x27;, secondary: &#x27;No promoted B300 profile&#x27;,
+            why: &#x27;The complete pipeline fits. Keep weights resident and spend bandwidth on Ulysses and tiled VAE decode.&#x27;,
+            evidence: &#x27;&lt;span&gt;4 GPUs used&lt;/span&gt;&lt;span&gt;5 s · 50-step evidence&lt;/span&gt;&lt;span&gt;BF16 and FP8 compared&lt;/span&gt;&#x27;,
+            guide: &#x27;&lt;strong&gt;Resident on B300&lt;/strong&gt; is the latency-oriented default. Precision changes in place without changing the request contract.&#x27;,
+            benchmark: &#x27;&lt;tr&gt;&lt;td&gt;BF16 · 5 s T2VA&lt;/td&gt;&lt;td&gt;Resident&lt;/td&gt;&lt;td&gt;162.30 s · 133,110 MiB&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Global FP8 · same case&lt;/td&gt;&lt;td&gt;Resident&lt;/td&gt;&lt;td&gt;151.58 s · 92,146 MiB&lt;/td&gt;&lt;/tr&gt;&#x27;,
+            limit: &#x27;Online FP8 is approximate and appears only with B300 evidence. The same prompt and seed must be reviewed for both video and audio quality.&#x27;
+          },
+          rtx5090: {
+            hardware: &#x27;2 × RTX 5090&#x27;, label: &#x27;RTX 5090&#x27;, profile: &#x27;DLO capacity · recommended&#x27;, profileName: &#x27;DLO&#x27;,
+            primary: &#x27;Fits 32 GiB/GPU&#x27;, primarySub: &#x27;TP2 + rank-local DLO&#x27;, secondary: &#x27;Resident does not fit&#x27;,
+            why: &#x27;Stream rank-local TP shards and keep 20 DiT blocks resident. Host RAM is part of the capacity plan.&#x27;,
+            evidence: &#x27;&lt;span&gt;2 GPUs&lt;/span&gt;&lt;span&gt;BF16 lossless&lt;/span&gt;&lt;span&gt;host RAM ≥384 GiB&lt;/span&gt;&lt;span&gt;FL2VA service&lt;/span&gt;&#x27;,
+            guide: &#x27;&lt;strong&gt;DLO on two RTX 5090s&lt;/strong&gt; is a capacity profile. It preserves BF16/FP32 math but spends PCIe bandwidth streaming weights.&#x27;,
+            benchmark: &#x27;&lt;tr&gt;&lt;td&gt;5 s T2VA · 50 steps&lt;/td&gt;&lt;td&gt;2×RTX 5090 · DLO&lt;/td&gt;&lt;td&gt;Valid H.264 + stereo AAC&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Placement&lt;/td&gt;&lt;td&gt;20 resident DiT blocks&lt;/td&gt;&lt;td&gt;384 GiB host class&lt;/td&gt;&lt;/tr&gt;&#x27;,
+            limit: &#x27;This capacity service loads FL2VA. Ref2VA choices stay visible but disabled until the service is restarted with the reference partition.&#x27;
+          },
+          mi300x: {
+            hardware: &#x27;4 × MI300X&#x27;, label: &#x27;MI300X&#x27;, profile: &#x27;Resident · ROCm&#x27;, profileName: &#x27;Resident&#x27;,
+            primary: &#x27;Resident ROCm profile&#x27;, primarySub: &#x27;USP4 + tiled VAE&#x27;, secondary: &#x27;FP8 not promoted&#x27;,
+            why: &#x27;Keep BF16 weights resident and use the ROCm-native parallel recipe. Precision support remains hardware-scoped.&#x27;,
+            evidence: &#x27;&lt;span&gt;4 GPUs&lt;/span&gt;&lt;span&gt;ROCm recipe&lt;/span&gt;&lt;span&gt;BF16&lt;/span&gt;&lt;span&gt;all request modes&lt;/span&gt;&#x27;,
+            guide: &#x27;&lt;strong&gt;Resident on MI300X&lt;/strong&gt; keeps the request workflow identical while the generated environment and device visibility change for ROCm.&#x27;,
+            benchmark: &#x27;&lt;tr&gt;&lt;td&gt;Deployment&lt;/td&gt;&lt;td&gt;4×MI300X · resident&lt;/td&gt;&lt;td&gt;BF16 profile&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Validation&lt;/td&gt;&lt;td&gt;Video + stereo audio&lt;/td&gt;&lt;td&gt;Target run required&lt;/td&gt;&lt;/tr&gt;&#x27;,
+            limit: &#x27;Online FP8 is not promoted for this hardware cell. The control is disabled with a reason instead of silently emitting an unvalidated command.&#x27;
+          }
+        };
+        const profile = profiles[state.hardware];
+        root.querySelector(&#x27;#h3-hardware-value&#x27;).textContent = profile.hardware;
+        root.querySelector(&#x27;#h3-profile-value&#x27;).textContent = profile.profile;
+        root.querySelector(&#x27;#h3-profile-primary&#x27;).querySelector(&#x27;span&#x27;).textContent = profile.primary;
+        root.querySelector(&#x27;#h3-profile-primary-sub&#x27;).textContent = profile.primarySub;
+        root.querySelector(&#x27;#h3-profile-secondary-sub&#x27;).textContent = profile.secondary;
+        root.querySelector(&#x27;#h3-why&#x27;).textContent = profile.why;
+        root.querySelector(&#x27;#h3-task-value&#x27;).textContent = taskLabels[state.task];
+        root.querySelector(&#x27;#h3-precision-value&#x27;).textContent = isFp8 ? &#x27;FP8 · approximate&#x27; : &#x27;BF16 · lossless&#x27;;
+        const fp8 = root.querySelector(&#x27;#h3-fp8&#x27;);
+        fp8.disabled = !isB300;
+        root.querySelector(&#x27;#h3-fp8-sub&#x27;).textContent = isB300 ? &#x27;B300 validated&#x27; : &#x27;Not promoted on this hardware&#x27;;
+        root.querySelectorAll(&#x27;.h3-ref-task&#x27;).forEach((button) =&gt; {
+          button.disabled = isRTX;
+          button.title = isRTX ? &#x27;Restart this capacity service with --task-type ref2va&#x27; : &#x27;&#x27;;
+        });
+        root.querySelector(&#x27;#h3-summary&#x27;).textContent = `${profile.label} · ${profile.profileName} · ${state.precision.toUpperCase()} · ${taskLabels[state.task]}`;
+        root.querySelector(&#x27;#h3-evidence&#x27;).innerHTML = profile.evidence;
+        root.querySelector(&#x27;#h3-status&#x27;).textContent = isFp8 ? &#x27;Validated on B300&#x27; : isRTX ? &#x27;Verified capacity path&#x27; : &#x27;Documented profile&#x27;;
+        root.querySelector(&#x27;#h3-guide-why&#x27;).innerHTML = profile.guide;
+        root.querySelector(&#x27;#h3-benchmark&#x27;).innerHTML = profile.benchmark;
+        root.querySelector(&#x27;#h3-limit&#x27;).textContent = profile.limit;
+        const baseServe = isFp8 ? serveCommands[state.hardware] + &#x27; &#x27; + continuation + String.fromCharCode(10) + &#x27;  --quantization fp8&#x27; : serveCommands[state.hardware];
+        const selectedCode = state.tab === &#x27;serve&#x27; ? baseServe : state.tab === &#x27;request&#x27; ? requestCommands[state.task] : verifyCommand;
+        code.textContent = selectedCode.replace(/^\+/gm, &#x27;&#x27;);
+        root.querySelector(&#x27;#h3-footnote&#x27;).textContent = state.tab === &#x27;serve&#x27;
+          ? &#x27;Generated from the selected hardware evidence cell&#x27;
+          : state.tab === &#x27;request&#x27; ? &#x27;Payload follows the selected request mode&#x27; : &#x27;Checks both video and audio streams&#x27;;
+        setPressed(hardwareButtons, state.hardware, &#x27;hardware&#x27;);
+        setPressed(taskButtons, state.task, &#x27;task&#x27;);
+        setPressed(precisionButtons, state.precision, &#x27;precision&#x27;);
+      }
+
+      viewButtons.forEach((button) =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+        root.dataset.view = button.dataset.view;
+        viewButtons.forEach((candidate) =&gt; candidate.setAttribute(&#x27;aria-pressed&#x27;, String(candidate === button)));
+      }));
+
+
+      hardwareButtons.forEach((button) =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+        state.hardware = button.dataset.hardware;
+        if (state.hardware !== &#x27;b300&#x27;) state.precision = &#x27;bf16&#x27;;
+        if (state.hardware === &#x27;rtx5090&#x27; &amp;&amp; [&#x27;image&#x27;, &#x27;ref&#x27;, &#x27;video&#x27;].includes(state.task)) state.task = &#x27;t2va&#x27;;
+        render();
+      }));
+      taskButtons.forEach((button) =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+        if (button.disabled) return;
+        state.task = button.dataset.task;
+        render();
+      }));
+      precisionButtons.forEach((button) =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+        if (button.disabled) return;
+        state.precision = button.dataset.precision;
+        render();
+      }));
+      tabButtons.forEach((button) =&gt; button.addEventListener(&#x27;click&#x27;, () =&gt; {
+        state.tab = button.dataset.tab;
+        tabButtons.forEach((candidate) =&gt; candidate.setAttribute(&#x27;aria-selected&#x27;, String(candidate === button)));
+        render();
+      }));
+      render();
+    })();
+  &lt;/script&gt;
+&lt;/div&gt;
+
+&lt;script src=&quot;https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script src=&quot;https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set([&quot;top&quot;, &quot;right&quot;, &quot;bottom&quot;, &quot;left&quot;]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =&gt;
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest(&quot;[data-tooltip]&quot;)
+      : null;
+  const containsTarget = (trigger, target) =&gt;
+    target?.nodeType != null &amp;&amp; trigger.contains(target);
+  const getContent = (trigger) =&gt;
+    trigger.getAttribute(&quot;data-tooltip&quot;)?.trim() ?? &quot;&quot;;
+  const getPlacement = (trigger) =&gt; {
+    const placement = trigger.getAttribute(&quot;data-tooltip-placement&quot;);
+    return tooltipPlacements.has(placement) ? placement : &quot;top&quot;;
+  };
+  const getTooltip = () =&gt; {
+    if (tooltip == null) {
+      tooltip = document.createElement(&quot;div&quot;);
+      tooltip.id = tooltipId;
+      tooltip.className = &quot;tooltip&quot;;
+      tooltip.setAttribute(&quot;role&quot;, &quot;tooltip&quot;);
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) =&gt; {
+    const ids = new Set(
+      (trigger.getAttribute(&quot;aria-describedby&quot;) ?? &quot;&quot;)
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute(&quot;aria-describedby&quot;);
+    } else {
+      trigger.setAttribute(&quot;aria-describedby&quot;, [...ids].join(&quot; &quot;));
+    }
+  };
+  const clearOpenTimeout = () =&gt; {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) =&gt; {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) =&gt; {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-width&quot;,
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              &quot;--tooltip-available-height&quot;,
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: &quot;fixed&quot;,
+    })
+      .then(({ x, y }) =&gt; {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = &quot;visible&quot;;
+      })
+      .catch(() =&gt; {
+        if (activeTrigger === trigger &amp;&amp; request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) =&gt; {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = &quot;hidden&quot;;
+    floating.style.transform = &quot;translate(0, 0)&quot;;
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () =&gt; {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) =&gt; {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() &lt; skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() =&gt; {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) =&gt; {
+    if (event.pointerType === &quot;touch&quot;) {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(&quot;:focus-visible&quot;)) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) =&gt; {
+    if (event.key === &quot;Escape&quot;) {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) =&gt; {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () =&gt; {
+    closeTooltip(false);
+    document.removeEventListener(&quot;pointerover&quot;, handlePointerOpen);
+    document.removeEventListener(&quot;pointerout&quot;, handleLeave);
+    document.removeEventListener(&quot;focusin&quot;, handleFocusIn);
+    document.removeEventListener(&quot;focusout&quot;, handleLeave);
+    document.removeEventListener(&quot;keydown&quot;, handleKeyDown);
+    document.removeEventListener(&quot;contextmenu&quot;, handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener(&quot;pointerover&quot;, handlePointerOpen);
+  document.addEventListener(&quot;pointerout&quot;, handleLeave);
+  document.addEventListener(&quot;focusin&quot;, handleFocusIn);
+  document.addEventListener(&quot;focusout&quot;, handleLeave);
+  document.addEventListener(&quot;keydown&quot;, handleKeyDown);
+  document.addEventListener(&quot;contextmenu&quot;, handleContextMenu);
+  window.addEventListener(&quot;pagehide&quot;, destroy, { once: true });
+})();
+&lt;/script&gt;
+&lt;script id=&quot;codex-visualization-lucide&quot; async src=&quot;https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+(() =&gt; {
+  const initialize = () =&gt; {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById(&quot;codex-visualization-lucide&quot;)
+    ?.addEventListener(&quot;load&quot;, initialize, { once: true });
+})();
+&lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+"></iframe>
+</body>
+</html>
