@@ -229,6 +229,7 @@ def main() -> None:
         video_runs = None
     seed = int(os.environ.get("SEED", "1101"))
     text_encoder_tp_size = int(os.environ.get("TEXT_ENCODER_TP_SIZE", "1"))
+    async_ulysses = os.environ.get("ASYNC_ULYSSES", "0") == "1"
     enforce_eager = os.environ.get("ENFORCE_EAGER", "0") == "1"
     async_output_timeout = float(os.environ.get("ASYNC_OUTPUT_TIMEOUT_SECONDS", "1800"))
     diffusion_engine._ASYNC_OUTPUT_TIMEOUT = async_output_timeout
@@ -255,6 +256,7 @@ def main() -> None:
                 "video_encoding": "deferred_until_after_all_timed_runs",
                 "seed": seed,
                 "text_encoder_tp_size": text_encoder_tp_size,
+                "async_ulysses": async_ulysses,
                 "enforce_eager": enforce_eager,
                 "async_output_timeout_seconds": async_output_timeout,
             },
@@ -269,6 +271,7 @@ def main() -> None:
             # Exact recipe profile: Ulysses=4, Ring=1, DiT TP=1, VAE tile PP=4.
             tensor_parallel_size=1,
             ulysses_degree=4,
+            async_ulysses=async_ulysses,
             ring_degree=1,
             text_encoder_tp_size=text_encoder_tp_size,
             vae_patch_parallel_size=4,
@@ -376,8 +379,10 @@ def main() -> None:
         "torch_version": torch.__version__,
         "flashinfer_version": metadata.version("flashinfer-python"),
         "parallel_config": (
-            f"tp1_ulysses4_ring1_text_encoder_tp{text_encoder_tp_size}_vae_tile4"
+            f"tp1_ulysses4_async{int(async_ulysses)}_ring1_"
+            f"text_encoder_tp{text_encoder_tp_size}_vae_tile4"
         ),
+        "async_ulysses": async_ulysses,
         "attention_config": attention_config,
         "regional_compile": not enforce_eager,
         "prompt": prompt,

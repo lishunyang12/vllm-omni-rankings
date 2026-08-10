@@ -1,0 +1,19 @@
+{
+  "reference": "/home/scratch.lbo_other/vllm-omni-async-ulysses/b300_ab_20260810/dense/t2va_trtllm_dense_run2.mp4",
+  "candidate": "/home/scratch.lbo_other/vllm-omni-async-ulysses/b300_fused_projection_20260810/t2va_trtllm_dense_run2.mp4",
+  "frames": 243,
+  "fps": 24.0,
+  "width": 1344,
+  "height": 768,
+  "lpips_alex": {
+    "mean": 0.22353975720121047,
+    "median": 0.2201402336359024,
+    "p95": 0.28937394022941587,
+    "max": 0.30027252435684204,
+    "last": 0.1618489772081375
+  },
+  "decoded_rgb": {
+    "mean_absolute_error": 16.819439919397173,
+    "mean_psnr_db": 18.139458315431135
+  }
+}

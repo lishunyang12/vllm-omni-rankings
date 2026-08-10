@@ -129,6 +129,47 @@ observed CV was 0.17%, the maximum span/median was 0.46%, and the maximum GPU
 temperature was 79°C. See the complete [timing results](./b300_starship_strict_20260806/results.json)
 and [thermal audit](./b300_starship_strict_20260806/thermal_audit.json).
 
+## B300 async Ulysses overlap
+
+This session isolates asynchronous Ulysses input exchange on the same official
+starship workload. Both modes use dense BF16 `TRTLLM_ATTN`, TP1, Ulysses4,
+Ring1, text-encoder TP1, VAE tile4, and regional compile. Each mode has one
+warmup followed by five measured requests on physical GPUs 0, 1, 4, and 5.
+
+| Ulysses input exchange | Median diffuse | Speedup | CV | Peak memory | Video | Raw record |
+|---|---:|---:|---:|---:|---|---|
+| Standard NCCL | 107.557 s | 1.000× | 0.11% | 141,796 MB | [MP4](./b300_async_ulysses_20260810/dense.mp4) | [JSON](./b300_async_ulysses_20260810/dense_summary.json) |
+| Async CUDA Copy Engine | 106.151 s | 1.013× | 0.19% | 141,540 MB | [MP4](./b300_async_ulysses_20260810/async.mp4) | [JSON](./b300_async_ulysses_20260810/async_summary.json) |
+
+The async path keeps MiniMax H3's fused QKV projection. It starts the V
+exchange before Q normalization and RoPE, then starts the Q exchange before K
+normalization and RoPE. The reverse Ulysses exchange remains NCCL. The run
+saved 1.406 s of diffuse time and 256 MB of peak worker memory. All measured
+outputs were deterministic within each mode, and the thermal audit passed with
+no slowdown signal or counter change. See [results](./b300_async_ulysses_20260810/results.json)
+and the [thermal audit](./b300_async_ulysses_20260810/thermal_audit.json).
+
+The steady-request Nsight capture shows that the async input path removes
+29,391 NCCL kernel launches and 60.6% of aggregate NCCL kernel time. It moves
+the input exchange to 88,173 peer-copy operations, of which 68.4% of copy-engine
+busy time overlaps non-NCCL GPU compute. Nsight instrumentation records each
+peer copy and therefore perturbs end-to-end timing; the table above uses the
+unprofiled five-run medians. See the complete
+[kernel profile summary](./b300_async_ulysses_20260810/nsys_profile_summary.json).
+
+A two-bank ping-pong variant was also tested. It removed the pre-overwrite
+barrier but improved the median by only 0.068 s (106.151 s to 106.083 s) while
+raising peak worker memory by 762 MB, so the final implementation keeps the
+simpler single bank. The rejected run is retained in the
+[raw summary](./b300_async_ulysses_20260810/rejected_pingpong_summary.json) and
+[thermal audit](./b300_async_ulysses_20260810/rejected_pingpong_thermal_audit.json).
+
+Changing the compiled execution schedule is not bitwise output preserving:
+the two modes produce different deterministic frame and audio hashes despite
+the exchange itself matching NCCL bit-for-bit in the distributed parity test.
+The clips are provided for inspection; end-of-diffusion LPIPS is not used as a
+correctness criterion for this mathematically equivalent scheduling change.
+
 ## B200 INT8 results
 
 These runs use four NVIDIA B200 GPUs and the same prompt, seed, output shape,
