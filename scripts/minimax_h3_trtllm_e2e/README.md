@@ -129,6 +129,44 @@ observed CV was 0.17%, the maximum span/median was 0.46%, and the maximum GPU
 temperature was 79°C. See the complete [timing results](./b300_starship_strict_20260806/results.json)
 and [thermal audit](./b300_starship_strict_20260806/thermal_audit.json).
 
+## MiniMax-H3 single-GPU profile on B300
+
+This session runs MiniMax-H3 FL2VA with the official
+[starship prompt](./prompts/minimax_h3_official_starship.txt): 1344x768,
+243 frames, 10 seconds, 24 FPS, and seed 0. It uses one B300, dense BF16
+`TRTLLM_ATTN`, regional compile, and the fused QK norm/RoPE path. SAGE and
+Skip-Softmax are disabled. Sampling uses 20 sigma points, corresponding to 19
+denoise updates. The first request warms compilation outside the capture; the
+second same-prompt request is captured with Nsight Systems.
+
+### Timing and memory
+
+- Model pipeline: 161.076 s, including 0.050 s cached text encode, 151.141 s
+  denoise (7.955 s/update), and 9.877 s VAE decode.
+- Output path: `Omni.generate()` returned in 224.764 s. The 63.687 s after the
+  model pipeline is dominated by CPU/shared-memory packing, copying, and NumPy
+  post-processing for 2.806 GiB of raw float output, rather than model compute;
+  the GPU-to-host DMA itself took only 52.7 ms. CPU video/audio encoding and MP4
+  mux added 37.151 s, bringing the complete run through the saved MP4 to
+  261.915 s.
+- GPU memory: 138.51 GiB peak reserved according to PyTorch. Nsight's
+  device-allocation high-water mark is 138.96 GiB; the scopes differ slightly.
+
+### Profile analysis
+
+The trace contains exactly 1,900 `_rms_norm_rope_kernel` launches (50 blocks ×
+19 updates × Q/K), confirming that the fusion is active throughout denoising.
+The dense TRTLLM attention kernel accounts for 69.2% of summed GPU kernel time,
+while fused QK norm/RoPE accounts for 1.3%. No SAGE or quantization kernel
+appears.
+
+### Artifacts
+
+- [Output video](./b300_single_gpu_qk_norm_rope_nsys_20260811/captured_request.mp4)
+- [Nsight Systems report](./b300_single_gpu_qk_norm_rope_nsys_20260811/trace.nsys-rep)
+- [Run configuration](./b300_single_gpu_qk_norm_rope_nsys_20260811/config.json)
+  and [raw timings](./b300_single_gpu_qk_norm_rope_nsys_20260811/result.json)
+
 ## B300 async Ulysses overlap
 
 This session isolates asynchronous Ulysses input exchange on the same official

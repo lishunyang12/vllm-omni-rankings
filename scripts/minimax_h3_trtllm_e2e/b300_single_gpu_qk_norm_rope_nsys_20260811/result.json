@@ -1,0 +1,17 @@
+{
+  "client_e2e_through_mp4_s": 261.91470478475094,
+  "denoise_per_update_s": 7.954796997830272,
+  "mp4_encode_mux_s": 37.151023521088064,
+  "peak_memory_mb": 141838.0,
+  "request_wall_time_s": 224.76368126366287,
+  "stage_durations": {
+    "MiniMaxH3Pipeline.decode": 9.87710512895137,
+    "MiniMaxH3Pipeline.diffuse": 151.14114295877516,
+    "MiniMaxH3Pipeline.encode_prompt": 0.05011206679046154,
+    "queue_wait_ms": 0.8180411532521248,
+    "stage_0_gen_ms": 224760.57744026184
+  },
+  "video_path": "/code/tensorrt_llm/reports/pr5990_single_gpu_nsys_20260811/captured_request.mp4",
+  "video_size_bytes": 3854565,
+  "warmup_wall_time_s": 171.53354597371072
+}
