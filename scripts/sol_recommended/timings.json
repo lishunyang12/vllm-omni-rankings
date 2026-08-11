@@ -1,0 +1,56 @@
+{
+  "case": {
+    "backend": "SOL_ATTN",
+    "dense_layers": "0,1",
+    "dense_steps": 10,
+    "description": "Recommended quality-first Sol-Attn configuration",
+    "group": "preset",
+    "kv_splits": 1,
+    "name": "sol_recommended",
+    "sink_start": 0,
+    "sink_tokens": 951,
+    "tau": 1.0,
+    "thresh_type": "diag"
+  },
+  "load_seconds": 89.52200647816062,
+  "runs": [
+    {
+      "generation_seconds": 136.86035738606006,
+      "peak_memory_mb": 49184.0,
+      "seed": 1101,
+      "status": "ok",
+      "warmup": true,
+      "warmup_index": 1
+    },
+    {
+      "encode_seconds": 0.5658049220219254,
+      "generation_seconds": 130.0701257099863,
+      "output": "/lustre/raplab/client/sylarl/minimax-h3-native/results/sol-sm120-offline-sweep/cases/sol_recommended/seed_1101_run_1.mp4",
+      "peak_memory_mb": 49184.0,
+      "repeat": 1,
+      "seed": 1101,
+      "status": "ok",
+      "warmup": false
+    },
+    {
+      "encode_seconds": 0.5623953780159354,
+      "generation_seconds": 129.83234455692582,
+      "output": "/lustre/raplab/client/sylarl/minimax-h3-native/results/sol-sm120-offline-sweep/cases/sol_recommended/seed_1101_run_2.mp4",
+      "peak_memory_mb": 49184.0,
+      "repeat": 2,
+      "seed": 1101,
+      "status": "ok",
+      "warmup": false
+    },
+    {
+      "encode_seconds": 0.6027671280317008,
+      "generation_seconds": 129.9141267479863,
+      "output": "/lustre/raplab/client/sylarl/minimax-h3-native/results/sol-sm120-offline-sweep/cases/sol_recommended/seed_1101_run_3.mp4",
+      "peak_memory_mb": 49184.0,
+      "repeat": 3,
+      "seed": 1101,
+      "status": "ok",
+      "warmup": false
+    }
+  ]
+}

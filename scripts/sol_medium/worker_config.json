@@ -1,0 +1,35 @@
+{
+  "aspect_ratio": "16:9",
+  "audio_flow_shift": 3.0,
+  "case": {
+    "backend": "SOL_ATTN",
+    "dense_layers": "0,1",
+    "dense_steps": 8,
+    "description": "Balanced preset: tau=1.5, dense_steps=8",
+    "group": "preset",
+    "kv_splits": 1,
+    "name": "sol_medium",
+    "sink_start": 0,
+    "sink_tokens": 951,
+    "tau": 1.5,
+    "thresh_type": "diag"
+  },
+  "case_dir": "/lustre/raplab/client/sylarl/minimax-h3-native/results/sol-sm120-offline-sweep/cases/sol_medium",
+  "duration": 5.0,
+  "enforce_eager": false,
+  "flow_shift": 12.0,
+  "fps": 24,
+  "height": 768,
+  "model": "MiniMax-H3/FL2VA",
+  "num_gpus": 4,
+  "num_inference_steps": 20,
+  "prompt": "At night, while their owner sleeps, three cats march into a bedroom playing tiny brass instruments, freeze, and quietly march out.",
+  "repeats": 3,
+  "seeds": [
+    1101
+  ],
+  "tensor_parallel_size": 4,
+  "text_encoder_tp_size": 4,
+  "warmups": 1,
+  "width": 1344
+}

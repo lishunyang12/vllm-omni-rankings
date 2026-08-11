@@ -1,0 +1,56 @@
+{
+  "case": {
+    "backend": "CUDNN_ATTN",
+    "dense_layers": null,
+    "dense_steps": null,
+    "description": "Exact dense cuDNN reference",
+    "group": "baseline",
+    "kv_splits": null,
+    "name": "dense_cudnn",
+    "sink_start": null,
+    "sink_tokens": null,
+    "tau": null,
+    "thresh_type": null
+  },
+  "load_seconds": 331.82021628599614,
+  "runs": [
+    {
+      "generation_seconds": 149.5171487289481,
+      "peak_memory_mb": 49184.0,
+      "seed": 1101,
+      "status": "ok",
+      "warmup": true,
+      "warmup_index": 1
+    },
+    {
+      "encode_seconds": 0.5740714489948004,
+      "generation_seconds": 142.771155445138,
+      "output": "/lustre/raplab/client/sylarl/minimax-h3-native/results/sol-sm120-offline-sweep/cases/dense_cudnn/seed_1101_run_1.mp4",
+      "peak_memory_mb": 49184.0,
+      "repeat": 1,
+      "seed": 1101,
+      "status": "ok",
+      "warmup": false
+    },
+    {
+      "encode_seconds": 0.5488929089624435,
+      "generation_seconds": 142.49360364908352,
+      "output": "/lustre/raplab/client/sylarl/minimax-h3-native/results/sol-sm120-offline-sweep/cases/dense_cudnn/seed_1101_run_2.mp4",
+      "peak_memory_mb": 49184.0,
+      "repeat": 2,
+      "seed": 1101,
+      "status": "ok",
+      "warmup": false
+    },
+    {
+      "encode_seconds": 0.5352072461973876,
+      "generation_seconds": 142.38623874704354,
+      "output": "/lustre/raplab/client/sylarl/minimax-h3-native/results/sol-sm120-offline-sweep/cases/dense_cudnn/seed_1101_run_3.mp4",
+      "peak_memory_mb": 49184.0,
+      "repeat": 3,
+      "seed": 1101,
+      "status": "ok",
+      "warmup": false
+    }
+  ]
+}

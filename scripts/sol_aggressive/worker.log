@@ -1,0 +1,261 @@
+
+=== 2026-08-10 17:44:45 /lustre/raplab/client/sylarl/minimax-h3-native/.venv/bin/python /lustre/raplab/client/sylarl/minimax-h3-native/vllm-omni-pr5851/benchmarks/diffusion/sol_attn_offline_sweep.py --worker-config /lustre/raplab/client/sylarl/minimax-h3-native/results/sol-sm120-offline-sweep/cases/sol_aggressive/worker_config.json ===
+INFO 08-10 17:44:53 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-10 17:44:54 [patch.py:481] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+INFO 08-10 17:44:56 [fa.py:67] Using CuTe FlashAttention-4 on Blackwell
+INFO 08-10 17:44:56 [omni_base.py:172] [Omni] Initializing with model MiniMax-H3/FL2VA
+INFO 08-10 17:44:56 [async_omni_engine.py:175] [AsyncOmniEngine] Initializing with model MiniMax-H3/FL2VA
+INFO 08-10 17:44:56 [async_omni_engine.py:274] [AsyncOmniEngine] Launching Orchestrator thread with 1 stages
+INFO 08-10 17:44:56 [stage_init_utils.py:511] [stage_init] Set VLLM_WORKER_MULTIPROC_METHOD=spawn
+INFO 08-10 17:44:56 [stage_utils.py:167] Stage 0 logical-to-physical device mapping: 0->4, 1->6, 2->5, 3->7
+INFO 08-10 17:44:56 [multiproc_executor.py:254] Starting server...
+INFO 08-10 17:45:06 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-10 17:45:07 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-10 17:45:07 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-10 17:45:07 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-10 17:45:07 [patch.py:481] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+INFO 08-10 17:45:08 [patch.py:481] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+INFO 08-10 17:45:08 [patch.py:481] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+INFO 08-10 17:45:09 [fa.py:67] Using CuTe FlashAttention-4 on Blackwell
+INFO 08-10 17:45:09 [patch.py:481] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+INFO 08-10 17:45:09 [diffusion_worker.py:819] Worker 1 created result MessageQueue
+INFO 08-10 17:45:09 [scheduler.py:252] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 08-10 17:45:09 [vllm.py:1109] Asynchronous scheduling is enabled.
+INFO 08-10 17:45:09 [kernel.py:295] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 08-10 17:45:09 [diffusion_worker.py:303] Final IR op priority after setting vLLM-Omni overrides: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+INFO 08-10 17:45:10 [fa.py:67] Using CuTe FlashAttention-4 on Blackwell
+INFO 08-10 17:45:10 [diffusion_worker.py:819] Worker 3 created result MessageQueue
+INFO 08-10 17:45:10 [fa.py:67] Using CuTe FlashAttention-4 on Blackwell
+INFO 08-10 17:45:10 [scheduler.py:252] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 08-10 17:45:10 [vllm.py:1109] Asynchronous scheduling is enabled.
+INFO 08-10 17:45:10 [kernel.py:295] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 08-10 17:45:10 [diffusion_worker.py:303] Final IR op priority after setting vLLM-Omni overrides: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+INFO 08-10 17:45:10 [diffusion_worker.py:819] Worker 2 created result MessageQueue
+INFO 08-10 17:45:10 [scheduler.py:252] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 08-10 17:45:10 [vllm.py:1109] Asynchronous scheduling is enabled.
+INFO 08-10 17:45:10 [kernel.py:295] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 08-10 17:45:10 [diffusion_worker.py:303] Final IR op priority after setting vLLM-Omni overrides: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+INFO 08-10 17:45:10 [fa.py:67] Using CuTe FlashAttention-4 on Blackwell
+INFO 08-10 17:45:11 [diffusion_worker.py:819] Worker 0 created result MessageQueue
+INFO 08-10 17:45:11 [scheduler.py:252] Chunked prefill is enabled with max_num_batched_tokens=2048.
+INFO 08-10 17:45:11 [vllm.py:1109] Asynchronous scheduling is enabled.
+INFO 08-10 17:45:11 [kernel.py:295] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+INFO 08-10 17:45:11 [diffusion_worker.py:303] Final IR op priority after setting vLLM-Omni overrides: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+INFO 08-10 17:45:12 [diffusion_worker.py:315] Worker 0: Initialized device and distributed environment.
+INFO 08-10 17:45:12 [diffusion_worker.py:315] Worker 1: Initialized device and distributed environment.
+INFO 08-10 17:45:12 [diffusion_worker.py:315] Worker 2: Initialized device and distributed environment.
+INFO 08-10 17:45:12 [diffusion_worker.py:315] Worker 3: Initialized device and distributed environment.
+INFO 08-10 17:45:12 [parallel_state.py:634] Building SP subgroups from explicit sp_group_ranks (sp_size=1, ulysses=1, ring=1, use_ulysses_low=True).
+INFO 08-10 17:45:12 [parallel_state.py:634] Building SP subgroups from explicit sp_group_ranks (sp_size=1, ulysses=1, ring=1, use_ulysses_low=True).
+INFO 08-10 17:45:12 [parallel_state.py:634] Building SP subgroups from explicit sp_group_ranks (sp_size=1, ulysses=1, ring=1, use_ulysses_low=True).
+INFO 08-10 17:45:12 [parallel_state.py:676] SP group details for rank 2: sp_group=[2], ulysses_group=[2], ring_group=[2]
+INFO 08-10 17:45:12 [parallel_state.py:676] SP group details for rank 1: sp_group=[1], ulysses_group=[1], ring_group=[1]
+INFO 08-10 17:45:12 [parallel_state.py:676] SP group details for rank 3: sp_group=[3], ulysses_group=[3], ring_group=[3]
+INFO 08-10 17:45:12 [parallel_state.py:634] Building SP subgroups from explicit sp_group_ranks (sp_size=1, ulysses=1, ring=1, use_ulysses_low=True).
+INFO 08-10 17:45:12 [parallel_state.py:676] SP group details for rank 0: sp_group=[0], ulysses_group=[0], ring_group=[0]
+INFO 08-10 17:45:12 [platform.py:216] Using Sol-Attn diffusion attention backend (head_dim=128, BF16 activations)
+INFO 08-10 17:45:12 [selector.py:89] Resolved diffusion attention backend 'SOL_ATTN' for role='self' via attention_config.default
+INFO 08-10 17:45:12 [platform.py:216] Using Sol-Attn diffusion attention backend (head_dim=128, BF16 activations)
+INFO 08-10 17:45:12 [selector.py:89] Resolved diffusion attention backend 'SOL_ATTN' for role='self' via attention_config.default
+INFO 08-10 17:45:12 [platform.py:216] Using Sol-Attn diffusion attention backend (head_dim=128, BF16 activations)
+INFO 08-10 17:45:12 [selector.py:89] Resolved diffusion attention backend 'SOL_ATTN' for role='self' via attention_config.default
+INFO 08-10 17:45:12 [platform.py:216] Using Sol-Attn diffusion attention backend (head_dim=128, BF16 activations)
+INFO 08-10 17:45:12 [selector.py:89] Resolved diffusion attention backend 'SOL_ATTN' for role='self' via attention_config.default
+INFO 08-10 17:45:26 [encoder.py:941] MiniMax H3 Qwen3-VL encoder: 50 retained decoder layers, text_encoder_tp_size=4, vision replicated
+INFO 08-10 17:45:27 [encoder.py:941] MiniMax H3 Qwen3-VL encoder: 50 retained decoder layers, text_encoder_tp_size=4, vision replicated
+The config attributes {'vae_ratio': 16, 'vae_ratio_t': 4} were passed to AutoencoderKLLegacy, but are not expected and will be ignored. Please verify your config.json configuration file.
+INFO 08-10 17:45:27 [encoder.py:941] MiniMax H3 Qwen3-VL encoder: 50 retained decoder layers, text_encoder_tp_size=4, vision replicated
+INFO 08-10 17:45:27 [encoder.py:941] MiniMax H3 Qwen3-VL encoder: 50 retained decoder layers, text_encoder_tp_size=4, vision replicated
+
+Multi-thread loading shards:   0% Completed | 0/13 [00:00<?, ?it/s]
+
+Multi-thread loading shards:   8% Completed | 1/13 [00:01<00:13,  1.16s/it]
+
+Multi-thread loading shards:  15% Completed | 2/13 [00:02<00:13,  1.24s/it]
+
+Multi-thread loading shards:  23% Completed | 3/13 [00:03<00:12,  1.21s/it]
+
+Multi-thread loading shards:  31% Completed | 4/13 [00:04<00:11,  1.22s/it]
+
+Multi-thread loading shards:  38% Completed | 5/13 [00:06<00:09,  1.21s/it]
+
+Multi-thread loading shards:  46% Completed | 6/13 [00:07<00:08,  1.24s/it]
+INFO 08-10 17:46:18 [diffusion_model_runner.py:242] Model loading took 38.7239 GiB and 66.668143 seconds
+INFO 08-10 17:46:18 [diffusion_model_runner.py:247] Model runner: Model loaded successfully.
+INFO 08-10 17:46:18 [compile.py:76] Regional compilation applied to 52 module(s) for repeated blocks ['MiniMaxH3DiTBlock'].
+INFO 08-10 17:46:18 [diffusion_model_runner.py:177] Model runner: transformer configured for lazy regional torch.compile with dynamic=True; compilation errors may surface on the first request.
+INFO 08-10 17:46:18 [diffusion_model_runner.py:321] Model runner: Initialization complete.
+
+Multi-thread loading shards:  54% Completed | 7/13 [00:08<00:07,  1.18s/it]
+INFO 08-10 17:46:19 [diffusion_worker.py:374] Worker 1: Process-scoped GPU memory after model loading: 39.43 GiB.
+INFO 08-10 17:46:19 [manager.py:96] Initializing DiffusionLoRAManager: device=cuda:1, dtype=torch.bfloat16, max_cached_adapters=1, static_lora_path=None
+INFO 08-10 17:46:19 [diffusion_worker.py:258] Worker 1: Initialization complete.
+INFO 08-10 17:46:19 [diffusion_worker.py:1185] Worker 1: Scheduler loop started.
+INFO 08-10 17:46:19 [diffusion_worker.py:1031] Worker 1 ready to receive requests via shared memory
+
+Multi-thread loading shards:  62% Completed | 8/13 [00:09<00:05,  1.16s/it]
+
+Multi-thread loading shards:  69% Completed | 9/13 [00:10<00:04,  1.13s/it]
+
+Multi-thread loading shards:  77% Completed | 10/13 [00:11<00:03,  1.16s/it]
+
+Multi-thread loading shards:  85% Completed | 11/13 [00:12<00:02,  1.12s/it]
+
+Multi-thread loading shards:  92% Completed | 12/13 [00:13<00:01,  1.07s/it]
+
+Multi-thread loading shards: 100% Completed | 13/13 [00:14<00:00,  1.05s/it]
+
+Multi-thread loading shards: 100% Completed | 13/13 [00:14<00:00,  1.14s/it]
+
+INFO 08-10 17:46:25 [diffusers_loader.py:543] Loading weights took 14.88 seconds
+INFO 08-10 17:46:26 [diffusion_model_runner.py:242] Model loading took 38.7239 GiB and 74.425785 seconds
+INFO 08-10 17:46:26 [diffusion_model_runner.py:247] Model runner: Model loaded successfully.
+INFO 08-10 17:46:26 [compile.py:76] Regional compilation applied to 52 module(s) for repeated blocks ['MiniMaxH3DiTBlock'].
+INFO 08-10 17:46:26 [diffusion_model_runner.py:177] Model runner: transformer configured for lazy regional torch.compile with dynamic=True; compilation errors may surface on the first request.
+INFO 08-10 17:46:26 [diffusion_model_runner.py:321] Model runner: Initialization complete.
+INFO 08-10 17:46:26 [diffusion_model_runner.py:242] Model loading took 38.7239 GiB and 74.580955 seconds
+INFO 08-10 17:46:26 [diffusion_model_runner.py:247] Model runner: Model loaded successfully.
+INFO 08-10 17:46:26 [compile.py:76] Regional compilation applied to 52 module(s) for repeated blocks ['MiniMaxH3DiTBlock'].
+INFO 08-10 17:46:26 [diffusion_model_runner.py:177] Model runner: transformer configured for lazy regional torch.compile with dynamic=True; compilation errors may surface on the first request.
+INFO 08-10 17:46:26 [diffusion_model_runner.py:321] Model runner: Initialization complete.
+INFO 08-10 17:46:27 [diffusion_model_runner.py:242] Model loading took 38.7239 GiB and 74.877572 seconds
+INFO 08-10 17:46:27 [diffusion_model_runner.py:247] Model runner: Model loaded successfully.
+INFO 08-10 17:46:27 [diffusion_worker.py:374] Worker 3: Process-scoped GPU memory after model loading: 39.43 GiB.
+INFO 08-10 17:46:27 [compile.py:76] Regional compilation applied to 52 module(s) for repeated blocks ['MiniMaxH3DiTBlock'].
+INFO 08-10 17:46:27 [diffusion_model_runner.py:177] Model runner: transformer configured for lazy regional torch.compile with dynamic=True; compilation errors may surface on the first request.
+INFO 08-10 17:46:27 [diffusion_model_runner.py:321] Model runner: Initialization complete.
+INFO 08-10 17:46:27 [manager.py:96] Initializing DiffusionLoRAManager: device=cuda:3, dtype=torch.bfloat16, max_cached_adapters=1, static_lora_path=None
+INFO 08-10 17:46:27 [diffusion_worker.py:258] Worker 3: Initialization complete.
+INFO 08-10 17:46:27 [diffusion_worker.py:1185] Worker 3: Scheduler loop started.
+INFO 08-10 17:46:27 [diffusion_worker.py:1031] Worker 3 ready to receive requests via shared memory
+INFO 08-10 17:46:27 [diffusion_worker.py:374] Worker 0: Process-scoped GPU memory after model loading: 39.43 GiB.
+INFO 08-10 17:46:27 [manager.py:96] Initializing DiffusionLoRAManager: device=cuda:0, dtype=torch.bfloat16, max_cached_adapters=1, static_lora_path=None
+INFO 08-10 17:46:27 [diffusion_worker.py:258] Worker 0: Initialization complete.
+INFO 08-10 17:46:27 [diffusion_worker.py:1185] Worker 0: Scheduler loop started.
+INFO 08-10 17:46:27 [diffusion_worker.py:1031] Worker 0 ready to receive requests via shared memory
+INFO 08-10 17:46:27 [diffusion_worker.py:374] Worker 2: Process-scoped GPU memory after model loading: 39.43 GiB.
+INFO 08-10 17:46:27 [manager.py:96] Initializing DiffusionLoRAManager: device=cuda:2, dtype=torch.bfloat16, max_cached_adapters=1, static_lora_path=None
+INFO 08-10 17:46:27 [diffusion_worker.py:258] Worker 2: Initialization complete.
+INFO 08-10 17:46:27 [diffusion_worker.py:1185] Worker 2: Scheduler loop started.
+INFO 08-10 17:46:27 [diffusion_worker.py:1031] Worker 2 ready to receive requests via shared memory
+INFO 08-10 17:46:27 [multiproc_executor.py:703] Async result pump started
+INFO 08-10 17:46:27 [diffusion_engine.py:279] [RequestBatch] engine init max_num_seqs=1 max_wait_ms=0.0
+INFO 08-10 17:46:27 [diffusion_engine.py:865] Skipping dummy warmup run (num_frames=0)
+INFO 08-10 17:46:27 [inline_stage_diffusion_client.py:72] [InlineStageDiffusionClient] stage-0 [rep-0] initialized inline (batch_size=1)
+INFO 08-10 17:46:27 [stage_runtime.py:662] [StageRuntime] Stage 0 replica 0 initialized (diffusion, batch_size=1)
+INFO 08-10 17:46:27 [orchestrator.py:507] [Orchestrator] Starting event loop
+INFO 08-10 17:46:27 [async_omni_engine.py:306] [AsyncOmniEngine] Orchestrator ready with 1 stages
+INFO 08-10 17:46:27 [omni_base.py:190] [Omni] AsyncOmniEngine initialized in 91.49 seconds
+INFO 08-10 17:46:27 [omni_base.py:210] [Omni] Initialized with 1 stages for model MiniMax-H3/FL2VA
+INFO 08-10 17:46:27 [pipeline_minimax_h3.py:815] MiniMax H3 t2va Qwen presentation: 26 tokens
+
+  0%|          | 0/19 [00:00<?, ?it/s]INFO 08-10 17:46:30 [sol_attn.py:218] Using cuDNN for the Sol-Attn dense guard on SM120
+
+  5%|▌         | 1/19 [00:09<02:46,  9.24s/it]
+ 11%|█         | 2/19 [00:16<02:14,  7.92s/it]
+ 16%|█▌        | 3/19 [00:22<01:56,  7.27s/it]
+ 21%|██        | 4/19 [00:29<01:44,  6.98s/it]
+ 26%|██▋       | 5/19 [00:35<01:35,  6.82s/it]
+ 32%|███▏      | 6/19 [00:42<01:27,  6.74s/it]
+ 37%|███▋      | 7/19 [00:47<01:13,  6.11s/it]
+ 42%|████▏     | 8/19 [00:52<01:02,  5.71s/it]
+ 47%|████▋     | 9/19 [00:56<00:54,  5.43s/it]
+ 53%|█████▎    | 10/19 [01:01<00:47,  5.25s/it]
+ 58%|█████▊    | 11/19 [01:06<00:40,  5.12s/it]
+ 63%|██████▎   | 12/19 [01:11<00:35,  5.04s/it]
+ 68%|██████▊   | 13/19 [01:16<00:29,  4.97s/it]
+ 74%|███████▎  | 14/19 [01:21<00:24,  4.93s/it]
+ 79%|███████▉  | 15/19 [01:25<00:19,  4.90s/it]
+ 84%|████████▍ | 16/19 [01:30<00:14,  4.88s/it]
+ 89%|████████▉ | 17/19 [01:35<00:09,  4.87s/it]
+ 95%|█████████▍| 18/19 [01:40<00:04,  4.86s/it]
+100%|██████████| 19/19 [01:45<00:00,  4.85s/it]
+100%|██████████| 19/19 [01:45<00:00,  5.54s/it]
+INFO 08-10 17:48:31 [pipeline_minimax_h3.py:815] MiniMax H3 t2va Qwen presentation: 26 tokens
+
+  0%|          | 0/19 [00:00<?, ?it/s]
+  5%|▌         | 1/19 [00:06<01:59,  6.61s/it]
+ 11%|█         | 2/19 [00:13<01:52,  6.59s/it]
+ 16%|█▌        | 3/19 [00:19<01:45,  6.58s/it]
+ 21%|██        | 4/19 [00:26<01:38,  6.58s/it]
+ 26%|██▋       | 5/19 [00:32<01:32,  6.57s/it]
+ 32%|███▏      | 6/19 [00:37<01:17,  5.99s/it]
+ 37%|███▋      | 7/19 [00:42<01:07,  5.62s/it]
+ 42%|████▏     | 8/19 [00:47<00:59,  5.37s/it]
+ 47%|████▋     | 9/19 [00:52<00:52,  5.21s/it]
+ 53%|█████▎    | 10/19 [00:57<00:45,  5.10s/it]
+ 58%|█████▊    | 11/19 [01:02<00:40,  5.03s/it]
+ 63%|██████▎   | 12/19 [01:06<00:34,  4.98s/it]
+ 68%|██████▊   | 13/19 [01:11<00:29,  4.94s/it]
+ 74%|███████▎  | 14/19 [01:16<00:24,  4.92s/it]
+ 79%|███████▉  | 15/19 [01:21<00:19,  4.90s/it]
+ 84%|████████▍ | 16/19 [01:26<00:14,  4.89s/it]
+ 89%|████████▉ | 17/19 [01:31<00:09,  4.87s/it]
+ 95%|█████████▍| 18/19 [01:36<00:04,  4.86s/it]
+100%|██████████| 19/19 [01:40<00:00,  4.86s/it]
+100%|██████████| 19/19 [01:40<00:00,  5.31s/it]
+INFO 08-10 17:50:32 [pipeline_minimax_h3.py:815] MiniMax H3 t2va Qwen presentation: 26 tokens
+
+  0%|          | 0/19 [00:00<?, ?it/s]
+  5%|▌         | 1/19 [00:06<01:59,  6.61s/it]
+ 11%|█         | 2/19 [00:13<01:52,  6.59s/it]
+ 16%|█▌        | 3/19 [00:19<01:45,  6.58s/it]
+ 21%|██        | 4/19 [00:26<01:38,  6.57s/it]
+ 26%|██▋       | 5/19 [00:32<01:31,  6.57s/it]
+ 32%|███▏      | 6/19 [00:37<01:17,  5.99s/it]
+ 37%|███▋      | 7/19 [00:42<01:07,  5.62s/it]
+ 42%|████▏     | 8/19 [00:47<00:59,  5.38s/it]
+ 47%|████▋     | 9/19 [00:52<00:52,  5.21s/it]
+ 53%|█████▎    | 10/19 [00:57<00:45,  5.10s/it]
+ 58%|█████▊    | 11/19 [01:02<00:40,  5.02s/it]
+ 63%|██████▎   | 12/19 [01:06<00:34,  4.97s/it]
+ 68%|██████▊   | 13/19 [01:11<00:29,  4.93s/it]
+ 74%|███████▎  | 14/19 [01:16<00:24,  4.91s/it]
+ 79%|███████▉  | 15/19 [01:21<00:19,  4.89s/it]
+ 84%|████████▍ | 16/19 [01:26<00:14,  4.88s/it]
+ 89%|████████▉ | 17/19 [01:31<00:09,  4.86s/it]
+ 95%|█████████▍| 18/19 [01:35<00:04,  4.86s/it]
+100%|██████████| 19/19 [01:40<00:00,  4.85s/it]
+100%|██████████| 19/19 [01:40<00:00,  5.30s/it]
+INFO 08-10 17:52:32 [pipeline_minimax_h3.py:815] MiniMax H3 t2va Qwen presentation: 26 tokens
+
+  0%|          | 0/19 [00:00<?, ?it/s]
+  5%|▌         | 1/19 [00:06<01:58,  6.58s/it]
+ 11%|█         | 2/19 [00:13<01:51,  6.58s/it]
+ 16%|█▌        | 3/19 [00:19<01:45,  6.58s/it]
+ 21%|██        | 4/19 [00:26<01:38,  6.58s/it]
+ 26%|██▋       | 5/19 [00:32<01:32,  6.58s/it]
+ 32%|███▏      | 6/19 [00:37<01:17,  6.00s/it]
+ 37%|███▋      | 7/19 [00:42<01:07,  5.62s/it]
+ 42%|████▏     | 8/19 [00:47<00:59,  5.38s/it]
+ 47%|████▋     | 9/19 [00:52<00:52,  5.21s/it]
+ 53%|█████▎    | 10/19 [00:57<00:45,  5.10s/it]
+ 58%|█████▊    | 11/19 [01:02<00:40,  5.02s/it]
+ 63%|██████▎   | 12/19 [01:06<00:34,  4.97s/it]
+ 68%|██████▊   | 13/19 [01:11<00:29,  4.94s/it]
+ 74%|███████▎  | 14/19 [01:16<00:24,  4.92s/it]
+ 79%|███████▉  | 15/19 [01:21<00:19,  4.90s/it]
+ 84%|████████▍ | 16/19 [01:26<00:14,  4.88s/it]
+ 89%|████████▉ | 17/19 [01:31<00:09,  4.86s/it]
+ 95%|█████████▍| 18/19 [01:35<00:04,  4.85s/it]
+100%|██████████| 19/19 [01:40<00:00,  4.84s/it]
+100%|██████████| 19/19 [01:40<00:00,  5.30s/it]
+INFO 08-10 17:54:33 [omni_base.py:630] [Omni] Shutting down
+INFO 08-10 17:54:33 [async_omni_engine.py:1836] [AsyncOmniEngine] Shutting down Orchestrator
+INFO 08-10 17:54:33 [orchestrator.py:612] [Orchestrator] Received shutdown signal
+INFO 08-10 17:54:33 [orchestrator.py:2258] [Orchestrator] Shutting down all 1 client(s)
+INFO 08-10 17:54:33 [diffusion_worker.py:1117] Worker 0: Received shutdown message
+INFO 08-10 17:54:33 [diffusion_worker.py:1117] Worker 2: Received shutdown message
+INFO 08-10 17:54:33 [diffusion_worker.py:1117] Worker 1: Received shutdown message
+INFO 08-10 17:54:33 [diffusion_worker.py:1138] event loop terminated.
+INFO 08-10 17:54:33 [diffusion_worker.py:1138] event loop terminated.
+INFO 08-10 17:54:33 [diffusion_worker.py:1138] event loop terminated.
+INFO 08-10 17:54:33 [diffusion_worker.py:1117] Worker 3: Received shutdown message
+INFO 08-10 17:54:33 [diffusion_worker.py:1138] event loop terminated.
+INFO 08-10 17:54:33 [diffusion_worker.py:1208] Worker 0: Shutdown complete.
+INFO 08-10 17:54:33 [diffusion_worker.py:1208] Worker 3: Shutdown complete.
+INFO 08-10 17:54:33 [diffusion_worker.py:1208] Worker 1: Shutdown complete.
+INFO 08-10 17:54:33 [diffusion_worker.py:1208] Worker 2: Shutdown complete.
+INFO 08-10 17:54:36 [stage_pool.py:1237] [StagePool] Stage 0 replica 0 shut down
+/home/sylarl/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/lib/python3.12/multiprocessing/resource_tracker.py:279: UserWarning: resource_tracker: There appear to be 4 leaked shared_memory objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
