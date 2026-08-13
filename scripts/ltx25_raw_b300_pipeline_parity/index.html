@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LTX-2.5 official ↔ vLLM-Omni pipeline parity</title>
+  <meta name="description" content="LTX-2.5 official-reference and vLLM-Omni B300 video parity across four one-stage and two-stage T2V/I2V pipelines.">
+  <style>
+    :root { color-scheme: dark; --bg:#070a10; --panel:#111722; --line:#2b3547; --text:#f4f7fb; --muted:#9eabba; --accent:#72e6be; --blue:#91aaff; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--text); background:radial-gradient(circle at 10% 0,rgba(87,121,255,.18),transparent 32rem),radial-gradient(circle at 92% 2%,rgba(53,225,178,.12),transparent 28rem),var(--bg); font:15px/1.55 Inter,system-ui,sans-serif; }
+    main { width:min(1600px,calc(100% - 30px)); margin:auto; padding:52px 0 80px; }
+    header { max-width:1050px; }
+    .eyebrow { color:var(--accent); font-weight:800; letter-spacing:.14em; text-transform:uppercase; font-size:.78rem; }
+    h1 { margin:8px 0 0; font-size:clamp(2.5rem,6vw,5.5rem); line-height:.98; letter-spacing:-.05em; }
+    .lead { color:var(--muted); max-width:930px; font-size:1.06rem; }
+    .chips { display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 34px; }
+    .chip { border:1px solid var(--line); border-radius:999px; padding:6px 11px; background:rgba(17,23,34,.85); }
+    section { margin:24px 0; border:1px solid var(--line); border-radius:20px; padding:20px; background:rgba(17,23,34,.92); }
+    h2 { margin:0; font-size:1.45rem; }
+    .meta,.prompt,.note { color:var(--muted); }
+    .prompt { border-left:3px solid var(--blue); padding:12px 15px; background:#171f2d; border-radius:0 10px 10px 0; }
+    .provenance { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .provenance div { border:1px solid var(--line); border-radius:12px; padding:12px; background:#0c111a; }
+    .provenance strong { display:block; margin-bottom:3px; }
+    code { overflow-wrap:anywhere; color:var(--blue); }
+    .seed { margin-top:20px; padding-top:18px; border-top:1px solid var(--line); }
+    .seed:first-of-type { border-top:0; }
+    .seed-head { display:flex; justify-content:space-between; gap:12px; align-items:baseline; margin-bottom:10px; }
+    .metric { color:var(--accent); font-variant-numeric:tabular-nums; text-align:right; }
+    .summary,.runtime { color:var(--muted); font-variant-numeric:tabular-nums; }
+    .runtime { display:block; margin-top:2px; font-size:.86rem; }
+    .pair { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    figure { margin:0; min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:13px; background:#05070b; }
+    video { display:block; width:100%; aspect-ratio:16/9; object-fit:contain; background:#020305; }
+    figcaption { display:flex; justify-content:space-between; padding:9px 11px; color:var(--muted); }
+    a { color:var(--accent); }
+    .pending { border:1px dashed var(--line); min-height:96px; display:grid; place-items:center; padding:18px; color:var(--muted); text-align:center; border-radius:12px; }
+    footer { margin-top:30px; color:var(--muted); }
+    @media (max-width:850px) { .pair,.provenance { grid-template-columns:1fr; } main { width:calc(100% - 18px); padding-top:30px; } section { padding:13px; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="eyebrow">Lightricks official reference × vLLM-Omni × NVIDIA B300</div>
+    <h1>Four pipelines.<br>Only completed pairs.</h1>
+    <p class="lead">The official side loads Lightricks' native split artifacts; vLLM-Omni loads the corresponding LTX-2.5 Diffusers materialization. Both use the official quickstart prompt, seed, release shape, schedule, CRF 18 image conditioning, and ConvVAE. The 481-frame run is a 20-second benchmark stress extension, not the quickstart duration or a claimed hard maximum.</p>
+    <div class="chips"><span class="chip">Lightricks/LTX-2.5</span><span class="chip">481 frames / 24 FPS stress run</span><span class="chip">seeds 42 · 43 · 44</span><span class="chip">960×544 one-stage</span><span class="chip">1920×1088 two-stage</span><span class="chip">SSIM · PSNR · LPIPS</span></div>
+  </header>
+  <p class="prompt"><strong>Official quickstart prompt:</strong> A medium close-up shot features a Caucasian man with a beard, wearing a green and white baseball cap without any letters on the front, and a light blue shirt over a white t-shirt. He is positioned in the center of the frame, looking intently directly at the camera, his eyes focused on camera. His facial expression is one of deep concentration, with his brow slightly raised. As he looks straight at the camera, a quick sniff sound is heard, and then he speaks with a deep male voice and a satisfied tone, saying, &#x27;I think it&#x27;s so good.&#x27; The camera remains static throughout, maintaining a shallow depth of field, which keeps the man in sharp focus while the background is softly blurred, showing a beige wall behind him. After a brief pause, another short, audible sniff is heard. The man then continues to speak, his voice maintaining the same quality, as he states, &#x27;So good. So good.&#x27; He elaborates further, emphasizing his point with a final statement, &#x27;This got to be, it&#x27;s got to be the best tool I&#x27;ve ever seen.&#x27; <a href="https://github.com/Lightricks/LTX-2#quick-start">source ↗</a></p>
+  <section>
+    <h2>Benchmark provenance</h2>
+    <p class="note">The dimensions below are the canonical LTX-2.5 release shapes selected for this benchmark, not universal upper limits. Diffusers is not used as the reference.</p>
+    <div class="provenance">
+      <div><strong>Official reference</strong><span class="note">Lightricks/LTX-2 at <code id="official-revision">manifest pending</code></span></div>
+      <div><strong>vLLM-Omni</strong><span class="note">Four explicit pipeline classes at <code id="omni-revision">manifest pending</code></span></div>
+      <div><strong>Run records</strong><span class="note"><a href="results-final/manifest-official.json">official manifest</a> · <a href="results-final/manifest-omni.json">Omni manifest</a> · completed files only</span></div>
+    </div>
+    <p class="note"><strong>Distilled one-stage qualification:</strong> its official-side reference extracts Stage 1 from Lightricks&#x27; public <code>DistilledPipeline</code> with the official distilled schedule. Lightricks does not publish a standalone distilled one-stage CLI entrypoint, so this row is labeled as a derived official-components reference rather than “Official native”.</p>
+    <p class="note"><strong>Metric scope:</strong> this is a production-backend cuDNN stress comparison, so decoded-video scores measure long-run trajectory similarity rather than serving as the CI precision gate. The strict reduced-shape correctness tests separately force the same PyTorch SDPA path and connector weights on both implementations.</p>
+  </section>
+  <div id="matrix"></div>
+  <footer>SSIM uses every decoded frame; PSNR averages finite per-frame values. LPIPS/AlexNet uses 32 uniformly sampled frames. Audio is included for playback but is not assigned a similarity score. ConvVAE is held constant on both sides; DiffVAE support is tracked separately.</footer>
+</main>
+<script>
+const cases = [
+  {id:'full_one_stage-t2v', title:'Full one-stage · T2V', meta:'LTX2Pipeline · official TI2VidOneStagePipeline · 960×544 · 30 steps'},
+  {id:'full_one_stage-i2v', title:'Full one-stage · first-frame I2V', meta:'LTX2Pipeline · official TI2VidOneStagePipeline · 960×544 · 30 steps · CRF 18'},
+  {id:'distilled_one_stage-t2v', title:'Distilled one-stage · T2V', meta:'LTX2DistilledOneStagePipeline · DistilledPipeline Stage 1 extract · 960×544 · official 8-step schedule', derivedOfficial:true},
+  {id:'distilled_one_stage-i2v', title:'Distilled one-stage · first-frame I2V', meta:'LTX2DistilledOneStagePipeline · DistilledPipeline Stage 1 extract · 960×544 · official 8-step schedule · CRF 18', derivedOfficial:true},
+  {id:'distilled_two_stage-t2v', title:'Distilled two-stage · T2V', meta:'LTX2DistilledTwoStagePipeline · official DistilledPipeline · 1920×1088 · official 8+3 schedule'},
+  {id:'distilled_two_stage-i2v', title:'Distilled two-stage · first-frame I2V', meta:'LTX2DistilledTwoStagePipeline · official DistilledPipeline · 1920×1088 · official 8+3 schedule · CRF 18'},
+  {id:'full_two_stage-t2v', title:'Full guided two-stage · T2V', meta:'LTX2TwoStagePipeline · official TI2VidTwoStagesPipeline · 1920×1088 · official 30+3 + LoRA450'},
+  {id:'full_two_stage-i2v', title:'Full guided two-stage · first-frame I2V', meta:'LTX2TwoStagePipeline · official TI2VidTwoStagesPipeline · 1920×1088 · official 30+3 + LoRA450 · CRF 18'}
+];
+const matrix = document.querySelector('#matrix');
+const seeds=[42,43,44];
+const resultsRoot='results-final';
+function videoFigure(src,label) {
+  return `<figure><video controls playsinline preload="metadata"><source src="${src}" type="video/mp4"></video><figcaption><strong>${label}</strong><a href="${src}">open MP4 ↗</a></figcaption></figure>`;
+}
+const mean = values => {
+  const finite=values.map(Number).filter(Number.isFinite);
+  return finite.length ? finite.reduce((a,b)=>a+b,0)/finite.length : null;
+};
+const fmtNumber = (value,digits) => Number.isFinite(Number(value))
+  ? Number(value).toFixed(digits)
+  : value==='inf' ? '∞' : 'pending';
+const fmtSeconds = value => Number.isFinite(value) ? `${value.toFixed(1)}s` : 'pending';
+function resultPaths(item,seed) {
+  const mode=item.id.substring(0,item.id.lastIndexOf('-'));
+  const modality=item.id.substring(item.id.lastIndexOf('-')+1);
+  return {
+    mode,
+    modality,
+    official:`${resultsRoot}/${mode}-${modality}-official-seed-${seed}.mp4`,
+    omni:`${resultsRoot}/${mode}-${modality}-omni-seed-${seed}.mp4`
+  };
+}
+async function fileExists(src) {
+  try {
+    const response=await fetch(src,{method:'HEAD',cache:'no-store'});
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+async function completedPairs() {
+  const checks=cases.flatMap(item=>seeds.map(async seed=>{
+    const paths=resultPaths(item,seed);
+    const [official,omni]=await Promise.all([fileExists(paths.official),fileExists(paths.omni)]);
+    return [`${item.id}-seed-${seed}`,official&&omni];
+  }));
+  return new Map(await Promise.all(checks));
+}
+function shortRevision(value) {
+  return typeof value==='string'&&value ? value.slice(0,12) : 'not recorded';
+}
+function officialRevisionLabel(manifest) {
+  const revisions=[...new Set(Object.values(manifest.official_runtime_revisions||{}))];
+  return revisions.length ? revisions.map(shortRevision).join(' / ') : shortRevision(manifest.official_revision);
+}
+function render(metrics={pairs:{}}, officialManifest={runs:{}}, omniManifest={runs:{}}, available=new Map()) {
+  matrix.innerHTML='';
+  for (const item of cases) {
+    const section=document.createElement('section');
+    const publishedSeeds=seeds.filter(seed=>available.get(`${item.id}-seed-${seed}`));
+    const completed=publishedSeeds.map(seed=>metrics.pairs?.[`${item.id}-seed-${seed}`]).filter(Boolean);
+    const metricSummary=completed.length ? `mean across ${completed.length}/3 seeds: SSIM ${fmtNumber(mean(completed.map(x=>x.ssim_mean)),4)} · PSNR ${fmtNumber(mean(completed.map(x=>x.psnr_mean_db)),2)} dB · LPIPS ${fmtNumber(mean(completed.map(x=>x.lpips_mean)),4)}` : 'alignment metrics pending';
+    section.innerHTML=`<h2>${item.title}</h2><p class="meta">${item.meta}</p><p class="summary">${metricSummary}</p>`;
+    for (const seed of publishedSeeds) {
+      const pairId=`${item.id}-seed-${seed}`;
+      const m=metrics.pairs?.[pairId];
+      const {mode,modality,official:officialSrc,omni:omniSrc}=resultPaths(item,seed);
+      const metric=m ? `SSIM ${fmtNumber(m.ssim_mean,4)} · PSNR ${fmtNumber(m.psnr_mean_db,2)} dB · LPIPS ${fmtNumber(m.lpips_mean,4)}` : 'metrics pending';
+      const officialRun=officialManifest.runs?.[`${mode}-${modality}-official-seed-${seed}`];
+      const omniRun=omniManifest.runs?.[`${mode}-${modality}-omni-seed-${seed}`];
+      const runtime=`cold E2E: official ${fmtSeconds(officialRun?.elapsed_seconds)} · vLLM-Omni ${fmtSeconds(omniRun?.elapsed_seconds)}`;
+      const officialLabel=item.derivedOfficial ? 'Official components · Stage 1 extract' : 'Official native';
+      section.insertAdjacentHTML('beforeend',`<div class="seed"><div class="seed-head"><strong>seed ${seed}</strong><span class="metric">${metric}<span class="runtime">${runtime}</span></span></div><div class="pair">${videoFigure(officialSrc,officialLabel)}${videoFigure(omniSrc,'vLLM-Omni')}</div></div>`);
+    }
+    if (!publishedSeeds.length) {
+      section.insertAdjacentHTML('beforeend','<div class="pending">No completed official ↔ vLLM-Omni pair is published for this combination yet.</div>');
+    }
+    matrix.appendChild(section);
+  }
+}
+async function loadJson(name,fallback) {
+  try {
+    const response=await fetch(`${resultsRoot}/${name}`,{cache:'no-store'});
+    return response.ok ? response.json() : fallback;
+  } catch {
+    return fallback;
+  }
+}
+Promise.all([
+  loadJson('metrics.json',{pairs:{}}),
+  loadJson('manifest-official.json',{runs:{}}),
+  loadJson('manifest-omni.json',{runs:{}}),
+  completedPairs()
+]).then(([metrics,official,omni,available])=>{
+  document.querySelector('#official-revision').textContent=officialRevisionLabel(official);
+  document.querySelector('#omni-revision').textContent=shortRevision(omni.omni_revision||official.omni_revision);
+  render(metrics,official,omni,available);
+});
+</script>
+</body>
+</html>
