@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>LTX-2.5 official ↔ vLLM-Omni pipeline parity</title>
-  <meta name="description" content="LTX-2.5 official-reference and vLLM-Omni B300 video parity across four one-stage and two-stage T2V/I2V pipelines.">
+  <title>LTX-2.5 cuDNN release parity and stress gallery</title>
+  <meta name="description" content="Current LTX-2.5 official-reference and vLLM-Omni BF16 cuDNN release parity, plus the earlier 20-second B300 stress gallery.">
   <style>
     :root { color-scheme: dark; --bg:#070a10; --panel:#111722; --line:#2b3547; --text:#f4f7fb; --muted:#9eabba; --accent:#72e6be; --blue:#91aaff; }
     * { box-sizing:border-box; }
@@ -36,6 +36,11 @@
     figcaption { display:flex; justify-content:space-between; padding:9px 11px; color:var(--muted); }
     a { color:var(--accent); }
     .pending { border:1px dashed var(--line); min-height:96px; display:grid; place-items:center; padding:18px; color:var(--muted); text-align:center; border-radius:12px; }
+    .release-callout { border-color:rgba(114,230,190,.55); background:linear-gradient(135deg,rgba(45,120,100,.22),rgba(17,23,34,.96)); }
+    .review { color:#ffd27a; }
+    details { margin-top:42px; }
+    summary { cursor:pointer; padding:18px 20px; border:1px solid var(--line); border-radius:16px; background:#0c111a; font-size:1.12rem; font-weight:750; }
+    details[open] summary { margin-bottom:18px; }
     footer { margin-top:30px; color:var(--muted); }
     @media (max-width:850px) { .pair,.provenance { grid-template-columns:1fr; } main { width:calc(100% - 18px); padding-top:30px; } section { padding:13px; } }
   </style>
@@ -44,11 +49,20 @@
 <main>
   <header>
     <div class="eyebrow">Lightricks official reference × vLLM-Omni × NVIDIA B300</div>
-    <h1>Four pipelines.<br>Only completed pairs.</h1>
-    <p class="lead">The official side loads Lightricks' native split artifacts; vLLM-Omni loads the corresponding LTX-2.5 Diffusers materialization. Both use the official quickstart prompt, seed, release shape, schedule, CRF 18 image conditioning, and ConvVAE. The 481-frame run is a 20-second benchmark stress extension, not the quickstart duration or a claimed hard maximum.</p>
-    <div class="chips"><span class="chip">Lightricks/LTX-2.5</span><span class="chip">481 frames / 24 FPS stress run</span><span class="chip">seeds 42 · 43 · 44</span><span class="chip">960×544 one-stage</span><span class="chip">1920×1088 two-stage</span><span class="chip">SSIM · PSNR · LPIPS</span></div>
+    <h1>Release parity.<br>Videos included.</h1>
+    <p class="lead">The first matrix is the current official Lightricks ↔ vLLM-Omni correctness result at PR head <code>35993bdb0</code>. Both sides run BF16 with the same PyTorch SDPA cuDNN kernel selection on one NVIDIA B300. The previous 481-frame, three-seed stress gallery remains available below as a separate historical workload.</p>
+    <div class="chips"><span class="chip">current head 35993bdb0</span><span class="chip">BF16 cuDNN</span><span class="chip">seed 42</span><span class="chip">25-frame strict parity</span><span class="chip">official native reference</span><span class="chip">SSIM · PSNR · LPIPS</span></div>
   </header>
   <p class="prompt"><strong>Official quickstart prompt:</strong> A medium close-up shot features a Caucasian man with a beard, wearing a green and white baseball cap without any letters on the front, and a light blue shirt over a white t-shirt. He is positioned in the center of the frame, looking intently directly at the camera, his eyes focused on camera. His facial expression is one of deep concentration, with his brow slightly raised. As he looks straight at the camera, a quick sniff sound is heard, and then he speaks with a deep male voice and a satisfied tone, saying, &#x27;I think it&#x27;s so good.&#x27; The camera remains static throughout, maintaining a shallow depth of field, which keeps the man in sharp focus while the background is softly blurred, showing a beige wall behind him. After a brief pause, another short, audible sniff is heard. The man then continues to speak, his voice maintaining the same quality, as he states, &#x27;So good. So good.&#x27; He elaborates further, emphasizing his point with a final statement, &#x27;This got to be, it&#x27;s got to be the best tool I&#x27;ve ever seen.&#x27; <a href="https://github.com/Lightricks/LTX-2#quick-start">source ↗</a></p>
+  <section class="release-callout">
+    <h2>Current BF16 cuDNN release-parity run</h2>
+    <p class="note">These are freshly generated seed-42 official/Omni pairs from the strict correctness harness—not averages copied from the long-form stress run. Full paths decode at 512×384; distilled two-stage paths decode at 1024×576. Cold-start latency is intentionally omitted because this harness measures numerical correctness rather than serving performance.</p>
+    <p class="note">Five public pairs exceed mean SSIM 0.99. Full two-stage I2V currently measures <span class="review">0.977070</span> and is shown exactly as measured rather than being rounded up or hidden.</p>
+    <p class="note"><a href="results-release/metrics.json">machine-readable metrics and pinned revisions ↗</a></p>
+  </section>
+  <div id="release-matrix"></div>
+  <details>
+    <summary>Open the earlier 481-frame / 20-second stress gallery (seeds 42, 43, 44)</summary>
   <section>
     <h2>Benchmark provenance</h2>
     <p class="note">The dimensions below are the canonical LTX-2.5 release shapes selected for this benchmark, not universal upper limits. Diffusers is not used as the reference.</p>
@@ -61,7 +75,8 @@
     <p class="note"><strong>Metric scope:</strong> this is a production-backend cuDNN stress comparison, so decoded-video scores measure long-run trajectory similarity rather than serving as the CI precision gate. The strict reduced-shape correctness tests separately force the same PyTorch SDPA path and connector weights on both implementations.</p>
   </section>
   <div id="matrix"></div>
-  <footer>SSIM uses every decoded frame; PSNR averages finite per-frame values. LPIPS/AlexNet uses 32 uniformly sampled frames. Audio is included for playback but is not assigned a similarity score. ConvVAE is held constant on both sides; DiffVAE support is tracked separately.</footer>
+  </details>
+  <footer>The release matrix reports the checked-in correctness harness output, including video and audio metrics. The expanded stress section retains its original all-frame SSIM, finite-frame PSNR, and 32-frame LPIPS methodology. ConvVAE is held constant on both sides; DiffVAE support is tracked separately.</footer>
 </main>
 <script>
 const cases = [
@@ -75,6 +90,7 @@ const cases = [
   {id:'full_two_stage-i2v', title:'Full guided two-stage · first-frame I2V', meta:'LTX2TwoStagePipeline · official TI2VidTwoStagesPipeline · 1920×1088 · official 30+3 + LoRA450 · CRF 18'}
 ];
 const matrix = document.querySelector('#matrix');
+const releaseMatrix = document.querySelector('#release-matrix');
 const seeds=[42,43,44];
 const resultsRoot='results-final';
 function videoFigure(src,label) {
@@ -88,6 +104,18 @@ const fmtNumber = (value,digits) => Number.isFinite(Number(value))
   ? Number(value).toFixed(digits)
   : value==='inf' ? '∞' : 'pending';
 const fmtSeconds = value => Number.isFinite(value) ? `${value.toFixed(1)}s` : 'pending';
+function renderRelease(data={pairs:[]}) {
+  releaseMatrix.innerHTML='';
+  for (const item of data.pairs||[]) {
+    const section=document.createElement('section');
+    const status=Number(item.ssim_mean)>=0.99 ? '' : ' · <span class="review">below 0.99; follow-up required</span>';
+    const metric=`SSIM mean ${fmtNumber(item.ssim_mean,6)} · min ${fmtNumber(item.ssim_min,6)} · PSNR ${fmtNumber(item.psnr_mean_db,2)} dB · LPIPS ${fmtNumber(item.lpips_alex_mean,7)}${status}`;
+    const audio=`audio: relative L2 ${fmtNumber(item.audio_relative_l2,4)} · cosine ${fmtNumber(item.audio_cosine_similarity,6)}`;
+    const root=`results-release/${item.id}`;
+    section.innerHTML=`<h2>${item.title}</h2><p class="meta">${item.omni_pipeline} · official ${item.official_pipeline} · ${item.decoded_shape}</p><p class="metric">${metric}</p><p class="summary">${audio}</p><div class="pair">${videoFigure(`${root}-official.mp4`,'Official native')}${videoFigure(`${root}-omni.mp4`,'vLLM-Omni')}</div>`;
+    releaseMatrix.appendChild(section);
+  }
+}
 function resultPaths(item,seed) {
   const mode=item.id.substring(0,item.id.lastIndexOf('-'));
   const modality=item.id.substring(item.id.lastIndexOf('-')+1);
@@ -155,11 +183,13 @@ async function loadJson(name,fallback) {
   }
 }
 Promise.all([
+  fetch('results-release/metrics.json',{cache:'no-store'}).then(response=>response.ok ? response.json() : {pairs:[]}),
   loadJson('metrics.json',{pairs:{}}),
   loadJson('manifest-official.json',{runs:{}}),
   loadJson('manifest-omni.json',{runs:{}}),
   completedPairs()
-]).then(([metrics,official,omni,available])=>{
+]).then(([release,metrics,official,omni,available])=>{
+  renderRelease(release);
   document.querySelector('#official-revision').textContent=officialRevisionLabel(official);
   document.querySelector('#omni-revision').textContent=shortRevision(omni.omni_revision||official.omni_revision);
   render(metrics,official,omni,available);

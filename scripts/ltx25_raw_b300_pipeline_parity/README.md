@@ -10,7 +10,31 @@ The two backends use different checkpoint packaging:
 - vLLM-Omni loads a materialized `Lightricks/LTX-2.5-Diffusers` checkpoint.
 - The official runtime loads the raw split artifacts from `Lightricks/LTX-2.5`.
 
-## Matrix
+## Current BF16 cuDNN release parity
+
+The gallery now leads with the latest strict correctness run at vLLM-Omni PR
+head `35993bdb0`. Both implementations ran sequentially on the same NVIDIA
+B300 with BF16, the same PyTorch SDPA cuDNN kernel selection, seed 42, official
+schedules, and identical conditioning. These compact 25-frame pairs are under
+[`results-release/`](results-release/); exact metrics and pinned revisions are
+in [`results-release/metrics.json`](results-release/metrics.json).
+
+| Public path | Task | SSIM mean / min | PSNR | LPIPS |
+|---|---|---:|---:|---:|
+| `LTX2Pipeline` | T2V | 0.999652 / 0.999564 | 58.80 dB | 0.0000367 |
+| `LTX2Pipeline` | I2V | 0.999589 / 0.999480 | 62.37 dB | 0.0000576 |
+| `LTX2TwoStagePipeline` | T2V | 0.999588 / 0.999485 | 56.40 dB | 0.0000687 |
+| `LTX2TwoStagePipeline` | I2V | 0.977070 / 0.971182 | 33.18 dB | 0.0164566 |
+| `LTX2DistilledTwoStagePipeline` | T2V | 0.997186 / 0.996164 | 46.04 dB | 0.0034523 |
+| `LTX2DistilledTwoStagePipeline` | I2V | 0.996489 / 0.995810 | 46.29 dB | 0.0037874 |
+
+Five of the six public native-reference pairs exceed mean SSIM 0.99. Full
+two-stage I2V is published at its measured 0.977070 and remains a correctness
+follow-up; the page does not substitute an earlier value. Cold-start latency
+is omitted from this matrix because the strict harness is a numerical
+correctness run, not a serving benchmark.
+
+## Long-form stress matrix
 
 | Mode | vLLM-Omni class | Official reference | T2V | I2V | Final output and schedule |
 |---|---|---|:---:|:---:|---|
