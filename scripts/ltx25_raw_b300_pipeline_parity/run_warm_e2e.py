@@ -38,8 +38,8 @@ import requests
 from run_pipeline_parity import NEGATIVE_PROMPT, PROMPT
 
 
-CONTROLLED_WIDTH = 768
-CONTROLLED_HEIGHT = 512
+CONTROLLED_WIDTH = 1920
+CONTROLLED_HEIGHT = 1088
 CONTROLLED_NUM_FRAMES = 121
 CONTROLLED_FPS = 24
 CONTROLLED_SEED = 42
@@ -167,7 +167,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=Path(__file__).parent / "results-warm-e2e",
+        default=Path(__file__).parent / "results-v2-staging" / "warm-e2e",
+    )
+    parser.add_argument(
+        "--request-dir",
+        type=Path,
+        help="Directory containing exact <pipeline-label>-<task>.json request templates.",
     )
     parser.add_argument(
         "--output-json",
@@ -204,7 +209,9 @@ def resolve_executable(value: str) -> str:
     return resolved
 
 
-def server_command(args: argparse.Namespace, spec: PipelineSpec, vllm_bin: str) -> list[str]:
+def server_command(
+    args: argparse.Namespace, spec: PipelineSpec, vllm_bin: str
+) -> list[str]:
     command = [
         vllm_bin,
         "serve",
@@ -243,7 +250,9 @@ def wait_until_ready(
     while time.monotonic() < deadline:
         returncode = process.poll()
         if returncode is not None:
-            raise RuntimeError(f"Resident server exited before readiness (code {returncode})")
+            raise RuntimeError(
+                f"Resident server exited before readiness (code {returncode})"
+            )
         try:
             response = session.get(f"{base_url}/health", timeout=2.0)
             if response.status_code == 200:
@@ -280,7 +289,9 @@ def resident_server(
 
     env = os.environ.copy()
     root = str(args.vllm_omni_root.resolve())
-    env["PYTHONPATH"] = root + (os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else "")
+    env["PYTHONPATH"] = root + (
+        os.pathsep + env["PYTHONPATH"] if env.get("PYTHONPATH") else ""
+    )
     with log_path.open("w") as log_stream:
         process = subprocess.Popen(
             command,
@@ -302,18 +313,58 @@ def resident_server(
             stop_process_group(process)
 
 
-def request_form(spec: PipelineSpec) -> dict[str, str]:
+def request_form(
+    spec: PipelineSpec,
+    task: str,
+    request_dir: Path | None,
+) -> dict[str, str]:
+    if request_dir is None:
+        request = {
+            "prompt": PROMPT,
+            "width": CONTROLLED_WIDTH,
+            "height": CONTROLLED_HEIGHT,
+            "num_frames": CONTROLLED_NUM_FRAMES,
+            "fps": CONTROLLED_FPS,
+            "num_inference_steps": spec.num_inference_steps,
+            "seed": CONTROLLED_SEED,
+            "negative_prompt": NEGATIVE_PROMPT if spec.guided else None,
+            "image_crf": CONTROLLED_IMAGE_CRF if task == "i2v" else None,
+        }
+    else:
+        request_path = request_dir / f"{spec.label}-{task}.json"
+        if not request_path.is_file():
+            raise FileNotFoundError(request_path)
+        request = json.loads(request_path.read_text())
+
     form = {
-        "prompt": PROMPT,
-        "width": str(CONTROLLED_WIDTH),
-        "height": str(CONTROLLED_HEIGHT),
-        "num_frames": str(CONTROLLED_NUM_FRAMES),
-        "fps": str(CONTROLLED_FPS),
-        "num_inference_steps": str(spec.num_inference_steps),
-        "seed": str(CONTROLLED_SEED),
+        key: str(request[key])
+        for key in (
+            "prompt",
+            "width",
+            "height",
+            "num_frames",
+            "fps",
+            "num_inference_steps",
+            "seed",
+        )
     }
-    if spec.guided:
-        form["negative_prompt"] = NEGATIVE_PROMPT
+    negative_prompt = request.get("negative_prompt")
+    if negative_prompt is not None:
+        form["negative_prompt"] = str(negative_prompt)
+
+    extra_params = {
+        key: value
+        for key, value in request.items()
+        if value is not None
+        and (
+            key.startswith(("video_", "audio_"))
+            or key in {"sigmas", "stage_1_sigmas", "stage_2_sigmas", "image_crf"}
+        )
+    }
+    if task == "i2v":
+        extra_params.setdefault("image_crf", CONTROLLED_IMAGE_CRF)
+    if extra_params:
+        form["extra_params"] = json.dumps(extra_params, separators=(",", ":"))
     return form
 
 
@@ -324,15 +375,13 @@ def send_request(
     spec: PipelineSpec,
     task: str,
     image: Path,
+    request_dir: Path | None,
     timeout: float,
 ) -> tuple[float, bytes]:
-    form = request_form(spec)
+    form = request_form(spec, task, request_dir)
     files = None
     image_stream = None
     if task == "i2v":
-        form["extra_params"] = json.dumps(
-            {"image_crf": CONTROLLED_IMAGE_CRF}, separators=(",", ":")
-        )
         image_stream = image.open("rb")
         files = {"input_reference": (image.name, image_stream, "image/png")}
 
@@ -353,9 +402,13 @@ def send_request(
 
     if response.status_code != 200:
         detail = body.decode("utf-8", errors="replace")[:1000]
-        raise RuntimeError(f"{spec.class_name} {task} returned HTTP {response.status_code}: {detail}")
+        raise RuntimeError(
+            f"{spec.class_name} {task} returned HTTP {response.status_code}: {detail}"
+        )
     if len(body) < 12 or body[4:8] != b"ftyp":
-        raise RuntimeError(f"{spec.class_name} {task} did not return a valid MP4 payload")
+        raise RuntimeError(
+            f"{spec.class_name} {task} did not return a valid MP4 payload"
+        )
     return elapsed, body
 
 
@@ -406,11 +459,18 @@ def benchmark_contract(args: argparse.Namespace) -> dict:
         "fps": CONTROLLED_FPS,
         "i2v_image": str(args.image),
         "i2v_image_crf": CONTROLLED_IMAGE_CRF,
-        "schedule_policy": "public official schedule: Full=30 Stage-1 steps, Distilled=8 Stage-1 steps; two-stage Stage 2 is pipeline-defined",
+        "schedule_policy": (
+            "exact per-pipeline request templates"
+            if args.request_dir is not None
+            else "public defaults: Full=30 Stage-1 steps, Distilled=8 Stage-1 steps"
+        ),
+        "request_templates": None
+        if args.request_dir is None
+        else str(args.request_dir),
         "request_order": list(args.tasks),
         "request_concurrency": 1,
         "transport": "persistent loopback HTTP session",
-        "showcase_separation": "This compact controlled workload is not the 1080p/481-frame quality showcase.",
+        "workload": "official quickstart prompt at 1920x1088, 121 frames, 24 FPS (5.0417 seconds)",
     }
 
 
@@ -419,17 +479,14 @@ def dry_run_payload(args: argparse.Namespace, vllm_bin: str) -> dict:
         "benchmark_contract": benchmark_contract(args),
         "servers": {
             class_name: {
-                "command": shlex.join(server_command(args, PIPELINES[class_name], vllm_bin)),
+                "command": shlex.join(
+                    server_command(args, PIPELINES[class_name], vllm_bin)
+                ),
                 "tasks": {
                     task: {
-                        "form": {
-                            **request_form(PIPELINES[class_name]),
-                            **(
-                                {"extra_params": json.dumps({"image_crf": CONTROLLED_IMAGE_CRF})}
-                                if task == "i2v"
-                                else {}
-                            ),
-                        },
+                        "form": request_form(
+                            PIPELINES[class_name], task, args.request_dir
+                        ),
                         "input_reference": str(args.image) if task == "i2v" else None,
                     }
                     for task in args.tasks
@@ -445,8 +502,12 @@ def main() -> None:
     args.vllm_omni_root = args.vllm_omni_root.resolve()
     args.image = args.image.resolve()
     args.output_dir = args.output_dir.resolve()
+    if args.request_dir is not None:
+        args.request_dir = args.request_dir.resolve()
     if not args.vllm_omni_root.is_dir():
         raise FileNotFoundError(args.vllm_omni_root)
+    if args.request_dir is not None and not args.request_dir.is_dir():
+        raise FileNotFoundError(args.request_dir)
     if "i2v" in args.tasks and not args.image.is_file():
         raise FileNotFoundError(args.image)
     if not 1 <= args.port <= 65535:
@@ -499,6 +560,7 @@ def main() -> None:
                         spec=spec,
                         task=task,
                         image=args.image,
+                        request_dir=args.request_dir,
                         timeout=args.request_timeout,
                     )
                     samples: list[float] = []
@@ -510,6 +572,7 @@ def main() -> None:
                             spec=spec,
                             task=task,
                             image=args.image,
+                            request_dir=args.request_dir,
                             timeout=args.request_timeout,
                         )
                         samples.append(elapsed)
@@ -519,7 +582,10 @@ def main() -> None:
                         )
                     pipeline_result["warm_e2e_seconds"][task] = summarize(samples)
                     if args.save_responses:
-                        response_path = responses_dir / f"{spec.label}-{task}-seed-{CONTROLLED_SEED}.mp4"
+                        response_path = (
+                            responses_dir
+                            / f"{spec.label}-{task}-seed-{CONTROLLED_SEED}.mp4"
+                        )
                         response_path.write_bytes(last_body)
                     write_summary(summary_path, result)
             print(f"[{class_name}] resident server stopped", flush=True)

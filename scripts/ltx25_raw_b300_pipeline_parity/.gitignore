@@ -1,7 +1,7 @@
 __pycache__/
 results/
+results-final/
+results-release/
+results-warm-e2e/
+results-v2-staging/
 *.lock
-results-final/*.log
-results-final/manifest-*-*.json
-results-warm-e2e/*.log
-results-warm-e2e/*.tmp

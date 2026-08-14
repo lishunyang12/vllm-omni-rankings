@@ -1,0 +1,63 @@
+{
+  "prompt": "A medium close-up shot features a Caucasian man with a beard, wearing a green and white baseball cap without any letters on the front, and a light blue shirt over a white t-shirt. He is positioned in the center of the frame, looking intently directly at the camera, his eyes focused on camera. His facial expression is one of deep concentration, with his brow slightly raised. As he looks straight at the camera, a quick sniff sound is heard, and then he speaks with a deep male voice and a satisfied tone, saying, 'I think it's so good.' The camera remains static throughout, maintaining a shallow depth of field, which keeps the man in sharp focus while the background is softly blurred, showing a beige wall behind him. After a brief pause, another short, audible sniff is heard. The man then continues to speak, his voice maintaining the same quality, as he states, 'So good. So good.' He elaborates further, emphasizing his point with a final statement, 'This got to be, it's got to be the best tool I've ever seen.'",
+  "negative_prompt": "blurry, out of focus, overexposed, underexposed, low contrast, washed out colors, excessive noise, grainy texture, poor lighting, flickering, motion blur, distorted proportions, unnatural skin tones, deformed facial features, asymmetrical face, missing facial features, extra limbs, disfigured hands, wrong hand count, artifacts around text, inconsistent perspective, camera shake, incorrect depth of field, background too sharp, background clutter, distracting reflections, harsh shadows, inconsistent lighting direction, color banding, cartoonish rendering, 3D CGI look, unrealistic materials, uncanny valley effect, incorrect ethnicity, wrong gender, exaggerated expressions, wrong gaze direction, mismatched lip sync, silent or muted audio, distorted voice, robotic voice, echo, background noise, off-sync audio, incorrect dialogue, added dialogue, repetitive speech, jittery movement, awkward pauses, incorrect timing, unnatural transitions, inconsistent framing, tilted camera, flat lighting, inconsistent tone, cinematic oversaturation, stylized filters, or AI artifacts.",
+  "width": 1920,
+  "height": 1088,
+  "num_frames": 121,
+  "fps": 24,
+  "num_inference_steps": 30,
+  "seed": 42,
+  "video_cfg_scale": 3.0,
+  "audio_cfg_scale": 7.0,
+  "video_stg_scale": 1.0,
+  "audio_stg_scale": 1.0,
+  "video_modality_scale": 3.0,
+  "audio_modality_scale": 3.0,
+  "video_rescale_scale": 0.7,
+  "audio_rescale_scale": 0.7,
+  "video_stg_blocks": [
+    28
+  ],
+  "audio_stg_blocks": [
+    28
+  ],
+  "stage_1_sigmas": [
+    0.9999999403953552,
+    0.9949570298194885,
+    0.9896030426025391,
+    0.9839084148406982,
+    0.9778395891189575,
+    0.9713582396507263,
+    0.9644212126731873,
+    0.9569781422615051,
+    0.9489720463752747,
+    0.9403364062309265,
+    0.9309937953948975,
+    0.9208537936210632,
+    0.9098098278045654,
+    0.8977352380752563,
+    0.8844786882400513,
+    0.8698580265045166,
+    0.8536507487297058,
+    0.8355841040611267,
+    0.8153185844421387,
+    0.7924267053604126,
+    0.7663628458976746,
+    0.7364180088043213,
+    0.7016562223434448,
+    0.6608133316040039,
+    0.6121406555175781,
+    0.5531478524208069,
+    0.48016369342803955,
+    0.3875408172607422,
+    0.26612043380737305,
+    0.10000002384185791,
+    0.0
+  ],
+  "stage_2_sigmas": [
+    0.909375,
+    0.725,
+    0.421875,
+    0.0
+  ]
+}

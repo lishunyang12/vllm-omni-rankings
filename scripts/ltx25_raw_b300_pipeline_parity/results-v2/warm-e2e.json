@@ -1,0 +1,156 @@
+{
+  "schema_version": 2,
+  "created_at_utc": "2026-08-14T14:11:32.399306+00:00",
+  "model": "Lightricks/LTX-2.5-Diffusers",
+  "vllm_omni_revision": "f7e2d68364fd10f3d8cf59c48ea7bc31e74faba7",
+  "cuda_visible_devices": "isolated B300 GPU per pipeline",
+  "attention_backend": "CUDNN_ATTN",
+  "benchmark_contract": {
+    "name": "LTX-2.5 controlled warm E2E",
+    "latency_scope": "client wall clock for POST /v1/videos/sync through complete MP4 receipt; server startup/model load, one warm-up per pipeline/task, validation, and optional file writes excluded",
+    "resident_runtime": "one server per public pipeline class; T2V and I2V run sequentially on that server",
+    "warmup_requests_excluded_per_pipeline_task": 1,
+    "timed_repeats_per_pipeline_task": 2,
+    "prompt": "A medium close-up shot features a Caucasian man with a beard, wearing a green and white baseball cap without any letters on the front, and a light blue shirt over a white t-shirt. He is positioned in the center of the frame, looking intently directly at the camera, his eyes focused on camera. His facial expression is one of deep concentration, with his brow slightly raised. As he looks straight at the camera, a quick sniff sound is heard, and then he speaks with a deep male voice and a satisfied tone, saying, 'I think it's so good.' The camera remains static throughout, maintaining a shallow depth of field, which keeps the man in sharp focus while the background is softly blurred, showing a beige wall behind him. After a brief pause, another short, audible sniff is heard. The man then continues to speak, his voice maintaining the same quality, as he states, 'So good. So good.' He elaborates further, emphasizing his point with a final statement, 'This got to be, it's got to be the best tool I've ever seen.'",
+    "seed": 42,
+    "width": 1920,
+    "height": 1088,
+    "num_frames": 121,
+    "fps": 24,
+    "i2v_image": "inputs/quickstart-seed42-frame0.png",
+    "i2v_image_crf": 18,
+    "schedule_policy": "exact per-pipeline Official request templates",
+    "request_order": [
+      "t2v",
+      "i2v"
+    ],
+    "request_concurrency": 1,
+    "transport": "persistent loopback HTTP session",
+    "request_templates": "requests/",
+    "workload": "official difficult quickstart dialogue at 1920x1088, 121 frames, 24 FPS (5.0417 seconds)",
+    "metric_scope": "not part of latency timing; published precision uses native decoded frames 0-23"
+  },
+  "pipelines": {
+    "LTX2Pipeline": {
+      "label": "full_one_stage",
+      "num_inference_steps": 30,
+      "guided": true,
+      "server_command": "vllm serve Lightricks/LTX-2.5-Diffusers --omni --model-class-name LTX2Pipeline --diffusion-attention-backend CUDNN_ATTN --enforce-eager",
+      "warm_e2e_seconds": {
+        "t2v": {
+          "timed_repeats": 2,
+          "samples_seconds": [
+            216.81264245300554,
+            216.059471296845
+          ],
+          "mean_seconds": 216.43605687492527,
+          "min_seconds": 216.059471296845,
+          "max_seconds": 216.81264245300554,
+          "stdev_seconds": 0.3765855780802667
+        },
+        "i2v": {
+          "timed_repeats": 2,
+          "samples_seconds": [
+            217.06588100385852,
+            216.99127746513113
+          ],
+          "mean_seconds": 217.02857923449483,
+          "min_seconds": 216.99127746513113,
+          "max_seconds": 217.06588100385852,
+          "stdev_seconds": 0.03730176936369389
+        }
+      }
+    },
+    "LTX2TwoStagePipeline": {
+      "label": "full_two_stage",
+      "num_inference_steps": 30,
+      "guided": true,
+      "server_command": "vllm serve Lightricks/LTX-2.5-Diffusers --omni --model-class-name LTX2TwoStagePipeline --diffusion-attention-backend CUDNN_ATTN --enforce-eager",
+      "warm_e2e_seconds": {
+        "t2v": {
+          "timed_repeats": 2,
+          "samples_seconds": [
+            55.85232157399878,
+            52.274988878984004
+          ],
+          "mean_seconds": 54.06365522649139,
+          "min_seconds": 52.274988878984004,
+          "max_seconds": 55.85232157399878,
+          "stdev_seconds": 1.7886663475073874
+        },
+        "i2v": {
+          "timed_repeats": 2,
+          "samples_seconds": [
+            53.673562101088464,
+            52.74768254416995
+          ],
+          "mean_seconds": 53.210622322629206,
+          "min_seconds": 52.74768254416995,
+          "max_seconds": 53.673562101088464,
+          "stdev_seconds": 0.4629397784592584
+        }
+      }
+    },
+    "LTX2DistilledOneStagePipeline": {
+      "label": "distilled_one_stage",
+      "num_inference_steps": 8,
+      "guided": false,
+      "server_command": "vllm serve Lightricks/LTX-2.5-Diffusers --omni --model-class-name LTX2DistilledOneStagePipeline --diffusion-attention-backend CUDNN_ATTN --enforce-eager",
+      "warm_e2e_seconds": {
+        "t2v": {
+          "timed_repeats": 2,
+          "samples_seconds": [
+            20.615473729092628,
+            22.679261408979073
+          ],
+          "mean_seconds": 21.64736756903585,
+          "min_seconds": 20.615473729092628,
+          "max_seconds": 22.679261408979073,
+          "stdev_seconds": 1.0318938399432227
+        },
+        "i2v": {
+          "timed_repeats": 2,
+          "samples_seconds": [
+            22.044278134824708,
+            22.482617225963622
+          ],
+          "mean_seconds": 22.263447680394165,
+          "min_seconds": 22.044278134824708,
+          "max_seconds": 22.482617225963622,
+          "stdev_seconds": 0.2191695455694571
+        }
+      }
+    },
+    "LTX2DistilledTwoStagePipeline": {
+      "label": "distilled_two_stage",
+      "num_inference_steps": 8,
+      "guided": false,
+      "server_command": "vllm serve Lightricks/LTX-2.5-Diffusers --omni --model-class-name LTX2DistilledTwoStagePipeline --diffusion-attention-backend CUDNN_ATTN --enforce-eager",
+      "warm_e2e_seconds": {
+        "t2v": {
+          "timed_repeats": 2,
+          "samples_seconds": [
+            14.654941256856546,
+            14.626032809028402
+          ],
+          "mean_seconds": 14.640487032942474,
+          "min_seconds": 14.626032809028402,
+          "max_seconds": 14.654941256856546,
+          "stdev_seconds": 0.014454223914071918
+        },
+        "i2v": {
+          "timed_repeats": 2,
+          "samples_seconds": [
+            15.077826729044318,
+            14.380285624181852
+          ],
+          "mean_seconds": 14.729056176613085,
+          "min_seconds": 14.380285624181852,
+          "max_seconds": 15.077826729044318,
+          "stdev_seconds": 0.3487705524312332
+        }
+      }
+    }
+  },
+  "hardware": "NVIDIA B300"
+}

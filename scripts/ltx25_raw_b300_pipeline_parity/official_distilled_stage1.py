@@ -11,15 +11,22 @@ from __future__ import annotations
 
 import logging
 from collections.abc import Iterator, Sequence
+from pathlib import Path
 
 import torch
+from safetensors import safe_open
 
 from ltx_core.allocator_trim_strategy import AllocatorTrimStrategy
 from ltx_core.components.noisers import GaussianNoiser
 from ltx_core.loader import LoraPathStrengthAndSDOps
 from ltx_core.loader.registry import Registry
 from ltx_core.model.transformer.compiling import CompilationConfig
-from ltx_core.model.video_vae import AUTO_TILING, AutoTiling, TilingConfig, get_video_chunks_number
+from ltx_core.model.video_vae import (
+    AUTO_TILING,
+    AutoTiling,
+    TilingConfig,
+    get_video_chunks_number,
+)
 from ltx_core.model.video_vae.transformer import DiffVAEMode
 from ltx_core.quantization import QuantizationPolicy
 from ltx_core.types import Audio, VideoPixelShape
@@ -58,7 +65,12 @@ from ltx_pipelines.utils.media_io import (
     vae_dtype_for_hdr,
 )
 from ltx_pipelines.utils.model_paths import ModelPaths
-from ltx_pipelines.utils.types import DEFAULT_AUTO_DURATION, AutoDuration, ModalitySpec, OffloadMode
+from ltx_pipelines.utils.types import (
+    DEFAULT_AUTO_DURATION,
+    AutoDuration,
+    ModalitySpec,
+    OffloadMode,
+)
 
 
 class OfficialDistilledStage1(DistilledPipeline):
@@ -129,7 +141,9 @@ class OfficialDistilledStage1(DistilledPipeline):
             self.dtype,
             self.device,
         )
-        self.use_ancestral_sampler = should_use_ancestral_sampler(model_paths.transformer())
+        self.use_ancestral_sampler = should_use_ancestral_sampler(
+            model_paths.transformer()
+        )
 
     def __call__(  # noqa: PLR0913
         self,
@@ -212,7 +226,9 @@ class OfficialDistilledStage1(DistilledPipeline):
                 color_space=color_space,
             )
         )
-        stage_1_conditionings.extend(generated_keyframe_conditionings(generated_keyframes, num_frames))
+        stage_1_conditionings.extend(
+            generated_keyframe_conditionings(generated_keyframes, num_frames)
+        )
 
         video_state, audio_state = self.stage(
             denoiser=SimpleDenoiser(video_context, audio_context),
@@ -222,15 +238,84 @@ class OfficialDistilledStage1(DistilledPipeline):
             height=stage_1_h,
             frames=num_frames,
             fps=frame_rate,
-            video=ModalitySpec(context=video_context, conditionings=stage_1_conditionings),
+            video=ModalitySpec(
+                context=video_context, conditionings=stage_1_conditionings
+            ),
             audio=ModalitySpec(context=audio_context),
             **self._stage_1_sampler_kwargs(seed),
         )
         # END exact Stage 1 extraction. Stage 2 upsampling/refinement is omitted.
 
-        decoded_video = self.video_decoder(video_state.latent, tiling_config, generator, dtype=vae_dtype)
+        decoded_video = self.video_decoder(
+            video_state.latent, tiling_config, generator, dtype=vae_dtype
+        )
         decoded_audio = self.audio_decoder(audio_state.latent)
         return decoded_video, decoded_audio, num_frames, tiling_config
+
+
+def _use_diffusers_connector_weights(
+    prompt_encoder: PromptEncoder, model: Path
+) -> None:
+    shards = sorted((model / "connectors").glob("*.safetensors"))
+    if not shards:
+        raise ValueError(f"No connector safetensors found under {model / 'connectors'}")
+    original_build = prompt_encoder._build_embeddings_processor
+
+    def build_embeddings_processor():
+        processor = original_build()
+        parameters = dict(processor.named_parameters())
+        expected = {
+            name
+            for name in parameters
+            if name.startswith(("video_connector.", "audio_connector."))
+        }
+        loaded: set[str] = set()
+        with torch.no_grad():
+            for shard in shards:
+                with safe_open(str(shard), framework="pt", device="cpu") as weights:
+                    for source_name in weights.keys():
+                        if not source_name.startswith(
+                            ("video_connector.", "audio_connector.")
+                        ):
+                            continue
+                        target_name = (
+                            source_name.replace(
+                                ".transformer_blocks.", ".transformer_1d_blocks."
+                            )
+                            .replace(".attn1.norm_q.", ".attn1.q_norm.")
+                            .replace(".attn1.norm_k.", ".attn1.k_norm.")
+                        )
+                        parameter = parameters[target_name]
+                        parameter.copy_(
+                            weights.get_tensor(source_name).to(
+                                parameter.device, parameter.dtype
+                            )
+                        )
+                        loaded.add(target_name)
+        if loaded != expected:
+            raise ValueError(
+                f"Connector weight mismatch: missing={sorted(expected - loaded)}, unexpected={sorted(loaded - expected)}"
+            )
+        return processor
+
+    prompt_encoder._build_embeddings_processor = build_embeddings_processor
+
+
+def _configure_cudnn_attention(pipeline: OfficialDistilledStage1) -> None:
+    from ltx_core.loader.attention_ops import set_attention_module_op
+    from ltx_core.model.transformer.attention import PytorchAttention
+    from torch.nn.attention import SDPBackend
+
+    attention = PytorchAttention(priority=[SDPBackend.CUDNN_ATTENTION, SDPBackend.MATH])
+    module_op = set_attention_module_op(attention=attention, masked_attention=attention)
+    for owner, attribute in (
+        (pipeline.stage, "_transformer_builder"),
+        (pipeline.prompt_encoder, "_embeddings_processor_builder"),
+    ):
+        builder = getattr(owner, attribute)
+        setattr(
+            owner, attribute, builder.with_module_ops((*builder.module_ops, module_op))
+        )
 
 
 def _stage_1_arg_parser():
@@ -245,8 +330,11 @@ def _stage_1_arg_parser():
         action for action in parser._actions if action.dest == "spatial_upsampler_path"
     )
     spatial_upsampler_action.required = False
-    spatial_upsampler_action.help = (
-        "Accepted for official two-stage CLI compatibility; unused by this Stage 1 extraction."
+    spatial_upsampler_action.help = "Accepted for official two-stage CLI compatibility; unused by this Stage 1 extraction."
+    parser.add_argument(
+        "--connector-model",
+        type=Path,
+        help="Materialized checkpoint whose connector weights are used on both sides.",
     )
     return parser
 
@@ -264,6 +352,9 @@ def main() -> None:
         prompt_enhancer_gemma_root=args.prompt_enhancer_gemma_root,
         diffvae_optimization=args.diffvae_optimization,
     )
+    if args.connector_model is not None:
+        _use_diffusers_connector_weights(pipeline.prompt_encoder, args.connector_model)
+    _configure_cudnn_attention(pipeline)
     hdr = resolve_hdr_color_space(images=args.images, hdr=args.hdr)
     vae_dtype = vae_dtype_for_hdr(hdr, torch.bfloat16)
     video, audio, num_frames, tiling_config = pipeline(

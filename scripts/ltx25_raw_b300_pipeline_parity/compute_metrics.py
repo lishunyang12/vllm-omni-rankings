@@ -25,14 +25,22 @@ FILENAME = re.compile(
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--results-dir", type=Path, default=Path(__file__).parent / "results-final"
+        "--results-dir",
+        type=Path,
+        default=Path(__file__).parent / "results-v2" / "videos",
     )
-    parser.add_argument("--lpips-frames", type=int, default=32)
+    parser.add_argument("--lpips-frames", type=int, default=24)
+    parser.add_argument(
+        "--max-frames",
+        type=int,
+        default=24,
+        help="Compare only the first N decoded frames; 24 frames is one second at 24 FPS.",
+    )
     parser.add_argument("--device", choices=("auto", "cpu", "cuda"), default="auto")
     parser.add_argument(
         "--force",
         action="store_true",
-        help="Recompute pairs already present in results-final/metrics.json.",
+        help="Recompute pairs already present in results-v2/videos/metrics.json.",
     )
     parser.add_argument(
         "--mode",
@@ -70,6 +78,7 @@ def compare_pair(
     *,
     lpips_model,
     lpips_frames: int,
+    max_frames: int,
     device: torch.device,
 ) -> dict:
     official = cv2.VideoCapture(str(official_path))
@@ -83,7 +92,8 @@ def compare_pair(
             f"Video metadata mismatch: official={official_meta}, omni={omni_meta}"
         )
 
-    total_frames = int(official_meta["frame_count"])
+    available_frames = int(official_meta["frame_count"])
+    total_frames = min(available_frames, max_frames)
     sampled_indices = set(
         np.linspace(
             0, max(total_frames - 1, 0), min(lpips_frames, total_frames), dtype=int
@@ -93,7 +103,7 @@ def compare_pair(
     psnr_values: list[float] = []
     lpips_values: list[float] = []
     frame_index = 0
-    while True:
+    while frame_index < total_frames:
         official_ok, official_frame = official.read()
         omni_ok, omni_frame = omni.read()
         if official_ok != omni_ok:
@@ -127,6 +137,7 @@ def compare_pair(
     finite_psnr = [value for value in psnr_values if math.isfinite(value)]
     return {
         **official_meta,
+        "evaluated_frame_count": total_frames,
         "ssim_mean": float(np.mean(ssim_values)),
         "ssim_min": float(np.min(ssim_values)),
         "psnr_mean_db": float(np.mean(finite_psnr)) if finite_psnr else "inf",
@@ -188,8 +199,8 @@ def main() -> None:
         previous_pairs = json.loads(metrics_path.read_text()).get("pairs", {})
 
     metric_contract = {
-        "ssim": "all decoded BGR frames (channel permutation invariant)",
-        "psnr": "finite per-frame values across all decoded BGR frames",
+        "ssim": f"first {args.max_frames} decoded BGR frames (channel permutation invariant)",
+        "psnr": f"finite per-frame values across the first {args.max_frames} decoded frames",
         "lpips": f"AlexNet, {args.lpips_frames} uniformly sampled decoded frames",
         "comparison": (
             "official raw split artifacts vs the corresponding Diffusers "
@@ -216,6 +227,7 @@ def main() -> None:
             paths["omni"],
             lpips_model=lpips_model,
             lpips_frames=args.lpips_frames,
+            max_frames=args.max_frames,
             device=device,
         )
         results = write_pair_result(metrics_path, metric_contract, pair_id, pair_result)
