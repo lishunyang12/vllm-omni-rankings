@@ -28,9 +28,11 @@
     .seed:first-of-type { border-top:0; }
     .seed-head { display:flex; justify-content:space-between; gap:12px; align-items:baseline; margin-bottom:10px; }
     .metric { color:var(--accent); font-variant-numeric:tabular-nums; text-align:right; }
-    .summary,.runtime { color:var(--muted); font-variant-numeric:tabular-nums; }
-    .runtime { display:block; margin-top:2px; font-size:.86rem; }
+    .summary { color:var(--muted); font-variant-numeric:tabular-nums; }
     .pair { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    table { width:100%; border-collapse:collapse; margin-top:14px; font-variant-numeric:tabular-nums; }
+    th,td { padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; }
+    th:not(:first-child),td:not(:first-child) { text-align:right; }
     figure { margin:0; min-width:0; overflow:hidden; border:1px solid var(--line); border-radius:13px; background:#05070b; }
     video { display:block; width:100%; aspect-ratio:16/9; object-fit:contain; background:#020305; }
     figcaption { display:flex; justify-content:space-between; padding:9px 11px; color:var(--muted); }
@@ -50,14 +52,28 @@
   <header>
     <div class="eyebrow">Lightricks official reference × vLLM-Omni × NVIDIA B300</div>
     <h1>Release parity.<br>Videos included.</h1>
-    <p class="lead">The first matrix is the current official Lightricks ↔ vLLM-Omni correctness result at PR head <code>35993bdb0</code>. Both sides run BF16 with the same PyTorch SDPA cuDNN kernel selection on one NVIDIA B300. The previous 481-frame, three-seed stress gallery remains available below as a separate historical workload.</p>
-    <div class="chips"><span class="chip">current head 35993bdb0</span><span class="chip">BF16 cuDNN</span><span class="chip">seed 42</span><span class="chip">25-frame strict parity</span><span class="chip">official native reference</span><span class="chip">SSIM · PSNR · LPIPS</span></div>
+    <p class="lead">Controlled warm serving latency and current official Lightricks ↔ vLLM-Omni correctness at PR head <code>29a24da58</code>. All runs use BF16 cuDNN on NVIDIA B300. The 481-frame, three-seed stress gallery remains below as a separate maximum-quality workload.</p>
+    <div class="chips"><span class="chip">current head 29a24da58</span><span class="chip">warm E2E only</span><span class="chip">BF16 cuDNN</span><span class="chip">seed 42</span><span class="chip">official native reference</span><span class="chip">SSIM · PSNR · LPIPS</span></div>
   </header>
   <p class="prompt"><strong>Official quickstart prompt:</strong> A medium close-up shot features a Caucasian man with a beard, wearing a green and white baseball cap without any letters on the front, and a light blue shirt over a white t-shirt. He is positioned in the center of the frame, looking intently directly at the camera, his eyes focused on camera. His facial expression is one of deep concentration, with his brow slightly raised. As he looks straight at the camera, a quick sniff sound is heard, and then he speaks with a deep male voice and a satisfied tone, saying, &#x27;I think it&#x27;s so good.&#x27; The camera remains static throughout, maintaining a shallow depth of field, which keeps the man in sharp focus while the background is softly blurred, showing a beige wall behind him. After a brief pause, another short, audible sniff is heard. The man then continues to speak, his voice maintaining the same quality, as he states, &#x27;So good. So good.&#x27; He elaborates further, emphasizing his point with a final statement, &#x27;This got to be, it&#x27;s got to be the best tool I&#x27;ve ever seen.&#x27; <a href="https://github.com/Lightricks/LTX-2#quick-start">source ↗</a></p>
   <section class="release-callout">
+    <h2>Controlled warm E2E · same T2V/I2V workload</h2>
+    <p class="note">One excluded warm-up, then three timed resident requests per task. Every class uses the same prompt, seed 42, 768×512, 121 frames, 24 FPS, and the same CRF-18 I2V frame. The timer covers the complete loopback API request and MP4 receipt; startup, model loading, warm-up, validation, and file writes are outside it.</p>
+    <table>
+      <thead><tr><th>Pipeline</th><th>T2V warm E2E</th><th>I2V warm E2E</th></tr></thead>
+      <tbody>
+        <tr><td><code>LTX2Pipeline</code></td><td>32.94s · <a href="results-warm-e2e/responses/full_one_stage-t2v-seed-42.mp4">video ↗</a></td><td>33.13s · <a href="results-warm-e2e/responses/full_one_stage-i2v-seed-42.mp4">video ↗</a></td></tr>
+        <tr><td><code>LTX2TwoStagePipeline</code></td><td>11.74s · <a href="results-warm-e2e/responses/full_two_stage-t2v-seed-42.mp4">video ↗</a></td><td>12.18s · <a href="results-warm-e2e/responses/full_two_stage-i2v-seed-42.mp4">video ↗</a></td></tr>
+        <tr><td><code>LTX2DistilledOneStagePipeline</code></td><td>4.74s · <a href="results-warm-e2e/responses/distilled_one_stage-t2v-seed-42.mp4">video ↗</a></td><td>4.77s · <a href="results-warm-e2e/responses/distilled_one_stage-i2v-seed-42.mp4">video ↗</a></td></tr>
+        <tr><td><code>LTX2DistilledTwoStagePipeline</code></td><td>4.05s · <a href="results-warm-e2e/responses/distilled_two_stage-t2v-seed-42.mp4">video ↗</a></td><td>4.65s · <a href="results-warm-e2e/responses/distilled_two_stage-i2v-seed-42.mp4">video ↗</a></td></tr>
+      </tbody>
+    </table>
+    <p class="note">Means of three same-GPU warm samples. <a href="results-warm-e2e/warm-e2e.json">Machine-readable result with all 24 timed requests ↗</a></p>
+  </section>
+  <section class="release-callout">
     <h2>Current BF16 cuDNN release-parity run</h2>
-    <p class="note">These are freshly generated seed-42 official/Omni pairs from the strict correctness harness—not averages copied from the long-form stress run. Full paths decode at 512×384; distilled two-stage paths decode at 1024×576. Cold-start latency is intentionally omitted because this harness measures numerical correctness rather than serving performance.</p>
-    <p class="note">Five public pairs exceed mean SSIM 0.99. Full two-stage I2V currently measures <span class="review">0.977070</span> and is shown exactly as measured rather than being rounded up or hidden.</p>
+    <p class="note">These are freshly generated seed-42 official/Omni pairs from the strict correctness harness—not averages copied from the long-form stress run. Full paths decode at 512×384; distilled two-stage paths decode at 1024×576.</p>
+    <p class="note">All six public native-reference pairs exceed mean SSIM 0.99. Full two-stage I2V now measures <span class="metric">0.999585</span> after matching the official two-step FP32 conditioned-noising order.</p>
     <p class="note"><a href="results-release/metrics.json">machine-readable metrics and pinned revisions ↗</a></p>
   </section>
   <div id="release-matrix"></div>
@@ -103,7 +119,6 @@ const mean = values => {
 const fmtNumber = (value,digits) => Number.isFinite(Number(value))
   ? Number(value).toFixed(digits)
   : value==='inf' ? '∞' : 'pending';
-const fmtSeconds = value => Number.isFinite(value) ? `${value.toFixed(1)}s` : 'pending';
 function renderRelease(data={pairs:[]}) {
   releaseMatrix.innerHTML='';
   for (const item of data.pairs||[]) {
@@ -162,11 +177,8 @@ function render(metrics={pairs:{}}, officialManifest={runs:{}}, omniManifest={ru
       const m=metrics.pairs?.[pairId];
       const {mode,modality,official:officialSrc,omni:omniSrc}=resultPaths(item,seed);
       const metric=m ? `SSIM ${fmtNumber(m.ssim_mean,4)} · PSNR ${fmtNumber(m.psnr_mean_db,2)} dB · LPIPS ${fmtNumber(m.lpips_mean,4)}` : 'metrics pending';
-      const officialRun=officialManifest.runs?.[`${mode}-${modality}-official-seed-${seed}`];
-      const omniRun=omniManifest.runs?.[`${mode}-${modality}-omni-seed-${seed}`];
-      const runtime=`cold E2E: official ${fmtSeconds(officialRun?.elapsed_seconds)} · vLLM-Omni ${fmtSeconds(omniRun?.elapsed_seconds)}`;
       const officialLabel=item.derivedOfficial ? 'Official components · Stage 1 extract' : 'Official native';
-      section.insertAdjacentHTML('beforeend',`<div class="seed"><div class="seed-head"><strong>seed ${seed}</strong><span class="metric">${metric}<span class="runtime">${runtime}</span></span></div><div class="pair">${videoFigure(officialSrc,officialLabel)}${videoFigure(omniSrc,'vLLM-Omni')}</div></div>`);
+      section.insertAdjacentHTML('beforeend',`<div class="seed"><div class="seed-head"><strong>seed ${seed}</strong><span class="metric">${metric}</span></div><div class="pair">${videoFigure(officialSrc,officialLabel)}${videoFigure(omniSrc,'vLLM-Omni')}</div></div>`);
     }
     if (!publishedSeeds.length) {
       section.insertAdjacentHTML('beforeend','<div class="pending">No completed official ↔ vLLM-Omni pair is published for this combination yet.</div>');

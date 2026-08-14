@@ -13,7 +13,7 @@ The two backends use different checkpoint packaging:
 ## Current BF16 cuDNN release parity
 
 The gallery now leads with the latest strict correctness run at vLLM-Omni PR
-head `35993bdb0`. Both implementations ran sequentially on the same NVIDIA
+head `29a24da58`. Both implementations ran sequentially on the same NVIDIA
 B300 with BF16, the same PyTorch SDPA cuDNN kernel selection, seed 42, official
 schedules, and identical conditioning. These compact 25-frame pairs are under
 [`results-release/`](results-release/); exact metrics and pinned revisions are
@@ -24,15 +24,13 @@ in [`results-release/metrics.json`](results-release/metrics.json).
 | `LTX2Pipeline` | T2V | 0.999652 / 0.999564 | 58.80 dB | 0.0000367 |
 | `LTX2Pipeline` | I2V | 0.999589 / 0.999480 | 62.37 dB | 0.0000576 |
 | `LTX2TwoStagePipeline` | T2V | 0.999588 / 0.999485 | 56.40 dB | 0.0000687 |
-| `LTX2TwoStagePipeline` | I2V | 0.977070 / 0.971182 | 33.18 dB | 0.0164566 |
+| `LTX2TwoStagePipeline` | I2V | 0.999585 / 0.999475 | 62.10 dB | 0.0000627 |
 | `LTX2DistilledTwoStagePipeline` | T2V | 0.997186 / 0.996164 | 46.04 dB | 0.0034523 |
 | `LTX2DistilledTwoStagePipeline` | I2V | 0.996489 / 0.995810 | 46.29 dB | 0.0037874 |
 
-Five of the six public native-reference pairs exceed mean SSIM 0.99. Full
-two-stage I2V is published at its measured 0.977070 and remains a correctness
-follow-up; the page does not substitute an earlier value. Cold-start latency
-is omitted from this matrix because the strict harness is a numerical
-correctness run, not a serving benchmark.
+All six public native-reference pairs exceed mean SSIM 0.99. The Full
+two-stage I2V pair was regenerated after matching the official two-step FP32
+conditioned-noising order; the checked-in score is 0.999585.
 
 ## Long-form stress matrix
 
@@ -73,6 +71,77 @@ vllm serve /path/to/LTX-2.5-Diffusers \
 Replace the class with `LTX2Pipeline`, `LTX2DistilledOneStagePipeline`,
 `LTX2DistilledTwoStagePipeline`, or `LTX2TwoStagePipeline` to select the
 desired final pipeline.
+
+## Warm online E2E benchmark (controlled workload)
+
+[`run_warm_e2e.py`](run_warm_e2e.py) is the serving-latency harness. It is
+separate from the 1080p/481-frame quality showcase above. Its controlled
+workload fixes the official quickstart prompt, seed 42, 768x512 output, 121
+frames, 24 FPS, and the same I2V first frame with CRF 18 for every class. Full
+pipelines keep their official 30-step schedule and distilled pipelines keep
+their official 8-step schedule; two-stage refinement remains pipeline-defined.
+
+The harness launches the four classes sequentially so they use the same GPU.
+For each class, one resident server handles both tasks in this order:
+
+1. One T2V warm-up request, excluded from all latency fields.
+2. Configurable sequential T2V timed repeats.
+3. One I2V warm-up request, excluded from all latency fields.
+4. Configurable sequential I2V timed repeats.
+
+Warm E2E is the client wall-clock time from `POST /v1/videos/sync` until the
+complete MP4 response is received over a persistent loopback HTTP session.
+Server startup, model loading, warm-up, response validation, and optional file
+writes are excluded. The raw result file records all three warm samples plus
+mean/min/max/population-stdev.
+
+| Pipeline | T2V warm E2E | I2V warm E2E |
+|---|---:|---:|
+| `LTX2Pipeline` | 32.94 s | 33.13 s |
+| `LTX2TwoStagePipeline` | 11.74 s | 12.18 s |
+| `LTX2DistilledOneStagePipeline` | 4.74 s | 4.77 s |
+| `LTX2DistilledTwoStagePipeline` | 4.05 s | 4.65 s |
+
+These values are the mean of three timed warm requests on NVIDIA B300 with
+BF16 cuDNN. Exact samples and validated 768x512, 121-frame MP4 responses are
+under [`results-warm-e2e/`](results-warm-e2e/). The controlled table is the
+cross-pipeline latency comparison; the 481-frame section remains the separate
+maximum-quality stress gallery because its one-stage and two-stage output
+resolutions intentionally differ.
+
+Run all four public classes on one B300:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 \
+/path/to/vllm-omni/.venv/bin/python \
+  scripts/ltx25_raw_b300_pipeline_parity/run_warm_e2e.py \
+  --model /path/to/LTX-2.5-Diffusers \
+  --vllm-omni-root /path/to/vllm-omni \
+  --vllm-bin /path/to/vllm-omni/.venv/bin/vllm \
+  --repeats 3 \
+  --attention-backend CUDNN_ATTN \
+  --output-dir scripts/ltx25_raw_b300_pipeline_parity/results-warm-e2e
+```
+
+The default pipeline order is `LTX2Pipeline`, `LTX2TwoStagePipeline`,
+`LTX2DistilledOneStagePipeline`, then `LTX2DistilledTwoStagePipeline`. Narrow
+the run with `--pipelines` and/or `--tasks`. For example, this keeps one
+distilled two-stage runtime resident while benchmarking both tasks five times:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 \
+/path/to/vllm-omni/.venv/bin/python \
+  scripts/ltx25_raw_b300_pipeline_parity/run_warm_e2e.py \
+  --model /path/to/LTX-2.5-Diffusers \
+  --vllm-omni-root /path/to/vllm-omni \
+  --vllm-bin /path/to/vllm-omni/.venv/bin/vllm \
+  --pipelines LTX2DistilledTwoStagePipeline \
+  --tasks t2v i2v \
+  --repeats 5
+```
+
+Add `--dry-run` to either command to print the four serve commands and exact
+multipart request contract without starting a server or touching a GPU.
 
 ## Reproduce the B300 comparison
 

@@ -3,3 +3,5 @@ results/
 *.lock
 results-final/*.log
 results-final/manifest-*-*.json
+results-warm-e2e/*.log
+results-warm-e2e/*.tmp
