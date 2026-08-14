@@ -39,6 +39,20 @@
     <p class="note">Both measurements reuse a persistent process and the same pipeline/server object, with one excluded warm-up per task and two timed repetitions. Official native measures the direct pipeline call through complete MP4 encoding. vLLM-Omni measures client wall time from <code>POST /v1/videos/sync</code> through receipt of the complete MP4. Model/process/server startup and warm-up are excluded. The Official path has no HTTP serving layer; speedup is Official mean divided by Omni mean.</p>
   </section>
   <div id="gallery"></div>
+  <section class="pipeline" id="minimax-appendix">
+    <div class="eyebrow">Appendix · MiniMax-H3 × NVIDIA B300</div>
+    <h2>Same hard scene · T2VA and first-frame FL2VA</h2>
+    <p class="meta">The exact LTX prompt and seed 42 are reused on one isolated B300. MiniMax-H3 keeps its native 1344×768, 124-frame, 24 FPS AV output and recommended BF16 <code>TRTLLM_ATTN</code> path. FL2VA means first-frame image-to-video with generated audio.</p>
+    <div class="method-grid">
+      <div><strong>Output</strong>1344×768 · 124 frames · 5.175 s</div>
+      <div><strong>Denoise</strong>50 requested steps · 49 updates</div>
+      <div><strong>Runtime</strong>resident server · regional compile · no offload</div>
+      <div><strong>Conditioning</strong>seed 42 · normalized <a href="minimax-appendix/inputs/quickstart-seed42-1344x768.png">first frame</a></div>
+    </div>
+    <div class="table-wrap"><table id="minimax-latency-table"><thead><tr><th>Task</th><th>Warm sample 1</th><th>Warm sample 2</th><th>Warm mean</th><th>Generation / playback</th></tr></thead><tbody></tbody></table></div>
+    <div class="pair" id="minimax-videos"></div>
+    <p class="note">Each task receives one excluded full 50-step warm-up followed by two timed requests. Timing starts before the loopback <code>POST /v1/videos/sync</code> and stops only after the complete MP4 body is received; startup, model load, warm-up, file writing, and validation are excluded. These clips align the difficult prompt, seed, GPU count, FPS, and approximately five-second playback with the LTX gallery. This is intentionally not an equal-compute or same-backend speedup claim: LTX above uses 1920×1088, 121 frames, and cuDNN; MiniMax-H3 uses 1344×768, 124 frames, and TRTLLM_ATTN.</p>
+  </section>
   <footer>Official uses pinned raw LTX-2.5 split artifacts and the pinned Lightricks runtime. vLLM-Omni uses the equivalent materialized checkpoint at head <code>f7e2d68364fd</code>. Both sides use BF16 cuDNN attention, the same connector weights, prompt, conditioning, schedules, and RNG seed. Distilled one-stage is the official DistilledPipeline Stage 1 extraction because Lightricks does not publish a standalone Stage 1 CLI.</footer>
 </main>
 <script>
@@ -83,7 +97,23 @@ function render(metrics,warm,contract){
     tbody.insertAdjacentHTML("beforeend","<tr><td><code>"+p.className+"</code></td><td>"+seconds(officialTimes.t2v&&officialTimes.t2v.mean_seconds)+"</td><td>"+seconds(times.t2v.mean_seconds)+"</td><td>"+(Number.isFinite(t2vSpeed)?t2vSpeed.toFixed(2)+"×":"n/a")+"</td><td>"+seconds(officialTimes.i2v&&officialTimes.i2v.mean_seconds)+"</td><td>"+seconds(times.i2v.mean_seconds)+"</td><td>"+(Number.isFinite(i2vSpeed)?i2vSpeed.toFixed(2)+"×":"n/a")+"</td></tr>");
   }
 }
+function renderMiniMax(data){
+  const rows=[
+    {key:"t2va",label:"T2VA · text → video + audio"},
+    {key:"fl2va",label:"FL2VA · first frame → video + audio"}
+  ];
+  const duration=Number(data.benchmark_contract.expected_mp4_duration_seconds);
+  const tbody=document.querySelector("#minimax-latency-table tbody");
+  for(const row of rows){
+    const result=data.tasks[row.key];
+    const samples=result.samples_seconds;
+    const rtf=Number(result.mean_seconds)/duration;
+    tbody.insertAdjacentHTML("beforeend","<tr><td>"+row.label+"</td><td>"+seconds(samples[0])+"</td><td>"+seconds(samples[1])+"</td><td>"+seconds(result.mean_seconds)+"</td><td>"+fmt(rtf,2)+"× realtime</td></tr>");
+  }
+  document.querySelector("#minimax-videos").innerHTML=video("minimax-appendix/videos/minimax-h3-t2va-seed-42.mp4","MiniMax-H3 · T2VA · exact timed response")+video("minimax-appendix/videos/minimax-h3-fl2va-seed-42.mp4","MiniMax-H3 · first-frame FL2VA · exact timed response");
+}
 Promise.all([load("metrics.json"),load("warm-e2e.json"),load("contract.json")]).then(values=>render(values[0],values[1],values[2])).catch(error=>{document.querySelector("#gallery").innerHTML="<section class=\"pipeline\"><h2>Result data failed to load</h2><p class=\"meta\">"+error.message+"</p></section>"});
+fetch("minimax-appendix/warm-e2e.json",{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("MiniMax appendix: HTTP "+response.status);return response.json()}).then(renderMiniMax).catch(error=>{document.querySelector("#minimax-videos").innerHTML="<p class=\"meta\">MiniMax appendix failed to load: "+error.message+"</p>"});
 </script>
 </body>
 </html>

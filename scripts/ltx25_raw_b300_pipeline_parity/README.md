@@ -125,3 +125,51 @@ bit-exact SDPA unit-test gates. Both sides use the same BF16 cuDNN backend;
 small implementation-order differences can accumulate over a denoising
 trajectory, and the hard prompt is intended to expose rather than conceal
 those differences.
+
+## MiniMax-H3 appendix
+
+The same public page includes MiniMax-H3 T2VA and first-frame FL2VA generated
+from the exact difficult prompt, seed 42, one isolated NVIDIA B300, and
+approximately five seconds of playback. MiniMax-H3 retains its native output
+contract rather than being resampled after generation:
+
+- Output: 1344x768, 124 frames, 24 FPS, 5.175 seconds
+- Audio: 32 kHz stereo AAC
+- Denoise: 50 requested steps, 49 updates
+- Runtime: BF16 `TRTLLM_ATTN`, regional compile, TP1, Ulysses1, Ring1,
+  text-encoder TP1, VAE patch1, no offload
+- Timing: one excluded complete warm-up per task, then two sequential warm E2E
+  requests through receipt of the complete MP4
+
+| MiniMax-H3 task | Warm samples | Mean | Generation / playback |
+|---|---:|---:|---:|
+| T2VA | 133.546 / 133.751 s | 133.648 s | 25.83x realtime |
+| first-frame FL2VA | 144.250 / 144.367 s | 144.309 s | 27.89x realtime |
+
+This appendix aligns prompt content, seed, GPU count, FPS, and playback length;
+it does not claim equal compute or a same-backend speedup against LTX. The LTX
+showcase uses 1920x1088, 121 frames, and cuDNN attention. MiniMax-H3 uses
+1344x768, 124 frames, and its recommended B300 `TRTLLM_ATTN` backend.
+
+Published MiniMax artifacts:
+
+- `minimax-appendix/videos/minimax-h3-t2va-seed-42.mp4`
+- `minimax-appendix/videos/minimax-h3-fl2va-seed-42.mp4`
+- `minimax-appendix/inputs/quickstart-seed42-1344x768.png`
+- `minimax-appendix/warm-e2e.json`
+- `minimax-appendix/contract.json`
+- `minimax-appendix/checksums.sha256`
+
+Reproduce with a local mirror of the FL2VA partition:
+
+    /path/to/vllm-omni/.venv/bin/python \
+      scripts/ltx25_raw_b300_pipeline_parity/run_minimax_appendix.py \
+      --model /path/to/MiniMax-H3/FL2VA \
+      --vllm-omni-root /path/to/vllm-omni \
+      --vllm-bin /path/to/vllm-omni/.venv/bin/vllm \
+      --gpu 0 \
+      --repeats 2 \
+      --output-dir /dev/shm/ltx25-minimax-appendix
+
+The script's `--dry-run` mode prints the exact resident server command and both
+multipart request forms without starting a GPU process.

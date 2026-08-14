@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-14T17:33:23.135940+00:00",
+  "model": "MiniMaxAI/MiniMax-H3 (FL2VA partition, local mirror)",
+  "vllm_omni_revision": "f7e2d68364fd10f3d8cf59c48ea7bc31e74faba7",
+  "physical_gpu": "5",
+  "gpu": "NVIDIA B300 SXM6 AC, 275040 MiB",
+  "server_command": "vllm serve MiniMaxAI/MiniMax-H3 --omni --host 127.0.0.1 --port 18096 --trust-remote-code --task-type fl2va --num-gpus 1 --tensor-parallel-size 1 --usp 1 --ring 1 --text-encoder-tp-size 1 --vae-patch-parallel-size 1 --vae-parallel-mode tile --vae-use-tiling --diffusion-attention-backend TRTLLM_ATTN",
+  "benchmark_contract": {
+    "name": "MiniMax-H3 appendix warm E2E",
+    "prompt": "A medium close-up shot features a Caucasian man with a beard, wearing a green and white baseball cap without any letters on the front, and a light blue shirt over a white t-shirt. He is positioned in the center of the frame, looking intently directly at the camera, his eyes focused on camera. His facial expression is one of deep concentration, with his brow slightly raised. As he looks straight at the camera, a quick sniff sound is heard, and then he speaks with a deep male voice and a satisfied tone, saying, 'I think it's so good.' The camera remains static throughout, maintaining a shallow depth of field, which keeps the man in sharp focus while the background is softly blurred, showing a beige wall behind him. After a brief pause, another short, audible sniff is heard. The man then continues to speak, his voice maintaining the same quality, as he states, 'So good. So good.' He elaborates further, emphasizing his point with a final statement, 'This got to be, it's got to be the best tool I've ever seen.'",
+    "seed": 42,
+    "width": 1344,
+    "height": 768,
+    "expected_frames": 124,
+    "fps": 24,
+    "requested_duration_seconds": 5.0,
+    "expected_mp4_duration_seconds": 5.175,
+    "num_inference_steps_requested": 50,
+    "denoise_updates": 49,
+    "flow_shift": 12.0,
+    "audio_flow_shift": 3.0,
+    "tasks": [
+      "t2va",
+      "fl2va"
+    ],
+    "task_partition": "FL2VA",
+    "attention_backend": "TRTLLM_ATTN",
+    "precision": "BF16",
+    "parallelism": "1 GPU, TP1, Ulysses1, Ring1, text-encoder TP1, VAE patch1",
+    "offload": "disabled",
+    "execution": "regional torch.compile; eager mode disabled",
+    "latency_scope": "loopback POST /v1/videos/sync through complete MP4 receipt",
+    "excluded": "server startup, model load, one full warm-up per task, response-file write, and validation",
+    "warmup_requests_excluded_per_task": 1,
+    "timed_repeats_per_task": 2,
+    "request_concurrency": 1,
+    "i2v_image": "inputs/quickstart-seed42-1344x768.png",
+    "i2v_image_sha256": "560c094f9900ea762227f84481ca8a2f73adac69963e0d1a78563bec1844d6b8",
+    "comparison_caveat": "Same hard prompt, seed, one-B300 hardware count, FPS, and approximately five-second playback as LTX; MiniMax uses 1344x768/124 frames/TRTLLM_ATTN while LTX uses 1920x1088/121 frames/cuDNN, so this is not equal-compute or same-backend.",
+    "i2v_image_preparation": "LTX seed-42 first frame: center crop 1920x1088 to 1904x1088 at x=8, then Lanczos scale to 1344x768"
+  },
+  "tasks": {
+    "t2va": {
+      "timed_repeats": 2,
+      "samples_seconds": [
+        133.545589257963,
+        133.75093803019263
+      ],
+      "mean_seconds": 133.64826364407782,
+      "min_seconds": 133.545589257963,
+      "max_seconds": 133.75093803019263,
+      "stdev_seconds": 0.10267438611481339
+    },
+    "fl2va": {
+      "timed_repeats": 2,
+      "samples_seconds": [
+        144.25041339802556,
+        144.36731427512132
+      ],
+      "mean_seconds": 144.30886383657344,
+      "min_seconds": 144.25041339802556,
+      "max_seconds": 144.36731427512132,
+      "stdev_seconds": 0.05845043854787946
+    }
+  },
+  "software": {
+    "python": "3.12.3",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "driver": "610.43.02",
+    "vllm": "0.27.0",
+    "vllm_omni_runtime": "0.27.0rc2.dev48+gdad5acb87.d20260813",
+    "source_override_revision": "f7e2d68364fd10f3d8cf59c48ea7bc31e74faba7"
+  },
+  "output_validation": {
+    "full_ffmpeg_decode": "passed for both files",
+    "video": "H.264, 1344x768, 24 FPS, 124 frames",
+    "audio": "AAC, 32000 Hz, stereo",
+    "container_duration_seconds": 5.175,
+    "backend_log": "TRTLLM_ATTN resolved for minimax_h3.token_refiner and self"
+  }
+}
