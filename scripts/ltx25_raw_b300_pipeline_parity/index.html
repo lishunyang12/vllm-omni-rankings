@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LTX-2.5 official parity · B300 BF16 cuDNN</title>
-  <meta name="description" content="Eight paired Official LTX-2.5 and vLLM-Omni videos, native first-second metrics, and warm online E2E latency.">
+  <meta name="description" content="Eight paired Official LTX-2.5 and vLLM-Omni videos, native first-second metrics, resident warm E2E latency, and speedup.">
   <style>
     :root{color-scheme:dark;--bg:#07090e;--panel:#111722;--panel2:#0c1119;--line:#2a3547;--text:#f5f7fb;--muted:#9eabba;--mint:#69e5b9;--blue:#8aa8ff;--amber:#f4c873}
     *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 8% 0,rgba(80,115,255,.20),transparent 34rem),radial-gradient(circle at 95% 1%,rgba(44,222,168,.13),transparent 30rem),var(--bg);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,sans-serif}
     main{width:min(1600px,calc(100% - 30px));margin:auto;padding:54px 0 80px}header{max-width:1120px}.eyebrow{color:var(--mint);font-weight:800;letter-spacing:.13em;text-transform:uppercase;font-size:.78rem}h1{margin:9px 0 12px;font-size:clamp(2.6rem,6vw,5.7rem);line-height:.96;letter-spacing:-.055em}.lead{max-width:980px;color:var(--muted);font-size:1.08rem}.chips{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 34px}.chip{padding:6px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(17,23,34,.9)}
-    .prompt,.method,.pipeline{border:1px solid var(--line);border-radius:20px;background:rgba(17,23,34,.94);padding:21px;margin:20px 0}.prompt blockquote{margin:12px 0 0;border-left:3px solid var(--blue);padding:12px 16px;color:#dce4f2;background:#151e2c;border-radius:0 12px 12px 0}.method-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.method-grid div{padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--panel2)}.method-grid strong{display:block;color:var(--mint)}h2{margin:0;font-size:1.5rem}.meta{color:var(--muted);margin:5px 0 15px}.tasks{display:grid;grid-template-columns:1fr;gap:24px}.task{min-width:0;border-top:1px solid var(--line);padding-top:15px}.task h3{margin:0 0 3px;font-size:1.08rem}.numbers{font-variant-numeric:tabular-nums;color:var(--mint);margin:6px 0}.latency{font-variant-numeric:tabular-nums;color:var(--amber);margin:6px 0 12px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}figure{margin:0;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:13px;background:#030509}video{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#020305}figcaption{display:flex;justify-content:space-between;gap:8px;padding:9px 10px;color:var(--muted)}a{color:var(--mint)}code{color:var(--blue);overflow-wrap:anywhere}table{width:100%;border-collapse:collapse;margin-top:14px;font-variant-numeric:tabular-nums}th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left}th:not(:first-child),td:not(:first-child){text-align:right}.note{color:var(--muted)}footer{margin-top:28px;color:var(--muted)}
+    .prompt,.method,.pipeline{border:1px solid var(--line);border-radius:20px;background:rgba(17,23,34,.94);padding:21px;margin:20px 0}.prompt blockquote{margin:12px 0 0;border-left:3px solid var(--blue);padding:12px 16px;color:#dce4f2;background:#151e2c;border-radius:0 12px 12px 0}.method-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.method-grid div{padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--panel2)}.method-grid strong{display:block;color:var(--mint)}h2{margin:0;font-size:1.5rem}.meta{color:var(--muted);margin:5px 0 15px}.tasks{display:grid;grid-template-columns:1fr;gap:24px}.task{min-width:0;border-top:1px solid var(--line);padding-top:15px}.task h3{margin:0 0 3px;font-size:1.08rem}.numbers{font-variant-numeric:tabular-nums;color:var(--mint);margin:6px 0}.latency{font-variant-numeric:tabular-nums;color:var(--amber);margin:6px 0 12px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}figure{margin:0;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:13px;background:#030509}video{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#020305}figcaption{display:flex;justify-content:space-between;gap:8px;padding:9px 10px;color:var(--muted)}a{color:var(--mint)}code{color:var(--blue);overflow-wrap:anywhere}.table-wrap{overflow-x:auto}table{width:100%;min-width:980px;border-collapse:collapse;margin-top:14px;font-variant-numeric:tabular-nums}th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th:not(:first-child),td:not(:first-child){text-align:right}.note{color:var(--muted)}footer{margin-top:28px;color:var(--muted)}
     @media(max-width:1000px){.method-grid{grid-template-columns:1fr 1fr}}@media(max-width:720px){main{width:calc(100% - 18px);padding-top:30px}.tasks,.method-grid,.pair{grid-template-columns:1fr}.pipeline,.prompt,.method{padding:14px}h1{font-size:3rem}}
   </style>
 </head>
@@ -19,7 +19,7 @@
     <div class="eyebrow">Lightricks official reference × vLLM-Omni × NVIDIA B300</div>
     <h1>Five seconds.<br>One hard prompt.<br>Eight honest pairs.</h1>
     <p class="lead">Every displayed result is freshly generated at 1920×1088, 121 frames, 24 FPS, seed 42, BF16 cuDNN. T2V and first-frame I2V use the same official quickstart scene so pipeline differences are visible instead of hidden by an easy prompt.</p>
-    <div class="chips"><span class="chip">5.0417 s per video</span><span class="chip">native 1080p-class decode</span><span class="chip">BF16 cuDNN</span><span class="chip">exact Official schedules</span><span class="chip">warm online E2E</span><span class="chip">48 kHz stereo audio</span><span class="chip">SSIM · PSNR · LPIPS</span></div>
+    <div class="chips"><span class="chip">5.0417 s per video</span><span class="chip">native 1080p-class decode</span><span class="chip">BF16 cuDNN</span><span class="chip">exact Official schedules</span><span class="chip">Official + Omni warm E2E</span><span class="chip">48 kHz stereo audio</span><span class="chip">SSIM · PSNR · LPIPS</span></div>
   </header>
   <section class="prompt">
     <h2>Official difficult prompt</h2>
@@ -32,11 +32,11 @@
     <div class="method-grid">
       <div><strong>Visual output</strong>1920×1088 · 121 frames · 24 FPS · AV MP4</div>
       <div><strong>Precision window</strong>first 24 native decoded frames</div>
-      <div><strong>Runtime</strong>resident server · one excluded warm-up</div>
+      <div><strong>Runtime</strong>resident pipelines · one excluded warm-up per task</div>
       <div><strong>Conditioning</strong>same seed; I2V <a href="inputs/quickstart-seed42-frame0.png">first frame</a> uses CRF 18</div>
     </div>
-    <table id="latency-table"><thead><tr><th>Pipeline</th><th>T2V warm E2E</th><th>I2V warm E2E</th></tr></thead><tbody></tbody></table>
-    <p class="note">Warm E2E is client wall time from <code>POST /v1/videos/sync</code> through receipt of the complete MP4. Model load, server startup, warm-up, and file writing are excluded. Official native is the quality reference and does not expose an equivalent resident HTTP serving path, so no synthetic Official latency is reported.</p>
+    <div class="table-wrap"><table id="latency-table"><thead><tr><th>Pipeline</th><th>T2V Official</th><th>T2V Omni</th><th>T2V speedup</th><th>I2V Official</th><th>I2V Omni</th><th>I2V speedup</th></tr></thead><tbody></tbody></table></div>
+    <p class="note">Both measurements reuse a persistent process and the same pipeline/server object, with one excluded warm-up per task and two timed repetitions. Official native measures the direct pipeline call through complete MP4 encoding. vLLM-Omni measures client wall time from <code>POST /v1/videos/sync</code> through receipt of the complete MP4. Model/process/server startup and warm-up are excluded. The Official path has no HTTP serving layer; speedup is Official mean divided by Omni mean.</p>
   </section>
   <div id="gallery"></div>
   <footer>Official uses pinned raw LTX-2.5 split artifacts and the pinned Lightricks runtime. vLLM-Omni uses the equivalent materialized checkpoint at head <code>f7e2d68364fd</code>. Both sides use BF16 cuDNN attention, the same connector weights, prompt, conditioning, schedules, and RNG seed. Distilled one-stage is the official DistilledPipeline Stage 1 extraction because Lightricks does not publish a standalone Stage 1 CLI.</footer>
@@ -57,11 +57,14 @@ function taskBlock(p,task,metrics,warm){
   const id=p.label+"-"+task+"-seed-42";
   const m=metrics.pairs[id];
   const w=warm.pipelines[p.className].warm_e2e_seconds[task];
+  const ow=(warm.pipelines[p.className].official_warm_e2e_seconds||{})[task]||{};
   const official=root+"/videos/"+p.label+"-"+task+"-official-seed-42.mp4";
   const omni=root+"/videos/"+p.label+"-"+task+"-omni-seed-42.mp4";
   const taskName=task==="t2v"?"Text-to-video":"First-frame image-to-video · CRF 18";
   const samples=(w.samples_seconds||[]).map(x=>Number(x).toFixed(2)).join(" / ");
-  return "<div class=\"task\"><h3>"+taskName+"</h3><p class=\"numbers\">first 1 s · SSIM "+fmt(m.ssim_mean,6)+" mean / "+fmt(m.ssim_min,6)+" min · PSNR "+fmt(m.psnr_mean_db,2)+" dB · LPIPS "+fmt(m.lpips_mean,6)+"</p><p class=\"latency\">vLLM-Omni warm E2E "+seconds(w.mean_seconds)+" mean · samples "+samples+" s</p><div class=\"pair\">"+video(official,"Official reference")+video(omni,"vLLM-Omni · exact timed response")+"</div></div>";
+  const officialSamples=(ow.samples_seconds||[]).map(x=>Number(x).toFixed(2)).join(" / ");
+  const speedup=Number(ow.mean_seconds)/Number(w.mean_seconds);
+  return "<div class=\"task\"><h3>"+taskName+"</h3><p class=\"numbers\">first 1 s · SSIM "+fmt(m.ssim_mean,6)+" mean / "+fmt(m.ssim_min,6)+" min · PSNR "+fmt(m.psnr_mean_db,2)+" dB · LPIPS "+fmt(m.lpips_mean,6)+"</p><p class=\"latency\">Official warm "+seconds(ow.mean_seconds)+" · samples "+(officialSamples||"n/a")+" s · vLLM-Omni warm "+seconds(w.mean_seconds)+" · samples "+samples+" s · speedup "+(Number.isFinite(speedup)?speedup.toFixed(2)+"×":"n/a")+"</p><div class=\"pair\">"+video(official,"Official reference")+video(omni,"vLLM-Omni · exact timed response")+"</div></div>";
 }
 function render(metrics,warm,contract){
   document.querySelector("#prompt-text").textContent=contract.prompt;
@@ -72,8 +75,12 @@ function render(metrics,warm,contract){
     section.className="pipeline";
     section.innerHTML="<h2>"+p.title+"</h2><p class=\"meta\"><code>"+p.className+"</code> · Official "+p.official+" · "+p.schedule+"</p><div class=\"tasks\">"+taskBlock(p,"t2v",metrics,warm)+taskBlock(p,"i2v",metrics,warm)+"</div>";
     gallery.appendChild(section);
-    const times=warm.pipelines[p.className].warm_e2e_seconds;
-    tbody.insertAdjacentHTML("beforeend","<tr><td><code>"+p.className+"</code></td><td>"+seconds(times.t2v.mean_seconds)+"</td><td>"+seconds(times.i2v.mean_seconds)+"</td></tr>");
+    const entry=warm.pipelines[p.className];
+    const times=entry.warm_e2e_seconds;
+    const officialTimes=entry.official_warm_e2e_seconds||{};
+    const t2vSpeed=Number(officialTimes.t2v&&officialTimes.t2v.mean_seconds)/Number(times.t2v.mean_seconds);
+    const i2vSpeed=Number(officialTimes.i2v&&officialTimes.i2v.mean_seconds)/Number(times.i2v.mean_seconds);
+    tbody.insertAdjacentHTML("beforeend","<tr><td><code>"+p.className+"</code></td><td>"+seconds(officialTimes.t2v&&officialTimes.t2v.mean_seconds)+"</td><td>"+seconds(times.t2v.mean_seconds)+"</td><td>"+(Number.isFinite(t2vSpeed)?t2vSpeed.toFixed(2)+"×":"n/a")+"</td><td>"+seconds(officialTimes.i2v&&officialTimes.i2v.mean_seconds)+"</td><td>"+seconds(times.i2v.mean_seconds)+"</td><td>"+(Number.isFinite(i2vSpeed)?i2vSpeed.toFixed(2)+"×":"n/a")+"</td></tr>");
   }
 }
 Promise.all([load("metrics.json"),load("warm-e2e.json"),load("contract.json")]).then(values=>render(values[0],values[1],values[2])).catch(error=>{document.querySelector("#gallery").innerHTML="<section class=\"pipeline\"><h2>Result data failed to load</h2><p class=\"meta\">"+error.message+"</p></section>"});

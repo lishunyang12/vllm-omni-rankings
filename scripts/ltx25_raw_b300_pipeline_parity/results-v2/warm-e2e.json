@@ -1,14 +1,14 @@
 {
-  "schema_version": 2,
-  "created_at_utc": "2026-08-14T14:11:32.399306+00:00",
+  "schema_version": 3,
+  "created_at_utc": "2026-08-14T16:28:34Z",
   "model": "Lightricks/LTX-2.5-Diffusers",
   "vllm_omni_revision": "f7e2d68364fd10f3d8cf59c48ea7bc31e74faba7",
   "cuda_visible_devices": "isolated B300 GPU per pipeline",
   "attention_backend": "CUDNN_ATTN",
   "benchmark_contract": {
     "name": "LTX-2.5 controlled warm E2E",
-    "latency_scope": "client wall clock for POST /v1/videos/sync through complete MP4 receipt; server startup/model load, one warm-up per pipeline/task, validation, and optional file writes excluded",
-    "resident_runtime": "one server per public pipeline class; T2V and I2V run sequentially on that server",
+    "latency_scope": "warm end-to-end generation through a complete encoded MP4; initialization and one warm-up per task excluded",
+    "resident_runtime": "one persistent process and reused pipeline/server object per public class on each side; T2V and I2V run sequentially",
     "warmup_requests_excluded_per_pipeline_task": 1,
     "timed_repeats_per_pipeline_task": 2,
     "prompt": "A medium close-up shot features a Caucasian man with a beard, wearing a green and white baseball cap without any letters on the front, and a light blue shirt over a white t-shirt. He is positioned in the center of the frame, looking intently directly at the camera, his eyes focused on camera. His facial expression is one of deep concentration, with his brow slightly raised. As he looks straight at the camera, a quick sniff sound is heard, and then he speaks with a deep male voice and a satisfied tone, saying, 'I think it's so good.' The camera remains static throughout, maintaining a shallow depth of field, which keeps the man in sharp focus while the background is softly blurred, showing a beige wall behind him. After a brief pause, another short, audible sniff is heard. The man then continues to speak, his voice maintaining the same quality, as he states, 'So good. So good.' He elaborates further, emphasizing his point with a final statement, 'This got to be, it's got to be the best tool I've ever seen.'",
@@ -25,10 +25,17 @@
       "i2v"
     ],
     "request_concurrency": 1,
-    "transport": "persistent loopback HTTP session",
+    "transport": {
+      "official": "direct Python pipeline call",
+      "vllm_omni": "persistent loopback HTTP session"
+    },
     "request_templates": "requests/",
     "workload": "official difficult quickstart dialogue at 1920x1088, 121 frames, 24 FPS (5.0417 seconds)",
-    "metric_scope": "not part of latency timing; published precision uses native decoded frames 0-23"
+    "metric_scope": "not part of latency timing; published precision uses native decoded frames 0-23",
+    "official_latency_scope": "reused Official pipeline-object direct call through complete MP4 encoding",
+    "omni_latency_scope": "resident vLLM-Omni client wall clock for POST /v1/videos/sync through complete MP4 receipt",
+    "comparison_caveat": "Official has no equivalent resident HTTP server; its direct call avoids HTTP overhead while both measurements include complete MP4 production",
+    "official_timing_validation": "two timed repetitions per task produced identical decoded frames and PCM; all outputs are 1920x1088, 121 frames, 24 FPS, 5.0417 seconds, 48 kHz stereo"
   },
   "pipelines": {
     "LTX2Pipeline": {
@@ -59,6 +66,36 @@
           "max_seconds": 217.06588100385852,
           "stdev_seconds": 0.03730176936369389
         }
+      },
+      "official_warm_e2e_seconds": {
+        "t2v": {
+          "warmup_seconds": 292.55441342806444,
+          "timed_repeats": 2,
+          "samples_seconds": [
+            415.85887424787506,
+            369.24128874903545
+          ],
+          "mean_seconds": 392.55008149845526,
+          "min_seconds": 369.24128874903545,
+          "max_seconds": 415.85887424787506,
+          "stdev_seconds": 23.30879274941981
+        },
+        "i2v": {
+          "warmup_seconds": 227.7420345239807,
+          "timed_repeats": 2,
+          "samples_seconds": [
+            228.37556893192232,
+            229.23424942791462
+          ],
+          "mean_seconds": 228.80490917991847,
+          "min_seconds": 228.37556893192232,
+          "max_seconds": 229.23424942791462,
+          "stdev_seconds": 0.42934024799615145
+        }
+      },
+      "speedup": {
+        "t2v": 1.813700023768698,
+        "i2v": 1.054261655248176
       }
     },
     "LTX2TwoStagePipeline": {
@@ -89,6 +126,36 @@
           "max_seconds": 53.673562101088464,
           "stdev_seconds": 0.4629397784592584
         }
+      },
+      "official_warm_e2e_seconds": {
+        "t2v": {
+          "warmup_seconds": 110.74055869597942,
+          "timed_repeats": 2,
+          "samples_seconds": [
+            95.56229001213796,
+            136.5415652638767
+          ],
+          "mean_seconds": 116.05192763800733,
+          "min_seconds": 95.56229001213796,
+          "max_seconds": 136.5415652638767,
+          "stdev_seconds": 20.489637625869364
+        },
+        "i2v": {
+          "warmup_seconds": 136.78073561703786,
+          "timed_repeats": 2,
+          "samples_seconds": [
+            137.2871581420768,
+            134.4693692161236
+          ],
+          "mean_seconds": 135.8782636791002,
+          "min_seconds": 134.4693692161236,
+          "max_seconds": 137.2871581420768,
+          "stdev_seconds": 1.4088944629766047
+        }
+      },
+      "speedup": {
+        "t2v": 2.1465793822453474,
+        "i2v": 2.553592830680246
       }
     },
     "LTX2DistilledOneStagePipeline": {
@@ -119,6 +186,36 @@
           "max_seconds": 22.482617225963622,
           "stdev_seconds": 0.2191695455694571
         }
+      },
+      "official_warm_e2e_seconds": {
+        "t2v": {
+          "warmup_seconds": 54.7510213709902,
+          "timed_repeats": 2,
+          "samples_seconds": [
+            32.9833283550106,
+            32.288397633004934
+          ],
+          "mean_seconds": 32.635862994007766,
+          "min_seconds": 32.288397633004934,
+          "max_seconds": 32.9833283550106,
+          "stdev_seconds": 0.34746536100283265
+        },
+        "i2v": {
+          "warmup_seconds": 34.00341412704438,
+          "timed_repeats": 2,
+          "samples_seconds": [
+            34.15403060009703,
+            33.43175590317696
+          ],
+          "mean_seconds": 33.792893251637,
+          "min_seconds": 33.43175590317696,
+          "max_seconds": 34.15403060009703,
+          "stdev_seconds": 0.36113734846003354
+        }
+      },
+      "speedup": {
+        "t2v": 1.5076134726279484,
+        "i2v": 1.5178643369506508
       }
     },
     "LTX2DistilledTwoStagePipeline": {
@@ -149,8 +246,40 @@
           "max_seconds": 15.077826729044318,
           "stdev_seconds": 0.3487705524312332
         }
+      },
+      "official_warm_e2e_seconds": {
+        "t2v": {
+          "warmup_seconds": 51.78795189387165,
+          "timed_repeats": 2,
+          "samples_seconds": [
+            35.70012043998577,
+            35.14327583881095
+          ],
+          "mean_seconds": 35.42169813939836,
+          "min_seconds": 35.14327583881095,
+          "max_seconds": 35.70012043998577,
+          "stdev_seconds": 0.27842230058740824
+        },
+        "i2v": {
+          "warmup_seconds": 36.91717837611213,
+          "timed_repeats": 2,
+          "samples_seconds": [
+            37.25804147403687,
+            35.046426666900516
+          ],
+          "mean_seconds": 36.152234070468694,
+          "min_seconds": 35.046426666900516,
+          "max_seconds": 37.25804147403687,
+          "stdev_seconds": 1.1058074035681784
+        }
+      },
+      "speedup": {
+        "t2v": 2.419434412236164,
+        "i2v": 2.454484091646789
       }
     }
   },
-  "hardware": "NVIDIA B300"
+  "hardware": "NVIDIA B300",
+  "official_model": "Lightricks/LTX-2.5 raw split artifacts",
+  "official_runtime_revision": "7954dcb0d986bdc36ef272564a9789ade07fcc65"
 }
