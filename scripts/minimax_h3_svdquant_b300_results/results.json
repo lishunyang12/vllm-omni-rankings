@@ -1,17 +1,32 @@
 {
-  "title": "MiniMax-H3 BF16 vs SVDQuant video comparison",
+  "title": "MiniMax-H3 BF16 vs native fused SVDQuant video comparison",
   "date_utc": "2026-08-15",
+  "vllm_omni_commit": "70b5a790d732e4894ea066ffba3f3b3b52ddac86",
+  "flashinfer_commit": "c03c4aef3a5e122d334aaff1e505b5fa361f1b75",
+  "actual_kernel_path": "FlashInfer native fused residual-GEMM + rank-32 correction; QKV native per-output-alpha epilogue; 208/208 DiT linears",
+  "video_protocol": "Existing BF16 baselines are reused. Native W4A4 uses one discarded full 50-step warmup, followed by five measured requests in one engine.",
   "strict_native_fused_e2e": {
     "hardware": "1 x NVIDIA B300 SXM6 AC",
     "task": "T2VA",
-    "resolution": [1344, 768],
+    "resolution": [
+      1344,
+      768
+    ],
     "duration_s": 5.0,
     "steps": 50,
     "seed": 1101,
     "warmups": 1,
     "measured_rounds": 3,
-    "bf16_wall_time_s": [134.1755732819438, 134.35317075811327, 135.26717765792273],
-    "svdquant_wall_time_s": [103.82109708804637, 104.02021086891182, 104.09090001904406],
+    "bf16_wall_time_s": [
+      134.1755732819438,
+      134.35317075811327,
+      135.26717765792273
+    ],
+    "svdquant_wall_time_s": [
+      103.82109708804637,
+      104.02021086891182,
+      104.09090001904406
+    ],
     "bf16_mean_s": 134.59864056599326,
     "svdquant_mean_s": 103.97740265866742,
     "speedup": 1.294498969240922
@@ -21,56 +36,131 @@
       "case": "Morning bakery",
       "task": "T2VA",
       "seed": 0,
-      "resolution": [1344, 768],
+      "resolution": [
+        1344,
+        768
+      ],
       "steps": 50,
-      "duration_s": 6,
-      "request_state": "BF16 cold / SVDQuant cold",
-      "e2e_latency_s": {"bf16": 197.6, "svdquant": 179.2, "speedup": 1.10},
-      "fidelity": {"psnr_db": 15.97, "ssim": 0.595, "temporal_rmse": 21.28}
+      "duration_s": 6.0,
+      "request_state": "BF16 cold / W4A4 warm",
+      "e2e_latency_s": {
+        "bf16": 197.5541154909879,
+        "native_w4a4": 154.41778076905757
+      },
+      "fidelity": {
+        "psnr_db": 16.177971,
+        "ssim": 0.591309,
+        "temporal_rmse": 19.798484610079544,
+        "frames": 158
+      },
+      "frames_sha256": {
+        "bf16": "ea2ecaa55e6fe063cd7ba1ad618617e4602d5eb5dc9a00f325a2bb50ff14a5f2",
+        "native_w4a4": "b16e605fca19914b283754080bb33556087b59103ef3bdd5701799ad4d04c788"
+      }
     },
     {
       "case": "Starship hyperspace",
       "task": "T2VA",
       "seed": 0,
-      "resolution": [1344, 768],
+      "resolution": [
+        1344,
+        768
+      ],
       "steps": 50,
-      "duration_s": 10,
-      "request_state": "BF16 cold / SVDQuant warm",
-      "e2e_latency_s": {"bf16": 398.1, "svdquant": 358.7, "speedup": 1.11},
-      "fidelity": {"psnr_db": 13.11, "ssim": 0.632, "temporal_rmse": 19.51}
+      "duration_s": 10.0,
+      "request_state": "BF16 cold / W4A4 warm",
+      "e2e_latency_s": {
+        "bf16": 398.0891004349105,
+        "native_w4a4": 334.4563659359701
+      },
+      "fidelity": {
+        "psnr_db": 13.171462,
+        "ssim": 0.63551,
+        "temporal_rmse": 19.108607488604903,
+        "frames": 243
+      },
+      "frames_sha256": {
+        "bf16": "3b315a8c51dc746e3eea92d9d63e73a23a5a78ba23bf8c0a4a437508c43030f9",
+        "native_w4a4": "c323159c0fb7b3b4910dd50e4e833e091ffa79646d24208a29f8d660d99e2de5"
+      }
     },
     {
       "case": "Ramen focus pull",
       "task": "FL2VA",
       "seed": 0,
-      "resolution": [1344, 768],
+      "resolution": [
+        1344,
+        768
+      ],
       "steps": 50,
-      "duration_s": 8,
-      "request_state": "BF16 cold / SVDQuant cold",
-      "e2e_latency_s": {"bf16": 285.6, "svdquant": 266.4, "speedup": 1.07},
-      "fidelity": {"psnr_db": 23.01, "ssim": 0.875, "temporal_rmse": 5.94}
+      "duration_s": 8.0,
+      "request_state": "BF16 cold / W4A4 warm",
+      "e2e_latency_s": {
+        "bf16": 285.56738500786014,
+        "native_w4a4": 235.69997297902592
+      },
+      "fidelity": {
+        "psnr_db": 23.027036,
+        "ssim": 0.878139,
+        "temporal_rmse": 5.967337986540364,
+        "frames": 192
+      },
+      "frames_sha256": {
+        "bf16": "131559d69347bc74d55d0a8c43369be0547c4aeebb86cb1867f7e1d2382e563d",
+        "native_w4a4": "33ae59cee7e66d23c051f73be3f67a62e67e7c98c37d5664c95a5129a11ccdfa"
+      }
     },
     {
       "case": "Five ducks",
       "task": "T2VA",
       "seed": 0,
-      "resolution": [1344, 768],
+      "resolution": [
+        1344,
+        768
+      ],
       "steps": 50,
-      "duration_s": 5,
-      "request_state": "BF16 cold / SVDQuant cold",
-      "e2e_latency_s": {"bf16": 136.7, "svdquant": 126.9, "speedup": 1.08},
-      "fidelity": {"psnr_db": 17.16, "ssim": 0.499, "temporal_rmse": 26.00}
+      "duration_s": 5.0,
+      "request_state": "BF16 cold / W4A4 warm",
+      "e2e_latency_s": {
+        "bf16": 136.69686877098866,
+        "native_w4a4": 102.29971141810529
+      },
+      "fidelity": {
+        "psnr_db": 17.407577,
+        "ssim": 0.496346,
+        "temporal_rmse": 26.469840126207615,
+        "frames": 124
+      },
+      "frames_sha256": {
+        "bf16": "591e46be7b09fc4c9db2904ecb8610a30f20fe14a2c8bdd89261c715e5c8d92d",
+        "native_w4a4": "f3c6db8a4293e4d7fa647b0e384541f4f9b505b9d89bb2b92a110bea987eb4e9"
+      }
     },
     {
       "case": "Miniature steam train",
       "task": "T2VA",
       "seed": 0,
-      "resolution": [1344, 768],
+      "resolution": [
+        1344,
+        768
+      ],
       "steps": 50,
-      "duration_s": 5,
-      "request_state": "BF16 warm / SVDQuant cold",
-      "e2e_latency_s": {"bf16": 133.7, "svdquant": 129.8, "speedup": 1.03},
-      "fidelity": {"psnr_db": 15.64, "ssim": 0.620, "temporal_rmse": 39.61}
+      "duration_s": 5.0,
+      "request_state": "BF16 warm / W4A4 warm",
+      "e2e_latency_s": {
+        "bf16": 133.71317885094322,
+        "native_w4a4": 102.60662397998385
+      },
+      "fidelity": {
+        "psnr_db": 15.543345,
+        "ssim": 0.616843,
+        "temporal_rmse": 39.74028162389088,
+        "frames": 124
+      },
+      "frames_sha256": {
+        "bf16": "1bc7a7e8ff468c5c85ce14ce17574829168f1d672c709a724748ab237d3d89ff",
+        "native_w4a4": "bf52d876987561b210a14698ea0dd5cce98ed3434c73cc1a9d71b7fe52777722"
+      }
     }
   ]
 }
