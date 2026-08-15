@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An empirical evaluation of native fused rank-32 SVDQuant for MiniMax-H3 T2VA inference on NVIDIA B300.">
+  <title>Native Fused SVDQuant for MiniMax-H3 on NVIDIA B300</title>
+  <style>
+    :root {
+      --ink: #17202a; --muted: #5d6873; --paper: #fff; --canvas: #eef1f3;
+      --rule: #d5dbe0; --accent: #176b4d; --accent-soft: #eaf6f0;
+      --link: #155e9b; --bf16: #6b7280; --bf16-soft: #f1f3f5;
+      --w4a4: #2563eb; --w4a4-soft: #e9f0ff; --w4a8: #0891b2;
+      --w8a8: #7c3aed; --w4a16: #d97706; --hybrid: #15803d;
+      --hybrid-soft: #ebf7ee; color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--canvas); color: var(--ink); font: 17px/1.62 Georgia, "Times New Roman", serif; }
+    a { color: var(--link); text-underline-offset: .16em; }
+    main { width: min(1020px, calc(100% - 32px)); margin: 34px auto 64px; padding: 62px 72px; background: var(--paper); border: 1px solid var(--rule); box-shadow: 0 16px 50px rgba(26,37,47,.09); }
+    .paper-head { padding-bottom: 28px; border-bottom: 1px solid var(--rule); text-align: center; }
+    .venue { margin: 0 0 16px; color: var(--accent); font: 700 .76rem/1.2 system-ui,sans-serif; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 850px; margin: 0 auto; font-size: clamp(2rem,5vw,3.35rem); line-height: 1.08; letter-spacing: -.028em; }
+    .author { margin: 24px 0 2px; font-size: 1.08rem; }
+    .affiliation, .date { margin: 0; color: var(--muted); font-size: .9rem; }
+    .downloads { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px; margin-top: 22px; }
+    .downloads a { padding: 7px 12px; border: 1px solid var(--rule); border-radius: 4px; color: var(--ink); font: 650 .78rem/1.2 system-ui,sans-serif; text-decoration: none; }
+    .downloads a.primary { border-color: var(--accent); background: var(--accent); color: #fff; }
+    .abstract { margin: 34px 0 24px; padding: 22px 26px; border-left: 4px solid var(--accent); background: var(--accent-soft); }
+    .abstract h2 { margin-top: 0; border: 0; font-size: 1.05rem; text-transform: uppercase; letter-spacing: .04em; }
+    .abstract p { margin-bottom: 0; text-align: justify; }
+    .keywords { color: var(--muted); font-size: .9rem; }
+    nav { margin: 28px 0 36px; padding: 16px 20px; border: 1px solid var(--rule); font: .85rem/1.55 system-ui,sans-serif; columns: 2; }
+    nav strong { display: block; margin-bottom: 4px; column-span: all; }
+    nav a { display: block; color: var(--ink); text-decoration: none; }
+    section { scroll-margin-top: 18px; }
+    h2 { margin: 42px 0 12px; padding-bottom: 6px; border-bottom: 1px solid var(--rule); font-size: 1.48rem; line-height: 1.2; }
+    h3 { margin: 27px 0 8px; font-size: 1.08rem; }
+    p { margin: .6em 0; }
+    .lead { font-size: 1.05rem; }
+    .result-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; margin: 22px 0; }
+    .metric { padding: 17px; border: 1px solid #c8d8cf; background: #f8fbf9; font-family: system-ui,sans-serif; }
+    .metric .value { display: block; color: var(--accent); font-size: 1.65rem; font-weight: 760; line-height: 1.15; }
+    .metric .label { display: block; margin-top: 5px; color: var(--muted); font-size: .78rem; }
+    .table-wrap { margin: 19px 0 8px; overflow-x: auto; }
+    table { width: 100%; min-width: 720px; border-collapse: collapse; font: .79rem/1.35 system-ui,sans-serif; font-variant-numeric: tabular-nums; }
+    th, td { padding: 8px 9px; border-bottom: 1px solid var(--rule); text-align: right; }
+    th { border-top: 2px solid var(--ink); border-bottom: 1px solid var(--ink); font-weight: 700; }
+    tbody tr:last-child td { border-bottom: 2px solid var(--ink); }
+    th:first-child, td:first-child { text-align: left; }
+    .best { color: var(--accent); font-weight: 750; }
+    .caption { margin: 7px 0 20px; color: var(--muted); font-size: .84rem; }
+    .bars { margin: 22px 0 28px; font: .82rem/1.35 system-ui,sans-serif; }
+    .bar-row { display: grid; grid-template-columns: 190px 1fr 72px; gap: 10px; align-items: center; margin: 9px 0; }
+    .bar-track { height: 22px; background: #edf0f2; border: 1px solid #dfe4e8; }
+    .bar { height: 100%; }
+    .bar.bf16 { width: 100%; background: var(--bf16); }
+    .bar.default { width: 81.27%; background: #5b82d7; }
+    .bar.tuned { width: 77.25%; background: var(--w4a4); }
+    .bar-value { text-align: right; font-variant-numeric: tabular-nums; }
+    .architecture { margin: 24px 0; padding: 20px; border: 1px solid var(--rule); background: #fafbfc; font-family: system-ui,sans-serif; }
+    .arch-grid { display: grid; grid-template-columns: 1fr 42px 1.2fr 42px 1.2fr 42px 1fr; align-items: stretch; gap: 8px; }
+    .node { display: grid; place-items: center; min-height: 78px; padding: 11px; border: 2px solid; border-radius: 6px; text-align: center; font-size: .78rem; font-weight: 680; line-height: 1.35; }
+    .node small { display: block; margin-top: 4px; font-weight: 500; }
+    .bf16-node { border-color: var(--bf16); background: var(--bf16-soft); }
+    .w4a4-node { border-color: var(--w4a4); background: var(--w4a4-soft); }
+    .hybrid-node { border-color: var(--hybrid); background: var(--hybrid-soft); }
+    .arrow { display: grid; place-items: center; color: var(--muted); font-size: 1.35rem; }
+    .fork { display: grid; gap: 8px; }
+    .legend { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 16px 0 0; color: var(--muted); font-size: .72rem; }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .swatch { width: 13px; height: 13px; border-radius: 2px; }
+    .swatch.bf16 { background: var(--bf16); } .swatch.w4a4 { background: var(--w4a4); }
+    .swatch.w4a8 { background: var(--w4a8); } .swatch.w8a8 { background: var(--w8a8); }
+    .swatch.w4a16 { background: var(--w4a16); } .swatch.hybrid { background: var(--hybrid); }
+    .equation { margin: 18px auto; padding: 14px; overflow-x: auto; background: #f6f8fa; text-align: center; font: .92rem/1.5 "SFMono-Regular",Consolas,monospace; }
+    .note { margin: 18px 0; padding: 15px 18px; border: 1px solid #e0d5ae; background: #fffaf0; font: .86rem/1.5 system-ui,sans-serif; }
+    code { font: .86em "SFMono-Regular",Consolas,monospace; }
+    ul { padding-left: 1.35em; } li { margin: .35em 0; }
+    footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--rule); color: var(--muted); font: .78rem/1.5 system-ui,sans-serif; }
+    @media (max-width: 820px) {
+      main { width: 100%; margin: 0; padding: 34px 18px 50px; border: 0; }
+      nav { columns: 1; } .result-grid { grid-template-columns: 1fr; }
+      .arch-grid { grid-template-columns: 1fr; } .arrow { transform: rotate(90deg); min-height: 26px; }
+      .bar-row { grid-template-columns: 130px 1fr 65px; } body { font-size: 16px; }
+    }
+    @media print {
+      body { background: #fff; font-size: 10pt; } main { width: 100%; margin: 0; padding: 0; border: 0; box-shadow: none; }
+      .downloads, nav { display: none; } a { color: inherit; text-decoration: none; }
+      table, .abstract, .architecture, .result-grid { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="paper-head">
+      <p class="venue">Empirical Systems Research Note · vLLM-Omni</p>
+      <h1>Native Fused SVDQuant for MiniMax-H3 on NVIDIA B300</h1>
+      <p class="author">Shunyang Li</p>
+      <p class="affiliation">vLLM-Omni Systems Benchmark</p>
+      <p class="date">15 August 2026</p>
+      <div class="downloads" aria-label="Report artifacts">
+        <a class="primary" href="results.json">Results (JSON)</a>
+        <a href="../minimax_h3_svdquant_official_comparison.html">Visual quality matrix</a>
+        <a href="https://github.com/lishunyang12/vllm-omni/tree/feat/minimax-h3-svdquant">vLLM-Omni source</a>
+        <a href="https://github.com/lishunyang12/flashinfer/tree/feat/minimax-h3-svdquant">FlashInfer source</a>
+      </div>
+    </header>
+
+    <aside class="abstract">
+      <h2>Abstract</h2>
+      <p>We evaluate an offline rank-32 SVDQuant checkpoint and a native fused W4A4 execution path for MiniMax-H3 video-audio generation. The implementation quantizes the residual linear branch to NVFP4 while retaining a low-rank BF16 correction, then fuses residual GEMM, rank-up, scalar or per-output scaling, and bias in a FlashInfer/CUTLASS kernel. On one NVIDIA B300 SXM6 AC, under a matched T2VA workload with one complete 50-step warmup and three complete measured rounds, mean end-to-end latency decreases from 134.599 s in BF16 to 103.977 s, a 1.2945x speedup. Mean denoise latency improves by 1.3129x and measured worker peak memory falls by 34.25%. A no-cache control reaches 1.2305x, isolating an additional 5.408 s of E2E savings from four B300-specific kernel tactics. All 208 targeted transformer linears use the native path, including 52 QKV projections with per-output alpha.</p>
+    </aside>
+    <p class="keywords"><strong>Keywords:</strong> SVDQuant; NVFP4; W4A4; diffusion transformer; video generation; kernel fusion; Blackwell; MiniMax-H3</p>
+
+    <nav aria-label="Contents">
+      <strong>Contents</strong>
+      <a href="#overview">1. Result Overview</a>
+      <a href="#method">2. Experimental Method</a>
+      <a href="#architecture">3. Quantized Architecture</a>
+      <a href="#performance">4. Performance Results</a>
+      <a href="#ablation">5. Kernel-Tactic Ablation</a>
+      <a href="#correctness">6. Correctness and Scope</a>
+      <a href="#artifacts">7. Artifacts</a>
+    </nav>
+
+    <section id="overview">
+      <h2>1. Result Overview</h2>
+      <p class="lead">The optimized path exceeds the 1.25x E2E target with a stable three-round mean of 103.977 s and a 0.135% coefficient of variation.</p>
+      <div class="result-grid">
+        <div class="metric"><span class="value">1.2945x</span><span class="label">E2E speedup over BF16</span></div>
+        <div class="metric"><span class="value">1.3129x</span><span class="label">Denoise-stage speedup</span></div>
+        <div class="metric"><span class="value">-34.25%</span><span class="label">Worker peak memory</span></div>
+      </div>
+      <p>The measured result is a systems result: checkpoint layout, dispatch coverage, native epilogue capability, and device-specific tactics are all held in scope. It is not attributed to four-bit arithmetic alone.</p>
+    </section>
+
+    <section id="method">
+      <h2>2. Experimental Method</h2>
+      <div class="table-wrap">
+        <table>
+          <tbody>
+            <tr><th>Variable</th><th>Setting</th></tr>
+            <tr><td>Hardware</td><td>1 x NVIDIA B300 SXM6 AC</td></tr>
+            <tr><td>Task</td><td>MiniMax-H3 FL2VA checkpoint, T2VA request</td></tr>
+            <tr><td>Output</td><td>1344 x 768, 5 s, 24 fps, 124 frames plus stereo audio</td></tr>
+            <tr><td>Sampling</td><td>50 steps, seed 1101, identical prompt and request settings</td></tr>
+            <tr><td>Protocol</td><td>1 complete 50-step warmup + 3 complete 50-step measured rounds</td></tr>
+            <tr><td>Runtime</td><td>PyTorch 2.11.0+cu130, CUDNN_ATTN, eager execution</td></tr>
+            <tr><td>Quantization</td><td>Offline block-aware rank-32 SVDQuant; NVFP4 W4A4 residual branch</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption"><strong>Table 1.</strong> Matched benchmark conditions. Engine initialization and the warmup request are excluded from measured E2E means.</p>
+      <p>The same seed is intentionally repeated to control workload variation. Per-round frame and audio hashes are identical within each recipe. Because BF16 and SVDQuant are different numerical recipes, equality of their output hashes is neither expected nor claimed; perceptual comparisons are reported separately.</p>
+    </section>
+
+    <section id="architecture">
+      <h2>3. Quantized Architecture</h2>
+      <p>SVDQuant decomposes each selected linear into a quantized residual branch and a rank-32 correction branch. MiniMax-H3 QKV uses three logical shard scales; per-output alpha support folds these scales into the native epilogue and raises native coverage from 156/208 to 208/208 linears.</p>
+      <div class="architecture" role="img" aria-label="SVDQuant dataflow from BF16 activation through parallel W4A4 residual and BF16 rank-down branches into a fused epilogue">
+        <div class="arch-grid">
+          <div class="node bf16-node">BF16 activation X<small>Transformer block input</small></div>
+          <div class="arrow">→</div>
+          <div class="fork">
+            <div class="node w4a4-node">Smooth + dynamic NVFP4 quant<small>packed X4 + block scales</small></div>
+            <div class="node bf16-node">Rank-down: X L2<sup>T</sup><small>BF16, rank 32</small></div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="fork">
+            <div class="node w4a4-node">NVFP4 residual GEMM<small>W4A4 tensor-core path</small></div>
+            <div class="node bf16-node">Rank-up correction<small>D L1<sup>T</sup> in shared accumulator</small></div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="node hybrid-node">Native fused epilogue<small>rank-up + alpha + bias → BF16</small></div>
+        </div>
+        <div class="legend" aria-label="Precision color legend">
+          <span><i class="swatch w4a4"></i>W4A4 / NVFP4 (active)</span>
+          <span><i class="swatch bf16"></i>BF16 correction/control</span>
+          <span><i class="swatch hybrid"></i>Mixed-precision fused kernel</span>
+          <span><i class="swatch w4a16"></i>W4A16 (AdaLN path)</span>
+          <span><i class="swatch w4a8"></i>W4A8 alternative</span>
+          <span><i class="swatch w8a8"></i>W8A8 / FP8 alternative</span>
+        </div>
+      </div>
+      <p class="caption"><strong>Figure 1.</strong> Normalized precision coloring. Blue, gray, green, orange, cyan, and violet always denote W4A4, BF16, mixed fused, W4A16, W4A8, and W8A8/FP8 respectively. The cyan and violet alternatives are shown only in the legend and were not measured in this experiment.</p>
+      <div class="equation">Y = alpha .* GEMM_NVFP4(Q4(X / s), W4) + (X L2<sup>T</sup>) L1<sup>T</sup> + b</div>
+      <p>The implementation folds <code>1 / alpha</code> row-wise into <code>L1</code>. Consequently, the epilogue may scale the shared accumulator by either a scalar alpha or an N-element per-output vector without incorrectly scaling the low-rank correction.</p>
+    </section>
+
+    <section id="performance">
+      <h2>4. Performance Results</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Recipe</th><th>E2E mean (s)</th><th>Range (s)</th><th>Denoise mean (s)</th><th>E2E vs BF16</th><th>Peak memory</th></tr></thead>
+          <tbody>
+            <tr><td>BF16</td><td>134.599</td><td>134.176–135.267</td><td>128.419</td><td>1.0000x</td><td>132,070 MiB</td></tr>
+            <tr><td>SVDQuant native, default tactic selection</td><td>109.386</td><td>109.341–109.411</td><td>103.171</td><td>1.2305x</td><td>86,840 MiB</td></tr>
+            <tr><td>SVDQuant native, B300 tactics</td><td class="best">103.977</td><td class="best">103.821–104.091</td><td class="best">97.814</td><td class="best">1.2945x</td><td class="best">86,840 MiB</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption"><strong>Table 2.</strong> Complete-request wall time, denoise-stage duration, and maximum measured worker memory. Each row contains three measured rounds after one full warmup.</p>
+      <div class="bars" aria-label="Mean E2E latency comparison, lower is better">
+        <div class="bar-row"><span>BF16</span><div class="bar-track"><div class="bar bf16"></div></div><span class="bar-value">134.599 s</span></div>
+        <div class="bar-row"><span>SVDQuant / default</span><div class="bar-track"><div class="bar default"></div></div><span class="bar-value">109.386 s</span></div>
+        <div class="bar-row"><span>SVDQuant / B300 tuned</span><div class="bar-track"><div class="bar tuned"></div></div><span class="bar-value">103.977 s</span></div>
+      </div>
+      <p class="caption"><strong>Figure 2.</strong> Mean E2E latency normalized to BF16 width; lower is better.</p>
+      <p>The tuned recipe saves 30.621 s per request relative to BF16. Nearly all of the reduction appears in denoising (30.606 s), consistent with acceleration of the transformer linear path rather than prompt encoding or VAE decode.</p>
+    </section>
+
+    <section id="ablation">
+      <h2>5. Kernel-Tactic Ablation</h2>
+      <p>Native fusion alone reaches 1.2305x E2E. Enabling the serialized B300 cache through <code>FLASHINFER_AUTOTUNER_LOAD_FROM_FILE=1</code> contributes a further 1.0520x over the same native code path, saving 5.408 s E2E and 5.357 s in denoising.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>MiniMax-H3 linear family</th><th>Main mapped M</th><th>Selected tactic</th><th>Native alpha mode</th></tr></thead>
+          <tbody>
+            <tr><td>QKV projection</td><td>65,536</td><td>23</td><td>Per-output (Q/K/V shards)</td></tr>
+            <tr><td>Attention output</td><td>65,536</td><td>22</td><td>Scalar</td></tr>
+            <tr><td>MLP fc1 / gate-up</td><td>65,536</td><td>7</td><td>Scalar</td></tr>
+            <tr><td>MLP fc2</td><td>65,536</td><td>22</td><td>Scalar</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="caption"><strong>Table 3.</strong> Serialized tactics selected by an exhaustive kernel sweep on the measured B300. The principal production shapes hit the cache; small M=32 calls use the generic fallback.</p>
+    </section>
+
+    <section id="correctness">
+      <h2>6. Correctness, Precision, and Scope</h2>
+      <ul>
+        <li><strong>Dispatch coverage:</strong> 208/208 targeted linears select native fused SVDQuant: 156 scalar-alpha linears and 52 QKV linears with vector alpha.</li>
+        <li><strong>Kernel numerics:</strong> scalar and per-column alpha, bias/no-bias, autotuned execution, and linear reference checks pass the FlashInfer GPU tests.</li>
+        <li><strong>Integration numerics:</strong> the vLLM-Omni backend tests cover the fallback reference, native scalar contract, and native per-output-alpha contract.</li>
+        <li><strong>Run stability:</strong> measured frame and audio hashes are stable within each recipe; tuned E2E CV is 0.135%.</li>
+      </ul>
+      <div class="note"><strong>Scope limitation.</strong> These performance numbers validate NVIDIA B300 (SM103), this exact MiniMax-H3 workload, and this software stack. SM100 is supported by the kernel family but needs its own tactics; RTX Blackwell SM110/SM120/SM121 remains on a compatible fallback until a native port is validated. Three measured rounds are sufficient to establish repeatability for this engineering run, but not to estimate fleet-level tail latency. Perceptual fidelity is not inferred from latency hashes; consult the paired visual matrix.</div>
+    </section>
+
+    <section id="artifacts">
+      <h2>7. Artifact Availability</h2>
+      <p>The machine-readable table, per-round observations, tactic mapping, coverage counts, and source-artifact SHA-256 values are preserved in <a href="results.json"><code>results.json</code></a>. The implementation is split at the intended abstraction boundary:</p>
+      <ul>
+        <li><a href="https://github.com/lishunyang12/vllm-omni/tree/feat/minimax-h3-svdquant">vLLM-Omni integration</a>: checkpoint conversion, backend dispatch, MiniMax-H3 module wiring, benchmark runner, and integration tests.</li>
+        <li><a href="https://github.com/lishunyang12/flashinfer/tree/feat/minimax-h3-svdquant">FlashInfer kernel</a>: NVFP4 residual GEMM, BF16 rank-up in the shared accumulator, per-output alpha epilogue, tactic dispatch, and GPU tests.</li>
+        <li><a href="../minimax_h3_svdquant_official_comparison.html">Five-case visual matrix</a>: paired BF16/SVDQuant outputs for separate fidelity inspection.</li>
+      </ul>
+    </section>
+
+    <footer>
+      <p>Values are reproduced from the benchmark JSON rather than entered from console summaries. Precision colors follow the report-wide legend and do not imply that unmeasured alternative recipes were benchmarked.</p>
+    </footer>
+  </main>
+</body>
+</html>

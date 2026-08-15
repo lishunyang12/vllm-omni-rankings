@@ -8,6 +8,10 @@ download counts.
 
 ## Research reports
 
+- **Native Fused SVDQuant for MiniMax-H3 on NVIDIA B300:**
+  [HTML](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_svdquant_b300_results/) ·
+  [results](scripts/minimax_h3_svdquant_b300_results/results.json) ·
+  [visual comparison](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_svdquant_official_comparison.html)
 - **Topology-Aware Distributed Layerwise Offloading for MiniMax-H3 on Eight
   NVIDIA B300 GPUs:** [HTML](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_b300_dlo_industrial_report/) ·
   [PDF](scripts/minimax_h3_b300_dlo_industrial_report/minimax_h3_b300_dlo_study.pdf) ·
