@@ -1,22 +1,14 @@
-# MiniMax-H3 SVDQuant on NVIDIA B300
+# MiniMax-H3 BF16 vs SVDQuant
 
-This directory contains the static academic results note and its machine-readable
-summary for the MiniMax-H3 native fused SVDQuant experiment conducted on 15 August
-2026.
+A self-contained page with five paired BF16/SVDQuant videos. Each case shows only:
 
-- Live report: <https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_svdquant_b300_results/>
-- Machine-readable data: [results.json](results.json)
-- Visual quality comparison: [BF16 vs SVDQuant, five official cases](../minimax_h3_svdquant_official_comparison.html)
+- the BF16 and SVDQuant videos;
+- PSNR, SSIM, and temporal RMSE;
+- BF16 and SVDQuant end-to-end request latency.
 
-## Result
+The page also reports the separate strict native-fused benchmark: one full
+50-step warmup followed by three measured rounds on NVIDIA B300. The strict
+mean is 134.599 s for BF16 and 103.977 s for SVDQuant, or 1.2945x E2E.
 
-Under a matched T2VA protocol (1344 x 768, 5 s, 50 steps, seed 1101, one full
-warmup plus three measured rounds), native fused rank-32 SVDQuant with bundled
-B300 tactics reduced mean wall time from 134.599 s to 103.977 s: 1.2945x E2E.
-Mean denoise time improved by 1.3129x and measured worker peak memory fell by
-34.25%.
-
-The sample count is deliberately reported: these are stable engineering
-measurements, not a population-level performance claim. The result is validated
-on B300 (SM103); it must not be generalized to other Blackwell SKUs without
-per-device kernel validation and tactic tuning.
+- Live page: <https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_svdquant_b300_results/>
+- Attached metrics: [results.json](results.json)
