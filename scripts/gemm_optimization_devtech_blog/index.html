@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="从 1.86 到 10.14 TFLOP/s：A100 上 CUDA Core FP32 GEMM 的完整优化路线。">
+  <meta name="theme-color" content="#512da8">
+  <title>从 1.86 到 10.14 TFLOP/s：CUDA Core GEMM 优化全链路</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <div class="reading-progress" aria-hidden="true"><span id="progress-bar"></span></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="返回文章顶部">
+        <span class="brand-mark" aria-hidden="true">G</span>
+        <span><strong>GPU 性能工程札记</strong><small>CUDA · GEMM · Profiling</small></span>
+      </a>
+      <nav class="top-actions" aria-label="页面操作">
+        <a href="https://github.com/lishunyang12/vllm-omni-rankings/blob/main/scripts/20210708_Gemm%20Optimization%20Devtech.pdf">原始 PDF</a>
+        <button id="theme-toggle" class="icon-button" type="button" aria-label="切换深浅色模式" title="切换深浅色模式">
+          <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66 1.42-1.42M4.92 19.08l1.42-1.42m11.32 0 1.42 1.42M4.92 4.92l1.42 1.42M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5 8.5 8.5 0 1 0 20.5 14.1Z"/></svg>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <div class="page-shell" id="top">
+    <main class="article">
+      <article>
+        <header class="hero">
+          <div class="eyebrow"><span>CUDA Core</span><span>·</span><span>FP32 SGEMM</span><span>·</span><span>A100</span></div>
+          <h1>从 1.86 到 10.14 TFLOP/s：CUDA Core GEMM 优化全链路</h1>
+          <p class="dek">把矩阵乘法从“每个线程算一个元素”一路推到接近 cuBLAS：分块、数据复用、向量化访存、软件流水线与 Split‑K 背后的工程逻辑。</p>
+          <div class="article-meta">
+            <span>原作者：Meng Wang、Perkz Zheng</span>
+            <span>材料日期：2021 年 7 月</span>
+            <span>约 18 分钟阅读</span>
+          </div>
+          <div class="source-links">
+            <span>基于 109 页《GEMM Optimization with CUDA Cores》整理</span>
+            <a class="button primary" href="https://github.com/lishunyang12/vllm-omni-rankings/blob/main/scripts/20210708_Gemm%20Optimization%20Devtech.pdf">阅读原始 PDF</a>
+          </div>
+        </header>
+
+        <section class="metric-strip" aria-label="核心结果速览">
+          <div><strong>5.45×</strong><span>自研 kernel 总加速</span><small>1.861 → 10.144 TFLOP/s</small></div>
+          <div><strong>95.92%</strong><span>实测时钟下 SOL</span><small>Split‑K + shared-memory epilog</small></div>
+          <div><strong>98.23%</strong><span>达到同条件 cuBLAS</span><small>10.144 / 10.326 TFLOP/s</small></div>
+          <div><strong>6.775 ms</strong><span>最终自研 kernel</span><small>M=N=4096，K=2048</small></div>
+        </section>
+
+        <section class="reader-card" aria-labelledby="reader-title">
+          <h2 id="reader-title">开始之前</h2>
+          <div class="reader-grid">
+            <div><h3>适读人群</h3><p>CUDA kernel、深度学习算子、编译器后端与 GPU 性能工程师；希望系统理解 GEMM 调优而非只调用库的读者。</p></div>
+            <div><h3>前置知识</h3><p>知道 thread/block/grid、warp、shared memory 与寄存器；能读懂基本 CUDA C 和矩阵乘法三重循环。</p></div>
+          </div>
+          <h3>阅读目标</h3>
+          <ul class="check-list">
+            <li>理解 GEMM 优化为什么本质上是数据搬运与复用问题</li>
+            <li>掌握 block、warp、thread 三级分块的职责</li>
+            <li>区分 long/short scoreboard，并用软件流水线隐藏延迟</li>
+            <li>知道 Split‑K 何时有效、何时反而拖慢</li>
+            <li>学会用 Nsight Compute 指标驱动下一步优化</li>
+          </ul>
+        </section>
+
+        <details class="mobile-toc">
+          <summary>文章目录</summary>
+          <ol>
+            <li><a href="#summary">先说结论</a></li>
+            <li><a href="#mental-model">GPU 心智模型</a></li>
+            <li><a href="#baseline">基线为什么慢</a></li>
+            <li><a href="#tiling">Stage 1：构造数据复用</a></li>
+            <li><a href="#pipeline">Stage 2：隐藏流水线停顿</a></li>
+            <li><a href="#split-k">Split‑K：用并行度换归约</a></li>
+            <li><a href="#libraries">与 cuBLAS / CUTLASS 的差距</a></li>
+            <li><a href="#playbook">可复用的调优方法</a></li>
+            <li><a href="#limits">边界条件</a></li>
+          </ol>
+        </details>
+
+        <section id="summary">
+          <div class="section-kicker">Executive summary</div>
+          <h2>先说结论：GEMM 优化是一条“让数据越来越近”的路线</h2>
+          <p class="lead">一次 FP32 FMA 只做两次浮点运算，却需要三个输入操作数。如果 A、B 每参与一次乘加都要从全局显存重新读取，CUDA Core 再多也只能等数据。整套优化的主线，是把可复用数据逐层搬近计算单元，并让搬运与计算在时间上重叠。</p>
+          <div class="decision-grid">
+            <article class="decision-card"><span>空间复用</span><h3>Global → SMEM → Register</h3><p>block tile 复用全局数据，thread tile 再复用 shared-memory 数据。</p></article>
+            <article class="decision-card"><span>指令效率</span><h3>float4 + Swizzle</h3><p>用 128-bit load/store 减少指令，并调整线程映射避免 bank conflict。</p></article>
+            <article class="decision-card"><span>时间重叠</span><h3>LDG/LDS Prefetch</h3><p>计算 block[k] 时预取 block[k+1]，隐藏 long 与 short scoreboard。</p></article>
+          </div>
+          <aside class="callout important">
+            <strong>这不是 Tensor Core 教程</strong>
+            <p>PDF 标题明确是 “with CUDA Cores”。实验使用 FP32 SIMT FMA，比较对象也是 SGEMM。这里讨论的 tiling、访存与流水线思想同样影响 Tensor Core kernel，但本文数字不能当作 Tensor Core 吞吐。</p>
+          </aside>
+        </section>
+
+        <section id="mental-model">
+          <div class="section-kicker">01 · Mental model</div>
+          <h2>先建立 GPU 心智模型：算术不是唯一瓶颈</h2>
+          <p class="section-question"><strong>本节核心问题：</strong>一个 warp 为什么会停下来？哪些存储层级决定了 GEMM 的速度？</p>
+          <p>GPU 以 32 个线程组成一个 warp，同一 warp 执行同一条指令。当指令取数未完成、前一条指令结果尚未就绪或遇到同步屏障时，warp 会 stall；调度器只能切换到另一个 ready warp。增加并发 warp 可以隐藏一部分延迟，但不能修复低效的内存访问模式。</p>
+          <div class="memory-stack" aria-label="GPU 内存层级">
+            <div class="memory-level global"><strong>Global Memory</strong><span>容量大、延迟高；所有 block 可见</span><small>应合并访问，避免重复读取</small></div>
+            <i aria-hidden="true">↓</i>
+            <div class="memory-level l2"><strong>L2 Cache</strong><span>A100：40 MB，所有 SM 共享</span><small>CTA 排布影响跨 block 数据复用</small></div>
+            <i aria-hidden="true">↓</i>
+            <div class="memory-level smem"><strong>L1 / Shared Memory</strong><span>每 SM 192 KB 可变划分</span><small>block 内显式复用，注意 32 个 bank</small></div>
+            <i aria-hidden="true">↓</i>
+            <div class="memory-level reg"><strong>Register File</strong><span>线程私有，距离 FMA 最近</span><small>速度快，但过量使用会压低 occupancy</small></div>
+          </div>
+          <div class="compare-panel">
+            <div><h3>Global memory：看 coalescing</h3><p>一个 warp 访问连续地址时，硬件可用尽量少的 32-byte sector 满足请求；地址分散会把一次理想访问膨胀成多次事务。</p></div>
+            <div><h3>Shared memory：看 bank conflict</h3><p>32 个 bank 对应连续的 32-bit word。多个线程同一阶段命中同一 bank 时，请求会被重放；padding 与 swizzle 是常见解法。</p></div>
+          </div>
+          <h3>Roofline 给出的第一条诊断线索</h3>
+          <div class="formula"><span>算术强度</span><strong>Arithmetic Intensity = 2 × M × N × K ÷ Bytes</strong></div>
+          <p>分子是 GEMM 的 FMA 工作量，分母是观测存储层级上的数据传输量。算术强度低时，性能被带宽上限约束；通过 tiling 增加复用后，kernel 才可能向计算上限移动。PDF 第 14 页以 Nsight Compute Roofline 作为后续优化的分析入口。</p>
+        </section>
+
+        <section id="baseline">
+          <div class="section-kicker">02 · Baseline</div>
+          <h2>基线为什么慢：每个线程只算一个 C 元素</h2>
+          <p class="section-question"><strong>本节核心问题：</strong>三重循环看起来已经完全并行，为什么只有 1.861 TFLOP/s？</p>
+          <div class="experiment-card">
+            <div><span>矩阵</span><strong>M=N=4096，K=2048</strong></div>
+            <div><span>表达式</span><strong>C = A × B</strong></div>
+            <div><span>平台</span><strong>A100 PCIe 40GB</strong></div>
+            <div><span>软件</span><strong>CUDA 11.1</strong></div>
+            <div><span>时钟</span><strong>mclk 1215 / pclk 765 MHz</strong></div>
+            <div><span>测量</span><strong>100 warmup + 100 iterations</strong></div>
+          </div>
+          <pre><code>// 一个线程对应 C[i][j]
+for (int k = 0; k &lt; K; ++k) {
+    C[i][j] += A[i][k] * B[k][j];
+}</code></pre>
+          <p>block 为 32×32，grid 为 128×128。问题不在并行任务数量，而在每个线程都沿 K 维反复访问全局显存：同一 A 或 B 元素会被相邻线程重复读取，warp 频繁等待 memory dependency。实测结果是 <strong>1,861.22 GFLOP/s、36.922 ms</strong>，只达到实验时钟下计算上限的 17.63%。</p>
+          <aside class="callout caution"><strong>更多线程不能补偿重复搬运</strong><p>如果每次 FMA 都伴随高延迟 load，增加线程只会让更多 warp 一起排队。第一步应提高数据复用，而不是继续放大 grid。</p></aside>
+        </section>
+
+        <section id="tiling">
+          <div class="section-kicker">03 · Stage 1</div>
+          <h2>构造数据复用：从 block tile 到 thread tile</h2>
+          <p class="section-question"><strong>本节核心问题：</strong>怎样让同一个 A/B 元素服务更多次 FMA，同时控制 shared-memory 指令数量？</p>
+          <h3>第一步：block tile，把 A/B 搬进 shared memory</h3>
+          <p>每个 block 先协作加载 A 与 B 的 32×32 子块，再在 shared memory 上完成内积。全局显存访问被 block 内线程摊薄，性能从 1.861 升到 <strong>2.863 TFLOP/s</strong>，加速 1.54×。但每个线程仍只生成一个 C 元素，shared-memory load 过密，Nsight Compute 指向 <code>Stall MIO Throttle</code>。</p>
+          <h3>第二步：thread tile，让一个线程生成一小块 C</h3>
+          <p>把 C 的 block tile 放大到 128×128。初版使用 32×32 线程，每个线程在寄存器中累积 4×4 个 C 元素：A/B 搬运量增加 4×，FMA 数却增加 16×。结果跃升到 <strong>7.990 TFLOP/s</strong>，是基线的 4.29×。</p>
+          <div class="tiling-visual" role="img" aria-label="GEMM 的 block、warp、thread 三级分块示意">
+            <div class="matrix a-matrix"><b>A tile</b><span>128×Ktile</span></div>
+            <div class="multiply">×</div>
+            <div class="matrix b-matrix"><b>B tile</b><span>Ktile×128</span></div>
+            <div class="equals">=</div>
+            <div class="matrix c-matrix">
+              <b>C block tile · 128×128</b>
+              <div class="warp-grid">
+                <span></span><span></span><span></span><span></span>
+                <span></span><span class="active"><i>thread<br>8×8</i></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+          <p>继续把 thread tile 调成 8×4、16×4，分别达到 8.432 与 8.643 TFLOP/s。更大的寄存器 tile 提高了 O(M×N) 计算对 O(M+N) 输入的复用，但不能无限增大：寄存器与 shared memory 用量会限制每个 SM 同时驻留的 block。</p>
+          <h3>第三步：outer product、float4 与 thread swizzle</h3>
+          <p>将循环重排为 accumulated outer product：每次从 shared memory 读取一列 A 和一行 B，在寄存器中更新一个小矩阵。其价值不仅是复用，也在于拉长 LDS 与依赖 FMA 之间的距离；材料中的 profile 将 short-scoreboard stall 从约 4 cycle 降到 0.14 cycle。</p>
+          <p>随后用 <code>float4</code> 把四条 32-bit 指令折叠为一条 128-bit LDG/LDS/STG，并重排 thread id，让向量化访存保持 coalesced、尽量避开 shared-memory bank conflict。最终 Stage 1 达到 <strong>9.160 TFLOP/s、7.502 ms</strong>。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Stage 1 步骤</th><th>线程 / block</th><th>C tile</th><th>Thread tile</th><th>TFLOP/s</th><th>时间</th><th>相对基线</th></tr></thead>
+              <tbody>
+                <tr><td><strong>逐元素基线</strong></td><td>32×32</td><td>32×32</td><td>—</td><td>1.861</td><td>36.922 ms</td><td>1.00×</td></tr>
+                <tr><td><strong>Shared memory</strong></td><td>32×32</td><td>32×32</td><td>—</td><td>2.863</td><td>24.003 ms</td><td>1.54×</td></tr>
+                <tr><td><strong>Thread tile</strong></td><td>32×32</td><td>128×128</td><td>4×4</td><td>7.990</td><td>8.601 ms</td><td>4.29×</td></tr>
+                <tr><td><strong>Thread tile 8×4</strong></td><td>32×16</td><td>128×128</td><td>8×4</td><td>8.432</td><td>8.150 ms</td><td>4.53×</td></tr>
+                <tr><td><strong>Thread tile 16×4</strong></td><td>32×8</td><td>128×128</td><td>16×4</td><td>8.643</td><td>7.951 ms</td><td>4.64×</td></tr>
+                <tr class="focus-row"><td><strong>Swizzle + float4</strong></td><td>32×8</td><td>128×128</td><td>8×8</td><td>9.160</td><td>7.502 ms</td><td>4.92×</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="perf-chart" aria-label="Stage 1 性能增长条形图">
+            <div><span>Baseline</span><i style="--value:18.0%"></i><strong>1.86</strong></div>
+            <div><span>SMEM tile</span><i style="--value:27.7%"></i><strong>2.86</strong></div>
+            <div><span>Thread 4×4</span><i style="--value:77.4%"></i><strong>7.99</strong></div>
+            <div><span>Thread 16×4</span><i style="--value:83.7%"></i><strong>8.64</strong></div>
+            <div><span>Swizzle + float4</span><i style="--value:88.7%"></i><strong>9.16</strong></div>
+            <small>单位：TFLOP/s；横轴上限使用同条件 cuBLAS 10.326 TFLOP/s。</small>
+          </div>
+        </section>
+
+        <section id="pipeline">
+          <div class="section-kicker">04 · Stage 2</div>
+          <h2>隐藏流水线停顿：计算当前块，预取下一块</h2>
+          <p class="section-question"><strong>本节核心问题：</strong>数据复用已经做好，为什么 warp 仍在等 LDG、LDS 和同步屏障？</p>
+          <p>Stage 1 的主循环仍按 <code>LDG → STS → LDS → FMA</code> 串行推进。STS 必须等 LDG 完成，造成 long scoreboard；FMA 紧跟依赖的 LDS，造成 short scoreboard。软件流水线的核心不是减少工作量，而是改变工作顺序。</p>
+          <div class="pipeline-visual" aria-label="GEMM 软件流水线时序">
+            <div class="pipeline-head"><span>时间 →</span><span>第 k 次迭代</span><span>第 k+1 次迭代</span></div>
+            <div class="pipeline-row"><strong>全局预取</strong><span class="load">LDG block[k+1]</span><span class="load">LDG block[k+2]</span></div>
+            <div class="pipeline-row"><strong>Shared 写入</strong><span class="store late">STS block[k+1]</span><span class="store late">STS block[k+2]</span></div>
+            <div class="pipeline-row"><strong>当前计算</strong><span class="compute">LDS + FMA block[k]</span><span class="compute">LDS + FMA block[k+1]</span></div>
+            <p>把 LDG 提前到前一轮，在其等待期间执行当前 block 的 LDS/FMA；数据就绪后再 STS。</p>
+          </div>
+          <div class="step-list">
+            <article><span>01</span><div><h3>Global prefetch：消除 long scoreboard</h3><p>把 <code>LDG-STS-FMA</code> 重排为 <code>LDG-FMA-STS</code>。预取 block[k+1] 到寄存器，同时计算 block[k]。long-scoreboard 指标从 0.97 降到 0，性能从 9.160 升到 <strong>9.721 TFLOP/s</strong>，约 +6.1%。</p></div></article>
+            <article><span>02</span><div><h3>Shared-memory double buffer：少一次 barrier，却没有更快</h3><p>两个 SMEM buffer 解除 LDS[k] 与 STS[k+1] 的覆盖冲突，从主循环移除一个 <code>__syncthreads()</code>。barrier stall 从 0.27 降到 0.18，但性能微降至 <strong>9.705 TFLOP/s</strong>（0.998×）。</p></div></article>
+            <article><span>03</span><div><h3>Shared prefetch：重叠 LDS 与 FMA</h3><p>提前把下一组 shared-memory 数据读入寄存器，在当前 FMA 之间穿插 LDS。short scoreboard 从 0.07 降到 0，性能回升到 <strong>9.770 TFLOP/s</strong>。</p></div></article>
+          </div>
+          <aside class="callout important"><strong>最值得复用的经验：指标改善不等于端到端变快</strong><p>Double buffer 的确减少了 barrier stall，却增加了 shared-memory 占用并改变调度条件，最终吞吐略降。每一步都必须用 kernel time 和 FLOP/s 验收，不能只看单个 stall 指标。</p></aside>
+        </section>
+
+        <section id="split-k">
+          <div class="section-kicker">05 · Split-K</div>
+          <h2>Split‑K：用更多 CTA 换取一次额外归约</h2>
+          <p class="section-question"><strong>本节核心问题：</strong>当 M、N 产生的 CTA 不足以填满 108 个 SM 时，如何继续提高并行度？</p>
+          <p>A100 有 108 个 SM，材料以每 SM 约 2 个 block 作为充分占用的经验目标，即至少需要 216 个 CTA。若 M、N 较小，输出 tile 数不足，可以沿 K 维切成 s 份：多个 CTA 分别计算同一 C tile 的 partial sum，最后再归约。</p>
+          <div class="split-diagram" aria-label="Split-K 计算与归约示意">
+            <div class="split-input"><span>A₀ × B₀</span><span>A₁ × B₁</span><span>A₂ × B₂</span></div>
+            <div class="split-arrows"><i>↘</i><i>↓</i><i>↙</i></div>
+            <div class="split-output"><strong>C tile</strong><small>atomic reduction of partial sums</small></div>
+          </div>
+          <h3>第一版为什么更慢？</h3>
+          <p>直接用标量 <code>atomicAdd</code> 替代向量化 STG，无法使用 float4。实际 global sector 从理想的 65,536 增到 262,144，正好 4×，性能降到 <strong>9.674 TFLOP/s</strong>，低于不切 K 的 9.770。</p>
+          <h3>先在 shared memory 中重排，再做原子归约</h3>
+          <p>优化版先用 STS.128 把线程分散的 C 子块整理成连续布局，再由适合连续访问的线程映射执行 LDS + atomicAdd。性能提高到 10.041 TFLOP/s；经过 padding、按 warp 重组 shared-memory layout 与循环形式调整，最终达到 <strong>10.144 TFLOP/s、6.775 ms</strong>。</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>K</th><th>不切 K</th><th>Split‑K</th><th>速度比</th><th>结论</th></tr></thead>
+              <tbody>
+                <tr><td>256</td><td>9.453 TFLOP/s</td><td>8.877 TFLOP/s</td><td class="bad">0.94×</td><td>归约开销占比过高</td></tr>
+                <tr><td>512</td><td>9.639</td><td>9.568</td><td>0.99×</td><td>基本持平</td></tr>
+                <tr><td>1,024</td><td>9.727</td><td>9.947</td><td class="best">1.02×</td><td>开始获益</td></tr>
+                <tr class="focus-row"><td>2,048</td><td>9.770</td><td>10.142</td><td class="best">1.04×</td><td>本文主实验点</td></tr>
+                <tr><td>4,096</td><td>9.795</td><td>10.248</td><td class="best">1.05×</td><td>收益扩大</td></tr>
+                <tr><td>8,192</td><td>9.807</td><td>10.297</td><td class="best">1.05×</td><td>收益稳定</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>在固定 M=N=4096 时，K 越大，主循环越长，额外归约越容易被摊薄。但这不是普遍单调规律：固定 K=2048 改变 M、N 后，Split‑K 的速度比从 0.98× 到 1.18× 都可能出现。<strong>Split‑K 是 shape-specific 的配置，不是全局开关。</strong></p>
+          <aside class="callout caution"><strong>材料对最终增益保持了正确的谨慎</strong><p>PDF 第 95 页明确写道，最终 Split‑K 提升的完整原因尚未确认，可能与更多 block 让 main loop、prolog、epilog 更好重叠有关。本文保留这一不确定性，不把相关性包装成已证明的因果机制。</p></aside>
+        </section>
+
+        <section id="libraries">
+          <div class="section-kicker">06 · Library baselines</div>
+          <h2>距离 cuBLAS 还差什么：最后 1.77% 最难</h2>
+          <p class="section-question"><strong>本节核心问题：</strong>自研 kernel 已达到 95.92% SOL，为什么 cuBLAS 仍然更快？</p>
+          <div class="comparison-cards">
+            <div><span>自研 Split‑K</span><strong>10.144</strong><small>TFLOP/s · 6.775 ms</small></div>
+            <div><span>CUTLASS Split‑K=2</span><strong>9.981</strong><small>TFLOP/s · 6.885 ms</small></div>
+            <div class="winner"><span>cuBLAS</span><strong>10.326</strong><small>TFLOP/s · 6.655 ms</small></div>
+          </div>
+          <p>按主实验 shape，自研实现达到 cuBLAS 的 98.23%，并略高于材料中的 CUTLASS 配置。但库实现还在几个更细层次占优：</p>
+          <ul class="detail-list">
+            <li><strong>按 shape 选择 kernel：</strong>cuBLAS 会随 K 改变 128×64、128×128、128×32 等 tile，而不是用一个 kernel 覆盖所有形状。</li>
+            <li><strong>寄存器复用控制：</strong>SASS 中更积极使用 <code>.reuse</code>，减少 operand collector 与 register-file 带宽压力。</li>
+            <li><strong>寄存器 bank 映射：</strong>精心排列累加器与 FMA 顺序，减少 RF bank conflict 和等待组。</li>
+            <li><strong>CTA remapping：</strong>调整 CTA id 访问顺序，提高跨 block 的 L2 命中率，减少 DRAM 流量。</li>
+          </ul>
+          <p>材料提出的后续方向包括 <code>LDGSTS</code>、三阶段流水线、128×64 小 tile、低 shared-memory 的 Split‑K swizzle，以及 serial reduction。它们共同说明：越接近硬件上限，优化越从“算法结构”转向“指令调度与物理资源映射”。</p>
+        </section>
+
+        <section id="playbook">
+          <div class="section-kicker">07 · Playbook</div>
+          <h2>可复用的 GEMM 调优方法：每一步都要闭环</h2>
+          <p class="section-question"><strong>本节核心问题：</strong>换一张 GPU、一个 shape 或一种数据类型，应该按什么顺序重新优化？</p>
+          <ol class="number-list">
+            <li><span>01</span><div><strong>固定实验与理论上限</strong><p>锁定 M/N/K、布局、数据类型、alpha/beta、GPU 时钟、warmup 与迭代次数；用实际时钟计算 SOL，别直接套规格表峰值。</p></div></li>
+            <li><span>02</span><div><strong>先查访问正确性</strong><p>验证 global coalescing、shared bank conflict、向量化对齐与边界处理。无效事务会让后续流水线优化失去意义。</p></div></li>
+            <li><span>03</span><div><strong>建立三级 tiling</strong><p>CTA tile 负责全局→SMEM 复用，warp tile 分配工作，thread tile 在寄存器中累积。逐步扩大 tile，同时监控寄存器与 occupancy。</p></div></li>
+            <li><span>04</span><div><strong>用 stall reason 决定流水线</strong><p>long scoreboard 高，优先做 global prefetch；short scoreboard 高，增加 LDS/FMA 距离或寄存器预取；barrier 高，再考虑 double buffer。</p></div></li>
+            <li><span>05</span><div><strong>并行度不足再尝试 Split‑K</strong><p>计算 CTA 数与 SM 数，评估 partial-sum reduction、memset 和非确定性代价；用 shape sweep 验证，而非只测一个 K。</p></div></li>
+            <li><span>06</span><div><strong>始终对照 cuBLAS / CUTLASS</strong><p>库性能既是上限参照，也是 tile、stage、split-K 与布局选择的提示。比较时必须保证表达式和数据布局等价。</p></div></li>
+          </ol>
+          <div class="summary-chain"><span>Profile</span><i>→</i><span>提出单一假设</span><i>→</i><span>最小代码改动</span><i>→</i><span>检查正确性</span><i>→</i><span>重测 kernel time</span></div>
+        </section>
+
+        <section id="limits">
+          <div class="section-kicker">08 · Limits</div>
+          <h2>边界条件：这组 2021 年数据不能直接外推</h2>
+          <div class="limits-grid">
+            <article><span>01</span><h3>固定硬件</h3><p>A100 PCIe 40GB，且 pclk 固定为 765 MHz。不同架构的 RF、SMEM、cache 与调度规则都可能改变最优 tile。</p></article>
+            <article><span>02</span><h3>固定精度</h3><p>实验是 FP32 CUDA Core SGEMM，不覆盖 TF32、FP16/BF16 或 Tensor Core MMA。</p></article>
+            <article><span>03</span><h3>友好 shape</h3><p>主结果 M=N=4096、K=2048，均为 tile 的良好整数倍；边界与非对齐 shape 没有在主线展开。</p></article>
+            <article><span>04</span><h3>软件较旧</h3><p>基于 CUDA 11.1/11.3。编译器代码生成、cuBLAS 选择器和 CUTLASS 模板此后均已演进。</p></article>
+            <article><span>05</span><h3>Split‑K 非确定</h3><p>atomic reduction 的加法顺序不固定；对严格数值复现有要求时，需要改用确定性归约方案。</p></article>
+            <article><span>06</span><h3>部分原因未隔离</h3><p>最终 Split‑K 增益的完整来源未由实验单独证明，原材料也明确承认这一点。</p></article>
+          </div>
+        </section>
+
+        <section class="conclusion">
+          <div class="section-kicker">Conclusion</div>
+          <h2>最终结论：高性能 GEMM 是数据流设计，不是循环展开比赛</h2>
+          <p>从 1.861 到 10.144 TFLOP/s 的 5.45× 提升，可以压缩成三句话：<strong>用层级 tiling 创造空间复用，用向量化与 swizzle 保持每次访问有效，用软件流水线把无法消除的延迟藏到 FMA 后面。</strong></p>
+          <p>真正成熟的调优过程还要接受两件事：减少某项 stall 不保证 kernel 更快；某个 shape 上有效的 Split‑K 和 tile，不保证能迁移到另一个 shape。最终裁判永远是正确性、完整 profile 与可重复的端到端时间。</p>
+          <div class="final-rule">少搬数据 → 搬连续数据 → 提前搬数据 → 用足够计算覆盖搬运</div>
+        </section>
+
+        <section id="sources" class="sources">
+          <h2>原始材料与延伸阅读</h2>
+          <ol>
+            <li>Meng Wang, Perkz Zheng, <a href="https://github.com/lishunyang12/vllm-omni-rankings/blob/main/scripts/20210708_Gemm%20Optimization%20Devtech.pdf">GEMM Optimization with CUDA Cores</a>, 2021.07.</li>
+            <li>NVIDIA Developer Blog, <a href="https://developer.nvidia.com/blog/cutlass-linear-algebra-cuda/">CUTLASS: Fast Linear Algebra in CUDA C++</a>.</li>
+            <li>NVIDIA Developer Blog, <a href="https://developer.nvidia.com/blog/accelerating-hpc-applications-with-nsight-compute-roofline-analysis/">Nsight Compute Roofline Analysis</a>.</li>
+            <li>NVIDIA Documentation, <a href="https://docs.nvidia.com/nsight-compute/ProfilingGuide/index.html">Nsight Compute Profiling Guide</a>.</li>
+            <li>NVIDIA, <a href="https://github.com/NVIDIA/cutlass">CUTLASS repository</a> and <a href="https://docs.nvidia.com/cuda/cublas/">cuBLAS documentation</a>.</li>
+          </ol>
+        </section>
+      </article>
+      <footer class="page-footer"><p>本文中的性能结论均受实验硬件、时钟、shape、精度与软件版本约束。</p><a href="#top">返回顶部 ↑</a></footer>
+    </main>
+
+    <aside class="desktop-sidebar" aria-label="文章目录">
+      <div class="toc-card">
+        <span class="toc-title">本文内容</span>
+        <nav id="toc">
+          <a href="#summary">先说结论</a>
+          <a href="#mental-model">GPU 心智模型</a>
+          <a href="#baseline">基线为什么慢</a>
+          <a href="#tiling">Stage 1：构造数据复用</a>
+          <a href="#pipeline">Stage 2：隐藏流水线停顿</a>
+          <a href="#split-k">Split‑K：用并行度换归约</a>
+          <a href="#libraries">与 cuBLAS / CUTLASS 的差距</a>
+          <a href="#playbook">可复用的调优方法</a>
+          <a href="#limits">边界条件</a>
+          <a href="#sources">原始材料</a>
+        </nav>
+        <div class="toc-note"><strong>一句话主线</strong><p>让数据更近、更连续，并让搬运与计算重叠。</p></div>
+      </div>
+    </aside>
+  </div>
+</body>
+</html>
