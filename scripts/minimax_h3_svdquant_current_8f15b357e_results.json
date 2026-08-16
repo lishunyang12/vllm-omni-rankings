@@ -1,0 +1,285 @@
+{
+  "generated_at": "2026-08-16T02:13:13Z",
+  "hardware": "NVIDIA B300 SXM6 AC (SM103)",
+  "vllm_omni_commit": "8f15b357e96fd2645423fdac0b2df31e3fdd4c93",
+  "flashinfer_dependency": "flashinfer-ai/flashinfer#4537",
+  "recipe": "offline rank-32 SVDQuant; NVFP4 W4A4 for 208/208 DiT linears; compact FP32 AdaLN curve/projections; no W4A16 AdaLN groups",
+  "actual_kernel_path": "FlashInfer native fused residual-GEMM + rank-32 correction; QKV per-output-alpha epilogue",
+  "cases": [
+    {
+      "slug": "morning-bakery",
+      "title": "Morning bakery",
+      "source": "MiniMax official base prompt guide \u2014 Case 1: T2VA",
+      "source_url": "https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/docs/VIDEO_PROMPT_WRITING_GUIDE_base_en.md#case-1-t2va",
+      "task": "t2va",
+      "prompt": "integrated_multimodal_description: [Shot 1] Live-action, cinematic, a medium-wide shot frames a baker opening the shutters of a small street bakery before sunrise. The camera pushes in with small amplitude at slow speed as the middle-aged baker with a calm, slightly raspy voice (S1) places a fresh loaf on the wooden counter and says: <d>[English] First batch of the morning.</d> [Shot 2] At 00:05.000, the camera cuts to a close-up of steam rising from the sliced bread while the baker's final words carry over from the previous shot.\n\noverall_soundscape: Wooden shutters scrape open over a quiet street as trays clink softly inside the bakery. The doorbell rings once, followed by light footsteps and the crisp sound of bread being sliced.\n\nnon_diegetic_music: A soft acoustic-guitar pattern at a moderate tempo, joined by sparse upright-bass notes and a gentle fade at the end.",
+      "seed": 0,
+      "width": 1344,
+      "height": 768,
+      "steps": 50,
+      "duration_seconds": 6.0,
+      "bf16": {
+        "wall_time_s": 197.5541154909879,
+        "worker_peak_memory_mb": 135832.0,
+        "stage_durations": {
+          "MiniMaxH3Pipeline.encode_prompt": 0.7500195968896151,
+          "MiniMaxH3Pipeline.diffuse": 188.25604814197868,
+          "MiniMaxH3Pipeline.decode": 6.707515362882987,
+          "queue_wait_ms": 0.2707850653678179,
+          "stage_0_gen_ms": 197553.03263664246
+        },
+        "request_mode": "reused cold baseline",
+        "mp4_sha256": "5572c9ad519c7dca78138ae93fcac868db9e3f759d3376f2e0afaceb563f2140",
+        "media": "embedded in minimax_h3_svdquant_current_8f15b357e.html"
+      },
+      "svdquant": {
+        "wall_time_s": 166.15153546794318,
+        "worker_peak_memory_mb": 83186.0,
+        "stage_durations": {
+          "MiniMaxH3Pipeline.encode_prompt": 1.6396995240356773,
+          "MiniMaxH3Pipeline.diffuse": 154.39718654286116,
+          "MiniMaxH3Pipeline.decode": 7.832499990006909,
+          "queue_wait_ms": 0.3233230672776699,
+          "stage_0_gen_ms": 166150.20322799683
+        },
+        "frames_sha256": "9a80f62c6c9643fa0b595b835485da52f694e5f8455d5048fe83409509c57b3b",
+        "audio_sha256": "6671fcb4dbb498b756df16ec7159f1d22cc266804e8ec5e5ef3cf1b70918c3d5",
+        "request_mode": "first real request",
+        "mp4_sha256": "aeb20d9c821f40ddf8c24090fcaa6ad8aa26f0f8a5028b8616938a3bb6912af6",
+        "media": "embedded in minimax_h3_svdquant_current_8f15b357e.html"
+      },
+      "metrics": {
+        "psnr_db": 16.352716,
+        "ssim": 0.596655,
+        "temporal_rmse": 19.83267250236113,
+        "frames": 158
+      }
+    },
+    {
+      "slug": "starship-hyperspace",
+      "title": "Starship hyperspace",
+      "source": "MiniMax official reproducible 768p T2VA case",
+      "source_url": "https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/main/scripts/readme/reproducible-768p-t2va-request.sh",
+      "task": "t2va",
+      "prompt": "integrated_multimodal_description: [Shot 1] Cinematic, medium wide shot, pushing in slowly. In the cavernous, dimly lit bridge of a starship, sleek metallic consoles with glowing amber displays flank a massive, curved observation window. A female captain, in her late 40s with an athletic build and short silver-streaked black hair, stands in the center midground. She wears a structured, high-collared dark navy military tunic with silver chest insignias. Her back is to the camera, silhouetted against the cool, ambient starlight pouring through the thick glass. She stands perfectly still with her hands clasped tightly behind her back. Outside the window, a massive armada of jagged, dark grey dreadnoughts hovers in tight formation against a deep purple space nebula. The fleet's massive rear thrusters begin to glow with an intense, escalating bright blue light. [Shot 2] At 00:04.500, the camera cuts to a close-up of the captain's face and shakes strongly. The brilliant blue-white light from the fleet's gathering energy reflects vividly in her dark eyes. Suddenly, a blinding white flash floods through the window, completely washing out the background as the fleet jumps to hyperspace. The sheer spatial force violently jolts the bridge, causing the captain from Shot 1 to stagger slightly forward, her shoulders tensing as she visibly braces herself against the physical tremors. As the intense white light fades abruptly, leaving only the dim, empty expanse of the purple nebula reflected on her starkly lit skin, her jaw clenches, and she slowly closes her eyes in the newly emptied space.\n\noverall_soundscape: A low, resonant hum of the ship's ambient life support systems serves as the baseline, soon drowned out by an audible, escalating, high-pitched electronic whine as the fleet outside charges its hyperdrives. A massive, deafening, bass-heavy boom and sharp crackle erupts during the blinding flash, accompanied by the loud metallic creaking, rattling, and deep thuds of the bridge's bulkheads vibrating under immense physical stress. The intense roaring impact then cuts abruptly back to a hollow, echoing room tone, leaving only the faint, steady hum of the isolated bridge.\n\nnon_diegetic_music: Cinematic space-opera orchestral score, slow tempo, featuring a solitary, mournful French horn melody over deep, sustained string dissonances that build rapidly in volume and intensity, swelling to a massive orchestral peak before snapping immediately into silence right after the jump.",
+      "seed": 0,
+      "width": 1344,
+      "height": 768,
+      "steps": 50,
+      "duration_seconds": 10.0,
+      "bf16": {
+        "wall_time_s": 398.0891004349105,
+        "worker_peak_memory_mb": 142708.0,
+        "stage_durations": {
+          "MiniMaxH3Pipeline.encode_prompt": 0.7767119859345257,
+          "MiniMaxH3Pipeline.diffuse": 383.34276413498446,
+          "MiniMaxH3Pipeline.decode": 10.323036599904299,
+          "queue_wait_ms": 0.2979431301355362,
+          "stage_0_gen_ms": 398087.96191215515
+        },
+        "request_mode": "reused cold baseline",
+        "mp4_sha256": "022c66a210b7fd46f77e35c36c92518c5dac267dcbbbd519df95396c031f5e20",
+        "media": "embedded in minimax_h3_svdquant_current_8f15b357e.html"
+      },
+      "svdquant": {
+        "wall_time_s": 336.6872788190376,
+        "worker_peak_memory_mb": 89630.0,
+        "stage_durations": {
+          "MiniMaxH3Pipeline.encode_prompt": 0.9146297520492226,
+          "MiniMaxH3Pipeline.diffuse": 322.282090353081,
+          "MiniMaxH3Pipeline.decode": 9.898805821081623,
+          "queue_wait_ms": 0.31361402943730354,
+          "stage_0_gen_ms": 336686.007976532
+        },
+        "frames_sha256": "a130ae8c5f658f92fda8c225f2bae604433dda62138b7ca5260489c9f27fc4c8",
+        "audio_sha256": "b1bd45f6c8ab8cee13ba105c0042fa089233841610c7dc5390d64de082e4366e",
+        "request_mode": "first real request",
+        "mp4_sha256": "1ccbf1ca488016d47e8544b3b5b10251ea0b7966c10e42e9547105342ca547ed",
+        "media": "embedded in minimax_h3_svdquant_current_8f15b357e.html"
+      },
+      "metrics": {
+        "psnr_db": 13.177561,
+        "ssim": 0.634992,
+        "temporal_rmse": 19.093437566591035,
+        "frames": 243
+      }
+    },
+    {
+      "slug": "five-ducks",
+      "title": "Five ducks",
+      "source": "Held-out counting and animal-motion stress case",
+      "source_url": "",
+      "task": "t2va",
+      "prompt": "Five white ducks with blue ribbons waddle across a small wooden bridge after summer rain, then jump together into a pond filled with pink water lilies.",
+      "seed": 0,
+      "width": 1344,
+      "height": 768,
+      "steps": 50,
+      "duration_seconds": 5.0,
+      "bf16": {
+        "wall_time_s": 136.69686877098866,
+        "worker_peak_memory_mb": 133104.0,
+        "stage_durations": {
+          "MiniMaxH3Pipeline.encode_prompt": 0.7459206238854676,
+          "MiniMaxH3Pipeline.diffuse": 128.70973573997617,
+          "MiniMaxH3Pipeline.decode": 5.379508130950853,
+          "queue_wait_ms": 0.3084540367126465,
+          "stage_0_gen_ms": 136695.77431678772
+        },
+        "request_mode": "reused cold baseline",
+        "mp4_sha256": "d11aeb43d9512c6b1e5a4ea8e832e7d18943e09b83901aceb78af3b21bb450ce",
+        "media": "embedded in minimax_h3_svdquant_current_8f15b357e.html"
+      },
+      "svdquant": {
+        "wall_time_s": 107.89451184496284,
+        "worker_peak_memory_mb": 80642.0,
+        "stage_durations": {
+          "MiniMaxH3Pipeline.encode_prompt": 1.0915684399660677,
+          "MiniMaxH3Pipeline.diffuse": 99.68480942794122,
+          "MiniMaxH3Pipeline.decode": 5.280303071951494,
+          "queue_wait_ms": 0.3353229258209467,
+          "stage_0_gen_ms": 107893.17560195923
+        },
+        "frames_sha256": "db34fe0a110545c92d3551eda682402b687c5effc27900a5d36b9dee6142b508",
+        "audio_sha256": "aa48c8371c3fb001bf41dcd0afe1ff8b7b00ce5eda962cae73765862e893d02e",
+        "request_mode": "first real request",
+        "mp4_sha256": "3ebcdb5b7d5ff813e58bc365d28297641f2a3e6b50901901ffa54af8e1f8bea2",
+        "media": "embedded in minimax_h3_svdquant_current_8f15b357e.html"
+      },
+      "metrics": {
+        "psnr_db": 17.452397,
+        "ssim": 0.506594,
+        "temporal_rmse": 26.114763687696502,
+        "frames": 124
+      }
+    },
+    {
+      "slug": "miniature-steam-train",
+      "title": "Miniature steam train",
+      "source": "Held-out low-light, mechanical-motion, and particle stress case",
+      "source_url": "",
+      "task": "t2va",
+      "prompt": "A miniature red steam train circles a snowy model village at blue hour, its warm headlamp glowing as white steam drifts past tiny green pine trees and golden windows.",
+      "seed": 0,
+      "width": 1344,
+      "height": 768,
+      "steps": 50,
+      "duration_seconds": 5.0,
+      "bf16": {
+        "wall_time_s": 133.71317885094322,
+        "worker_peak_memory_mb": 133104.0,
+        "stage_durations": {
+          "MiniMaxH3Pipeline.encode_prompt": 0.045888724038377404,
+          "MiniMaxH3Pipeline.diffuse": 127.41324487701058,
+          "MiniMaxH3Pipeline.decode": 4.830766376107931,
+          "queue_wait_ms": 0.27199508622288704,
+          "stage_0_gen_ms": 133712.20707893372
+        },
+        "request_mode": "reused cold baseline",
+        "mp4_sha256": "759cd989d972bcb1b348058cd65e43aecc10c2ffb04c1d6ee0fc90c474db8f19",
+        "media": "embedded in minimax_h3_svdquant_current_8f15b357e.html"
+      },
+      "svdquant": {
+        "wall_time_s": 107.40509140794165,
+        "worker_peak_memory_mb": 80642.0,
+        "stage_durations": {
+          "MiniMaxH3Pipeline.encode_prompt": 0.8349906450603157,
+          "MiniMaxH3Pipeline.diffuse": 99.59339043498039,
+          "MiniMaxH3Pipeline.decode": 5.218096463009715,
+          "queue_wait_ms": 0.29828515835106373,
+          "stage_0_gen_ms": 107403.7127494812
+        },
+        "frames_sha256": "82290b5e4f72dff9c6e5e34ed2b584c6e84625c858e9a840d24cdb18983419ad",
+        "audio_sha256": "6d4273f0a88387cc797e19c1c165935d2c547d4d0640fb63f77b2fc680bfcea7",
+        "request_mode": "first real request",
+        "mp4_sha256": "956973e001215b65c2d79bd253ee2695aed776c13e2d68e377b727f5fb0ca4c2",
+        "media": "embedded in minimax_h3_svdquant_current_8f15b357e.html"
+      },
+      "metrics": {
+        "psnr_db": 15.676312,
+        "ssim": 0.614279,
+        "temporal_rmse": 39.085034457539024,
+        "frames": 124
+      }
+    },
+    {
+      "slug": "golden-retriever",
+      "title": "Golden retriever",
+      "source": "Held-out T2VA validation prompt",
+      "source_url": "",
+      "task": "t2va",
+      "prompt": "integrated_multimodal_description: [Shot 1] A golden retriever runs through shallow ocean waves at sunset, splashing water toward the camera.\n\noverall_soundscape: Natural ambient sound synchronized with the visible action.\n\nnon_diegetic_music: N/A",
+      "seed": 1101,
+      "width": 1344,
+      "height": 768,
+      "steps": 50,
+      "duration_seconds": 5.0,
+      "bf16": {
+        "wall_time_s": 193.93286310392432,
+        "worker_peak_memory_mb": 144073.9208984375,
+        "stage_durations": {},
+        "request_mode": "reused cold baseline",
+        "mp4_sha256": "f280511be175eb416f424be29f7abee64935432369a9b907b29e1e12116faf49",
+        "media": "embedded in minimax_h3_svdquant_current_8f15b357e.html"
+      },
+      "svdquant": {
+        "wall_time_s": 107.85802701697685,
+        "worker_peak_memory_mb": 80650.0,
+        "stage_durations": {
+          "MiniMaxH3Pipeline.encode_prompt": 0.863146540010348,
+          "MiniMaxH3Pipeline.diffuse": 99.94096060306765,
+          "MiniMaxH3Pipeline.decode": 5.2517593579832464,
+          "queue_wait_ms": 0.3514119889587164,
+          "stage_0_gen_ms": 107856.68325424194
+        },
+        "frames_sha256": "96825cc3067a6a6ec8ef27a77a31bf6e73f25805fa9f3ea8f2ff83fd8fdd2cbe",
+        "audio_sha256": "6dec5383bc8899cb37c553ca2491e28812c582cf54026bb9078cda6984b34f16",
+        "request_mode": "first real request",
+        "mp4_sha256": "733d1ad236a9e98fe993a2b1a0cc636722826e4c94fdbab17d661b1ac7f1e30c",
+        "media": "embedded in minimax_h3_svdquant_current_8f15b357e.html"
+      },
+      "metrics": {
+        "psnr_db": 14.45565,
+        "ssim": 0.640437,
+        "temporal_rmse": 21.40937590641368,
+        "frames": 124
+      }
+    }
+  ],
+  "strict_native_fused_e2e": {
+    "hardware": "1 x NVIDIA B300 SXM6 AC",
+    "task": "T2VA",
+    "resolution": [
+      1344,
+      768
+    ],
+    "duration_s": 5.0,
+    "steps": 50,
+    "seed": 1101,
+    "warmups": 1,
+    "measured_rounds": 3,
+    "bf16_mean_s": 134.59864056599326,
+    "svdquant_mean_s": 106.402,
+    "speedup": 1.2650010391345394,
+    "bf16_wall_range_s": [
+      134.176,
+      135.267
+    ],
+    "svdquant_wall_range_s": [
+      106.378,
+      106.418
+    ],
+    "bf16_denoise_mean_s": 128.419,
+    "svdquant_denoise_mean_s": 99.758,
+    "denoise_speedup": 1.2873052787746349,
+    "bf16_peak_memory_mib": 132070,
+    "svdquant_peak_memory_mib": 86840,
+    "peak_memory_reduction_pct": 34.24699023245249,
+    "provenance": "Published default-AdaLN matched configuration in vLLM-Omni PR 6162; latest compact checkpoint is performance-neutral in matched fast-frequency segments but its mixed-DVFS 3-run mean is not used as a speedup claim."
+  },
+  "video_protocol": "BF16 videos are reused. Every W4A4 video was regenerated from compact checkpoint and vLLM-Omni commit 8f15b357e as the first real request after engine initialization; per-case latency is descriptive and no unmatched per-case speedup is claimed.",
+  "metric_contract": {
+    "psnr_ssim": "FFmpeg decoded YUV420 frames over all paired frames",
+    "temporal_rmse": "RMSE((candidate[t]-candidate[t-1])-(reference[t]-reference[t-1])) in decoded RGB 0..255"
+  }
+}
