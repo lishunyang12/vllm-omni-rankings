@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MiniMax-H3 BF16 parallel samples</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, sans-serif; }
+    body { max-width: 1280px; margin: 0 auto; padding: 24px; }
+    h1 { margin-bottom: 8px; }
+    .summary { color: #888; margin-bottom: 24px; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+    article { border: 1px solid #7776; border-radius: 8px; padding: 12px; }
+    video { display: block; width: 100%; background: #000; border-radius: 4px; }
+    h2 { font-size: 1rem; margin: 10px 0 4px; }
+    p { margin: 4px 0; }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>MiniMax-H3 BF16 parallel high-quality samples</h1>
+  <p class="summary">Official FL2VA checkpoint · T2VA · 1344×768 · 124 frames · 24 FPS · 50 steps · synchronized audio</p>
+  <main class="grid">
+    <article>
+      <video controls preload="metadata" src="sam-lisa-seed1101.mp4"></video>
+      <h2>Seed 1101</h2>
+      <p>Wall 146.459 s · denoise 131.480 s</p>
+    </article>
+    <article>
+      <video controls preload="metadata" src="sam-lisa-seed2027.mp4"></video>
+      <h2>Seed 2027</h2>
+      <p>Wall 146.708 s · denoise 133.009 s</p>
+    </article>
+    <article>
+      <video controls preload="metadata" src="sam-lisa-seed4099.mp4"></video>
+      <h2>Seed 4099</h2>
+      <p>Wall 142.399 s · denoise 130.070 s</p>
+    </article>
+    <article>
+      <video controls preload="metadata" src="sam-lisa-seed7727.mp4"></video>
+      <h2>Seed 7727</h2>
+      <p>Wall 145.572 s · denoise 132.959 s</p>
+    </article>
+  </main>
+</body>
+</html>
