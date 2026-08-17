@@ -44,7 +44,7 @@ def test_authenticated_generation_flow() -> None:
         assert client.get("/").status_code == 401
         page = client.get("/?token=test-token")
         assert page.status_code == 200
-        assert "MiniMax-H3 文生视频" in page.text
+        assert "MiniMax-H3 FP8 文生视频" in page.text
 
         created = client.post(
             "/api/videos",
@@ -61,7 +61,7 @@ def test_authenticated_generation_flow() -> None:
         assert asyncio_client is replacement
 
 
-def test_generation_payload_is_fixed_high_quality() -> None:
+def test_generation_payload_is_fixed_fp8_no_cache() -> None:
     captured = {}
 
     def backend(request: httpx.Request) -> httpx.Response:
@@ -92,6 +92,7 @@ def test_generation_payload_is_fixed_high_quality() -> None:
         assert response.status_code == 200
 
     body = captured["body"]
+    assert b'name="quality"' not in body
     assert b"1344" in body
     assert b"768" in body
     assert b"50" in body
