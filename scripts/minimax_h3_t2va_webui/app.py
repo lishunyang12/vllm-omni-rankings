@@ -117,7 +117,6 @@ async def create_video(
             "fps": "24",
             "num_inference_steps": "50",
             "flow_shift": "12",
-            "quality": "high",
             "extra_params": json.dumps(
                 {"task": "t2va", "duration": seconds, "audio_flow_shift": 3.0}, separators=(",", ":")
             ),

@@ -2,7 +2,7 @@
 
 Small authenticated Web UI for the resident MiniMax-H3 FL2VA asynchronous video API.
 
-The browser can choose a prompt, duration from 4 to 15 seconds, and seed. The server fixes the validated high-quality settings to 1344x768, 24 FPS, 50 steps, video flow shift 12, and audio flow shift 3.
+The browser can choose a prompt, duration from 4 to 15 seconds, and seed. The server uses online global FP8 quantization for the official FL2VA checkpoint, with request-level Cache-DiT disabled, and fixes the generation settings to 1344x768, 24 FPS, 50 steps, video flow shift 12, and audio flow shift 3.
 
 ## Start
 

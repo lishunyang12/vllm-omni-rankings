@@ -42,7 +42,8 @@ trap cleanup EXIT INT TERM
   --vae-patch-parallel-size 4 \
   --vae-parallel-mode tile \
   --vae-use-tiling \
-  --diffusion-attention-backend TRTLLM_ATTN \
+  --quantization fp8 \
+  --diffusion-attention-backend CUDNN_ATTN \
   >"$runtime_dir/backend.log" 2>&1 &
 backend_pid=$!
 
