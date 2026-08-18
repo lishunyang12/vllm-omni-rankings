@@ -1,68 +1,88 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="700" viewBox="0 0 1600 700">
-  <title>MiniMax H3 disaggregated GPU memory architecture</title>
-  <desc>Only the GPU-memory-consuming text encoder and diffusion components are shown.</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="840" viewBox="0 0 1800 840">
+  <title>MiniMax H3 AR-to-diffusion disaggregated components</title>
+  <desc>PR 5885 H3 text encoder and diffusion stages connected through the reusable PR 6093 NIXL connector, with PR 6264 direct stage-payload routing.</desc>
   <defs>
     <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto">
       <path d="M0 0 L10 5 L0 10 Z" fill="#000"/>
     </marker>
   </defs>
 
-  <rect width="1600" height="700" fill="#fff"/>
+  <rect width="1800" height="840" fill="#fff"/>
 
-  <text x="800" y="65" text-anchor="middle" font-family="Arial, sans-serif" font-size="40" font-weight="bold" fill="#000">
-    MiniMax H3 Disaggregated Deployment
-  </text>
-  <text x="800" y="103" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#000">
-    GPU memory view
-  </text>
+  <!-- Orchestrator -->
+  <rect x="690" y="35" width="420" height="95" fill="#fff" stroke="#000" stroke-width="3"/>
+  <text x="900" y="73" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="bold" fill="#000">Omni Orchestrator</text>
+  <text x="900" y="107" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#000">request routing + sender endpoint metadata</text>
 
-  <rect x="90" y="175" width="500" height="350" fill="#fff" stroke="#000" stroke-width="4"/>
-  <text x="115" y="215" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#000">STAGE 0 — GPU MEMORY</text>
+  <path d="M760 130 L500 180" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="9 7" marker-end="url(#arrow)"/>
+  <path d="M1040 130 L1300 180" fill="none" stroke="#000" stroke-width="2" stroke-dasharray="9 7" marker-end="url(#arrow)"/>
 
-  <rect x="140" y="265" width="400" height="155" fill="#fff" stroke="#000" stroke-width="3"/>
-  <text x="340" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="bold" fill="#000">
-    MiniMaxH3TextEncoder
-  </text>
-  <text x="340" y="349" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" fill="#000">
-    Qwen3-VL Transformer weights
-  </text>
-  <text x="340" y="383" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" fill="#000">
-    KV / prefix cache + activations
-  </text>
+  <!-- Stage 0 -->
+  <rect x="50" y="180" width="560" height="530" fill="#fff" stroke="#000" stroke-width="4"/>
+  <text x="80" y="222" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#000">STAGE 0</text>
+  <text x="580" y="222" text-anchor="end" font-family="Arial, sans-serif" font-size="20" fill="#000">2× A100 · TP=2</text>
 
-  <text x="340" y="474" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" fill="#000">
-    Tensor Parallel
-  </text>
+  <rect x="105" y="265" width="450" height="130" fill="#fff" stroke="#000" stroke-width="3"/>
+  <text x="330" y="307" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="bold" fill="#000">MiniMaxH3TextEncoder</text>
+  <text x="330" y="343" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#000">Qwen3-VL Transformer · layer 50 residual</text>
+  <text x="330" y="374" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#000">H3 model component · PR #5885</text>
 
-  <line x1="590" y1="350" x2="1002" y2="350" stroke="#000" stroke-width="4" marker-end="url(#arrow)"/>
-  <rect x="650" y="262" width="300" height="72" fill="#fff" stroke="#000" stroke-width="2"/>
-  <text x="800" y="292" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="bold" fill="#000">
-    BF16 hidden states [S, 5120]
-  </text>
-  <text x="800" y="319" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#000">
-    + token-role tags [S]
-  </text>
+  <line x1="330" y1="395" x2="330" y2="443" stroke="#000" stroke-width="3" marker-end="url(#arrow)"/>
 
-  <rect x="1010" y="175" width="500" height="350" fill="#fff" stroke="#000" stroke-width="4"/>
-  <text x="1035" y="215" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#000">STAGE 1 — GPU MEMORY</text>
+  <rect x="105" y="450" width="450" height="135" fill="#fff" stroke="#000" stroke-width="3"/>
+  <text x="330" y="491" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#000">AR Model Runner</text>
+  <text x="330" y="527" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#000">send_full_payload_outputs()</text>
+  <text x="330" y="558" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#000">direct payload producer · PR #6264</text>
 
-  <rect x="1060" y="265" width="185" height="155" fill="#fff" stroke="#000" stroke-width="3"/>
-  <text x="1152" y="319" text-anchor="middle" font-family="Arial, sans-serif" font-size="27" font-weight="bold" fill="#000">H3 DiT</text>
-  <text x="1152" y="356" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#000">Weights</text>
-  <text x="1152" y="386" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#000">Activations</text>
+  <text x="330" y="650" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#000">GPU-resident encoder weights, cache and activations</text>
 
-  <line x1="1245" y1="343" x2="1284" y2="343" stroke="#000" stroke-width="3" marker-end="url(#arrow)"/>
+  <!-- Shared transfer component -->
+  <rect x="690" y="270" width="420" height="360" fill="#fff" stroke="#000" stroke-width="4"/>
+  <text x="900" y="310" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#000">NixlConnector</text>
+  <text x="900" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#000">shared OmniConnector component · PR #6093</text>
 
-  <rect x="1292" y="265" width="168" height="155" fill="#fff" stroke="#000" stroke-width="3"/>
-  <text x="1376" y="313" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="bold" fill="#000">Video VAE</text>
-  <text x="1376" y="346" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="bold" fill="#000">Audio VAE</text>
-  <text x="1376" y="383" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#000">Weights + buffers</text>
+  <rect x="745" y="375" width="310" height="85" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="900" y="408" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="bold" fill="#000">ZMQ control plane</text>
+  <text x="900" y="438" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#000">GET_META / XFER_DONE · rank-aware</text>
 
-  <text x="1260" y="474" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" fill="#000">
-    Ulysses / denoising
-  </text>
+  <rect x="745" y="495" width="310" height="85" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="900" y="528" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="bold" fill="#000">NIXL data plane</text>
+  <text x="900" y="558" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#000">consumer-initiated READ into Stage 1 GPU</text>
 
-  <text x="800" y="602" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" fill="#000">
-    CPU preprocessing and MP4 output are omitted because they are not major GPU-memory consumers.
-  </text>
+  <!-- Direct payload path -->
+  <line x1="555" y1="518" x2="682" y2="518" stroke="#000" stroke-width="4" marker-end="url(#arrow)"/>
+  <line x1="1110" y1="518" x2="1232" y2="518" stroke="#000" stroke-width="4" marker-end="url(#arrow)"/>
+  <rect x="650" y="185" width="500" height="62" fill="#fff" stroke="#000" stroke-width="2"/>
+  <text x="900" y="212" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="bold" fill="#000">text_encoder_output</text>
+  <text x="900" y="237" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#000">BF16 hidden_states [S, 5120] + token_tags [S]</text>
+
+  <!-- Stage 1 -->
+  <rect x="1190" y="180" width="560" height="530" fill="#fff" stroke="#000" stroke-width="4"/>
+  <text x="1220" y="222" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#000">STAGE 1</text>
+  <text x="1720" y="222" text-anchor="end" font-family="Arial, sans-serif" font-size="20" fill="#000">4× A100 · TP=4</text>
+
+  <rect x="1245" y="265" width="450" height="105" fill="#fff" stroke="#000" stroke-width="3"/>
+  <text x="1470" y="306" text-anchor="middle" font-family="Arial, sans-serif" font-size="25" font-weight="bold" fill="#000">DiffusionModelRunner</text>
+  <text x="1470" y="341" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#000">connector-backed payload receive · PR #6264</text>
+
+  <rect x="1245" y="470" width="195" height="95" fill="#fff" stroke="#000" stroke-width="3"/>
+  <text x="1342" y="507" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="bold" fill="#000">Leader rank</text>
+  <text x="1342" y="539" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#000">connector.get()</text>
+
+  <line x1="1440" y1="518" x2="1492" y2="518" stroke="#000" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="1500" y="470" width="195" height="95" fill="#fff" stroke="#000" stroke-width="3"/>
+  <text x="1597" y="507" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="bold" fill="#000">TP group</text>
+  <text x="1597" y="539" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" fill="#000">broadcast to 4 ranks</text>
+
+  <line x1="1470" y1="565" x2="1470" y2="597" stroke="#000" stroke-width="3" marker-end="url(#arrow)"/>
+
+  <rect x="1245" y="605" width="450" height="75" fill="#fff" stroke="#000" stroke-width="3"/>
+  <text x="1470" y="637" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="bold" fill="#000">H3 DiT + Video VAE + Audio VAE</text>
+  <text x="1470" y="665" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#000">MiniMaxH3Pipeline · PR #5885</text>
+
+  <!-- Reuse -->
+  <line x1="900" y1="630" x2="900" y2="748" stroke="#000" stroke-width="2" stroke-dasharray="9 7" marker-end="url(#arrow)"/>
+  <rect x="735" y="755" width="330" height="60" fill="#fff" stroke="#000" stroke-width="3"/>
+  <text x="900" y="792" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" fill="#000">Wan pipeline · reuse #6093 component</text>
 </svg>
