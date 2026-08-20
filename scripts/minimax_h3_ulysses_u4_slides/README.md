@@ -1,9 +1,15 @@
-# MiniMax-H3 Ulysses U4 学术幻灯片
+# MiniMax-H3 Ulysses SP=8 Profiling 幻灯片
 
-- `MiniMax-H3_Ulysses_U4_学术解析.pptx`：23 页、16:9、中文学术演示稿。
+- `MiniMax-H3_Ulysses_U4_学术解析.pptx`：7 页、16:9、白底绿色调中文技术演示稿。
 - `build_deck.py`：可维护的本地生成源文件。
 
-内容基于当前分支 `agent/minimax-h3-online-fp8@f76f8e58fb`、本地 B300 U4 实验记录，以及后续严格 Ulysses 边界优化提交 `7b76b6446`。
+内容基于原始 profile 分支 `agent/minimax-h3-pillar1@50cf90da7` 和
+`minimax_h3_sp8_2step_b300_20260820.nsys-rep`，重点解释：
+
+- SP=8 下 Q/K/V 与 Output All-to-All 的数据布局；
+- NCCL 前 `direct_copy_kernel_cuda` 的源码归因；
+- 由 `_rope_combine_kernel` 直接生成 Ulysses packed Q/K 的优化；
+- 预期收益、适用边界和 before/after 验证标准。
 
 重新生成：
 
