@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the six-slide MiniMax-H3 SP=8 optimization deck."""
+"""Build the seven-slide MiniMax-H3 SP=8 optimization deck."""
 
 from pathlib import Path
 
@@ -136,6 +136,53 @@ def add_box(slide, x, y, w, h, value, size=15, font=FONT, align=PP_ALIGN.LEFT):
     return box
 
 
+def add_module_node(slide, x, y, w, h, heading):
+    node = slide.shapes.add_shape(
+        MSO_SHAPE.RECTANGLE,
+        Inches(x),
+        Inches(y),
+        Inches(w),
+        Inches(h),
+    )
+    node.fill.solid()
+    node.fill.fore_color.rgb = rgb(WHITE)
+    node.line.color.rgb = rgb(LIGHT_GRAY)
+    node.line.width = Pt(1)
+    add_text(
+        slide,
+        x + 0.08,
+        y + 0.08,
+        w - 0.16,
+        h - 0.16,
+        heading,
+        13,
+        BLACK,
+        True,
+        align=PP_ALIGN.CENTER,
+        valign=MSO_ANCHOR.MIDDLE,
+    )
+    return node
+
+
+def add_flow_arrow(slide, x, y, w=0.24, h=0.28, direction="right"):
+    shape_type = {
+        "right": MSO_SHAPE.RIGHT_ARROW,
+        "left": MSO_SHAPE.LEFT_ARROW,
+        "down": MSO_SHAPE.DOWN_ARROW,
+    }[direction]
+    arrow = slide.shapes.add_shape(
+        shape_type,
+        Inches(x),
+        Inches(y),
+        Inches(w),
+        Inches(h),
+    )
+    arrow.fill.solid()
+    arrow.fill.fore_color.rgb = rgb(GREEN)
+    arrow.line.color.rgb = rgb(GREEN)
+    return arrow
+
+
 def set_cell(cell, value, size=13, bold=False, color=BLACK, font=FONT):
     cell.text = str(value)
     cell.fill.solid()
@@ -195,16 +242,17 @@ def build_deck():
     slide = new_slide(prs, "Contents")
     entries = [
         ("2", "Profile Baseline"),
-        ("3", "Bottleneck"),
-        ("4", "Optimization 1 — Pack Q/K in RoPE"),
-        ("5", "Optimization 2 — Pack V in QKV Projection"),
-        ("6", "Optimization 3 — Remove Output Copies"),
+        ("3", "Original Data Layout Flow"),
+        ("4", "Bottleneck"),
+        ("5", "Optimization 1 — Pack Q/K in RoPE"),
+        ("6", "Optimization 2 — Pack V in QKV Projection"),
+        ("7", "Optimization 3 — Remove Output Copies"),
     ]
     for index, (page, label) in enumerate(entries):
-        y = 1.48 + index * 0.95
-        add_text(slide, 1.20, y, 0.55, 0.45, page, 21, GREEN, True, MONO)
-        add_text(slide, 1.95, y, 9.90, 0.45, label, 21, BLACK)
-        add_line(slide, 1.20, y + 0.58, 12.0, y + 0.58, LIGHT_GRAY, 0.6)
+        y = 1.34 + index * 0.84
+        add_text(slide, 1.20, y, 0.55, 0.42, page, 19, GREEN, True, MONO)
+        add_text(slide, 1.95, y, 9.90, 0.42, label, 19, BLACK)
+        add_line(slide, 1.20, y + 0.52, 12.0, y + 0.52, LIGHT_GRAY, 0.6)
     add_footer(slide, 1)
 
     # 2. Profile Baseline
@@ -235,7 +283,104 @@ def build_deck():
     )
     add_footer(slide, 2)
 
-    # 3. Bottleneck
+    # 3. Original data-layout flow
+    slide = new_slide(prs, "Original Data Layout Flow")
+    top_x = [0.55, 3.00, 5.45, 7.90, 10.35]
+    top_nodes = [
+        "QKV Projection\n+ split",
+        "Q/K Norm + RoPE\nV bypass",
+        "Input pack",
+        "3× NCCL A2A",
+        "TRTLLM Attention",
+    ]
+    top_shapes = [
+        "[T_local, H, D] ×3",
+        "[B, T_local, H, D]",
+        "[P, T_local, B, H/P, D]",
+        "[B, T_global, H/P, D]",
+    ]
+    for x, heading in zip(top_x, top_nodes):
+        add_module_node(slide, x, 1.95, 1.85, 0.82, heading)
+    for index, label in enumerate(top_shapes):
+        arrow_x = top_x[index] + 1.89
+        add_flow_arrow(slide, arrow_x, 2.22, 0.52, 0.28)
+        add_text(
+            slide,
+            arrow_x - 0.88,
+            1.36,
+            2.28,
+            0.40,
+            label,
+            9,
+            GREEN,
+            True,
+            MONO,
+            PP_ALIGN.CENTER,
+        )
+
+    add_flow_arrow(slide, 11.12, 3.03, 0.32, 0.76, "down")
+    add_text(
+        slide,
+        9.20,
+        3.24,
+        1.80,
+        0.40,
+        "[B, T_global, H/P, D]",
+        9,
+        GREEN,
+        True,
+        MONO,
+        PP_ALIGN.RIGHT,
+    )
+
+    bottom_x = [10.35, 7.90, 5.45, 3.00, 0.55]
+    bottom_nodes = [
+        "Output pack",
+        "NCCL A2A",
+        "Output unpack",
+        "Out Projection",
+        "Block output",
+    ]
+    bottom_shapes = [
+        "[P, H/P, T_local, B, D]",
+        "[P, H/P, T_local, B, D]",
+        "[B, T_local, H, D]",
+        "[T_local, hidden]",
+    ]
+    for x, heading in zip(bottom_x, bottom_nodes):
+        add_module_node(slide, x, 4.45, 1.85, 0.82, heading)
+    for index, label in enumerate(bottom_shapes):
+        arrow_x = bottom_x[index] - 0.56
+        add_flow_arrow(slide, arrow_x, 4.72, 0.52, 0.28, "left")
+        add_text(
+            slide,
+            arrow_x - 0.88,
+            3.88,
+            2.28,
+            0.40,
+            label,
+            9,
+            GREEN,
+            True,
+            MONO,
+            PP_ALIGN.CENTER,
+        )
+
+    add_text(
+        slide,
+        0.75,
+        6.18,
+        11.85,
+        0.32,
+        "P=8 · T_local=4,720 · T_global=37,760 · H=56 · H/P=7 · D=128 · B=1",
+        11,
+        GRAY,
+        font=MONO,
+        align=PP_ALIGN.CENTER,
+    )
+    add_footer(slide, 3)
+
+    # 4. Bottleneck
     slide = new_slide(prs, "Bottleneck")
     rows = [
         ["Stage", "Representative time", "Kernel"],
@@ -261,9 +406,9 @@ def build_deck():
         13,
         0.34,
     )
-    add_footer(slide, 3)
+    add_footer(slide, 4)
 
-    # 4. Optimization 1
+    # 5. Optimization 1
     slide = new_slide(prs, "Optimization 1 — Pack Q/K in RoPE")
     rows = [
         ["Current", "Proposed"],
@@ -297,9 +442,9 @@ def build_deck():
         14,
         0.42,
     )
-    add_footer(slide, 4)
+    add_footer(slide, 5)
 
-    # 5. Optimization 2
+    # 6. Optimization 2
     slide = new_slide(prs, "Optimization 2 — Pack V in QKV Projection")
     rows = [
         ["Current", "Proposed"],
@@ -323,9 +468,9 @@ def build_deck():
         16,
         0.55,
     )
-    add_footer(slide, 5)
+    add_footer(slide, 6)
 
-    # 6. Optimization 3
+    # 7. Optimization 3
     slide = new_slide(prs, "Optimization 3 — Remove Output Copies")
     add_box(
         slide,
@@ -353,7 +498,7 @@ def build_deck():
         17,
         0.62,
     )
-    add_footer(slide, 6)
+    add_footer(slide, 7)
 
     prs.save(OUT_FILE)
     return OUT_FILE, len(prs.slides)
