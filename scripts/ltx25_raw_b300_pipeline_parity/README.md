@@ -173,3 +173,58 @@ Reproduce with a local mirror of the FL2VA partition:
 
 The script's `--dry-run` mode prints the exact resident server command and both
 multipart request forms without starting a GPU process.
+
+## LTX-2.5 Stage-2 TDP resolution appendix
+
+The final section of the same public page contains a resident-server,
+four-GPU comparison of global Ulysses SP and Stage-2 tiled data parallelism.
+It uses the exact official difficult prompt, seeds 42 through 51, 121 frames,
+24 FPS, the distilled 8-step Stage 1, and the matched Stage-2 sigma schedule
+`[0.625, 0.4, 0.0]`.
+
+| Delivery output | Internal shape | Global SP mean | Stage-2 TDP mean | Mean per-seed speedup | Full-frame SSIM | PSNR |
+|---|---|---:|---:|---:|---:|---:|
+| 1920x1080 | 1920x1088 | 8.974 s | 8.754 s | 1.026x | 0.984624 | 41.096 dB |
+| DCI 2K 2048x1080 | 2048x1088 | 10.329 s | 10.006 s | 1.032x | 0.985059 | 41.029 dB |
+| QHD 2K 2560x1440 | 2560x1472 | 17.949 s | 16.112 s | 1.113x | 0.986302 | 40.512 dB |
+
+Latency is client wall time for `POST /v1/videos/sync` through receipt of the
+complete MP4. One request per resolution/mode is excluded as warm-up, then all
+ten seeds are measured with alternating mode order. Server startup, warm-up,
+file writes, ffprobe validation, scoring, and page transcodes are excluded.
+
+The Global-SP request uses the 64-pixel-aligned internal shape. The TDP request
+uses the delivery shape and lets the runtime align internally, then crop after
+decode. Both paths therefore denoise the same internal token grid. TDP keeps
+global attention in Stage 1, uses a 2x2 grid with five latent cells of overlap
+in Stage 2, and retains the full-context Stage-1 audio.
+
+Every one of the 60 source responses decoded to exactly 121 frames at 24 FPS.
+The published directory contains 30 labeled side-by-side AV MP4s, 30 posters,
+full-frame and horizontal/vertical overlap-band SSIM/PSNR for each seed,
+provenance, and checksums:
+
+- `tdp-resolution-study/results.json`
+- `tdp-resolution-study/videos/<resolution>/seed-<seed>.mp4`
+- `tdp-resolution-study/previews/<resolution>/seed-<seed>.jpg`
+- `tdp-resolution-study/checksums.sha256`
+
+Reproduce the complete user-facing serving path:
+
+    /path/to/vllm-omni/.venv/bin/python \
+      scripts/ltx25_raw_b300_pipeline_parity/run_tdp_resolution_study.py \
+      --model /path/to/LTX-2.5-Diffusers \
+      --vllm-omni-root /path/to/vllm-omni \
+      --vllm-bin /path/to/vllm-omni/.venv/bin/vllm \
+      --gpus 0,1,2,3 \
+      --output-dir /dev/shm/ltx25-tdp-resolution-study
+
+Then validate, score, and create the page assets:
+
+    /path/to/vllm-omni/.venv/bin/python \
+      scripts/ltx25_raw_b300_pipeline_parity/analyze_tdp_resolution_study.py \
+      --results-dir /dev/shm/ltx25-tdp-resolution-study \
+      --publish-dir scripts/ltx25_raw_b300_pipeline_parity/tdp-resolution-study
+
+The implementation and the high-resolution async-output fix are tracked in
+[vLLM-Omni Draft PR #6430](https://github.com/vllm-project/vllm-omni/pull/6430).

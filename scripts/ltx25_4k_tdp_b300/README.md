@@ -58,6 +58,10 @@ frames 0, 60, and 120 found no obvious tile boundary. TDP uses approximate
 local Stage-2 attention, so these scores are diagnostics rather than a
 bit-parity claim.
 
+For the follow-up official-prompt study with ten seeds at 1080p, DCI 2K, and
+QHD 2K through a resident user-facing server, see the
+[60-video resolution appendix](../ltx25_raw_b300_pipeline_parity/#ltx25-tdp-resolution-study).
+
 ## Reproduce
 
 The included driver runs both modes, validates media metadata, computes
