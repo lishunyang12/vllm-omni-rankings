@@ -1,0 +1,180 @@
+{
+  "case_count": 5,
+  "cases": [
+    {
+      "audio_shape": [
+        1,
+        2,
+        165600
+      ],
+      "case": "morning-bakery",
+      "frames_shape": [
+        124,
+        768,
+        1344,
+        3
+      ],
+      "height": 768,
+      "latency_caveat": "Concurrent quality run; not an isolated E2E benchmark.",
+      "model": "/tmp/h3-bf16-baseline/Ref2VA",
+      "mp4_sha256": "5916e7658c499a716e5413a2281d6f4a04a4ec4ca353d2128c41ba5b0cf28cc6",
+      "output": "/home/zjy/code/lsy/bench_outputs/minimax-h3-bf16-matched-10case-20260822/ref2va/morning-bakery.mp4",
+      "partition": "ref2va",
+      "peak_memory_mb": 74516.0,
+      "prompt": "Continue naturally from the supplied bakery frame. The baker opens the wooden shutters before sunrise, places a fresh loaf on the counter, and warm steam rises while the camera slowly pushes in.",
+      "rank": null,
+      "reference_audio": null,
+      "reference_image": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank32-10case-20260822/inputs/morning-bakery-bf16-first-frame.png",
+      "seed": 1101,
+      "stage_durations": {
+        "queue_wait_ms": 0.209905207157135,
+        "stage_0_gen_ms": 258522.56178855896
+      },
+      "steps": 50,
+      "variant": "bf16",
+      "wall_s": 258.52352082915604,
+      "width": 1344
+    },
+    {
+      "audio_shape": [
+        1,
+        2,
+        165600
+      ],
+      "case": "starship-hyperspace",
+      "frames_shape": [
+        124,
+        768,
+        1344,
+        3
+      ],
+      "height": 768,
+      "latency_caveat": "Concurrent quality run; not an isolated E2E benchmark.",
+      "model": "/tmp/h3-bf16-baseline/Ref2VA",
+      "mp4_sha256": "b42de9d0e2edbbd07719f9500920400e7a3b23a46d9ae07dcf02ab25e062e743",
+      "output": "/home/zjy/code/lsy/bench_outputs/minimax-h3-bf16-matched-10case-20260822/ref2va/starship-hyperspace.mp4",
+      "partition": "ref2va",
+      "peak_memory_mb": 74516.0,
+      "prompt": "Continue naturally from the supplied starship frame. Blue engine light grows outside the observation window, the bridge trembles, and the fleet jumps to hyperspace in a bright flash.",
+      "rank": null,
+      "reference_audio": null,
+      "reference_image": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank32-10case-20260822/inputs/starship-hyperspace-bf16-first-frame.png",
+      "seed": 2027,
+      "stage_durations": {
+        "queue_wait_ms": 0.3469027578830719,
+        "stage_0_gen_ms": 261966.6759967804
+      },
+      "steps": 50,
+      "variant": "bf16",
+      "wall_s": 261.96774306101725,
+      "width": 1344
+    },
+    {
+      "audio_shape": [
+        1,
+        2,
+        165600
+      ],
+      "case": "bearded-speaker",
+      "frames_shape": [
+        124,
+        768,
+        1344,
+        3
+      ],
+      "height": 768,
+      "latency_caveat": "Concurrent quality run; not an isolated E2E benchmark.",
+      "model": "/tmp/h3-bf16-baseline/Ref2VA",
+      "mp4_sha256": "8d4d75e22be6b00deb71cbe8d6430fed1475de96c34d86fa1ffdf92d5b769d90",
+      "output": "/home/zjy/code/lsy/bench_outputs/minimax-h3-bf16-matched-10case-20260822/ref2va/bearded-speaker.mp4",
+      "partition": "ref2va",
+      "peak_memory_mb": 74592.0,
+      "prompt": "Preserve the identity and clothing of the man in the supplied image. He looks directly at the camera, smiles slightly, and says in a calm voice, 'I think it is so good.' Keep the camera static.",
+      "rank": null,
+      "reference_audio": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank32-10case-20260822/inputs/quant-review-reference.wav",
+      "reference_image": "/home/zjy/code/lsy/vllm-omni-rankings/scripts/ltx25_raw_b300_pipeline_parity/minimax-appendix/inputs/quickstart-seed42-1344x768.png",
+      "seed": 4099,
+      "stage_durations": {
+        "queue_wait_ms": 0.34603290259838104,
+        "stage_0_gen_ms": 261179.44145202637
+      },
+      "steps": 50,
+      "variant": "bf16",
+      "wall_s": 261.1803337079473,
+      "width": 1344
+    },
+    {
+      "audio_shape": [
+        1,
+        2,
+        165600
+      ],
+      "case": "cats-brass-band",
+      "frames_shape": [
+        124,
+        768,
+        1344,
+        3
+      ],
+      "height": 768,
+      "latency_caveat": "Concurrent quality run; not an isolated E2E benchmark.",
+      "model": "/tmp/h3-bf16-baseline/Ref2VA",
+      "mp4_sha256": "6c241d2d40d75000b6df79a0ac3ae3ba97e11599addb8a354e3745492d4f686e",
+      "output": "/home/zjy/code/lsy/bench_outputs/minimax-h3-bf16-matched-10case-20260822/ref2va/cats-brass-band.mp4",
+      "partition": "ref2va",
+      "peak_memory_mb": 74516.0,
+      "prompt": "Continue naturally from the supplied frame. The three cats march forward together while playing tiny brass instruments, with stable body shapes, synchronized motion, and matching room ambience.",
+      "rank": null,
+      "reference_audio": null,
+      "reference_image": "/home/zjy/code/lsy/bench_outputs/minimax-h3-all-tasks-smoke-fl2va/t2va_first_frame.png",
+      "seed": 5503,
+      "stage_durations": {
+        "queue_wait_ms": 0.30654389411211014,
+        "stage_0_gen_ms": 259081.9284915924
+      },
+      "steps": 50,
+      "variant": "bf16",
+      "wall_s": 259.08290669694543,
+      "width": 1344
+    },
+    {
+      "audio_shape": [
+        1,
+        2,
+        165600
+      ],
+      "case": "portrait-wave",
+      "frames_shape": [
+        124,
+        768,
+        1344,
+        3
+      ],
+      "height": 768,
+      "latency_caveat": "Concurrent quality run; not an isolated E2E benchmark.",
+      "model": "/tmp/h3-bf16-baseline/Ref2VA",
+      "mp4_sha256": "33c8ac42fc09d7093cfd565fb827f3bdd1876c67cec6268614e971cb50f59f9a",
+      "output": "/home/zjy/code/lsy/bench_outputs/minimax-h3-bf16-matched-10case-20260822/ref2va/portrait-wave.mp4",
+      "partition": "ref2va",
+      "peak_memory_mb": 74580.0,
+      "prompt": "Preserve the person's identity and the room composition. The person looks toward the camera, smiles gently, and waves once while natural room ambience remains synchronized.",
+      "rank": null,
+      "reference_audio": null,
+      "reference_image": "/home/zjy/code/lsy/bench_inputs/quant-review-reference.png",
+      "seed": 7727,
+      "stage_durations": {
+        "queue_wait_ms": 0.3017941489815712,
+        "stage_0_gen_ms": 260358.75344276428
+      },
+      "steps": 50,
+      "variant": "bf16",
+      "wall_s": 260.3599421251565,
+      "width": 1344
+    }
+  ],
+  "model": "/tmp/h3-bf16-baseline/Ref2VA",
+  "partition": "ref2va",
+  "rank": null,
+  "steps": 50,
+  "variant": "bf16"
+}

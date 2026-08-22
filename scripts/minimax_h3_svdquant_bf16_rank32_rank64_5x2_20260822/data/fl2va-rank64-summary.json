@@ -1,0 +1,180 @@
+{
+  "case_count": 5,
+  "cases": [
+    {
+      "audio_shape": [
+        1,
+        2,
+        165600
+      ],
+      "case": "morning-bakery",
+      "frames_shape": [
+        124,
+        768,
+        1344,
+        3
+      ],
+      "height": 768,
+      "latency_caveat": "Concurrent quality run; not an isolated E2E benchmark.",
+      "model": "/tmp/h3-official-candidate-layoutfixed-r64-fl2va/FL2VA",
+      "mp4_sha256": "ff18accc2915d6d5f706be59c6e04bc64b3f5a8a5de92e566810b435c60cfdb2",
+      "output": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank64-fl2va-matched-5case-20260822/fl2va/morning-bakery.mp4",
+      "partition": "fl2va",
+      "peak_memory_mb": 23796.0,
+      "prompt": "Continue naturally from the supplied bakery frame. The baker opens the wooden shutters before sunrise, places a fresh loaf on the counter, and warm steam rises while the camera slowly pushes in.",
+      "rank": 64,
+      "reference_audio": null,
+      "reference_image": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank32-10case-20260822/inputs/morning-bakery-bf16-first-frame.png",
+      "seed": 1101,
+      "stage_durations": {
+        "queue_wait_ms": 0.48778997734189034,
+        "stage_0_gen_ms": 181418.82586479187
+      },
+      "steps": 50,
+      "variant": "rank64",
+      "wall_s": 181.42035204917192,
+      "width": 1344
+    },
+    {
+      "audio_shape": [
+        1,
+        2,
+        165600
+      ],
+      "case": "starship-hyperspace",
+      "frames_shape": [
+        124,
+        768,
+        1344,
+        3
+      ],
+      "height": 768,
+      "latency_caveat": "Concurrent quality run; not an isolated E2E benchmark.",
+      "model": "/tmp/h3-official-candidate-layoutfixed-r64-fl2va/FL2VA",
+      "mp4_sha256": "908750796f8a30fb45d39dc5ab6649dfb6bfbf0a9d1805c2daeb053d90f26879",
+      "output": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank64-fl2va-matched-5case-20260822/fl2va/starship-hyperspace.mp4",
+      "partition": "fl2va",
+      "peak_memory_mb": 23792.0,
+      "prompt": "Continue naturally from the supplied starship frame. Blue engine light grows outside the observation window, the bridge trembles, and the fleet jumps to hyperspace in a bright flash.",
+      "rank": 64,
+      "reference_audio": null,
+      "reference_image": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank32-10case-20260822/inputs/starship-hyperspace-bf16-first-frame.png",
+      "seed": 2027,
+      "stage_durations": {
+        "queue_wait_ms": 0.32524392008781433,
+        "stage_0_gen_ms": 165955.93285560608
+      },
+      "steps": 50,
+      "variant": "rank64",
+      "wall_s": 165.95723308809102,
+      "width": 1344
+    },
+    {
+      "audio_shape": [
+        1,
+        2,
+        165600
+      ],
+      "case": "bearded-speaker",
+      "frames_shape": [
+        124,
+        768,
+        1344,
+        3
+      ],
+      "height": 768,
+      "latency_caveat": "Concurrent quality run; not an isolated E2E benchmark.",
+      "model": "/tmp/h3-official-candidate-layoutfixed-r64-fl2va/FL2VA",
+      "mp4_sha256": "4e67b5ada1bc9b78c8dfb04f9f9099f3dbc038613c1d7dd03913b7ba5f1d2ca9",
+      "output": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank64-fl2va-matched-5case-20260822/fl2va/bearded-speaker.mp4",
+      "partition": "fl2va",
+      "peak_memory_mb": 23792.0,
+      "prompt": "Preserve the identity and clothing of the man in the supplied image. He looks directly at the camera, smiles slightly, and says in a calm voice, 'I think it is so good.' Keep the camera static.",
+      "rank": 64,
+      "reference_audio": null,
+      "reference_image": "/home/zjy/code/lsy/vllm-omni-rankings/scripts/ltx25_raw_b300_pipeline_parity/minimax-appendix/inputs/quickstart-seed42-1344x768.png",
+      "seed": 4099,
+      "stage_durations": {
+        "queue_wait_ms": 0.2877148799598217,
+        "stage_0_gen_ms": 164706.31289482117
+      },
+      "steps": 50,
+      "variant": "rank64",
+      "wall_s": 164.70745945209637,
+      "width": 1344
+    },
+    {
+      "audio_shape": [
+        1,
+        2,
+        165600
+      ],
+      "case": "cats-brass-band",
+      "frames_shape": [
+        124,
+        768,
+        1344,
+        3
+      ],
+      "height": 768,
+      "latency_caveat": "Concurrent quality run; not an isolated E2E benchmark.",
+      "model": "/tmp/h3-official-candidate-layoutfixed-r64-fl2va/FL2VA",
+      "mp4_sha256": "ef184abdcfcd591743dcce5c005c7e406cc356af5805a35a85a1eb9b4c6830e3",
+      "output": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank64-fl2va-matched-5case-20260822/fl2va/cats-brass-band.mp4",
+      "partition": "fl2va",
+      "peak_memory_mb": 23792.0,
+      "prompt": "Continue naturally from the supplied frame. The three cats march forward together while playing tiny brass instruments, with stable body shapes, synchronized motion, and matching room ambience.",
+      "rank": 64,
+      "reference_audio": null,
+      "reference_image": "/home/zjy/code/lsy/bench_outputs/minimax-h3-all-tasks-smoke-fl2va/t2va_first_frame.png",
+      "seed": 5503,
+      "stage_durations": {
+        "queue_wait_ms": 0.2566548064351082,
+        "stage_0_gen_ms": 165860.0652217865
+      },
+      "steps": 50,
+      "variant": "rank64",
+      "wall_s": 165.86151579162106,
+      "width": 1344
+    },
+    {
+      "audio_shape": [
+        1,
+        2,
+        165600
+      ],
+      "case": "portrait-wave",
+      "frames_shape": [
+        124,
+        768,
+        1344,
+        3
+      ],
+      "height": 768,
+      "latency_caveat": "Concurrent quality run; not an isolated E2E benchmark.",
+      "model": "/tmp/h3-official-candidate-layoutfixed-r64-fl2va/FL2VA",
+      "mp4_sha256": "a50b8e8e9f0bb9733d817d84ee10fe1d6e71f5f04ea2da607de9a428e90c4b7b",
+      "output": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank64-fl2va-matched-5case-20260822/fl2va/portrait-wave.mp4",
+      "partition": "fl2va",
+      "peak_memory_mb": 23792.0,
+      "prompt": "Preserve the person's identity and the room composition. The person looks toward the camera, smiles gently, and waves once while natural room ambience remains synchronized.",
+      "rank": 64,
+      "reference_audio": null,
+      "reference_image": "/home/zjy/code/lsy/bench_inputs/quant-review-reference.png",
+      "seed": 7727,
+      "stage_durations": {
+        "queue_wait_ms": 0.288303941488266,
+        "stage_0_gen_ms": 166396.27289772034
+      },
+      "steps": 50,
+      "variant": "rank64",
+      "wall_s": 166.3978831069544,
+      "width": 1344
+    }
+  ],
+  "model": "/tmp/h3-official-candidate-layoutfixed-r64-fl2va/FL2VA",
+  "partition": "fl2va",
+  "rank": 64,
+  "steps": 50,
+  "variant": "rank64"
+}

@@ -1,0 +1,11 @@
+{
+  "reference": "/home/zjy/code/lsy/bench_outputs/minimax-h3-bf16-matched-10case-20260822/fl2va/starship-hyperspace.mp4",
+  "candidate": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank64-fl2va-matched-5case-20260822/fl2va/starship-hyperspace.mp4",
+  "frames": 124,
+  "psnr_db": 20.034009,
+  "ssim": 0.778929,
+  "temporal_rmse": 23.777875900268555,
+  "audio_samples_per_channel": 165888,
+  "audio_correlation": 0.7228769288830212,
+  "audio_rmse": 0.21894744038581848
+}

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MiniMax-H3 BF16 vs SVDQuant W4A4</title>
+  <style>
+    body { max-width: 1500px; margin: 24px auto 64px; padding: 0 18px; color: #111; background: #fff; font: 15px/1.45 Arial, sans-serif; }
+    h1 { margin-bottom: 6px; }
+    h2 { margin: 38px 0 10px; border-top: 1px solid #999; padding-top: 24px; }
+    h3 { margin: 26px 0 5px; }
+    p { max-width: 1180px; }
+    table { width: 100%; border-collapse: collapse; margin: 14px 0 22px; }
+    th, td { border: 1px solid #999; padding: 7px 9px; text-align: left; }
+    th { background: #eee; }
+    .note { border-left: 4px solid #333; padding: 8px 12px; background: #f5f5f5; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    figure { margin: 0; }
+    figcaption { margin-bottom: 6px; font-weight: bold; }
+    video { display: block; width: 100%; background: #000; }
+    .stats { min-height: 66px; margin-top: 6px; font: 13px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .prompt { margin: 4px 0 12px; }
+    .error { color: #a00; white-space: pre-wrap; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>MiniMax-H3 · BF16 vs SVDQuant W4A4</h1>
+  <p>Five matched FL2VA cases and five matched Ref2VA cases. Every row uses the same prompt, seed, reference media, 1344×768 output, 124 frames, 24 FPS, and 50 schedule points.</p>
+  <p><strong>BF16</strong> uses the full BF16 Qwen3-VL encoder and BF16 DiT. <strong>Rank-32</strong> uses the quantized encoder and SVDQuant NVFP4 DiT with RTN. <strong>Rank-64</strong> uses the same deployment layout and a GPTQ checkpoint calibrated with four samples.</p>
+  <p class="note"><strong>Measurement caveat:</strong> these are attached quality-run E2E measurements on B300, not an isolated 1-warmup + 3-round performance benchmark. Runs overlapped other validation or offline quantization work. The first BF16 FL2VA request also includes cold disk-backed materialization. Rank-32 versus rank-64 is a recipe comparison, not a rank-only ablation. The installed FlashInfer build runs native NVFP4 GEMM with the SVD rank correction on the compatibility path.</p>
+  <p>vLLM-Omni validation branch base: <code>521c04c</code>, using its current local MiniMax-H3 SVDQuant working tree. All displayed values are loaded from the linked JSON files.</p>
+
+  <div id="summaries"></div>
+  <div id="results"></div>
+  <p id="error" class="error"></p>
+
+  <script>
+    const partitions = ["fl2va", "ref2va"];
+    const variants = [
+      { key: "bf16", label: "BF16 baseline" },
+      { key: "rank32", label: "SVDQuant rank-32 RTN", rank: 32 },
+      { key: "rank64", label: "SVDQuant rank-64 GPTQ n=4", rank: 64 },
+    ];
+    const titles = {
+      "morning-bakery": "Morning bakery",
+      "starship-hyperspace": "Starship hyperspace",
+      "bearded-speaker": "Bearded speaker",
+      "cats-brass-band": "Cats brass band",
+      "portrait-wave": "Portrait wave",
+    };
+
+    const summaryPath = (partition, variant) => `data/${partition}-${variant}-summary.json`;
+    const metricPath = (partition, slug, rank) => `data/${partition}-${slug}-rank${rank}-metrics.json`;
+    const mean = values => values.reduce((sum, value) => sum + value, 0) / values.length;
+    const fmt = (value, digits = 3) => Number(value).toFixed(digits);
+    const escapeHtml = value => String(value).replace(/[&<>"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"})[char]);
+
+    async function loadJson(path) {
+      const response = await fetch(path);
+      if (!response.ok) throw new Error(`${path}: HTTP ${response.status}`);
+      return response.json();
+    }
+
+    async function run() {
+      const summaries = {};
+      const metrics = {};
+      for (const partition of partitions) {
+        summaries[partition] = {};
+        metrics[partition] = {};
+        for (const variant of variants) {
+          summaries[partition][variant.key] = await loadJson(summaryPath(partition, variant.key));
+        }
+        const slugs = summaries[partition].bf16.cases.map(item => item.case);
+        for (const slug of slugs) {
+          metrics[partition][slug] = {};
+          for (const rank of [32, 64]) {
+            metrics[partition][slug][rank] = await loadJson(metricPath(partition, slug, rank));
+          }
+        }
+      }
+
+      const summariesRoot = document.getElementById("summaries");
+      const resultsRoot = document.getElementById("results");
+      for (const partition of partitions) {
+        const baselineWall = mean(summaries[partition].bf16.cases.map(item => item.wall_s));
+        const baselinePeak = mean(summaries[partition].bf16.cases.map(item => item.peak_memory_mb));
+        const tableRows = variants.map(variant => {
+          const cases = summaries[partition][variant.key].cases;
+          const wall = mean(cases.map(item => item.wall_s));
+          const peak = mean(cases.map(item => item.peak_memory_mb));
+          const speedup = baselineWall / wall;
+          const memoryReduction = 100 * (1 - peak / baselinePeak);
+          let fidelity = "reference";
+          if (variant.rank) {
+            const values = cases.map(item => metrics[partition][item.case][variant.rank]);
+            fidelity = `PSNR ${fmt(mean(values.map(item => item.psnr_db)))} dB · SSIM ${fmt(mean(values.map(item => item.ssim)), 4)} · T-RMSE ${fmt(mean(values.map(item => item.temporal_rmse)), 2)}`;
+          }
+          return `<tr><td>${variant.label}</td><td>${fmt(wall)} s</td><td>${fmt(peak, 1)} MiB</td><td>${variant.key === "bf16" ? "1.000×" : `${fmt(speedup)}×`}</td><td>${variant.key === "bf16" ? "—" : `${fmt(memoryReduction, 2)}%`}</td><td>${fidelity}</td><td><a href="${summaryPath(partition, variant.key)}">JSON</a></td></tr>`;
+        }).join("");
+        summariesRoot.insertAdjacentHTML("beforeend", `
+          <h2>${partition.toUpperCase()} summary</h2>
+          <table>
+            <thead><tr><th>Variant</th><th>Mean E2E wall</th><th>Mean peak VRAM</th><th>BF16 / variant</th><th>Peak VRAM reduction</th><th>Mean fidelity vs BF16</th><th>Raw</th></tr></thead>
+            <tbody>${tableRows}</tbody>
+          </table>`);
+
+        const caseMaps = Object.fromEntries(variants.map(variant => [variant.key, Object.fromEntries(summaries[partition][variant.key].cases.map(item => [item.case, item]))]));
+        resultsRoot.insertAdjacentHTML("beforeend", `<h2>${partition.toUpperCase()} videos</h2>`);
+        for (const baseline of summaries[partition].bf16.cases) {
+          const slug = baseline.case;
+          const cards = variants.map(variant => {
+            const item = caseMaps[variant.key][slug];
+            const metric = variant.rank ? metrics[partition][slug][variant.rank] : null;
+            const fidelity = metric
+              ? `<br>PSNR ${fmt(metric.psnr_db)} dB · SSIM ${fmt(metric.ssim, 4)}<br>T-RMSE ${fmt(metric.temporal_rmse, 2)} · audio corr ${fmt(metric.audio_correlation, 4)}<br><a href="${metricPath(partition, slug, variant.rank)}">metrics JSON</a>`
+              : "<br>fidelity reference";
+            return `<figure><figcaption>${variant.label}</figcaption><video controls playsinline preload="metadata" src="${partition}/${variant.key}/${slug}.mp4"></video><div class="stats">E2E ${fmt(item.wall_s)} s · peak ${fmt(item.peak_memory_mb, 0)} MiB${fidelity}</div></figure>`;
+          }).join("");
+          resultsRoot.insertAdjacentHTML("beforeend", `
+            <h3>${escapeHtml(titles[slug] || slug)} · seed ${baseline.seed}</h3>
+            <p class="prompt">${escapeHtml(baseline.prompt)}${baseline.reference_audio ? " <strong>Reference image + audio.</strong>" : ""}</p>
+            <div class="grid">${cards}</div>`);
+        }
+      }
+    }
+
+    run().catch(error => { document.getElementById("error").textContent = `Failed to load attached result data: ${error.stack || error}`; });
+  </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "reference": "/home/zjy/code/lsy/bench_outputs/minimax-h3-bf16-matched-10case-20260822/ref2va/morning-bakery.mp4",
+  "candidate": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank32-10case-20260822/ref2va/morning-bakery.mp4",
+  "frames": 124,
+  "psnr_db": 17.158908,
+  "ssim": 0.713084,
+  "temporal_rmse": 31.98676109313965,
+  "audio_samples_per_channel": 165888,
+  "audio_correlation": 0.6419867031444307,
+  "audio_rmse": 0.15420317649841309
+}

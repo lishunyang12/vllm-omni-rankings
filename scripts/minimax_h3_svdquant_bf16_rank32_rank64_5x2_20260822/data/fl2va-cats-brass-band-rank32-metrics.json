@@ -1,0 +1,11 @@
+{
+  "reference": "/home/zjy/code/lsy/bench_outputs/minimax-h3-bf16-matched-10case-20260822/fl2va/cats-brass-band.mp4",
+  "candidate": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank32-10case-20260822/fl2va/cats-brass-band.mp4",
+  "frames": 124,
+  "psnr_db": 17.310521,
+  "ssim": 0.697115,
+  "temporal_rmse": 22.18759536743164,
+  "audio_samples_per_channel": 165888,
+  "audio_correlation": 0.34036691076268843,
+  "audio_rmse": 0.10114485025405884
+}
