@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MiniMax-H3 Ref2VA — BF16 vs SVDQuant rank-32</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #fff; color: #111; font: 15px/1.45 Arial, sans-serif; }
+    main { max-width: 1500px; margin: 0 auto; padding: 24px; }
+    h1 { margin: 0 0 6px; font-size: 24px; font-weight: 600; }
+    p { margin: 6px 0 16px; }
+    .note { padding: 10px 12px; border: 1px solid #aaa; background: #f5f5f5; }
+    .videos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    figure { margin: 0; }
+    figcaption { margin-bottom: 7px; font-weight: 600; }
+    video { display: block; width: 100%; background: #000; border: 1px solid #222; }
+    .controls { display: flex; gap: 8px; margin: 10px 0 22px; }
+    button, a.data { border: 1px solid #333; background: #fff; color: #111; padding: 7px 12px; text-decoration: none; cursor: pointer; }
+    button:hover, a.data:hover { background: #eee; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #aaa; padding: 8px 10px; text-align: left; vertical-align: top; }
+    th { background: #eee; font-weight: 600; }
+    code { font-family: Consolas, monospace; }
+    @media (max-width: 850px) { .videos { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>MiniMax-H3 Ref2VA — BF16 vs SVDQuant rank-32</h1>
+  <p>Same prompt, reference image, seed 42, 1344×768, 24 fps, 124 frames, and 50 inference steps.</p>
+
+  <p class="note"><strong>Accuracy preview, not the final official checkpoint.</strong> The current rank-32 output is visually valid and runs below 32 GB, but its diffusion trajectory differs from BF16. Rank-64 GPTQ validation is still in progress. The candidate wall time was collected during concurrent quantization and is therefore not reported as a speedup result.</p>
+
+  <div class="videos">
+    <figure>
+      <figcaption>BF16 baseline</figcaption>
+      <video id="bf16" controls playsinline preload="metadata" src="bf16-seed42.mp4"></video>
+    </figure>
+    <figure>
+      <figcaption>SVDQuant rank-32 candidate</figcaption>
+      <video id="quant" controls playsinline preload="metadata" src="svdquant-r32-seed42.mp4"></video>
+    </figure>
+  </div>
+
+  <div class="controls">
+    <button type="button" onclick="playBoth()">Play both</button>
+    <button type="button" onclick="pauseBoth()">Pause both</button>
+    <button type="button" onclick="restartBoth()">Restart both</button>
+    <a class="data" href="results.json">Attached JSON data</a>
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Metric</th><th>Result</th><th>Meaning</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Video PSNR</td><td>13.631 dB</td><td>Candidate versus BF16 decoded frames</td></tr>
+      <tr><td>Video SSIM</td><td>0.706955</td><td>Candidate versus BF16 decoded frames</td></tr>
+      <tr><td>Temporal RMSE</td><td>23.687</td><td>RMSE between consecutive-frame differences</td></tr>
+      <tr><td>Audio correlation</td><td>0.621107</td><td>Decoded stereo PCM correlation versus BF16</td></tr>
+      <tr><td>Audio RMSE</td><td>0.274084</td><td>Decoded float PCM RMSE versus BF16</td></tr>
+      <tr><td>Candidate peak GPU memory</td><td>28,220 MiB</td><td>One GPU with disk-backed component phases</td></tr>
+      <tr><td>Matched E2E latency</td><td>Pending</td><td>Requires isolated 1 warmup + 3 measured rounds</td></tr>
+    </tbody>
+  </table>
+
+  <table>
+    <thead>
+      <tr><th>Candidate component</th><th>Format</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>DiT</td><td>NVFP4 W4A4, rank-32 SVDQuant correction, AdaLN lookup</td></tr>
+      <tr><td>Text encoder</td><td>ModelOpt NVFP4 W4A16 with corrected Comfy nibble and scale layout</td></tr>
+      <tr><td>Video VAE</td><td>Persistent FP16 weights with tiled execution</td></tr>
+      <tr><td>Residency</td><td>Encoder → reference VAE encode → DiT → VAE decode, loaded as disk-backed phases</td></tr>
+    </tbody>
+  </table>
+</main>
+<script>
+  const videos = [document.getElementById("bf16"), document.getElementById("quant")];
+  function align() { videos[1].currentTime = videos[0].currentTime; }
+  function playBoth() { align(); videos.forEach(video => video.play()); }
+  function pauseBoth() { videos.forEach(video => video.pause()); }
+  function restartBoth() { pauseBoth(); videos.forEach(video => { video.currentTime = 0; }); }
+</script>
+</body>
+</html>
