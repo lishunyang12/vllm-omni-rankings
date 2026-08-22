@@ -8,6 +8,9 @@
     "cases": 5,
     "same_prompt_and_seed": true
   },
+  "rank32_recipe": "SVDQuant NVFP4 rank-32 with GPTQ disabled (RTN)",
+  "rank64_recipe": "SVDQuant NVFP4 rank-64 with GPTQ enabled and four calibration samples",
+  "ablation_caveat": "This is a comparison of candidate recipes, not a rank-only ablation, because both rank and GPTQ calibration differ.",
   "rank32_mean_wall_s": 230.73460031338035,
   "rank64_mean_wall_s": 237.9158981940709,
   "rank64_mean_wall_overhead_pct": 3.112362805984459,

@@ -22,11 +22,11 @@
 </head>
 <body>
   <h1>MiniMax-H3 Ref2VA · SVDQuant rank-32 vs rank-64</h1>
-  <p>Same prompt, reference media, seed, 1344×768, 124 frames, 24 FPS, and 50 steps. Left is rank-32; right is rank-64.</p>
+  <p>Same prompt, reference media, seed, 1344×768, 124 frames, 24 FPS, and 50 steps. Left is rank-32 RTN; right is rank-64 GPTQ calibrated with four samples.</p>
   <p><a href="summary.json">Download attached results data (JSON)</a></p>
 
   <table>
-    <thead><tr><th>Metric</th><th>Rank-32</th><th>Rank-64</th><th>Difference</th></tr></thead>
+    <thead><tr><th>Metric</th><th>Rank-32 RTN</th><th>Rank-64 GPTQ n=4</th><th>Difference</th></tr></thead>
     <tbody>
       <tr><td>Mean E2E wall</td><td>230.735 s</td><td>237.916 s</td><td>rank-64 +3.11%</td></tr>
       <tr><td>Mean peak GPU memory</td><td>28,175.6 MiB</td><td>28,556.0 MiB</td><td>rank-64 +380.4 MiB</td></tr>
@@ -35,15 +35,15 @@
     </tbody>
   </table>
 
-  <p class="note"><strong>Latency caveat:</strong> these are exploratory quality runs, not a controlled 1-warmup + 3-round benchmark. The rank-32 run overlapped rank-64 offline quantization; rank-64 ran later. The installed FlashInfer uses native NVFP4 GEMM but executes the SVD rank correction separately. Similarity above compares rank-32 with rank-64; it is not a metric against BF16.</p>
+  <p class="note"><strong>Experiment caveat:</strong> this compares two candidate recipes, not a rank-only ablation: rank-32 uses RTN while rank-64 uses GPTQ with four calibration samples. These are exploratory quality runs, not a controlled 1-warmup + 3-round benchmark. The rank-32 run overlapped rank-64 offline quantization; rank-64 ran later. The installed FlashInfer uses native NVFP4 GEMM but executes the SVD rank correction separately. Similarity above compares the two candidates; it is not a metric against BF16.</p>
 
   <section class="case">
     <h2>Morning bakery · seed 1101</h2>
     <p class="prompt">Continue naturally from the supplied bakery frame. The baker opens the wooden shutters before sunrise, places a fresh loaf on the counter, and warm steam rises while the camera slowly pushes in.</p>
     <p class="data">Rank-32: 224.051 s · 28,118 MiB &nbsp;|&nbsp; Rank-64: 236.444 s · 28,516 MiB &nbsp;|&nbsp; paired SSIM: 0.6321</p>
     <div class="pair">
-      <div><p class="label">Rank-32</p><video controls playsinline preload="metadata" src="rank32/morning-bakery.mp4"></video></div>
-      <div><p class="label">Rank-64</p><video controls playsinline preload="metadata" src="rank64/morning-bakery.mp4"></video></div>
+      <div><p class="label">Rank-32 RTN</p><video controls playsinline preload="metadata" src="rank32/morning-bakery.mp4"></video></div>
+      <div><p class="label">Rank-64 GPTQ n=4</p><video controls playsinline preload="metadata" src="rank64/morning-bakery.mp4"></video></div>
     </div>
   </section>
 
@@ -52,8 +52,8 @@
     <p class="prompt">Continue naturally from the supplied starship frame. Blue engine light grows outside the observation window, the bridge trembles, and the fleet jumps to hyperspace in a bright flash.</p>
     <p class="data">Rank-32: 232.865 s · 28,150 MiB &nbsp;|&nbsp; Rank-64: 238.217 s · 28,508 MiB &nbsp;|&nbsp; paired SSIM: 0.7617</p>
     <div class="pair">
-      <div><p class="label">Rank-32</p><video controls playsinline preload="metadata" src="rank32/starship-hyperspace.mp4"></video></div>
-      <div><p class="label">Rank-64</p><video controls playsinline preload="metadata" src="rank64/starship-hyperspace.mp4"></video></div>
+      <div><p class="label">Rank-32 RTN</p><video controls playsinline preload="metadata" src="rank32/starship-hyperspace.mp4"></video></div>
+      <div><p class="label">Rank-64 GPTQ n=4</p><video controls playsinline preload="metadata" src="rank64/starship-hyperspace.mp4"></video></div>
     </div>
   </section>
 
@@ -62,8 +62,8 @@
     <p class="prompt">Preserve the identity and clothing of the man in the supplied image. He looks directly at the camera, smiles slightly, and says in a calm voice, “I think it is so good.” Keep the camera static. This case also supplies reference audio.</p>
     <p class="data">Rank-32: 230.587 s · 28,232 MiB &nbsp;|&nbsp; Rank-64: 241.641 s · 28,622 MiB &nbsp;|&nbsp; paired SSIM: 0.6948</p>
     <div class="pair">
-      <div><p class="label">Rank-32</p><video controls playsinline preload="metadata" src="rank32/bearded-speaker.mp4"></video></div>
-      <div><p class="label">Rank-64</p><video controls playsinline preload="metadata" src="rank64/bearded-speaker.mp4"></video></div>
+      <div><p class="label">Rank-32 RTN</p><video controls playsinline preload="metadata" src="rank32/bearded-speaker.mp4"></video></div>
+      <div><p class="label">Rank-64 GPTQ n=4</p><video controls playsinline preload="metadata" src="rank64/bearded-speaker.mp4"></video></div>
     </div>
   </section>
 
@@ -72,8 +72,8 @@
     <p class="prompt">Continue naturally from the supplied frame. The three cats march forward together while playing tiny brass instruments, with stable body shapes, synchronized motion, and matching room ambience.</p>
     <p class="data">Rank-32: 233.013 s · 28,150 MiB &nbsp;|&nbsp; Rank-64: 236.139 s · 28,508 MiB &nbsp;|&nbsp; paired SSIM: 0.6522</p>
     <div class="pair">
-      <div><p class="label">Rank-32</p><video controls playsinline preload="metadata" src="rank32/cats-brass-band.mp4"></video></div>
-      <div><p class="label">Rank-64</p><video controls playsinline preload="metadata" src="rank64/cats-brass-band.mp4"></video></div>
+      <div><p class="label">Rank-32 RTN</p><video controls playsinline preload="metadata" src="rank32/cats-brass-band.mp4"></video></div>
+      <div><p class="label">Rank-64 GPTQ n=4</p><video controls playsinline preload="metadata" src="rank64/cats-brass-band.mp4"></video></div>
     </div>
   </section>
 
@@ -82,8 +82,8 @@
     <p class="prompt">Preserve the person's identity and the room composition. The person looks toward the camera, smiles gently, and waves once while natural room ambience remains synchronized.</p>
     <p class="data">Rank-32: 233.157 s · 28,228 MiB &nbsp;|&nbsp; Rank-64: 237.138 s · 28,626 MiB &nbsp;|&nbsp; paired SSIM: 0.7113</p>
     <div class="pair">
-      <div><p class="label">Rank-32</p><video controls playsinline preload="metadata" src="rank32/portrait-wave.mp4"></video></div>
-      <div><p class="label">Rank-64</p><video controls playsinline preload="metadata" src="rank64/portrait-wave.mp4"></video></div>
+      <div><p class="label">Rank-32 RTN</p><video controls playsinline preload="metadata" src="rank32/portrait-wave.mp4"></video></div>
+      <div><p class="label">Rank-64 GPTQ n=4</p><video controls playsinline preload="metadata" src="rank64/portrait-wave.mp4"></video></div>
     </div>
   </section>
 </body>
