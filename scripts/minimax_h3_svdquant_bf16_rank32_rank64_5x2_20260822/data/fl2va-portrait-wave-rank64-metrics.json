@@ -1,0 +1,11 @@
+{
+  "reference": "/home/zjy/code/lsy/bench_outputs/minimax-h3-bf16-matched-10case-20260822/fl2va/portrait-wave.mp4",
+  "candidate": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank64-fl2va-matched-5case-20260822/fl2va/portrait-wave.mp4",
+  "frames": 124,
+  "psnr_db": 15.719189,
+  "ssim": 0.695001,
+  "temporal_rmse": 30.64957618713379,
+  "audio_samples_per_channel": 165888,
+  "audio_correlation": 0.4466485637093148,
+  "audio_rmse": 0.23247350752353668
+}

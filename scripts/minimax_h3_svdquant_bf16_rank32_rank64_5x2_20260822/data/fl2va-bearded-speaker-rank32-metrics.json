@@ -1,0 +1,11 @@
+{
+  "reference": "/home/zjy/code/lsy/bench_outputs/minimax-h3-bf16-matched-10case-20260822/fl2va/bearded-speaker.mp4",
+  "candidate": "/home/zjy/code/lsy/bench_outputs/minimax-h3-rank32-10case-20260822/fl2va/bearded-speaker.mp4",
+  "frames": 124,
+  "psnr_db": 21.082942,
+  "ssim": 0.833982,
+  "temporal_rmse": 16.362882614135742,
+  "audio_samples_per_channel": 165888,
+  "audio_correlation": 0.18105331559890891,
+  "audio_rmse": 0.09994393587112427
+}
