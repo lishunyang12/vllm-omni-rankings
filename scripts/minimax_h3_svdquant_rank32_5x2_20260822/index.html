@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MiniMax-H3 SVDQuant rank-32 validation</title>
+  <style>
+    body { margin: 24px auto 64px; max-width: 1440px; padding: 0 18px; color: #111; background: #fff; font: 15px/1.45 Arial, sans-serif; }
+    h1 { margin-bottom: 6px; }
+    h2 { margin: 34px 0 8px; border-top: 1px solid #bbb; padding-top: 24px; }
+    p { max-width: 1100px; }
+    table { border-collapse: collapse; margin: 18px 0; }
+    th, td { border: 1px solid #999; padding: 7px 10px; text-align: left; }
+    th { background: #eee; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    figure { margin: 0; }
+    figcaption { margin-bottom: 7px; font-weight: bold; }
+    video { width: 100%; display: block; background: #000; }
+    .meta { margin-top: 7px; font-family: monospace; }
+    .note { border-left: 4px solid #222; padding-left: 12px; }
+    @media (max-width: 800px) { .pair { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>MiniMax-H3 SVDQuant rank-32</h1>
+  <p>Five FL2VA and five Ref2VA outputs from the current rank-32 checkpoint. All requests use 1344×768, 24 FPS, 50 schedule points, five-second target duration, quantized Qwen3-VL encoder, SVDQuant NVFP4 DiT, and disk-backed phase residency without DLO.</p>
+  <p class="note"><strong>Latency caveat:</strong> these are concurrent quality and memory runs on B300 while rank-64 quantization was active. The installed FlashInfer build used the SVDQuant compatibility path, so rank correction was not fused into the NVFP4 GEMM. The wall times below are attached run data, not final fused speedup numbers.</p>
+  <table>
+    <thead><tr><th>Partition</th><th>Completed</th><th>Peak memory range</th><th>Mean wall time</th><th>Wall range</th><th>Raw data</th></tr></thead>
+    <tbody>
+      <tr><td>FL2VA rank-32</td><td>5 / 5</td><td>23,412–23,428 MiB</td><td>168.104 s</td><td>162.854–170.048 s</td><td><a href="fl2va-summary.json">JSON</a></td></tr>
+      <tr><td>Ref2VA rank-32</td><td>5 / 5</td><td>28,118–28,232 MiB</td><td>230.735 s</td><td>224.051–233.157 s</td><td><a href="ref2va-summary.json">JSON</a></td></tr>
+    </tbody>
+  </table>
+
+  <h2>1. Morning bakery</h2>
+  <p>Seed 1101. The baker opens the shutters, places a loaf on the counter, and steam rises as the camera pushes in.</p>
+  <div class="pair">
+    <figure><figcaption>FL2VA rank-32</figcaption><video controls preload="metadata" src="fl2va/morning-bakery.mp4"></video><div class="meta">162.854 s · 23,412 MiB</div></figure>
+    <figure><figcaption>Ref2VA rank-32</figcaption><video controls preload="metadata" src="ref2va/morning-bakery.mp4"></video><div class="meta">224.051 s · 28,118 MiB</div></figure>
+  </div>
+
+  <h2>2. Starship hyperspace</h2>
+  <p>Seed 2027. Engine light grows, the bridge trembles, and the fleet jumps to hyperspace.</p>
+  <div class="pair">
+    <figure><figcaption>FL2VA rank-32</figcaption><video controls preload="metadata" src="fl2va/starship-hyperspace.mp4"></video><div class="meta">169.214 s · 23,428 MiB</div></figure>
+    <figure><figcaption>Ref2VA rank-32</figcaption><video controls preload="metadata" src="ref2va/starship-hyperspace.mp4"></video><div class="meta">232.865 s · 28,150 MiB</div></figure>
+  </div>
+
+  <h2>3. Bearded speaker</h2>
+  <p>Seed 4099. Identity, clothing, static framing, speech motion, and audio synchronization. The Ref2VA request also includes a WAV audio reference.</p>
+  <div class="pair">
+    <figure><figcaption>FL2VA rank-32</figcaption><video controls preload="metadata" src="fl2va/bearded-speaker.mp4"></video><div class="meta">169.549 s · 23,428 MiB</div></figure>
+    <figure><figcaption>Ref2VA rank-32 · image + audio</figcaption><video controls preload="metadata" src="ref2va/bearded-speaker.mp4"></video><div class="meta">230.587 s · 28,232 MiB</div></figure>
+  </div>
+
+  <h2>4. Cats brass band</h2>
+  <p>Seed 5503. Three-subject counting, synchronized animal movement, small instruments, and matching room ambience.</p>
+  <div class="pair">
+    <figure><figcaption>FL2VA rank-32</figcaption><video controls preload="metadata" src="fl2va/cats-brass-band.mp4"></video><div class="meta">170.048 s · 23,428 MiB</div></figure>
+    <figure><figcaption>Ref2VA rank-32</figcaption><video controls preload="metadata" src="ref2va/cats-brass-band.mp4"></video><div class="meta">233.013 s · 28,150 MiB</div></figure>
+  </div>
+
+  <h2>5. Portrait wave</h2>
+  <p>Seed 7727. Identity and room composition preservation with a gentle smile, one wave, and synchronized ambience.</p>
+  <div class="pair">
+    <figure><figcaption>FL2VA rank-32</figcaption><video controls preload="metadata" src="fl2va/portrait-wave.mp4"></video><div class="meta">168.854 s · 23,428 MiB</div></figure>
+    <figure><figcaption>Ref2VA rank-32</figcaption><video controls preload="metadata" src="ref2va/portrait-wave.mp4"></video><div class="meta">233.157 s · 28,228 MiB</div></figure>
+  </div>
+</body>
+</html>
