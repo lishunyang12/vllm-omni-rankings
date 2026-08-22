@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="MiniMax-H3 Turbo LoRA validation for vLLM-Omni PR #6476 on 2x NVIDIA B300.">
+  <title>MiniMax-H3 Turbo LoRA · PR #6476 Validation</title>
+  <style>
+    :root {
+      --ink: #111;
+      --muted: #555;
+      --line: #a1a1a1;
+      --soft: #f5f5f5;
+      --soft-green: #effbf3;
+      --green: #146c3a;
+      --link: #0759a5;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #fff;
+      font: 15px/1.48 Arial, Helvetica, sans-serif;
+    }
+    a { color: var(--link); text-underline-offset: 2px; }
+    main { width: min(1500px, calc(100% - 36px)); margin: 0 auto; padding: 28px 0 72px; }
+    .hero { border-bottom: 2px solid var(--ink); padding-bottom: 24px; }
+    .kicker {
+      margin-bottom: 8px;
+      color: var(--muted);
+      font: 700 12px/1.3 Arial, sans-serif;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .title-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
+    h1 { margin: 0 0 5px; font-size: clamp(2.1rem, 5vw, 4.25rem); line-height: 1; letter-spacing: -.045em; }
+    .subtitle { margin: 0; color: var(--muted); font-size: 1.05rem; }
+    .hero > p { max-width: 1050px; margin: 18px 0 0; }
+    .pass-badge {
+      flex: 0 0 auto;
+      min-width: 160px;
+      border: 1px solid #78b68e;
+      background: var(--soft-green);
+      padding: 10px 14px;
+      text-align: right;
+    }
+    .pass-badge span { display: block; color: var(--green); font-size: 12px; text-transform: uppercase; }
+    .pass-badge strong { color: var(--green); font-size: 25px; letter-spacing: .04em; }
+    .link-row { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 14px; }
+    .metric-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border: 1px solid var(--line);
+      border-top: 0;
+      margin-bottom: 36px;
+    }
+    .metric-strip div { padding: 14px 16px; border-right: 1px solid var(--line); }
+    .metric-strip div:last-child { border-right: 0; }
+    .metric-strip strong { display: block; font-size: 24px; }
+    .metric-strip span { color: var(--muted); font-size: 13px; }
+    section { margin-top: 40px; }
+    h2 { margin: 0 0 12px; border-top: 1px solid var(--line); padding-top: 22px; font-size: 1.55rem; }
+    h3 { margin: 0 0 8px; font-size: 1rem; }
+    .section-lead { max-width: 1050px; margin: -4px 0 14px; color: var(--muted); }
+    .table-wrap { width: 100%; overflow-x: auto; }
+    table { width: 100%; min-width: 850px; border-collapse: collapse; }
+    th, td { border: 1px solid var(--line); padding: 8px 10px; text-align: left; vertical-align: top; }
+    thead th, .evidence-table th { background: #eee; }
+    .note { border-left: 4px solid #333; padding: 10px 13px; background: var(--soft); }
+    code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; overflow-wrap: anywhere; }
+    .video-grid, .contact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    figure { min-width: 0; margin: 0; }
+    figcaption { margin-bottom: 7px; font-weight: 700; }
+    video, .contact-grid img { display: block; width: 100%; background: #000; border: 1px solid #777; }
+    video { aspect-ratio: 16 / 9; object-fit: contain; }
+    .video-meta {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 62px;
+      padding: 8px 2px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .video-meta a { flex: 0 0 auto; }
+    .contact-grid img { aspect-ratio: 16 / 9; object-fit: cover; }
+    .contract-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 18px; }
+    .contract-grid > div { border: 1px solid var(--line); padding: 14px; }
+    blockquote { margin: 0; border-left: 4px solid #333; padding: 12px 14px; background: var(--soft); font-size: 1.02rem; }
+    dl { margin: 0; }
+    dl div { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; border-bottom: 1px solid #ccc; padding: 6px 0; }
+    dl div:last-child { border-bottom: 0; }
+    dt { color: var(--muted); }
+    dd { margin: 0; text-align: right; font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .evidence-table { min-width: 720px; }
+    .evidence-table th { width: 190px; }
+    .verdict { border: 2px solid var(--ink); padding: 18px 20px; }
+    .verdict h2 { border: 0; padding: 0; }
+    .verdict p { max-width: 1100px; }
+    .small-print, footer { color: var(--muted); font-size: 13px; }
+    footer { margin-top: 30px; border-top: 1px solid var(--line); padding-top: 15px; }
+    @media (max-width: 850px) {
+      main { width: min(100% - 22px, 1500px); padding-top: 18px; }
+      .title-row { display: block; }
+      .pass-badge { width: fit-content; margin-top: 16px; text-align: left; }
+      .metric-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .metric-strip div:nth-child(2) { border-right: 0; }
+      .metric-strip div:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+      .video-grid, .contact-grid, .contract-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .metric-strip { grid-template-columns: 1fr; }
+      .metric-strip div { border-right: 0; border-bottom: 1px solid var(--line); }
+      .metric-strip div:last-child { border-bottom: 0; }
+      .video-meta { display: block; }
+      .video-meta a { display: inline-block; margin-top: 6px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <div class="kicker">vLLM-Omni · PR #6476 · NVIDIA B300</div>
+      <div class="title-row">
+        <div>
+          <h1>MiniMax-H3 Turbo LoRA</h1>
+          <p class="subtitle">Matched 4-step T2VA validation: real adapter, real TP2 service, real AV output.</p>
+        </div>
+        <div class="pass-badge" aria-label="Functional verdict: pass">
+          <span>Functional verdict</span>
+          <strong>PASS</strong>
+        </div>
+      </div>
+      <p>
+        The same prompt, seed, resolution, duration, sampling schedule, and server process are used for both clips.
+        The only request-level difference is whether the published LightX2V Turbo LoRA is active.
+      </p>
+      <nav class="link-row" aria-label="Source links">
+        <a href="https://github.com/vllm-project/vllm-omni/pull/6476">PR #6476 ↗</a>
+        <a href="https://huggingface.co/lightx2v/Minimax-h3-Turbo/blob/main/minimax_h3_fl2v_turbo_4step_v1.0_768p_bf16.safetensors">Turbo v1.0 artifact ↗</a>
+      </nav>
+    </header>
+
+    <section class="metric-strip" aria-label="Validation highlights">
+      <div><strong>312</strong><span>logical LoRA targets</span></div>
+      <div><strong>624</strong><span>A/B tensors consumed</span></div>
+      <div><strong>140</strong><span>targeted tests passed</span></div>
+      <div><strong>107</strong><span>decoded video frames</span></div>
+    </section>
+
+    <section>
+      <h2>Result summary</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Variant</th><th>HTTP E2E</th><th>Stage generation</th><th>Relative</th><th>MP4 size</th><th>Visual result</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>No-LoRA control</strong></td><td>7.246 s</td><td>6.684 s</td><td>1.000×</td><td>6.01 MB</td>
+              <td>Degraded blue texture; prompt subjects are not recovered.</td>
+            </tr>
+            <tr>
+              <td><strong>Turbo LoRA v1.0</strong></td><td>7.885 s</td><td>7.345 s</td><td>1.088× latency</td><td>7.49 MB</td>
+              <td>Coherent forest, character, sleeping giant, motion, and audio.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note">
+        <strong>Measurement scope:</strong> steady requests on 2× NVIDIA B300, TP2, eager execution, BF16, and
+        <code>TRTLLM_ATTN</code>. These numbers validate functionality and local overhead; they do not reproduce the PR author's 4× H200 USP4 performance claim.
+      </p>
+    </section>
+
+    <section>
+      <h2>Matched video comparison</h2>
+      <p class="section-lead">1344×768 · 24 FPS · 107 frames · H.264 video · 32 kHz stereo AAC · seed 1101</p>
+      <div class="video-grid">
+        <figure>
+          <figcaption>No-LoRA control</figcaption>
+          <video controls playsinline preload="metadata" poster="media/no-lora-contact.png">
+            <source src="media/no-lora-control.mp4" type="video/mp4">
+          </video>
+          <div class="video-meta">
+            <span>Degraded blue texture; prompt subjects are not recovered.</span>
+            <a href="media/no-lora-control.mp4">Open MP4 ↗</a>
+          </div>
+        </figure>
+        <figure>
+          <figcaption>Turbo LoRA v1.0</figcaption>
+          <video controls playsinline preload="metadata" poster="media/turbo-contact.png">
+            <source src="media/turbo-v1.mp4" type="video/mp4">
+          </video>
+          <div class="video-meta">
+            <span>Coherent forest, character, sleeping giant, motion, and audio.</span>
+            <a href="media/turbo-v1.mp4">Open MP4 ↗</a>
+          </div>
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Four matched points in time</h2>
+      <p class="section-lead">Frames 0, 35, 70, and 106. The Turbo result preserves scene structure and subject identity throughout the clip.</p>
+      <div class="contact-grid">
+        <figure>
+          <figcaption>No-LoRA control</figcaption>
+          <img src="media/no-lora-contact.png" alt="No-LoRA contact sheet at four matched timestamps">
+        </figure>
+        <figure>
+          <figcaption>Turbo LoRA v1.0</figcaption>
+          <img src="media/turbo-contact.png" alt="Turbo LoRA contact sheet at four matched timestamps">
+        </figure>
+      </div>
+    </section>
+
+    <section>
+      <h2>Exact request contract</h2>
+      <div class="contract-grid">
+        <div>
+          <h3>Prompt</h3>
+          <blockquote>
+            In a snowy blue-purple forest, Ori carefully walks past a sleeping giant; footsteps crunch in the snow while the creature breathes and softly snorts.
+          </blockquote>
+        </div>
+        <div>
+          <h3>Sampling</h3>
+          <dl>
+            <div><dt>Task</dt><dd>T2VA</dd></div>
+            <div><dt>Steps / flow shift</dt><dd>4 / 6</dd></div>
+            <div><dt>Duration</dt><dd>4.4 s requested</dd></div>
+            <div><dt>Audio flow shift</dt><dd>3.0</dd></div>
+            <div><dt>LoRA scale</dt><dd>1.0</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Implementation evidence</h2>
+      <div class="table-wrap">
+        <table class="evidence-table">
+          <tbody>
+            <tr><th>PR head</th><td><code>53f54af83e2970dca4d3e02d635bb4c80920b151</code></td></tr>
+            <tr><th>Runtime</th><td>Python 3.12 · PyTorch 2.13.0 + CUDA 13.0 · vLLM 0.27.0</td></tr>
+            <tr><th>Topology</th><td>2× NVIDIA B300 · DiT TP2 · text encoder TP2 · VAE patch parallel 2</td></tr>
+            <tr><th>Adapter contract</th><td>rank 128 · alpha 128 · 624 tensors → 312 logical targets</td></tr>
+            <tr><th>Adapter SHA-256</th><td><code>1bdabc2e9fce20b1db563b96bcf6e46adcad4c1964f423676436bf266cc7416c</code></td></tr>
+            <tr><th>Regression checks</th><td>140 tests passed · project pre-commit passed · worktree clean</td></tr>
+            <tr><th>Output validation</th><td>Full ffmpeg decode passed · H.264 1344×768/24 FPS · AAC 32 kHz stereo · non-silent audio</td></tr>
+            <tr><th>Determinism</th><td>Cold and warm Turbo runs produced the same decoded-video SHA-256.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="verdict">
+      <h2>Validation conclusion</h2>
+      <p>
+        PR #6476 does more than produce a valid container: the published Turbo v1.0 adapter restores a coherent, usable 4-step result while the matched no-LoRA control collapses. Dynamic deactivation and reactivation were both observed in the live TP2 service.
+      </p>
+      <p class="small-print">
+        Host note: the installed FlashAttention wheel lacked a B300/SM103 kernel image, so the successful validation used the platform's supported TRTLLM_ATTN path. FL2VA, regional torch.compile, and the author's H200 latency table are outside this run's scope.
+      </p>
+    </section>
+
+    <footer>
+      Validation performed 2026-08-22 UTC. Attached media are the exact responses returned by <code>POST /v1/videos/sync</code>.
+    </footer>
+  </main>
+</body>
+</html>
