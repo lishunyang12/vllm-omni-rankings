@@ -1,0 +1,36 @@
+{
+  "status": "accuracy_preview_not_release_gate",
+  "model": "MiniMaxAI/MiniMax-H3",
+  "task": "Ref2VA",
+  "prompt": "The person in the reference image looks toward the camera, smiles gently, and waves while natural room ambience remains synchronized.",
+  "seed": 42,
+  "width": 1344,
+  "height": 768,
+  "fps": 24,
+  "frames": 124,
+  "duration_seconds": 5.175,
+  "inference_steps": 50,
+  "baseline": {
+    "label": "BF16",
+    "video": "bf16-seed42.mp4"
+  },
+  "candidate": {
+    "label": "SVDQuant rank-32",
+    "video": "svdquant-r32-seed42.mp4",
+    "dit": "NVFP4 W4A4 plus rank-32 correction and AdaLN lookup",
+    "text_encoder": "corrected-layout ModelOpt NVFP4 W4A16",
+    "video_vae": "persistent FP16 with tiled execution",
+    "disk_backed_phases": true,
+    "peak_memory_mib": 28220,
+    "observed_wall_seconds": 227.67681547021493,
+    "timing_valid_for_speedup": false,
+    "timing_note": "Generated concurrently with rank-64 GPTQ quantization; do not use this wall time for a speedup claim."
+  },
+  "candidate_vs_bf16": {
+    "video_psnr_db": 13.631242,
+    "video_ssim": 0.706955,
+    "temporal_rmse": 23.686525344848633,
+    "audio_correlation": 0.6211064870817762,
+    "audio_rmse": 0.2740844190120697
+  }
+}
