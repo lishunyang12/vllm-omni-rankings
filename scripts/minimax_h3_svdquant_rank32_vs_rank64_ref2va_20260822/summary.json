@@ -1,0 +1,92 @@
+{
+  "scope": "MiniMax-H3 Ref2VA rank-32 vs rank-64 exploratory matched quality run",
+  "settings": {
+    "resolution": "1344x768",
+    "video_frames": 124,
+    "fps": 24,
+    "steps": 50,
+    "cases": 5,
+    "same_prompt_and_seed": true
+  },
+  "rank32_mean_wall_s": 230.73460031338035,
+  "rank64_mean_wall_s": 237.9158981940709,
+  "rank64_mean_wall_overhead_pct": 3.112362805984459,
+  "rank32_mean_peak_memory_mb": 28175.6,
+  "rank64_mean_peak_memory_mb": 28556.0,
+  "rank64_mean_peak_memory_delta_mb": 380.4,
+  "rank32_transformer_bytes": 12613434088,
+  "rank64_transformer_bytes": 12923550968,
+  "rank64_transformer_delta_bytes": 310116880,
+  "rank32_vs_rank64_mean_psnr_db": 15.6896322,
+  "rank32_vs_rank64_mean_ssim": 0.6904068,
+  "rank32_vs_rank64_mean_temporal_rmse": 25.07319221496582,
+  "latency_caveat": "Exploratory quality runs, not a controlled 1-warmup + 3-round benchmark; rank-32 overlapped rank-64 offline quantization, rank-64 ran later.",
+  "runtime_caveat": "Installed FlashInfer uses the compatibility path: NVFP4 GEMM is native, but the SVD rank correction is a separate operation.",
+  "cases": [
+    {
+      "case": "morning-bakery",
+      "seed": 1101,
+      "rank32_wall_s": 224.05101405782625,
+      "rank64_wall_s": 236.44360933080316,
+      "rank64_wall_overhead_pct": 5.531148932795471,
+      "rank32_peak_memory_mb": 28118.0,
+      "rank64_peak_memory_mb": 28516.0,
+      "rank64_peak_memory_delta_mb": 398.0,
+      "rank32_vs_rank64_psnr_db": 14.983382,
+      "rank32_vs_rank64_ssim": 0.632085,
+      "rank32_vs_rank64_temporal_rmse": 32.61309814453125
+    },
+    {
+      "case": "starship-hyperspace",
+      "seed": 2027,
+      "rank32_wall_s": 232.86474364297464,
+      "rank64_wall_s": 238.21699507394806,
+      "rank64_wall_overhead_pct": 2.298437860211,
+      "rank32_peak_memory_mb": 28150.0,
+      "rank64_peak_memory_mb": 28508.0,
+      "rank64_peak_memory_delta_mb": 358.0,
+      "rank32_vs_rank64_psnr_db": 16.34802,
+      "rank32_vs_rank64_ssim": 0.761705,
+      "rank32_vs_rank64_temporal_rmse": 24.34183120727539
+    },
+    {
+      "case": "bearded-speaker",
+      "seed": 4099,
+      "rank32_wall_s": 230.58720698207617,
+      "rank64_wall_s": 241.64137039799243,
+      "rank64_wall_overhead_pct": 4.793918778319517,
+      "rank32_peak_memory_mb": 28232.0,
+      "rank64_peak_memory_mb": 28622.0,
+      "rank64_peak_memory_delta_mb": 390.0,
+      "rank32_vs_rank64_psnr_db": 14.477527,
+      "rank32_vs_rank64_ssim": 0.694758,
+      "rank32_vs_rank64_temporal_rmse": 19.021547317504883
+    },
+    {
+      "case": "cats-brass-band",
+      "seed": 5503,
+      "rank32_wall_s": 233.01316732401028,
+      "rank64_wall_s": 236.13939432566985,
+      "rank64_wall_overhead_pct": 1.3416525072647456,
+      "rank32_peak_memory_mb": 28150.0,
+      "rank64_peak_memory_mb": 28508.0,
+      "rank64_peak_memory_delta_mb": 358.0,
+      "rank32_vs_rank64_psnr_db": 17.442271,
+      "rank32_vs_rank64_ssim": 0.65221,
+      "rank32_vs_rank64_temporal_rmse": 21.98090934753418
+    },
+    {
+      "case": "portrait-wave",
+      "seed": 7727,
+      "rank32_wall_s": 233.15686956001446,
+      "rank64_wall_s": 237.13812184194103,
+      "rank64_wall_overhead_pct": 1.7075423466782258,
+      "rank32_peak_memory_mb": 28228.0,
+      "rank64_peak_memory_mb": 28626.0,
+      "rank64_peak_memory_delta_mb": 398.0,
+      "rank32_vs_rank64_psnr_db": 15.196961,
+      "rank32_vs_rank64_ssim": 0.711276,
+      "rank32_vs_rank64_temporal_rmse": 27.4085750579834
+    }
+  ]
+}

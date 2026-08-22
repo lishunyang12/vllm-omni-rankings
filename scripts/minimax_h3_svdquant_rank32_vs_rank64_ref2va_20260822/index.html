@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MiniMax-H3 SVDQuant rank-32 vs rank-64</title>
+  <style>
+    body { max-width: 1180px; margin: 24px auto; padding: 0 16px; font: 16px/1.45 Arial, sans-serif; color: #111; background: #fff; }
+    h1, h2 { font-weight: 600; }
+    table { border-collapse: collapse; width: 100%; margin: 16px 0 28px; }
+    th, td { border: 1px solid #aaa; padding: 7px 9px; text-align: left; }
+    th { background: #eee; }
+    .note { border-left: 4px solid #555; padding: 8px 12px; background: #f5f5f5; }
+    .case { border-top: 1px solid #777; margin-top: 32px; padding-top: 18px; }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    video { width: 100%; background: #000; }
+    .label { font-weight: 600; margin: 0 0 6px; }
+    .data { color: #333; margin: 6px 0; }
+    .prompt { margin: 6px 0 14px; }
+    @media (max-width: 760px) { .pair { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <h1>MiniMax-H3 Ref2VA · SVDQuant rank-32 vs rank-64</h1>
+  <p>Same prompt, reference media, seed, 1344×768, 124 frames, 24 FPS, and 50 steps. Left is rank-32; right is rank-64.</p>
+  <p><a href="summary.json">Download attached results data (JSON)</a></p>
+
+  <table>
+    <thead><tr><th>Metric</th><th>Rank-32</th><th>Rank-64</th><th>Difference</th></tr></thead>
+    <tbody>
+      <tr><td>Mean E2E wall</td><td>230.735 s</td><td>237.916 s</td><td>rank-64 +3.11%</td></tr>
+      <tr><td>Mean peak GPU memory</td><td>28,175.6 MiB</td><td>28,556.0 MiB</td><td>rank-64 +380.4 MiB</td></tr>
+      <tr><td>Transformer checkpoint</td><td>12,613,434,088 bytes</td><td>12,923,550,968 bytes</td><td>rank-64 +310,116,880 bytes</td></tr>
+      <tr><td>Rank-32 vs rank-64 decoded similarity</td><td colspan="3">PSNR 15.690 dB · SSIM 0.6904 · temporal RMSE 25.07</td></tr>
+    </tbody>
+  </table>
+
+  <p class="note"><strong>Latency caveat:</strong> these are exploratory quality runs, not a controlled 1-warmup + 3-round benchmark. The rank-32 run overlapped rank-64 offline quantization; rank-64 ran later. The installed FlashInfer uses native NVFP4 GEMM but executes the SVD rank correction separately. Similarity above compares rank-32 with rank-64; it is not a metric against BF16.</p>
+
+  <section class="case">
+    <h2>Morning bakery · seed 1101</h2>
+    <p class="prompt">Continue naturally from the supplied bakery frame. The baker opens the wooden shutters before sunrise, places a fresh loaf on the counter, and warm steam rises while the camera slowly pushes in.</p>
+    <p class="data">Rank-32: 224.051 s · 28,118 MiB &nbsp;|&nbsp; Rank-64: 236.444 s · 28,516 MiB &nbsp;|&nbsp; paired SSIM: 0.6321</p>
+    <div class="pair">
+      <div><p class="label">Rank-32</p><video controls playsinline preload="metadata" src="rank32/morning-bakery.mp4"></video></div>
+      <div><p class="label">Rank-64</p><video controls playsinline preload="metadata" src="rank64/morning-bakery.mp4"></video></div>
+    </div>
+  </section>
+
+  <section class="case">
+    <h2>Starship hyperspace · seed 2027</h2>
+    <p class="prompt">Continue naturally from the supplied starship frame. Blue engine light grows outside the observation window, the bridge trembles, and the fleet jumps to hyperspace in a bright flash.</p>
+    <p class="data">Rank-32: 232.865 s · 28,150 MiB &nbsp;|&nbsp; Rank-64: 238.217 s · 28,508 MiB &nbsp;|&nbsp; paired SSIM: 0.7617</p>
+    <div class="pair">
+      <div><p class="label">Rank-32</p><video controls playsinline preload="metadata" src="rank32/starship-hyperspace.mp4"></video></div>
+      <div><p class="label">Rank-64</p><video controls playsinline preload="metadata" src="rank64/starship-hyperspace.mp4"></video></div>
+    </div>
+  </section>
+
+  <section class="case">
+    <h2>Bearded speaker · seed 4099</h2>
+    <p class="prompt">Preserve the identity and clothing of the man in the supplied image. He looks directly at the camera, smiles slightly, and says in a calm voice, “I think it is so good.” Keep the camera static. This case also supplies reference audio.</p>
+    <p class="data">Rank-32: 230.587 s · 28,232 MiB &nbsp;|&nbsp; Rank-64: 241.641 s · 28,622 MiB &nbsp;|&nbsp; paired SSIM: 0.6948</p>
+    <div class="pair">
+      <div><p class="label">Rank-32</p><video controls playsinline preload="metadata" src="rank32/bearded-speaker.mp4"></video></div>
+      <div><p class="label">Rank-64</p><video controls playsinline preload="metadata" src="rank64/bearded-speaker.mp4"></video></div>
+    </div>
+  </section>
+
+  <section class="case">
+    <h2>Cats brass band · seed 5503</h2>
+    <p class="prompt">Continue naturally from the supplied frame. The three cats march forward together while playing tiny brass instruments, with stable body shapes, synchronized motion, and matching room ambience.</p>
+    <p class="data">Rank-32: 233.013 s · 28,150 MiB &nbsp;|&nbsp; Rank-64: 236.139 s · 28,508 MiB &nbsp;|&nbsp; paired SSIM: 0.6522</p>
+    <div class="pair">
+      <div><p class="label">Rank-32</p><video controls playsinline preload="metadata" src="rank32/cats-brass-band.mp4"></video></div>
+      <div><p class="label">Rank-64</p><video controls playsinline preload="metadata" src="rank64/cats-brass-band.mp4"></video></div>
+    </div>
+  </section>
+
+  <section class="case">
+    <h2>Portrait wave · seed 7727</h2>
+    <p class="prompt">Preserve the person's identity and the room composition. The person looks toward the camera, smiles gently, and waves once while natural room ambience remains synchronized.</p>
+    <p class="data">Rank-32: 233.157 s · 28,228 MiB &nbsp;|&nbsp; Rank-64: 237.138 s · 28,626 MiB &nbsp;|&nbsp; paired SSIM: 0.7113</p>
+    <div class="pair">
+      <div><p class="label">Rank-32</p><video controls playsinline preload="metadata" src="rank32/portrait-wave.mp4"></video></div>
+      <div><p class="label">Rank-64</p><video controls playsinline preload="metadata" src="rank64/portrait-wave.mp4"></video></div>
+    </div>
+  </section>
+</body>
+</html>
