@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-23 01:04 UTC",
+  "generated": "2026-08-23 06:34 UTC",
   "source": "https://raw.githubusercontent.com/vllm-project/vllm-omni/main/docs/models/supported_models.md",
   "models": [
     {
@@ -16,7 +16,7 @@
       "id": "black-forest-labs/FLUX.1-dev",
       "downloads_30d": 631339,
       "downloads_all": 32874683,
-      "likes": 14224,
+      "likes": 14226,
       "pipeline_tag": "text-to-image",
       "created": "2024-07-31",
       "released": "2024-07-31",
@@ -46,7 +46,7 @@
       "id": "Qwen/Qwen3-TTS-12Hz-1.7B-CustomVoice",
       "downloads_30d": 2273032,
       "downloads_all": 12604344,
-      "likes": 1899,
+      "likes": 1900,
       "pipeline_tag": "text-to-speech",
       "created": "2026-01-21",
       "released": "2026-01-21",
@@ -86,7 +86,7 @@
       "id": "Tongyi-MAI/Z-Image-Turbo",
       "downloads_30d": 804129,
       "downloads_all": 8205136,
-      "likes": 5134,
+      "likes": 5136,
       "pipeline_tag": "text-to-image",
       "created": "2025-11-25",
       "released": "2025-11-25",
@@ -126,7 +126,7 @@
       "id": "black-forest-labs/FLUX.2-dev",
       "downloads_30d": 694740,
       "downloads_all": 4310964,
-      "likes": 2072,
+      "likes": 2073,
       "pipeline_tag": "image-to-image",
       "created": "2025-11-22",
       "released": "2025-11-22",
@@ -156,7 +156,7 @@
       "id": "MiniMaxAI/MiniMax-H3",
       "downloads_30d": 3899160,
       "downloads_all": 3899160,
-      "likes": 4338,
+      "likes": 4352,
       "pipeline_tag": "image-text-to-video",
       "created": "2026-07-28",
       "released": "2026-08-03",
@@ -206,7 +206,7 @@
       "id": "tencent/HunyuanImage-3.0",
       "downloads_30d": 14429,
       "downloads_all": 2470330,
-      "likes": 1109,
+      "likes": 1110,
       "pipeline_tag": "text-to-image",
       "created": "2025-09-25",
       "released": "2025-09-25",
@@ -286,20 +286,10 @@
       "id": "fishaudio/s2-pro",
       "downloads_30d": 451384,
       "downloads_all": 1342461,
-      "likes": 1269,
+      "likes": 1270,
       "pipeline_tag": "text-to-speech",
       "created": "2026-03-09",
       "released": "2026-03-09",
-      "status": "ok"
-    },
-    {
-      "id": "black-forest-labs/FLUX.2-klein-9B",
-      "downloads_30d": 306057,
-      "downloads_all": 1330507,
-      "likes": 1245,
-      "pipeline_tag": "image-to-image",
-      "created": "2026-01-14",
-      "released": "2026-01-14",
       "status": "ok"
     },
     {
@@ -366,7 +356,7 @@
       "id": "Lightricks/LTX-2.5",
       "downloads_30d": 694670,
       "downloads_all": 694670,
-      "likes": 1565,
+      "likes": 1580,
       "pipeline_tag": "image-to-video",
       "created": "2026-07-23",
       "released": "2026-07-23",
@@ -436,7 +426,7 @@
       "id": "krea/Krea-2-Turbo",
       "downloads_30d": 72158,
       "downloads_all": 300299,
-      "likes": 903,
+      "likes": 904,
       "pipeline_tag": "text-to-image",
       "created": "2026-06-18",
       "released": "2026-06-18",
@@ -546,7 +536,7 @@
       "id": "SenseNova/SenseNova-U1-8B-MoT",
       "downloads_30d": 30092,
       "downloads_all": 127848,
-      "likes": 290,
+      "likes": 291,
       "pipeline_tag": "any-to-any",
       "created": "2026-04-22",
       "released": "2026-04-22",
@@ -716,7 +706,7 @@
       "id": "MiniMaxAI/MiniMax-Music3",
       "downloads_30d": 16644,
       "downloads_all": 16644,
-      "likes": 1182,
+      "likes": 1189,
       "pipeline_tag": "text-to-audio",
       "created": "2026-08-07",
       "released": "2026-08-07",
@@ -833,16 +823,6 @@
       "status": "ok"
     },
     {
-      "id": "Lightricks/LTX-2.5-Diffusers",
-      "downloads_30d": 6489,
-      "downloads_all": 6489,
-      "likes": 37,
-      "pipeline_tag": "text-to-video",
-      "created": "2026-07-26",
-      "released": "2026-07-26",
-      "status": "ok"
-    },
-    {
       "id": "robbyant/lingbot-video-moe-30b-a3b",
       "downloads_30d": 5355,
       "downloads_all": 6409,
@@ -856,7 +836,7 @@
       "id": "meituan-longcat/LongCat-Video-Avatar-1.5",
       "downloads_30d": 1651,
       "downloads_all": 6369,
-      "likes": 742,
+      "likes": 744,
       "pipeline_tag": null,
       "created": "2026-05-21",
       "released": "2026-05-21",
@@ -873,16 +853,6 @@
       "status": "ok"
     },
     {
-      "id": "bytedance-research/Lance",
-      "downloads_30d": 425,
-      "downloads_all": 4804,
-      "likes": 1056,
-      "pipeline_tag": "any-to-any",
-      "created": "2026-05-15",
-      "released": "2026-05-15",
-      "status": "ok"
-    },
-    {
       "id": "hunyuanvideo-community/HunyuanVideo-1.5-Diffusers-720p_i2v",
       "downloads_30d": 520,
       "downloads_all": 4587,
@@ -890,16 +860,6 @@
       "pipeline_tag": "image-to-video",
       "created": "2025-11-29",
       "released": "2025-11-29",
-      "status": "ok"
-    },
-    {
-      "id": "bytedance-research/MammothModa2-Preview",
-      "downloads_30d": 596,
-      "downloads_all": 4560,
-      "likes": 20,
-      "pipeline_tag": null,
-      "created": "2025-09-30",
-      "released": "2025-10-13",
       "status": "ok"
     },
     {
@@ -943,16 +903,6 @@
       "status": "ok"
     },
     {
-      "id": "zhangj1an/AudioX",
-      "downloads_30d": 481,
-      "downloads_all": 1094,
-      "likes": 0,
-      "pipeline_tag": "text-to-audio",
-      "created": "2026-04-06",
-      "released": "2026-04-06",
-      "status": "ok"
-    },
-    {
       "id": "robbyant/lingbot-video-dense-1.3b",
       "downloads_30d": 286,
       "downloads_all": 1027,
@@ -960,16 +910,6 @@
       "pipeline_tag": null,
       "created": "2026-07-08",
       "released": "2026-07-08",
-      "status": "ok"
-    },
-    {
-      "id": "bytedance-research/MammothModa2-Dev",
-      "downloads_30d": 586,
-      "downloads_all": 862,
-      "likes": 6,
-      "pipeline_tag": null,
-      "created": "2025-12-30",
-      "released": "2025-12-30",
       "status": "ok"
     },
     {
@@ -1043,6 +983,16 @@
       "status": "gated"
     },
     {
+      "id": "Lightricks/LTX-2.5-Diffusers",
+      "downloads_30d": null,
+      "downloads_all": null,
+      "likes": null,
+      "pipeline_tag": null,
+      "created": null,
+      "released": null,
+      "status": "URLError"
+    },
+    {
       "id": "OvisAI/Ovis-Image",
       "downloads_30d": null,
       "downloads_all": null,
@@ -1051,6 +1001,26 @@
       "created": null,
       "released": null,
       "status": "gated"
+    },
+    {
+      "id": "black-forest-labs/FLUX.2-klein-9B",
+      "downloads_30d": null,
+      "downloads_all": null,
+      "likes": null,
+      "pipeline_tag": null,
+      "created": null,
+      "released": null,
+      "status": "URLError"
+    },
+    {
+      "id": "bytedance-research/Lance",
+      "downloads_30d": null,
+      "downloads_all": null,
+      "likes": null,
+      "pipeline_tag": null,
+      "created": null,
+      "released": null,
+      "status": "URLError"
     },
     {
       "id": "first/last-keyframe",
@@ -1080,7 +1050,7 @@
       "pipeline_tag": null,
       "created": null,
       "released": null,
-      "status": "gated"
+      "status": "URLError"
     },
     {
       "id": "recipes.vllm.ai/bosonai",
