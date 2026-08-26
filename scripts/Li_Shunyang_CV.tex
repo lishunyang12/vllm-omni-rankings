@@ -1,0 +1,122 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage[left=0.58in,right=0.58in,top=0.45in,bottom=0.38in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{charter}
+\usepackage{enumitem}
+\usepackage{tabularx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\hypersetup{
+  colorlinks=true,
+  urlcolor=black,
+  linkcolor=black,
+  pdftitle={Li Shunyang's CV},
+  pdfauthor={Li Shunyang}
+}
+\urlstyle{same}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\setlength{\tabcolsep}{0pt}
+\linespread{0.96}
+
+\newcommand{\cvsection}[1]{%
+  \vspace{8pt}%
+  {\fontsize{13.5pt}{15pt}\selectfont\bfseries #1}\par
+  \vspace{1.5pt}\hrule height 0.45pt\vspace{3pt}%
+}
+
+\newcommand{\role}[3]{%
+  {\fontsize{10pt}{11pt}\selectfont
+  \begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}Xr@{}}
+    \textbf{#1} \textit{#2} & \textbf{#3}
+  \end{tabularx}}\vspace{-1pt}%
+}
+
+\newcommand{\projectrole}[2]{%
+  \textbf{#1} \textit{#2}\par\vspace{-1pt}%
+}
+
+\newenvironment{cvitems}{%
+  \begin{itemize}[
+    leftmargin=0.285in,
+    labelsep=0.075in,
+    itemsep=1.2pt,
+    topsep=1.5pt,
+    parsep=0pt,
+    partopsep=0pt
+  ]\raggedright
+}{\end{itemize}}
+
+\begin{document}
+
+\begin{center}
+  {\fontsize{22pt}{24pt}\selectfont\bfseries Li Shunyang}\par
+  \vspace{7pt}
+  {\fontsize{10pt}{12pt}\selectfont
+    Singapore
+    \enspace|\enspace +65 90506121
+    \enspace|\enspace \href{mailto:shunyang@u.nus.edu}{\underline{shunyang@u.nus.edu}}
+    \enspace|\enspace \href{https://github.com/lishunyang12}{\underline{github.com/lishunyang12}}
+    \enspace|\enspace \href{https://linkedin.com/in/shunyangli}{\underline{linkedin.com/in/shunyangli}}}
+\end{center}
+
+\vspace{7pt}
+
+\cvsection{Skills}
+\begin{cvitems}
+  \item \textbf{Languages:} C++ (C++17/20, templates, concurrency), Python, Bash
+  \item \textbf{Performance \& Quantization:} CUDA, Triton, TensorRT, ONNX, FP8/NVFP4/W4A16 (ModelOpt, AutoRound), low-latency optimization
+  \item \textbf{ML \& Inference:} PyTorch, vLLM / vLLM-Omni, diffusion \& omni-modality serving
+\end{cvitems}
+
+\cvsection{Open-Source Contributions}
+\projectrole{vLLM-Omni}{Committer (52 merged PRs)}
+\begin{cvitems}
+  \item \textbf{Quantization:} Architected the unified quantization framework (\#1764) after adding online FP8 for DiTs (\#1034); extended ModelOpt FP8 to Wan2.2/HunyuanVideo-1.5 (\#3305) and global online FP8 to MiniMax-H3 (\#5910).
+  \item \textbf{Attention backends:} Made Blackwell a first-class diffusion target with cuDNN/FlashInfer backends and auto-routing (\#3079); added \texttt{TRTLLM\_ATTN} with Skip-Softmax (\#5283) and typed SAGE FP8/INT8 attention (\#5509).
+  \item \textbf{Model integration:} Integrated HunyuanVideo-1.5 T2V/I2V (\#1516), ByteDance Lance (\#3710), JoyAI-VL streaming interaction serving (\#4575), and LTX-2.5 T2V/I2V pipelines (\#6070).
+  \item \textbf{Cosmos3:} Fixed joint video+sound generation under Ulysses sequence parallelism (\#4678) and shipped the Cosmos3-Edge recipe and correct task presets (\#5313, \#5596).
+\end{cvitems}
+
+\projectrole{vLLM}{Contributor}
+\begin{cvitems}
+  \item Drove early adoption of \textbf{TurboQuant} (ICLR 2026, Google Research) in core vLLM (\#38280), adding a KV-cache backend with fused Triton encode/decode kernels.
+\end{cvitems}
+
+\cvsection{Industry Experience}
+\role{Developer Technology Engineer Intern,}{NVIDIA DevTech, Shenzhen, China}{Jul 2026 -- Present}
+\begin{cvitems}
+  \item Optimized vLLM-Omni's \textbf{TensorRT-LLM attention backend} for \textbf{Blackwell SM100}, integrating generated FMHA kernels and tuning backend execution for production video-diffusion workloads.
+  \item Optimized \textbf{Fast Ulysses} for \textbf{Blackwell SM120}, implementing a packed peer-to-peer PCIe transport and topology-aware Ulysses parallelism for multi-GPU video diffusion inference.
+\end{cvitems}
+
+\role{Backend Engineer Intern}{ByteDance / TikTok, Singapore}{Mar 2026 -- Jun 2026}
+\begin{cvitems}
+  \item Built the end-to-end \textbf{data pipeline} for a \textbf{unified LLM-generation framework} powering \textbf{q2q (query-to-query)} and \textbf{v2q (video-to-query)} generation tasks within TikTok's recommendation architecture.
+  \item Built scalable offline data pipelines (ingestion, cleaning, and feature processing) on the team's large-scale infrastructure to produce training data for the framework.
+\end{cvitems}
+
+\role{LLM Engineer Intern}{Thales DIS, Singapore}{May 2025 -- Dec 2025}
+\begin{cvitems}
+  \item Scaled \textbf{vLLM} inference for \textbf{Qwen3-Coder-30B / Qwen3-30B-A3B-Instruct} on 2$\times$H100 80GB GPUs, cutting total inference time for 14k samples from \textbf{26 hours to 15 minutes} ($\approx$\textbf{104$\times$ speedup}).
+  \item Fine-tuned models with \textbf{QLoRA} for code generation and completion, improving accuracy on internal JavaCard and cryptography benchmarks; co-built a dataset generator producing 10k+ training samples.
+\end{cvitems}
+
+\role{Computer Vision Lead (Extracurricular)}{Calibur Robotics, NUS, Singapore}{Aug 2024 -- Oct 2025}
+\begin{cvitems}
+  \item Achieved \textbf{end-to-end perception latency of 2.2 ms/frame} on \textbf{NVIDIA Jetson AGX Thor} by designing a real-time pipeline spanning camera capture, \textbf{YOLOv11-Pose} detection, pose estimation, target tracking, and command output.
+  \item Optimized the model with \textbf{ONNX} and \textbf{TensorRT} plus custom GPU kernels, reaching \textbf{1.7 ms} inference latency on Jetson AGX Thor.
+\end{cvitems}
+
+\cvsection{Education}
+\role{National University of Singapore}{}{Aug 2023 -- May 2027}
+\begin{cvitems}
+  \item \textit{Bachelor of Engineering in Computer Engineering (Honours), Minor in Mathematics}
+  \item Cumulative GPA: 4.58/5.0
+\end{cvitems}
+
+\end{document}
