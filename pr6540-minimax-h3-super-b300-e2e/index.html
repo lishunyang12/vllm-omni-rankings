@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="vLLM-Omni PR #6540 MiniMax H3 Super official-alignment E2E evidence: timings, quality checks, and all 24 generated videos.">
-  <title>PR #6540 · MiniMax H3 Super 对齐与 E2E 证据</title>
+  <meta name="description" content="vLLM-Omni PR #6540 MiniMax H3 Super native-2K E2E evidence: timings, quality checks, and all 28 generated videos.">
+  <title>PR #6540 · MiniMax H3 Super 原生 2K 与 E2E 证据</title>
   <style>
     :root {
       color-scheme: dark;
@@ -147,13 +147,13 @@
 
   <main id="top">
     <div class="wrap hero">
-      <div class="eyebrow">Official-source alignment · B300 E2E</div>
-      <h1>MiniMax H3 Super<br>对齐、计时与完整视频证据</h1>
-      <p class="lede">先在同机复现 NVLabs Sana 的 H3 Super 官方源码路径，再把 PR #6540 的 LoRA、调度、latent 契约与 decoder 对齐。页面保留全部 24 个生成视频，包括已知模糊失败，便于直接审阅而不是只展示精选结果。</p>
+      <div class="eyebrow">Native LTX-2.5 2K · B300 E2E</div>
+      <h1>MiniMax H3 Super<br>原生 2K、计时与完整视频证据</h1>
+      <p class="lede">在完成 NVLabs Sana H3 Super 官方源码对齐后，把最终 LTX-2.5 refinement 提升到原生 1920×1088 画布；不是事后插值，也不回退 768p。页面保留全部 28 个生成视频，包括官方复现、已知模糊失败和历史基线。</p>
       <div class="chips">
-        <span class="chip good">最终 HEAD E2E 通过</span>
+        <span class="chip good">原生 1920×1088 E2E 通过</span>
         <span class="chip good">3/3 正式输出确定性一致</span>
-        <span class="chip good">24 个视频已归档</span>
+        <span class="chip good">28 个视频已归档</span>
         <span class="chip warn">硬件：2× NVIDIA B300</span>
         <span class="chip">2026-08-29 UTC</span>
       </div>
@@ -167,7 +167,7 @@
     <section id="comparison">
       <div class="wrap">
         <h2>同输入、同 prompt、同 seed</h2>
-        <p class="section-intro">两边都使用 bamboo-forest 输入、完整英文对话 prompt 和 seed 50803。左侧是 Sana <code>sol-engine</code> 源码在 B300 上的兼容复现；右侧是 rebase 后最终 vLLM-Omni HEAD。二者算法配置已对齐，但不同 runtime/kernel 的数值轨迹仍会使运动与构图随时间分叉，因此这里不声称像素等价。</p>
+        <p class="section-intro">两边都使用 bamboo-forest 输入、完整英文对话 prompt 和 seed 50803。左侧是 Sana <code>sol-engine</code> 的 1344×768 源码兼容复现；右侧是最终 vLLM-Omni HEAD 的 LTX-2.5 原生 1920×1088 路径。输出画布和 runtime 不同，因此这里用于直接视觉审阅，不声称像素等价。</p>
         <div class="grid two">
           <article class="panel">
             <video class="compare-video" controls preload="metadata" poster="posters/official/final-hot.jpg" src="videos/official/final-hot.mp4"></video>
@@ -178,11 +178,11 @@
             </div>
           </article>
           <article class="panel">
-            <video class="compare-video" controls preload="metadata" poster="posters/alignment-rebased/05s-measured-3.jpg" src="videos/alignment-rebased/05s-measured-3.mp4"></video>
+            <video class="compare-video" controls preload="metadata" poster="posters/native-2k/05s-measured-3.jpg" src="videos/native-2k/05s-measured-3.mp4"></video>
             <div class="panel-body">
-              <div class="kicker">Candidate · commit 8c2afe44c</div>
-              <h3>vLLM-Omni 最终 HEAD</h3>
-              <div class="muted">1344×768 · 121 帧 · 24 fps · AAC 32 kHz stereo</div>
+              <div class="kicker">Candidate · commit dc4b5279f</div>
+              <h3>vLLM-Omni 原生 LTX-2.5 2K</h3>
+              <div class="muted">1920×1088 · 121 帧 · 24 fps · AAC 32 kHz stereo</div>
             </div>
           </article>
         </div>
@@ -201,6 +201,7 @@
               <tr><td>H3 Turbo LoRA</td><td><code>4step_v0.1</code>, rank 128, scale 0.0625</td><td>相同文件 SHA 与 runtime scale</td><td class="ok">对齐</td></tr>
               <tr><td>H3 调度</td><td>video flow shift 12；audio 3；5 sigma 点；4 次 forward</td><td>配置与运行时校验一致</td><td class="ok">对齐</td></tr>
               <tr><td>LTX refine</td><td>LoRA scale 0.8；3 updates；σ=[.909375,.725,.421875,0]</td><td>phase adapter 支持逐阶段 scale</td><td class="ok">对齐</td></tr>
+              <tr><td>2K 画布</td><td>源码复现为 1344×768</td><td>960×544 latent handoff → 1920×1088 输出；无后处理放大</td><td class="ok">原生 2K</td></tr>
               <tr><td>快速 decoder</td><td>Stage 1 TAEH3；Stage 2 TAEHV</td><td>相同 decoder family</td><td class="ok">对齐</td></tr>
               <tr><td>TAEHV latent</td><td>接收归一化 diffusion latent</td><td>修复前错误反归一化；最终直接解码归一化 latent</td><td class="ok">已修复</td></tr>
               <tr><td>损失型 attention</td><td>Sol sparse path</td><td>B300 默认 dense BF16 CUDNN；未强制 FP8 SAGE</td><td class="muted">实现不同</td></tr>
@@ -216,8 +217,8 @@
         <p class="section-intro">vLLM 口径为 <code>Omni.generate</code> 到完整 MP4 bytes 返回，排除 engine/model 启动、落盘、ffprobe 与解码校验。官方源码 hot run 排除模型加载、compile 与 warmup，并在 Stage 2 mux/verify 后停止。不同 runtime 的计时边界接近但并非严格同构。</p>
         <div class="grid three" style="margin-bottom:16px">
           <div class="fact"><span>官方源码复现 hot E2E</span><strong>6.018s</strong><span>1 次 hot；B300 兼容路径</span></div>
-          <div class="fact"><span>vLLM 最终 HEAD 正式均值</span><strong>10.217s</strong><span>1 warmup + 3 measured</span></div>
-          <div class="fact"><span>vLLM 编译完全稳定后均值</span><strong>9.373s</strong><span>measured #2–#3；透明披露</span></div>
+          <div class="fact"><span>vLLM 768p 对齐快照</span><strong>10.217s</strong><span>旧 HEAD；保留作历史对比</span></div>
+          <div class="fact"><span>vLLM 原生 2K 正式均值</span><strong>13.333s</strong><span>1 warmup + 3 measured</span></div>
         </div>
         <div class="table-shell">
           <table>
@@ -226,21 +227,22 @@
               <tr><td>Sana 官方源码复现</td><td>hot ×1</td><td class="num">3.777s</td><td class="num">2.231s</td><td class="num">6.018s</td><td class="ok">有效</td></tr>
               <tr><td>vLLM 修复前（已知模糊）</td><td>measured ×3</td><td class="num">5.425s</td><td class="num">3.627s</td><td class="num">9.267s</td><td class="fail">质量失败</td></tr>
               <tr><td>vLLM 修复后、rebase 前</td><td>measured ×3</td><td class="num">5.411s</td><td class="num">3.572s</td><td class="num">9.193s</td><td class="ok">有效</td></tr>
-              <tr><td>vLLM 最终 HEAD</td><td>measured ×3</td><td class="num">5.723s</td><td class="num">4.311s</td><td class="num">10.217s</td><td class="ok">有效</td></tr>
-              <tr><td>vLLM 最终 HEAD 稳定尾部</td><td>#2–#3</td><td class="num">5.648s</td><td class="num">3.548s</td><td class="num">9.373s</td><td class="ok">有效</td></tr>
+              <tr><td>vLLM 768p 对齐快照</td><td>measured ×3</td><td class="num">5.723s</td><td class="num">4.311s</td><td class="num">10.217s</td><td class="ok">有效</td></tr>
+              <tr><td><strong>vLLM 原生 2K 最终 HEAD</strong></td><td>measured ×3</td><td class="num"><strong>5.743s</strong></td><td class="num"><strong>7.205s</strong></td><td class="num"><strong>13.333s</strong></td><td class="ok">有效</td></tr>
             </tbody>
           </table>
         </div>
-        <div class="callout" style="margin-top:14px">最终 HEAD 的 measured #1 Stage 2 为 5.836s，而 #2 / #3 为 3.682s / 3.414s。虽然已有一次 warmup，lazy regional compile 仍在首个正式请求发生一次额外 specialization；主表同时保留原始三次均值与稳定尾部均值，没有删除慢样本。</div>
+        <div class="callout" style="margin-top:14px">2K 的三个正式请求非常稳定：LTX refinement 为 7.141–7.242s，E2E 为 13.311–13.358s。30.731s warmup 单独保留，主要包含首次 H3 LoRA 加载和 draft decode；没有混入正式均值。</div>
 
-        <h3 style="margin-top:26px">最终 HEAD：每次正式请求</h3>
+        <h3 style="margin-top:26px">原生 2K 最终 HEAD：每次请求</h3>
         <div class="table-shell">
           <table>
             <thead><tr><th>请求</th><th>H3 draft</th><th>LTX refine</th><th>调度残差</th><th>E2E wall</th><th>SHA256</th></tr></thead>
             <tbody>
-              <tr><td>measured #1</td><td class="num">5.872s</td><td class="num">5.836s</td><td class="num">0.197s</td><td class="num">11.904s</td><td><code>78f6861f…</code></td></tr>
-              <tr><td>measured #2</td><td class="num">5.951s</td><td class="num">3.682s</td><td class="num">0.182s</td><td class="num">9.815s</td><td><code>78f6861f…</code></td></tr>
-              <tr><td>measured #3</td><td class="num">5.345s</td><td class="num">3.414s</td><td class="num">0.172s</td><td class="num">8.932s</td><td><code>78f6861f…</code></td></tr>
+              <tr><td>warmup #0（排除）</td><td class="num">23.180s</td><td class="num">7.151s</td><td class="num">0.400s</td><td class="num">30.731s</td><td><code>c92d1636…</code></td></tr>
+              <tr><td>measured #1</td><td class="num">5.796s</td><td class="num">7.141s</td><td class="num">0.374s</td><td class="num">13.311s</td><td><code>0e9a1ba2…</code></td></tr>
+              <tr><td>measured #2</td><td class="num">5.694s</td><td class="num">7.242s</td><td class="num">0.396s</td><td class="num">13.332s</td><td><code>0e9a1ba2…</code></td></tr>
+              <tr><td>measured #3</td><td class="num">5.737s</td><td class="num">7.233s</td><td class="num">0.388s</td><td class="num">13.358s</td><td><code>0e9a1ba2…</code></td></tr>
             </tbody>
           </table>
         </div>
@@ -272,10 +274,10 @@
         </div>
 
         <details style="margin-top:16px">
-          <summary>vLLM 最终 HEAD measured #3 profiler 细分</summary>
+          <summary>vLLM 原生 2K measured #3 profiler 细分</summary>
           <div class="detail-body">
-            <p>Stage 1：prompt encode 0.153938s；visual conditions 0.126856s；reference audio conditions 0.000022s；diffuse 4.443441s；TAEH3/audio decode 0.068644s；pipeline forward 4.810205s；stage wrapper 5.345245s。</p>
-            <p>Stage 2：VAE encode 合计 0.137514s；text encoder 0.050358s；pipeline forward 2.688294s；stage wrapper 3.413970s。Profiler 的 forward 为包含型计时，不能与内部项简单相加。</p>
+            <p>Stage 1：prompt encode 0.064998s；visual conditions 0.118048s；reference audio conditions 0.000019s；diffuse 4.290877s；TAEH3/audio decode 0.067879s；pipeline forward 4.558890s；stage wrapper 5.736997s。</p>
+            <p>Stage 2：VAE encode 合计 0.264252s；text encoder 0.050418s；pipeline forward 5.699296s；stage wrapper 7.233047s。Profiler 的 forward 为包含型计时，不能与内部项简单相加。</p>
           </div>
         </details>
       </div>
@@ -284,22 +286,22 @@
     <section id="quality">
       <div class="wrap">
         <h2>质量回归定位与核验</h2>
-        <p class="section-intro">模糊并非 H3 draft 本身导致。根因是 refiner 在送入 TAEHV 前对 diffusion latent 做了错误的反归一化；TAEHV 的训练契约要求直接接收归一化 latent。修复后最终 HEAD 与 rebase 前通过版本逐字节一致。</p>
+        <p class="section-intro">已修复的 latent 契约继续用于 2K。新路径直接在 1920×1088 latent canvas 上 refinement 和 TAEHV decode；首帧保持原始 2K 输入，整段抽帧未见明显身份漂移。</p>
         <div class="grid three">
-          <div class="fact"><span>修复前清晰度均值</span><strong style="color:var(--bad)">5.58</strong><span>Laplacian variance · 121 frames</span></div>
-          <div class="fact"><span>官方源码复现</span><strong>52.91</strong><span>Laplacian variance · 121 frames</span></div>
-          <div class="fact"><span>最终 vLLM HEAD</span><strong>63.23</strong><span>Laplacian variance · 121 frames</span></div>
+          <div class="fact"><span>2K 输出像素</span><strong>2.09M</strong><span>1920×1088 · 无后处理放大</span></div>
+          <div class="fact"><span>首帧输入保持</span><strong>0.9436</strong><span>SSIM；PSNR 35.68 dB</span></div>
+          <div class="fact"><span>正式输出确定性</span><strong>3 / 3</strong><span>byte-identical MP4</span></div>
         </div>
-        <div class="callout bad" style="margin-top:16px">Laplacian variance 只作为模糊回归的机械检查，不是美学评分。官方与 vLLM 视频因生成轨迹随时间分叉，帧对齐 PSNR/SSIM（约 19.18 dB / 0.650）不能被解释为主观质量排名或像素等价证明。</div>
+        <div class="callout" style="margin-top:16px">透明说明：2K 输出缩到共同 1344×768 尺寸后的 Laplacian 均值为 37.57，旧 768p 对齐输出为 63.23。该指标对分辨率、锐化和生成轨迹敏感，只用于发现“5.58”级别的严重模糊回归，不能证明 2K 的感知细节一定优于 768p；请直接播放页面视频审阅。</div>
         <div class="table-shell" style="margin-top:16px">
           <table>
             <thead><tr><th>检查</th><th>最终结果</th><th>证据</th></tr></thead>
             <tbody>
-              <tr><td>容器与完整解码</td><td class="ok">4/4 通过</td><td>H.264 1344×768；121 @ 24fps；AAC stereo 32kHz；ffmpeg full decode</td></tr>
-              <tr><td>正式输出确定性</td><td class="ok">3/3 一致</td><td><code>78f6861f14bbfc987e618325bedb98095ff31fc96cd5ca51ef4d10b61bc1ff92</code></td></tr>
+              <tr><td>容器与完整解码</td><td class="ok">4/4 通过</td><td>H.264 1920×1088；121 @ 24fps；AAC stereo 32kHz；ffmpeg full decode</td></tr>
+              <tr><td>正式输出确定性</td><td class="ok">3/3 一致</td><td><code>0e9a1ba2ef275ffe68fe39a3545164867066b72e4fc3538728288d6688959ca6</code></td></tr>
               <tr><td>修复前 → 修复后</td><td class="ok">模糊回归消失</td><td>Laplacian mean 5.58 → 63.23；抽帧人工检查</td></tr>
-              <tr><td>rebase 前 → 最终 HEAD</td><td class="ok">逐字节一致</td><td>视频 SHA256 完全相同</td></tr>
-              <tr><td>峰值显存（runner reported）</td><td>83,684 MiB</td><td>单请求；2× B300，物理 GPU 2/3</td></tr>
+              <tr><td>首帧保持</td><td class="ok">SSIM 0.9436</td><td>与原始 1920×1088 JPEG 对比；PSNR 35.68 dB</td></tr>
+              <tr><td>监控峰值显存</td><td>136,422 / 89,220 MiB</td><td>H3 / LTX；2× B300，物理 GPU 4/5</td></tr>
             </tbody>
           </table>
         </div>
@@ -308,10 +310,10 @@
 
     <section id="videos">
       <div class="wrap">
-        <h2>全部 24 个生成视频</h2>
+        <h2>全部 28 个生成视频</h2>
         <p class="section-intro">所有 warmup、正式重复、官方 Stage 1 中间产物和早期基线都保留。浏览器只预载 metadata；点击播放时才加载完整视频。</p>
         <div class="filters" aria-label="视频筛选">
-          <button class="filter active" data-filter="all">全部 24</button>
+          <button class="filter active" data-filter="all">全部 28</button>
           <button class="filter" data-filter="pass">通过</button>
           <button class="filter" data-filter="reference">官方源码</button>
           <button class="filter" data-filter="fail">已知失败</button>
@@ -326,21 +328,26 @@
         <h2>原始证据与复现材料</h2>
         <p class="section-intro">页面上的数字均可回溯到 JSON、原始日志和运行配置。模型权重不随页面发布。</p>
         <div class="artifact-list">
-          <a href="SHA256SUMS.txt"><strong>全部视频 SHA256 清单</strong><br><span class="muted">24 个 MP4 的完整校验值</span></a>
+          <a href="SHA256SUMS.txt"><strong>全部视频 SHA256 清单</strong><br><span class="muted">28 个 MP4 的完整校验值</span></a>
+          <a href="artifacts/native-2k/results.json"><strong>原生 2K results</strong><br><span class="muted">逐请求阶段耗时、输出 SHA 与媒体校验</span></a>
+          <a href="artifacts/native-2k/metadata.json"><strong>原生 2K metadata</strong><br><span class="muted">commit、GPU、输入、prompt 与干净树证明</span></a>
+          <a href="artifacts/native-2k/run.log"><strong>原生 2K full log</strong><br><span class="muted">初始化、profiler、请求与 shutdown</span></a>
+          <a href="artifacts/native-2k/deploy.yaml"><strong>原生 2K deploy config</strong><br><span class="muted">960×544 handoff → 1920×1088</span></a>
+          <a href="artifacts/native-2k/contact-sheet.jpg"><strong>原生 2K 时间线抽帧</strong><br><span class="muted">全 5 秒六帧视觉核验</span></a>
           <a href="artifacts/official/e2e-benchmark.json"><strong>官方源码 E2E benchmark</strong><br><span class="muted">边界、身份、handoff 与 hot 总耗时</span></a>
           <a href="artifacts/official/stage1-benchmark.json"><strong>官方 Stage 1 benchmark</strong><br><span class="muted">H3 denoise、TAEH3 与 handoff telemetry</span></a>
           <a href="artifacts/official/stage2-benchmark.json"><strong>官方 Stage 2 benchmark</strong><br><span class="muted">refiner 每阶段精确耗时</span></a>
           <a href="artifacts/official/stage1.log"><strong>官方 Stage 1 log</strong><br><span class="muted">原始运行日志</span></a>
           <a href="artifacts/official/stage2.log"><strong>官方 Stage 2 log</strong><br><span class="muted">原始运行日志</span></a>
-          <a href="artifacts/alignment-rebased/metadata.json"><strong>最终 HEAD metadata</strong><br><span class="muted">commit、输入 SHA、prompt SHA、seed 与契约</span></a>
-          <a href="artifacts/alignment-rebased/results.json"><strong>最终 HEAD results</strong><br><span class="muted">逐请求耗时、输出 SHA 与媒体校验</span></a>
-          <a href="artifacts/alignment-rebased/run.log"><strong>最终 HEAD full log</strong><br><span class="muted">初始化、profiler 与 shutdown</span></a>
-          <a href="artifacts/alignment-rebased/deploy.yaml"><strong>最终 deploy config</strong><br><span class="muted">两阶段 B300 配置</span></a>
-          <a href="artifacts/alignment-rebased/run_e2e.py"><strong>E2E runner</strong><br><span class="muted">请求、计时、ffprobe 和 full-decode 校验</span></a>
+          <a href="artifacts/alignment-rebased/metadata.json"><strong>768p 对齐快照 metadata</strong><br><span class="muted">commit、输入 SHA、prompt SHA、seed 与契约</span></a>
+          <a href="artifacts/alignment-rebased/results.json"><strong>768p 对齐快照 results</strong><br><span class="muted">逐请求耗时、输出 SHA 与媒体校验</span></a>
+          <a href="artifacts/alignment-rebased/run.log"><strong>768p 对齐快照 full log</strong><br><span class="muted">初始化、profiler 与 shutdown</span></a>
+          <a href="artifacts/alignment-rebased/deploy.yaml"><strong>768p 对齐快照 deploy</strong><br><span class="muted">两阶段 B300 配置</span></a>
+          <a href="artifacts/native-2k/run_e2e.py"><strong>原生 2K E2E runner</strong><br><span class="muted">请求、计时、ffprobe 和 full-decode 校验</span></a>
           <a href="artifacts/alignment-before/results.json"><strong>修复前 results</strong><br><span class="muted">已知模糊失败的完整记录</span></a>
           <a href="artifacts/alignment-after/results.json"><strong>修复后 results</strong><br><span class="muted">rebase 前通过记录</span></a>
           <a href="inputs/official-bamboo-forest.jpg"><strong>官方对齐输入图</strong><br><span class="muted">SHA256 23e873c7837d…</span></a>
-          <a href="https://github.com/lishunyang12/vllm-omni/commit/8c2afe44c4e9bf114c872326a0c15ddc6c26a47d"><strong>最终实现 commit</strong><br><span class="muted">8c2afe44c4e9…</span></a>
+          <a href="https://github.com/lishunyang12/vllm-omni/commit/dc4b5279fe1216fcfdc423d337e429df9f46f1ba"><strong>最终 2K 实现 commit</strong><br><span class="muted">dc4b5279fe12…</span></a>
         </div>
         <details style="margin-top:16px">
           <summary>测试身份与 prompt</summary>
@@ -361,6 +368,17 @@
   <script>
     const groups = [
       {
+        title: "vLLM-Omni 原生 LTX-2.5 2K · 最终 HEAD",
+        note: "commit dc4b5279f · 1920×1088 · 1 warmup + 3 measured · 全部完整解码",
+        items: [
+          ["05s-warmup-0", "2K Warmup #0", "pass", "E2E 30.731s；排除在正式均值外"],
+          ["05s-measured-1", "2K Measured #1", "pass", "E2E 13.311s；H3 5.796s + LTX 7.141s"],
+          ["05s-measured-2", "2K Measured #2", "pass", "E2E 13.332s；H3 5.694s + LTX 7.242s"],
+          ["05s-measured-3", "2K Measured #3", "pass", "E2E 13.358s；H3 5.737s + LTX 7.233s"]
+        ],
+        dir: "native-2k"
+      },
+      {
         title: "Sana 官方源码路径 · B300 兼容复现",
         note: "3 个 Stage 1 中间产物 + 1 个最终 refined hot 输出",
         items: [
@@ -372,8 +390,8 @@
         dir: "official"
       },
       {
-        title: "vLLM-Omni 最终 HEAD · rebase 后",
-        note: "commit 8c2afe44c · 1 warmup + 3 measured · 全部完整解码",
+        title: "vLLM-Omni 768p 对齐快照 · 2K 前",
+        note: "commit 8c2afe44c · 1344×768 · 1 warmup + 3 measured · 全部完整解码",
         items: [
           ["05s-warmup-0", "Warmup #0", "pass", "编译 / warmup，排除在正式均值外"],
           ["05s-measured-1", "Measured #1", "pass", "E2E 11.904s；含一次延迟 specialization"],

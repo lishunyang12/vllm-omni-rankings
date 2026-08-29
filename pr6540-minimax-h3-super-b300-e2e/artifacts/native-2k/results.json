@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-29T08:51:42.073979+00:00",
+  "all_outputs_valid": true,
+  "records": [
+    {
+      "name": "05s-warmup-0",
+      "kind": "warmup",
+      "repeat": 0,
+      "stage_0_draft_s": 23.179888248443604,
+      "stage_1_refiner_s": 7.150538921356201,
+      "stage_sum_s": 30.330427169799805,
+      "wall_s": 30.7308113030158,
+      "orchestration_residual_s": 0.40038413321599364,
+      "stage_durations_raw": {
+        "LTX25H3RefinerPipeline.vae.encode": 0.26439791917800903,
+        "LTX25H3RefinerPipeline.text_encoder.forward": 0.051362911239266396,
+        "queue_wait_ms": 0.21503586322069168,
+        "ar2diffusion_ms": 0.08757784962654114,
+        "stage_0_gen_ms": 23179.888248443604,
+        "stage_1_gen_ms": 7150.538921356201
+      },
+      "peak_memory_mb_reported": 87690.0,
+      "output": "outputs/05s-warmup-0.mp4",
+      "bytes": 8890820,
+      "sha256": "c92d16363335759daf1e5a01a0cce4673a81865a4b989c9b2470852a7495e481",
+      "validation": {
+        "container_duration_s": 5.042,
+        "video_codec": "h264",
+        "width": 1920,
+        "height": 1088,
+        "fps": "24/1",
+        "frames": 121,
+        "audio_codec": "aac",
+        "audio_sample_rate": 32000,
+        "audio_channels": 2,
+        "full_decode": "passed"
+      },
+      "finished_at_utc": "2026-08-29T08:51:00.717310+00:00"
+    },
+    {
+      "name": "05s-measured-1",
+      "kind": "measured",
+      "repeat": 1,
+      "stage_0_draft_s": 5.796425819396973,
+      "stage_1_refiner_s": 7.140688896179199,
+      "stage_sum_s": 12.937114715576172,
+      "wall_s": 13.310908904764801,
+      "orchestration_residual_s": 0.3737941891886294,
+      "stage_durations_raw": {
+        "LTX25H3RefinerPipeline.vae.encode": 0.2642916985787451,
+        "LTX25H3RefinerPipeline.text_encoder.forward": 0.05082195997238159,
+        "queue_wait_ms": 0.25581615045666695,
+        "ar2diffusion_ms": 0.07804902270436287,
+        "stage_0_gen_ms": 5796.425819396973,
+        "stage_1_gen_ms": 7140.688896179199
+      },
+      "peak_memory_mb_reported": 87690.0,
+      "output": "outputs/05s-measured-1.mp4",
+      "bytes": 8877896,
+      "sha256": "0e9a1ba2ef275ffe68fe39a3545164867066b72e4fc3538728288d6688959ca6",
+      "validation": {
+        "container_duration_s": 5.042,
+        "video_codec": "h264",
+        "width": 1920,
+        "height": 1088,
+        "fps": "24/1",
+        "frames": 121,
+        "audio_codec": "aac",
+        "audio_sample_rate": 32000,
+        "audio_channels": 2,
+        "full_decode": "passed"
+      },
+      "finished_at_utc": "2026-08-29T08:51:14.477372+00:00"
+    },
+    {
+      "name": "05s-measured-2",
+      "kind": "measured",
+      "repeat": 2,
+      "stage_0_draft_s": 5.694239854812622,
+      "stage_1_refiner_s": 7.241777420043945,
+      "stage_sum_s": 12.936017274856567,
+      "wall_s": 13.331881037913263,
+      "orchestration_residual_s": 0.39586376305669546,
+      "stage_durations_raw": {
+        "LTX25H3RefinerPipeline.vae.encode": 0.264861477073282,
+        "LTX25H3RefinerPipeline.text_encoder.forward": 0.050586223136633635,
+        "queue_wait_ms": 0.20578596740961075,
+        "ar2diffusion_ms": 0.08393870666623116,
+        "stage_0_gen_ms": 5694.239854812622,
+        "stage_1_gen_ms": 7241.777420043945
+      },
+      "peak_memory_mb_reported": 87690.0,
+      "output": "outputs/05s-measured-2.mp4",
+      "bytes": 8877896,
+      "sha256": "0e9a1ba2ef275ffe68fe39a3545164867066b72e4fc3538728288d6688959ca6",
+      "validation": {
+        "container_duration_s": 5.042,
+        "video_codec": "h264",
+        "width": 1920,
+        "height": 1088,
+        "fps": "24/1",
+        "frames": 121,
+        "audio_codec": "aac",
+        "audio_sample_rate": 32000,
+        "audio_channels": 2,
+        "full_decode": "passed"
+      },
+      "finished_at_utc": "2026-08-29T08:51:28.251514+00:00"
+    },
+    {
+      "name": "05s-measured-3",
+      "kind": "measured",
+      "repeat": 3,
+      "stage_0_draft_s": 5.73699688911438,
+      "stage_1_refiner_s": 7.233046770095825,
+      "stage_sum_s": 12.970043659210205,
+      "wall_s": 13.357568837236613,
+      "orchestration_residual_s": 0.38752517802640796,
+      "stage_durations_raw": {
+        "LTX25H3RefinerPipeline.vae.encode": 0.26425187522545457,
+        "LTX25H3RefinerPipeline.text_encoder.forward": 0.0504182162694633,
+        "queue_wait_ms": 0.1970878802239895,
+        "ar2diffusion_ms": 0.08185813203454018,
+        "stage_0_gen_ms": 5736.99688911438,
+        "stage_1_gen_ms": 7233.046770095825
+      },
+      "peak_memory_mb_reported": 87690.0,
+      "output": "outputs/05s-measured-3.mp4",
+      "bytes": 8877896,
+      "sha256": "0e9a1ba2ef275ffe68fe39a3545164867066b72e4fc3538728288d6688959ca6",
+      "validation": {
+        "container_duration_s": 5.042,
+        "video_codec": "h264",
+        "width": 1920,
+        "height": 1088,
+        "fps": "24/1",
+        "frames": 121,
+        "audio_codec": "aac",
+        "audio_sample_rate": 32000,
+        "audio_channels": 2,
+        "full_decode": "passed"
+      },
+      "finished_at_utc": "2026-08-29T08:51:42.073712+00:00"
+    }
+  ],
+  "measured_summary": {
+    "repeats": 3,
+    "stage_0_draft_mean_s": 5.742554187774658,
+    "stage_1_refiner_mean_s": 7.20517102877299,
+    "wall_mean_s": 13.333452926638225,
+    "wall_min_s": 13.310908904764801,
+    "wall_max_s": 13.357568837236613
+  }
+}

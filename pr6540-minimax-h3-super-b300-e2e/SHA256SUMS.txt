@@ -22,3 +22,7 @@ fc93a0b3b67b30421c0e29736d0d34231c52eacdf4ffd9864e971e1e0d19f10d  pr6540-minimax
 fd99706b2492e381bc914b3d0c83af1ff1dabafa57596c001beec1beb7ee1a3f  pr6540-minimax-h3-super-b300-e2e/videos/official/stage1-compile-prime-excluded.mp4
 93cca5db356b5c4ae655e8e0e919c81772fefeaff44f94219708296393dedec7  pr6540-minimax-h3-super-b300-e2e/videos/official/stage1-hot.mp4
 93cca5db356b5c4ae655e8e0e919c81772fefeaff44f94219708296393dedec7  pr6540-minimax-h3-super-b300-e2e/videos/official/stage1-warmup-excluded.mp4
+c92d16363335759daf1e5a01a0cce4673a81865a4b989c9b2470852a7495e481  pr6540-minimax-h3-super-b300-e2e/videos/native-2k/05s-warmup-0.mp4
+0e9a1ba2ef275ffe68fe39a3545164867066b72e4fc3538728288d6688959ca6  pr6540-minimax-h3-super-b300-e2e/videos/native-2k/05s-measured-1.mp4
+0e9a1ba2ef275ffe68fe39a3545164867066b72e4fc3538728288d6688959ca6  pr6540-minimax-h3-super-b300-e2e/videos/native-2k/05s-measured-2.mp4
+0e9a1ba2ef275ffe68fe39a3545164867066b72e4fc3538728288d6688959ca6  pr6540-minimax-h3-super-b300-e2e/videos/native-2k/05s-measured-3.mp4
