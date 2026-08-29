@@ -1,0 +1,71 @@
+# Reproducible PR #6540 E2E configuration.
+# Physical GPUs 2 and 3 are exposed as logical devices 0 and 1.
+pipeline: minimax_h3_super
+async_chunk: false
+trust_remote_code: true
+distributed_executor_backend: mp
+
+stages:
+  - stage_id: 0
+    model: /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA
+    devices: "0"
+    model_class_name: MiniMaxH3SuperDraftPipeline
+    task_type: fl2va
+    max_num_seqs: 1
+    enforce_eager: true
+    lora_backend: peft
+    enable_diffusion_pipeline_profiler: true
+    diffusion_attention_config:
+      per_role:
+        self:
+          backend: TRTLLM_ATTN
+          quant:
+            dtype_qk: fp8_e4m3
+            q_block_size: 1
+            k_block_size: 16
+        minimax_h3.token_refiner:
+          backend: TRTLLM_ATTN
+    additional_config:
+      taeh3_checkpoint: https://raw.githubusercontent.com/madebyollin/taehv/e589fddc076e77f5ba8cd6baabe4ba3260b261cd/taeh3.pth
+    default_sampling_params:
+      seed: 42
+      height: 512
+      width: 896
+      fps: 24
+      num_inference_steps: 5
+      lora_request:
+        lora_name: h3-turbo-v1.0
+        lora_int_id: 1
+        lora_path: /home/zjy/code/lsy/models/minimax-h3-turbo-pr6476
+      lora_scale: 1.0
+      extra_args:
+        task: fl2va
+        duration: 5.0
+        flow_shift: 6.0
+        audio_flow_shift: 3.0
+
+  - stage_id: 1
+    model: /home/zjy/code/lsy/results/pr6540-b300-e2e-20260829T054221Z/model
+    devices: "1"
+    model_class_name: LTX25H3RefinerPipeline
+    max_num_seqs: 1
+    enforce_eager: false
+    diffusion_compile_dynamic: false
+    vae_use_tiling: true
+    enable_diffusion_pipeline_profiler: true
+    additional_config:
+      taehv_checkpoint: https://raw.githubusercontent.com/madebyollin/taehv/32ac0146b11007cda5a57b60a3b35653361fb8a4/taeltx2_3_wide.pth
+      encode_output_video: true
+    default_sampling_params:
+      seed: 42
+      height: 768
+      width: 1344
+      num_frames: 121
+      fps: 24
+      num_inference_steps: 3
+
+edges:
+  - from: 0
+    to: 1
+    window_size: -1
+    max_inflight: 1

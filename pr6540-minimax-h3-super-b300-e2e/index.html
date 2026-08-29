@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="B300 end-to-end validation evidence for vLLM-Omni PR #6540: MiniMax H3 Super draft to LTX-2.5 refiner.">
+  <title>PR #6540 · MiniMax H3 Super E2E Evidence</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #f4f0e8;
+      --muted: #aaa79f;
+      --paper: #111318;
+      --panel: #181b21;
+      --panel-2: #20242c;
+      --line: #343944;
+      --draft: #ff7a3d;
+      --refiner: #55d6be;
+      --residual: #6d7686;
+      --good: #8de37c;
+      --shadow: 0 18px 70px rgba(0, 0, 0, .28);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 84% -10%, rgba(85, 214, 190, .12), transparent 32rem),
+        radial-gradient(circle at 6% 10%, rgba(255, 122, 61, .14), transparent 34rem),
+        var(--paper);
+      color: var(--ink);
+      font: 15px/1.6 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a { color: inherit; }
+    code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .shell { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+      background: rgba(17, 19, 24, .86);
+      backdrop-filter: blur(18px);
+    }
+    .nav-inner {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { font-weight: 760; letter-spacing: -.02em; text-decoration: none; }
+    .brand span { color: var(--draft); }
+    .nav-links { display: flex; align-items: center; gap: 18px; color: var(--muted); font-size: 13px; }
+    .nav-links a { text-decoration: none; }
+    .nav-links a:hover { color: var(--ink); }
+
+    header { padding: 78px 0 54px; }
+    .eyebrow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 20px;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .13em;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 10px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .035);
+    }
+    .pill.good { color: var(--good); border-color: rgba(141, 227, 124, .32); }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 13px currentColor; }
+    h1 {
+      max-width: 880px;
+      margin: 0;
+      font-size: clamp(42px, 7.2vw, 92px);
+      line-height: .96;
+      letter-spacing: -.065em;
+      font-weight: 760;
+    }
+    h1 em { color: var(--draft); font-style: normal; }
+    .lede {
+      max-width: 760px;
+      margin: 30px 0 0;
+      color: #c9c6be;
+      font-size: clamp(17px, 2vw, 21px);
+      line-height: 1.55;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 28px;
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .hero-meta strong { display: block; color: var(--ink); font-size: 14px; font-weight: 650; }
+
+    section { padding: 54px 0; }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 24px;
+    }
+    h2 { margin: 0; font-size: clamp(29px, 4vw, 46px); line-height: 1.05; letter-spacing: -.045em; }
+    .section-kicker { max-width: 570px; margin: 0; color: var(--muted); }
+
+    .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    .stat {
+      min-height: 154px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
+      box-shadow: var(--shadow);
+    }
+    .stat-label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
+    .stat-value { margin-top: 14px; font-size: clamp(30px, 4vw, 46px); line-height: 1; letter-spacing: -.05em; font-weight: 740; }
+    .stat-note { margin-top: 12px; color: var(--muted); font-size: 12px; }
+
+    .latency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+    .latency-card { padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+    .latency-top { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
+    .latency-top h3 { margin: 0; font-size: 23px; letter-spacing: -.025em; }
+    .latency-top strong { font-size: 28px; letter-spacing: -.04em; }
+    .bar { display: flex; overflow: hidden; height: 12px; margin: 22px 0 18px; border-radius: 99px; background: #0d0f13; }
+    .bar span { display: block; height: 100%; }
+    .draft { background: var(--draft); }
+    .refiner { background: var(--refiner); }
+    .residual { background: var(--residual); }
+    .legend { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .legend-item { color: var(--muted); font-size: 11px; }
+    .legend-item i { display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; }
+    .legend-item strong { display: block; margin-top: 3px; color: var(--ink); font-size: 15px; }
+
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+    table { width: 100%; min-width: 820px; border-collapse: collapse; }
+    th, td { padding: 14px 16px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
+    th:first-child, td:first-child { text-align: left; }
+    th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .09em; font-weight: 650; }
+    td { font-variant-numeric: tabular-nums; }
+    tr:last-child td { border-bottom: 0; }
+    tr.warmup td { color: #97948d; background: rgba(255,255,255,.012); }
+    .run-name { color: var(--ink); font-weight: 650; }
+    .kind { display: inline-block; margin-left: 8px; padding: 2px 7px; border: 1px solid var(--line); border-radius: 99px; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
+    .valid { color: var(--good); }
+
+    .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .video-card { overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: var(--panel); box-shadow: var(--shadow); }
+    video { display: block; width: 100%; aspect-ratio: 7 / 4; background: #050607; object-fit: contain; }
+    .video-info { padding: 18px 19px 20px; }
+    .video-title { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+    .video-title h3 { margin: 0; font-size: 18px; letter-spacing: -.02em; }
+    .video-title a { color: var(--muted); font-size: 12px; text-decoration: none; }
+    .video-title a:hover { color: var(--ink); }
+    .video-meta { display: flex; flex-wrap: wrap; gap: 7px 16px; margin-top: 10px; color: var(--muted); font-size: 12px; }
+    .video-meta strong { color: var(--ink); font-weight: 600; }
+
+    .evidence-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; }
+    .evidence-card { padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
+    .evidence-card h3 { margin: 0 0 14px; font-size: 19px; }
+    .facts { display: grid; grid-template-columns: max-content 1fr; gap: 10px 22px; margin: 0; }
+    .facts dt { color: var(--muted); }
+    .facts dd { margin: 0; overflow-wrap: anywhere; }
+    .artifact-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .artifact-list a {
+      padding: 12px 13px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: #d5d2ca;
+      background: var(--panel-2);
+      text-decoration: none;
+      font-size: 13px;
+    }
+    .artifact-list a:hover { border-color: var(--draft); color: var(--ink); }
+    details { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 16px; }
+    summary { cursor: pointer; color: #d5d2ca; }
+    details p { color: var(--muted); }
+    .input-preview { width: 100%; margin-top: 14px; border-radius: 12px; border: 1px solid var(--line); }
+    .notice { margin-top: 18px; padding: 16px 18px; border-left: 3px solid #d9ae60; background: rgba(217, 174, 96, .08); color: #d6c6a8; }
+
+    footer { padding: 42px 0 70px; color: var(--muted); border-top: 1px solid var(--line); font-size: 12px; }
+    footer .shell { display: flex; justify-content: space-between; gap: 24px; }
+
+    @media (max-width: 850px) {
+      .summary-grid { grid-template-columns: 1fr 1fr; }
+      .latency-grid, .video-grid, .evidence-grid { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; gap: 12px; }
+      .nav-links a:not(:last-child) { display: none; }
+    }
+    @media (max-width: 520px) {
+      .shell { width: min(100% - 24px, 1160px); }
+      header { padding-top: 52px; }
+      .summary-grid { grid-template-columns: 1fr; }
+      .legend { grid-template-columns: 1fr; }
+      .artifact-list { grid-template-columns: 1fr; }
+      footer .shell { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="shell nav-inner">
+      <a class="brand" href="#top">vLLM-Omni <span>/ E2E</span></a>
+      <div class="nav-links">
+        <a href="#latency">Latency</a>
+        <a href="#videos">Videos</a>
+        <a href="#evidence">Evidence</a>
+        <a href="https://github.com/vllm-project/vllm-omni/pull/6540">PR #6540 ↗</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="top">
+    <div class="shell">
+      <div class="eyebrow">
+        <span class="pill good"><span class="dot"></span> 8 / 8 outputs valid</span>
+        <span class="pill">B300 · 2 GPUs</span>
+        <span class="pill">Seed 42</span>
+      </div>
+      <h1>MiniMax H3 Super <em>E2E evidence.</em></h1>
+      <p class="lede">Two-stage image-to-video validation for vLLM-Omni PR #6540: MiniMax H3 Super produces the draft on GPU 2, then LTX-2.5 refines and encodes the final video with audio on GPU 3.</p>
+      <div class="hero-meta">
+        <div><strong>Commit</strong><span class="mono">cc202c4673d3</span></div>
+        <div><strong>Run</strong>2026-08-29 06:02–06:06 UTC</div>
+        <div><strong>Machine</strong><span class="mono">vllm-inference</span></div>
+        <div><strong>Protocol</strong>1 warmup + 3 measured / duration</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="latency">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Measured latency</h2>
+          <p class="section-kicker">Means below use the three post-warmup runs at concurrency 1. Request latency spans <span class="mono">Omni.generate</span> through receipt of the complete encoded MP4; startup, file writes, and validation are excluded.</p>
+        </div>
+
+        <div class="summary-grid">
+          <article class="stat">
+            <div class="stat-label">5s video · E2E</div>
+            <div class="stat-value">8.586s</div>
+            <div class="stat-note">min 8.557 · max 8.624</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">10s video · E2E</div>
+            <div class="stat-value">18.160s</div>
+            <div class="stat-note">min 18.089 · max 18.267</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">Stage 0 peak</div>
+            <div class="stat-value">144.8GiB</div>
+            <div class="stat-note">148,262 MiB · physical GPU 2</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">Stage 1 peak</div>
+            <div class="stat-value">89.5GiB</div>
+            <div class="stat-note">91,640 MiB · physical GPU 3</div>
+          </article>
+        </div>
+
+        <div class="latency-grid">
+          <article class="latency-card">
+            <div class="latency-top"><h3>5-second output</h3><strong>8.586s</strong></div>
+            <div class="bar" aria-label="Stage 0 4.998 seconds, Stage 1 3.403 seconds, orchestration 0.185 seconds">
+              <span class="draft" style="width:58.22%"></span>
+              <span class="refiner" style="width:39.64%"></span>
+              <span class="residual" style="width:2.14%"></span>
+            </div>
+            <div class="legend">
+              <div class="legend-item"><i class="draft"></i>Stage 0 · draft<strong>4.998s</strong></div>
+              <div class="legend-item"><i class="refiner"></i>Stage 1 · refiner<strong>3.403s</strong></div>
+              <div class="legend-item"><i class="residual"></i>Orchestration<strong>0.185s</strong></div>
+            </div>
+          </article>
+          <article class="latency-card">
+            <div class="latency-top"><h3>10-second output</h3><strong>18.160s</strong></div>
+            <div class="bar" aria-label="Stage 0 10.817 seconds, Stage 1 6.992 seconds, orchestration 0.352 seconds">
+              <span class="draft" style="width:59.56%"></span>
+              <span class="refiner" style="width:38.50%"></span>
+              <span class="residual" style="width:1.94%"></span>
+            </div>
+            <div class="legend">
+              <div class="legend-item"><i class="draft"></i>Stage 0 · draft<strong>10.817s</strong></div>
+              <div class="legend-item"><i class="refiner"></i>Stage 1 · refiner<strong>6.992s</strong></div>
+              <div class="legend-item"><i class="residual"></i>Orchestration<strong>0.352s</strong></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="shell">
+        <div class="section-head">
+          <h2>Every run</h2>
+          <p class="section-kicker">Warmup rows are shown for reproducibility but excluded from the means. The first request for each shape may include lazy compilation.</p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Run</th><th>Stage 0</th><th>Stage 1</th><th>Residual</th><th>E2E wall</th><th>Frames</th><th>Decode</th></tr></thead>
+            <tbody>
+              <tr class="warmup"><td><span class="run-name">05s-warmup-0</span><span class="kind">warmup</span></td><td>13.267s</td><td>3.363s</td><td>0.191s</td><td>16.822s</td><td>121</td><td class="valid">Passed</td></tr>
+              <tr><td><span class="run-name">05s-measured-1</span></td><td>4.954s</td><td>3.415s</td><td>0.189s</td><td>8.557s</td><td>121</td><td class="valid">Passed</td></tr>
+              <tr><td><span class="run-name">05s-measured-2</span></td><td>5.045s</td><td>3.390s</td><td>0.189s</td><td>8.624s</td><td>121</td><td class="valid">Passed</td></tr>
+              <tr><td><span class="run-name">05s-measured-3</span></td><td>4.996s</td><td>3.404s</td><td>0.176s</td><td>8.576s</td><td>121</td><td class="valid">Passed</td></tr>
+              <tr class="warmup"><td><span class="run-name">10s-warmup-0</span><span class="kind">warmup</span></td><td>10.921s</td><td>19.315s</td><td>0.375s</td><td>30.611s</td><td>241</td><td class="valid">Passed</td></tr>
+              <tr><td><span class="run-name">10s-measured-1</span></td><td>10.786s</td><td>6.949s</td><td>0.354s</td><td>18.089s</td><td>241</td><td class="valid">Passed</td></tr>
+              <tr><td><span class="run-name">10s-measured-2</span></td><td>10.811s</td><td>6.964s</td><td>0.351s</td><td>18.125s</td><td>241</td><td class="valid">Passed</td></tr>
+              <tr><td><span class="run-name">10s-measured-3</span></td><td>10.853s</td><td>7.063s</td><td>0.350s</td><td>18.267s</td><td>241</td><td class="valid">Passed</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="videos">
+      <div class="shell">
+        <div class="section-head">
+          <h2>All generated videos</h2>
+          <p class="section-kicker">Eight original MP4 outputs, including warmups. Every file was independently checked with <span class="mono">ffprobe</span> and fully decoded by <span class="mono">ffmpeg</span>.</p>
+        </div>
+        <div class="video-grid">
+          <article class="video-card">
+            <video controls preload="metadata" poster="posters/05s-warmup-0.jpg"><source src="videos/05s-warmup-0.mp4" type="video/mp4"></video>
+            <div class="video-info"><div class="video-title"><h3>5s · warmup</h3><a href="videos/05s-warmup-0.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>16.822s</strong> wall</span><span>121 frames</span><span class="mono">20268816…</span></div></div>
+          </article>
+          <article class="video-card">
+            <video controls preload="metadata" poster="posters/05s-measured-1.jpg"><source src="videos/05s-measured-1.mp4" type="video/mp4"></video>
+            <div class="video-info"><div class="video-title"><h3>5s · measured 1</h3><a href="videos/05s-measured-1.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>8.557s</strong> wall</span><span>121 frames</span><span class="mono">cb93588a…</span></div></div>
+          </article>
+          <article class="video-card">
+            <video controls preload="metadata" poster="posters/05s-measured-2.jpg"><source src="videos/05s-measured-2.mp4" type="video/mp4"></video>
+            <div class="video-info"><div class="video-title"><h3>5s · measured 2</h3><a href="videos/05s-measured-2.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>8.624s</strong> wall</span><span>121 frames</span><span class="mono">cb93588a…</span></div></div>
+          </article>
+          <article class="video-card">
+            <video controls preload="metadata" poster="posters/05s-measured-3.jpg"><source src="videos/05s-measured-3.mp4" type="video/mp4"></video>
+            <div class="video-info"><div class="video-title"><h3>5s · measured 3</h3><a href="videos/05s-measured-3.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>8.576s</strong> wall</span><span>121 frames</span><span class="mono">cb93588a…</span></div></div>
+          </article>
+          <article class="video-card">
+            <video controls preload="metadata" poster="posters/10s-warmup-0.jpg"><source src="videos/10s-warmup-0.mp4" type="video/mp4"></video>
+            <div class="video-info"><div class="video-title"><h3>10s · warmup</h3><a href="videos/10s-warmup-0.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>30.611s</strong> wall</span><span>241 frames</span><span class="mono">f8fa4d6e…</span></div></div>
+          </article>
+          <article class="video-card">
+            <video controls preload="metadata" poster="posters/10s-measured-1.jpg"><source src="videos/10s-measured-1.mp4" type="video/mp4"></video>
+            <div class="video-info"><div class="video-title"><h3>10s · measured 1</h3><a href="videos/10s-measured-1.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>18.089s</strong> wall</span><span>241 frames</span><span class="mono">f8fa4d6e…</span></div></div>
+          </article>
+          <article class="video-card">
+            <video controls preload="metadata" poster="posters/10s-measured-2.jpg"><source src="videos/10s-measured-2.mp4" type="video/mp4"></video>
+            <div class="video-info"><div class="video-title"><h3>10s · measured 2</h3><a href="videos/10s-measured-2.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>18.125s</strong> wall</span><span>241 frames</span><span class="mono">f8fa4d6e…</span></div></div>
+          </article>
+          <article class="video-card">
+            <video controls preload="metadata" poster="posters/10s-measured-3.jpg"><source src="videos/10s-measured-3.mp4" type="video/mp4"></video>
+            <div class="video-info"><div class="video-title"><h3>10s · measured 3</h3><a href="videos/10s-measured-3.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>18.267s</strong> wall</span><span>241 frames</span><span class="mono">f8fa4d6e…</span></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="evidence">
+      <div class="shell">
+        <div class="section-head">
+          <h2>Reproducibility</h2>
+          <p class="section-kicker">Machine-readable artifacts are published alongside the rendered evidence so the headline numbers can be audited.</p>
+        </div>
+        <div class="evidence-grid">
+          <article class="evidence-card">
+            <h3>Run contract</h3>
+            <dl class="facts">
+              <dt>Pipeline</dt><dd>MiniMax H3 Super Draft → LTX-2.5 H3 Refiner</dd>
+              <dt>Hardware</dt><dd>2 × NVIDIA B300 SXM6 AC; CUDA 13.0; driver 610.43.02</dd>
+              <dt>Mapping</dt><dd>Stage 0: physical GPU 2 · Stage 1: physical GPU 3</dd>
+              <dt>Software</dt><dd>PyTorch 2.13.0+cu130 · vLLM 0.28.0 · diffusers 0.40.0</dd>
+              <dt>Output</dt><dd>1344 × 768 · 24 fps · H.264 · AAC stereo 32 kHz</dd>
+              <dt>Engine init</dt><dd>115.090s, excluded from request latency</dd>
+              <dt>Commit</dt><dd class="mono">cc202c4673d34b3fdafdca05d187f34970375f75</dd>
+            </dl>
+            <details>
+              <summary>Input and prompt</summary>
+              <img class="input-preview" src="input.png" alt="Input portrait used by all eight E2E runs">
+              <p>A medium close-up of a bearded man in a green-and-white baseball cap, looking at camera and speaking: “I think it’s so good … This got to be, it’s got to be the best tool I’ve ever seen.” The full prompt is preserved in <a href="artifacts/metadata.json">metadata.json</a>.</p>
+            </details>
+          </article>
+          <article class="evidence-card">
+            <h3>Raw artifacts</h3>
+            <div class="artifact-list">
+              <a href="artifacts/results.json">Results JSON ↗</a>
+              <a href="artifacts/metadata.json">Metadata JSON ↗</a>
+              <a href="artifacts/gpu-samples.csv">GPU samples CSV ↗</a>
+              <a href="artifacts/deploy.yaml">Deploy YAML ↗</a>
+              <a href="artifacts/run.log">Complete run log ↗</a>
+              <a href="https://github.com/vllm-project/vllm-omni/pull/6540">Pull request ↗</a>
+            </div>
+            <div class="notice"><strong>Hardware scope.</strong> The shared RTX PRO 5000 host was unreachable from the runner during this validation. These results are B300 evidence and are not labeled as PRO 5000 results.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell"><span>vLLM-Omni PR #6540 · B300 E2E evidence</span><span>Generated 2026-08-29 UTC</span></div>
+  </footer>
+</body>
+</html>

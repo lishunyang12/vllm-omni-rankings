@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-29T06:02:32.657537+00:00",
+  "pull_request": "https://github.com/vllm-project/vllm-omni/pull/6540",
+  "commit": "cc202c4673d34b3fdafdca05d187f34970375f75",
+  "git_status": "",
+  "hostname": "vllm-inference",
+  "physical_gpus": [
+    2,
+    3
+  ],
+  "visible_logical_gpus": [
+    0,
+    1
+  ],
+  "gpu_inventory": [
+    "0, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02",
+    "1, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02",
+    "2, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02",
+    "3, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02",
+    "4, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02",
+    "5, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02",
+    "6, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02",
+    "7, NVIDIA B300 SXM6 AC, 275040 MiB, 610.43.02"
+  ],
+  "input_image": "input.png",
+  "input_sha256": "560c094f9900ea762227f84481ca8a2f73adac69963e0d1a78563bec1844d6b8",
+  "prompt": "A medium close-up shot features a Caucasian man with a beard, wearing a green and white baseball cap without any letters on the front, and a light blue shirt over a white t-shirt. He is positioned in the center of the frame, looking intently directly at the camera, his eyes focused on camera. His facial expression is one of deep concentration, with his brow slightly raised. As he looks straight at the camera, a quick sniff sound is heard, and then he speaks with a deep male voice and a satisfied tone, saying, 'I think it's so good.' The camera remains static throughout, maintaining a shallow depth of field, which keeps the man in sharp focus while the background is softly blurred, showing a beige wall behind him. After a brief pause, another short, audible sniff is heard. The man then continues to speak, his voice maintaining the same quality, as he states, 'So good. So good.' He elaborates further, emphasizing his point with a final statement, 'This got to be, it's got to be the best tool I've ever seen.'",
+  "seed": 42,
+  "protocol": {
+    "durations_seconds": [
+      5,
+      10
+    ],
+    "warmups_per_duration": 1,
+    "measured_repeats_per_duration": 3,
+    "request_concurrency": 1,
+    "latency_scope": "Omni.generate call through receipt of complete encoded MP4 bytes",
+    "excluded": "engine startup/model load, output-file write, ffprobe, and full ffmpeg validation"
+  },
+  "software": {
+    "python": "3.12.3",
+    "torch": "2.13.0+cu130",
+    "cuda": "13.0",
+    "vllm": "0.28.0",
+    "vllm_omni": "0.27.0rc2.dev159+g01601557d",
+    "transformers": "5.14.1",
+    "diffusers": "0.40.0"
+  },
+  "deploy_config": "deploy.yaml",
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "2,3",
+    "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+    "VLLM_OMNI_VIDEO_SYNC_TIMEOUT": "14400",
+    "TORCHINDUCTOR_CACHE_DIR": "/home/zjy/code/lsy/results/pr6540-b300-e2e-20260829T054221Z/cache/torchinductor",
+    "TRITON_CACHE_DIR": "/home/zjy/code/lsy/results/pr6540-b300-e2e-20260829T054221Z/cache/triton"
+  },
+  "engine_init_s": 115.09039722103626
+}
