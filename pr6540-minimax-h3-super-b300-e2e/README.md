@@ -7,4 +7,4 @@ Static GitHub Pages report for the two-stage MiniMax H3 Super draft → LTX-2.5 
 - Validation: 8/8 MP4 files passed stream checks and full ffmpeg decode
 - Page: <https://lishunyang12.github.io/vllm-omni-rankings/pr6540-minimax-h3-super-b300-e2e/>
 
-Raw run metadata, results, GPU samples, deploy configuration, and complete logs are under `artifacts/`.
+The exact runner and launch script are published with the raw metadata, results, GPU samples, deploy configuration, and complete logs under `artifacts/`.
