@@ -1,0 +1,968 @@
+{
+  "actual_transformer_forwards": 4,
+  "api_sigma_points": 5,
+  "audio_sigmas": [
+    1.0,
+    0.9,
+    0.75,
+    0.5,
+    0.0
+  ],
+  "duration": 5.0,
+  "encoded_duration_s": 5.166666666666667,
+  "excluded": {
+    "compile_prime": {
+      "client_and_transport_residual_s": 0.07767873905574417,
+      "decoder_telemetry": {
+        "audio_decode_cuda_ms": 13404.87109375,
+        "audio_decode_s": 13.404987634,
+        "audio_latent": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            2,
+            32,
+            207
+          ]
+        },
+        "audio_output": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            1,
+            2,
+            165600
+          ]
+        },
+        "audio_sample_rate": 32000,
+        "cuda_device": 0,
+        "event": "decoder",
+        "hostname": "vllm-inference",
+        "local_rank": 0,
+        "pid": 632957,
+        "post_decoding_cuda_ms": 0.029055999591946602,
+        "post_decoding_s": 4.0459e-05,
+        "rank": 0,
+        "request_sequence": 1,
+        "run_id": null,
+        "schema": "minimax_h3_stage1_decoder_telemetry_v1",
+        "source_latent_cloned_before_decoder": true,
+        "stage1_decode_cuda_ms": 1963.380374358967,
+        "stage1_decode_s": 1.9634462860000002,
+        "stage1_decoder_name": "madebyollin_taeh3",
+        "status": "ok",
+        "taeh3_checkpoint_sha256": "af92965c2d7986a89a757e7cccd26f9eeeff0c3f0d5495eb168aeb2d6d9be9ba",
+        "taehv_commit": "e589fddc076e77f5ba8cd6baabe4ba3260b261cd",
+        "taehv_source_sha256": "28b452ad74f924d2d0922d6b3e805dfa7f504c523ced240435fefad5f6f650a7",
+        "time_unix_ns": 1787987267541194380,
+        "video_latent": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            1,
+            24,
+            37,
+            32,
+            56
+          ]
+        },
+        "video_output": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            1,
+            3,
+            124,
+            512,
+            896
+          ]
+        }
+      },
+      "delivery": {
+        "destination_cuda_complete": false,
+        "tensor_staged": false,
+        "tensor_token": "h3tensor://discard/pair-0/seq-1"
+      },
+      "denoise_telemetry": {
+        "cache_mode": "none",
+        "cache_safety": null,
+        "cached_steps": 0,
+        "computed_forwards": 4,
+        "denoise_total_s": 13.696131341,
+        "error_type": null,
+        "height": 512,
+        "is_warmup": false,
+        "model_binding": {
+          "latent_grid": [
+            32,
+            56
+          ],
+          "lora_applied": true,
+          "lora_coverage": {
+            "active_dynamic_layers": 0,
+            "mapped_layers": 208,
+            "mapped_tensors": 416,
+            "merge_mode": "merge",
+            "merged_layers": 208,
+            "wrapped_layers_total": 208
+          },
+          "lora_nickname": "lx2v_4s_v01_544p",
+          "lora_path": "/home/zjy/code/lsy/models/sana-h3-super-official/Minimax-h3-Turbo/minimax_h3_fl2v_turbo_4step_v0.1.safetensors",
+          "lora_scale": 0.0625,
+          "model_profile": "lx2v_4s_v01_544p",
+          "nfe": 4,
+          "off_native_distillation_grid": false,
+          "offgrid_acknowledged_by_sweep": false,
+          "pixel_canvas": [
+            896,
+            512
+          ],
+          "teacher_lora_audit": null
+        },
+        "nfe": 4,
+        "output_file_name": "compile_prime_excluded.mp4",
+        "parameters": {
+          "cooldown_steps": 0,
+          "max_continuous_cached_steps": 0,
+          "threshold": null,
+          "warmup_steps": 0
+        },
+        "request_index": 0,
+        "scheduled_steps": 4,
+        "schema_version": 1,
+        "seed": 50803,
+        "status": "ok",
+        "width": 896
+      },
+      "duration": 5.0,
+      "encode_mux_telemetry": {
+        "audio_decode_cuda_ms": 13404.87109375,
+        "audio_decode_s": 13.404987634,
+        "cuda_device": 0,
+        "destination_cuda_complete": false,
+        "event": "tensor_handoff",
+        "fps": 24.0,
+        "handoff_mode": "direct_tensor",
+        "hostname": "vllm-inference",
+        "local_rank": 0,
+        "mp4_ready": false,
+        "outputs": [
+          {
+            "contiguous": true,
+            "device": "cuda:0",
+            "dtype": "torch.float32",
+            "shape": [
+              1,
+              3,
+              124,
+              512,
+              896
+            ]
+          }
+        ],
+        "phase": "discard",
+        "pid": 632957,
+        "post_decoding_s": 4.0459e-05,
+        "preprocessing": {
+          "discarded_before_preprocess": true,
+          "preprocess_and_d2h_s": 0.0
+        },
+        "rank": 0,
+        "request_sequence": 1,
+        "run_id": null,
+        "schema": "minimax_h3_stage1_decoder_telemetry_v1",
+        "stage1_decoder_name": "madebyollin_taeh3",
+        "stage1_encode_mux_definition": "not_materialized",
+        "stage1_encode_mux_s": 0.0,
+        "stage1_tensor_handoff_s": 7.459e-06,
+        "stage_ack": null,
+        "status": "ok",
+        "tensor_handoff_s": 7.459e-06,
+        "tensor_staged": false,
+        "tensor_token": "h3tensor://discard/pair-0/seq-1",
+        "time_unix_ns": 1787987282911335498,
+        "writer_sequence": 1
+      },
+      "encoded_duration_s": 5.166666666666667,
+      "h3_denoise_s": 13.696131341,
+      "h3_dit_and_shared_s": 27.504534989796326,
+      "media": null,
+      "metrics": {
+        "memory_snapshots": {
+          "after_forward": {
+            "allocated_mb": 120311.36,
+            "peak_allocated_mb": 128478.43,
+            "peak_reserved_mb": 138662.0,
+            "reserved_mb": 138662.0
+          },
+          "before_forward": {
+            "allocated_mb": 124255.32,
+            "peak_allocated_mb": 124255.32,
+            "peak_reserved_mb": 127594.0,
+            "reserved_mb": 127594.0
+          }
+        },
+        "request_id": null,
+        "stages": {
+          "Scheduler.return_result.spill_arrays": 0.05577877163887024,
+          "SchedulerClient.materialize_file_refs": 0.006489921361207962
+        },
+        "steps": [],
+        "total_duration_ms": 42872.96890979633
+      },
+      "model_binding": {
+        "latent_grid": [
+          32,
+          56
+        ],
+        "lora_applied": true,
+        "lora_coverage": {
+          "active_dynamic_layers": 0,
+          "mapped_layers": 208,
+          "mapped_tensors": 416,
+          "merge_mode": "merge",
+          "merged_layers": 208,
+          "wrapped_layers_total": 208
+        },
+        "lora_nickname": "lx2v_4s_v01_544p",
+        "lora_path": "/home/zjy/code/lsy/models/sana-h3-super-official/Minimax-h3-Turbo/minimax_h3_fl2v_turbo_4step_v0.1.safetensors",
+        "lora_scale": 0.0625,
+        "model_profile": "lx2v_4s_v01_544p",
+        "nfe": 4,
+        "off_native_distillation_grid": false,
+        "offgrid_acknowledged_by_sweep": false,
+        "pixel_canvas": [
+          896,
+          512
+        ],
+        "teacher_lora_audit": null
+      },
+      "output_file": "h3tensor://discard/pair-0/seq-1",
+      "output_frames": 124,
+      "phase": "compile_prime_excluded",
+      "repeat": 0,
+      "stage1_audio_decode_s": 13.404987634,
+      "stage1_decode_s": 1.9634462860000002,
+      "stage1_decoder_name": "taeh3",
+      "stage1_encode_mux_s": 0.0,
+      "stage1_tensor_handoff_s": 7.459e-06,
+      "stage1_wall_s": 42.95065510785207,
+      "worker_pre_save_s": 42.87296890979633
+    },
+    "model_load_s": 79.75399760296568,
+    "warmup": {
+      "client_and_transport_residual_s": 0.010102118383244374,
+      "decoder_telemetry": {
+        "audio_decode_cuda_ms": 28.820735931396484,
+        "audio_decode_s": 0.028847349,
+        "audio_latent": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            2,
+            32,
+            207
+          ]
+        },
+        "audio_output": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            1,
+            2,
+            165600
+          ]
+        },
+        "audio_sample_rate": 32000,
+        "cuda_device": 0,
+        "event": "decoder",
+        "hostname": "vllm-inference",
+        "local_rank": 0,
+        "pid": 632957,
+        "post_decoding_cuda_ms": 0.014655999839305878,
+        "post_decoding_s": 2.8759e-05,
+        "rank": 0,
+        "request_sequence": 2,
+        "run_id": null,
+        "schema": "minimax_h3_stage1_decoder_telemetry_v1",
+        "source_latent_cloned_before_decoder": true,
+        "stage1_decode_cuda_ms": 35.544128350913525,
+        "stage1_decode_s": 0.03560076,
+        "stage1_decoder_name": "madebyollin_taeh3",
+        "status": "ok",
+        "taeh3_checkpoint_sha256": "af92965c2d7986a89a757e7cccd26f9eeeff0c3f0d5495eb168aeb2d6d9be9ba",
+        "taehv_commit": "e589fddc076e77f5ba8cd6baabe4ba3260b261cd",
+        "taehv_source_sha256": "28b452ad74f924d2d0922d6b3e805dfa7f504c523ced240435fefad5f6f650a7",
+        "time_unix_ns": 1787987292450579825,
+        "video_latent": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            1,
+            24,
+            37,
+            32,
+            56
+          ]
+        },
+        "video_output": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            1,
+            3,
+            124,
+            512,
+            896
+          ]
+        }
+      },
+      "delivery": {
+        "destination_cuda_complete": true,
+        "tensor_staged": true,
+        "tensor_token": "h3tensor://pair-0/seq-2"
+      },
+      "denoise_telemetry": {
+        "cache_mode": "none",
+        "cache_safety": null,
+        "cached_steps": 0,
+        "computed_forwards": 4,
+        "denoise_total_s": 3.514722376,
+        "error_type": null,
+        "height": 512,
+        "is_warmup": false,
+        "model_binding": {
+          "latent_grid": [
+            32,
+            56
+          ],
+          "lora_applied": true,
+          "lora_coverage": {
+            "active_dynamic_layers": 0,
+            "mapped_layers": 208,
+            "mapped_tensors": 416,
+            "merge_mode": "merge",
+            "merged_layers": 208,
+            "wrapped_layers_total": 208
+          },
+          "lora_nickname": "lx2v_4s_v01_544p",
+          "lora_path": "/home/zjy/code/lsy/models/sana-h3-super-official/Minimax-h3-Turbo/minimax_h3_fl2v_turbo_4step_v0.1.safetensors",
+          "lora_scale": 0.0625,
+          "model_profile": "lx2v_4s_v01_544p",
+          "nfe": 4,
+          "off_native_distillation_grid": false,
+          "offgrid_acknowledged_by_sweep": false,
+          "pixel_canvas": [
+            896,
+            512
+          ],
+          "teacher_lora_audit": null
+        },
+        "nfe": 4,
+        "output_file_name": "warmup_excluded.mp4",
+        "parameters": {
+          "cooldown_steps": 0,
+          "max_continuous_cached_steps": 0,
+          "threshold": null,
+          "warmup_steps": 0
+        },
+        "request_index": 1,
+        "scheduled_steps": 4,
+        "schema_version": 1,
+        "seed": 50803,
+        "status": "ok",
+        "width": 896
+      },
+      "duration": 5.0,
+      "encode_mux_telemetry": {
+        "audio_decode_cuda_ms": 28.820735931396484,
+        "audio_decode_s": 0.028847349,
+        "cuda_device": 0,
+        "destination_cuda_complete": true,
+        "event": "tensor_handoff",
+        "fps": 24.0,
+        "handoff_mode": "direct_tensor",
+        "hostname": "vllm-inference",
+        "local_rank": 0,
+        "mp4_ready": false,
+        "outputs": [
+          {
+            "contiguous": true,
+            "device": "cuda:0",
+            "dtype": "torch.float32",
+            "shape": [
+              1,
+              3,
+              124,
+              512,
+              896
+            ]
+          }
+        ],
+        "phase": "warmup",
+        "pid": 632957,
+        "post_decoding_s": 2.8759e-05,
+        "preprocessing": {
+          "audio": {
+            "contiguous": true,
+            "device": "cuda:0",
+            "dtype": "torch.float32",
+            "shape": [
+              1,
+              2,
+              161333
+            ]
+          },
+          "audio_cpu": {
+            "contiguous": true,
+            "device": "cpu",
+            "dtype": "torch.float32",
+            "shape": [
+              1,
+              2,
+              161333
+            ]
+          },
+          "pinned_buffers_reused": false,
+          "preprocess_and_d2h_s": 0.073149206,
+          "video": {
+            "contiguous": true,
+            "device": "cuda:0",
+            "dtype": "torch.bfloat16",
+            "shape": [
+              1,
+              3,
+              121,
+              384,
+              672
+            ]
+          },
+          "video_cpu": {
+            "contiguous": true,
+            "device": "cpu",
+            "dtype": "torch.bfloat16",
+            "shape": [
+              1,
+              3,
+              121,
+              384,
+              672
+            ]
+          }
+        },
+        "rank": 0,
+        "request_sequence": 2,
+        "run_id": null,
+        "schema": "minimax_h3_stage1_decoder_telemetry_v1",
+        "stage1_decoder_name": "madebyollin_taeh3",
+        "stage1_encode_mux_definition": "not_materialized",
+        "stage1_encode_mux_s": 0.0,
+        "stage1_tensor_handoff_s": 83.466451713,
+        "stage_ack": {
+          "audio_nbytes": 1290664,
+          "copied_to_cuda": true,
+          "pair_id": 0,
+          "protocol": "h3-ltx-tensor-handoff-v1",
+          "schema_version": 1,
+          "seq": 2,
+          "status": "staged",
+          "tensor_token": "h3tensor://pair-0/seq-2",
+          "timing": {
+            "accept_wait_s": 8.9218e-05,
+            "audio_nbytes": 1290664,
+            "h2d_s": 0.004411054775118828,
+            "payload_receive_s": 0.041269437,
+            "receive_and_h2d_s": 0.04568049177511883,
+            "receive_s": 0.041269437,
+            "video_nbytes": 187342848
+          },
+          "video_nbytes": 187342848
+        },
+        "status": "ok",
+        "tensor_handoff_s": 83.466451713,
+        "tensor_staged": true,
+        "tensor_token": "h3tensor://pair-0/seq-2",
+        "time_unix_ns": 1787987292516808222,
+        "writer_sequence": 2
+      },
+      "encoded_duration_s": 5.166666666666667,
+      "h3_denoise_s": 3.514722376,
+      "h3_dit_and_shared_s": 9.46408644261676,
+      "media": null,
+      "metrics": {
+        "memory_snapshots": {
+          "after_forward": {
+            "allocated_mb": 120323.74,
+            "peak_allocated_mb": 128490.61,
+            "peak_reserved_mb": 133712.0,
+            "reserved_mb": 133712.0
+          },
+          "before_forward": {
+            "allocated_mb": 119658.86,
+            "peak_allocated_mb": 119658.86,
+            "peak_reserved_mb": 121372.0,
+            "reserved_mb": 121372.0
+          }
+        },
+        "request_id": null,
+        "stages": {
+          "Scheduler.return_result.spill_arrays": 0.05868915468454361,
+          "SchedulerClient.materialize_file_refs": 0.0074999406933784485
+        },
+        "steps": [],
+        "total_duration_ms": 9528.534551616758
+      },
+      "model_binding": {
+        "latent_grid": [
+          32,
+          56
+        ],
+        "lora_applied": true,
+        "lora_coverage": {
+          "active_dynamic_layers": 0,
+          "mapped_layers": 208,
+          "mapped_tensors": 416,
+          "merge_mode": "merge",
+          "merged_layers": 208,
+          "wrapped_layers_total": 208
+        },
+        "lora_nickname": "lx2v_4s_v01_544p",
+        "lora_path": "/home/zjy/code/lsy/models/sana-h3-super-official/Minimax-h3-Turbo/minimax_h3_fl2v_turbo_4step_v0.1.safetensors",
+        "lora_scale": 0.0625,
+        "model_profile": "lx2v_4s_v01_544p",
+        "nfe": 4,
+        "off_native_distillation_grid": false,
+        "offgrid_acknowledged_by_sweep": false,
+        "pixel_canvas": [
+          896,
+          512
+        ],
+        "teacher_lora_audit": null
+      },
+      "output_file": "h3tensor://pair-0/seq-2",
+      "output_frames": 124,
+      "phase": "warmup_excluded",
+      "repeat": 0,
+      "stage1_audio_decode_s": 0.028847349,
+      "stage1_decode_s": 0.03560076,
+      "stage1_decoder_name": "taeh3",
+      "stage1_encode_mux_s": 0.0,
+      "stage1_tensor_handoff_s": 83.466451713,
+      "stage1_wall_s": 93.005088383,
+      "worker_pre_save_s": 9.528534551616758
+    }
+  },
+  "execution": {
+    "attention": "dense",
+    "cache_mode": "none",
+    "decode_precision": {
+      "binding_verified": "resolved inside pinned decoder stage",
+      "decoder_full_dtype": "stock",
+      "video_vae_decode_precision": "pipeline_default"
+    },
+    "delivery_overlay": {
+      "config": {
+        "decoder_name": "madebyollin_taeh3",
+        "decoder_telemetry_path": "/home/zjy/code/lsy/results/sana-h3-super-official-e2e-b300-20260829T070300Z/pair_0/stage1/decoder_telemetry.jsonl",
+        "direct_handoff": {
+          "auth_token_sha256": "dd1d40d32f779eef7dcb7f102907327dee3554a26e946f8d721a4a8db3dcca77",
+          "endpoint": "tcp://127.0.0.1:31900",
+          "pair_id": 0
+        },
+        "encode_telemetry_path": "/home/zjy/code/lsy/results/sana-h3-super-official-e2e-b300-20260829T070300Z/pair_0/stage1/encode_mux_telemetry.jsonl",
+        "run_id": null,
+        "taeh3_checkpoint_path": "/home/zjy/code/lsy/models/sana-h3-super-official/taehv/taeh3.pth",
+        "taehv_source_path": "/home/zjy/code/lsy/vendor/Sana-sol-engine-b300/models/minimax_h3/super_acceleration/vendor/taeh3/taehv.py"
+      },
+      "delivery_boundary": "direct_preprocess_d2h_binary_stage_through_destination_h2d_ack",
+      "installed": true,
+      "mp4_readability_checked_before_save_outputs_return": false,
+      "name": "minimax_h3_stage1_decoder_telemetry_v1",
+      "pinned_sglang_commit": "12eadf86f12aec2e6f81a6e38b61b964a4c6b529",
+      "pinned_sglang_decoding_sha256": "5e2cf87da11e0c744d6c7703d8151abd7da7937e1ad67d576fdbf6c678380954",
+      "pinned_sglang_decoding_source": "/home/zjy/code/lsy/vendor/sglang-h3-super/python/sglang/multimodal_gen/runtime/pipelines_core/stages/model_specific_stages/minimax_h3/stages/decoding.py",
+      "pinned_sglang_gpu_worker_sha256": "f103c0861a11a36233e8ed71d6aeffa76635882bb5fb0a4fbce2d74fe1eb3f6b",
+      "pinned_sglang_gpu_worker_source": "/home/zjy/code/lsy/vendor/sglang-h3-super/python/sglang/multimodal_gen/runtime/managers/gpu_worker.py",
+      "video_decode_boundary": "cuda_synchronize_before_and_after"
+    },
+    "framework": "SGLang multimodal_gen",
+    "handoff_mode": "direct_tensor",
+    "runtime": {
+      "cuda": "13.0",
+      "gpu_capability": [
+        10,
+        3
+      ],
+      "gpu_name": "NVIDIA B300 SXM6 AC",
+      "lora_bytes": 1383677888,
+      "torch": "2.11.0+cu130",
+      "triton": "3.6.0",
+      "upstream_model_sha256": "5f87319969c446685ee93d422fc34a7c040defb238eff2274d664f2f8310e997",
+      "upstream_model_source": "/home/zjy/code/lsy/vendor/sglang-h3-super/python/sglang/multimodal_gen/runtime/models/dits/minimax_h3.py",
+      "visible_gpu_count": 1
+    },
+    "service_ports": {
+      "http": 28840,
+      "master": 28842,
+      "nccl": 28843,
+      "scheduler": 28841,
+      "strict": true
+    },
+    "sglang_commit": "12eadf86f12aec2e6f81a6e38b61b964a4c6b529",
+    "torch_compile": true,
+    "visible_gpus_per_service": 1
+  },
+  "fps": 24,
+  "h3_dit_and_shared_s": 3.6521889252187263,
+  "hot_repeats": [
+    {
+      "client_and_transport_residual_s": 0.010936952781273789,
+      "decoder_telemetry": {
+        "audio_decode_cuda_ms": 31.789567947387695,
+        "audio_decode_s": 0.031809529,
+        "audio_latent": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            2,
+            32,
+            207
+          ]
+        },
+        "audio_output": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            1,
+            2,
+            165600
+          ]
+        },
+        "audio_sample_rate": 32000,
+        "cuda_device": 0,
+        "event": "decoder",
+        "hostname": "vllm-inference",
+        "local_rank": 0,
+        "pid": 632957,
+        "post_decoding_cuda_ms": 0.01664000004529953,
+        "post_decoding_s": 3.171e-05,
+        "rank": 0,
+        "request_sequence": 3,
+        "run_id": null,
+        "schema": "minimax_h3_stage1_decoder_telemetry_v1",
+        "source_latent_cloned_before_decoder": true,
+        "stage1_decode_cuda_ms": 34.72166471928358,
+        "stage1_decode_s": 0.034778895,
+        "stage1_decoder_name": "madebyollin_taeh3",
+        "status": "ok",
+        "taeh3_checkpoint_sha256": "af92965c2d7986a89a757e7cccd26f9eeeff0c3f0d5495eb168aeb2d6d9be9ba",
+        "taehv_commit": "e589fddc076e77f5ba8cd6baabe4ba3260b261cd",
+        "taehv_source_sha256": "28b452ad74f924d2d0922d6b3e805dfa7f504c523ced240435fefad5f6f650a7",
+        "time_unix_ns": 1787987497002527225,
+        "video_latent": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            1,
+            24,
+            37,
+            32,
+            56
+          ]
+        },
+        "video_output": {
+          "contiguous": true,
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "shape": [
+            1,
+            3,
+            124,
+            512,
+            896
+          ]
+        }
+      },
+      "delivery": {
+        "destination_cuda_complete": true,
+        "tensor_staged": true,
+        "tensor_token": "h3tensor://pair-0/seq-3"
+      },
+      "denoise_telemetry": {
+        "cache_mode": "none",
+        "cache_safety": null,
+        "cached_steps": 0,
+        "computed_forwards": 4,
+        "denoise_total_s": 3.520673918,
+        "error_type": null,
+        "height": 512,
+        "is_warmup": false,
+        "model_binding": {
+          "latent_grid": [
+            32,
+            56
+          ],
+          "lora_applied": true,
+          "lora_coverage": {
+            "active_dynamic_layers": 0,
+            "mapped_layers": 208,
+            "mapped_tensors": 416,
+            "merge_mode": "merge",
+            "merged_layers": 208,
+            "wrapped_layers_total": 208
+          },
+          "lora_nickname": "lx2v_4s_v01_544p",
+          "lora_path": "/home/zjy/code/lsy/models/sana-h3-super-official/Minimax-h3-Turbo/minimax_h3_fl2v_turbo_4step_v0.1.safetensors",
+          "lora_scale": 0.0625,
+          "model_profile": "lx2v_4s_v01_544p",
+          "nfe": 4,
+          "off_native_distillation_grid": false,
+          "offgrid_acknowledged_by_sweep": false,
+          "pixel_canvas": [
+            896,
+            512
+          ],
+          "teacher_lora_audit": null
+        },
+        "nfe": 4,
+        "output_file_name": "hot_00.mp4",
+        "parameters": {
+          "cooldown_steps": 0,
+          "max_continuous_cached_steps": 0,
+          "threshold": null,
+          "warmup_steps": 0
+        },
+        "request_index": 2,
+        "scheduled_steps": 4,
+        "schema_version": 1,
+        "seed": 50803,
+        "status": "ok",
+        "width": 896
+      },
+      "duration": 5.0,
+      "encode_mux_telemetry": {
+        "audio_decode_cuda_ms": 31.789567947387695,
+        "audio_decode_s": 0.031809529,
+        "cuda_device": 0,
+        "destination_cuda_complete": true,
+        "event": "tensor_handoff",
+        "fps": 24.0,
+        "handoff_mode": "direct_tensor",
+        "hostname": "vllm-inference",
+        "local_rank": 0,
+        "mp4_ready": false,
+        "outputs": [
+          {
+            "contiguous": true,
+            "device": "cuda:0",
+            "dtype": "torch.float32",
+            "shape": [
+              1,
+              3,
+              124,
+              512,
+              896
+            ]
+          }
+        ],
+        "phase": "hot",
+        "pid": 632957,
+        "post_decoding_s": 3.171e-05,
+        "preprocessing": {
+          "audio": {
+            "contiguous": true,
+            "device": "cuda:0",
+            "dtype": "torch.float32",
+            "shape": [
+              1,
+              2,
+              161333
+            ]
+          },
+          "audio_cpu": {
+            "contiguous": true,
+            "device": "cpu",
+            "dtype": "torch.float32",
+            "shape": [
+              1,
+              2,
+              161333
+            ]
+          },
+          "pinned_buffers_reused": true,
+          "preprocess_and_d2h_s": 0.004497354,
+          "video": {
+            "contiguous": true,
+            "device": "cuda:0",
+            "dtype": "torch.bfloat16",
+            "shape": [
+              1,
+              3,
+              121,
+              384,
+              672
+            ]
+          },
+          "video_cpu": {
+            "contiguous": true,
+            "device": "cpu",
+            "dtype": "torch.bfloat16",
+            "shape": [
+              1,
+              3,
+              121,
+              384,
+              672
+            ]
+          }
+        },
+        "rank": 0,
+        "request_sequence": 3,
+        "run_id": null,
+        "schema": "minimax_h3_stage1_decoder_telemetry_v1",
+        "stage1_decoder_name": "madebyollin_taeh3",
+        "stage1_encode_mux_definition": "not_materialized",
+        "stage1_encode_mux_s": 0.0,
+        "stage1_tensor_handoff_s": 0.047688761,
+        "stage_ack": {
+          "audio_nbytes": 1290664,
+          "copied_to_cuda": true,
+          "pair_id": 0,
+          "protocol": "h3-ltx-tensor-handoff-v1",
+          "schema_version": 1,
+          "seq": 3,
+          "status": "staged",
+          "tensor_token": "h3tensor://pair-0/seq-3",
+          "timing": {
+            "accept_wait_s": 3.729378089,
+            "audio_nbytes": 1290664,
+            "h2d_s": 0.0034844926558434963,
+            "payload_receive_s": 0.038821018,
+            "receive_and_h2d_s": 0.042305510655843495,
+            "receive_s": 0.038821018,
+            "video_nbytes": 187342848
+          },
+          "video_nbytes": 187342848
+        },
+        "status": "ok",
+        "tensor_handoff_s": 0.047688761,
+        "tensor_staged": true,
+        "tensor_token": "h3tensor://pair-0/seq-3",
+        "time_unix_ns": 1787987497072099762,
+        "writer_sequence": 3
+      },
+      "encoded_duration_s": 5.166666666666667,
+      "h3_denoise_s": 3.520673918,
+      "h3_dit_and_shared_s": 3.6521889252187263,
+      "media": null,
+      "metrics": {
+        "memory_snapshots": {
+          "after_forward": {
+            "allocated_mb": 120976.24,
+            "peak_allocated_mb": 129143.11,
+            "peak_reserved_mb": 134456.0,
+            "reserved_mb": 134456.0
+          },
+          "before_forward": {
+            "allocated_mb": 120311.36,
+            "peak_allocated_mb": 120311.36,
+            "peak_reserved_mb": 122116.0,
+            "reserved_mb": 122116.0
+          }
+        },
+        "request_id": null,
+        "stages": {
+          "Scheduler.return_result.spill_arrays": 0.04048924893140793,
+          "SchedulerClient.materialize_file_refs": 0.005269888788461685
+        },
+        "steps": [],
+        "total_duration_ms": 3718.777349218726
+      },
+      "model_binding": {
+        "latent_grid": [
+          32,
+          56
+        ],
+        "lora_applied": true,
+        "lora_coverage": {
+          "active_dynamic_layers": 0,
+          "mapped_layers": 208,
+          "mapped_tensors": 416,
+          "merge_mode": "merge",
+          "merged_layers": 208,
+          "wrapped_layers_total": 208
+        },
+        "lora_nickname": "lx2v_4s_v01_544p",
+        "lora_path": "/home/zjy/code/lsy/models/sana-h3-super-official/Minimax-h3-Turbo/minimax_h3_fl2v_turbo_4step_v0.1.safetensors",
+        "lora_scale": 0.0625,
+        "model_profile": "lx2v_4s_v01_544p",
+        "nfe": 4,
+        "off_native_distillation_grid": false,
+        "offgrid_acknowledged_by_sweep": false,
+        "pixel_canvas": [
+          896,
+          512
+        ],
+        "teacher_lora_audit": null
+      },
+      "output_file": "h3tensor://pair-0/seq-3",
+      "output_frames": 124,
+      "phase": "hot",
+      "repeat": 0,
+      "stage1_audio_decode_s": 0.031809529,
+      "stage1_decode_s": 0.034778895,
+      "stage1_decoder_name": "taeh3",
+      "stage1_encode_mux_s": 0.0,
+      "stage1_tensor_handoff_s": 0.047688761,
+      "stage1_wall_s": 3.777403063,
+      "worker_pre_save_s": 3.718777349218726
+    }
+  ],
+  "kind": "sglang_minimax_h3_stage1_direct_tensor_single_gb200_hot",
+  "model": {
+    "lora_merge_mode": "merge",
+    "lora_path": "/home/zjy/code/lsy/models/sana-h3-super-official/Minimax-h3-Turbo/minimax_h3_fl2v_turbo_4step_v0.1.safetensors",
+    "lora_scale": 0.0625,
+    "path": "/home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe",
+    "profile": "lx2v_4s_v01_544p"
+  },
+  "output_frames": 124,
+  "prompt": {
+    "first_frame": "/home/zjy/code/lsy/results/sana-h3-super-official-e2e-b300-20260829T070300Z/pair_0/stage1/_input/bamboo-forest-wuxia-pair.jpg",
+    "id": "bamboo-forest-wuxia-pair-en",
+    "index": 3,
+    "seed": 50803,
+    "sha256": "2aac356eccb7a38f2a12abd82018d0b2ad7c2dae759958ab46e2c0daf0523d1b"
+  },
+  "resolution": [
+    896,
+    512
+  ],
+  "schema_version": 1,
+  "stage1_decode_s": 0.034778895,
+  "stage1_decoder_name": "madebyollin/taeh3@e589fddc076e77f5ba8cd6baabe4ba3260b261cd",
+  "stage1_encode_mux_s": 0.0,
+  "stage1_tensor_handoff_s": 0.047688761,
+  "stage1_wall_s": 3.777403063,
+  "status": "complete",
+  "summary_method": "median_of_1_hot_repeats",
+  "video_sigmas": [
+    1.0,
+    0.972972972972973,
+    0.9230769230769231,
+    0.8,
+    0.0
+  ],
+  "wall_boundary": "start immediately before DiffGenerator.generate; stop after Stage-2 acknowledges the staged tensors as destination-CUDA-complete; excludes model load, startup LoRA merge, compile, warmup, and result serialization"
+}

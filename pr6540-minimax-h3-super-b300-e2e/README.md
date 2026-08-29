@@ -1,10 +1,15 @@
-# PR #6540 MiniMax H3 Super B300 E2E evidence
+# PR #6540 MiniMax H3 Super alignment evidence
 
-Static GitHub Pages report for the two-stage MiniMax H3 Super draft → LTX-2.5 refiner E2E run on commit `cc202c4673d34b3fdafdca05d187f34970375f75`.
+Static GitHub Pages evidence for [vllm-project/vllm-omni#6540](https://github.com/vllm-project/vllm-omni/pull/6540).
 
-- Hardware: 2 × NVIDIA B300 SXM6 AC (physical GPUs 2 and 3)
-- Protocol: seed 42, concurrency 1, 1 warmup + 3 measured runs for 5-second and 10-second outputs
-- Validation: 8/8 MP4 files passed stream checks and full ffmpeg decode
-- Page: <https://lishunyang12.github.io/vllm-omni-rankings/pr6540-minimax-h3-super-b300-e2e/>
+The page contains all 24 generated test videos from this investigation:
 
-The exact runner and launch script are published with the raw metadata, results, GPU samples, deploy configuration, and complete logs under `artifacts/`.
+- 4 Sana official-source reproduction artifacts (three Stage 1 intermediates and one final output)
+- 4 vLLM-Omni videos from the known blurred latent-contract failure
+- 4 post-fix videos before rebase
+- 4 post-rebase final-HEAD videos
+- 8 original PR baseline videos retained from the previous page
+
+It also includes per-stage timings, deterministic output hashes, media validation, the blur-regression check, configs, raw logs, and benchmark JSON. “Official-source reproduction” means the NVLabs source path adapted to run on B300; it is not an NVIDIA-published B300 benchmark.
+
+Run `sha256sum -c pr6540-minimax-h3-super-b300-e2e/SHA256SUMS.txt` from the repository root to verify every published MP4.

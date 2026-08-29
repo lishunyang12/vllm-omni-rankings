@@ -1,303 +1,188 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="B300 end-to-end validation evidence for vLLM-Omni PR #6540: MiniMax H3 Super draft to LTX-2.5 refiner.">
-  <title>PR #6540 · MiniMax H3 Super E2E Evidence</title>
+  <meta name="description" content="vLLM-Omni PR #6540 MiniMax H3 Super official-alignment E2E evidence: timings, quality checks, and all 24 generated videos.">
+  <title>PR #6540 · MiniMax H3 Super 对齐与 E2E 证据</title>
   <style>
     :root {
       color-scheme: dark;
-      --ink: #f4f0e8;
-      --muted: #aaa79f;
-      --paper: #111318;
-      --panel: #181b21;
-      --panel-2: #20242c;
-      --line: #343944;
-      --draft: #ff7a3d;
-      --refiner: #55d6be;
-      --residual: #6d7686;
-      --good: #8de37c;
-      --shadow: 0 18px 70px rgba(0, 0, 0, .28);
+      --bg: #071014;
+      --surface: #0d181d;
+      --surface-2: #122229;
+      --line: #263940;
+      --text: #eef6f5;
+      --muted: #9fb2b5;
+      --accent: #67e8c6;
+      --accent-2: #ffb35a;
+      --bad: #ff776d;
+      --good: #72e6a5;
+      --shadow: 0 18px 60px rgba(0,0,0,.28);
+      --radius: 18px;
     }
-
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
       background:
-        radial-gradient(circle at 84% -10%, rgba(85, 214, 190, .12), transparent 32rem),
-        radial-gradient(circle at 6% 10%, rgba(255, 122, 61, .14), transparent 34rem),
-        var(--paper);
-      color: var(--ink);
-      font: 15px/1.6 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        radial-gradient(circle at 18% -8%, rgba(34, 123, 112, .30), transparent 36rem),
+        radial-gradient(circle at 88% 18%, rgba(195, 111, 37, .14), transparent 32rem),
+        var(--bg);
+      color: var(--text);
+      font: 15px/1.65 ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
-
-    a { color: inherit; }
-    code, .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .shell { width: min(1160px, calc(100% - 40px)); margin: 0 auto; }
-
-    nav {
+    a { color: var(--accent); text-underline-offset: 3px; }
+    a:hover { color: #a1f6df; }
+    code {
+      padding: .12rem .35rem;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(0,0,0,.25);
+      color: #d9e9e6;
+      font-size: .88em;
+      overflow-wrap: anywhere;
+    }
+    .wrap { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+    .topbar {
       position: sticky;
       top: 0;
-      z-index: 10;
-      border-bottom: 1px solid rgba(255, 255, 255, .08);
-      background: rgba(17, 19, 24, .86);
+      z-index: 20;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(7,16,20,.86);
       backdrop-filter: blur(18px);
     }
-    .nav-inner {
-      min-height: 58px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 24px;
-    }
-    .brand { font-weight: 760; letter-spacing: -.02em; text-decoration: none; }
-    .brand span { color: var(--draft); }
-    .nav-links { display: flex; align-items: center; gap: 18px; color: var(--muted); font-size: 13px; }
-    .nav-links a { text-decoration: none; }
-    .nav-links a:hover { color: var(--ink); }
-
-    header { padding: 78px 0 54px; }
-    .eyebrow {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 9px;
-      margin-bottom: 20px;
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .13em;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 5px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .035);
-    }
-    .pill.good { color: var(--good); border-color: rgba(141, 227, 124, .32); }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; box-shadow: 0 0 13px currentColor; }
-    h1 {
-      max-width: 880px;
-      margin: 0;
-      font-size: clamp(42px, 7.2vw, 92px);
-      line-height: .96;
-      letter-spacing: -.065em;
-      font-weight: 760;
-    }
-    h1 em { color: var(--draft); font-style: normal; }
-    .lede {
-      max-width: 760px;
-      margin: 30px 0 0;
-      color: #c9c6be;
-      font-size: clamp(17px, 2vw, 21px);
-      line-height: 1.55;
-    }
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px 28px;
-      margin-top: 30px;
-      color: var(--muted);
-      font-size: 13px;
-    }
-    .hero-meta strong { display: block; color: var(--ink); font-size: 14px; font-weight: 650; }
-
-    section { padding: 54px 0; }
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 30px;
-      margin-bottom: 24px;
-    }
-    h2 { margin: 0; font-size: clamp(29px, 4vw, 46px); line-height: 1.05; letter-spacing: -.045em; }
-    .section-kicker { max-width: 570px; margin: 0; color: var(--muted); }
-
-    .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-    .stat {
-      min-height: 154px;
-      padding: 22px;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      background: linear-gradient(145deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
-      box-shadow: var(--shadow);
-    }
-    .stat-label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
-    .stat-value { margin-top: 14px; font-size: clamp(30px, 4vw, 46px); line-height: 1; letter-spacing: -.05em; font-weight: 740; }
-    .stat-note { margin-top: 12px; color: var(--muted); font-size: 12px; }
-
-    .latency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
-    .latency-card { padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
-    .latency-top { display: flex; align-items: baseline; justify-content: space-between; gap: 20px; }
-    .latency-top h3 { margin: 0; font-size: 23px; letter-spacing: -.025em; }
-    .latency-top strong { font-size: 28px; letter-spacing: -.04em; }
-    .bar { display: flex; overflow: hidden; height: 12px; margin: 22px 0 18px; border-radius: 99px; background: #0d0f13; }
-    .bar span { display: block; height: 100%; }
-    .draft { background: var(--draft); }
-    .refiner { background: var(--refiner); }
-    .residual { background: var(--residual); }
-    .legend { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-    .legend-item { color: var(--muted); font-size: 11px; }
-    .legend-item i { display: inline-block; width: 7px; height: 7px; margin-right: 6px; border-radius: 50%; }
-    .legend-item strong { display: block; margin-top: 3px; color: var(--ink); font-size: 15px; }
-
-    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
-    table { width: 100%; min-width: 820px; border-collapse: collapse; }
-    th, td { padding: 14px 16px; text-align: right; border-bottom: 1px solid var(--line); white-space: nowrap; }
-    th:first-child, td:first-child { text-align: left; }
-    th { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .09em; font-weight: 650; }
-    td { font-variant-numeric: tabular-nums; }
+    .topbar .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 58px; gap: 18px; }
+    .brand { color: var(--text); font-weight: 750; text-decoration: none; letter-spacing: -.02em; }
+    nav { display: flex; gap: 18px; flex-wrap: wrap; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 13px; }
+    nav a:hover { color: var(--text); }
+    .hero { padding: 74px 0 44px; }
+    .eyebrow { color: var(--accent); font: 700 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 900px; margin: 14px 0 18px; font-size: clamp(38px, 6vw, 72px); line-height: .98; letter-spacing: -.055em; }
+    .lede { max-width: 820px; margin: 0; color: #c5d4d3; font-size: clamp(17px, 2vw, 21px); line-height: 1.55; }
+    .chips { display: flex; flex-wrap: wrap; gap: 9px; margin: 28px 0 0; }
+    .chip { padding: 7px 11px; border: 1px solid var(--line); border-radius: 999px; color: #bdd0d1; background: rgba(12,27,32,.75); font-size: 12px; }
+    .chip.good { color: var(--good); border-color: rgba(114,230,165,.35); }
+    .chip.warn { color: var(--accent-2); border-color: rgba(255,179,90,.35); }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+    .button { display: inline-flex; align-items: center; gap: 7px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-2); color: var(--text); text-decoration: none; font-weight: 650; }
+    .button.primary { background: var(--accent); border-color: var(--accent); color: #05211a; }
+    section { padding: 32px 0; scroll-margin-top: 70px; }
+    h2 { margin: 0 0 8px; font-size: clamp(28px, 4vw, 42px); line-height: 1.1; letter-spacing: -.035em; }
+    h3 { margin: 0 0 8px; font-size: 19px; letter-spacing: -.015em; }
+    .section-intro { max-width: 820px; margin: 0 0 22px; color: var(--muted); }
+    .grid { display: grid; gap: 16px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .panel { border: 1px solid var(--line); border-radius: var(--radius); background: rgba(13,24,29,.88); box-shadow: var(--shadow); overflow: hidden; }
+    .panel-body { padding: 20px; }
+    .compare-video { width: 100%; aspect-ratio: 7 / 4; display: block; object-fit: cover; background: #020506; }
+    .kicker { color: var(--muted); font: 650 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .08em; text-transform: uppercase; }
+    .fact { padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); }
+    .fact strong { display: block; margin-top: 3px; color: var(--accent); font-size: 28px; line-height: 1.1; letter-spacing: -.04em; }
+    .fact span { color: var(--muted); font-size: 12px; }
+    .callout { padding: 16px 18px; border: 1px solid rgba(255,179,90,.32); border-left: 4px solid var(--accent-2); border-radius: 12px; background: rgba(255,179,90,.06); color: #e9d3b7; }
+    .callout.bad { border-color: rgba(255,119,109,.30); border-left-color: var(--bad); background: rgba(255,119,109,.06); color: #f0c1bc; }
+    .table-shell { border: 1px solid var(--line); border-radius: 14px; overflow-x: auto; background: var(--surface); }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: #aebfc1; background: #102027; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
     tr:last-child td { border-bottom: 0; }
-    tr.warmup td { color: #97948d; background: rgba(255,255,255,.012); }
-    .run-name { color: var(--ink); font-weight: 650; }
-    .kind { display: inline-block; margin-left: 8px; padding: 2px 7px; border: 1px solid var(--line); border-radius: 99px; color: var(--muted); font-size: 10px; text-transform: uppercase; letter-spacing: .06em; }
-    .valid { color: var(--good); }
-
-    .video-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-    .video-card { overflow: hidden; border: 1px solid var(--line); border-radius: 20px; background: var(--panel); box-shadow: var(--shadow); }
-    video { display: block; width: 100%; aspect-ratio: 7 / 4; background: #050607; object-fit: contain; }
-    .video-info { padding: 18px 19px 20px; }
-    .video-title { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
-    .video-title h3 { margin: 0; font-size: 18px; letter-spacing: -.02em; }
-    .video-title a { color: var(--muted); font-size: 12px; text-decoration: none; }
-    .video-title a:hover { color: var(--ink); }
-    .video-meta { display: flex; flex-wrap: wrap; gap: 7px 16px; margin-top: 10px; color: var(--muted); font-size: 12px; }
-    .video-meta strong { color: var(--ink); font-weight: 600; }
-
-    .evidence-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 18px; }
-    .evidence-card { padding: 24px; border: 1px solid var(--line); border-radius: 18px; background: var(--panel); }
-    .evidence-card h3 { margin: 0 0 14px; font-size: 19px; }
-    .facts { display: grid; grid-template-columns: max-content 1fr; gap: 10px 22px; margin: 0; }
-    .facts dt { color: var(--muted); }
-    .facts dd { margin: 0; overflow-wrap: anywhere; }
-    .artifact-list { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .artifact-list a {
-      padding: 12px 13px;
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      color: #d5d2ca;
-      background: var(--panel-2);
-      text-decoration: none;
-      font-size: 13px;
+    td.num { font-variant-numeric: tabular-nums; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; }
+    .ok { color: var(--good); }
+    .fail { color: var(--bad); }
+    .muted { color: var(--muted); }
+    details { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+    summary { cursor: pointer; padding: 13px 16px; font-weight: 700; }
+    details .detail-body { padding: 0 16px 16px; color: var(--muted); }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 22px; }
+    .filter { appearance: none; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--muted); cursor: pointer; }
+    .filter.active { color: #062019; background: var(--accent); border-color: var(--accent); font-weight: 750; }
+    .video-group { margin-top: 32px; }
+    .video-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 13px; }
+    .video-group-head p { margin: 0; color: var(--muted); font-size: 13px; }
+    .video-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .video-card { border: 1px solid var(--line); border-radius: 14px; background: var(--surface); overflow: hidden; box-shadow: 0 10px 28px rgba(0,0,0,.18); }
+    .video-card[data-status="fail"] { border-color: rgba(255,119,109,.45); }
+    .video-card[hidden], .video-group[hidden] { display: none; }
+    .video-card video { width: 100%; aspect-ratio: 16/9; display: block; object-fit: cover; background: #020506; }
+    .video-meta { padding: 13px 14px 15px; }
+    .video-title { display: flex; justify-content: space-between; align-items: start; gap: 8px; font-weight: 720; }
+    .badge { flex: none; padding: 3px 7px; border-radius: 999px; background: rgba(114,230,165,.12); color: var(--good); font-size: 10px; letter-spacing: .05em; text-transform: uppercase; }
+    .badge.fail { background: rgba(255,119,109,.12); color: var(--bad); }
+    .badge.archive { background: rgba(159,178,181,.12); color: var(--muted); }
+    .badge.reference { background: rgba(103,232,198,.12); color: var(--accent); }
+    .video-note { min-height: 39px; margin-top: 6px; color: var(--muted); font-size: 12px; }
+    .video-links { display: flex; gap: 13px; margin-top: 8px; font-size: 12px; }
+    .artifact-list { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+    .artifact-list a { display: block; padding: 11px 13px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); text-decoration: none; }
+    footer { margin-top: 44px; padding: 30px 0 52px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+    @media (max-width: 900px) {
+      .video-grid, .grid.three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      nav { display: none; }
     }
-    .artifact-list a:hover { border-color: var(--draft); color: var(--ink); }
-    details { margin-top: 16px; border-top: 1px solid var(--line); padding-top: 16px; }
-    summary { cursor: pointer; color: #d5d2ca; }
-    details p { color: var(--muted); }
-    .input-preview { width: 100%; margin-top: 14px; border-radius: 12px; border: 1px solid var(--line); }
-    .notice { margin-top: 18px; padding: 16px 18px; border-left: 3px solid #d9ae60; background: rgba(217, 174, 96, .08); color: #d6c6a8; }
-
-    footer { padding: 42px 0 70px; color: var(--muted); border-top: 1px solid var(--line); font-size: 12px; }
-    footer .shell { display: flex; justify-content: space-between; gap: 24px; }
-
-    @media (max-width: 850px) {
-      .summary-grid { grid-template-columns: 1fr 1fr; }
-      .latency-grid, .video-grid, .evidence-grid { grid-template-columns: 1fr; }
-      .section-head { align-items: start; flex-direction: column; gap: 12px; }
-      .nav-links a:not(:last-child) { display: none; }
-    }
-    @media (max-width: 520px) {
-      .shell { width: min(100% - 24px, 1160px); }
-      header { padding-top: 52px; }
-      .summary-grid { grid-template-columns: 1fr; }
-      .legend { grid-template-columns: 1fr; }
-      .artifact-list { grid-template-columns: 1fr; }
-      footer .shell { flex-direction: column; }
+    @media (max-width: 640px) {
+      .wrap { width: min(100% - 22px, 1180px); }
+      .hero { padding-top: 52px; }
+      .grid.two, .grid.three, .video-grid, .artifact-list { grid-template-columns: 1fr; }
+      .video-group-head { display: block; }
+      .video-group-head p { margin-top: 4px; }
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div class="shell nav-inner">
-      <a class="brand" href="#top">vLLM-Omni <span>/ E2E</span></a>
-      <div class="nav-links">
-        <a href="#latency">Latency</a>
-        <a href="#videos">Videos</a>
-        <a href="#evidence">Evidence</a>
-        <a href="https://github.com/vllm-project/vllm-omni/pull/6540">PR #6540 ↗</a>
-      </div>
-    </div>
-  </nav>
-
-  <header id="top">
-    <div class="shell">
-      <div class="eyebrow">
-        <span class="pill good"><span class="dot"></span> 8 / 8 outputs valid</span>
-        <span class="pill">B300 · 2 GPUs</span>
-        <span class="pill">Seed 42</span>
-      </div>
-      <h1>MiniMax H3 Super <em>E2E evidence.</em></h1>
-      <p class="lede">Two-stage image-to-video validation for vLLM-Omni PR #6540: MiniMax H3 Super produces the draft on GPU 2, then LTX-2.5 refines and encodes the final video with audio on GPU 3.</p>
-      <div class="hero-meta">
-        <div><strong>Commit</strong><span class="mono">cc202c4673d3</span></div>
-        <div><strong>Run</strong>2026-08-29 06:02–06:06 UTC</div>
-        <div><strong>Machine</strong><span class="mono">vllm-inference</span></div>
-        <div><strong>Protocol</strong>1 warmup + 3 measured / duration</div>
-      </div>
+  <header class="topbar">
+    <div class="wrap">
+      <a class="brand" href="#top">H3 Super · PR #6540</a>
+      <nav aria-label="页面导航">
+        <a href="#comparison">画面对比</a>
+        <a href="#timings">阶段耗时</a>
+        <a href="#quality">质量核验</a>
+        <a href="#videos">全部视频</a>
+        <a href="#artifacts">原始证据</a>
+      </nav>
     </div>
   </header>
 
-  <main>
-    <section id="latency">
-      <div class="shell">
-        <div class="section-head">
-          <h2>Measured latency</h2>
-          <p class="section-kicker">Means below use the three post-warmup runs at concurrency 1. Request latency spans <span class="mono">Omni.generate</span> through receipt of the complete encoded MP4; startup, file writes, and validation are excluded.</p>
-        </div>
+  <main id="top">
+    <div class="wrap hero">
+      <div class="eyebrow">Official-source alignment · B300 E2E</div>
+      <h1>MiniMax H3 Super<br>对齐、计时与完整视频证据</h1>
+      <p class="lede">先在同机复现 NVLabs Sana 的 H3 Super 官方源码路径，再把 PR #6540 的 LoRA、调度、latent 契约与 decoder 对齐。页面保留全部 24 个生成视频，包括已知模糊失败，便于直接审阅而不是只展示精选结果。</p>
+      <div class="chips">
+        <span class="chip good">最终 HEAD E2E 通过</span>
+        <span class="chip good">3/3 正式输出确定性一致</span>
+        <span class="chip good">24 个视频已归档</span>
+        <span class="chip warn">硬件：2× NVIDIA B300</span>
+        <span class="chip">2026-08-29 UTC</span>
+      </div>
+      <div class="hero-actions">
+        <a class="button primary" href="#comparison">播放最终对比</a>
+        <a class="button" href="https://github.com/vllm-project/vllm-omni/pull/6540">查看 PR #6540</a>
+        <a class="button" href="https://nvlabs.github.io/Sana/Sol-Engine/H3-Super-Acceleration/">NVLabs 官方页面</a>
+      </div>
+    </div>
 
-        <div class="summary-grid">
-          <article class="stat">
-            <div class="stat-label">5s video · E2E</div>
-            <div class="stat-value">8.586s</div>
-            <div class="stat-note">min 8.557 · max 8.624</div>
-          </article>
-          <article class="stat">
-            <div class="stat-label">10s video · E2E</div>
-            <div class="stat-value">18.160s</div>
-            <div class="stat-note">min 18.089 · max 18.267</div>
-          </article>
-          <article class="stat">
-            <div class="stat-label">Stage 0 peak</div>
-            <div class="stat-value">144.8GiB</div>
-            <div class="stat-note">148,262 MiB · physical GPU 2</div>
-          </article>
-          <article class="stat">
-            <div class="stat-label">Stage 1 peak</div>
-            <div class="stat-value">89.5GiB</div>
-            <div class="stat-note">91,640 MiB · physical GPU 3</div>
-          </article>
-        </div>
-
-        <div class="latency-grid">
-          <article class="latency-card">
-            <div class="latency-top"><h3>5-second output</h3><strong>8.586s</strong></div>
-            <div class="bar" aria-label="Stage 0 4.998 seconds, Stage 1 3.403 seconds, orchestration 0.185 seconds">
-              <span class="draft" style="width:58.22%"></span>
-              <span class="refiner" style="width:39.64%"></span>
-              <span class="residual" style="width:2.14%"></span>
-            </div>
-            <div class="legend">
-              <div class="legend-item"><i class="draft"></i>Stage 0 · draft<strong>4.998s</strong></div>
-              <div class="legend-item"><i class="refiner"></i>Stage 1 · refiner<strong>3.403s</strong></div>
-              <div class="legend-item"><i class="residual"></i>Orchestration<strong>0.185s</strong></div>
+    <section id="comparison">
+      <div class="wrap">
+        <h2>同输入、同 prompt、同 seed</h2>
+        <p class="section-intro">两边都使用 bamboo-forest 输入、完整英文对话 prompt 和 seed 50803。左侧是 Sana <code>sol-engine</code> 源码在 B300 上的兼容复现；右侧是 rebase 后最终 vLLM-Omni HEAD。二者算法配置已对齐，但不同 runtime/kernel 的数值轨迹仍会使运动与构图随时间分叉，因此这里不声称像素等价。</p>
+        <div class="grid two">
+          <article class="panel">
+            <video class="compare-video" controls preload="metadata" poster="posters/official/final-hot.jpg" src="videos/official/final-hot.mp4"></video>
+            <div class="panel-body">
+              <div class="kicker">Reference · source reproduction</div>
+              <h3>Sana H3 Super 官方源码路径</h3>
+              <div class="muted">1344×768 · 121 帧 · 24 fps · AAC 32 kHz stereo</div>
             </div>
           </article>
-          <article class="latency-card">
-            <div class="latency-top"><h3>10-second output</h3><strong>18.160s</strong></div>
-            <div class="bar" aria-label="Stage 0 10.817 seconds, Stage 1 6.992 seconds, orchestration 0.352 seconds">
-              <span class="draft" style="width:59.56%"></span>
-              <span class="refiner" style="width:38.50%"></span>
-              <span class="residual" style="width:1.94%"></span>
-            </div>
-            <div class="legend">
-              <div class="legend-item"><i class="draft"></i>Stage 0 · draft<strong>10.817s</strong></div>
-              <div class="legend-item"><i class="refiner"></i>Stage 1 · refiner<strong>6.992s</strong></div>
-              <div class="legend-item"><i class="residual"></i>Orchestration<strong>0.352s</strong></div>
+          <article class="panel">
+            <video class="compare-video" controls preload="metadata" poster="posters/alignment-rebased/05s-measured-3.jpg" src="videos/alignment-rebased/05s-measured-3.mp4"></video>
+            <div class="panel-body">
+              <div class="kicker">Candidate · commit 8c2afe44c</div>
+              <h3>vLLM-Omni 最终 HEAD</h3>
+              <div class="muted">1344×768 · 121 帧 · 24 fps · AAC 32 kHz stereo</div>
             </div>
           </article>
         </div>
@@ -305,23 +190,116 @@
     </section>
 
     <section>
-      <div class="shell">
-        <div class="section-head">
-          <h2>Every run</h2>
-          <p class="section-kicker">Warmup rows are shown for reproducibility but excluded from the means. The first request for each shape may include lazy compilation.</p>
-        </div>
-        <div class="table-wrap">
+      <div class="wrap">
+        <h2>对齐契约</h2>
+        <p class="section-intro">质量修复不是调 prompt，而是恢复官方 pipeline 的推理契约。</p>
+        <div class="table-shell">
           <table>
-            <thead><tr><th>Run</th><th>Stage 0</th><th>Stage 1</th><th>Residual</th><th>E2E wall</th><th>Frames</th><th>Decode</th></tr></thead>
+            <thead><tr><th>项目</th><th>Sana 源码复现</th><th>vLLM-Omni 最终 HEAD</th><th>状态</th></tr></thead>
             <tbody>
-              <tr class="warmup"><td><span class="run-name">05s-warmup-0</span><span class="kind">warmup</span></td><td>13.267s</td><td>3.363s</td><td>0.191s</td><td>16.822s</td><td>121</td><td class="valid">Passed</td></tr>
-              <tr><td><span class="run-name">05s-measured-1</span></td><td>4.954s</td><td>3.415s</td><td>0.189s</td><td>8.557s</td><td>121</td><td class="valid">Passed</td></tr>
-              <tr><td><span class="run-name">05s-measured-2</span></td><td>5.045s</td><td>3.390s</td><td>0.189s</td><td>8.624s</td><td>121</td><td class="valid">Passed</td></tr>
-              <tr><td><span class="run-name">05s-measured-3</span></td><td>4.996s</td><td>3.404s</td><td>0.176s</td><td>8.576s</td><td>121</td><td class="valid">Passed</td></tr>
-              <tr class="warmup"><td><span class="run-name">10s-warmup-0</span><span class="kind">warmup</span></td><td>10.921s</td><td>19.315s</td><td>0.375s</td><td>30.611s</td><td>241</td><td class="valid">Passed</td></tr>
-              <tr><td><span class="run-name">10s-measured-1</span></td><td>10.786s</td><td>6.949s</td><td>0.354s</td><td>18.089s</td><td>241</td><td class="valid">Passed</td></tr>
-              <tr><td><span class="run-name">10s-measured-2</span></td><td>10.811s</td><td>6.964s</td><td>0.351s</td><td>18.125s</td><td>241</td><td class="valid">Passed</td></tr>
-              <tr><td><span class="run-name">10s-measured-3</span></td><td>10.853s</td><td>7.063s</td><td>0.350s</td><td>18.267s</td><td>241</td><td class="valid">Passed</td></tr>
+              <tr><td>输入 / prompt / seed</td><td>bamboo-forest / 完整英文 prompt / 50803</td><td>相同 SHA、prompt SHA、seed</td><td class="ok">对齐</td></tr>
+              <tr><td>H3 Turbo LoRA</td><td><code>4step_v0.1</code>, rank 128, scale 0.0625</td><td>相同文件 SHA 与 runtime scale</td><td class="ok">对齐</td></tr>
+              <tr><td>H3 调度</td><td>video flow shift 12；audio 3；5 sigma 点；4 次 forward</td><td>配置与运行时校验一致</td><td class="ok">对齐</td></tr>
+              <tr><td>LTX refine</td><td>LoRA scale 0.8；3 updates；σ=[.909375,.725,.421875,0]</td><td>phase adapter 支持逐阶段 scale</td><td class="ok">对齐</td></tr>
+              <tr><td>快速 decoder</td><td>Stage 1 TAEH3；Stage 2 TAEHV</td><td>相同 decoder family</td><td class="ok">对齐</td></tr>
+              <tr><td>TAEHV latent</td><td>接收归一化 diffusion latent</td><td>修复前错误反归一化；最终直接解码归一化 latent</td><td class="ok">已修复</td></tr>
+              <tr><td>损失型 attention</td><td>Sol sparse path</td><td>B300 默认 dense BF16 CUDNN；未强制 FP8 SAGE</td><td class="muted">实现不同</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="timings">
+      <div class="wrap">
+        <h2>端到端与阶段耗时</h2>
+        <p class="section-intro">vLLM 口径为 <code>Omni.generate</code> 到完整 MP4 bytes 返回，排除 engine/model 启动、落盘、ffprobe 与解码校验。官方源码 hot run 排除模型加载、compile 与 warmup，并在 Stage 2 mux/verify 后停止。不同 runtime 的计时边界接近但并非严格同构。</p>
+        <div class="grid three" style="margin-bottom:16px">
+          <div class="fact"><span>官方源码复现 hot E2E</span><strong>6.018s</strong><span>1 次 hot；B300 兼容路径</span></div>
+          <div class="fact"><span>vLLM 最终 HEAD 正式均值</span><strong>10.217s</strong><span>1 warmup + 3 measured</span></div>
+          <div class="fact"><span>vLLM 编译完全稳定后均值</span><strong>9.373s</strong><span>measured #2–#3；透明披露</span></div>
+        </div>
+        <div class="table-shell">
+          <table>
+            <thead><tr><th>运行</th><th>样本</th><th>Stage 1: H3 draft</th><th>Stage 2: LTX refine</th><th>E2E wall</th><th>输出</th></tr></thead>
+            <tbody>
+              <tr><td>Sana 官方源码复现</td><td>hot ×1</td><td class="num">3.777s</td><td class="num">2.231s</td><td class="num">6.018s</td><td class="ok">有效</td></tr>
+              <tr><td>vLLM 修复前（已知模糊）</td><td>measured ×3</td><td class="num">5.425s</td><td class="num">3.627s</td><td class="num">9.267s</td><td class="fail">质量失败</td></tr>
+              <tr><td>vLLM 修复后、rebase 前</td><td>measured ×3</td><td class="num">5.411s</td><td class="num">3.572s</td><td class="num">9.193s</td><td class="ok">有效</td></tr>
+              <tr><td>vLLM 最终 HEAD</td><td>measured ×3</td><td class="num">5.723s</td><td class="num">4.311s</td><td class="num">10.217s</td><td class="ok">有效</td></tr>
+              <tr><td>vLLM 最终 HEAD 稳定尾部</td><td>#2–#3</td><td class="num">5.648s</td><td class="num">3.548s</td><td class="num">9.373s</td><td class="ok">有效</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="callout" style="margin-top:14px">最终 HEAD 的 measured #1 Stage 2 为 5.836s，而 #2 / #3 为 3.682s / 3.414s。虽然已有一次 warmup，lazy regional compile 仍在首个正式请求发生一次额外 specialization；主表同时保留原始三次均值与稳定尾部均值，没有删除慢样本。</div>
+
+        <h3 style="margin-top:26px">最终 HEAD：每次正式请求</h3>
+        <div class="table-shell">
+          <table>
+            <thead><tr><th>请求</th><th>H3 draft</th><th>LTX refine</th><th>调度残差</th><th>E2E wall</th><th>SHA256</th></tr></thead>
+            <tbody>
+              <tr><td>measured #1</td><td class="num">5.872s</td><td class="num">5.836s</td><td class="num">0.197s</td><td class="num">11.904s</td><td><code>78f6861f…</code></td></tr>
+              <tr><td>measured #2</td><td class="num">5.951s</td><td class="num">3.682s</td><td class="num">0.182s</td><td class="num">9.815s</td><td><code>78f6861f…</code></td></tr>
+              <tr><td>measured #3</td><td class="num">5.345s</td><td class="num">3.414s</td><td class="num">0.172s</td><td class="num">8.932s</td><td><code>78f6861f…</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid two" style="margin-top:16px">
+          <div>
+            <h3>官方 Stage 1 hot 细分</h3>
+            <div class="table-shell"><table style="min-width:0"><tbody>
+              <tr><td>H3 DiT + shared</td><td class="num">3.652189s</td></tr>
+              <tr><td>其中 denoise</td><td class="num">3.520674s</td></tr>
+              <tr><td>TAEH3 video decode</td><td class="num">0.034779s</td></tr>
+              <tr><td>Audio decode</td><td class="num">0.031810s</td></tr>
+              <tr><td>Tensor handoff</td><td class="num">0.047689s</td></tr>
+              <tr><td><strong>Stage 1 wall</strong></td><td class="num"><strong>3.777403s</strong></td></tr>
+            </tbody></table></div>
+          </div>
+          <div>
+            <h3>官方 Stage 2 hot 细分</h3>
+            <div class="table-shell"><table style="min-width:0"><tbody>
+              <tr><td>Input / Gemma</td><td class="num">0.000658 / 0.064090s</td></tr>
+              <tr><td>Video VAE / upsample</td><td class="num">0.115956 / 0.011156s</td></tr>
+              <tr><td>First-frame / audio / state</td><td class="num">0.054496 / 0.003230 / 0.000740s</td></tr>
+              <tr><td>Joint denoise</td><td class="num">1.574948s</td></tr>
+              <tr><td>TAEHV decode</td><td class="num">0.075022s</td></tr>
+              <tr><td>Mux / verify</td><td class="num">0.323714 / 0.007028s</td></tr>
+              <tr><td><strong>Stage 2 wall</strong></td><td class="num"><strong>2.231452s</strong></td></tr>
+            </tbody></table></div>
+          </div>
+        </div>
+
+        <details style="margin-top:16px">
+          <summary>vLLM 最终 HEAD measured #3 profiler 细分</summary>
+          <div class="detail-body">
+            <p>Stage 1：prompt encode 0.153938s；visual conditions 0.126856s；reference audio conditions 0.000022s；diffuse 4.443441s；TAEH3/audio decode 0.068644s；pipeline forward 4.810205s；stage wrapper 5.345245s。</p>
+            <p>Stage 2：VAE encode 合计 0.137514s；text encoder 0.050358s；pipeline forward 2.688294s；stage wrapper 3.413970s。Profiler 的 forward 为包含型计时，不能与内部项简单相加。</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <section id="quality">
+      <div class="wrap">
+        <h2>质量回归定位与核验</h2>
+        <p class="section-intro">模糊并非 H3 draft 本身导致。根因是 refiner 在送入 TAEHV 前对 diffusion latent 做了错误的反归一化；TAEHV 的训练契约要求直接接收归一化 latent。修复后最终 HEAD 与 rebase 前通过版本逐字节一致。</p>
+        <div class="grid three">
+          <div class="fact"><span>修复前清晰度均值</span><strong style="color:var(--bad)">5.58</strong><span>Laplacian variance · 121 frames</span></div>
+          <div class="fact"><span>官方源码复现</span><strong>52.91</strong><span>Laplacian variance · 121 frames</span></div>
+          <div class="fact"><span>最终 vLLM HEAD</span><strong>63.23</strong><span>Laplacian variance · 121 frames</span></div>
+        </div>
+        <div class="callout bad" style="margin-top:16px">Laplacian variance 只作为模糊回归的机械检查，不是美学评分。官方与 vLLM 视频因生成轨迹随时间分叉，帧对齐 PSNR/SSIM（约 19.18 dB / 0.650）不能被解释为主观质量排名或像素等价证明。</div>
+        <div class="table-shell" style="margin-top:16px">
+          <table>
+            <thead><tr><th>检查</th><th>最终结果</th><th>证据</th></tr></thead>
+            <tbody>
+              <tr><td>容器与完整解码</td><td class="ok">4/4 通过</td><td>H.264 1344×768；121 @ 24fps；AAC stereo 32kHz；ffmpeg full decode</td></tr>
+              <tr><td>正式输出确定性</td><td class="ok">3/3 一致</td><td><code>78f6861f14bbfc987e618325bedb98095ff31fc96cd5ca51ef4d10b61bc1ff92</code></td></tr>
+              <tr><td>修复前 → 修复后</td><td class="ok">模糊回归消失</td><td>Laplacian mean 5.58 → 63.23；抽帧人工检查</td></tr>
+              <tr><td>rebase 前 → 最终 HEAD</td><td class="ok">逐字节一致</td><td>视频 SHA256 完全相同</td></tr>
+              <tr><td>峰值显存（runner reported）</td><td>83,684 MiB</td><td>单请求；2× B300，物理 GPU 2/3</td></tr>
             </tbody>
           </table>
         </div>
@@ -329,93 +307,160 @@
     </section>
 
     <section id="videos">
-      <div class="shell">
-        <div class="section-head">
-          <h2>All generated videos</h2>
-          <p class="section-kicker">Eight original MP4 outputs, including warmups. Every file was independently checked with <span class="mono">ffprobe</span> and fully decoded by <span class="mono">ffmpeg</span>.</p>
+      <div class="wrap">
+        <h2>全部 24 个生成视频</h2>
+        <p class="section-intro">所有 warmup、正式重复、官方 Stage 1 中间产物和早期基线都保留。浏览器只预载 metadata；点击播放时才加载完整视频。</p>
+        <div class="filters" aria-label="视频筛选">
+          <button class="filter active" data-filter="all">全部 24</button>
+          <button class="filter" data-filter="pass">通过</button>
+          <button class="filter" data-filter="reference">官方源码</button>
+          <button class="filter" data-filter="fail">已知失败</button>
+          <button class="filter" data-filter="archive">早期归档</button>
         </div>
-        <div class="video-grid">
-          <article class="video-card">
-            <video controls preload="metadata" poster="posters/05s-warmup-0.jpg"><source src="videos/05s-warmup-0.mp4" type="video/mp4"></video>
-            <div class="video-info"><div class="video-title"><h3>5s · warmup</h3><a href="videos/05s-warmup-0.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>16.822s</strong> wall</span><span>121 frames</span><span class="mono">20268816…</span></div></div>
-          </article>
-          <article class="video-card">
-            <video controls preload="metadata" poster="posters/05s-measured-1.jpg"><source src="videos/05s-measured-1.mp4" type="video/mp4"></video>
-            <div class="video-info"><div class="video-title"><h3>5s · measured 1</h3><a href="videos/05s-measured-1.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>8.557s</strong> wall</span><span>121 frames</span><span class="mono">cb93588a…</span></div></div>
-          </article>
-          <article class="video-card">
-            <video controls preload="metadata" poster="posters/05s-measured-2.jpg"><source src="videos/05s-measured-2.mp4" type="video/mp4"></video>
-            <div class="video-info"><div class="video-title"><h3>5s · measured 2</h3><a href="videos/05s-measured-2.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>8.624s</strong> wall</span><span>121 frames</span><span class="mono">cb93588a…</span></div></div>
-          </article>
-          <article class="video-card">
-            <video controls preload="metadata" poster="posters/05s-measured-3.jpg"><source src="videos/05s-measured-3.mp4" type="video/mp4"></video>
-            <div class="video-info"><div class="video-title"><h3>5s · measured 3</h3><a href="videos/05s-measured-3.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>8.576s</strong> wall</span><span>121 frames</span><span class="mono">cb93588a…</span></div></div>
-          </article>
-          <article class="video-card">
-            <video controls preload="metadata" poster="posters/10s-warmup-0.jpg"><source src="videos/10s-warmup-0.mp4" type="video/mp4"></video>
-            <div class="video-info"><div class="video-title"><h3>10s · warmup</h3><a href="videos/10s-warmup-0.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>30.611s</strong> wall</span><span>241 frames</span><span class="mono">f8fa4d6e…</span></div></div>
-          </article>
-          <article class="video-card">
-            <video controls preload="metadata" poster="posters/10s-measured-1.jpg"><source src="videos/10s-measured-1.mp4" type="video/mp4"></video>
-            <div class="video-info"><div class="video-title"><h3>10s · measured 1</h3><a href="videos/10s-measured-1.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>18.089s</strong> wall</span><span>241 frames</span><span class="mono">f8fa4d6e…</span></div></div>
-          </article>
-          <article class="video-card">
-            <video controls preload="metadata" poster="posters/10s-measured-2.jpg"><source src="videos/10s-measured-2.mp4" type="video/mp4"></video>
-            <div class="video-info"><div class="video-title"><h3>10s · measured 2</h3><a href="videos/10s-measured-2.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>18.125s</strong> wall</span><span>241 frames</span><span class="mono">f8fa4d6e…</span></div></div>
-          </article>
-          <article class="video-card">
-            <video controls preload="metadata" poster="posters/10s-measured-3.jpg"><source src="videos/10s-measured-3.mp4" type="video/mp4"></video>
-            <div class="video-info"><div class="video-title"><h3>10s · measured 3</h3><a href="videos/10s-measured-3.mp4">MP4 ↗</a></div><div class="video-meta"><span><strong>18.267s</strong> wall</span><span>241 frames</span><span class="mono">f8fa4d6e…</span></div></div>
-          </article>
-        </div>
+        <div id="video-groups"></div>
       </div>
     </section>
 
-    <section id="evidence">
-      <div class="shell">
-        <div class="section-head">
-          <h2>Reproducibility</h2>
-          <p class="section-kicker">Machine-readable artifacts are published alongside the rendered evidence so the headline numbers can be audited.</p>
+    <section id="artifacts">
+      <div class="wrap">
+        <h2>原始证据与复现材料</h2>
+        <p class="section-intro">页面上的数字均可回溯到 JSON、原始日志和运行配置。模型权重不随页面发布。</p>
+        <div class="artifact-list">
+          <a href="SHA256SUMS.txt"><strong>全部视频 SHA256 清单</strong><br><span class="muted">24 个 MP4 的完整校验值</span></a>
+          <a href="artifacts/official/e2e-benchmark.json"><strong>官方源码 E2E benchmark</strong><br><span class="muted">边界、身份、handoff 与 hot 总耗时</span></a>
+          <a href="artifacts/official/stage1-benchmark.json"><strong>官方 Stage 1 benchmark</strong><br><span class="muted">H3 denoise、TAEH3 与 handoff telemetry</span></a>
+          <a href="artifacts/official/stage2-benchmark.json"><strong>官方 Stage 2 benchmark</strong><br><span class="muted">refiner 每阶段精确耗时</span></a>
+          <a href="artifacts/official/stage1.log"><strong>官方 Stage 1 log</strong><br><span class="muted">原始运行日志</span></a>
+          <a href="artifacts/official/stage2.log"><strong>官方 Stage 2 log</strong><br><span class="muted">原始运行日志</span></a>
+          <a href="artifacts/alignment-rebased/metadata.json"><strong>最终 HEAD metadata</strong><br><span class="muted">commit、输入 SHA、prompt SHA、seed 与契约</span></a>
+          <a href="artifacts/alignment-rebased/results.json"><strong>最终 HEAD results</strong><br><span class="muted">逐请求耗时、输出 SHA 与媒体校验</span></a>
+          <a href="artifacts/alignment-rebased/run.log"><strong>最终 HEAD full log</strong><br><span class="muted">初始化、profiler 与 shutdown</span></a>
+          <a href="artifacts/alignment-rebased/deploy.yaml"><strong>最终 deploy config</strong><br><span class="muted">两阶段 B300 配置</span></a>
+          <a href="artifacts/alignment-rebased/run_e2e.py"><strong>E2E runner</strong><br><span class="muted">请求、计时、ffprobe 和 full-decode 校验</span></a>
+          <a href="artifacts/alignment-before/results.json"><strong>修复前 results</strong><br><span class="muted">已知模糊失败的完整记录</span></a>
+          <a href="artifacts/alignment-after/results.json"><strong>修复后 results</strong><br><span class="muted">rebase 前通过记录</span></a>
+          <a href="inputs/official-bamboo-forest.jpg"><strong>官方对齐输入图</strong><br><span class="muted">SHA256 23e873c7837d…</span></a>
+          <a href="https://github.com/lishunyang12/vllm-omni/commit/8c2afe44c4e9bf114c872326a0c15ddc6c26a47d"><strong>最终实现 commit</strong><br><span class="muted">8c2afe44c4e9…</span></a>
         </div>
-        <div class="evidence-grid">
-          <article class="evidence-card">
-            <h3>Run contract</h3>
-            <dl class="facts">
-              <dt>Pipeline</dt><dd>MiniMax H3 Super Draft → LTX-2.5 H3 Refiner</dd>
-              <dt>Hardware</dt><dd>2 × NVIDIA B300 SXM6 AC; CUDA 13.0; driver 610.43.02</dd>
-              <dt>Mapping</dt><dd>Stage 0: physical GPU 2 · Stage 1: physical GPU 3</dd>
-              <dt>Software</dt><dd>PyTorch 2.13.0+cu130 · vLLM 0.28.0 · diffusers 0.40.0</dd>
-              <dt>Output</dt><dd>1344 × 768 · 24 fps · H.264 · AAC stereo 32 kHz</dd>
-              <dt>Engine init</dt><dd>115.090s, excluded from request latency</dd>
-              <dt>Commit</dt><dd class="mono">cc202c4673d34b3fdafdca05d187f34970375f75</dd>
-            </dl>
-            <details>
-              <summary>Input and prompt</summary>
-              <img class="input-preview" src="input.png" alt="Input portrait used by all eight E2E runs">
-              <p>A medium close-up of a bearded man in a green-and-white baseball cap, looking at camera and speaking: “I think it’s so good … This got to be, it’s got to be the best tool I’ve ever seen.” The full prompt is preserved in <a href="artifacts/metadata.json">metadata.json</a>.</p>
-            </details>
-          </article>
-          <article class="evidence-card">
-            <h3>Raw artifacts</h3>
-            <div class="artifact-list">
-              <a href="artifacts/results.json">Results JSON ↗</a>
-              <a href="artifacts/metadata.json">Metadata JSON ↗</a>
-              <a href="artifacts/gpu-samples.csv">GPU samples CSV ↗</a>
-              <a href="artifacts/deploy.yaml">Deploy YAML ↗</a>
-              <a href="artifacts/run_e2e.py">E2E runner ↗</a>
-              <a href="artifacts/run.sh">Exact launch script ↗</a>
-              <a href="artifacts/run.log">Complete run log ↗</a>
-              <a href="https://github.com/vllm-project/vllm-omni/pull/6540">Pull request ↗</a>
-            </div>
-            <div class="notice"><strong>Hardware scope.</strong> The shared RTX PRO 5000 host was unreachable from the runner during this validation. These results are B300 evidence and are not labeled as PRO 5000 results.</div>
-          </article>
-        </div>
+        <details style="margin-top:16px">
+          <summary>测试身份与 prompt</summary>
+          <div class="detail-body">
+            <p><strong>Input SHA256:</strong> <code>23e873c7837d02dd0028504677892f35ee58ea3c344e535024dce72e3f448f1d</code><br><strong>Prompt SHA256:</strong> <code>2aac356eccb7a38f2a12abd82018d0b2ad7c2dae759958ab46e2c0daf0523d1b</code><br><strong>Seed:</strong> 50803</p>
+            <p>Use the supplied image as the exact opening frame. Preserve every character's identity, facial features, clothing, hair, environment, camera composition, and lighting. Create one continuous 5-second human speaking shot with natural movement and realistic timing. The two figures remain controlled and still as mist and fine snow drift through the bamboo. The person in white speaks first, and the person in black answers quietly with restrained tension. Dialogue: The person in white says, “You’re late.” The person in black replies, “But I came. Where is it?” The first speaker answers, “Where you would least dare to look.” All dialogue must be spoken in clear, natural English, with accurate phoneme-level lip synchronization, realistic expressions, blinking, breathing, and subtle head motion. Keep natural ambient sound. No subtitles, captions, watermarks, voice-over, extra people, duplicated characters, identity drift, or facial distortion.</p>
+          </div>
+        </details>
+        <div class="callout" style="margin-top:16px">平台说明：NVLabs 公布的是面向 GB200 / Sol Engine 的加速路径。本页“官方源码复现”指从 <code>NVlabs/Sana@d0c0a468</code> 的 <code>sol-engine/models/minimax_h3/super_acceleration</code> 出发，在 B300 上做兼容适配后运行；它不是 NVLabs 官方发布的 B300 benchmark。PRO5000 主机在本轮验证期间 DNS 不可达，因此没有声称 PRO5000 证据。</div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="shell"><span>vLLM-Omni PR #6540 · B300 E2E evidence</span><span>Generated 2026-08-29 UTC</span></div>
+    <div class="wrap">Evidence snapshot for <a href="https://github.com/vllm-project/vllm-omni/pull/6540">vllm-project/vllm-omni#6540</a> · generated 2026-08-29 UTC · all timings are seconds.</div>
   </footer>
+
+  <script>
+    const groups = [
+      {
+        title: "Sana 官方源码路径 · B300 兼容复现",
+        note: "3 个 Stage 1 中间产物 + 1 个最终 refined hot 输出",
+        items: [
+          ["stage1-compile-prime-excluded", "Stage 1 compile prime（排除）", "reference", "896×512 draft；只用于编译预热证据"],
+          ["stage1-warmup-excluded", "Stage 1 warmup（排除）", "reference", "896×512 draft；不计入 hot 耗时"],
+          ["stage1-hot", "Stage 1 hot draft", "reference", "896×512；TAEH3 中间输出"],
+          ["final-hot", "Stage 2 final hot", "pass", "1344×768；官方源码路径最终输出"]
+        ],
+        dir: "official"
+      },
+      {
+        title: "vLLM-Omni 最终 HEAD · rebase 后",
+        note: "commit 8c2afe44c · 1 warmup + 3 measured · 全部完整解码",
+        items: [
+          ["05s-warmup-0", "Warmup #0", "pass", "编译 / warmup，排除在正式均值外"],
+          ["05s-measured-1", "Measured #1", "pass", "E2E 11.904s；含一次延迟 specialization"],
+          ["05s-measured-2", "Measured #2", "pass", "E2E 9.815s"],
+          ["05s-measured-3", "Measured #3", "pass", "E2E 8.932s"]
+        ],
+        dir: "alignment-rebased"
+      },
+      {
+        title: "vLLM-Omni latent 修复后 · rebase 前",
+        note: "质量通过；3 次 measured SHA 完全一致",
+        items: [
+          ["05s-warmup-0", "Warmup #0", "pass", "排除在正式均值外"],
+          ["05s-measured-1", "Measured #1", "pass", "E2E 9.231s"],
+          ["05s-measured-2", "Measured #2", "pass", "E2E 9.202s"],
+          ["05s-measured-3", "Measured #3", "pass", "E2E 9.148s"]
+        ],
+        dir: "alignment-after"
+      },
+      {
+        title: "vLLM-Omni latent 修复前 · 已知质量失败",
+        note: "可解码且确定性一致，但 TAEHV 输入契约错误导致严重模糊",
+        items: [
+          ["05s-warmup-0", "Warmup #0", "fail", "已知模糊；仅保留作回归证据"],
+          ["05s-measured-1", "Measured #1", "fail", "已知模糊；E2E 9.265s"],
+          ["05s-measured-2", "Measured #2", "fail", "已知模糊；E2E 9.303s"],
+          ["05s-measured-3", "Measured #3", "fail", "已知模糊；E2E 9.232s"]
+        ],
+        dir: "alignment-before"
+      },
+      {
+        title: "原 PR B300 基线 · 早期归档",
+        note: "原页面的 seed 42 / 早期配置；保留 5s 与 10s 全部 8 个结果",
+        items: [
+          ["05s-warmup-0", "5s Warmup #0", "archive", "早期基线；排除在正式均值外"],
+          ["05s-measured-1", "5s Measured #1", "archive", "早期基线；E2E 8.557s"],
+          ["05s-measured-2", "5s Measured #2", "archive", "早期基线；E2E 8.624s"],
+          ["05s-measured-3", "5s Measured #3", "archive", "早期基线；E2E 8.576s"],
+          ["10s-warmup-0", "10s Warmup #0", "archive", "早期基线；排除在正式均值外"],
+          ["10s-measured-1", "10s Measured #1", "archive", "早期基线；E2E 18.089s"],
+          ["10s-measured-2", "10s Measured #2", "archive", "早期基线；E2E 18.125s"],
+          ["10s-measured-3", "10s Measured #3", "archive", "早期基线；E2E 18.267s"]
+        ],
+        dir: ""
+      }
+    ];
+
+    const label = { pass: "PASS", fail: "KNOWN FAIL", archive: "ARCHIVE", reference: "REFERENCE" };
+    const host = document.querySelector("#video-groups");
+    for (const group of groups) {
+      const section = document.createElement("section");
+      section.className = "video-group";
+      section.innerHTML = `<div class="video-group-head"><h3>${group.title}</h3><p>${group.note}</p></div><div class="video-grid"></div>`;
+      const grid = section.querySelector(".video-grid");
+      for (const [file, title, status, note] of group.items) {
+        const prefix = group.dir ? `${group.dir}/` : "";
+        const card = document.createElement("article");
+        card.className = "video-card";
+        card.dataset.status = status;
+        card.innerHTML = `
+          <video controls preload="metadata" playsinline poster="posters/${prefix}${file}.jpg" src="videos/${prefix}${file}.mp4"></video>
+          <div class="video-meta">
+            <div class="video-title"><span>${title}</span><span class="badge ${status}">${label[status]}</span></div>
+            <div class="video-note">${note}</div>
+            <div class="video-links"><a href="videos/${prefix}${file}.mp4">打开 MP4</a><a href="posters/${prefix}${file}.jpg">静态帧</a></div>
+          </div>`;
+        grid.appendChild(card);
+      }
+      host.appendChild(section);
+    }
+
+    document.querySelectorAll(".filter").forEach(button => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".filter").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        const filter = button.dataset.filter;
+        document.querySelectorAll(".video-group").forEach(group => {
+          let visible = 0;
+          group.querySelectorAll(".video-card").forEach(card => {
+            const show = filter === "all" || card.dataset.status === filter;
+            card.hidden = !show;
+            if (show) visible += 1;
+          });
+          group.hidden = visible === 0;
+        });
+      });
+    });
+  </script>
 </body>
 </html>

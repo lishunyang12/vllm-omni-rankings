@@ -1,0 +1,429 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "pair_id": 0,
+  "endpoint": "tcp://127.0.0.1:31900",
+  "handoff_mode": "direct_tensor",
+  "hot_repeats_expected": 1,
+  "configuration": {
+    "input_encoder": "official_vae_upsampler",
+    "handoff_mode": "direct_tensor",
+    "direct_tensor_contract": {
+      "video": {
+        "name": "video",
+        "dtype": "bfloat16",
+        "shape": [
+          1,
+          3,
+          121,
+          384,
+          672
+        ],
+        "nbytes": 187342848
+      },
+      "audio": {
+        "name": "audio",
+        "dtype": "float32",
+        "shape": [
+          1,
+          2,
+          161333
+        ],
+        "nbytes": 1290664
+      },
+      "transport": "binary_tcp_loopback_pinned_cpu"
+    },
+    "input_vae_temporal_tile_mode": "full",
+    "input_vae_full_temporal_tile": {
+      "frames": [
+        128,
+        24
+      ],
+      "height": [
+        768,
+        64
+      ],
+      "width": [
+        768,
+        64
+      ]
+    },
+    "highres_first_frame_condition": true,
+    "stage2_audio": true,
+    "output_decoder": "taehv",
+    "stage2_schedule": "default",
+    "sigmas": [
+      0.909375,
+      0.725,
+      0.421875,
+      0.0
+    ],
+    "updates": 3,
+    "attention": "layer0_dense_layers1_47_sol_strict",
+    "compile": "max-autotune-no-cudagraphs",
+    "retain_allocator_cache": true,
+    "compile_cache_root": "/home/zjy/code/lsy/cache/sana-h3-super-official/stage2/b300_sm103_torch211_sol/pair_0"
+  },
+  "excluded": {
+    "model_load_s": 73.3489522235468,
+    "full_warmup": {
+      "status": "succeeded",
+      "index": 0,
+      "source_index": 3,
+      "prompt_id": "bamboo-forest-wuxia-pair-en",
+      "seed": 50803,
+      "prompt_stats": {
+        "characters": 948,
+        "whitespace_words": 137,
+        "raw_tokens_including_bos": 190,
+        "kept_tokens": 190,
+        "max_tokens": 1024,
+        "truncated": false
+      },
+      "source_video": "/dev/null",
+      "highres_first_frame": "/home/zjy/code/lsy/models/sana-h3-super-official/dataset/inputs/i2v_talking/bamboo-forest-wuxia-pair.jpg",
+      "output": "/home/zjy/code/lsy/results/sana-h3-super-official-e2e-b300-20260829T070300Z/pair_0/stage2/videos/.warmup_excluded.mp4",
+      "input_info": {
+        "tensor_token": "h3tensor://pair-0/seq-2",
+        "wire_metadata": {
+          "phase": "warmup",
+          "request_sequence": 2,
+          "fps": 24.0,
+          "audio_sample_rate": 32000,
+          "video_value_range": [
+            -1.0,
+            1.0
+          ],
+          "audio_value_range": [
+            -1.0,
+            1.0
+          ]
+        },
+        "tensor_stage": {
+          "accept_wait_s": 8.9218e-05,
+          "payload_receive_s": 0.041269437,
+          "receive_s": 0.041269437,
+          "h2d_s": 0.004411054775118828,
+          "receive_and_h2d_s": 0.04568049177511883,
+          "video_nbytes": 187342848,
+          "audio_nbytes": 1290664
+        },
+        "transport": "direct_tensor_binary_tcp",
+        "source_width": 896,
+        "source_height": 512,
+        "source_frames": 124,
+        "source_fps": 24.0,
+        "consumed_frames": 121,
+        "dropped_tail_frames": 3,
+        "preprocess": "stage1_cuda_bilinear_resize_then_vae_range",
+        "encoder_backend": "ltx_video_vae",
+        "encoder_input_width": 672,
+        "encoder_input_height": 384,
+        "encoder_pixels_shape": [
+          1,
+          3,
+          121,
+          384,
+          672
+        ],
+        "latent_upsampler": true,
+        "observed_range": [
+          -1.0,
+          1.0
+        ]
+      },
+      "output_info": {
+        "width": 1344,
+        "height": 768,
+        "frames": 121,
+        "fps": 24.0,
+        "duration_s": 5.041666666666667,
+        "bytes": 1602558
+      },
+      "attention": {
+        "backend": "sol",
+        "architecture": "sm100-auto-dispatch",
+        "stage2_taus": [
+          1.0,
+          1.25,
+          1.5
+        ],
+        "thresh_type": "diag",
+        "kv_splits": "auto",
+        "dense_layers": [
+          0
+        ],
+        "sol_layers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "cross_attention": "dense",
+        "compile_boundary": "eager_inner_sol_callable",
+        "completed_steps": 3,
+        "dense_calls": 3,
+        "dense_calls_source": "inferred_from_layer1_entry_after_dense_layer0",
+        "sol_calls": 141,
+        "kernel": {
+          "dispatch_calls": 0,
+          "kernel_calls": 141,
+          "hunyuan_calls": 0,
+          "dense_guard_calls": 0
+        },
+        "selected_backend": "cute_sm100"
+      },
+      "official_vae_tiling": null,
+      "phases_s": {
+        "input_decode_resize_s": 3.157967,
+        "gemma_multimodal_embedding_s": 20.185272,
+        "official_input_video_vae_encode_s": 1.972139,
+        "learned_latent_upsample_s": 1.460163,
+        "highres_first_frame_condition_s": 0.132082,
+        "audio_vae_encode_s": 0.624117,
+        "multimodal_state_prepare_s": 0.220471,
+        "joint_video_audio_stage2_s": 88.505651,
+        "taehv_video_decode_s": 0.69329,
+        "h264_encode_mux_s": 0.391383,
+        "output_verify_s": 0.00731,
+        "per_request_gc_allocator_cleanup_s": 1e-05
+      },
+      "wall_s": 117.350377,
+      "handoff_mode": "direct_tensor",
+      "input": "h3tensor://pair-0/seq-2",
+      "tensor_stage": {
+        "accept_wait_s": 8.9218e-05,
+        "payload_receive_s": 0.041269437,
+        "receive_s": 0.041269437,
+        "h2d_s": 0.004411054775118828,
+        "receive_and_h2d_s": 0.04568049177511883,
+        "video_nbytes": 187342848,
+        "audio_nbytes": 1290664
+      }
+    }
+  },
+  "hot": [
+    {
+      "status": "succeeded",
+      "index": 0,
+      "source_index": 3,
+      "prompt_id": "bamboo-forest-wuxia-pair-en",
+      "seed": 50803,
+      "prompt_stats": {
+        "characters": 948,
+        "whitespace_words": 137,
+        "raw_tokens_including_bos": 190,
+        "kept_tokens": 190,
+        "max_tokens": 1024,
+        "truncated": false
+      },
+      "source_video": "/dev/null",
+      "highres_first_frame": "/home/zjy/code/lsy/models/sana-h3-super-official/dataset/inputs/i2v_talking/bamboo-forest-wuxia-pair.jpg",
+      "output": "/home/zjy/code/lsy/results/sana-h3-super-official-e2e-b300-20260829T070300Z/pair_0/stage2/videos/hot_00_refined_1344x768_121f.mp4",
+      "input_info": {
+        "tensor_token": "h3tensor://pair-0/seq-3",
+        "wire_metadata": {
+          "phase": "hot",
+          "request_sequence": 3,
+          "fps": 24.0,
+          "audio_sample_rate": 32000,
+          "video_value_range": [
+            -1.0,
+            1.0
+          ],
+          "audio_value_range": [
+            -1.0,
+            1.0
+          ]
+        },
+        "tensor_stage": {
+          "accept_wait_s": 3.729378089,
+          "payload_receive_s": 0.038821018,
+          "receive_s": 0.038821018,
+          "h2d_s": 0.0034844926558434963,
+          "receive_and_h2d_s": 0.042305510655843495,
+          "video_nbytes": 187342848,
+          "audio_nbytes": 1290664
+        },
+        "transport": "direct_tensor_binary_tcp",
+        "source_width": 896,
+        "source_height": 512,
+        "source_frames": 124,
+        "source_fps": 24.0,
+        "consumed_frames": 121,
+        "dropped_tail_frames": 3,
+        "preprocess": "stage1_cuda_bilinear_resize_then_vae_range",
+        "encoder_backend": "ltx_video_vae",
+        "encoder_input_width": 672,
+        "encoder_input_height": 384,
+        "encoder_pixels_shape": [
+          1,
+          3,
+          121,
+          384,
+          672
+        ],
+        "latent_upsampler": true,
+        "observed_range": [
+          -1.0,
+          1.0
+        ]
+      },
+      "output_info": {
+        "width": 1344,
+        "height": 768,
+        "frames": 121,
+        "fps": 24.0,
+        "duration_s": 5.041666666666667,
+        "bytes": 1602558
+      },
+      "attention": {
+        "backend": "sol",
+        "architecture": "sm100-auto-dispatch",
+        "stage2_taus": [
+          1.0,
+          1.25,
+          1.5
+        ],
+        "thresh_type": "diag",
+        "kv_splits": "auto",
+        "dense_layers": [
+          0
+        ],
+        "sol_layers": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46,
+          47
+        ],
+        "cross_attention": "dense",
+        "compile_boundary": "eager_inner_sol_callable",
+        "completed_steps": 3,
+        "dense_calls": 3,
+        "dense_calls_source": "inferred_from_layer1_entry_after_dense_layer0",
+        "sol_calls": 141,
+        "kernel": {
+          "dispatch_calls": 0,
+          "kernel_calls": 141,
+          "hunyuan_calls": 0,
+          "dense_guard_calls": 0
+        },
+        "selected_backend": "cute_sm100"
+      },
+      "official_vae_tiling": null,
+      "phases_s": {
+        "input_decode_resize_s": 0.000658,
+        "gemma_multimodal_embedding_s": 0.06409,
+        "official_input_video_vae_encode_s": 0.115956,
+        "learned_latent_upsample_s": 0.011156,
+        "highres_first_frame_condition_s": 0.054496,
+        "audio_vae_encode_s": 0.00323,
+        "multimodal_state_prepare_s": 0.00074,
+        "joint_video_audio_stage2_s": 1.574948,
+        "taehv_video_decode_s": 0.075022,
+        "h264_encode_mux_s": 0.323714,
+        "output_verify_s": 0.007028,
+        "per_request_gc_allocator_cleanup_s": 1e-05
+      },
+      "wall_s": 2.231452,
+      "handoff_mode": "direct_tensor",
+      "input": "h3tensor://pair-0/seq-3",
+      "tensor_stage": {
+        "accept_wait_s": 3.729378089,
+        "payload_receive_s": 0.038821018,
+        "receive_s": 0.038821018,
+        "h2d_s": 0.0034844926558434963,
+        "receive_and_h2d_s": 0.042305510655843495,
+        "video_nbytes": 187342848,
+        "audio_nbytes": 1290664
+      },
+      "repeat": 0
+    }
+  ]
+}

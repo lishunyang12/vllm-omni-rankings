@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-29T07:36:39.540617+00:00",
+  "pull_request": "https://github.com/vllm-project/vllm-omni/pull/6540",
+  "commit": "cc202c4673d34b3fdafdca05d187f34970375f75",
+  "dirty_diff_sha256": "a99161b32620e626127597decb4306b4890f84e55762c4e620ab785a7f06da66",
+  "hostname": "vllm-inference",
+  "physical_gpus": [
+    2,
+    3
+  ],
+  "visible_logical_gpus": [
+    0,
+    1
+  ],
+  "input_image": "/home/zjy/code/lsy/models/sana-h3-super-official/dataset/inputs/i2v_talking/bamboo-forest-wuxia-pair.jpg",
+  "input_sha256": "23e873c7837d02dd0028504677892f35ee58ea3c344e535024dce72e3f448f1d",
+  "prompt": "Use the supplied image as the exact opening frame. Preserve every character's identity, facial features, clothing, hair, environment, camera composition, and lighting. Create one continuous 5-second human speaking shot with natural movement and realistic timing. The two figures remain controlled and still as mist and fine snow drift through the bamboo. The person in white speaks first, and the person in black answers quietly with restrained tension. Dialogue: The person in white says, \u201cYou\u2019re late.\u201d The person in black replies, \u201cBut I came. Where is it?\u201d The first speaker answers, \u201cWhere you would least dare to look.\u201d All dialogue must be spoken in clear, natural English, with accurate phoneme-level lip synchronization, realistic expressions, blinking, breathing, and subtle head motion. Keep natural ambient sound. No subtitles, captions, watermarks, voice-over, extra people, duplicated characters, identity drift, or facial distortion.",
+  "prompt_sha256": "2aac356eccb7a38f2a12abd82018d0b2ad7c2dae759958ab46e2c0daf0523d1b",
+  "seed": 50803,
+  "official_alignment": {
+    "h3_lora": "minimax_h3_fl2v_turbo_4step_v0.1.safetensors",
+    "h3_lora_sha256": "5ff4a12c8b4599fec716e1b15a45e504e0d1129111896bdcde5ac4a15e395b29",
+    "h3_lora_scale": 0.0625,
+    "h3_video_flow_shift": 12.0,
+    "h3_audio_flow_shift": 3.0,
+    "h3_sigma_points": 5,
+    "h3_transformer_forwards": 4,
+    "ltx_lora_scale": 0.8,
+    "ltx_sigmas": [
+      0.909375,
+      0.725,
+      0.421875,
+      0.0
+    ],
+    "lossy_stage1_attention_override": null
+  },
+  "protocol": {
+    "duration_seconds": 5,
+    "warmups": 1,
+    "measured_repeats": 3,
+    "request_concurrency": 1,
+    "latency_scope": "Omni.generate through receipt of complete encoded MP4 bytes",
+    "excluded": "engine/model startup, output write, ffprobe, and ffmpeg decode validation"
+  },
+  "software": {
+    "python": "3.12.3"
+  },
+  "deploy_config": "/home/zjy/code/lsy/results/pr6540-aligned-normalized-taehv-b300-20260829T073549Z/deploy.yaml",
+  "environment": {
+    "CUDA_VISIBLE_DEVICES": "2,3",
+    "VLLM_WORKER_MULTIPROC_METHOD": "spawn",
+    "VLLM_OMNI_VIDEO_SYNC_TIMEOUT": "14400",
+    "TORCHINDUCTOR_CACHE_DIR": "/home/zjy/code/lsy/results/pr6540-aligned-b300-e2e-20260829T072419Z/cache/torchinductor",
+    "TRITON_CACHE_DIR": "/home/zjy/code/lsy/results/pr6540-aligned-b300-e2e-20260829T072419Z/cache/triton"
+  },
+  "engine_init_s": 156.72239265684038
+}

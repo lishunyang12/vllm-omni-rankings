@@ -1,0 +1,235 @@
+Skipping pipeline module sglang.multimodal_gen.runtime.pipelines.hunyuan3d_pipeline during discovery due to import failure: No module named 'trimesh'
+[08-29 07:06:00] Applying performance_mode=speed
+[93m[08-29 07:06:00] Both --warmup-mode and the deprecated --warmup/--server-warmup were set; --warmup-mode=off takes precedence.[0;0m
+[08-29 07:06:00] server_args: {"model_path": "/home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe", "model_subfolder": "FL2VA", "model_variant": "fl2va", "model_id": null, "backend": "auto", "attention_backend": null, "attention_backend_config": {}, "component_attention_backends": {}, "cache_dit_config": null, "nccl_port": 28843, "trust_remote_code": false, "revision": "bfc8ed0353f5a9733be73e6b2c98ec0948195b86", "num_gpus": 1, "performance_mode": "speed", "base_gpu_id": 0, "gpu_ids": null, "tp_size": 1, "sp_degree": 1, "ulysses_degree": 1, "ring_degree": 1, "dp_size": 1, "dp_degree": 1, "enable_cfg_parallel": false, "cfg_parallel_degree": 1, "encoder_parallel": "auto", "hsdp_replicate_dim": 1, "hsdp_shard_dim": 1, "dist_timeout": 3600, "pipeline_class_name": null, "lora_path": "/home/zjy/code/lsy/models/sana-h3-super-official/Minimax-h3-Turbo/minimax_h3_fl2v_turbo_4step_v0.1.safetensors", "lora_nickname": "lx2v_4s_v01_544p", "lora_scale": 0.0625, "lora_merge_mode": "merge", "lora_weight_name": null, "component_paths": {}, "transformer_weights_path": null, "component_transformer_weights_paths": {}, "quantization": null, "quantization_ignored_layers": null, "lora_target_modules": ["qkv_proj", "out_proj", "mlp.fc1", "mlp.fc2"], "dit_cpu_offload": false, "dit_layerwise_offload": false, "layerwise_offload_components": [], "dit_offload_prefetch_size": 0.0, "dit_layerwise_resident_layers": 0.0, "offload_during_compile": false, "text_encoder_cpu_offload": false, "image_encoder_cpu_offload": false, "vae_cpu_offload": false, "use_fsdp_inference": false, "pin_cpu_memory": true, "ltx2_two_stage_device_mode": null, "comfyui_mode": false, "enable_torch_compile": true, "regional_compile": false, "enable_breakable_cuda_graph": false, "bcg_text_buckets": null, "enable_layerwise_nvtx_marker": false, "warmup_mode": "off", "warmup": false, "server_warmup": false, "warmup_resolutions": null, "warmup_steps": 1, "disable_autocast": false, "master_port": 28842, "host": "127.0.0.1", "port": 28840, "webui": false, "webui_port": 12312, "scheduler_port": 28841, "batching_mode": "dynamic", "batching_max_size": 1, "batching_delay_ms": 0.0, "batching_config": null, "enable_batching_metrics": false, "strict_ports": true, "output_path": "outputs/", "input_save_path": "inputs/uploads", "prompt_file_path": null, "model_paths": {}, "model_loaded": {"transformer": true, "vae": true, "video_vae": true, "audio_vae": true, "video_dit": true, "audio_dit": true, "dual_tower_bridge": true}, "boundary_ratio": null, "disagg_role": "monolithic", "disagg_timeout": 3600, "disagg_downstream_wait_timeout": 1800, "disagg_dispatch_policy": "round_robin", "disagg_mode": false, "disagg_instance_id": 0, "disagg_max_slots_per_instance": 8, "disagg_transfer_redundancy": 1.25, "disagg_role_device": "auto", "disagg_transfer_backend": "auto", "disagg_transfer_pool_size": 268435456, "disagg_transfer_pin_memory": "auto", "disagg_p2p_hostname": "127.0.0.1", "disagg_ib_device": null, "disagg_server_addr": null, "encoder_urls": null, "denoiser_urls": null, "decoder_urls": null, "encoder_tp": null, "denoiser_tp": null, "denoiser_sp": null, "denoiser_ulysses": null, "denoiser_ring": null, "decoder_sp": null, "decoder_tp": null, "pool_work_endpoint": null, "pool_result_endpoint": null, "pool_control_endpoint": null, "pool_control_advertised_endpoint": null, "log_level": "info", "log_requests": false, "log_requests_level": 2, "log_requests_format": "text", "log_requests_target": null, "uvicorn_access_log_exclude_prefixes": [], "enable_trace": false, "otlp_traces_endpoint": "localhost:4317", "srt_encoder_url": null, "srt_encoder_connect_timeout": 3.05, "srt_encoder_timeout": 100, "pe_server_url": null}
+[08-29 07:06:00] Local mode: True
+[08-29 07:06:00] Starting server...
+[08-29 07:06:07] Scheduler bind at endpoint: tcp://127.0.0.1:28841
+[08-29 07:06:12] torch.compile cache: TORCHINDUCTOR_CACHE_DIR=/home/zjy/code/lsy/results/sana-h3-super-cache/stage1/b300_sm103_torch211_sglang12eadf86/896x512_124f_lora4_taeh3/inductor TRITON_CACHE_DIR=/home/zjy/code/lsy/results/sana-h3-super-cache/stage1/b300_sm103_torch211_sglang12eadf86/896x512_124f_lora4_taeh3/triton
+[08-29 07:06:12] Initializing distributed environment with world_size=1, device=cuda:0, timeout=3600
+[08-29 07:06:12] Setting distributed timeout to 3600 seconds
+[08-29 07:06:31] No pipeline_class_name specified, using model_index.json
+[93m[08-29 07:06:31] Skipping pipeline module sglang.multimodal_gen.runtime.pipelines.hunyuan3d_pipeline during discovery due to import failure: No module named 'trimesh'[0;0m
+[08-29 07:06:31] Using pipeline from model_index.json: MiniMaxH3Pipeline
+[08-29 07:06:31] Loading pipeline modules...
+[08-29 07:06:31] Model path: /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA
+[08-29 07:06:31] Diffusers version: 0.32.2
+[08-29 07:06:31] Loading pipeline modules from config: {'_class_name': 'MiniMaxH3Pipeline', '_diffusers_version': '0.32.2', 'text_encoder': ['transformers', 'MiniMaxH3Qwen3VLHFEncoder'], 'tokenizer': ['transformers', 'Qwen2TokenizerFast'], 'video_vae': ['diffusers', 'MiniMaxH3VideoVAE'], 'audio_vae': ['diffusers', 'MiniMaxH3AudioVAE'], 'scheduler': None, 'transformer': ['diffusers', 'MiniMaxH3DiTModel'], 'processor': ['transformers', 'Qwen3VLProcessor'], '_minimax_h3': {'schema_version': 1, 'partition': 'fl2va', 'tasks': ['t2va', 'fl2va'], 'task_aliases': {}, 'sigma_shift_scales': {'video': 12.0, 'audio': 3.0}}}
+[08-29 07:06:31] Loading required components: ['processor', 'text_encoder', 'tokenizer', 'video_vae', 'audio_vae', 'transformer']
+[08-29 07:06:31] Memory-aware component load order: ['text_encoder', 'transformer', 'audio_vae', 'video_vae', 'processor', 'tokenizer']
+Loading required modules:   0%|          | 0/6 [00:00<?, ?it/s][08-29 07:06:31] Loading text_encoder from /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA/text_encoder. avail mem: 261.86 GB
+[ERROR] `loss` is part of Qwen3VLCausalLMOutputWithPast.__init__'s signature, but not documented. Make sure to add it to the docstring of the function in /home/zjy/code/lsy/envs/sana-h3-super/lib/python3.13/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py.
+[ERROR] `logits` is part of Qwen3VLCausalLMOutputWithPast.__init__'s signature, but not documented. Make sure to add it to the docstring of the function in /home/zjy/code/lsy/envs/sana-h3-super/lib/python3.13/site-packages/transformers/models/qwen3_vl/modeling_qwen3_vl.py.
+
+Loading safetensors checkpoint shards:   0% Completed | 0/12 [00:00<?, ?it/s]
+[A
+Loading safetensors checkpoint shards:   8% Completed | 1/12 [00:01<00:11,  1.07s/it]
+[A
+Loading safetensors checkpoint shards:  17% Completed | 2/12 [00:01<00:07,  1.38it/s]
+[A
+Loading safetensors checkpoint shards:  25% Completed | 3/12 [00:02<00:05,  1.63it/s]
+[A
+Loading safetensors checkpoint shards:  33% Completed | 4/12 [00:02<00:04,  1.78it/s]
+[A
+Loading safetensors checkpoint shards:  42% Completed | 5/12 [00:03<00:03,  1.87it/s]
+[A
+Loading safetensors checkpoint shards:  50% Completed | 6/12 [00:03<00:03,  1.93it/s]
+[A
+Loading safetensors checkpoint shards:  58% Completed | 7/12 [00:03<00:02,  1.97it/s]
+[A
+Loading safetensors checkpoint shards:  67% Completed | 8/12 [00:04<00:01,  2.00it/s]
+[A
+Loading safetensors checkpoint shards:  75% Completed | 9/12 [00:04<00:01,  2.01it/s]
+[A
+Loading safetensors checkpoint shards:  83% Completed | 10/12 [00:05<00:00,  2.01it/s]
+[A
+Loading safetensors checkpoint shards:  92% Completed | 11/12 [00:05<00:00,  2.57it/s]
+[A
+Loading safetensors checkpoint shards: 100% Completed | 12/12 [00:05<00:00,  3.17it/s]
+[ALoading safetensors checkpoint shards: 100% Completed | 12/12 [00:05<00:00,  2.09it/s]
+
+[08-29 07:06:42] Loaded text_encoder: MiniMaxH3Qwen3VLEncoder (sgl-diffusion version). model size: 47.97 GB, consumed GPU mem: 48.01 GB, avail GPU mem: 213.86 GB
+[08-29 07:06:42] Attention backends for text_encoder: fa
+Loading required modules:  17%|█▋        | 1/6 [00:11<00:57, 11.41s/it][08-29 07:06:42] Loading transformer from /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA/transformer. avail mem: 213.86 GB
+[08-29 07:06:42] Loading MiniMaxH3DiTModel from 13 safetensors file(s) , param_dtype: torch.bfloat16
+
+Loading safetensors checkpoint shards:   0% Completed | 0/13 [00:00<?, ?it/s]
+[ALoading safetensors checkpoint shards: 100% Completed | 13/13 [00:00<00:00, 1919.52it/s]
+
+[08-29 07:06:55] Loaded transformer: MiniMaxH3DiTModel (sgl-diffusion version). model size: 61.73 GB, consumed GPU mem: 65.21 GB, avail GPU mem: 148.64 GB
+Loading required modules:  33%|███▎      | 2/6 [00:23<00:47, 11.95s/it][08-29 07:06:55] Loading audio_vae from /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA/audio_vae. avail mem: 148.64 GB
+[08-29 07:06:55] Loaded audio_vae: MiniMaxH3AudioVAE (sgl-diffusion version). model size: 0.56 GB, consumed GPU mem: 0.02 GB, avail GPU mem: 148.62 GB
+Loading required modules:  50%|█████     | 3/6 [00:24<00:19,  6.63s/it][08-29 07:06:55] Loading video_vae from /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA/video_vae. avail mem: 148.62 GB
+[08-29 07:06:58] Loaded video_vae: MiniMaxH3VideoVAE (sgl-diffusion version). model size: 9.7 GB, consumed GPU mem: 7.77 GB, avail GPU mem: 140.85 GB
+Loading required modules:  67%|██████▋   | 4/6 [00:26<00:10,  5.09s/it][08-29 07:06:58] Loading processor from /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA/processor. avail mem: 140.85 GB
+[08-29 07:06:58] Loaded processor: Qwen3VLProcessor (sgl-diffusion version). model size: NA GB, consumed GPU mem: 0.00 GB, avail GPU mem: 140.85 GB
+Loading required modules:  83%|████████▎ | 5/6 [00:26<00:03,  3.32s/it][08-29 07:06:58] Loading tokenizer from /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA/tokenizer. avail mem: 140.85 GB
+[08-29 07:06:58] Loaded tokenizer: Qwen2Tokenizer (sgl-diffusion version). model size: NA GB, consumed GPU mem: 0.00 GB, avail GPU mem: 140.85 GB
+Loading required modules: 100%|██████████| 6/6 [00:27<00:00,  2.25s/it]Loading required modules: 100%|██████████| 6/6 [00:27<00:00,  4.52s/it]
+[08-29 07:06:58] Creating pipeline stages...
+[08-29 07:06:58] Compiling transformer with mode: max-autotune-no-cudagraphs
+[08-29 07:06:58] Using fa attention backend
+[08-29 07:07:18] Converted 208 layers to LoRA layers
+[08-29 07:07:18] [LoRAFormatAdapter] normalize_lora_state_dict called, #keys=624
+[08-29 07:07:18] [LoRAFormatAdapter] before convert, sample keys (<=20): token_refiner.refiner_blocks.0.attn.to_k.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_k.lora_B.default.weight, token_refiner.refiner_blocks.0.attn.to_out.0.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_out.0.lora_B.default.weight, token_refiner.refiner_blocks.0.attn.to_q.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_q.lora_B.default.weight, token_refiner.refiner_blocks.0.attn.to_v.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_v.lora_B.default.weight, token_refiner.refiner_blocks.0.ff.net.0.proj.lora_A.default.weight, token_refiner.refiner_blocks.0.ff.net.0.proj.lora_B.default.weight, token_refiner.refiner_blocks.0.ff.net.2.lora_A.default.weight, token_refiner.refiner_blocks.0.ff.net.2.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_k.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_k.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_out.0.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_out.0.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_q.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_q.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_v.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_v.lora_B.default.weight
+[08-29 07:07:18] [LoRAFormatAdapter] detected format: LoRAFormat.STANDARD
+[08-29 07:07:18] [LoRAFormatAdapter] diffusers.lora_conversion_utils converted keys, sample keys (<=20): token_refiner.refiner_blocks.0.attn.to_k.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_k.lora_B.default.weight, token_refiner.refiner_blocks.0.attn.to_out.0.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_out.0.lora_B.default.weight, token_refiner.refiner_blocks.0.attn.to_q.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_q.lora_B.default.weight, token_refiner.refiner_blocks.0.attn.to_v.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_v.lora_B.default.weight, token_refiner.refiner_blocks.0.ff.net.0.proj.lora_A.default.weight, token_refiner.refiner_blocks.0.ff.net.0.proj.lora_B.default.weight, token_refiner.refiner_blocks.0.ff.net.2.lora_A.default.weight, token_refiner.refiner_blocks.0.ff.net.2.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_k.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_k.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_out.0.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_out.0.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_q.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_q.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_v.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_v.lora_B.default.weight
+[08-29 07:07:18] [LoRAFormatAdapter] after convert, sample keys (<=20): token_refiner.refiner_blocks.0.attn.to_k.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_k.lora_B.default.weight, token_refiner.refiner_blocks.0.attn.to_out.0.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_out.0.lora_B.default.weight, token_refiner.refiner_blocks.0.attn.to_q.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_q.lora_B.default.weight, token_refiner.refiner_blocks.0.attn.to_v.lora_A.default.weight, token_refiner.refiner_blocks.0.attn.to_v.lora_B.default.weight, token_refiner.refiner_blocks.0.ff.net.0.proj.lora_A.default.weight, token_refiner.refiner_blocks.0.ff.net.0.proj.lora_B.default.weight, token_refiner.refiner_blocks.0.ff.net.2.lora_A.default.weight, token_refiner.refiner_blocks.0.ff.net.2.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_k.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_k.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_out.0.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_out.0.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_q.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_q.lora_B.default.weight, token_refiner.refiner_blocks.1.attn.to_v.lora_A.default.weight, token_refiner.refiner_blocks.1.attn.to_v.lora_B.default.weight
+[08-29 07:07:19] Rank 0: loaded LoRA adapter /home/zjy/code/lsy/models/sana-h3-super-official/Minimax-h3-Turbo/minimax_h3_fl2v_turbo_4step_v0.1.safetensors
+[08-29 07:07:20] Rank 0: LoRA adapter(s) /home/zjy/code/lsy/models/sana-h3-super-official/Minimax-h3-Turbo/minimax_h3_fl2v_turbo_4step_v0.1.safetensors applied to 208 layers (targets: all, strengths: 0.06, merge_mode=merge)
+[08-29 07:07:20] Pipeline instantiated
+[08-29 07:07:20] Worker 0: Initialized device, model, and distributed environment.
+[08-29 07:07:20] Worker 0: Scheduler loop started.
+[08-29 07:07:20] Adjusting number of frames from 1 to 1 based on model
+[08-29 07:07:20] Processing 1 grouped request(s)
+[08-29 07:07:20] Sampling params:
+                       width: 896
+                      height: 512
+                  num_frames: 124
+                         fps: 24
+                      prompt: <redacted, len=948>
+                  neg_prompt: None
+                        seed: 50803
+                 infer_steps: 5
+      num_outputs_per_prompt: 1
+              guidance_scale: 1.0
+     embedded_guidance_scale: 6.0
+                    n_tokens: None
+                  flow_shift: 12.0
+                  image_path: None
+                 save_output: True
+            output_file_path: /home/zjy/code/lsy/results/sana-h3-super-official-e2e-b300-20260829T070300Z/pair_0/stage1/videos/compile_prime_excluded.mp4
+        
+[08-29 07:07:20] Running pipeline stages: ['InputValidationStage', 'MiniMaxH3PartitionAdmissionStage', 'MiniMaxH3TextEncodingStage', 'MiniMaxH3VisualEncodingStage', 'MiniMaxH3AudioEncodingStage', 'MiniMaxH3LatentPreparationStage', 'MiniMaxH3TimestepPreparationStage', 'MiniMaxH3SingleGPUVAECompileStage', 'MiniMaxH3Stage1TelemetryDecodingStage']
+[08-29 07:07:20] [InputValidationStage] started...
+[08-29 07:07:20] [InputValidationStage] finished in 0.0000 seconds
+[08-29 07:07:20] [MiniMaxH3PartitionAdmissionStage] started...
+[08-29 07:07:20] [MiniMaxH3PartitionAdmissionStage] finished in 0.0000 seconds
+[08-29 07:07:20] [MiniMaxH3TextEncodingStage] started...
+/home/zjy/code/lsy/envs/sana-h3-super/lib/python3.13/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/base_dsl/dsl.py:2214: UserWarning: Argument aux_data (position 18) cannot be converted to a JitArgument for function 'cutlass___call___sglangkernelsopsattentionflash_attncuteflash_fwd_sm100FlashAttentionForwardSm100_object_at__Tensorgmemoi64i64i641_Tensorgmemoi64i64i641_Tensorgmemoi64i64i641_Tenso'. Its type `<class 'sglang.kernels.ops.attention.flash_attn.cute.utils.AuxData'>` is not supported. If the value is known at compile time, annotate it: `aux_data: Constexpr`. Otherwise, implement the `JitArgument` or `DynamicExpression` protocol for type `<class 'sglang.kernels.ops.attention.flash_attn.cute.utils.AuxData'>`, or register a custom argument adapter.
+  exe_args, func_types, adapted_args = self.generate_mlir_function_types(
+[08-29 07:07:31] [MiniMaxH3TextEncodingStage] finished in 11.2654 seconds
+[08-29 07:07:32] [MiniMaxH3VisualEncodingStage] started...
+[08-29 07:07:33] [MiniMaxH3VisualEncodingStage] finished in 1.8139 seconds
+[08-29 07:07:33] [MiniMaxH3AudioEncodingStage] started...
+[08-29 07:07:33] [MiniMaxH3AudioEncodingStage] finished in 0.0000 seconds
+[08-29 07:07:33] [MiniMaxH3LatentPreparationStage] started...
+[08-29 07:07:33] [MiniMaxH3LatentPreparationStage] finished in 0.0104 seconds
+[08-29 07:07:33] [MiniMaxH3TimestepPreparationStage] started...
+[08-29 07:07:33] [MiniMaxH3TimestepPreparationStage] finished in 0.0002 seconds
+[08-29 07:07:33] [MiniMaxH3SingleGPUVAECompileStage] started...
+[H3SingleGPUVAECompile] new_install=1 cache_hit=0 scope=single_gpu_local_video_vae_encoder_decoder_only decoder_tile_batch_size=1
+/home/zjy/code/lsy/envs/sana-h3-super/lib/python3.13/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/base_dsl/dsl.py:2214: UserWarning: Argument aux_data (position 18) cannot be converted to a JitArgument for function 'cutlass___call___sglangkernelsopsattentionflash_attncuteflash_fwd_sm100FlashAttentionForwardSm100_object_at__Tensorgmemoi64i641_Tensorgmemoi64i641_Tensorgmemoi64i641_Tensorgmemoi64'. Its type `<class 'sglang.kernels.ops.attention.flash_attn.cute.utils.AuxData'>` is not supported. If the value is known at compile time, annotate it: `aux_data: Constexpr`. Otherwise, implement the `JitArgument` or `DynamicExpression` protocol for type `<class 'sglang.kernels.ops.attention.flash_attn.cute.utils.AuxData'>`, or register a custom argument adapter.
+  exe_args, func_types, adapted_args = self.generate_mlir_function_types(
+minimax_h3 denoise:   0%|          | 0/4 [00:00<?, ?it/s]/home/zjy/code/lsy/envs/sana-h3-super/lib/python3.13/site-packages/torch/_dynamo/variables/functions.py:2202: UserWarning: Dynamo detected a call to a `functools.lru_cache`-wrapped function at 'interface.py:499'. Dynamo ignores the cache wrapper and directly traces the wrapped function. Silent incorrectness is only a *potential* risk, not something we have observed. Enable TORCH_LOGS=+dynamo for a DEBUG stack trace.
+
+This call originates from:
+  File "/home/zjy/code/lsy/vendor/sglang-h3-super/python/sglang/kernels/ops/attention/flash_attn/cute/interface.py", line 499, in torch_dynamo_resume_in__flash_attn_fwd_at_480
+    arch = _get_device_arch() if _arch is None else _arch
+
+  torch._dynamo.utils.warn_once(msg)
+minimax_h3 denoise:  25%|██▌       | 1/4 [00:06<00:19,  6.48s/it]minimax_h3 denoise:  50%|█████     | 2/4 [00:09<00:09,  4.66s/it]minimax_h3 denoise: 100%|██████████| 4/4 [00:10<00:00,  1.95s/it]minimax_h3 denoise: 100%|██████████| 4/4 [00:10<00:00,  2.63s/it]
+[08-29 07:07:47] [MiniMaxH3SingleGPUVAECompileStage] finished in 13.7036 seconds
+[08-29 07:07:47] [MiniMaxH3Stage1TelemetryDecodingStage] started...
+[08-29 07:07:49] Compiling VAE decode with mode: max-autotune-no-cudagraphs
+[08-29 07:08:02] [MiniMaxH3Stage1TelemetryDecodingStage] finished in 15.3690 seconds
+[08-29 07:08:02] Pixel data generated successfully in [92m42.95[0;0m seconds
+[08-29 07:08:02] Memory usage - Max peak: 138662.00 MB, Avg peak: 138662.00 MB
+[08-29 07:08:02] Adjusting number of frames from 1 to 1 based on model
+[08-29 07:08:02] Processing 1 grouped request(s)
+[08-29 07:08:02] Sampling params:
+                       width: 896
+                      height: 512
+                  num_frames: 124
+                         fps: 24
+                      prompt: <redacted, len=948>
+                  neg_prompt: None
+                        seed: 50803
+                 infer_steps: 5
+      num_outputs_per_prompt: 1
+              guidance_scale: 1.0
+     embedded_guidance_scale: 6.0
+                    n_tokens: None
+                  flow_shift: 12.0
+                  image_path: None
+                 save_output: True
+            output_file_path: /home/zjy/code/lsy/results/sana-h3-super-official-e2e-b300-20260829T070300Z/pair_0/stage1/videos/warmup_excluded.mp4
+        
+[08-29 07:08:02] Running pipeline stages: ['InputValidationStage', 'MiniMaxH3PartitionAdmissionStage', 'MiniMaxH3TextEncodingStage', 'MiniMaxH3VisualEncodingStage', 'MiniMaxH3AudioEncodingStage', 'MiniMaxH3LatentPreparationStage', 'MiniMaxH3TimestepPreparationStage', 'MiniMaxH3SingleGPUVAECompileStage', 'MiniMaxH3Stage1TelemetryDecodingStage']
+[08-29 07:08:02] [InputValidationStage] started...
+[08-29 07:08:02] [InputValidationStage] finished in 0.0000 seconds
+[08-29 07:08:02] [MiniMaxH3PartitionAdmissionStage] started...
+[08-29 07:08:02] [MiniMaxH3PartitionAdmissionStage] finished in 0.0000 seconds
+[08-29 07:08:02] [MiniMaxH3TextEncodingStage] started...
+[08-29 07:08:03] [MiniMaxH3TextEncodingStage] finished in 0.0505 seconds
+[08-29 07:08:03] [MiniMaxH3VisualEncodingStage] started...
+[08-29 07:08:08] [MiniMaxH3VisualEncodingStage] finished in 5.8656 seconds
+[08-29 07:08:08] [MiniMaxH3AudioEncodingStage] started...
+[08-29 07:08:08] [MiniMaxH3AudioEncodingStage] finished in 0.0000 seconds
+[08-29 07:08:08] [MiniMaxH3LatentPreparationStage] started...
+[08-29 07:08:08] [MiniMaxH3LatentPreparationStage] finished in 0.0114 seconds
+[08-29 07:08:08] [MiniMaxH3TimestepPreparationStage] started...
+[08-29 07:08:08] [MiniMaxH3TimestepPreparationStage] finished in 0.0002 seconds
+[08-29 07:08:08] [MiniMaxH3SingleGPUVAECompileStage] started...
+[H3SingleGPUVAECompile] new_install=0 cache_hit=1 scope=single_gpu_local_video_vae_encoder_decoder_only decoder_tile_batch_size=1
+minimax_h3 denoise:   0%|          | 0/4 [00:00<?, ?it/s]minimax_h3 denoise:  50%|█████     | 2/4 [00:00<00:00,  3.00it/s]minimax_h3 denoise:  75%|███████▌  | 3/4 [00:01<00:00,  1.78it/s]minimax_h3 denoise: 100%|██████████| 4/4 [00:02<00:00,  1.47it/s]minimax_h3 denoise: 100%|██████████| 4/4 [00:02<00:00,  1.65it/s]
+[08-29 07:08:12] [MiniMaxH3SingleGPUVAECompileStage] finished in 3.5152 seconds
+[08-29 07:08:12] [MiniMaxH3Stage1TelemetryDecodingStage] started...
+[08-29 07:08:12] [MiniMaxH3Stage1TelemetryDecodingStage] finished in 0.0650 seconds
+[08-29 07:09:35] Pixel data generated successfully in [92m93.00[0;0m seconds
+[08-29 07:09:35] Memory usage - Max peak: 133712.00 MB, Avg peak: 133712.00 MB
+[08-29 07:11:33] Adjusting number of frames from 1 to 1 based on model
+[08-29 07:11:33] Processing 1 grouped request(s)
+[08-29 07:11:33] Sampling params:
+                       width: 896
+                      height: 512
+                  num_frames: 124
+                         fps: 24
+                      prompt: <redacted, len=948>
+                  neg_prompt: None
+                        seed: 50803
+                 infer_steps: 5
+      num_outputs_per_prompt: 1
+              guidance_scale: 1.0
+     embedded_guidance_scale: 6.0
+                    n_tokens: None
+                  flow_shift: 12.0
+                  image_path: None
+                 save_output: True
+            output_file_path: /home/zjy/code/lsy/results/sana-h3-super-official-e2e-b300-20260829T070300Z/pair_0/stage1/videos/hot_00.mp4
+        
+[08-29 07:11:33] Running pipeline stages: ['InputValidationStage', 'MiniMaxH3PartitionAdmissionStage', 'MiniMaxH3TextEncodingStage', 'MiniMaxH3VisualEncodingStage', 'MiniMaxH3AudioEncodingStage', 'MiniMaxH3LatentPreparationStage', 'MiniMaxH3TimestepPreparationStage', 'MiniMaxH3SingleGPUVAECompileStage', 'MiniMaxH3Stage1TelemetryDecodingStage']
+[08-29 07:11:33] [InputValidationStage] started...
+[08-29 07:11:33] [InputValidationStage] finished in 0.0001 seconds
+[08-29 07:11:33] [MiniMaxH3PartitionAdmissionStage] started...
+[08-29 07:11:33] [MiniMaxH3PartitionAdmissionStage] finished in 0.0000 seconds
+[08-29 07:11:33] [MiniMaxH3TextEncodingStage] started...
+[08-29 07:11:33] [MiniMaxH3TextEncodingStage] finished in 0.0474 seconds
+[08-29 07:11:33] [MiniMaxH3VisualEncodingStage] started...
+[08-29 07:11:33] [MiniMaxH3VisualEncodingStage] finished in 0.0520 seconds
+[08-29 07:11:33] [MiniMaxH3AudioEncodingStage] started...
+[08-29 07:11:33] [MiniMaxH3AudioEncodingStage] finished in 0.0000 seconds
+[08-29 07:11:33] [MiniMaxH3LatentPreparationStage] started...
+[08-29 07:11:33] [MiniMaxH3LatentPreparationStage] finished in 0.0086 seconds
+[08-29 07:11:33] [MiniMaxH3TimestepPreparationStage] started...
+[08-29 07:11:33] [MiniMaxH3TimestepPreparationStage] finished in 0.0002 seconds
+[08-29 07:11:33] [MiniMaxH3SingleGPUVAECompileStage] started...
+[H3SingleGPUVAECompile] new_install=0 cache_hit=1 scope=single_gpu_local_video_vae_encoder_decoder_only decoder_tile_batch_size=1
+minimax_h3 denoise:   0%|          | 0/4 [00:00<?, ?it/s]minimax_h3 denoise:  50%|█████     | 2/4 [00:00<00:00,  2.96it/s]minimax_h3 denoise:  75%|███████▌  | 3/4 [00:01<00:00,  1.77it/s]minimax_h3 denoise: 100%|██████████| 4/4 [00:02<00:00,  1.47it/s]minimax_h3 denoise: 100%|██████████| 4/4 [00:02<00:00,  1.64it/s]
+[08-29 07:11:37] [MiniMaxH3SingleGPUVAECompileStage] finished in 3.5212 seconds
+[08-29 07:11:37] [MiniMaxH3Stage1TelemetryDecodingStage] started...
+[08-29 07:11:37] [MiniMaxH3Stage1TelemetryDecodingStage] finished in 0.0671 seconds
+[08-29 07:11:37] Pixel data generated successfully in [92m3.78[0;0m seconds
+[08-29 07:11:37] Memory usage - Max peak: 134456.00 MB, Avg peak: 134456.00 MB
+[08-29 07:11:45] Worker 0: Shutdown complete.
+[93m[08-29 07:11:49] Local worker sglang-diffusionWorker-0 did not terminate gracefully, forcing.[0;0m
+{
+  "duration": 5.0,
+  "output_frames": 124,
+  "h3_dit_and_shared_s": 3.6521889252187263,
+  "stage1_decoder_name": "madebyollin/taeh3@e589fddc076e77f5ba8cd6baabe4ba3260b261cd",
+  "stage1_decode_s": 0.034778895,
+  "stage1_encode_mux_s": 0.0,
+  "stage1_tensor_handoff_s": 0.047688761,
+  "stage1_wall_s": 3.777403063
+}

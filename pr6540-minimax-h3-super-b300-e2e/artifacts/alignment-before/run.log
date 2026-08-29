@@ -1,0 +1,264 @@
+/home/zjy/code/lsy/worktree/minimax-h3-super-acceleration/vllm_omni/version.py:55: RuntimeWarning: vLLM and vLLM-Omni appear to have mismatched major/minor versions:
+ --> vLLM-Omni version 0.27.0rc2.dev159+g01601557d
+ --> vLLM version 0.28.0
+This will likely cause compatibility issues.
+  warn_if_misaligned_vllm_version()
+INFO 08-29 07:26:41 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-29 07:26:42 [quack_fp8.py:76] Quack FP8 fused-bias GEMM enabled (CuteDSL).
+INFO 08-29 07:26:42 [quack_fp8.py:155] Patched FlashInfer FP8 ScaledMM to use quack fused-bias GEMM.
+INFO 08-29 07:26:42 [patch.py:503] inductor factorable-divisibility patch: installed.
+INFO 08-29 07:26:42 [patch.py:568] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+{"event": "metadata", "data": {"schema_version": 1, "created_at_utc": "2026-08-29T07:26:43.449278+00:00", "pull_request": "https://github.com/vllm-project/vllm-omni/pull/6540", "commit": "cc202c4673d34b3fdafdca05d187f34970375f75", "dirty_diff_sha256": "d790a79c2a89a446ba27e5f7a9026abf8290f5026f6a40104212e618437b14e9", "hostname": "vllm-inference", "physical_gpus": [2, 3], "visible_logical_gpus": [0, 1], "input_image": "/home/zjy/code/lsy/models/sana-h3-super-official/dataset/inputs/i2v_talking/bamboo-forest-wuxia-pair.jpg", "input_sha256": "23e873c7837d02dd0028504677892f35ee58ea3c344e535024dce72e3f448f1d", "prompt": "Use the supplied image as the exact opening frame. Preserve every character's identity, facial features, clothing, hair, environment, camera composition, and lighting. Create one continuous 5-second human speaking shot with natural movement and realistic timing. The two figures remain controlled and still as mist and fine snow drift through the bamboo. The person in white speaks first, and the person in black answers quietly with restrained tension. Dialogue: The person in white says, \u201cYou\u2019re late.\u201d The person in black replies, \u201cBut I came. Where is it?\u201d The first speaker answers, \u201cWhere you would least dare to look.\u201d All dialogue must be spoken in clear, natural English, with accurate phoneme-level lip synchronization, realistic expressions, blinking, breathing, and subtle head motion. Keep natural ambient sound. No subtitles, captions, watermarks, voice-over, extra people, duplicated characters, identity drift, or facial distortion.", "prompt_sha256": "2aac356eccb7a38f2a12abd82018d0b2ad7c2dae759958ab46e2c0daf0523d1b", "seed": 50803, "official_alignment": {"h3_lora": "minimax_h3_fl2v_turbo_4step_v0.1.safetensors", "h3_lora_sha256": "5ff4a12c8b4599fec716e1b15a45e504e0d1129111896bdcde5ac4a15e395b29", "h3_lora_scale": 0.0625, "h3_video_flow_shift": 12.0, "h3_audio_flow_shift": 3.0, "h3_sigma_points": 5, "h3_transformer_forwards": 4, "ltx_lora_scale": 0.8, "ltx_sigmas": [0.909375, 0.725, 0.421875, 0.0], "lossy_stage1_attention_override": null}, "protocol": {"duration_seconds": 5, "warmups": 1, "measured_repeats": 3, "request_concurrency": 1, "latency_scope": "Omni.generate through receipt of complete encoded MP4 bytes", "excluded": "engine/model startup, output write, ffprobe, and ffmpeg decode validation"}, "software": {"python": "3.12.3"}, "deploy_config": "/home/zjy/code/lsy/results/pr6540-aligned-b300-e2e-20260829T072419Z/deploy.yaml", "environment": {"CUDA_VISIBLE_DEVICES": "2,3", "VLLM_WORKER_MULTIPROC_METHOD": "spawn", "VLLM_OMNI_VIDEO_SYNC_TIMEOUT": "14400", "TORCHINDUCTOR_CACHE_DIR": "/home/zjy/code/lsy/results/pr6540-aligned-b300-e2e-20260829T072419Z/cache/torchinductor", "TRITON_CACHE_DIR": "/home/zjy/code/lsy/results/pr6540-aligned-b300-e2e-20260829T072419Z/cache/triton"}}}
+INFO 08-29 07:26:43 [omni_base.py:205] [Omni] Initializing with model /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA
+INFO 08-29 07:26:43 [async_omni_engine.py:159] [AsyncOmniEngine] Initializing with model /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA
+INFO 08-29 07:26:43 [async_omni_engine.py:258] [AsyncOmniEngine] Launching Orchestrator thread with 2 stages
+INFO 08-29 07:26:43 [initialization.py:324] Auto-configuring SharedMemoryConnector for edge ('0', '1')
+INFO 08-29 07:26:43 [initialization.py:356] Loaded OmniTransferConfig with 1 connector configurations
+INFO 08-29 07:26:43 [stage_utils.py:167] Stage 0 logical-to-physical device mapping: 0->2
+/home/zjy/code/lsy/worktree/minimax-h3-super-acceleration/vllm_omni/version.py:55: RuntimeWarning: vLLM and vLLM-Omni appear to have mismatched major/minor versions:
+ --> vLLM-Omni version 0.27.0rc2.dev159+g01601557d
+ --> vLLM version 0.28.0
+This will likely cause compatibility issues.
+  warn_if_misaligned_vllm_version()
+INFO 08-29 07:26:49 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-29 07:26:49 [quack_fp8.py:76] Quack FP8 fused-bias GEMM enabled (CuteDSL).
+INFO 08-29 07:26:49 [quack_fp8.py:155] Patched FlashInfer FP8 ScaledMM to use quack fused-bias GEMM.
+INFO 08-29 07:26:49 [patch.py:503] inductor factorable-divisibility patch: installed.
+INFO 08-29 07:26:49 [patch.py:568] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+INFO 08-29 07:26:51 [multiproc_executor.py:296] Starting server...
+/home/zjy/code/lsy/worktree/minimax-h3-super-acceleration/vllm_omni/version.py:55: RuntimeWarning: vLLM and vLLM-Omni appear to have mismatched major/minor versions:
+ --> vLLM-Omni version 0.27.0rc2.dev159+g01601557d
+ --> vLLM version 0.28.0
+This will likely cause compatibility issues.
+  warn_if_misaligned_vllm_version()
+INFO 08-29 07:26:56 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-29 07:26:57 [quack_fp8.py:76] Quack FP8 fused-bias GEMM enabled (CuteDSL).
+INFO 08-29 07:26:57 [quack_fp8.py:155] Patched FlashInfer FP8 ScaledMM to use quack fused-bias GEMM.
+INFO 08-29 07:26:57 [patch.py:503] inductor factorable-divisibility patch: installed.
+INFO 08-29 07:26:57 [patch.py:568] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+(DiffusionWorker pid=753502) INFO 08-29 07:26:59 [diffusion_worker.py:1026] Worker 0 created result MessageQueue
+(DiffusionWorker pid=753502) INFO 08-29 07:26:59 [scheduler.py:242] Chunked prefill is enabled with max_num_batched_tokens=2048.
+(DiffusionWorker pid=753502) INFO 08-29 07:26:59 [kernel.py:308] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+(DiffusionWorker pid=753502) INFO 08-29 07:26:59 [diffusion_worker.py:323] Final IR op priority after setting vLLM-Omni overrides: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(DiffusionWorker pid=753502) INFO 08-29 07:26:59 [diffusion_worker.py:335] Worker 0: Initialized device and distributed environment.
+(DiffusionWorker pid=753502) INFO 08-29 07:26:59 [parallel_state.py:594] Building SP subgroups from explicit sp_group_ranks (sp_size=1, ulysses=1, ring=1, use_ulysses_low=True).
+(DiffusionWorker pid=753502) INFO 08-29 07:26:59 [parallel_state.py:636] SP group details for rank 0: sp_group=[0], ulysses_group=[0], ring_group=[0]
+(DiffusionWorker pid=753502) INFO 08-29 07:27:00 [platform.py:221] Defaulting to diffusion attention backend CUDNN_ATTN (Blackwell sm_103, cuDNN 92000)
+(DiffusionWorker pid=753502) INFO 08-29 07:27:00 [selector.py:80] Resolved diffusion attention backend 'CUDNN_ATTN' for role='minimax_h3.token_refiner' (role_category='self') via platform default
+(DiffusionWorker pid=753502) INFO 08-29 07:27:00 [selector.py:89] Resolved diffusion attention backend 'CUDNN_ATTN' for role='self' via platform default
+(DiffusionWorker pid=753502) INFO 08-29 07:27:01 [encoder.py:1133] MiniMax H3 Qwen3-VL encoder: 50 retained decoder layers, text_encoder_tp_size=1, vision replicated
+(DiffusionWorker pid=753502) The config attributes {'vae_ratio': 16, 'vae_ratio_t': 4} were passed to AutoencoderKLLegacy, but are not expected and will be ignored. Please verify your config.json configuration file.
+(DiffusionWorker pid=753502) Multi-thread loading shards:   0% Completed | 0/13 [00:00<?, ?it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:   8% Completed | 1/13 [00:00<00:09,  1.24it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  15% Completed | 2/13 [00:01<00:09,  1.15it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  23% Completed | 3/13 [00:02<00:08,  1.15it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  31% Completed | 4/13 [00:03<00:08,  1.12it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  38% Completed | 5/13 [00:04<00:07,  1.07it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  46% Completed | 6/13 [00:05<00:06,  1.04it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  54% Completed | 7/13 [00:06<00:05,  1.01it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  62% Completed | 8/13 [00:07<00:04,  1.01it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  69% Completed | 9/13 [00:08<00:03,  1.03it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  77% Completed | 10/13 [00:09<00:02,  1.09it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  85% Completed | 11/13 [00:10<00:01,  1.11it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  92% Completed | 12/13 [00:11<00:00,  1.13it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards: 100% Completed | 13/13 [00:11<00:00,  1.13it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards: 100% Completed | 13/13 [00:11<00:00,  1.09it/s]
+(DiffusionWorker pid=753502) 
+(DiffusionWorker pid=753502) Multi-thread loading shards:   0% Completed | 0/14 [00:00<?, ?it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:   7% Completed | 1/14 [00:00<00:06,  2.14it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  14% Completed | 2/14 [00:00<00:05,  2.22it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  21% Completed | 3/14 [00:01<00:04,  2.28it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  29% Completed | 4/14 [00:01<00:04,  2.29it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  36% Completed | 5/14 [00:02<00:03,  2.30it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  43% Completed | 6/14 [00:02<00:03,  2.31it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  50% Completed | 7/14 [00:03<00:03,  2.32it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  57% Completed | 8/14 [00:03<00:02,  2.32it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  64% Completed | 9/14 [00:03<00:02,  2.32it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  71% Completed | 10/14 [00:04<00:01,  2.85it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards:  86% Completed | 12/14 [00:04<00:00,  3.57it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards: 100% Completed | 14/14 [00:04<00:00,  5.01it/s]
+(DiffusionWorker pid=753502) Multi-thread loading shards: 100% Completed | 14/14 [00:04<00:00,  3.02it/s]
+(DiffusionWorker pid=753502) 
+(DiffusionWorker pid=753502) INFO 08-29 07:27:56 [diffusers_loader.py:829] Loading weights took 16.56 seconds
+(DiffusionWorker pid=753502) INFO 08-29 07:27:57 [diffusion_model_runner.py:315] Model loading took 115.5852 GiB and 58.062452 seconds
+(DiffusionWorker pid=753502) INFO 08-29 07:27:57 [diffusion_model_runner.py:321] Model runner: Model loaded successfully.
+(DiffusionWorker pid=753502) INFO 08-29 07:27:57 [diffusion_model_runner.py:412] Model runner: Initialization complete.
+(DiffusionWorker pid=753502) INFO 08-29 07:27:58 [diffusion_worker.py:416] Worker 0: Process-scoped GPU memory after model loading: 116.80 GiB.
+(DiffusionWorker pid=753502) INFO 08-29 07:27:58 [manager.py:107] Initializing DiffusionLoRAManager: device=cuda:0, dtype=torch.bfloat16, max_cached_adapters=1, static_lora_path=None
+(DiffusionWorker pid=753502) INFO 08-29 07:27:58 [diffusion_worker.py:293] Worker 0: Initialization complete.
+(DiffusionWorker pid=753502) INFO 08-29 07:27:58 [diffusion_worker.py:1475] Worker 0: Scheduler loop started.
+(DiffusionWorker pid=753502) INFO 08-29 07:27:58 [diffusion_worker.py:1319] Worker 0 ready to receive requests via shared memory
+INFO 08-29 07:27:58 [multiproc_executor.py:834] Async result pump started for 1 worker queue(s)
+INFO 08-29 07:27:58 [diffusion_engine.py:395] [RequestBatch] engine init max_num_seqs=1 max_wait_ms=0.0
+INFO 08-29 07:27:58 [diffusion_engine.py:1139] Skipping dummy warmup run (num_frames=0)
+INFO 08-29 07:27:58 [stage_diffusion_proc.py:139] StageDiffusionProc initialized with model: /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA
+INFO 08-29 07:27:58 [stage_diffusion_client.py:146] [StageDiffusionClient] stage-0 [rep-0] initialized (owns_process=True, batch_size=1)
+INFO 08-29 07:27:58 [stage_runtime.py:682] [StageRuntime] Stage 0 replica 0 initialized (diffusion, batch_size=1)
+INFO 08-29 07:27:58 [stage_utils.py:167] Stage 1 logical-to-physical device mapping: 1->3
+/home/zjy/code/lsy/worktree/minimax-h3-super-acceleration/vllm_omni/version.py:55: RuntimeWarning: vLLM and vLLM-Omni appear to have mismatched major/minor versions:
+ --> vLLM-Omni version 0.27.0rc2.dev159+g01601557d
+ --> vLLM version 0.28.0
+This will likely cause compatibility issues.
+  warn_if_misaligned_vllm_version()
+INFO 08-29 07:28:04 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-29 07:28:04 [quack_fp8.py:76] Quack FP8 fused-bias GEMM enabled (CuteDSL).
+INFO 08-29 07:28:04 [quack_fp8.py:155] Patched FlashInfer FP8 ScaledMM to use quack fused-bias GEMM.
+INFO 08-29 07:28:04 [patch.py:503] inductor factorable-divisibility patch: installed.
+INFO 08-29 07:28:04 [patch.py:568] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+INFO 08-29 07:28:06 [multiproc_executor.py:296] Starting server...
+/home/zjy/code/lsy/worktree/minimax-h3-super-acceleration/vllm_omni/version.py:55: RuntimeWarning: vLLM and vLLM-Omni appear to have mismatched major/minor versions:
+ --> vLLM-Omni version 0.27.0rc2.dev159+g01601557d
+ --> vLLM version 0.28.0
+This will likely cause compatibility issues.
+  warn_if_misaligned_vllm_version()
+INFO 08-29 07:28:11 [patch.py:252] NVFP4 W4A4 weight_scale NaN-clamp: installed.
+INFO 08-29 07:28:12 [quack_fp8.py:76] Quack FP8 fused-bias GEMM enabled (CuteDSL).
+INFO 08-29 07:28:12 [quack_fp8.py:155] Patched FlashInfer FP8 ScaledMM to use quack fused-bias GEMM.
+INFO 08-29 07:28:12 [patch.py:503] inductor factorable-divisibility patch: installed.
+INFO 08-29 07:28:12 [patch.py:568] [cumem-cuda] CuMemAllocator._python_free_callback patched: asleep guard extended to all platforms.
+(DiffusionWorker pid=761375) INFO 08-29 07:28:14 [diffusion_worker.py:1026] Worker 0 created result MessageQueue
+(DiffusionWorker pid=761375) INFO 08-29 07:28:14 [scheduler.py:242] Chunked prefill is enabled with max_num_batched_tokens=2048.
+(DiffusionWorker pid=761375) INFO 08-29 07:28:14 [kernel.py:308] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+(DiffusionWorker pid=761375) INFO 08-29 07:28:14 [diffusion_worker.py:323] Final IR op priority after setting vLLM-Omni overrides: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(DiffusionWorker pid=761375) INFO 08-29 07:28:14 [diffusion_worker.py:335] Worker 0: Initialized device and distributed environment.
+(DiffusionWorker pid=761375) INFO 08-29 07:28:14 [parallel_state.py:594] Building SP subgroups from explicit sp_group_ranks (sp_size=1, ulysses=1, ring=1, use_ulysses_low=True).
+(DiffusionWorker pid=761375) INFO 08-29 07:28:14 [parallel_state.py:636] SP group details for rank 0: sp_group=[0], ulysses_group=[0], ring_group=[0]
+(DiffusionWorker pid=761375) [transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+(DiffusionWorker pid=761375) Loading weights:   0%|          | 0/677 [00:00<?, ?it/s]Loading weights: 100%|██████████| 677/677 [00:00<00:00, 8021.85it/s]
+(DiffusionWorker pid=761375) Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:00<00:00, 162.89it/s]
+(DiffusionWorker pid=761375) INFO 08-29 07:28:17 [platform.py:221] Defaulting to diffusion attention backend CUDNN_ATTN (Blackwell sm_103, cuDNN 92000)
+(DiffusionWorker pid=761375) INFO 08-29 07:28:17 [selector.py:80] Resolved diffusion attention backend 'CUDNN_ATTN' for role='ltx2.connector' (role_category='self') via platform default
+(DiffusionWorker pid=761375) INFO 08-29 07:28:17 [platform.py:221] Defaulting to diffusion attention backend CUDNN_ATTN (Blackwell sm_103, cuDNN 92000)
+(DiffusionWorker pid=761375) There are modules in DistributedLTX2VideoDiffusionDecoderModel that should be kept in float32: []. Casting directly with `to()` can lead to inconsistent results; set `torch_dtype` in `from_pretrained()` instead to keep these modules in float32.
+(DiffusionWorker pid=761375) Fetching 51 files:   0%|          | 0/51 [00:00<?, ?it/s]Fetching 51 files: 100%|██████████| 51/51 [00:00<00:00, 3506.43it/s]
+(DiffusionWorker pid=761375) INFO 08-29 07:28:18 [selector.py:89] Resolved diffusion attention backend 'CUDNN_ATTN' for role='self' via platform default
+(DiffusionWorker pid=761375) INFO 08-29 07:28:26 [ltx2_phase_adapter.py:373] Installed 1564 LTX layer-fused phase-adapter linears
+(DiffusionWorker pid=761375) WARNING 08-29 07:28:26 [diffusion_pipeline_profiler.py:69] [DiffusionPipelineProfiler] Method path tokenizer.forward not found
+(DiffusionWorker pid=761375) Multi-thread loading shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(DiffusionWorker pid=761375) Multi-thread loading shards:  25% Completed | 1/4 [00:00<00:02,  1.05it/s]
+(DiffusionWorker pid=761375) Multi-thread loading shards:  50% Completed | 2/4 [00:02<00:02,  1.11s/it]
+(DiffusionWorker pid=761375) Multi-thread loading shards:  75% Completed | 3/4 [00:03<00:01,  1.18s/it]
+(DiffusionWorker pid=761375) Multi-thread loading shards: 100% Completed | 4/4 [00:04<00:00,  1.21s/it]
+(DiffusionWorker pid=761375) Multi-thread loading shards: 100% Completed | 4/4 [00:04<00:00,  1.17s/it]
+(DiffusionWorker pid=761375) 
+(DiffusionWorker pid=761375) INFO 08-29 07:28:31 [diffusers_loader.py:829] Loading weights took 4.95 seconds
+(DiffusionWorker pid=761375) INFO 08-29 07:28:33 [ltx2_phase_adapter.py:393] Materialized 1660 LTX phase-adapter tensor pairs
+(DiffusionWorker pid=761375) INFO 08-29 07:28:35 [diffusion_model_runner.py:315] Model loading took 75.7534 GiB and 20.657700 seconds
+(DiffusionWorker pid=761375) INFO 08-29 07:28:35 [diffusion_model_runner.py:321] Model runner: Model loaded successfully.
+(DiffusionWorker pid=761375) INFO 08-29 07:28:35 [compile.py:103] Regional compilation applied to 48 module(s) for repeated blocks ['LTX2VideoTransformerBlock'].
+(DiffusionWorker pid=761375) INFO 08-29 07:28:35 [diffusion_model_runner.py:250] Model runner: transformer configured for lazy regional torch.compile with dynamic=False; compilation errors may surface on the first request.
+(DiffusionWorker pid=761375) INFO 08-29 07:28:35 [diffusion_model_runner.py:412] Model runner: Initialization complete.
+(DiffusionWorker pid=761375) INFO 08-29 07:28:35 [diffusion_worker.py:416] Worker 0: Process-scoped GPU memory after model loading: 76.66 GiB.
+(DiffusionWorker pid=761375) INFO 08-29 07:28:35 [manager.py:107] Initializing DiffusionLoRAManager: device=cuda:0, dtype=torch.bfloat16, max_cached_adapters=1, static_lora_path=None
+(DiffusionWorker pid=761375) INFO 08-29 07:28:35 [diffusion_worker.py:293] Worker 0: Initialization complete.
+(DiffusionWorker pid=761375) INFO 08-29 07:28:35 [diffusion_worker.py:1475] Worker 0: Scheduler loop started.
+(DiffusionWorker pid=761375) INFO 08-29 07:28:35 [diffusion_worker.py:1319] Worker 0 ready to receive requests via shared memory
+INFO 08-29 07:28:35 [multiproc_executor.py:834] Async result pump started for 1 worker queue(s)
+INFO 08-29 07:28:35 [diffusion_engine.py:395] [RequestBatch] engine init max_num_seqs=1 max_wait_ms=0.0
+INFO 08-29 07:28:35 [diffusion_engine.py:1141] dummy run to warm up the model
+(DiffusionWorker pid=761375) INFO 08-29 07:28:36 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.vae.encode took 0.248855s
+(DiffusionWorker pid=761375) INFO 08-29 07:28:38 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.text_encoder.forward took 1.280645s
+(DiffusionWorker pid=761375) INFO 08-29 07:28:42 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.vae.encode took 0.041409s
+(DiffusionWorker pid=761375)   0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:12<00:25, 12.81s/it] 67%|██████▋   | 2/3 [00:13<00:05,  5.61s/it]100%|██████████| 3/3 [00:13<00:00,  3.31s/it]100%|██████████| 3/3 [00:13<00:00,  4.65s/it]
+(DiffusionWorker pid=761375) INFO 08-29 07:28:57 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.forward took 21.387272s
+INFO 08-29 07:28:57 [stage_diffusion_proc.py:139] StageDiffusionProc initialized with model: /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA
+INFO 08-29 07:28:57 [stage_diffusion_client.py:146] [StageDiffusionClient] stage-1 [rep-0] initialized (owns_process=True, batch_size=1)
+INFO 08-29 07:28:57 [stage_runtime.py:682] [StageRuntime] Stage 1 replica 0 initialized (diffusion, batch_size=1)
+INFO 08-29 07:28:57 [orchestrator.py:574] [Orchestrator] Starting event loop
+INFO 08-29 07:28:57 [async_omni_engine.py:290] [AsyncOmniEngine] Orchestrator ready with 2 stages
+INFO 08-29 07:28:57 [omni_base.py:225] [Omni] AsyncOmniEngine initialized in 133.84 seconds
+INFO 08-29 07:28:57 [omni_base.py:245] [Omni] Initialized with 2 stages for model /home/zjy/.cache/huggingface/hub/models--MiniMaxAI--MiniMax-H3/snapshots/42ed227ee7df40d41602854ae760620d6eb651fe/FL2VA
+{"event": "engine_ready", "engine_init_s": 133.8395783957094}
+{"event": "request_start", "name": "05s-warmup-0", "at": "2026-08-29T07:28:57.311732+00:00"}
+INFO 08-29 07:28:57 [stage_diffusion_client.py:353] [StageDiffusionClient] stage-0 [rep-0] add request: 0_9ef5398e-6ab5-41c2-a7ef-b421653dfff0
+(DiffusionWorker pid=753502) INFO 08-29 07:28:57 [manager.py:257] Loading new adapter: id=1, name=lx2v_4s_v01_544p
+(DiffusionWorker pid=753502) INFO 08-29 07:28:57 [manager.py:745] Adding new adapter: id=1, name=lx2v_4s_v01_544p
+(DiffusionWorker pid=753502) INFO 08-29 07:29:03 [manager.py:328] Loaded PEFT config: r=128, lora_alpha=128, target_modules=^transformer\.(?:token_refiner\.blocks|blocks)\.\d+\.(?:attn\.(?:to_q|to_k|to_v|out_proj)|mlp\.(?:fc1|fc2))$
+(DiffusionWorker pid=753502) INFO 08-29 07:29:03 [manager.py:335] Loaded LoRA model: id=1, num_modules=312, modules=['token_refiner.blocks.0.attn.to_k', 'token_refiner.blocks.0.attn.out_proj', 'token_refiner.blocks.0.attn.to_q', 'token_refiner.blocks.0.attn.to_v', 'token_refiner.blocks.0.mlp.fc1', 'token_refiner.blocks.0.mlp.fc2', 'token_refiner.blocks.1.attn.to_k', 'token_refiner.blocks.1.attn.out_proj', 'token_refiner.blocks.1.attn.to_q', 'token_refiner.blocks.1.attn.to_v', 'token_refiner.blocks.1.mlp.fc1', 'token_refiner.blocks.1.mlp.fc2', 'blocks.0.attn.to_k', 'blocks.0.attn.out_proj', 'blocks.0.attn.to_q', 'blocks.0.attn.to_v', 'blocks.0.mlp.fc1', 'blocks.0.mlp.fc2', 'blocks.1.attn.to_k', 'blocks.1.attn.out_proj', 'blocks.1.attn.to_q', 'blocks.1.attn.to_v', 'blocks.1.mlp.fc1', 'blocks.1.mlp.fc2', 'blocks.10.attn.to_k', 'blocks.10.attn.out_proj', 'blocks.10.attn.to_q', 'blocks.10.attn.to_v', 'blocks.10.mlp.fc1', 'blocks.10.mlp.fc2', 'blocks.11.attn.to_k', 'blocks.11.attn.out_proj', 'blocks.11.attn.to_q', 'blocks.11.attn.to_v', 'blocks.11.mlp.fc1', 'blocks.11.mlp.fc2', 'blocks.12.attn.to_k', 'blocks.12.attn.out_proj', 'blocks.12.attn.to_q', 'blocks.12.attn.to_v', 'blocks.12.mlp.fc1', 'blocks.12.mlp.fc2', 'blocks.13.attn.to_k', 'blocks.13.attn.out_proj', 'blocks.13.attn.to_q', 'blocks.13.attn.to_v', 'blocks.13.mlp.fc1', 'blocks.13.mlp.fc2', 'blocks.14.attn.to_k', 'blocks.14.attn.out_proj', 'blocks.14.attn.to_q', 'blocks.14.attn.to_v', 'blocks.14.mlp.fc1', 'blocks.14.mlp.fc2', 'blocks.15.attn.to_k', 'blocks.15.attn.out_proj', 'blocks.15.attn.to_q', 'blocks.15.attn.to_v', 'blocks.15.mlp.fc1', 'blocks.15.mlp.fc2', 'blocks.16.attn.to_k', 'blocks.16.attn.out_proj', 'blocks.16.attn.to_q', 'blocks.16.attn.to_v', 'blocks.16.mlp.fc1', 'blocks.16.mlp.fc2', 'blocks.17.attn.to_k', 'blocks.17.attn.out_proj', 'blocks.17.attn.to_q', 'blocks.17.attn.to_v', 'blocks.17.mlp.fc1', 'blocks.17.mlp.fc2', 'blocks.18.attn.to_k', 'blocks.18.attn.out_proj', 'blocks.18.attn.to_q', 'blocks.18.attn.to_v', 'blocks.18.mlp.fc1', 'blocks.18.mlp.fc2', 'blocks.19.attn.to_k', 'blocks.19.attn.out_proj', 'blocks.19.attn.to_q', 'blocks.19.attn.to_v', 'blocks.19.mlp.fc1', 'blocks.19.mlp.fc2', 'blocks.2.attn.to_k', 'blocks.2.attn.out_proj', 'blocks.2.attn.to_q', 'blocks.2.attn.to_v', 'blocks.2.mlp.fc1', 'blocks.2.mlp.fc2', 'blocks.20.attn.to_k', 'blocks.20.attn.out_proj', 'blocks.20.attn.to_q', 'blocks.20.attn.to_v', 'blocks.20.mlp.fc1', 'blocks.20.mlp.fc2', 'blocks.21.attn.to_k', 'blocks.21.attn.out_proj', 'blocks.21.attn.to_q', 'blocks.21.attn.to_v', 'blocks.21.mlp.fc1', 'blocks.21.mlp.fc2', 'blocks.22.attn.to_k', 'blocks.22.attn.out_proj', 'blocks.22.attn.to_q', 'blocks.22.attn.to_v', 'blocks.22.mlp.fc1', 'blocks.22.mlp.fc2', 'blocks.23.attn.to_k', 'blocks.23.attn.out_proj', 'blocks.23.attn.to_q', 'blocks.23.attn.to_v', 'blocks.23.mlp.fc1', 'blocks.23.mlp.fc2', 'blocks.24.attn.to_k', 'blocks.24.attn.out_proj', 'blocks.24.attn.to_q', 'blocks.24.attn.to_v', 'blocks.24.mlp.fc1', 'blocks.24.mlp.fc2', 'blocks.25.attn.to_k', 'blocks.25.attn.out_proj', 'blocks.25.attn.to_q', 'blocks.25.attn.to_v', 'blocks.25.mlp.fc1', 'blocks.25.mlp.fc2', 'blocks.26.attn.to_k', 'blocks.26.attn.out_proj', 'blocks.26.attn.to_q', 'blocks.26.attn.to_v', 'blocks.26.mlp.fc1', 'blocks.26.mlp.fc2', 'blocks.27.attn.to_k', 'blocks.27.attn.out_proj', 'blocks.27.attn.to_q', 'blocks.27.attn.to_v', 'blocks.27.mlp.fc1', 'blocks.27.mlp.fc2', 'blocks.28.attn.to_k', 'blocks.28.attn.out_proj', 'blocks.28.attn.to_q', 'blocks.28.attn.to_v', 'blocks.28.mlp.fc1', 'blocks.28.mlp.fc2', 'blocks.29.attn.to_k', 'blocks.29.attn.out_proj', 'blocks.29.attn.to_q', 'blocks.29.attn.to_v', 'blocks.29.mlp.fc1', 'blocks.29.mlp.fc2', 'blocks.3.attn.to_k', 'blocks.3.attn.out_proj', 'blocks.3.attn.to_q', 'blocks.3.attn.to_v', 'blocks.3.mlp.fc1', 'blocks.3.mlp.fc2', 'blocks.30.attn.to_k', 'blocks.30.attn.out_proj', 'blocks.30.attn.to_q', 'blocks.30.attn.to_v', 'blocks.30.mlp.fc1', 'blocks.30.mlp.fc2', 'blocks.31.attn.to_k', 'blocks.31.attn.out_proj', 'blocks.31.attn.to_q', 'blocks.31.attn.to_v', 'blocks.31.mlp.fc1', 'blocks.31.mlp.fc2', 'blocks.32.attn.to_k', 'blocks.32.attn.out_proj', 'blocks.32.attn.to_q', 'blocks.32.attn.to_v', 'blocks.32.mlp.fc1', 'blocks.32.mlp.fc2', 'blocks.33.attn.to_k', 'blocks.33.attn.out_proj', 'blocks.33.attn.to_q', 'blocks.33.attn.to_v', 'blocks.33.mlp.fc1', 'blocks.33.mlp.fc2', 'blocks.34.attn.to_k', 'blocks.34.attn.out_proj', 'blocks.34.attn.to_q', 'blocks.34.attn.to_v', 'blocks.34.mlp.fc1', 'blocks.34.mlp.fc2', 'blocks.35.attn.to_k', 'blocks.35.attn.out_proj', 'blocks.35.attn.to_q', 'blocks.35.attn.to_v', 'blocks.35.mlp.fc1', 'blocks.35.mlp.fc2', 'blocks.36.attn.to_k', 'blocks.36.attn.out_proj', 'blocks.36.attn.to_q', 'blocks.36.attn.to_v', 'blocks.36.mlp.fc1', 'blocks.36.mlp.fc2', 'blocks.37.attn.to_k', 'blocks.37.attn.out_proj', 'blocks.37.attn.to_q', 'blocks.37.attn.to_v', 'blocks.37.mlp.fc1', 'blocks.37.mlp.fc2', 'blocks.38.attn.to_k', 'blocks.38.attn.out_proj', 'blocks.38.attn.to_q', 'blocks.38.attn.to_v', 'blocks.38.mlp.fc1', 'blocks.38.mlp.fc2', 'blocks.39.attn.to_k', 'blocks.39.attn.out_proj', 'blocks.39.attn.to_q', 'blocks.39.attn.to_v', 'blocks.39.mlp.fc1', 'blocks.39.mlp.fc2', 'blocks.4.attn.to_k', 'blocks.4.attn.out_proj', 'blocks.4.attn.to_q', 'blocks.4.attn.to_v', 'blocks.4.mlp.fc1', 'blocks.4.mlp.fc2', 'blocks.40.attn.to_k', 'blocks.40.attn.out_proj', 'blocks.40.attn.to_q', 'blocks.40.attn.to_v', 'blocks.40.mlp.fc1', 'blocks.40.mlp.fc2', 'blocks.41.attn.to_k', 'blocks.41.attn.out_proj', 'blocks.41.attn.to_q', 'blocks.41.attn.to_v', 'blocks.41.mlp.fc1', 'blocks.41.mlp.fc2', 'blocks.42.attn.to_k', 'blocks.42.attn.out_proj', 'blocks.42.attn.to_q', 'blocks.42.attn.to_v', 'blocks.42.mlp.fc1', 'blocks.42.mlp.fc2', 'blocks.43.attn.to_k', 'blocks.43.attn.out_proj', 'blocks.43.attn.to_q', 'blocks.43.attn.to_v', 'blocks.43.mlp.fc1', 'blocks.43.mlp.fc2', 'blocks.44.attn.to_k', 'blocks.44.attn.out_proj', 'blocks.44.attn.to_q', 'blocks.44.attn.to_v', 'blocks.44.mlp.fc1', 'blocks.44.mlp.fc2', 'blocks.45.attn.to_k', 'blocks.45.attn.out_proj', 'blocks.45.attn.to_q', 'blocks.45.attn.to_v', 'blocks.45.mlp.fc1', 'blocks.45.mlp.fc2', 'blocks.46.attn.to_k', 'blocks.46.attn.out_proj', 'blocks.46.attn.to_q', 'blocks.46.attn.to_v', 'blocks.46.mlp.fc1', 'blocks.46.mlp.fc2', 'blocks.47.attn.to_k', 'blocks.47.attn.out_proj', 'blocks.47.attn.to_q', 'blocks.47.attn.to_v', 'blocks.47.mlp.fc1', 'blocks.47.mlp.fc2', 'blocks.48.attn.to_k', 'blocks.48.attn.out_proj', 'blocks.48.attn.to_q', 'blocks.48.attn.to_v', 'blocks.48.mlp.fc1', 'blocks.48.mlp.fc2', 'blocks.49.attn.to_k', 'blocks.49.attn.out_proj', 'blocks.49.attn.to_q', 'blocks.49.attn.to_v', 'blocks.49.mlp.fc1', 'blocks.49.mlp.fc2', 'blocks.5.attn.to_k', 'blocks.5.attn.out_proj', 'blocks.5.attn.to_q', 'blocks.5.attn.to_v', 'blocks.5.mlp.fc1', 'blocks.5.mlp.fc2', 'blocks.6.attn.to_k', 'blocks.6.attn.out_proj', 'blocks.6.attn.to_q', 'blocks.6.attn.to_v', 'blocks.6.mlp.fc1', 'blocks.6.mlp.fc2', 'blocks.7.attn.to_k', 'blocks.7.attn.out_proj', 'blocks.7.attn.to_q', 'blocks.7.attn.to_v', 'blocks.7.mlp.fc1', 'blocks.7.mlp.fc2', 'blocks.8.attn.to_k', 'blocks.8.attn.out_proj', 'blocks.8.attn.to_q', 'blocks.8.attn.to_v', 'blocks.8.mlp.fc1', 'blocks.8.mlp.fc2', 'blocks.9.attn.to_k', 'blocks.9.attn.out_proj', 'blocks.9.attn.to_q', 'blocks.9.attn.to_v', 'blocks.9.mlp.fc1', 'blocks.9.mlp.fc2']
+(DiffusionWorker pid=753502) INFO 08-29 07:29:03 [manager.py:482] Increasing max LoRA rank: 0 -> 128
+(DiffusionWorker pid=753502) INFO 08-29 07:29:03 [manager.py:688] Activating adapter: id=1
+(DiffusionWorker pid=753502) INFO 08-29 07:29:05 [pipeline_minimax_h3.py:1210] MiniMax H3 fl2va Qwen presentation: 640 tokens, 1 reference images
+(DiffusionWorker pid=753502) INFO 08-29 07:29:16 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.encode_prompt took 11.102037s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:22 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline._encode_visual_conditions took 5.161615s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:22 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline._encode_reference_audio_conditions took 0.000029s
+(DiffusionWorker pid=753502)   0%|          | 0/4 [00:00<?, ?it/s] 25%|██▌       | 1/4 [00:03<00:11,  3.83s/it] 50%|█████     | 2/4 [00:04<00:04,  2.20s/it] 75%|███████▌  | 3/4 [00:05<00:01,  1.69s/it]100%|██████████| 4/4 [00:07<00:00,  1.45s/it]100%|██████████| 4/4 [00:07<00:00,  1.76s/it]
+(DiffusionWorker pid=753502) INFO 08-29 07:29:29 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.diffuse took 7.120304s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:37 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.decode took 7.889328s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:37 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.forward took 31.291850s
+INFO 08-29 07:29:37 [orchestrator.py:2491] [Orchestrator] ar2diffusion req=0_9ef5398e-6ab5-41c2-a7ef-b421653dfff0 wall_time=0.079ms stage=0->1
+INFO 08-29 07:29:37 [stage_diffusion_client.py:353] [StageDiffusionClient] stage-1 [rep-0] add request: 0_9ef5398e-6ab5-41c2-a7ef-b421653dfff0
+(DiffusionWorker pid=761375) INFO 08-29 07:29:38 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.vae.encode took 0.117504s
+(DiffusionWorker pid=761375) INFO 08-29 07:29:38 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.text_encoder.forward took 0.051603s
+(DiffusionWorker pid=761375) INFO 08-29 07:29:38 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.vae.encode took 0.020619s
+(DiffusionWorker pid=761375)   0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:00<00:01,  1.77it/s] 67%|██████▋   | 2/3 [00:01<00:00,  1.75it/s]100%|██████████| 3/3 [00:01<00:00,  1.74it/s]100%|██████████| 3/3 [00:01<00:00,  1.74it/s]
+(DiffusionWorker pid=761375) INFO 08-29 07:29:41 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.forward took 2.646835s
+{"event": "request_complete", "record": {"name": "05s-warmup-0", "kind": "warmup", "repeat": 0, "stage_0_draft_s": 40.615384101867676, "stage_1_refiner_s": 3.6090972423553467, "stage_sum_s": 44.22448134422302, "wall_s": 44.445708617102355, "orchestration_residual_s": 0.2212272728793323, "stage_durations_raw": {"LTX25H3RefinerPipeline.vae.encode": 0.13812253065407276, "LTX25H3RefinerPipeline.text_encoder.forward": 0.051602561958134174, "queue_wait_ms": 0.21866708993911743, "ar2diffusion_ms": 0.07900875061750412, "stage_0_gen_ms": 40615.384101867676, "stage_1_gen_ms": 3609.0972423553467}, "peak_memory_mb_reported": 83684.0, "output": "outputs/05s-warmup-0.mp4", "bytes": 1721009, "sha256": "db6a1bf6f29fef904f6f102858b5505ddfa38b5208051d7d5be43d9a40230ab1", "validation": {"container_duration_s": 5.042, "video_codec": "h264", "width": 1344, "height": 768, "fps": "24/1", "frames": 121, "audio_codec": "aac", "audio_sample_rate": 32000, "audio_channels": 2, "full_decode": "passed"}, "finished_at_utc": "2026-08-29T07:29:41.954216+00:00"}}
+{"event": "request_start", "name": "05s-measured-1", "at": "2026-08-29T07:29:41.954546+00:00"}
+INFO 08-29 07:29:41 [stage_diffusion_client.py:353] [StageDiffusionClient] stage-0 [rep-0] add request: 0_d932c70d-fe50-494c-8b26-3b9af12b1a8e
+(DiffusionWorker pid=753502) INFO 08-29 07:29:42 [pipeline_minimax_h3.py:1210] MiniMax H3 fl2va Qwen presentation: 640 tokens, 1 reference images
+(DiffusionWorker pid=753502) INFO 08-29 07:29:42 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.encode_prompt took 0.075711s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:42 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline._encode_visual_conditions took 0.123121s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:42 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline._encode_reference_audio_conditions took 0.000021s
+(DiffusionWorker pid=753502)   0%|          | 0/4 [00:00<?, ?it/s] 25%|██▌       | 1/4 [00:01<00:03,  1.07s/it] 50%|█████     | 2/4 [00:02<00:02,  1.07s/it] 75%|███████▌  | 3/4 [00:03<00:01,  1.07s/it]100%|██████████| 4/4 [00:04<00:00,  1.07s/it]100%|██████████| 4/4 [00:04<00:00,  1.07s/it]
+(DiffusionWorker pid=753502) INFO 08-29 07:29:46 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.diffuse took 4.380549s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:46 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.decode took 0.067881s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:46 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.forward took 4.665671s
+INFO 08-29 07:29:47 [orchestrator.py:2491] [Orchestrator] ar2diffusion req=0_d932c70d-fe50-494c-8b26-3b9af12b1a8e wall_time=0.078ms stage=0->1
+INFO 08-29 07:29:47 [stage_diffusion_client.py:353] [StageDiffusionClient] stage-1 [rep-0] add request: 0_d932c70d-fe50-494c-8b26-3b9af12b1a8e
+(DiffusionWorker pid=761375) INFO 08-29 07:29:48 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.vae.encode took 0.117160s
+(DiffusionWorker pid=761375) INFO 08-29 07:29:48 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.text_encoder.forward took 0.050510s
+(DiffusionWorker pid=761375) INFO 08-29 07:29:48 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.vae.encode took 0.020447s
+(DiffusionWorker pid=761375)   0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:00<00:01,  1.77it/s] 67%|██████▋   | 2/3 [00:01<00:00,  1.75it/s]100%|██████████| 3/3 [00:01<00:00,  1.74it/s]100%|██████████| 3/3 [00:01<00:00,  1.74it/s]
+(DiffusionWorker pid=761375) INFO 08-29 07:29:50 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.forward took 2.674367s
+{"event": "request_complete", "record": {"name": "05s-measured-1", "kind": "measured", "repeat": 1, "stage_0_draft_s": 5.405316591262817, "stage_1_refiner_s": 3.645503520965576, "stage_sum_s": 9.050820112228394, "wall_s": 9.264798235148191, "orchestration_residual_s": 0.2139781229197979, "stage_durations_raw": {"LTX25H3RefinerPipeline.vae.encode": 0.13760702311992645, "LTX25H3RefinerPipeline.text_encoder.forward": 0.05050956690683961, "queue_wait_ms": 0.2315659075975418, "ar2diffusion_ms": 0.07789907976984978, "stage_0_gen_ms": 5405.316591262817, "stage_1_gen_ms": 3645.503520965576}, "peak_memory_mb_reported": 83684.0, "output": "outputs/05s-measured-1.mp4", "bytes": 1729239, "sha256": "b3adf3236a28d72a522878a839b3eed2f74eb2d8773f4eaef657de8351e596c2", "validation": {"container_duration_s": 5.042, "video_codec": "h264", "width": 1344, "height": 768, "fps": "24/1", "frames": 121, "audio_codec": "aac", "audio_sample_rate": 32000, "audio_channels": 2, "full_decode": "passed"}, "finished_at_utc": "2026-08-29T07:29:51.428381+00:00"}}
+{"event": "request_start", "name": "05s-measured-2", "at": "2026-08-29T07:29:51.428800+00:00"}
+INFO 08-29 07:29:51 [stage_diffusion_client.py:353] [StageDiffusionClient] stage-0 [rep-0] add request: 0_3acd8218-da4d-437a-ac85-faa3cdcdb073
+(DiffusionWorker pid=753502) INFO 08-29 07:29:51 [pipeline_minimax_h3.py:1210] MiniMax H3 fl2va Qwen presentation: 640 tokens, 1 reference images
+(DiffusionWorker pid=753502) INFO 08-29 07:29:51 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.encode_prompt took 0.082732s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:51 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline._encode_visual_conditions took 0.124110s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:51 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline._encode_reference_audio_conditions took 0.000019s
+(DiffusionWorker pid=753502)   0%|          | 0/4 [00:00<?, ?it/s] 25%|██▌       | 1/4 [00:01<00:03,  1.07s/it] 50%|█████     | 2/4 [00:02<00:02,  1.07s/it] 75%|███████▌  | 3/4 [00:03<00:01,  1.08s/it]100%|██████████| 4/4 [00:04<00:00,  1.08s/it]100%|██████████| 4/4 [00:04<00:00,  1.08s/it]
+(DiffusionWorker pid=753502) INFO 08-29 07:29:56 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.diffuse took 4.425099s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:56 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.decode took 0.066478s
+(DiffusionWorker pid=753502) INFO 08-29 07:29:56 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.forward took 4.715490s
+INFO 08-29 07:29:56 [orchestrator.py:2491] [Orchestrator] ar2diffusion req=0_3acd8218-da4d-437a-ac85-faa3cdcdb073 wall_time=0.077ms stage=0->1
+INFO 08-29 07:29:56 [stage_diffusion_client.py:353] [StageDiffusionClient] stage-1 [rep-0] add request: 0_3acd8218-da4d-437a-ac85-faa3cdcdb073
+(DiffusionWorker pid=761375) INFO 08-29 07:29:57 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.vae.encode took 0.117279s
+(DiffusionWorker pid=761375) INFO 08-29 07:29:57 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.text_encoder.forward took 0.050366s
+(DiffusionWorker pid=761375) INFO 08-29 07:29:57 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.vae.encode took 0.020451s
+(DiffusionWorker pid=761375)   0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:00<00:01,  1.78it/s] 67%|██████▋   | 2/3 [00:01<00:00,  1.75it/s]100%|██████████| 3/3 [00:01<00:00,  1.74it/s]100%|██████████| 3/3 [00:01<00:00,  1.75it/s]
+(DiffusionWorker pid=761375) INFO 08-29 07:30:00 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.forward took 2.676990s
+{"event": "request_complete", "record": {"name": "05s-measured-2", "kind": "measured", "repeat": 2, "stage_0_draft_s": 5.454137563705444, "stage_1_refiner_s": 3.6222283840179443, "stage_sum_s": 9.076365947723389, "wall_s": 9.302991822827607, "orchestration_residual_s": 0.22662587510421872, "stage_durations_raw": {"LTX25H3RefinerPipeline.vae.encode": 0.13772973604500294, "LTX25H3RefinerPipeline.text_encoder.forward": 0.050366176292300224, "queue_wait_ms": 0.18137693405151367, "ar2diffusion_ms": 0.0774189829826355, "stage_0_gen_ms": 5454.137563705444, "stage_1_gen_ms": 3622.2283840179443}, "peak_memory_mb_reported": 83684.0, "output": "outputs/05s-measured-2.mp4", "bytes": 1729239, "sha256": "b3adf3236a28d72a522878a839b3eed2f74eb2d8773f4eaef657de8351e596c2", "validation": {"container_duration_s": 5.042, "video_codec": "h264", "width": 1344, "height": 768, "fps": "24/1", "frames": 121, "audio_codec": "aac", "audio_sample_rate": 32000, "audio_channels": 2, "full_decode": "passed"}, "finished_at_utc": "2026-08-29T07:30:00.938168+00:00"}}
+{"event": "request_start", "name": "05s-measured-3", "at": "2026-08-29T07:30:00.938622+00:00"}
+INFO 08-29 07:30:00 [stage_diffusion_client.py:353] [StageDiffusionClient] stage-0 [rep-0] add request: 0_5053a99c-10e4-42e6-bfb3-f88f3068171b
+(DiffusionWorker pid=753502) INFO 08-29 07:30:01 [pipeline_minimax_h3.py:1210] MiniMax H3 fl2va Qwen presentation: 640 tokens, 1 reference images
+(DiffusionWorker pid=753502) INFO 08-29 07:30:01 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.encode_prompt took 0.108157s
+(DiffusionWorker pid=753502) INFO 08-29 07:30:01 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline._encode_visual_conditions took 0.120654s
+(DiffusionWorker pid=753502) INFO 08-29 07:30:01 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline._encode_reference_audio_conditions took 0.000020s
+(DiffusionWorker pid=753502)   0%|          | 0/4 [00:00<?, ?it/s] 25%|██▌       | 1/4 [00:01<00:03,  1.07s/it] 50%|█████     | 2/4 [00:02<00:02,  1.07s/it] 75%|███████▌  | 3/4 [00:03<00:01,  1.08s/it]100%|██████████| 4/4 [00:04<00:00,  1.08s/it]100%|██████████| 4/4 [00:04<00:00,  1.08s/it]
+(DiffusionWorker pid=753502) INFO 08-29 07:30:05 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.diffuse took 4.415623s
+(DiffusionWorker pid=753502) INFO 08-29 07:30:05 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.decode took 0.067106s
+(DiffusionWorker pid=753502) INFO 08-29 07:30:05 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] MiniMaxH3SuperDraftPipeline.forward took 4.728641s
+INFO 08-29 07:30:06 [orchestrator.py:2491] [Orchestrator] ar2diffusion req=0_5053a99c-10e4-42e6-bfb3-f88f3068171b wall_time=0.073ms stage=0->1
+INFO 08-29 07:30:06 [stage_diffusion_client.py:353] [StageDiffusionClient] stage-1 [rep-0] add request: 0_5053a99c-10e4-42e6-bfb3-f88f3068171b
+(DiffusionWorker pid=761375) INFO 08-29 07:30:07 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.vae.encode took 0.117103s
+(DiffusionWorker pid=761375) INFO 08-29 07:30:07 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.text_encoder.forward took 0.050494s
+(DiffusionWorker pid=761375) INFO 08-29 07:30:07 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.vae.encode took 0.020430s
+(DiffusionWorker pid=761375)   0%|          | 0/3 [00:00<?, ?it/s] 33%|███▎      | 1/3 [00:00<00:01,  1.78it/s] 67%|██████▋   | 2/3 [00:01<00:00,  1.75it/s]100%|██████████| 3/3 [00:01<00:00,  1.74it/s]100%|██████████| 3/3 [00:01<00:00,  1.75it/s]
+(DiffusionWorker pid=761375) INFO 08-29 07:30:09 [diffusion_pipeline_profiler.py:32] [DiffusionPipelineProfiler] LTX25H3RefinerPipeline.forward took 2.676214s
+{"event": "request_complete", "record": {"name": "05s-measured-3", "kind": "measured", "repeat": 3, "stage_0_draft_s": 5.415982723236084, "stage_1_refiner_s": 3.6121795177459717, "stage_sum_s": 9.028162240982056, "wall_s": 9.232299897819757, "orchestration_residual_s": 0.2041376568377018, "stage_durations_raw": {"LTX25H3RefinerPipeline.vae.encode": 0.1375335529446602, "LTX25H3RefinerPipeline.text_encoder.forward": 0.05049371114000678, "queue_wait_ms": 0.20226696506142616, "ar2diffusion_ms": 0.073297880589962, "stage_0_gen_ms": 5415.982723236084, "stage_1_gen_ms": 3612.1795177459717}, "peak_memory_mb_reported": 83684.0, "output": "outputs/05s-measured-3.mp4", "bytes": 1729239, "sha256": "b3adf3236a28d72a522878a839b3eed2f74eb2d8773f4eaef657de8351e596c2", "validation": {"container_duration_s": 5.042, "video_codec": "h264", "width": 1344, "height": 768, "fps": "24/1", "frames": 121, "audio_codec": "aac", "audio_sample_rate": 32000, "audio_channels": 2, "full_decode": "passed"}, "finished_at_utc": "2026-08-29T07:30:10.380849+00:00"}}
+{"event": "complete", "summary": {"schema_version": 1, "created_at_utc": "2026-08-29T07:30:10.381206+00:00", "all_outputs_valid": true, "records": [{"name": "05s-warmup-0", "kind": "warmup", "repeat": 0, "stage_0_draft_s": 40.615384101867676, "stage_1_refiner_s": 3.6090972423553467, "stage_sum_s": 44.22448134422302, "wall_s": 44.445708617102355, "orchestration_residual_s": 0.2212272728793323, "stage_durations_raw": {"LTX25H3RefinerPipeline.vae.encode": 0.13812253065407276, "LTX25H3RefinerPipeline.text_encoder.forward": 0.051602561958134174, "queue_wait_ms": 0.21866708993911743, "ar2diffusion_ms": 0.07900875061750412, "stage_0_gen_ms": 40615.384101867676, "stage_1_gen_ms": 3609.0972423553467}, "peak_memory_mb_reported": 83684.0, "output": "outputs/05s-warmup-0.mp4", "bytes": 1721009, "sha256": "db6a1bf6f29fef904f6f102858b5505ddfa38b5208051d7d5be43d9a40230ab1", "validation": {"container_duration_s": 5.042, "video_codec": "h264", "width": 1344, "height": 768, "fps": "24/1", "frames": 121, "audio_codec": "aac", "audio_sample_rate": 32000, "audio_channels": 2, "full_decode": "passed"}, "finished_at_utc": "2026-08-29T07:29:41.954216+00:00"}, {"name": "05s-measured-1", "kind": "measured", "repeat": 1, "stage_0_draft_s": 5.405316591262817, "stage_1_refiner_s": 3.645503520965576, "stage_sum_s": 9.050820112228394, "wall_s": 9.264798235148191, "orchestration_residual_s": 0.2139781229197979, "stage_durations_raw": {"LTX25H3RefinerPipeline.vae.encode": 0.13760702311992645, "LTX25H3RefinerPipeline.text_encoder.forward": 0.05050956690683961, "queue_wait_ms": 0.2315659075975418, "ar2diffusion_ms": 0.07789907976984978, "stage_0_gen_ms": 5405.316591262817, "stage_1_gen_ms": 3645.503520965576}, "peak_memory_mb_reported": 83684.0, "output": "outputs/05s-measured-1.mp4", "bytes": 1729239, "sha256": "b3adf3236a28d72a522878a839b3eed2f74eb2d8773f4eaef657de8351e596c2", "validation": {"container_duration_s": 5.042, "video_codec": "h264", "width": 1344, "height": 768, "fps": "24/1", "frames": 121, "audio_codec": "aac", "audio_sample_rate": 32000, "audio_channels": 2, "full_decode": "passed"}, "finished_at_utc": "2026-08-29T07:29:51.428381+00:00"}, {"name": "05s-measured-2", "kind": "measured", "repeat": 2, "stage_0_draft_s": 5.454137563705444, "stage_1_refiner_s": 3.6222283840179443, "stage_sum_s": 9.076365947723389, "wall_s": 9.302991822827607, "orchestration_residual_s": 0.22662587510421872, "stage_durations_raw": {"LTX25H3RefinerPipeline.vae.encode": 0.13772973604500294, "LTX25H3RefinerPipeline.text_encoder.forward": 0.050366176292300224, "queue_wait_ms": 0.18137693405151367, "ar2diffusion_ms": 0.0774189829826355, "stage_0_gen_ms": 5454.137563705444, "stage_1_gen_ms": 3622.2283840179443}, "peak_memory_mb_reported": 83684.0, "output": "outputs/05s-measured-2.mp4", "bytes": 1729239, "sha256": "b3adf3236a28d72a522878a839b3eed2f74eb2d8773f4eaef657de8351e596c2", "validation": {"container_duration_s": 5.042, "video_codec": "h264", "width": 1344, "height": 768, "fps": "24/1", "frames": 121, "audio_codec": "aac", "audio_sample_rate": 32000, "audio_channels": 2, "full_decode": "passed"}, "finished_at_utc": "2026-08-29T07:30:00.938168+00:00"}, {"name": "05s-measured-3", "kind": "measured", "repeat": 3, "stage_0_draft_s": 5.415982723236084, "stage_1_refiner_s": 3.6121795177459717, "stage_sum_s": 9.028162240982056, "wall_s": 9.232299897819757, "orchestration_residual_s": 0.2041376568377018, "stage_durations_raw": {"LTX25H3RefinerPipeline.vae.encode": 0.1375335529446602, "LTX25H3RefinerPipeline.text_encoder.forward": 0.05049371114000678, "queue_wait_ms": 0.20226696506142616, "ar2diffusion_ms": 0.073297880589962, "stage_0_gen_ms": 5415.982723236084, "stage_1_gen_ms": 3612.1795177459717}, "peak_memory_mb_reported": 83684.0, "output": "outputs/05s-measured-3.mp4", "bytes": 1729239, "sha256": "b3adf3236a28d72a522878a839b3eed2f74eb2d8773f4eaef657de8351e596c2", "validation": {"container_duration_s": 5.042, "video_codec": "h264", "width": 1344, "height": 768, "fps": "24/1", "frames": 121, "audio_codec": "aac", "audio_sample_rate": 32000, "audio_channels": 2, "full_decode": "passed"}, "finished_at_utc": "2026-08-29T07:30:10.380849+00:00"}], "measured_summary": {"repeats": 3, "stage_0_draft_mean_s": 5.425145626068115, "stage_1_refiner_mean_s": 3.6266371409098306, "wall_mean_s": 9.266696651931852, "wall_min_s": 9.232299897819757, "wall_max_s": 9.302991822827607}}}
+INFO 08-29 07:30:10 [omni_base.py:768] [Omni] Shutting down
+INFO 08-29 07:30:10 [async_omni_engine.py:2058] [AsyncOmniEngine] Shutting down Orchestrator
+INFO 08-29 07:30:10 [orchestrator.py:675] [Orchestrator] Received shutdown signal
+INFO 08-29 07:30:10 [orchestrator.py:2951] [Orchestrator] Shutting down all 2 client(s)
+INFO 08-29 07:30:10 [utils.py:615] [shutdown] Process manager: send sigterm to process StageDiffusionProc
+(DiffusionWorker pid=753502) INFO 08-29 07:30:10 [diffusion_worker.py:1408] Worker 0: Received shutdown message
+(DiffusionWorker pid=753502) INFO 08-29 07:30:10 [diffusion_worker.py:1430] event loop terminated.
+(DiffusionWorker pid=753502) INFO 08-29 07:30:11 [diffusion_worker.py:1498] Worker 0: Shutdown complete.
+INFO 08-29 07:30:17 [stage_pool.py:1275] [StagePool] Stage 0 replica 0 shut down
+INFO 08-29 07:30:17 [utils.py:615] [shutdown] Process manager: send sigterm to process StageDiffusionProc
+(DiffusionWorker pid=761375) INFO 08-29 07:30:17 [diffusion_worker.py:1408] Worker 0: Received shutdown message
+(DiffusionWorker pid=761375) INFO 08-29 07:30:17 [diffusion_worker.py:1430] event loop terminated.
+(DiffusionWorker pid=761375) INFO 08-29 07:30:18 [diffusion_worker.py:1498] Worker 0: Shutdown complete.
+INFO 08-29 07:30:24 [stage_pool.py:1275] [StagePool] Stage 1 replica 0 shut down
