@@ -1,0 +1,1 @@
+{"default":{"backend":"TRTLLM_ATTN","skip_softmax":{"threshold":0.05,"disabled_until_timestep":0.97}},"per_role":{"minimax_h3.token_refiner":{"backend":"TRTLLM_ATTN"}}}

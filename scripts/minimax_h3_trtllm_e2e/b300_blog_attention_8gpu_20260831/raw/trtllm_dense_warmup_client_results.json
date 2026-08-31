@@ -1,0 +1,30 @@
+{
+  "runs": [
+    {
+      "request_index": 1,
+      "excluded_warmup": true,
+      "client_complete_mp4_e2e_seconds": 78.259436,
+      "video": "/artifacts/b300_blog_final_dense_thermal45_tp8_20260831T125043Z/trtllm_dense/client/response_1.mp4",
+      "video_bytes": 12237471,
+      "video_sha256": "87453b78a80af773e8098365e30a4a2f7ca5b9e7f2906bd98edae2cd3e60baae",
+      "cooldown_wait_seconds": 0.14158639311790466,
+      "start_temperatures_c": {
+        "0": 33,
+        "1": 33,
+        "2": 45,
+        "3": 48,
+        "4": 34,
+        "5": 33,
+        "6": 46,
+        "7": 44
+      },
+      "request_id": "video_sync-857a39890ba39fc7",
+      "server_inference_time_seconds": 78.226,
+      "stage_durations": {
+        "queue_wait_ms": 0.9417058899998665,
+        "stage_0_gen_ms": 77031.0308933258
+      },
+      "peak_memory_mb": 89522.0
+    }
+  ]
+}

@@ -1,8 +1,26 @@
 # MiniMax-H3 TRTLLM vs FA4 E2E
 
-Matched MiniMax-H3 `FL2VA` T2VA outputs on four NVIDIA B300 or B200 GPUs. The
-clips below are the steady-state second request after one regional-compile
-warmup.
+Matched MiniMax-H3 `FL2VA` T2VA outputs on four or eight NVIDIA B300 or B200
+GPUs. Unless a section says otherwise, the linked clip is the first measured
+request after one full-shape warmup.
+
+## B300 production-blog attention A/B
+
+The final eight-GPU starship comparison uses TP1, Ulysses8, Ring1, Fast
+Ulysses, text-encoder TP8, and VAE tile8. Each row has one excluded warmup and
+two thermally qualified measured requests; speedup uses the server's model
+execution timer.
+
+| Attention policy | Mean model execution | Speedup vs dense | Full-video LPIPS | Video |
+|---|---:|---:|---:|---|
+| Dense TRTLLM | 54.246 s | 1.000x | 0 | [MP4](./b300_blog_attention_8gpu_20260831/media/trtllm_dense.mp4) |
+| FP8 SAGE, Q1/K4 | 46.592 s | 1.164x | 0.4093 | [MP4](./b300_blog_attention_8gpu_20260831/media/sage_fp8_k4.mp4) |
+| Skip-Softmax 0.05/0.97 | 50.029 s | 1.084x | 0.0917 | [MP4](./b300_blog_attention_8gpu_20260831/media/skip_softmax_005_gate097.mp4) |
+| FP8 SAGE Q1/K4 + Skip-Softmax 0.05/0.97 | 46.073 s | 1.177x | 0.4103 | [MP4](./b300_blog_attention_8gpu_20260831/media/sage_fp8_skip_005_gate097.mp4) |
+
+The [complete evidence bundle](./b300_blog_attention_8gpu_20260831/) contains
+the exact source patch, environment, launch scripts, raw timings, telemetry,
+thermal audits, full-frame video metrics, decoded-audio metrics, and media.
 
 ## B300 stable matrix
 

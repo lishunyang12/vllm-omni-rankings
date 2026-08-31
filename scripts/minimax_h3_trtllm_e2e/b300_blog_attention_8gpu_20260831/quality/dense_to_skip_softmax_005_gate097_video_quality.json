@@ -1,0 +1,19 @@
+{
+  "reference": "/artifacts/b300_blog_final_attention_thermal_tp8_tail_20260831T121956Z/trtllm_dense/client/response_2.mp4",
+  "candidate": "/artifacts/b300_blog_final_attention_thermal_tp8_tail_20260831T121956Z/skip_softmax_005_gate097/client/response_2.mp4",
+  "frames": 243,
+  "fps": 24.0,
+  "width": 1344,
+  "height": 768,
+  "lpips_alex": {
+    "mean": 0.09171542707723354,
+    "median": 0.06938722729682922,
+    "p95": 0.1509368360042572,
+    "max": 0.15922394394874573,
+    "last": 0.04363090917468071
+  },
+  "decoded_rgb": {
+    "mean_absolute_error": 7.253422798933806,
+    "mean_psnr_db": 26.33299946854147
+  }
+}

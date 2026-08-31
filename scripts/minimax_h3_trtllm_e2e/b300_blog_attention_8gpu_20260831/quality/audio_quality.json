@@ -1,0 +1,47 @@
+{
+  "reference_mode": "trtllm_dense",
+  "sample_rate": 32000,
+  "comparison": "decoded stereo AAC waveform",
+  "results": {
+    "trtllm_dense": {
+      "video": "/artifacts/b300_blog_final_attention_thermal_tp8_tail_20260831T121956Z/trtllm_dense/client/response_2.mp4",
+      "samples_per_channel": 324608,
+      "channels": 2,
+      "decoded_sha256": "04c1963abac913a6dc5bd2532e9ed9a12596e3d952ba7e03120068a181c737a3",
+      "correlation": 1.0,
+      "snr_db": null,
+      "rms_error": 0.0,
+      "candidate_rms": 0.09104388207271531
+    },
+    "sage_fp8_k4": {
+      "video": "/artifacts/b300_blog_final_attention_thermal_tp8_tail_20260831T121956Z/sage_fp8_k4/client/response_2.mp4",
+      "samples_per_channel": 324608,
+      "channels": 2,
+      "decoded_sha256": "f3452b646065587d73c0f9db4650b0ab1b6d14ad9d092667b990765526f3a9b4",
+      "correlation": 0.9559192779052152,
+      "snr_db": 10.623865679710079,
+      "rms_error": 0.026795229653286477,
+      "candidate_rms": 0.08520807512111622
+    },
+    "skip_softmax_005_gate097": {
+      "video": "/artifacts/b300_blog_final_attention_thermal_tp8_tail_20260831T121956Z/skip_softmax_005_gate097/client/response_2.mp4",
+      "samples_per_channel": 324608,
+      "channels": 2,
+      "decoded_sha256": "1460d008e1785a5d30a881f4cb0b825d12a5c9bd4f43a5cb20929d9aa344aa09",
+      "correlation": 0.9008042323407954,
+      "snr_db": 6.422949379745355,
+      "rms_error": 0.04346135863707464,
+      "candidate_rms": 0.1000678018454564
+    },
+    "sage_fp8_skip_005_gate097": {
+      "video": "/artifacts/b300_blog_final_attention_thermal_tp8_tail_20260831T121956Z/sage_fp8_skip_005_gate097/client/response_2.mp4",
+      "samples_per_channel": 324608,
+      "channels": 2,
+      "decoded_sha256": "3dbb22f33dcccdf55e3e7be653dbffb37304121289f4d86541d576a9e8d4b8b9",
+      "correlation": 0.868232391439724,
+      "snr_db": 5.758013194128932,
+      "rms_error": 0.04691914699167533,
+      "candidate_rms": 0.09173129442084393
+    }
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "workload": {
+    "model": "MiniMaxAI/MiniMax-H3 FL2VA",
+    "prompt": "../prompts/minimax_h3_official_starship.txt",
+    "prompt_sha256": "bc61e2a588f9b3b5caf7698e559f9f46d89e5bdfe46ff823253aa75c9d93a894",
+    "seed": 0,
+    "width": 1344,
+    "height": 768,
+    "fps": 24,
+    "duration_seconds": 10.0,
+    "decoded_frames": 243,
+    "sigma_points": 50,
+    "dit_forwards": 49
+  },
+  "placement": {
+    "gpus": 8,
+    "dit_tp": 1,
+    "ulysses": 8,
+    "ring": 1,
+    "text_encoder_tp": 8,
+    "vae_patch_parallel": 8,
+    "vae_parallel_mode": "tile",
+    "fast_ulysses": true
+  },
+  "methodology": {
+    "excluded_full_shape_warmups": 1,
+    "measured_requests": 2,
+    "reported_timer": "diffusion_engine_exec_time_s",
+    "client_e2e_is_supplementary": true,
+    "maximum_start_temperature_c": {
+      "trtllm_dense": 49,
+      "sage_fp8_k4": 50,
+      "skip_softmax_005_gate097": 50,
+      "sage_fp8_skip_005_gate097": 50
+    },
+    "thermal_requirement": "No final measured run increments an NVIDIA software thermal-slowdown counter."
+  },
+  "modes": {
+    "trtllm_dense": {
+      "attention_config": "configs/trtllm_dense.json",
+      "model_execution_seconds": [54.185, 54.306],
+      "mean_model_execution_seconds": 54.2455,
+      "speedup_vs_dense": 1.0,
+      "client_e2e_seconds": [56.632369, 57.201018],
+      "mean_client_e2e_seconds": 56.9166935,
+      "peak_memory_mb": 89522.0,
+      "video": "media/trtllm_dense.mp4",
+      "video_sha256": "5956147b0f4675f93c11cef628fe22c5757967dbcf570e7ddffd47e50d162222",
+      "thermal_audit": "raw/trtllm_dense_thermal_audit.json"
+    },
+    "sage_fp8_k4": {
+      "attention_config": "configs/sage_fp8_k4.json",
+      "model_execution_seconds": [46.647, 46.536],
+      "mean_model_execution_seconds": 46.5915,
+      "speedup_vs_dense": 1.1642788921,
+      "client_e2e_seconds": [48.64579, 48.626081],
+      "mean_client_e2e_seconds": 48.6359355,
+      "peak_memory_mb": 89334.0,
+      "video": "media/sage_fp8_k4.mp4",
+      "video_sha256": "8c12ef479e9144e01075a4944074cb1f3f6a07593e3e57610b1fd5eed28dac9e",
+      "video_quality": "quality/dense_to_sage_fp8_k4_video_quality.json",
+      "mean_full_video_lpips_alex": 0.4092648374,
+      "mean_decoded_rgb_psnr_db": 13.8571640448,
+      "decoded_audio_correlation": 0.9559192779,
+      "decoded_audio_snr_db": 10.6238656797,
+      "thermal_audit": "raw/sage_fp8_k4_thermal_audit.json"
+    },
+    "skip_softmax_005_gate097": {
+      "attention_config": "configs/skip_softmax_005_gate097.json",
+      "model_execution_seconds": [50.09, 49.968],
+      "mean_model_execution_seconds": 50.029,
+      "speedup_vs_dense": 1.084281117,
+      "client_e2e_seconds": [52.286717, 52.163932],
+      "mean_client_e2e_seconds": 52.2253245,
+      "peak_memory_mb": 89522.0,
+      "video": "media/skip_softmax_005_gate097.mp4",
+      "video_sha256": "3ef0263c137ce684aa332f9586f2434fab4bea0306499c9738bae0044ab2163c",
+      "video_quality": "quality/dense_to_skip_softmax_005_gate097_video_quality.json",
+      "mean_full_video_lpips_alex": 0.0917154271,
+      "mean_decoded_rgb_psnr_db": 26.3329994685,
+      "decoded_audio_correlation": 0.9008042323,
+      "decoded_audio_snr_db": 6.4229493797,
+      "thermal_audit": "raw/skip_and_combined_thermal_audit.json"
+    },
+    "sage_fp8_skip_005_gate097": {
+      "attention_config": "configs/sage_fp8_skip_005_gate097.json",
+      "model_execution_seconds": [46.143, 46.003],
+      "mean_model_execution_seconds": 46.073,
+      "speedup_vs_dense": 1.1773815467,
+      "client_e2e_seconds": [48.120528, 47.868066],
+      "mean_client_e2e_seconds": 47.994297,
+      "peak_memory_mb": 89334.0,
+      "video": "media/sage_fp8_skip_005_gate097.mp4",
+      "video_sha256": "0df1847a01088d588f0a458c6e1cb1ea3b55b3cb75392db3ec433ec9417d88ea",
+      "video_quality": "quality/dense_to_sage_fp8_skip_005_gate097_video_quality.json",
+      "mean_full_video_lpips_alex": 0.4103100332,
+      "mean_decoded_rgb_psnr_db": 13.9700115674,
+      "decoded_audio_correlation": 0.8682323914,
+      "decoded_audio_snr_db": 5.7580131941,
+      "thermal_audit": "raw/skip_and_combined_thermal_audit.json"
+    }
+  },
+  "audio_quality": "quality/audio_quality.json"
+}

@@ -1,0 +1,135 @@
+{
+  "prompt_sha256_stripped": "98f36b879692095e099ae824c18d9e93e7006a490e082fd474a5f531769dcf06",
+  "warmup_requests": 1,
+  "measured_requests": 2,
+  "max_start_temperature_c": 50,
+  "inter_request_delay_seconds": 0.0,
+  "gpu_indices": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "runs": [
+    {
+      "request_index": 1,
+      "excluded_warmup": true,
+      "client_complete_mp4_e2e_seconds": 67.497237,
+      "video": "/artifacts/b300_blog_final_attention_thermal_tp8_tail_20260831T121956Z/skip_softmax_005_gate097/client/response_1.mp4",
+      "video_bytes": 11947234,
+      "video_sha256": "4d461fc39f74e07e3a1c034395f205073bd65f3d6457512b6a3e9dc28fa3d336",
+      "cooldown_wait_seconds": 0.1087744110263884,
+      "start_temperatures_c": {
+        "0": 33,
+        "1": 33,
+        "2": 45,
+        "3": 48,
+        "4": 34,
+        "5": 33,
+        "6": 46,
+        "7": 44
+      },
+      "request_id": "video_sync-ae94753af5c62fac",
+      "server_inference_time_seconds": 67.467,
+      "stage_durations": {
+        "queue_wait_ms": 1.105050090700388,
+        "stage_0_gen_ms": 66614.12382125854
+      },
+      "peak_memory_mb": 89522.0,
+      "media_validation": {
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "fps": 24.0,
+        "audio_sample_rate": 32000,
+        "audio_channels": 2,
+        "decoded_frames": 243,
+        "frame_mean_variance": 896.1565056462075,
+        "minimum_frame_pixel_variance": 1859.659469350124,
+        "audio_rms": 0.10034295595833431
+      }
+    },
+    {
+      "request_index": 2,
+      "excluded_warmup": false,
+      "client_complete_mp4_e2e_seconds": 52.286717,
+      "video": "/artifacts/b300_blog_final_attention_thermal_tp8_tail_20260831T121956Z/skip_softmax_005_gate097/client/response_2.mp4",
+      "video_bytes": 11947330,
+      "video_sha256": "3ef0263c137ce684aa332f9586f2434fab4bea0306499c9738bae0044ab2163c",
+      "cooldown_wait_seconds": 206.43618420884013,
+      "start_temperatures_c": {
+        "0": 34,
+        "1": 34,
+        "2": 47,
+        "3": 50,
+        "4": 34,
+        "5": 34,
+        "6": 48,
+        "7": 46
+      },
+      "request_id": "video_sync-a733fab6c600d8b9",
+      "server_inference_time_seconds": 52.262,
+      "stage_durations": {
+        "queue_wait_ms": 2.4627121165394783,
+        "stage_0_gen_ms": 51221.03571891785
+      },
+      "peak_memory_mb": 89522.0,
+      "media_validation": {
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "fps": 24.0,
+        "audio_sample_rate": 32000,
+        "audio_channels": 2,
+        "decoded_frames": 243,
+        "frame_mean_variance": 896.1565056462075,
+        "minimum_frame_pixel_variance": 1859.659469350124,
+        "audio_rms": 0.10006780184545638
+      }
+    },
+    {
+      "request_index": 3,
+      "excluded_warmup": false,
+      "client_complete_mp4_e2e_seconds": 52.163932,
+      "video": "/artifacts/b300_blog_final_attention_thermal_tp8_tail_20260831T121956Z/skip_softmax_005_gate097/client/response_3.mp4",
+      "video_bytes": 11947330,
+      "video_sha256": "3ef0263c137ce684aa332f9586f2434fab4bea0306499c9738bae0044ab2163c",
+      "cooldown_wait_seconds": 216.89225032995455,
+      "start_temperatures_c": {
+        "0": 34,
+        "1": 34,
+        "2": 47,
+        "3": 50,
+        "4": 34,
+        "5": 34,
+        "6": 48,
+        "7": 46
+      },
+      "request_id": "video_sync-ae31db0753e939de",
+      "server_inference_time_seconds": 52.137,
+      "stage_durations": {
+        "queue_wait_ms": 1.216747099533677,
+        "stage_0_gen_ms": 51094.0146446228
+      },
+      "peak_memory_mb": 89522.0,
+      "media_validation": {
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "fps": 24.0,
+        "audio_sample_rate": 32000,
+        "audio_channels": 2,
+        "decoded_frames": 243,
+        "frame_mean_variance": 896.1565056462075,
+        "minimum_frame_pixel_variance": 1859.659469350124,
+        "audio_rms": 0.10006780184545638
+      }
+    }
+  ],
+  "measured_client_complete_mp4_e2e_seconds": [
+    52.286717,
+    52.163932
+  ],
+  "median_client_complete_mp4_e2e_seconds": 52.2253245
+}

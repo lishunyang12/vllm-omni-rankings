@@ -1,0 +1,1 @@
+{"default":{"backend":"TRTLLM_ATTN","quant":{"dtype_qk":"fp8_e4m3","q_block_size":1,"k_block_size":4}},"per_role":{"minimax_h3.token_refiner":{"backend":"TRTLLM_ATTN"}}}

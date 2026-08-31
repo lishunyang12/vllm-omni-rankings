@@ -1,0 +1,83 @@
+{
+  "criteria": {
+    "thermal_slowdown_counter_delta_us": 0,
+    "thermal_slowdown_active_samples": 0,
+    "minimum_loaded_samples": 1
+  },
+  "gpus": {
+    "0": {
+      "sample_count": 166,
+      "loaded_sample_count": 27,
+      "maximum_temperature_c": 65,
+      "minimum_loaded_sm_clock_mhz": 1672,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    },
+    "1": {
+      "sample_count": 166,
+      "loaded_sample_count": 27,
+      "maximum_temperature_c": 65,
+      "minimum_loaded_sm_clock_mhz": 1620,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    },
+    "2": {
+      "sample_count": 166,
+      "loaded_sample_count": 27,
+      "maximum_temperature_c": 82,
+      "minimum_loaded_sm_clock_mhz": 1612,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    },
+    "3": {
+      "sample_count": 166,
+      "loaded_sample_count": 27,
+      "maximum_temperature_c": 84,
+      "minimum_loaded_sm_clock_mhz": 1680,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    },
+    "4": {
+      "sample_count": 166,
+      "loaded_sample_count": 27,
+      "maximum_temperature_c": 65,
+      "minimum_loaded_sm_clock_mhz": 1650,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    },
+    "5": {
+      "sample_count": 166,
+      "loaded_sample_count": 27,
+      "maximum_temperature_c": 64,
+      "minimum_loaded_sm_clock_mhz": 1657,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    },
+    "6": {
+      "sample_count": 166,
+      "loaded_sample_count": 27,
+      "maximum_temperature_c": 82,
+      "minimum_loaded_sm_clock_mhz": 1627,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    },
+    "7": {
+      "sample_count": 166,
+      "loaded_sample_count": 27,
+      "maximum_temperature_c": 81,
+      "minimum_loaded_sm_clock_mhz": 1695,
+      "thermal_slowdown_active_samples": 0,
+      "thermal_slowdown_counter_delta_us": 0,
+      "accepted": true
+    }
+  },
+  "accepted": true,
+  "decision": "pass"
+}
