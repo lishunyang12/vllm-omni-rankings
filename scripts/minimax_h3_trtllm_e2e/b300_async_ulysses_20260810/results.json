@@ -1,0 +1,49 @@
+{
+  "configuration": {
+    "model": "MiniMax-H3 FL2VA",
+    "prompt": "official starship",
+    "seed": 0,
+    "resolution": "1344x768",
+    "frames": 243,
+    "denoise_steps": 50,
+    "attention_backend": "TRTLLM_ATTN",
+    "parallelism": "TP1, Ulysses4, Ring1, text-encoder TP1, VAE tile4",
+    "regional_compile": true,
+    "physical_gpus": [0, 1, 4, 5]
+  },
+  "dense": {
+    "values_s": [
+      107.31326497904956,
+      107.55120673310012,
+      107.61894782166928,
+      107.55686140619218,
+      107.58664816431701
+    ],
+    "median_s": 107.55686140619218,
+    "cv": 0.0011310235090520328,
+    "peak_memory_mb": 141796.0,
+    "summary": "dense_summary.json",
+    "video": "dense.mp4"
+  },
+  "async_ulysses": {
+    "values_s": [
+      105.72700790967792,
+      106.15082656405866,
+      106.07767461054027,
+      106.17476608231664,
+      106.23424390424043
+    ],
+    "median_s": 106.15082656405866,
+    "cv": 0.0018980936934049225,
+    "peak_memory_mb": 141540.0,
+    "summary": "async_summary.json",
+    "video": "async.mp4"
+  },
+  "diffuse_speedup_x": 1.0132456325366908,
+  "diffuse_time_saved_s": 1.406034842133522,
+  "peak_memory_change_mb": -256.0,
+  "both_stable": true,
+  "thermal_audit_passed": true,
+  "steady_frame_hash_match": false,
+  "steady_audio_hash_match": false
+}

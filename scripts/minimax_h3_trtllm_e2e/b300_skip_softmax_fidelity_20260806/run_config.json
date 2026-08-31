@@ -1,0 +1,17 @@
+{
+  "model": "/home/scratch.lbo_other/MiniMax-H3/FL2VA",
+  "container": "vllm-omni-h3-mixed-devel-lbo",
+  "num_runs": 6,
+  "video_runs": "2",
+  "physical_gpu_indices": "0,1,4,5",
+  "reference": "trtllm_dense",
+  "modes": [
+    "trtllm_dense",
+    "skip_softmax_005_gate095",
+    "skip_softmax_006_gate095",
+    "skip_softmax_0075_gate095",
+    "skip_softmax_005_gate096",
+    "skip_softmax_005_gate097",
+    "skip_softmax_006_gate096"
+  ]
+}

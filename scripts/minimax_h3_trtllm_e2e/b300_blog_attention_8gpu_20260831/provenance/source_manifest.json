@@ -1,0 +1,24 @@
+{
+  "repository": "https://github.com/vllm-project/vllm-omni",
+  "upstream_base_sha": "b864374089749ad3b4e6d01cb5d4f627beeb6174",
+  "measured_head_sha": "99e94905b8e49236df42ae7f5e9fd5a2bb6e97aa",
+  "patch_commits": [
+    {
+      "sha": "398b0a7e3ea906c646e00a488285c29dc1159bc2",
+      "title": "fix(ulysses): stage strided QKV rows with copy engine",
+      "upstream_pr": "https://github.com/vllm-project/vllm-omni/pull/6814",
+      "upstream_merge_sha": "6f16f9546d18fa5094115d13502b885c761c93b8"
+    },
+    {
+      "sha": "99e94905b8e49236df42ae7f5e9fd5a2bb6e97aa",
+      "title": "fix(build): align Fast Ulysses CUDA headers",
+      "scope": "Local CUDA-header compatibility patch; no model scheduling or attention-policy change."
+    }
+  ],
+  "exact_patch": "vllm_omni_source.patch",
+  "docker_image_id": "sha256:609a5b463503f663bedc6a8045ef2aae530bf59c6dc20371c84b1d302fb6f9ca",
+  "docker_image_tag": "vllm/vllm-openai:v0.28.0",
+  "model_index_sha256": "d1113e0f123c69f79cd0de35ca1771606ebc3ec924270d257b771f96f584aa6b",
+  "transformer_weight_index_sha256": "fb457a26ffa6294660e249b0ddd03a337f2e5393f770b5c34c8b8f90a29a7efb",
+  "text_encoder_weight_index_sha256": "06c952c569285870b811989b794b9766493e280fb77fbcb957fc4e5fcf25403a"
+}

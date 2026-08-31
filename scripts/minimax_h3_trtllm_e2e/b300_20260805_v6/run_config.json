@@ -1,0 +1,11 @@
+{
+  "model": "/home/scratch.lbo_other/MiniMax-H3/FL2VA",
+  "num_runs": 6,
+  "video_runs": "2",
+  "single_container": "vllm-omni-h3-mixed-devel-lbo",
+  "physical_gpu_indices": "0,1,4,5",
+  "gates": [0.90, 0.95, 0.99],
+  "thresholds": [0.05, 0.10, 0.30, 0.50],
+  "sage": [false, true],
+  "controls": ["recipe_flash", "trtllm_dense", "sage_fp8"]
+}

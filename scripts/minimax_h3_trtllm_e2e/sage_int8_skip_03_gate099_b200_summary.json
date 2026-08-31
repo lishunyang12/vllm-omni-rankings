@@ -1,0 +1,149 @@
+{
+  "mode": "sage_int8_skip_03_gate099",
+  "model": "/home/scratch.lbo_other/MiniMax-H3/FL2VA",
+  "hardware": [
+    {
+      "logical_index": 0,
+      "name": "NVIDIA B200",
+      "compute_capability": "10.0",
+      "total_memory_gib": 178.34405517578125
+    },
+    {
+      "logical_index": 1,
+      "name": "NVIDIA B200",
+      "compute_capability": "10.0",
+      "total_memory_gib": 178.34405517578125
+    },
+    {
+      "logical_index": 2,
+      "name": "NVIDIA B200",
+      "compute_capability": "10.0",
+      "total_memory_gib": 178.34405517578125
+    },
+    {
+      "logical_index": 3,
+      "name": "NVIDIA B200",
+      "compute_capability": "10.0",
+      "total_memory_gib": 178.34405517578125
+    }
+  ],
+  "torch_version": "2.11.0+cu130",
+  "flashinfer_version": "0.6.16.post1",
+  "parallel_config": "tp1_ulysses4_ring1_text_encoder_tp1_vae_tile4",
+  "attention_config": {
+    "default": {
+      "backend": "TRTLLM_ATTN",
+      "skip_softmax": {
+        "threshold": 0.3,
+        "disabled_until_timestep": 0.99
+      },
+      "quant": {
+        "dtype_qk": "int8",
+        "q_block_size": 1,
+        "k_block_size": 16
+      }
+    },
+    "per_role": {
+      "minimax_h3.token_refiner": {
+        "backend": "TRTLLM_ATTN"
+      }
+    }
+  },
+  "regional_compile": true,
+  "prompt": "In a snowy blue-purple forest, Ori carefully walks past a sleeping giant; footsteps crunch in the snow while the creature breathes and softly snorts.",
+  "seed": 1101,
+  "height": 768,
+  "width": 1248,
+  "duration_seconds": 8.7,
+  "num_inference_steps": 50,
+  "runs": [
+    {
+      "run": 1,
+      "warmup": true,
+      "wall_time_s": 87.37837042899628,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 1.5126135149912443,
+        "MiniMaxH3Pipeline.diffuse": 79.54847986898676,
+        "MiniMaxH3Pipeline.decode": 2.965425394999329,
+        "queue_wait_ms": 0.19995300681330264,
+        "stage_0_gen_ms": 87377.40278244019
+      },
+      "worker_peak_memory_mb": 138362.0,
+      "frames_shape": [
+        209,
+        768,
+        1248,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        278400
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "458b4237551abecc59476162d3be1b8d62aa700d8fcaa2e3710193d669b96e8c",
+      "audio_sha256": "520e2ab96bfc45a1c0d081815581108b8a89b6abf1a5d57f700e8fd3f00b36b1",
+      "mp4": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/sage_int8_skip_03_gate099_b200_gpus0_3/t2va_sage_int8_skip_03_gate099_run1.mp4"
+    },
+    {
+      "run": 2,
+      "warmup": false,
+      "wall_time_s": 74.74566507599957,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.027785714002675377,
+        "MiniMaxH3Pipeline.diffuse": 70.13101165299304,
+        "MiniMaxH3Pipeline.decode": 2.4456146739976248,
+        "queue_wait_ms": 0.36931599606759846,
+        "stage_0_gen_ms": 74741.62101745605
+      },
+      "worker_peak_memory_mb": 138362.0,
+      "frames_shape": [
+        209,
+        768,
+        1248,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        278400
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "fb82e60f9a0b87ea870d1f7be5addf25f5f150d47f139c104b5630feabf8d725",
+      "audio_sha256": "c27c3cc60e52359aa04da709c5ac76a8dfe3968c5d5dacd675c2eb12ec61f474",
+      "mp4": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/sage_int8_skip_03_gate099_b200_gpus0_3/t2va_sage_int8_skip_03_gate099_run2.mp4"
+    },
+    {
+      "run": 3,
+      "warmup": false,
+      "wall_time_s": 74.69763406300626,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.028217083992785774,
+        "MiniMaxH3Pipeline.diffuse": 70.08386069399421,
+        "MiniMaxH3Pipeline.decode": 2.4448929149948526,
+        "queue_wait_ms": 0.1778370060492307,
+        "stage_0_gen_ms": 74696.91491127014
+      },
+      "worker_peak_memory_mb": 138362.0,
+      "frames_shape": [
+        209,
+        768,
+        1248,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        278400
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "fb82e60f9a0b87ea870d1f7be5addf25f5f150d47f139c104b5630feabf8d725",
+      "audio_sha256": "c27c3cc60e52359aa04da709c5ac76a8dfe3968c5d5dacd675c2eb12ec61f474",
+      "mp4": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/sage_int8_skip_03_gate099_b200_gpus0_3/t2va_sage_int8_skip_03_gate099_run3.mp4"
+    }
+  ],
+  "steady_output_deterministic": true
+}

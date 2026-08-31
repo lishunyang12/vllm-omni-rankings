@@ -1,0 +1,185 @@
+{
+  "session_root": "/home/scratch.lbo_other/vllm-omni-async-ulysses/b300_nsys_fused_final_20260810",
+  "modes": {
+    "sync_ulysses": {
+      "diffuse": {
+        "values_s": [
+          126.2707587229088
+        ],
+        "median_s": 126.2707587229088
+      },
+      "nccl_kernels": {
+        "count": 39387,
+        "time_ms": 29953.890017,
+        "kernel_types": 2
+      },
+      "symmetric_memory_barriers": {
+        "count": 0,
+        "time_ms": 0.0
+      },
+      "cuda_memcpy": {
+        "count": 119712,
+        "time_ms": 1283.83419,
+        "bytes_mb": 2611494.1859999998,
+        "breakdown": {
+          "[CUDA memcpy Device-to-Device]": {
+            "count": 11756,
+            "time_ms": 900.468915,
+            "bytes_mb": 2611462.664
+          },
+          "[CUDA memcpy Device-to-Host]": {
+            "count": 105991,
+            "time_ms": 377.302458,
+            "bytes_mb": 0.508
+          },
+          "[CUDA memcpy Host-to-Device]": {
+            "count": 1965,
+            "time_ms": 6.062817,
+            "bytes_mb": 31.014
+          }
+        }
+      },
+      "copy_compute_overlap": {
+        "available": true,
+        "method": "union of DtoD/P2P copy intervals intersected with the union of non-NCCL kernel intervals on each Nsight Device",
+        "aggregate_device_copy_busy_ms": 900.468915,
+        "aggregate_device_non_nccl_compute_busy_ms": 390986.843856,
+        "aggregate_device_overlap_ms": 0.082464,
+        "copy_hidden_pct": 0.009157895250609512,
+        "by_operation": {
+          "[CUDA memcpy Device-to-Device]": {
+            "copy_busy_ms": 900.468915,
+            "overlap_ms": 0.082464,
+            "copy_hidden_pct": 0.009157895250609512
+          }
+        },
+        "per_device": {
+          "NVIDIA B300 SXM6 AC (0)": {
+            "copy_busy_ms": 223.311766,
+            "non_nccl_compute_busy_ms": 96890.329908,
+            "overlap_ms": 0.020352,
+            "copy_hidden_pct": 0.009113715933803506
+          },
+          "NVIDIA B300 SXM6 AC (1)": {
+            "copy_busy_ms": 226.03673,
+            "non_nccl_compute_busy_ms": 98266.287419,
+            "overlap_ms": 0.01936,
+            "copy_hidden_pct": 0.008564979682726785
+          },
+          "NVIDIA B300 SXM6 AC (2)": {
+            "copy_busy_ms": 225.502996,
+            "non_nccl_compute_busy_ms": 97780.463657,
+            "overlap_ms": 0.025056,
+            "copy_hidden_pct": 0.01111116058076674
+          },
+          "NVIDIA B300 SXM6 AC (3)": {
+            "copy_busy_ms": 225.617423,
+            "non_nccl_compute_busy_ms": 98049.762872,
+            "overlap_ms": 0.017696,
+            "copy_hidden_pct": 0.007843365891117372
+          }
+        }
+      }
+    },
+    "async_ulysses": {
+      "diffuse": {
+        "values_s": [
+          127.02016631700099
+        ],
+        "median_s": 127.02016631700099
+      },
+      "nccl_kernels": {
+        "count": 9996,
+        "time_ms": 11803.389782,
+        "kernel_types": 2
+      },
+      "symmetric_memory_barriers": {
+        "count": 19594,
+        "time_ms": 4669.59659
+      },
+      "cuda_memcpy": {
+        "count": 237279,
+        "time_ms": 14131.161871999999,
+        "bytes_mb": 10404772.343,
+        "breakdown": {
+          "[CUDA memcpy Device-to-Device]": {
+            "count": 41150,
+            "time_ms": 1653.67986,
+            "bytes_mb": 4559782.277
+          },
+          "[CUDA memcpy Device-to-Host]": {
+            "count": 105991,
+            "time_ms": 367.186077,
+            "bytes_mb": 0.508
+          },
+          "[CUDA memcpy Host-to-Device]": {
+            "count": 1965,
+            "time_ms": 6.575489,
+            "bytes_mb": 31.014
+          },
+          "[CUDA memcpy Peer-to-Peer]": {
+            "count": 88173,
+            "time_ms": 12103.720446,
+            "bytes_mb": 5844958.544
+          }
+        }
+      },
+      "copy_compute_overlap": {
+        "available": true,
+        "method": "union of DtoD/P2P copy intervals intersected with the union of non-NCCL kernel intervals on each Nsight Device",
+        "aggregate_device_copy_busy_ms": 13757.400306,
+        "aggregate_device_non_nccl_compute_busy_ms": 398498.035874,
+        "aggregate_device_overlap_ms": 8394.141673,
+        "copy_hidden_pct": 61.01546430497535,
+        "by_operation": {
+          "[CUDA memcpy Device-to-Device]": {
+            "copy_busy_ms": 1653.67986,
+            "overlap_ms": 111.680015,
+            "copy_hidden_pct": 6.753424148250799
+          },
+          "[CUDA memcpy Peer-to-Peer]": {
+            "copy_busy_ms": 12103.720446,
+            "overlap_ms": 8282.461658,
+            "copy_hidden_pct": 68.42905613155632
+          }
+        },
+        "per_device": {
+          "NVIDIA B300 SXM6 AC (0)": {
+            "copy_busy_ms": 3071.486775,
+            "non_nccl_compute_busy_ms": 99047.801455,
+            "overlap_ms": 1703.684751,
+            "copy_hidden_pct": 55.46775473255945
+          },
+          "NVIDIA B300 SXM6 AC (1)": {
+            "copy_busy_ms": 3455.622388,
+            "non_nccl_compute_busy_ms": 100063.743143,
+            "overlap_ms": 2106.547125,
+            "copy_hidden_pct": 60.959991818411616
+          },
+          "NVIDIA B300 SXM6 AC (2)": {
+            "copy_busy_ms": 3644.203288,
+            "non_nccl_compute_busy_ms": 99479.459832,
+            "overlap_ms": 2252.263461,
+            "copy_hidden_pct": 61.804001670721284
+          },
+          "NVIDIA B300 SXM6 AC (3)": {
+            "copy_busy_ms": 3586.087855,
+            "non_nccl_compute_busy_ms": 99907.031444,
+            "overlap_ms": 2331.646336,
+            "copy_hidden_pct": 65.01921955841208
+          }
+        }
+      }
+    }
+  },
+  "comparison": {
+    "diffuse_speedup_x": 0.9941000896485845,
+    "diffuse_time_change_pct": 0.5934925882061943,
+    "nccl_kernel_count_change": -29391,
+    "nccl_kernel_time_change_pct": -60.59480162576173,
+    "symmetric_memory_barrier_count_change": 19594,
+    "cuda_memcpy_time_change_pct": 1000.6999176427914,
+    "cuda_memcpy_bytes_change_pct": 298.4221905903183,
+    "copy_hidden_change_percentage_points": 61.00630640972474
+  }
+}

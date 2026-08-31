@@ -1,0 +1,28 @@
+mode,backend,sage,skip_softmax,median_diffuse_s,cv_percent,speedup_vs_dense,video,summary
+recipe_flash,FLASH_ATTN,—,—,74.972,0.05,1.017,./b300_20260805_v6/recipe_flash.mp4,./b300_20260805_v6/recipe_flash.json
+trtllm_dense,TRTLLM_ATTN,—,—,76.275,0.33,1.000,./b300_20260805_v6/trtllm_dense.mp4,./b300_20260805_v6/trtllm_dense.json
+sage_fp8,TRTLLM_ATTN,FP8,—,63.578,0.18,1.200,./b300_20260805_v6/sage_fp8.mp4,./b300_20260805_v6/sage_fp8.json
+skip_softmax_005_gate090,TRTLLM_ATTN,—,"threshold 0.05, disabled_until_timestep=0.90 (21/49 steps)",73.069,0.09,1.044,./b300_20260805_v6/skip_softmax_005_gate090.mp4,./b300_20260805_v6/skip_softmax_005_gate090.json
+skip_softmax_010_gate090,TRTLLM_ATTN,—,"threshold 0.10, disabled_until_timestep=0.90 (21/49 steps)",72.808,0.32,1.048,./b300_20260805_v6/skip_softmax_010_gate090.mp4,./b300_20260805_v6/skip_softmax_010_gate090.json
+skip_softmax_03_gate090,TRTLLM_ATTN,—,"threshold 0.30, disabled_until_timestep=0.90 (21/49 steps)",71.505,0.26,1.067,./b300_20260805_v6/skip_softmax_03_gate090.mp4,./b300_20260805_v6/skip_softmax_03_gate090.json
+skip_softmax_05_gate090,TRTLLM_ATTN,—,"threshold 0.50, disabled_until_timestep=0.90 (21/49 steps)",71.200,0.22,1.071,./b300_20260805_v6/skip_softmax_05_gate090.mp4,./b300_20260805_v6/skip_softmax_05_gate090.json
+skip_softmax_005_gate095,TRTLLM_ATTN,—,"threshold 0.05, disabled_until_timestep=0.95 (30/49 steps)",72.111,0.24,1.058,./b300_20260805_v6/skip_softmax_005_gate095.mp4,./b300_20260805_v6/skip_softmax_005_gate095.json
+skip_softmax_010_gate095,TRTLLM_ATTN,—,"threshold 0.10, disabled_until_timestep=0.95 (30/49 steps)",71.343,0.25,1.069,./b300_20260805_v6/skip_softmax_010_gate095.mp4,./b300_20260805_v6/skip_softmax_010_gate095.json
+skip_softmax_03_gate095,TRTLLM_ATTN,—,"threshold 0.30, disabled_until_timestep=0.95 (30/49 steps)",69.698,0.14,1.094,./b300_20260805_v6/skip_softmax_03_gate095.mp4,./b300_20260805_v6/skip_softmax_03_gate095.json
+skip_softmax_05_gate095,TRTLLM_ATTN,—,"threshold 0.50, disabled_until_timestep=0.95 (30/49 steps)",69.193,0.19,1.102,./b300_20260805_v6/skip_softmax_05_gate095.mp4,./b300_20260805_v6/skip_softmax_05_gate095.json
+skip_softmax_005_gate099,TRTLLM_ATTN,—,"threshold 0.05, disabled_until_timestep=0.99 (43/49 steps)",70.446,0.07,1.083,./b300_20260805_v6/skip_softmax_005_gate099.mp4,./b300_20260805_v6/skip_softmax_005_gate099.json
+skip_softmax_010_gate099,TRTLLM_ATTN,—,"threshold 0.10, disabled_until_timestep=0.99 (43/49 steps)",69.524,0.22,1.097,./b300_20260805_v6/skip_softmax_010_gate099.mp4,./b300_20260805_v6/skip_softmax_010_gate099.json
+skip_softmax_03_gate099,TRTLLM_ATTN,—,"threshold 0.30, disabled_until_timestep=0.99 (43/49 steps)",67.214,0.28,1.135,./b300_20260805_v6/skip_softmax_03_gate099.mp4,./b300_20260805_v6/skip_softmax_03_gate099.json
+skip_softmax_05_gate099,TRTLLM_ATTN,—,"threshold 0.50, disabled_until_timestep=0.99 (43/49 steps)",65.975,0.17,1.156,./b300_20260805_v6/skip_softmax_05_gate099.mp4,./b300_20260805_v6/skip_softmax_05_gate099.json
+sage_fp8_skip_005_gate090,TRTLLM_ATTN,FP8,"threshold 0.05, disabled_until_timestep=0.90 (21/49 steps)",63.045,0.25,1.210,./b300_20260805_v6/sage_fp8_skip_005_gate090.mp4,./b300_20260805_v6/sage_fp8_skip_005_gate090.json
+sage_fp8_skip_010_gate090,TRTLLM_ATTN,FP8,"threshold 0.10, disabled_until_timestep=0.90 (21/49 steps)",62.726,0.27,1.216,./b300_20260805_v6/sage_fp8_skip_010_gate090.mp4,./b300_20260805_v6/sage_fp8_skip_010_gate090.json
+sage_fp8_skip_03_gate090,TRTLLM_ATTN,FP8,"threshold 0.30, disabled_until_timestep=0.90 (21/49 steps)",61.496,0.17,1.240,./b300_20260805_v6/sage_fp8_skip_03_gate090.mp4,./b300_20260805_v6/sage_fp8_skip_03_gate090.json
+sage_fp8_skip_05_gate090,TRTLLM_ATTN,FP8,"threshold 0.50, disabled_until_timestep=0.90 (21/49 steps)",60.981,0.18,1.251,./b300_20260805_v6/sage_fp8_skip_05_gate090.mp4,./b300_20260805_v6/sage_fp8_skip_05_gate090.json
+sage_fp8_skip_005_gate095,TRTLLM_ATTN,FP8,"threshold 0.05, disabled_until_timestep=0.95 (30/49 steps)",62.783,0.27,1.215,./b300_20260805_v6/sage_fp8_skip_005_gate095.mp4,./b300_20260805_v6/sage_fp8_skip_005_gate095.json
+sage_fp8_skip_010_gate095,TRTLLM_ATTN,FP8,"threshold 0.10, disabled_until_timestep=0.95 (30/49 steps)",62.109,0.10,1.228,./b300_20260805_v6/sage_fp8_skip_010_gate095.mp4,./b300_20260805_v6/sage_fp8_skip_010_gate095.json
+sage_fp8_skip_03_gate095,TRTLLM_ATTN,FP8,"threshold 0.30, disabled_until_timestep=0.95 (30/49 steps)",60.583,0.23,1.259,./b300_20260805_v6/sage_fp8_skip_03_gate095.mp4,./b300_20260805_v6/sage_fp8_skip_03_gate095.json
+sage_fp8_skip_05_gate095,TRTLLM_ATTN,FP8,"threshold 0.50, disabled_until_timestep=0.95 (30/49 steps)",60.086,0.43,1.269,./b300_20260805_v6/sage_fp8_skip_05_gate095.mp4,./b300_20260805_v6/sage_fp8_skip_05_gate095.json
+sage_fp8_skip_005_gate099,TRTLLM_ATTN,FP8,"threshold 0.05, disabled_until_timestep=0.99 (43/49 steps)",62.284,0.11,1.225,./b300_20260805_v6/sage_fp8_skip_005_gate099.mp4,./b300_20260805_v6/sage_fp8_skip_005_gate099.json
+sage_fp8_skip_010_gate099,TRTLLM_ATTN,FP8,"threshold 0.10, disabled_until_timestep=0.99 (43/49 steps)",61.781,0.28,1.235,./b300_20260805_v6/sage_fp8_skip_010_gate099.mp4,./b300_20260805_v6/sage_fp8_skip_010_gate099.json
+sage_fp8_skip_03_gate099,TRTLLM_ATTN,FP8,"threshold 0.30, disabled_until_timestep=0.99 (43/49 steps)",59.741,0.42,1.277,./b300_20260805_v6/sage_fp8_skip_03_gate099.mp4,./b300_20260805_v6/sage_fp8_skip_03_gate099.json
+sage_fp8_skip_05_gate099,TRTLLM_ATTN,FP8,"threshold 0.50, disabled_until_timestep=0.99 (43/49 steps)",58.322,0.22,1.308,./b300_20260805_v6/sage_fp8_skip_05_gate099.mp4,./b300_20260805_v6/sage_fp8_skip_05_gate099.json

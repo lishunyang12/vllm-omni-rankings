@@ -1,0 +1,1247 @@
+{
+  "criteria": {
+    "minimum_measured_runs": 5,
+    "maximum_cv": 0.02,
+    "maximum_span_over_median": 0.05
+  },
+  "required_modes": [
+    "recipe_flash",
+    "trtllm_dense",
+    "sage_fp8",
+    "skip_softmax_005_gate090",
+    "skip_softmax_010_gate090",
+    "skip_softmax_03_gate090",
+    "skip_softmax_05_gate090",
+    "skip_softmax_005_gate095",
+    "skip_softmax_010_gate095",
+    "skip_softmax_03_gate095",
+    "skip_softmax_05_gate095",
+    "skip_softmax_005_gate099",
+    "skip_softmax_010_gate099",
+    "skip_softmax_03_gate099",
+    "skip_softmax_05_gate099",
+    "sage_fp8_skip_005_gate090",
+    "sage_fp8_skip_010_gate090",
+    "sage_fp8_skip_03_gate090",
+    "sage_fp8_skip_05_gate090",
+    "sage_fp8_skip_005_gate095",
+    "sage_fp8_skip_010_gate095",
+    "sage_fp8_skip_03_gate095",
+    "sage_fp8_skip_05_gate095",
+    "sage_fp8_skip_005_gate099",
+    "sage_fp8_skip_010_gate099",
+    "sage_fp8_skip_03_gate099",
+    "sage_fp8_skip_05_gate099"
+  ],
+  "qualification_decision": "serial_g1",
+  "preferred_group": "g1",
+  "modes": {
+    "recipe_flash": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/recipe_flash/summary.json",
+        "mode": "recipe_flash",
+        "values_s": [
+          74.95307326689363,
+          75.00769122503698,
+          74.97230263799429,
+          74.97262780554593,
+          74.91404428239912
+        ],
+        "count": 5,
+        "min_s": 74.91404428239912,
+        "max_s": 75.00769122503698,
+        "mean_s": 74.96394784357399,
+        "median_s": 74.97230263799429,
+        "stdev_s": 0.034158635757914856,
+        "cv": 0.00045566751405879937,
+        "span_over_median": 0.0012490871874382393,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/recipe_flash/summary.json",
+          "mode": "recipe_flash",
+          "values_s": [
+            74.95307326689363,
+            75.00769122503698,
+            74.97230263799429,
+            74.97262780554593,
+            74.91404428239912
+          ],
+          "count": 5,
+          "min_s": 74.91404428239912,
+          "max_s": 75.00769122503698,
+          "mean_s": 74.96394784357399,
+          "median_s": 74.97230263799429,
+          "stdev_s": 0.034158635757914856,
+          "cv": 0.00045566751405879937,
+          "span_over_median": 0.0012490871874382393,
+          "stable": true
+        }
+      ]
+    },
+    "trtllm_dense": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/qualification/isolated_g1/summary.json",
+        "mode": "trtllm_dense",
+        "values_s": [
+          75.69395339488983,
+          76.20212969370186,
+          76.2745892861858,
+          76.27908092178404,
+          76.277423880063
+        ],
+        "count": 5,
+        "min_s": 75.69395339488983,
+        "max_s": 76.27908092178404,
+        "mean_s": 76.14543543532491,
+        "median_s": 76.2745892861858,
+        "stdev_s": 0.2544666257860789,
+        "cv": 0.0033418500312105163,
+        "span_over_median": 0.0076713297622460624,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/preflight/mixed/summary.json",
+          "mode": "trtllm_dense",
+          "values_s": [
+            75.82807220704854
+          ],
+          "count": 1,
+          "min_s": 75.82807220704854,
+          "max_s": 75.82807220704854,
+          "mean_s": 75.82807220704854,
+          "median_s": 75.82807220704854,
+          "stdev_s": 0.0,
+          "cv": 0.0,
+          "span_over_median": 0.0,
+          "stable": false
+        },
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/qualification/isolated_g1/summary.json",
+          "mode": "trtllm_dense",
+          "values_s": [
+            75.69395339488983,
+            76.20212969370186,
+            76.2745892861858,
+            76.27908092178404,
+            76.277423880063
+          ],
+          "count": 5,
+          "min_s": 75.69395339488983,
+          "max_s": 76.27908092178404,
+          "mean_s": 76.14543543532491,
+          "median_s": 76.2745892861858,
+          "stdev_s": 0.2544666257860789,
+          "cv": 0.0033418500312105163,
+          "span_over_median": 0.0076713297622460624,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8/summary.json",
+        "mode": "sage_fp8",
+        "values_s": [
+          63.587069261819124,
+          63.52673521172255,
+          63.48204583674669,
+          63.577509343624115,
+          63.78062906116247
+        ],
+        "count": 5,
+        "min_s": 63.48204583674669,
+        "max_s": 63.78062906116247,
+        "mean_s": 63.59079774301499,
+        "median_s": 63.577509343624115,
+        "stdev_s": 0.11418997056724466,
+        "cv": 0.00179569960780666,
+        "span_over_median": 0.004696365546533046,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8/summary.json",
+          "mode": "sage_fp8",
+          "values_s": [
+            63.587069261819124,
+            63.52673521172255,
+            63.48204583674669,
+            63.577509343624115,
+            63.78062906116247
+          ],
+          "count": 5,
+          "min_s": 63.48204583674669,
+          "max_s": 63.78062906116247,
+          "mean_s": 63.59079774301499,
+          "median_s": 63.577509343624115,
+          "stdev_s": 0.11418997056724466,
+          "cv": 0.00179569960780666,
+          "span_over_median": 0.004696365546533046,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_005_gate090": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_005_gate090/summary.json",
+        "mode": "skip_softmax_005_gate090",
+        "values_s": [
+          73.03754516132176,
+          72.98827003501356,
+          73.16260849963874,
+          73.06910120602697,
+          73.10834540612996
+        ],
+        "count": 5,
+        "min_s": 72.98827003501356,
+        "max_s": 73.16260849963874,
+        "mean_s": 73.07317406162619,
+        "median_s": 73.06910120602697,
+        "stdev_s": 0.06657747855224115,
+        "cv": 0.0009111069747167832,
+        "span_over_median": 0.002385939634505861,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_005_gate090/summary.json",
+          "mode": "skip_softmax_005_gate090",
+          "values_s": [
+            73.03754516132176,
+            72.98827003501356,
+            73.16260849963874,
+            73.06910120602697,
+            73.10834540612996
+          ],
+          "count": 5,
+          "min_s": 72.98827003501356,
+          "max_s": 73.16260849963874,
+          "mean_s": 73.07317406162619,
+          "median_s": 73.06910120602697,
+          "stdev_s": 0.06657747855224115,
+          "cv": 0.0009111069747167832,
+          "span_over_median": 0.002385939634505861,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_010_gate090": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_010_gate090/summary.json",
+        "mode": "skip_softmax_010_gate090",
+        "values_s": [
+          72.33297842834145,
+          72.66661484073848,
+          72.8826819267124,
+          72.88293683435768,
+          72.80832742899656
+        ],
+        "count": 5,
+        "min_s": 72.33297842834145,
+        "max_s": 72.88293683435768,
+        "mean_s": 72.7147078918293,
+        "median_s": 72.80832742899656,
+        "stdev_s": 0.230928125234067,
+        "cv": 0.003175810395574945,
+        "span_over_median": 0.007553509679954614,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_010_gate090/summary.json",
+          "mode": "skip_softmax_010_gate090",
+          "values_s": [
+            72.33297842834145,
+            72.66661484073848,
+            72.8826819267124,
+            72.88293683435768,
+            72.80832742899656
+          ],
+          "count": 5,
+          "min_s": 72.33297842834145,
+          "max_s": 72.88293683435768,
+          "mean_s": 72.7147078918293,
+          "median_s": 72.80832742899656,
+          "stdev_s": 0.230928125234067,
+          "cv": 0.003175810395574945,
+          "span_over_median": 0.007553509679954614,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_03_gate090": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_03_gate090/summary.json",
+        "mode": "skip_softmax_03_gate090",
+        "values_s": [
+          71.38653121050447,
+          71.50513425562531,
+          71.54620734974742,
+          71.47106861323118,
+          71.86514592822641
+        ],
+        "count": 5,
+        "min_s": 71.38653121050447,
+        "max_s": 71.86514592822641,
+        "mean_s": 71.55481747146696,
+        "median_s": 71.50513425562531,
+        "stdev_s": 0.18315324464203955,
+        "cv": 0.0025596214359022485,
+        "span_over_median": 0.006693431495575249,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_03_gate090/summary.json",
+          "mode": "skip_softmax_03_gate090",
+          "values_s": [
+            71.38653121050447,
+            71.50513425562531,
+            71.54620734974742,
+            71.47106861323118,
+            71.86514592822641
+          ],
+          "count": 5,
+          "min_s": 71.38653121050447,
+          "max_s": 71.86514592822641,
+          "mean_s": 71.55481747146696,
+          "median_s": 71.50513425562531,
+          "stdev_s": 0.18315324464203955,
+          "cv": 0.0025596214359022485,
+          "span_over_median": 0.006693431495575249,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_05_gate090": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_05_gate090/summary.json",
+        "mode": "skip_softmax_05_gate090",
+        "values_s": [
+          70.96422950923443,
+          71.11670250911266,
+          71.38158607110381,
+          71.19980874564499,
+          71.2311127204448
+        ],
+        "count": 5,
+        "min_s": 70.96422950923443,
+        "max_s": 71.38158607110381,
+        "mean_s": 71.17868791110814,
+        "median_s": 71.19980874564499,
+        "stdev_s": 0.15345741250418224,
+        "cv": 0.0021559460704843043,
+        "span_over_median": 0.00586176521007735,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_05_gate090/summary.json",
+          "mode": "skip_softmax_05_gate090",
+          "values_s": [
+            70.96422950923443,
+            71.11670250911266,
+            71.38158607110381,
+            71.19980874564499,
+            71.2311127204448
+          ],
+          "count": 5,
+          "min_s": 70.96422950923443,
+          "max_s": 71.38158607110381,
+          "mean_s": 71.17868791110814,
+          "median_s": 71.19980874564499,
+          "stdev_s": 0.15345741250418224,
+          "cv": 0.0021559460704843043,
+          "span_over_median": 0.00586176521007735,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_005_gate095": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_005_gate095/summary.json",
+        "mode": "skip_softmax_005_gate095",
+        "values_s": [
+          71.88069724012166,
+          72.08889771904796,
+          72.11060662101954,
+          72.17373577132821,
+          72.3664633538574
+        ],
+        "count": 5,
+        "min_s": 71.88069724012166,
+        "max_s": 72.3664633538574,
+        "mean_s": 72.12408014107496,
+        "median_s": 72.11060662101954,
+        "stdev_s": 0.17454933292152405,
+        "cv": 0.0024201256027127824,
+        "span_over_median": 0.006736403096547232,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_005_gate095/summary.json",
+          "mode": "skip_softmax_005_gate095",
+          "values_s": [
+            71.88069724012166,
+            72.08889771904796,
+            72.11060662101954,
+            72.17373577132821,
+            72.3664633538574
+          ],
+          "count": 5,
+          "min_s": 71.88069724012166,
+          "max_s": 72.3664633538574,
+          "mean_s": 72.12408014107496,
+          "median_s": 72.11060662101954,
+          "stdev_s": 0.17454933292152405,
+          "cv": 0.0024201256027127824,
+          "span_over_median": 0.006736403096547232,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_010_gate095": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_010_gate095/summary.json",
+        "mode": "skip_softmax_010_gate095",
+        "values_s": [
+          71.1347670527175,
+          71.20544196106493,
+          71.34336929861456,
+          71.48296913318336,
+          71.54790716059506
+        ],
+        "count": 5,
+        "min_s": 71.1347670527175,
+        "max_s": 71.54790716059506,
+        "mean_s": 71.34289092123508,
+        "median_s": 71.34336929861456,
+        "stdev_s": 0.17596985111619767,
+        "cv": 0.002466536593120038,
+        "span_over_median": 0.005790869031546781,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_010_gate095/summary.json",
+          "mode": "skip_softmax_010_gate095",
+          "values_s": [
+            71.1347670527175,
+            71.20544196106493,
+            71.34336929861456,
+            71.48296913318336,
+            71.54790716059506
+          ],
+          "count": 5,
+          "min_s": 71.1347670527175,
+          "max_s": 71.54790716059506,
+          "mean_s": 71.34289092123508,
+          "median_s": 71.34336929861456,
+          "stdev_s": 0.17596985111619767,
+          "cv": 0.002466536593120038,
+          "span_over_median": 0.005790869031546781,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_03_gate095": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_03_gate095/summary.json",
+        "mode": "skip_softmax_03_gate095",
+        "values_s": [
+          69.50506415497512,
+          69.62374319601804,
+          69.76000556629151,
+          69.69809358939528,
+          69.7190978564322
+        ],
+        "count": 5,
+        "min_s": 69.50506415497512,
+        "max_s": 69.76000556629151,
+        "mean_s": 69.66120087262243,
+        "median_s": 69.69809358939528,
+        "stdev_s": 0.10032105077009978,
+        "cv": 0.0014401280700506412,
+        "span_over_median": 0.003657796048458701,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_03_gate095/summary.json",
+          "mode": "skip_softmax_03_gate095",
+          "values_s": [
+            69.50506415497512,
+            69.62374319601804,
+            69.76000556629151,
+            69.69809358939528,
+            69.7190978564322
+          ],
+          "count": 5,
+          "min_s": 69.50506415497512,
+          "max_s": 69.76000556629151,
+          "mean_s": 69.66120087262243,
+          "median_s": 69.69809358939528,
+          "stdev_s": 0.10032105077009978,
+          "cv": 0.0014401280700506412,
+          "span_over_median": 0.003657796048458701,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_05_gate095": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_05_gate095/summary.json",
+        "mode": "skip_softmax_05_gate095",
+        "values_s": [
+          68.98548578098416,
+          69.19323401711881,
+          69.3335647713393,
+          69.2283477364108,
+          69.1187772070989
+        ],
+        "count": 5,
+        "min_s": 68.98548578098416,
+        "max_s": 69.3335647713393,
+        "mean_s": 69.1718819025904,
+        "median_s": 69.19323401711881,
+        "stdev_s": 0.12975869533853213,
+        "cv": 0.0018758878863706732,
+        "span_over_median": 0.005030535070365655,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_05_gate095/summary.json",
+          "mode": "skip_softmax_05_gate095",
+          "values_s": [
+            68.98548578098416,
+            69.19323401711881,
+            69.3335647713393,
+            69.2283477364108,
+            69.1187772070989
+          ],
+          "count": 5,
+          "min_s": 68.98548578098416,
+          "max_s": 69.3335647713393,
+          "mean_s": 69.1718819025904,
+          "median_s": 69.19323401711881,
+          "stdev_s": 0.12975869533853213,
+          "cv": 0.0018758878863706732,
+          "span_over_median": 0.005030535070365655,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_005_gate099": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_005_gate099/summary.json",
+        "mode": "skip_softmax_005_gate099",
+        "values_s": [
+          70.38860140927136,
+          70.52375030331314,
+          70.44561314303428,
+          70.44467387720942,
+          70.47207724768668
+        ],
+        "count": 5,
+        "min_s": 70.38860140927136,
+        "max_s": 70.52375030331314,
+        "mean_s": 70.45494319610297,
+        "median_s": 70.44561314303428,
+        "stdev_s": 0.04904522200764675,
+        "cv": 0.0006961218018604485,
+        "span_over_median": 0.0019184855949421215,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_005_gate099/summary.json",
+          "mode": "skip_softmax_005_gate099",
+          "values_s": [
+            70.38860140927136,
+            70.52375030331314,
+            70.44561314303428,
+            70.44467387720942,
+            70.47207724768668
+          ],
+          "count": 5,
+          "min_s": 70.38860140927136,
+          "max_s": 70.52375030331314,
+          "mean_s": 70.45494319610297,
+          "median_s": 70.44561314303428,
+          "stdev_s": 0.04904522200764675,
+          "cv": 0.0006961218018604485,
+          "span_over_median": 0.0019184855949421215,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_010_gate099": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_010_gate099/summary.json",
+        "mode": "skip_softmax_010_gate099",
+        "values_s": [
+          69.27140783052891,
+          69.2742827301845,
+          69.571419631131,
+          69.523990444839,
+          69.54840587545186
+        ],
+        "count": 5,
+        "min_s": 69.27140783052891,
+        "max_s": 69.571419631131,
+        "mean_s": 69.43790130242705,
+        "median_s": 69.523990444839,
+        "stdev_s": 0.15160875516267416,
+        "cv": 0.0021833717943513797,
+        "span_over_median": 0.004315226998371313,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_010_gate099/summary.json",
+          "mode": "skip_softmax_010_gate099",
+          "values_s": [
+            69.27140783052891,
+            69.2742827301845,
+            69.571419631131,
+            69.523990444839,
+            69.54840587545186
+          ],
+          "count": 5,
+          "min_s": 69.27140783052891,
+          "max_s": 69.571419631131,
+          "mean_s": 69.43790130242705,
+          "median_s": 69.523990444839,
+          "stdev_s": 0.15160875516267416,
+          "cv": 0.0021833717943513797,
+          "span_over_median": 0.004315226998371313,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_03_gate099": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_03_gate099/summary.json",
+        "mode": "skip_softmax_03_gate099",
+        "values_s": [
+          66.96556829381734,
+          66.96101974789053,
+          67.36527733970433,
+          67.21383237279952,
+          67.29858395177871
+        ],
+        "count": 5,
+        "min_s": 66.96101974789053,
+        "max_s": 67.36527733970433,
+        "mean_s": 67.16085634119808,
+        "median_s": 67.21383237279952,
+        "stdev_s": 0.1881723842287492,
+        "cv": 0.0028018163329064007,
+        "span_over_median": 0.006014499955479403,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_03_gate099/summary.json",
+          "mode": "skip_softmax_03_gate099",
+          "values_s": [
+            66.96556829381734,
+            66.96101974789053,
+            67.36527733970433,
+            67.21383237279952,
+            67.29858395177871
+          ],
+          "count": 5,
+          "min_s": 66.96101974789053,
+          "max_s": 67.36527733970433,
+          "mean_s": 67.16085634119808,
+          "median_s": 67.21383237279952,
+          "stdev_s": 0.1881723842287492,
+          "cv": 0.0028018163329064007,
+          "span_over_median": 0.006014499955479403,
+          "stable": true
+        }
+      ]
+    },
+    "skip_softmax_05_gate099": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_05_gate099/summary.json",
+        "mode": "skip_softmax_05_gate099",
+        "values_s": [
+          65.75491651240736,
+          65.90772164892405,
+          66.02112103346735,
+          66.02773792669177,
+          65.9746137810871
+        ],
+        "count": 5,
+        "min_s": 65.75491651240736,
+        "max_s": 66.02773792669177,
+        "mean_s": 65.93722218051553,
+        "median_s": 65.9746137810871,
+        "stdev_s": 0.11262314106603723,
+        "cv": 0.0017080358762719822,
+        "span_over_median": 0.004135248372800897,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/skip_softmax_05_gate099/summary.json",
+          "mode": "skip_softmax_05_gate099",
+          "values_s": [
+            65.75491651240736,
+            65.90772164892405,
+            66.02112103346735,
+            66.02773792669177,
+            65.9746137810871
+          ],
+          "count": 5,
+          "min_s": 65.75491651240736,
+          "max_s": 66.02773792669177,
+          "mean_s": 65.93722218051553,
+          "median_s": 65.9746137810871,
+          "stdev_s": 0.11262314106603723,
+          "cv": 0.0017080358762719822,
+          "span_over_median": 0.004135248372800897,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_005_gate090": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_005_gate090/summary.json",
+        "mode": "sage_fp8_skip_005_gate090",
+        "values_s": [
+          62.774718279019,
+          62.94385866262019,
+          63.10279249865562,
+          63.04537452943623,
+          63.18757451325655
+        ],
+        "count": 5,
+        "min_s": 62.774718279019,
+        "max_s": 63.18757451325655,
+        "mean_s": 63.01086369659752,
+        "median_s": 63.04537452943623,
+        "stdev_s": 0.1589991727785066,
+        "cv": 0.0025233612658302966,
+        "span_over_median": 0.0065485570879555465,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_005_gate090/summary.json",
+          "mode": "sage_fp8_skip_005_gate090",
+          "values_s": [
+            62.774718279019,
+            62.94385866262019,
+            63.10279249865562,
+            63.04537452943623,
+            63.18757451325655
+          ],
+          "count": 5,
+          "min_s": 62.774718279019,
+          "max_s": 63.18757451325655,
+          "mean_s": 63.01086369659752,
+          "median_s": 63.04537452943623,
+          "stdev_s": 0.1589991727785066,
+          "cv": 0.0025233612658302966,
+          "span_over_median": 0.0065485570879555465,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_010_gate090": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_010_gate090/summary.json",
+        "mode": "sage_fp8_skip_010_gate090",
+        "values_s": [
+          62.4215953219682,
+          62.629437148571014,
+          62.86989583354443,
+          62.76726250629872,
+          62.726453511975706
+        ],
+        "count": 5,
+        "min_s": 62.4215953219682,
+        "max_s": 62.86989583354443,
+        "mean_s": 62.68292886447161,
+        "median_s": 62.726453511975706,
+        "stdev_s": 0.16964653674318697,
+        "cv": 0.0027064232609485136,
+        "span_over_median": 0.007146913088122318,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_010_gate090/summary.json",
+          "mode": "sage_fp8_skip_010_gate090",
+          "values_s": [
+            62.4215953219682,
+            62.629437148571014,
+            62.86989583354443,
+            62.76726250629872,
+            62.726453511975706
+          ],
+          "count": 5,
+          "min_s": 62.4215953219682,
+          "max_s": 62.86989583354443,
+          "mean_s": 62.68292886447161,
+          "median_s": 62.726453511975706,
+          "stdev_s": 0.16964653674318697,
+          "cv": 0.0027064232609485136,
+          "span_over_median": 0.007146913088122318,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_03_gate090": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_03_gate090/summary.json",
+        "mode": "sage_fp8_skip_03_gate090",
+        "values_s": [
+          61.324486900120974,
+          61.534322222694755,
+          61.49600670579821,
+          61.420455472543836,
+          61.60388364829123
+        ],
+        "count": 5,
+        "min_s": 61.324486900120974,
+        "max_s": 61.60388364829123,
+        "mean_s": 61.4758309898898,
+        "median_s": 61.49600670579821,
+        "stdev_s": 0.10746772606278289,
+        "cv": 0.0017481297012553899,
+        "span_over_median": 0.0045433315614607775,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_03_gate090/summary.json",
+          "mode": "sage_fp8_skip_03_gate090",
+          "values_s": [
+            61.324486900120974,
+            61.534322222694755,
+            61.49600670579821,
+            61.420455472543836,
+            61.60388364829123
+          ],
+          "count": 5,
+          "min_s": 61.324486900120974,
+          "max_s": 61.60388364829123,
+          "mean_s": 61.4758309898898,
+          "median_s": 61.49600670579821,
+          "stdev_s": 0.10746772606278289,
+          "cv": 0.0017481297012553899,
+          "span_over_median": 0.0045433315614607775,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_05_gate090": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_05_gate090/summary.json",
+        "mode": "sage_fp8_skip_05_gate090",
+        "values_s": [
+          60.94338064920157,
+          60.980785984545946,
+          61.15111371781677,
+          60.96004209667444,
+          61.16922666784376
+        ],
+        "count": 5,
+        "min_s": 60.94338064920157,
+        "max_s": 61.16922666784376,
+        "mean_s": 61.040909823216495,
+        "median_s": 60.980785984545946,
+        "stdev_s": 0.10985958760704674,
+        "cv": 0.0017997698252731874,
+        "span_over_median": 0.003703560309954387,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_05_gate090/summary.json",
+          "mode": "sage_fp8_skip_05_gate090",
+          "values_s": [
+            60.94338064920157,
+            60.980785984545946,
+            61.15111371781677,
+            60.96004209667444,
+            61.16922666784376
+          ],
+          "count": 5,
+          "min_s": 60.94338064920157,
+          "max_s": 61.16922666784376,
+          "mean_s": 61.040909823216495,
+          "median_s": 60.980785984545946,
+          "stdev_s": 0.10985958760704674,
+          "cv": 0.0017997698252731874,
+          "span_over_median": 0.003703560309954387,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_005_gate095": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_005_gate095/summary.json",
+        "mode": "sage_fp8_skip_005_gate095",
+        "values_s": [
+          62.44225690700114,
+          62.709556373767555,
+          62.86742653697729,
+          62.78322531376034,
+          62.844997621141374
+        ],
+        "count": 5,
+        "min_s": 62.44225690700114,
+        "max_s": 62.86742653697729,
+        "mean_s": 62.72949255052954,
+        "median_s": 62.78322531376034,
+        "stdev_s": 0.1718692685269031,
+        "cv": 0.0027398479015027875,
+        "span_over_median": 0.006772025932904215,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_005_gate095/summary.json",
+          "mode": "sage_fp8_skip_005_gate095",
+          "values_s": [
+            62.44225690700114,
+            62.709556373767555,
+            62.86742653697729,
+            62.78322531376034,
+            62.844997621141374
+          ],
+          "count": 5,
+          "min_s": 62.44225690700114,
+          "max_s": 62.86742653697729,
+          "mean_s": 62.72949255052954,
+          "median_s": 62.78322531376034,
+          "stdev_s": 0.1718692685269031,
+          "cv": 0.0027398479015027875,
+          "span_over_median": 0.006772025932904215,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_010_gate095": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_010_gate095/summary.json",
+        "mode": "sage_fp8_skip_010_gate095",
+        "values_s": [
+          62.10944028198719,
+          62.05552035663277,
+          62.08312407974154,
+          62.18223523162305,
+          62.18968915846199
+        ],
+        "count": 5,
+        "min_s": 62.05552035663277,
+        "max_s": 62.18968915846199,
+        "mean_s": 62.124001821689305,
+        "median_s": 62.10944028198719,
+        "stdev_s": 0.059746747874536967,
+        "cv": 0.0009617337280689737,
+        "span_over_median": 0.0021601998217995557,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_010_gate095/summary.json",
+          "mode": "sage_fp8_skip_010_gate095",
+          "values_s": [
+            62.10944028198719,
+            62.05552035663277,
+            62.08312407974154,
+            62.18223523162305,
+            62.18968915846199
+          ],
+          "count": 5,
+          "min_s": 62.05552035663277,
+          "max_s": 62.18968915846199,
+          "mean_s": 62.124001821689305,
+          "median_s": 62.10944028198719,
+          "stdev_s": 0.059746747874536967,
+          "cv": 0.0009617337280689737,
+          "span_over_median": 0.0021601998217995557,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_03_gate095": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_03_gate095/summary.json",
+        "mode": "sage_fp8_skip_03_gate095",
+        "values_s": [
+          60.394894615747035,
+          60.49375884048641,
+          60.58346953149885,
+          60.62360056955367,
+          60.770074769854546
+        ],
+        "count": 5,
+        "min_s": 60.394894615747035,
+        "max_s": 60.770074769854546,
+        "mean_s": 60.5731596654281,
+        "median_s": 60.58346953149885,
+        "stdev_s": 0.14098675065222804,
+        "cv": 0.0023275449296513368,
+        "span_over_median": 0.006192780918769361,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_03_gate095/summary.json",
+          "mode": "sage_fp8_skip_03_gate095",
+          "values_s": [
+            60.394894615747035,
+            60.49375884048641,
+            60.58346953149885,
+            60.62360056955367,
+            60.770074769854546
+          ],
+          "count": 5,
+          "min_s": 60.394894615747035,
+          "max_s": 60.770074769854546,
+          "mean_s": 60.5731596654281,
+          "median_s": 60.58346953149885,
+          "stdev_s": 0.14098675065222804,
+          "cv": 0.0023275449296513368,
+          "span_over_median": 0.006192780918769361,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_05_gate095": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_05_gate095/summary.json",
+        "mode": "sage_fp8_skip_05_gate095",
+        "values_s": [
+          59.55751018691808,
+          59.996542355045676,
+          60.221636125817895,
+          60.10075079835951,
+          60.08607066422701
+        ],
+        "count": 5,
+        "min_s": 59.55751018691808,
+        "max_s": 60.221636125817895,
+        "mean_s": 59.99250202607364,
+        "median_s": 60.08607066422701,
+        "stdev_s": 0.25603200327450476,
+        "cv": 0.004267733377134853,
+        "span_over_median": 0.01105291012639325,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_05_gate095/summary.json",
+          "mode": "sage_fp8_skip_05_gate095",
+          "values_s": [
+            59.55751018691808,
+            59.996542355045676,
+            60.221636125817895,
+            60.10075079835951,
+            60.08607066422701
+          ],
+          "count": 5,
+          "min_s": 59.55751018691808,
+          "max_s": 60.221636125817895,
+          "mean_s": 59.99250202607364,
+          "median_s": 60.08607066422701,
+          "stdev_s": 0.25603200327450476,
+          "cv": 0.004267733377134853,
+          "span_over_median": 0.01105291012639325,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_005_gate099": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_005_gate099/summary.json",
+        "mode": "sage_fp8_skip_005_gate099",
+        "values_s": [
+          62.21642931457609,
+          62.28432447183877,
+          62.1423694267869,
+          62.291296595707536,
+          62.29342954233289
+        ],
+        "count": 5,
+        "min_s": 62.1423694267869,
+        "max_s": 62.29342954233289,
+        "mean_s": 62.24556987024844,
+        "median_s": 62.28432447183877,
+        "stdev_s": 0.06592212127431074,
+        "cv": 0.00105906527021483,
+        "span_over_median": 0.002425331202143621,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_005_gate099/summary.json",
+          "mode": "sage_fp8_skip_005_gate099",
+          "values_s": [
+            62.21642931457609,
+            62.28432447183877,
+            62.1423694267869,
+            62.291296595707536,
+            62.29342954233289
+          ],
+          "count": 5,
+          "min_s": 62.1423694267869,
+          "max_s": 62.29342954233289,
+          "mean_s": 62.24556987024844,
+          "median_s": 62.28432447183877,
+          "stdev_s": 0.06592212127431074,
+          "cv": 0.00105906527021483,
+          "span_over_median": 0.002425331202143621,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_010_gate099": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_010_gate099/summary.json",
+        "mode": "sage_fp8_skip_010_gate099",
+        "values_s": [
+          61.50377435423434,
+          61.75967355724424,
+          61.78077082615346,
+          61.90601736493409,
+          61.93544124159962
+        ],
+        "count": 5,
+        "min_s": 61.50377435423434,
+        "max_s": 61.93544124159962,
+        "mean_s": 61.77713546883315,
+        "median_s": 61.78077082615346,
+        "stdev_s": 0.1708183933214247,
+        "cv": 0.0027650746837817263,
+        "span_over_median": 0.006987075130220703,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_010_gate099/summary.json",
+          "mode": "sage_fp8_skip_010_gate099",
+          "values_s": [
+            61.50377435423434,
+            61.75967355724424,
+            61.78077082615346,
+            61.90601736493409,
+            61.93544124159962
+          ],
+          "count": 5,
+          "min_s": 61.50377435423434,
+          "max_s": 61.93544124159962,
+          "mean_s": 61.77713546883315,
+          "median_s": 61.78077082615346,
+          "stdev_s": 0.1708183933214247,
+          "cv": 0.0027650746837817263,
+          "span_over_median": 0.006987075130220703,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_03_gate099": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_03_gate099/summary.json",
+        "mode": "sage_fp8_skip_03_gate099",
+        "values_s": [
+          59.31971059367061,
+          59.466288425028324,
+          59.740642346441746,
+          59.79139570053667,
+          59.93779243156314
+        ],
+        "count": 5,
+        "min_s": 59.31971059367061,
+        "max_s": 59.93779243156314,
+        "mean_s": 59.651165899448095,
+        "median_s": 59.740642346441746,
+        "stdev_s": 0.25192632894763406,
+        "cv": 0.004223326152120774,
+        "span_over_median": 0.010346086242397867,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_03_gate099/summary.json",
+          "mode": "sage_fp8_skip_03_gate099",
+          "values_s": [
+            59.31971059367061,
+            59.466288425028324,
+            59.740642346441746,
+            59.79139570053667,
+            59.93779243156314
+          ],
+          "count": 5,
+          "min_s": 59.31971059367061,
+          "max_s": 59.93779243156314,
+          "mean_s": 59.651165899448095,
+          "median_s": 59.740642346441746,
+          "stdev_s": 0.25192632894763406,
+          "cv": 0.004223326152120774,
+          "span_over_median": 0.010346086242397867,
+          "stable": true
+        }
+      ]
+    },
+    "sage_fp8_skip_05_gate099": {
+      "selected": {
+        "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_05_gate099/summary.json",
+        "mode": "sage_fp8_skip_05_gate099",
+        "values_s": [
+          58.1101133460179,
+          58.321852615103126,
+          58.27351434715092,
+          58.46016969624907,
+          58.341313829645514
+        ],
+        "count": 5,
+        "min_s": 58.1101133460179,
+        "max_s": 58.46016969624907,
+        "mean_s": 58.3013927668333,
+        "median_s": 58.321852615103126,
+        "stdev_s": 0.1270702886923646,
+        "cv": 0.002179541219547894,
+        "span_over_median": 0.006002147300453201,
+        "stable": true
+      },
+      "candidates": [
+        {
+          "summary": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/final/sage_fp8_skip_05_gate099/summary.json",
+          "mode": "sage_fp8_skip_05_gate099",
+          "values_s": [
+            58.1101133460179,
+            58.321852615103126,
+            58.27351434715092,
+            58.46016969624907,
+            58.341313829645514
+          ],
+          "count": 5,
+          "min_s": 58.1101133460179,
+          "max_s": 58.46016969624907,
+          "mean_s": 58.3013927668333,
+          "median_s": 58.321852615103126,
+          "stdev_s": 0.1270702886923646,
+          "cv": 0.002179541219547894,
+          "span_over_median": 0.006002147300453201,
+          "stable": true
+        }
+      ]
+    }
+  },
+  "needs_rerun": [],
+  "complete_and_stable": true,
+  "errors": []
+}

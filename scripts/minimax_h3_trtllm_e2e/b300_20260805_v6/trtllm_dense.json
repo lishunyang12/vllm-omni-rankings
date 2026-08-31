@@ -1,0 +1,226 @@
+{
+  "mode": "trtllm_dense",
+  "model": "/home/scratch.lbo_other/MiniMax-H3/FL2VA",
+  "hardware": [
+    {
+      "logical_index": 0,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    },
+    {
+      "logical_index": 1,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    },
+    {
+      "logical_index": 2,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    },
+    {
+      "logical_index": 3,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    }
+  ],
+  "torch_version": "2.11.0+cu130",
+  "flashinfer_version": "0.6.16.post1",
+  "parallel_config": "tp1_ulysses4_ring1_text_encoder_tp1_vae_tile4",
+  "attention_config": {
+    "default": {
+      "backend": "TRTLLM_ATTN"
+    }
+  },
+  "regional_compile": true,
+  "prompt": "In a snowy blue-purple forest, Ori carefully walks past a sleeping giant; footsteps crunch in the snow while the creature breathes and softly snorts.",
+  "seed": 1101,
+  "height": 768,
+  "width": 1248,
+  "duration_seconds": 8.7,
+  "num_inference_steps": 50,
+  "video_runs": [
+    2
+  ],
+  "video_encoding": "deferred_until_after_all_timed_runs",
+  "runs": [
+    {
+      "run": 1,
+      "warmup": true,
+      "wall_time_s": 179.4470916269347,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 64.02259643748403,
+        "MiniMaxH3Pipeline.diffuse": 93.33409638423473,
+        "MiniMaxH3Pipeline.decode": 15.225901015102863,
+        "queue_wait_ms": 0.3903014585375786,
+        "stage_0_gen_ms": 179445.03235816956
+      },
+      "worker_peak_memory_mb": 138160.0,
+      "frames_shape": [
+        209,
+        768,
+        1248,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        278400
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "3eccce2405a7287ecc4b33d0cccc66c8e1528a9ead1bab0c6a0d8b8d9c9e9304",
+      "audio_sha256": "d19ffb562a44b589800bfb9e8e032e65630ff887ba3e0f9e2401cc7ccdcafab1",
+      "mp4": null
+    },
+    {
+      "run": 2,
+      "warmup": false,
+      "wall_time_s": 83.19151796400547,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.03459904529154301,
+        "MiniMaxH3Pipeline.diffuse": 75.69395339488983,
+        "MiniMaxH3Pipeline.decode": 2.391912564635277,
+        "queue_wait_ms": 0.8286032825708389,
+        "stage_0_gen_ms": 83188.11678886414
+      },
+      "worker_peak_memory_mb": 138160.0,
+      "frames_shape": [
+        209,
+        768,
+        1248,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        278400
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "0ebc6ce04151f22601c7a807c4768e56760590d3794ef59a7d21679f49eded4e",
+      "audio_sha256": "d8dafe1e5fb2ac422ce18d26b0720966e9851225ab19e2bd353b42a8d9779070",
+      "mp4": "/home/scratch.lbo_other/vllm-omni-5771/minimax_h3_trtllm_e2e/b300_overnight_20260805_v6/qualification/isolated_g1/t2va_trtllm_dense_run2.mp4"
+    },
+    {
+      "run": 3,
+      "warmup": false,
+      "wall_time_s": 82.64960428699851,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.03200734872370958,
+        "MiniMaxH3Pipeline.diffuse": 76.20212969370186,
+        "MiniMaxH3Pipeline.decode": 2.3973503224551678,
+        "queue_wait_ms": 0.6040968000888824,
+        "stage_0_gen_ms": 82647.48883247375
+      },
+      "worker_peak_memory_mb": 138160.0,
+      "frames_shape": [
+        209,
+        768,
+        1248,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        278400
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "0ebc6ce04151f22601c7a807c4768e56760590d3794ef59a7d21679f49eded4e",
+      "audio_sha256": "d8dafe1e5fb2ac422ce18d26b0720966e9851225ab19e2bd353b42a8d9779070",
+      "mp4": null
+    },
+    {
+      "run": 4,
+      "warmup": false,
+      "wall_time_s": 81.26762289367616,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.05242037307471037,
+        "MiniMaxH3Pipeline.diffuse": 76.2745892861858,
+        "MiniMaxH3Pipeline.decode": 2.392229188233614,
+        "queue_wait_ms": 1.1902116239070892,
+        "stage_0_gen_ms": 81265.05541801453
+      },
+      "worker_peak_memory_mb": 138160.0,
+      "frames_shape": [
+        209,
+        768,
+        1248,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        278400
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "0ebc6ce04151f22601c7a807c4768e56760590d3794ef59a7d21679f49eded4e",
+      "audio_sha256": "d8dafe1e5fb2ac422ce18d26b0720966e9851225ab19e2bd353b42a8d9779070",
+      "mp4": null
+    },
+    {
+      "run": 5,
+      "warmup": false,
+      "wall_time_s": 81.66344185825437,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.03465049993246794,
+        "MiniMaxH3Pipeline.diffuse": 76.27908092178404,
+        "MiniMaxH3Pipeline.decode": 2.393656267784536,
+        "queue_wait_ms": 0.8290223777294159,
+        "stage_0_gen_ms": 81661.08727455139
+      },
+      "worker_peak_memory_mb": 138160.0,
+      "frames_shape": [
+        209,
+        768,
+        1248,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        278400
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "0ebc6ce04151f22601c7a807c4768e56760590d3794ef59a7d21679f49eded4e",
+      "audio_sha256": "d8dafe1e5fb2ac422ce18d26b0720966e9851225ab19e2bd353b42a8d9779070",
+      "mp4": null
+    },
+    {
+      "run": 6,
+      "warmup": false,
+      "wall_time_s": 82.38542373944074,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.06293562892824411,
+        "MiniMaxH3Pipeline.diffuse": 76.277423880063,
+        "MiniMaxH3Pipeline.decode": 2.3934771828353405,
+        "queue_wait_ms": 1.314614899456501,
+        "stage_0_gen_ms": 82382.04002380371
+      },
+      "worker_peak_memory_mb": 138160.0,
+      "frames_shape": [
+        209,
+        768,
+        1248,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        278400
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "0ebc6ce04151f22601c7a807c4768e56760590d3794ef59a7d21679f49eded4e",
+      "audio_sha256": "d8dafe1e5fb2ac422ce18d26b0720966e9851225ab19e2bd353b42a8d9779070",
+      "mp4": null
+    }
+  ],
+  "steady_output_deterministic": true
+}

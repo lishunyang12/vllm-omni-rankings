@@ -1,0 +1,128 @@
+From 398b0a7e3ea906c646e00a488285c29dc1159bc2 Mon Sep 17 00:00:00 2001
+From: Bo Li <22713281+bobboli@users.noreply.github.com>
+Date: Sun, 30 Aug 2026 09:42:20 +0000
+Subject: [PATCH 1/2] fix(ulysses): stage strided QKV rows with copy engine
+
+Fused QKV projections produce row-strided views. Copy complete rows into the symmetric-memory workspace with cudaMemcpy2DAsync instead of materializing the view with TensorIterator.
+
+Signed-off-by: Bo Li <22713281+bobboli@users.noreply.github.com>
+---
+ .../diffusion/distributed/a2a_permute.py      |  4 ++-
+ .../diffusion/distributed/csrc/a2a_permute.cu | 34 +++++++++++++++++++
+ 2 files changed, 37 insertions(+), 1 deletion(-)
+
+diff --git a/vllm_omni/diffusion/distributed/a2a_permute.py b/vllm_omni/diffusion/distributed/a2a_permute.py
+index 4584fbfd..d6ea0521 100644
+--- a/vllm_omni/diffusion/distributed/a2a_permute.py
++++ b/vllm_omni/diffusion/distributed/a2a_permute.py
+@@ -172,7 +172,9 @@ def ulysses_qkv_fwd(x: torch.Tensor, group_name: str, world_size: int) -> torch.
+     rows = B * s_local
+     symm_in = _get_symm_buffer((rows, p, lc), x.dtype, x.device, group_name)
+     # (B, S_local, H, D) -> (rows, p, lc); H is row-major so column block r = heads [r*Hl:(r+1)*Hl]
+-    symm_in.copy_(x.reshape(rows, p, lc))
++    # Fused QKV projections produce row-strided views. Stage complete rows with
++    # the copy engine instead of materializing the view with TensorIterator.
++    torch.ops.a2ap.copy_rows(x.view(rows, p, lc), symm_in)
+     out = torch.empty(p, rows, lc, device=x.device, dtype=x.dtype)
+     torch.ops.a2ap.all_to_all_permute(symm_in, out, 1, 0, group_name)
+     # (p, rows, lc) -> (B, S_global, H_local, D), sequence ordered rank-major
+diff --git a/vllm_omni/diffusion/distributed/csrc/a2a_permute.cu b/vllm_omni/diffusion/distributed/csrc/a2a_permute.cu
+index ce5dba77..1c218a1c 100644
+--- a/vllm_omni/diffusion/distributed/csrc/a2a_permute.cu
++++ b/vllm_omni/diffusion/distributed/csrc/a2a_permute.cu
+@@ -7,6 +7,7 @@
+ // cached per group — the PR's keyed-devcomm manager API is not in 2.11).
+ 
+ #include <c10/cuda/CUDAGuard.h>
++#include <c10/cuda/CUDAException.h>
+ #include <c10/macros/Macros.h>
+ #include <ATen/native/cuda/MemoryAccess.cuh>
+ #include <ATen/cuda/CUDAContext.h>
+@@ -29,6 +30,37 @@ using namespace c10d::symmetric_memory;
+ #error "Build requires NCCL >= 2.28 with symmetric-memory device support"
+ #endif
+ 
++void copy_rows(const at::Tensor& input, at::Tensor& out) {
++  TORCH_CHECK(input.is_cuda() && out.is_cuda(), "a2a_permute: copy_rows requires CUDA tensors");
++  TORCH_CHECK(input.device() == out.device(), "a2a_permute: copy_rows device mismatch");
++  TORCH_CHECK(input.scalar_type() == out.scalar_type(), "a2a_permute: copy_rows dtype mismatch");
++  TORCH_CHECK(input.dim() == 3, "a2a_permute: copy_rows input must be 3-D");
++  TORCH_CHECK(out.sizes() == input.sizes(), "a2a_permute: copy_rows shape mismatch");
++  TORCH_CHECK(out.is_contiguous(), "a2a_permute: copy_rows output must be contiguous");
++  TORCH_CHECK(
++      input.stride(2) == 1 && input.stride(1) == input.size(2),
++      "a2a_permute: copy_rows requires contiguous rows");
++
++  const int64_t row_elements = input.size(1) * input.size(2);
++  TORCH_CHECK(input.stride(0) >= row_elements, "a2a_permute: copy_rows input rows overlap");
++  const size_t rows = static_cast<size_t>(input.size(0));
++  const size_t row_bytes = static_cast<size_t>(row_elements) * input.element_size();
++  const size_t input_pitch =
++      static_cast<size_t>(input.stride(0) * input.element_size());
++
++  c10::cuda::CUDAGuard guard(input.device());
++  auto stream = at::cuda::getCurrentCUDAStream();
++  C10_CUDA_CHECK(cudaMemcpy2DAsync(
++      out.data_ptr(),
++      row_bytes,
++      input.data_ptr(),
++      input_pitch,
++      row_bytes,
++      rows,
++      cudaMemcpyDeviceToDevice,
++      stream));
++}
++
+ // ---- kernel (verbatim from PR) ----------------------------------------------
+ __device__ inline void copy_bytes_vec16_aligned(
+     const char* src, char* dst, size_t nbytes, size_t tid, size_t stride) {
+@@ -227,8 +259,10 @@ void all_to_all_permute(
+ } // namespace
+ 
+ TORCH_LIBRARY_FRAGMENT(a2ap, m) {
++  m.def("copy_rows(Tensor input, Tensor(a!) out) -> ()");
+   m.def("all_to_all_permute(Tensor input, Tensor(a!) out, int scatter_dim, int gather_dim, str group_name) -> ()");
+ }
+ TORCH_LIBRARY_IMPL(a2ap, CUDA, m) {
++  m.impl("copy_rows", TORCH_FN(copy_rows));
+   m.impl("all_to_all_permute", TORCH_FN(all_to_all_permute));
+ }
+-- 
+2.43.0
+
+
+From 99e94905b8e49236df42ae7f5e9fd5a2bb6e97aa Mon Sep 17 00:00:00 2001
+From: Bo Li <22713281+bobboli@users.noreply.github.com>
+Date: Sun, 30 Aug 2026 17:16:20 +0000
+Subject: [PATCH 2/2] fix(build): align Fast Ulysses CUDA headers
+
+Signed-off-by: Bo Li <22713281+bobboli@users.noreply.github.com>
+---
+ vllm_omni/diffusion/distributed/a2a_permute.py | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/vllm_omni/diffusion/distributed/a2a_permute.py b/vllm_omni/diffusion/distributed/a2a_permute.py
+index d6ea0521..80f4d89a 100644
+--- a/vllm_omni/diffusion/distributed/a2a_permute.py
++++ b/vllm_omni/diffusion/distributed/a2a_permute.py
+@@ -67,7 +67,16 @@ def _ensure_built() -> None:
+         src = os.path.join(here, "csrc", "a2a_permute.cu")
+         site_packages = sysconfig.get_paths()["purelib"]
+         nvidia_root = os.path.join(site_packages, "nvidia")
+-        include_paths = glob.glob(os.path.join(nvidia_root, "*", "include"))
++        wheel_include_paths = glob.glob(os.path.join(nvidia_root, "*", "include"))
++        include_paths = [
++            "/usr/local/cuda/include",
++            "/tmp/nvidia-cu13-libheaders",
++            *(
++                path
++                for path in wheel_include_paths
++                if os.path.basename(os.path.dirname(path)) != "cu13"
++            ),
++        ]
+         nccl_libs = glob.glob(os.path.join(nvidia_root, "nccl", "lib", "libnccl.so*"))
+         if not nccl_libs:
+             raise RuntimeError("a2a_permute: could not locate nvidia-nccl libnccl.so")
+-- 
+2.43.0
+

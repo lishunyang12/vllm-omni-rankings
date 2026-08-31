@@ -1,0 +1,227 @@
+{
+  "mode": "trtllm_dense",
+  "model": "/home/scratch.lbo_other/MiniMax-H3/FL2VA",
+  "hardware": [
+    {
+      "logical_index": 0,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    },
+    {
+      "logical_index": 1,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    },
+    {
+      "logical_index": 2,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    },
+    {
+      "logical_index": 3,
+      "name": "NVIDIA B300 SXM6 AC",
+      "compute_capability": "10.3",
+      "total_memory_gib": 267.6771240234375
+    }
+  ],
+  "torch_version": "2.11.0+cu130",
+  "flashinfer_version": "0.6.16.post1",
+  "parallel_config": "tp1_ulysses4_async0_ring1_text_encoder_tp1_vae_tile4",
+  "async_ulysses": false,
+  "attention_config": {
+    "default": {
+      "backend": "TRTLLM_ATTN"
+    }
+  },
+  "regional_compile": true,
+  "prompt": "integrated_multimodal_description: [Shot 1] Cinematic, medium wide shot, pushing in slowly. In the cavernous, dimly lit bridge of a starship, sleek metallic consoles with glowing amber displays flank a massive, curved observation window. A female captain, in her late 40s with an athletic build and short silver-streaked black hair, stands in the center midground. She wears a structured, high-collared dark navy military tunic with silver chest insignias. Her back is to the camera, silhouetted against the cool, ambient starlight pouring through the thick glass. She stands perfectly still with her hands clasped tightly behind her back. Outside the window, a massive armada of jagged, dark grey dreadnoughts hovers in tight formation against a deep purple space nebula. The fleet's massive rear thrusters begin to glow with an intense, escalating bright blue light. [Shot 2] At 00:04.500, the camera cuts to a close-up of the captain's face and shakes strongly. The brilliant blue-white light from the fleet's gathering energy reflects vividly in her dark eyes. Suddenly, a blinding white flash floods through the window, completely washing out the background as the fleet jumps to hyperspace. The sheer spatial force violently jolts the bridge, causing the captain from Shot 1 to stagger slightly forward, her shoulders tensing as she visibly braces herself against the physical tremors. As the intense white light fades abruptly, leaving only the dim, empty expanse of the purple nebula reflected on her starkly lit skin, her jaw clenches, and she slowly closes her eyes in the newly emptied space.\noverall_soundscape: A low, resonant hum of the ship's ambient life support systems serves as the baseline, soon drowned out by an audible, escalating, high-pitched electronic whine as the fleet outside charges its hyperdrives. A massive, deafening, bass-heavy boom and sharp crackle erupts during the blinding flash, accompanied by the loud metallic creaking, rattling, and deep thuds of the bridge's bulkheads vibrating under immense physical stress. The intense roaring impact then cuts abruptly back to a hollow, echoing room tone, leaving only the faint, steady hum of the isolated bridge.\nnon_diegetic_music: Cinematic space-opera orchestral score, slow tempo, featuring a solitary, mournful French horn melody over deep, sustained string dissonances that build rapidly in volume and intensity, swelling to a massive orchestral peak before snapping immediately into silence right after the jump.",
+  "seed": 0,
+  "height": 768,
+  "width": 1344,
+  "duration_seconds": 10.0,
+  "num_inference_steps": 50,
+  "video_runs": [
+    2
+  ],
+  "video_encoding": "deferred_until_after_all_timed_runs",
+  "runs": [
+    {
+      "run": 1,
+      "warmup": true,
+      "wall_time_s": 205.8132157586515,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 57.53123105503619,
+        "MiniMaxH3Pipeline.diffuse": 126.8909210767597,
+        "MiniMaxH3Pipeline.decode": 15.877891064621508,
+        "queue_wait_ms": 0.48263557255268097,
+        "stage_0_gen_ms": 205811.4070892334
+      },
+      "worker_peak_memory_mb": 141796.0,
+      "frames_shape": [
+        243,
+        768,
+        1344,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        324000
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "8f23714cdd0405f314d917365ce658eee6e17d9c9cd25dcb2f266f297502aa50",
+      "audio_sha256": "48f68b389a3a505ff9b679a7aaec43a9fde5535f73144e5a45aa6512d69390a7",
+      "mp4": null
+    },
+    {
+      "run": 2,
+      "warmup": false,
+      "wall_time_s": 113.8932408420369,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.05014127027243376,
+        "MiniMaxH3Pipeline.diffuse": 107.31326497904956,
+        "MiniMaxH3Pipeline.decode": 2.7744598742574453,
+        "queue_wait_ms": 0.9269556030631065,
+        "stage_0_gen_ms": 113890.85721969604
+      },
+      "worker_peak_memory_mb": 141796.0,
+      "frames_shape": [
+        243,
+        768,
+        1344,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        324000
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "240cc9e8e1aa62cdf487701ac3f11ad4f7d838b32d0328a6c636d305b49a1514",
+      "audio_sha256": "e6a0f7b49b91730a6b0387c109d4bc04f9c8e39e59796c60bcb1dbf0457ba7aa",
+      "mp4": "/home/scratch.lbo_other/vllm-omni-async-ulysses/b300_ab_20260810/dense/t2va_trtllm_dense_run2.mp4"
+    },
+    {
+      "run": 3,
+      "warmup": false,
+      "wall_time_s": 113.31122615281492,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.04790438245981932,
+        "MiniMaxH3Pipeline.diffuse": 107.55120673310012,
+        "MiniMaxH3Pipeline.decode": 2.7320575024932623,
+        "queue_wait_ms": 0.7230276241898537,
+        "stage_0_gen_ms": 113309.62657928467
+      },
+      "worker_peak_memory_mb": 141796.0,
+      "frames_shape": [
+        243,
+        768,
+        1344,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        324000
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "240cc9e8e1aa62cdf487701ac3f11ad4f7d838b32d0328a6c636d305b49a1514",
+      "audio_sha256": "e6a0f7b49b91730a6b0387c109d4bc04f9c8e39e59796c60bcb1dbf0457ba7aa",
+      "mp4": null
+    },
+    {
+      "run": 4,
+      "warmup": false,
+      "wall_time_s": 114.11893342342228,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.0496848588809371,
+        "MiniMaxH3Pipeline.diffuse": 107.61894782166928,
+        "MiniMaxH3Pipeline.decode": 2.730238990858197,
+        "queue_wait_ms": 0.481938011944294,
+        "stage_0_gen_ms": 114117.30718612671
+      },
+      "worker_peak_memory_mb": 141796.0,
+      "frames_shape": [
+        243,
+        768,
+        1344,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        324000
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "240cc9e8e1aa62cdf487701ac3f11ad4f7d838b32d0328a6c636d305b49a1514",
+      "audio_sha256": "e6a0f7b49b91730a6b0387c109d4bc04f9c8e39e59796c60bcb1dbf0457ba7aa",
+      "mp4": null
+    },
+    {
+      "run": 5,
+      "warmup": false,
+      "wall_time_s": 114.04267131723464,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.05060063395649195,
+        "MiniMaxH3Pipeline.diffuse": 107.55686140619218,
+        "MiniMaxH3Pipeline.decode": 2.7328096199780703,
+        "queue_wait_ms": 0.5661919713020325,
+        "stage_0_gen_ms": 114041.09144210815
+      },
+      "worker_peak_memory_mb": 141796.0,
+      "frames_shape": [
+        243,
+        768,
+        1344,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        324000
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "240cc9e8e1aa62cdf487701ac3f11ad4f7d838b32d0328a6c636d305b49a1514",
+      "audio_sha256": "e6a0f7b49b91730a6b0387c109d4bc04f9c8e39e59796c60bcb1dbf0457ba7aa",
+      "mp4": null
+    },
+    {
+      "run": 6,
+      "warmup": false,
+      "wall_time_s": 114.03929379303008,
+      "stage_durations": {
+        "MiniMaxH3Pipeline.encode_prompt": 0.04704225342720747,
+        "MiniMaxH3Pipeline.diffuse": 107.58664816431701,
+        "MiniMaxH3Pipeline.decode": 2.7306458074599504,
+        "queue_wait_ms": 0.8552847430109978,
+        "stage_0_gen_ms": 114037.23430633545
+      },
+      "worker_peak_memory_mb": 141796.0,
+      "frames_shape": [
+        243,
+        768,
+        1344,
+        3
+      ],
+      "audio_shape": [
+        1,
+        2,
+        324000
+      ],
+      "fps": 24,
+      "audio_sample_rate": 32000,
+      "frames_sha256": "240cc9e8e1aa62cdf487701ac3f11ad4f7d838b32d0328a6c636d305b49a1514",
+      "audio_sha256": "e6a0f7b49b91730a6b0387c109d4bc04f9c8e39e59796c60bcb1dbf0457ba7aa",
+      "mp4": null
+    }
+  ],
+  "steady_output_deterministic": true
+}

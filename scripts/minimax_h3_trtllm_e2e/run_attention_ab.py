@@ -10,6 +10,7 @@ from pathlib import Path
 import numpy as np
 import torch
 
+import vllm_omni.diffusion.diffusion_engine as diffusion_engine
 from vllm_omni.diffusion.data import DiffusionParallelConfig
 from vllm_omni.entrypoints.omni import Omni
 from vllm_omni.entrypoints.openai.video_api_utils import _encode_video_bytes
@@ -23,7 +24,7 @@ PROMPT = (
 
 
 MODE_CONFIGS: dict[str, dict[str, object]] = {
-    # This is the MiniMax-H3 recipe's validated 4xB300 attention setting.
+    # Explicit FA4 baseline using the recipe's four-GPU parallel profile.
     "recipe_flash": {"default": {"backend": "FLASH_ATTN"}},
     # Control for separating the TRTLLM dense-kernel effect from the two features.
     "trtllm_dense": {"default": {"backend": "TRTLLM_ATTN"}},
@@ -35,7 +36,8 @@ MODE_CONFIGS: dict[str, dict[str, object]] = {
                 "threshold": 0.5,
                 "disabled_until_timestep": 0.94,
             },
-        }
+        },
+        "per_role": {"minimax_h3.token_refiner": {"backend": "TRTLLM_ATTN"}},
     },
     # B300 is SM103; use the FP8-QK SAGE kernel (the INT8 kernel is not a
     # valid B300 target). Block sizes match the #5509 example.
@@ -47,23 +49,135 @@ MODE_CONFIGS: dict[str, dict[str, object]] = {
                 "q_block_size": 1,
                 "k_block_size": 16,
             },
-        }
+        },
+        "per_role": {"minimax_h3.token_refiner": {"backend": "TRTLLM_ATTN"}},
     },
     "sage_fp8_skip": {
         "default": {
             "backend": "TRTLLM_ATTN",
             "skip_softmax": {
-                "threshold": 0.5,
-                "disabled_until_timestep": 0.94,
+                "threshold": 0.3,
+                "disabled_until_timestep": 0.9,
             },
             "quant": {
                 "dtype_qk": "fp8_e4m3",
                 "q_block_size": 1,
                 "k_block_size": 16,
             },
-        }
+        },
+        "per_role": {"minimax_h3.token_refiner": {"backend": "TRTLLM_ATTN"}},
+    },
+    "sage_int8": {
+        "default": {
+            "backend": "TRTLLM_ATTN",
+            "quant": {
+                "dtype_qk": "int8",
+                "q_block_size": 1,
+                "k_block_size": 16,
+            },
+        },
+        "per_role": {"minimax_h3.token_refiner": {"backend": "TRTLLM_ATTN"}},
+    },
+    "sage_int8_skip": {
+        "default": {
+            "backend": "TRTLLM_ATTN",
+            "skip_softmax": {
+                "threshold": 0.3,
+                "disabled_until_timestep": 0.9,
+            },
+            "quant": {
+                "dtype_qk": "int8",
+                "q_block_size": 1,
+                "k_block_size": 16,
+            },
+        },
+        "per_role": {"minimax_h3.token_refiner": {"backend": "TRTLLM_ATTN"}},
+    },
+    "sage_int8_skip_03_gate099": {
+        "default": {
+            "backend": "TRTLLM_ATTN",
+            "skip_softmax": {
+                "threshold": 0.3,
+                "disabled_until_timestep": 0.99,
+            },
+            "quant": {
+                "dtype_qk": "int8",
+                "q_block_size": 1,
+                "k_block_size": 16,
+            },
+        },
+        "per_role": {"minimax_h3.token_refiner": {"backend": "TRTLLM_ATTN"}},
+    },
+    "sage_int8_skip_05_gate099": {
+        "default": {
+            "backend": "TRTLLM_ATTN",
+            "skip_softmax": {
+                "threshold": 0.5,
+                "disabled_until_timestep": 0.99,
+            },
+            "quant": {
+                "dtype_qk": "int8",
+                "q_block_size": 1,
+                "k_block_size": 16,
+            },
+        },
+        "per_role": {"minimax_h3.token_refiner": {"backend": "TRTLLM_ATTN"}},
     },
 }
+
+
+def _skip_softmax_mode_config(
+    *,
+    threshold: float,
+    disabled_until_timestep: float,
+    sage_dtype: str | None,
+) -> dict[str, object]:
+    default: dict[str, object] = {
+        "backend": "TRTLLM_ATTN",
+        "skip_softmax": {
+            "threshold": threshold,
+            "disabled_until_timestep": disabled_until_timestep,
+        },
+    }
+    if sage_dtype is not None:
+        default["quant"] = {
+            "dtype_qk": sage_dtype,
+            "q_block_size": 1,
+            "k_block_size": 16,
+        }
+    return {
+        "default": default,
+        "per_role": {"minimax_h3.token_refiner": {"backend": "TRTLLM_ATTN"}},
+    }
+
+
+for threshold_name, threshold in {
+    "005": 0.05,
+    "006": 0.06,
+    "0075": 0.075,
+    "010": 0.10,
+    "03": 0.30,
+    "05": 0.50,
+}.items():
+    for gate_name, gate in {
+        "090": 0.90,
+        "095": 0.95,
+        "096": 0.96,
+        "097": 0.97,
+        "098": 0.98,
+        "099": 0.99,
+    }.items():
+        suffix = f"{threshold_name}_gate{gate_name}"
+        MODE_CONFIGS[f"skip_softmax_{suffix}"] = _skip_softmax_mode_config(
+            threshold=threshold,
+            disabled_until_timestep=gate,
+            sage_dtype=None,
+        )
+        MODE_CONFIGS[f"sage_fp8_skip_{suffix}"] = _skip_softmax_mode_config(
+            threshold=threshold,
+            disabled_until_timestep=gate,
+            sage_dtype="fp8_e4m3",
+        )
 
 
 def array_sha256(value: np.ndarray) -> str:
@@ -93,14 +207,32 @@ def main() -> None:
     model_dir = Path(os.environ["MODEL_DIR"])
     output_root = Path(os.environ["OUTPUT_ROOT"])
     output_root.mkdir(parents=True, exist_ok=True)
+    prompt_file = os.environ.get("PROMPT_FILE")
+    prompt = (
+        Path(prompt_file).read_text(encoding="utf-8").strip()
+        if prompt_file
+        else os.environ.get("PROMPT", PROMPT)
+    )
+    if not prompt:
+        raise ValueError("Prompt must not be empty")
     height = int(os.environ.get("HEIGHT", "768"))
     width = int(os.environ.get("WIDTH", "1248"))
     duration = float(os.environ.get("DURATION_SECONDS", "8.7"))
     steps = int(os.environ.get("NUM_INFERENCE_STEPS", "50"))
     num_runs = int(os.environ.get("NUM_RUNS", "3"))
+    video_runs_value = os.environ.get("VIDEO_RUNS", "")
+    if video_runs_value.lower() == "none":
+        video_runs: set[int] | None = set()
+    elif video_runs_value:
+        video_runs = {int(item) for item in video_runs_value.split(",") if item}
+    else:
+        video_runs = None
     seed = int(os.environ.get("SEED", "1101"))
     text_encoder_tp_size = int(os.environ.get("TEXT_ENCODER_TP_SIZE", "1"))
+    async_ulysses = os.environ.get("ASYNC_ULYSSES", "0") == "1"
     enforce_eager = os.environ.get("ENFORCE_EAGER", "0") == "1"
+    async_output_timeout = float(os.environ.get("ASYNC_OUTPUT_TIMEOUT_SECONDS", "1800"))
+    diffusion_engine._ASYNC_OUTPUT_TIMEOUT = async_output_timeout
 
     hardware = _hardware()
     if len(hardware) != 4:
@@ -120,9 +252,13 @@ def main() -> None:
                 "duration_seconds": duration,
                 "num_inference_steps": steps,
                 "num_runs": num_runs,
+                "video_runs": sorted(video_runs) if video_runs is not None else "all",
+                "video_encoding": "deferred_until_after_all_timed_runs",
                 "seed": seed,
                 "text_encoder_tp_size": text_encoder_tp_size,
+                "async_ulysses": async_ulysses,
                 "enforce_eager": enforce_eager,
+                "async_output_timeout_seconds": async_output_timeout,
             },
             sort_keys=True,
         ),
@@ -135,6 +271,7 @@ def main() -> None:
             # Exact recipe profile: Ulysses=4, Ring=1, DiT TP=1, VAE tile PP=4.
             tensor_parallel_size=1,
             ulysses_degree=4,
+            async_ulysses=async_ulysses,
             ring_degree=1,
             text_encoder_tp_size=text_encoder_tp_size,
             vae_patch_parallel_size=4,
@@ -148,11 +285,12 @@ def main() -> None:
     )
 
     records: list[dict[str, object]] = []
+    pending_videos: list[tuple[Path, np.ndarray, int, np.ndarray, int]] = []
     try:
         for run_index in range(num_runs):
             started = time.perf_counter()
             outputs = engine.generate(
-                PROMPT,
+                prompt,
                 OmniDiffusionSamplingParams(
                     height=height,
                     width=width,
@@ -162,6 +300,7 @@ def main() -> None:
                     output_type="np",
                     extra_args={
                         "task": "t2va",
+                        "aspect_ratio": "16:9",
                         "duration": duration,
                         "flow_shift": 12.0,
                         "audio_flow_shift": 3.0,
@@ -186,35 +325,47 @@ def main() -> None:
             if audio.ndim not in (2, 3) or 2 not in audio.shape:
                 raise RuntimeError(f"Unexpected audio shape: {audio.shape}")
             if fps != 24 or sample_rate != 32000:
-                raise RuntimeError(f"Unexpected media rates: fps={fps}, audio={sample_rate}")
-
-            output_path = output_root / f"t2va_{mode}_run{run_index + 1}.mp4"
-            output_path.write_bytes(
-                _encode_video_bytes(
-                    frames,
-                    fps=fps,
-                    audio=audio,
-                    audio_sample_rate=sample_rate,
+                raise RuntimeError(
+                    f"Unexpected media rates: fps={fps}, audio={sample_rate}"
                 )
-            )
+
+            run_number = run_index + 1
+            output_path = None
+            if video_runs is None or run_number in video_runs:
+                output_path = output_root / f"t2va_{mode}_run{run_number}.mp4"
+                pending_videos.append(
+                    (output_path, frames.copy(), fps, audio.copy(), sample_rate)
+                )
             record = {
-                "run": run_index + 1,
+                "run": run_number,
                 "warmup": run_index == 0,
                 "wall_time_s": wall_time,
                 "stage_durations": dict(getattr(result, "stage_durations", {}) or {}),
-                "worker_peak_memory_mb": float(getattr(result, "peak_memory_mb", 0.0) or 0.0),
+                "worker_peak_memory_mb": float(
+                    getattr(result, "peak_memory_mb", 0.0) or 0.0
+                ),
                 "frames_shape": list(frames.shape),
                 "audio_shape": list(audio.shape),
                 "fps": fps,
                 "audio_sample_rate": sample_rate,
                 "frames_sha256": array_sha256(frames),
                 "audio_sha256": array_sha256(audio),
-                "mp4": str(output_path),
+                "mp4": str(output_path) if output_path is not None else None,
             }
             records.append(record)
             print("RUN_RESULT " + json.dumps(record, sort_keys=True), flush=True)
     finally:
         engine.close()
+
+    for output_path, frames, fps, audio, sample_rate in pending_videos:
+        output_path.write_bytes(
+            _encode_video_bytes(
+                frames,
+                fps=fps,
+                audio=audio,
+                audio_sample_rate=sample_rate,
+            )
+        )
 
     steady_records = records[1:] if len(records) > 1 else records
     output_reference = (
@@ -228,23 +379,29 @@ def main() -> None:
         "torch_version": torch.__version__,
         "flashinfer_version": metadata.version("flashinfer-python"),
         "parallel_config": (
-            f"tp1_ulysses4_ring1_text_encoder_tp{text_encoder_tp_size}_vae_tile4"
+            f"tp1_ulysses4_async{int(async_ulysses)}_ring1_"
+            f"text_encoder_tp{text_encoder_tp_size}_vae_tile4"
         ),
+        "async_ulysses": async_ulysses,
         "attention_config": attention_config,
         "regional_compile": not enforce_eager,
-        "prompt": PROMPT,
+        "prompt": prompt,
         "seed": seed,
         "height": height,
         "width": width,
         "duration_seconds": duration,
         "num_inference_steps": steps,
+        "video_runs": sorted(video_runs) if video_runs is not None else "all",
+        "video_encoding": "deferred_until_after_all_timed_runs",
         "runs": records,
         "steady_output_deterministic": all(
             (record["frames_sha256"], record["audio_sha256"]) == output_reference
             for record in steady_records[1:]
         ),
     }
-    (output_root / "summary.json").write_text(json.dumps(summary, indent=2) + "\n", encoding="utf-8")
+    (output_root / "summary.json").write_text(
+        json.dumps(summary, indent=2) + "\n", encoding="utf-8"
+    )
     print("FINAL_SUMMARY " + json.dumps(summary, sort_keys=True), flush=True)
 
 
