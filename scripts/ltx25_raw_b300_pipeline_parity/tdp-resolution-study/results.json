@@ -1,0 +1,1761 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-21T02:27:12.739214+00:00",
+  "title": "LTX-2.5 Global SP versus Stage-2 TDP resolution study",
+  "contract": {
+    "prompt": "A medium close-up shot features a Caucasian man with a beard, wearing a green and white baseball cap without any letters on the front, and a light blue shirt over a white t-shirt. He is positioned in the center of the frame, looking intently directly at the camera, his eyes focused on camera. His facial expression is one of deep concentration, with his brow slightly raised. As he looks straight at the camera, a quick sniff sound is heard, and then he speaks with a deep male voice and a satisfied tone, saying, 'I think it's so good.' The camera remains static throughout, maintaining a shallow depth of field, which keeps the man in sharp focus while the background is softly blurred, showing a beige wall behind him. After a brief pause, another short, audible sniff is heard. The man then continues to speak, his voice maintaining the same quality, as he states, 'So good. So good.' He elaborates further, emphasizing his point with a final statement, 'This got to be, it's got to be the best tool I've ever seen.'",
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      51
+    ],
+    "warmup_seed": 41,
+    "resolutions": [
+      {
+        "label": "1080p",
+        "width": 1920,
+        "height": 1080
+      },
+      {
+        "label": "dci2k",
+        "width": 2048,
+        "height": 1080
+      },
+      {
+        "label": "qhd2k",
+        "width": 2560,
+        "height": 1440
+      }
+    ],
+    "internal_alignment": 64,
+    "num_frames": 121,
+    "fps": 24,
+    "num_inference_steps": 8,
+    "stage_2_sigmas": [
+      0.625,
+      0.4,
+      0.0
+    ],
+    "tdp_overlap_latent_cells": 5,
+    "warmup": "one excluded request per resolution and mode",
+    "order": "modes alternate by seed after both shape-specific warm-ups",
+    "latency_scope": "POST /v1/videos/sync through receipt of complete MP4; file write and probe excluded",
+    "concurrency": 1
+  },
+  "provenance": {
+    "model": "/home/zjy/code/lsy/models/ltx-2.5-diffusers",
+    "model_class": "LTX2DistilledTwoStagePipeline",
+    "vllm_omni_revision": "1b6b686aaccf226e1768fefd1fe7e4ddb01cbb4e",
+    "software_versions": {
+      "torch": "2.13.0+cu130",
+      "cuda": "13.0",
+      "vllm": "0.27.0",
+      "vllm_omni": "0.27.0rc2.dev48+gdad5acb87.d20260813"
+    },
+    "server_command": "/home/zjy/code/lsy/vllm-omni/.venv/bin/vllm serve /home/zjy/code/lsy/models/ltx-2.5-diffusers --omni --host 127.0.0.1 --port 18093 --model-class-name LTX2DistilledTwoStagePipeline --diffusion-attention-backend CUDNN_ATTN --usp 4 --enforce-eager --enable-diffusion-pipeline-profiler",
+    "gpus": "0,1,2,3",
+    "attention_backend": "CUDNN_ATTN",
+    "latency_scope": "POST /v1/videos/sync through receipt of complete MP4; file write and probe excluded"
+  },
+  "resolutions": {
+    "1080p": {
+      "label": "1080p",
+      "target": {
+        "width": 1920,
+        "height": 1080
+      },
+      "internal": {
+        "width": 1920,
+        "height": 1088
+      },
+      "overlap_bands": [
+        {
+          "axis": "horizontal",
+          "x": 0,
+          "y": 480,
+          "width": 1920,
+          "height": 160
+        },
+        {
+          "axis": "vertical",
+          "x": 896,
+          "y": 0,
+          "width": 160,
+          "height": 1080
+        }
+      ],
+      "cases": [
+        {
+          "seed": 42,
+          "latency_seconds": {
+            "global_sp": 8.487331747077405,
+            "stage2_tdp": 8.216321996878833,
+            "speedup_global_over_tdp": 1.0329843146728577
+          },
+          "peak_used_mib": {
+            "global_sp": 115388.5,
+            "stage2_tdp": 115388.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.986185,
+              "psnr_mean_db": 41.700742
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 1920,
+                "height": 160,
+                "ssim_mean": 0.986844,
+                "psnr_mean_db": 41.290282
+              },
+              {
+                "axis": "vertical",
+                "x": 896,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.973435,
+                "psnr_mean_db": 38.33167
+              }
+            ]
+          },
+          "video": "videos/1080p/seed-42.mp4",
+          "preview": "previews/1080p/seed-42.jpg",
+          "video_bytes": 496727,
+          "video_sha256": "fe8f53a4fb80468ec745bb4b176291b0bdcf6568f8f67e833fd11b5ac9c03f9b",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 43,
+          "latency_seconds": {
+            "global_sp": 8.643680316396058,
+            "stage2_tdp": 8.228026077151299,
+            "speedup_global_over_tdp": 1.050516884043307
+          },
+          "peak_used_mib": {
+            "global_sp": 115388.5,
+            "stage2_tdp": 115388.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.983499,
+              "psnr_mean_db": 41.169739
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 1920,
+                "height": 160,
+                "ssim_mean": 0.985831,
+                "psnr_mean_db": 42.472323
+              },
+              {
+                "axis": "vertical",
+                "x": 896,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.967282,
+                "psnr_mean_db": 38.192603
+              }
+            ]
+          },
+          "video": "videos/1080p/seed-43.mp4",
+          "preview": "previews/1080p/seed-43.jpg",
+          "video_bytes": 502028,
+          "video_sha256": "83800d40265efead357b5a2cd7ff874a252544f34456e86f66f83f34cdcfd69e",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 44,
+          "latency_seconds": {
+            "global_sp": 8.63926451280713,
+            "stage2_tdp": 8.33535597100854,
+            "speedup_global_over_tdp": 1.0364601755288707
+          },
+          "peak_used_mib": {
+            "global_sp": 115388.5,
+            "stage2_tdp": 115388.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.983496,
+              "psnr_mean_db": 40.645309
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 1920,
+                "height": 160,
+                "ssim_mean": 0.987778,
+                "psnr_mean_db": 42.828367
+              },
+              {
+                "axis": "vertical",
+                "x": 896,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.973328,
+                "psnr_mean_db": 38.56849
+              }
+            ]
+          },
+          "video": "videos/1080p/seed-44.mp4",
+          "preview": "previews/1080p/seed-44.jpg",
+          "video_bytes": 561505,
+          "video_sha256": "d2df4d34079a69c88a1e345bf23cdda5417a3e7629b3320de519bc1a0de3987e",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 45,
+          "latency_seconds": {
+            "global_sp": 8.507626242004335,
+            "stage2_tdp": 8.221609331201762,
+            "speedup_global_over_tdp": 1.034788433660684
+          },
+          "peak_used_mib": {
+            "global_sp": 115388.5,
+            "stage2_tdp": 115388.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.984894,
+              "psnr_mean_db": 40.934423
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 1920,
+                "height": 160,
+                "ssim_mean": 0.989006,
+                "psnr_mean_db": 43.449829
+              },
+              {
+                "axis": "vertical",
+                "x": 896,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.96965,
+                "psnr_mean_db": 37.398115
+              }
+            ]
+          },
+          "video": "videos/1080p/seed-45.mp4",
+          "preview": "previews/1080p/seed-45.jpg",
+          "video_bytes": 529336,
+          "video_sha256": "4d5376e1608c4c356b4f8b34f36f95077fa58979c52dd7cf89851fcc44993b3a",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 46,
+          "latency_seconds": {
+            "global_sp": 8.493378307670355,
+            "stage2_tdp": 9.13387593999505,
+            "speedup_global_over_tdp": 0.9298766879983436
+          },
+          "peak_used_mib": {
+            "global_sp": 115388.5,
+            "stage2_tdp": 115388.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.982634,
+              "psnr_mean_db": 40.52479
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 1920,
+                "height": 160,
+                "ssim_mean": 0.982155,
+                "psnr_mean_db": 40.008954
+              },
+              {
+                "axis": "vertical",
+                "x": 896,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.967261,
+                "psnr_mean_db": 37.542193
+              }
+            ]
+          },
+          "video": "videos/1080p/seed-46.mp4",
+          "preview": "previews/1080p/seed-46.jpg",
+          "video_bytes": 562083,
+          "video_sha256": "b55b256dc0ee084a094a6fbd2e0b370ec1367b6a1bf2a0fc3fc5bba7eb529e17",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 47,
+          "latency_seconds": {
+            "global_sp": 9.496426119934767,
+            "stage2_tdp": 9.071999717038125,
+            "speedup_global_over_tdp": 1.046784216946075
+          },
+          "peak_used_mib": {
+            "global_sp": 115388.5,
+            "stage2_tdp": 115388.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.985157,
+              "psnr_mean_db": 41.195256
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 1920,
+                "height": 160,
+                "ssim_mean": 0.98539,
+                "psnr_mean_db": 41.041368
+              },
+              {
+                "axis": "vertical",
+                "x": 896,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.976215,
+                "psnr_mean_db": 39.303433
+              }
+            ]
+          },
+          "video": "videos/1080p/seed-47.mp4",
+          "preview": "previews/1080p/seed-47.jpg",
+          "video_bytes": 529132,
+          "video_sha256": "ef3c4346347e086a8a7e50a353e701dacd83b3ba2f28aaa69ad85908d48a6dbc",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 48,
+          "latency_seconds": {
+            "global_sp": 9.460220522247255,
+            "stage2_tdp": 8.968275678809732,
+            "speedup_global_over_tdp": 1.0548538939988086
+          },
+          "peak_used_mib": {
+            "global_sp": 115388.5,
+            "stage2_tdp": 115388.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.984583,
+              "psnr_mean_db": 40.489657
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 1920,
+                "height": 160,
+                "ssim_mean": 0.986959,
+                "psnr_mean_db": 41.80244
+              },
+              {
+                "axis": "vertical",
+                "x": 896,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.973318,
+                "psnr_mean_db": 37.175278
+              }
+            ]
+          },
+          "video": "videos/1080p/seed-48.mp4",
+          "preview": "previews/1080p/seed-48.jpg",
+          "video_bytes": 556092,
+          "video_sha256": "936abd0d5451239c6f7d5cf4b83a6de68b46171211efbee38e7dc155c7af9de8",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 49,
+          "latency_seconds": {
+            "global_sp": 9.358030862174928,
+            "stage2_tdp": 9.057001977227628,
+            "speedup_global_over_tdp": 1.033237144664889
+          },
+          "peak_used_mib": {
+            "global_sp": 115388.5,
+            "stage2_tdp": 115388.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.987478,
+              "psnr_mean_db": 42.107702
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 1920,
+                "height": 160,
+                "ssim_mean": 0.988124,
+                "psnr_mean_db": 42.384193
+              },
+              {
+                "axis": "vertical",
+                "x": 896,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.979376,
+                "psnr_mean_db": 39.863204
+              }
+            ]
+          },
+          "video": "videos/1080p/seed-49.mp4",
+          "preview": "previews/1080p/seed-49.jpg",
+          "video_bytes": 453905,
+          "video_sha256": "618deae494115dea46d81a6fdc2ea1e56239705951a403d96d3804cb38f01a9a",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 50,
+          "latency_seconds": {
+            "global_sp": 9.285006676800549,
+            "stage2_tdp": 9.13513108016923,
+            "speedup_global_over_tdp": 1.016406507505587
+          },
+          "peak_used_mib": {
+            "global_sp": 115388.5,
+            "stage2_tdp": 115388.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.98438,
+              "psnr_mean_db": 40.843153
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 1920,
+                "height": 160,
+                "ssim_mean": 0.984979,
+                "psnr_mean_db": 40.309281
+              },
+              {
+                "axis": "vertical",
+                "x": 896,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.969666,
+                "psnr_mean_db": 36.943139
+              }
+            ]
+          },
+          "video": "videos/1080p/seed-50.mp4",
+          "preview": "previews/1080p/seed-50.jpg",
+          "video_bytes": 555887,
+          "video_sha256": "57a3f4e644a823d01eab7c06236874af02ac2f81c3820455923c7294fb512abe",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 51,
+          "latency_seconds": {
+            "global_sp": 9.370001601055264,
+            "stage2_tdp": 9.174097049981356,
+            "speedup_global_over_tdp": 1.0213540962131316
+          },
+          "peak_used_mib": {
+            "global_sp": 115388.5,
+            "stage2_tdp": 115388.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.983932,
+              "psnr_mean_db": 41.351417
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 1920,
+                "height": 160,
+                "ssim_mean": 0.986225,
+                "psnr_mean_db": 42.224189
+              },
+              {
+                "axis": "vertical",
+                "x": 896,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.970079,
+                "psnr_mean_db": 39.198517
+              }
+            ]
+          },
+          "video": "videos/1080p/seed-51.mp4",
+          "preview": "previews/1080p/seed-51.jpg",
+          "video_bytes": 474903,
+          "video_sha256": "24c1d51b8b1c48caab19fa25317ab29b494906e68b8ceebd7326171b7986ce79",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        }
+      ],
+      "summary": {
+        "latency_seconds": {
+          "global_sp": {
+            "samples": 10,
+            "mean": 8.974096690816804,
+            "min": 8.487331747077405,
+            "max": 9.496426119934767,
+            "stdev": 0.4262473576644223
+          },
+          "stage2_tdp": {
+            "samples": 10,
+            "mean": 8.754169481946155,
+            "min": 8.216321996878833,
+            "max": 9.174097049981356,
+            "stdev": 0.41585391771392893
+          },
+          "speedup_global_over_tdp": {
+            "samples": 10,
+            "mean": 1.0257262355232553,
+            "min": 0.9298766879983436,
+            "max": 1.0548538939988086,
+            "stdev": 0.03392046342448718
+          }
+        },
+        "quality": {
+          "full_frame_ssim": {
+            "samples": 10,
+            "mean": 0.9846237999999999,
+            "min": 0.982634,
+            "max": 0.987478,
+            "stdev": 0.0013407913931704485
+          },
+          "full_frame_psnr_db": {
+            "samples": 10,
+            "mean": 41.0962188,
+            "min": 40.489657,
+            "max": 42.107702,
+            "stdev": 0.4956686584551821
+          },
+          "horizontal_overlap_ssim": {
+            "samples": 10,
+            "mean": 0.9863291000000001,
+            "min": 0.982155,
+            "max": 0.989006,
+            "stdev": 0.00183126723609637
+          },
+          "vertical_overlap_ssim": {
+            "samples": 10,
+            "mean": 0.971961,
+            "min": 0.967261,
+            "max": 0.979376,
+            "stdev": 0.003702624285557482
+          }
+        }
+      }
+    },
+    "dci2k": {
+      "label": "dci2k",
+      "target": {
+        "width": 2048,
+        "height": 1080
+      },
+      "internal": {
+        "width": 2048,
+        "height": 1088
+      },
+      "overlap_bands": [
+        {
+          "axis": "horizontal",
+          "x": 0,
+          "y": 480,
+          "width": 2048,
+          "height": 160
+        },
+        {
+          "axis": "vertical",
+          "x": 960,
+          "y": 0,
+          "width": 160,
+          "height": 1080
+        }
+      ],
+      "cases": [
+        {
+          "seed": 42,
+          "latency_seconds": {
+            "global_sp": 10.232972484081984,
+            "stage2_tdp": 9.800094574224204,
+            "speedup_global_over_tdp": 1.0441707890244567
+          },
+          "peak_used_mib": {
+            "global_sp": 131916.5,
+            "stage2_tdp": 131916.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.988357,
+              "psnr_mean_db": 42.35947
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 2048,
+                "height": 160,
+                "ssim_mean": 0.990732,
+                "psnr_mean_db": 42.319806
+              },
+              {
+                "axis": "vertical",
+                "x": 960,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.982201,
+                "psnr_mean_db": 39.970532
+              }
+            ]
+          },
+          "video": "videos/dci2k/seed-42.mp4",
+          "preview": "previews/dci2k/seed-42.jpg",
+          "video_bytes": 381504,
+          "video_sha256": "2b5e6162080e140a42787d63ab85e2768c587e3a101973e25a96f98247b5360a",
+          "video_metadata": {
+            "width": 1280,
+            "height": 338,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 43,
+          "latency_seconds": {
+            "global_sp": 10.12364642182365,
+            "stage2_tdp": 9.826735952869058,
+            "speedup_global_over_tdp": 1.0302145565301268
+          },
+          "peak_used_mib": {
+            "global_sp": 131916.5,
+            "stage2_tdp": 131916.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.985316,
+              "psnr_mean_db": 40.643132
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 2048,
+                "height": 160,
+                "ssim_mean": 0.988574,
+                "psnr_mean_db": 41.055687
+              },
+              {
+                "axis": "vertical",
+                "x": 960,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.971613,
+                "psnr_mean_db": 36.716285
+              }
+            ]
+          },
+          "video": "videos/dci2k/seed-43.mp4",
+          "preview": "previews/dci2k/seed-43.jpg",
+          "video_bytes": 462997,
+          "video_sha256": "76d8bd229876791c26b9f89ba232d8d0901e24ffc42af2d7246668d5d05b5847",
+          "video_metadata": {
+            "width": 1280,
+            "height": 338,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 44,
+          "latency_seconds": {
+            "global_sp": 10.180849252268672,
+            "stage2_tdp": 9.989930287003517,
+            "speedup_global_over_tdp": 1.0191111408969022
+          },
+          "peak_used_mib": {
+            "global_sp": 131916.5,
+            "stage2_tdp": 131916.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.982844,
+              "psnr_mean_db": 40.495629
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 2048,
+                "height": 160,
+                "ssim_mean": 0.986642,
+                "psnr_mean_db": 41.694616
+              },
+              {
+                "axis": "vertical",
+                "x": 960,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.96457,
+                "psnr_mean_db": 37.821386
+              }
+            ]
+          },
+          "video": "videos/dci2k/seed-44.mp4",
+          "preview": "previews/dci2k/seed-44.jpg",
+          "video_bytes": 518213,
+          "video_sha256": "82bb927ae68be615cc2967bbe5a1d791f1aba0aff86bac3190dc7c18f93d0040",
+          "video_metadata": {
+            "width": 1280,
+            "height": 338,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 45,
+          "latency_seconds": {
+            "global_sp": 10.360271912999451,
+            "stage2_tdp": 10.068231156095862,
+            "speedup_global_over_tdp": 1.0290061632848757
+          },
+          "peak_used_mib": {
+            "global_sp": 131916.5,
+            "stage2_tdp": 131916.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.981746,
+              "psnr_mean_db": 39.8691
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 2048,
+                "height": 160,
+                "ssim_mean": 0.982114,
+                "psnr_mean_db": 39.589937
+              },
+              {
+                "axis": "vertical",
+                "x": 960,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.969559,
+                "psnr_mean_db": 37.297896
+              }
+            ]
+          },
+          "video": "videos/dci2k/seed-45.mp4",
+          "preview": "previews/dci2k/seed-45.jpg",
+          "video_bytes": 570344,
+          "video_sha256": "3fa7eeee9c6b6b6bb73ca998ca57c6d69b93459084b4c83fd97da6dc3dacf408",
+          "video_metadata": {
+            "width": 1280,
+            "height": 338,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 46,
+          "latency_seconds": {
+            "global_sp": 10.37003752309829,
+            "stage2_tdp": 10.123894793912768,
+            "speedup_global_over_tdp": 1.024313046924739
+          },
+          "peak_used_mib": {
+            "global_sp": 131916.5,
+            "stage2_tdp": 131916.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.984776,
+              "psnr_mean_db": 40.866514
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 2048,
+                "height": 160,
+                "ssim_mean": 0.98576,
+                "psnr_mean_db": 40.282511
+              },
+              {
+                "axis": "vertical",
+                "x": 960,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.962085,
+                "psnr_mean_db": 36.261306
+              }
+            ]
+          },
+          "video": "videos/dci2k/seed-46.mp4",
+          "preview": "previews/dci2k/seed-46.jpg",
+          "video_bytes": 509142,
+          "video_sha256": "912885e45467bc11b234c696c569194e281b72fc0bac2c0a4de8bff12aac885a",
+          "video_metadata": {
+            "width": 1280,
+            "height": 338,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 47,
+          "latency_seconds": {
+            "global_sp": 10.596308017149568,
+            "stage2_tdp": 9.943476016167551,
+            "speedup_global_over_tdp": 1.0656543043821443
+          },
+          "peak_used_mib": {
+            "global_sp": 131916.5,
+            "stage2_tdp": 131916.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.986365,
+              "psnr_mean_db": 41.8032
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 2048,
+                "height": 160,
+                "ssim_mean": 0.987573,
+                "psnr_mean_db": 41.452954
+              },
+              {
+                "axis": "vertical",
+                "x": 960,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.979286,
+                "psnr_mean_db": 39.581649
+              }
+            ]
+          },
+          "video": "videos/dci2k/seed-47.mp4",
+          "preview": "previews/dci2k/seed-47.jpg",
+          "video_bytes": 445084,
+          "video_sha256": "924081c6bcf33870c8d9e0f0b2af8678a1d8854870979127038d7ab5094e7806",
+          "video_metadata": {
+            "width": 1280,
+            "height": 338,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 48,
+          "latency_seconds": {
+            "global_sp": 10.473360436037183,
+            "stage2_tdp": 10.145422037690878,
+            "speedup_global_over_tdp": 1.0323237808272532
+          },
+          "peak_used_mib": {
+            "global_sp": 131916.5,
+            "stage2_tdp": 131916.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.984496,
+              "psnr_mean_db": 40.756555
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 2048,
+                "height": 160,
+                "ssim_mean": 0.987558,
+                "psnr_mean_db": 40.952702
+              },
+              {
+                "axis": "vertical",
+                "x": 960,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.979984,
+                "psnr_mean_db": 39.412052
+              }
+            ]
+          },
+          "video": "videos/dci2k/seed-48.mp4",
+          "preview": "previews/dci2k/seed-48.jpg",
+          "video_bytes": 517992,
+          "video_sha256": "2f2c75397f9926c7f3bd1ab522742ccd93a7ac1c4bc5c9bc27f7f282af0d8efd",
+          "video_metadata": {
+            "width": 1280,
+            "height": 338,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 49,
+          "latency_seconds": {
+            "global_sp": 10.317823816556484,
+            "stage2_tdp": 10.115438965149224,
+            "speedup_global_over_tdp": 1.0200075203957573
+          },
+          "peak_used_mib": {
+            "global_sp": 131916.5,
+            "stage2_tdp": 131916.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.984824,
+              "psnr_mean_db": 40.814711
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 2048,
+                "height": 160,
+                "ssim_mean": 0.987307,
+                "psnr_mean_db": 41.605239
+              },
+              {
+                "axis": "vertical",
+                "x": 960,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.975713,
+                "psnr_mean_db": 38.152846
+              }
+            ]
+          },
+          "video": "videos/dci2k/seed-49.mp4",
+          "preview": "previews/dci2k/seed-49.jpg",
+          "video_bytes": 506994,
+          "video_sha256": "01ede001d14518f41e25c846cda0fb88a4e808152fe003396c99f3aedd99f599",
+          "video_metadata": {
+            "width": 1280,
+            "height": 338,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 50,
+          "latency_seconds": {
+            "global_sp": 10.380640128161758,
+            "stage2_tdp": 10.209972894284874,
+            "speedup_global_over_tdp": 1.0167157381948013
+          },
+          "peak_used_mib": {
+            "global_sp": 131916.5,
+            "stage2_tdp": 131916.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.985185,
+              "psnr_mean_db": 41.114094
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 2048,
+                "height": 160,
+                "ssim_mean": 0.984569,
+                "psnr_mean_db": 40.753426
+              },
+              {
+                "axis": "vertical",
+                "x": 960,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.968432,
+                "psnr_mean_db": 36.843391
+              }
+            ]
+          },
+          "video": "videos/dci2k/seed-50.mp4",
+          "preview": "previews/dci2k/seed-50.jpg",
+          "video_bytes": 489141,
+          "video_sha256": "e64c3f9dc7e975e7eb822c56c3643efac721e02f991a1334a603205ea9036a82",
+          "video_metadata": {
+            "width": 1280,
+            "height": 338,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 51,
+          "latency_seconds": {
+            "global_sp": 10.253425627946854,
+            "stage2_tdp": 9.838487629778683,
+            "speedup_global_over_tdp": 1.042174977880976
+          },
+          "peak_used_mib": {
+            "global_sp": 131916.5,
+            "stage2_tdp": 131916.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.986678,
+              "psnr_mean_db": 41.566804
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 480,
+                "width": 2048,
+                "height": 160,
+                "ssim_mean": 0.988167,
+                "psnr_mean_db": 41.978462
+              },
+              {
+                "axis": "vertical",
+                "x": 960,
+                "y": 0,
+                "width": 160,
+                "height": 1080,
+                "ssim_mean": 0.975982,
+                "psnr_mean_db": 38.149261
+              }
+            ]
+          },
+          "video": "videos/dci2k/seed-51.mp4",
+          "preview": "previews/dci2k/seed-51.jpg",
+          "video_bytes": 463396,
+          "video_sha256": "df637c9605bdf75b17be7b1eea63ceb649d7aebe253a8873e69f4f6c98e46501",
+          "video_metadata": {
+            "width": 1280,
+            "height": 338,
+            "frames": 121,
+            "fps": 24.0
+          }
+        }
+      ],
+      "summary": {
+        "latency_seconds": {
+          "global_sp": {
+            "samples": 10,
+            "mean": 10.32893356201239,
+            "min": 10.12364642182365,
+            "max": 10.596308017149568,
+            "stdev": 0.13296563232302733
+          },
+          "stage2_tdp": {
+            "samples": 10,
+            "mean": 10.006168430717661,
+            "min": 9.800094574224204,
+            "max": 10.209972894284874,
+            "stdev": 0.1405533600403644
+          },
+          "speedup_global_over_tdp": {
+            "samples": 10,
+            "mean": 1.0323692018342032,
+            "min": 1.0167157381948013,
+            "max": 1.0656543043821443,
+            "stdev": 0.014134366795482023
+          }
+        },
+        "quality": {
+          "full_frame_ssim": {
+            "samples": 10,
+            "mean": 0.9850587000000001,
+            "min": 0.981746,
+            "max": 0.988357,
+            "stdev": 0.0017782013974800557
+          },
+          "full_frame_psnr_db": {
+            "samples": 10,
+            "mean": 41.0289209,
+            "min": 39.8691,
+            "max": 42.35947,
+            "stdev": 0.6775916639386059
+          },
+          "horizontal_overlap_ssim": {
+            "samples": 10,
+            "mean": 0.9868995999999999,
+            "min": 0.982114,
+            "max": 0.990732,
+            "stdev": 0.002232685611544965
+          },
+          "vertical_overlap_ssim": {
+            "samples": 10,
+            "mean": 0.9729424999999999,
+            "min": 0.962085,
+            "max": 0.982201,
+            "stdev": 0.006434291588823128
+          }
+        }
+      }
+    },
+    "qhd2k": {
+      "label": "qhd2k",
+      "target": {
+        "width": 2560,
+        "height": 1440
+      },
+      "internal": {
+        "width": 2560,
+        "height": 1472
+      },
+      "overlap_bands": [
+        {
+          "axis": "horizontal",
+          "x": 0,
+          "y": 672,
+          "width": 2560,
+          "height": 160
+        },
+        {
+          "axis": "vertical",
+          "x": 1216,
+          "y": 0,
+          "width": 160,
+          "height": 1440
+        }
+      ],
+      "cases": [
+        {
+          "seed": 42,
+          "latency_seconds": {
+            "global_sp": 21.15317811165005,
+            "stage2_tdp": 16.98397093359381,
+            "speedup_global_over_tdp": 1.2454789397813715
+          },
+          "peak_used_mib": {
+            "global_sp": 163410.5,
+            "stage2_tdp": 163410.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.988042,
+              "psnr_mean_db": 40.886133
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 672,
+                "width": 2560,
+                "height": 160,
+                "ssim_mean": 0.990523,
+                "psnr_mean_db": 42.582669
+              },
+              {
+                "axis": "vertical",
+                "x": 1216,
+                "y": 0,
+                "width": 160,
+                "height": 1440,
+                "ssim_mean": 0.982706,
+                "psnr_mean_db": 39.374382
+              }
+            ]
+          },
+          "video": "videos/qhd2k/seed-42.mp4",
+          "preview": "previews/qhd2k/seed-42.jpg",
+          "video_bytes": 490709,
+          "video_sha256": "048d4811341e45e6fb115f6e4a1be001c0efde5b87a1e8bd2903b20863fb6ca9",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 43,
+          "latency_seconds": {
+            "global_sp": 18.227896706666797,
+            "stage2_tdp": 15.932191032916307,
+            "speedup_global_over_tdp": 1.1440922763860604
+          },
+          "peak_used_mib": {
+            "global_sp": 163410.5,
+            "stage2_tdp": 163410.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.984217,
+              "psnr_mean_db": 40.413985
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 672,
+                "width": 2560,
+                "height": 160,
+                "ssim_mean": 0.985093,
+                "psnr_mean_db": 41.180406
+              },
+              {
+                "axis": "vertical",
+                "x": 1216,
+                "y": 0,
+                "width": 160,
+                "height": 1440,
+                "ssim_mean": 0.965257,
+                "psnr_mean_db": 37.005575
+              }
+            ]
+          },
+          "video": "videos/qhd2k/seed-43.mp4",
+          "preview": "previews/qhd2k/seed-43.jpg",
+          "video_bytes": 492303,
+          "video_sha256": "bcdae828abf6a159a2c31209def903fec58f0e689a1cbb4d243a359f2241b60a",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 44,
+          "latency_seconds": {
+            "global_sp": 18.39028127770871,
+            "stage2_tdp": 16.01170175895095,
+            "speedup_global_over_tdp": 1.1485525745211982
+          },
+          "peak_used_mib": {
+            "global_sp": 163410.5,
+            "stage2_tdp": 163410.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.986747,
+              "psnr_mean_db": 40.947763
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 672,
+                "width": 2560,
+                "height": 160,
+                "ssim_mean": 0.986249,
+                "psnr_mean_db": 40.922971
+              },
+              {
+                "axis": "vertical",
+                "x": 1216,
+                "y": 0,
+                "width": 160,
+                "height": 1440,
+                "ssim_mean": 0.977648,
+                "psnr_mean_db": 38.604663
+              }
+            ]
+          },
+          "video": "videos/qhd2k/seed-44.mp4",
+          "preview": "previews/qhd2k/seed-44.jpg",
+          "video_bytes": 473669,
+          "video_sha256": "dce7bead483aaae7cd70a305dff7808cdd9ff44081e9e577a8b2e97f58767f7c",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 45,
+          "latency_seconds": {
+            "global_sp": 17.22995999082923,
+            "stage2_tdp": 15.929884603247046,
+            "speedup_global_over_tdp": 1.0816123543868725
+          },
+          "peak_used_mib": {
+            "global_sp": 163410.5,
+            "stage2_tdp": 163410.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.987097,
+              "psnr_mean_db": 40.573743
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 672,
+                "width": 2560,
+                "height": 160,
+                "ssim_mean": 0.990452,
+                "psnr_mean_db": 42.710426
+              },
+              {
+                "axis": "vertical",
+                "x": 1216,
+                "y": 0,
+                "width": 160,
+                "height": 1440,
+                "ssim_mean": 0.976814,
+                "psnr_mean_db": 38.290733
+              }
+            ]
+          },
+          "video": "videos/qhd2k/seed-45.mp4",
+          "preview": "previews/qhd2k/seed-45.jpg",
+          "video_bytes": 495985,
+          "video_sha256": "55fdec7ee8218556b489d6283992090dce437e87a256369ae2f846d6d0fc885b",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 46,
+          "latency_seconds": {
+            "global_sp": 17.84394070506096,
+            "stage2_tdp": 16.01312468200922,
+            "speedup_global_over_tdp": 1.114332215567438
+          },
+          "peak_used_mib": {
+            "global_sp": 163410.5,
+            "stage2_tdp": 163410.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.986022,
+              "psnr_mean_db": 39.354736
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 672,
+                "width": 2560,
+                "height": 160,
+                "ssim_mean": 0.986837,
+                "psnr_mean_db": 39.769495
+              },
+              {
+                "axis": "vertical",
+                "x": 1216,
+                "y": 0,
+                "width": 160,
+                "height": 1440,
+                "ssim_mean": 0.977433,
+                "psnr_mean_db": 38.599973
+              }
+            ]
+          },
+          "video": "videos/qhd2k/seed-46.mp4",
+          "preview": "previews/qhd2k/seed-46.jpg",
+          "video_bytes": 548721,
+          "video_sha256": "cfc4ada98b772c093f4b9bc8c74f41a6dd498700a32b8e3a3d7dee4cfc87da26",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 47,
+          "latency_seconds": {
+            "global_sp": 17.24477903963998,
+            "stage2_tdp": 15.955099876970053,
+            "speedup_global_over_tdp": 1.080831782477995
+          },
+          "peak_used_mib": {
+            "global_sp": 163410.5,
+            "stage2_tdp": 163410.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.988159,
+              "psnr_mean_db": 40.934169
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 672,
+                "width": 2560,
+                "height": 160,
+                "ssim_mean": 0.989989,
+                "psnr_mean_db": 41.554882
+              },
+              {
+                "axis": "vertical",
+                "x": 1216,
+                "y": 0,
+                "width": 160,
+                "height": 1440,
+                "ssim_mean": 0.980289,
+                "psnr_mean_db": 38.860255
+              }
+            ]
+          },
+          "video": "videos/qhd2k/seed-47.mp4",
+          "preview": "previews/qhd2k/seed-47.jpg",
+          "video_bytes": 473538,
+          "video_sha256": "d3934eaefec0d9a708857feaae611a577e0c1bda008a9de84f3db004e1574967",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 48,
+          "latency_seconds": {
+            "global_sp": 18.036744459997863,
+            "stage2_tdp": 16.364008931908756,
+            "speedup_global_over_tdp": 1.1022203993562592
+          },
+          "peak_used_mib": {
+            "global_sp": 163410.5,
+            "stage2_tdp": 163410.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.986543,
+              "psnr_mean_db": 40.624632
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 672,
+                "width": 2560,
+                "height": 160,
+                "ssim_mean": 0.988228,
+                "psnr_mean_db": 42.362194
+              },
+              {
+                "axis": "vertical",
+                "x": 1216,
+                "y": 0,
+                "width": 160,
+                "height": 1440,
+                "ssim_mean": 0.972475,
+                "psnr_mean_db": 37.133459
+              }
+            ]
+          },
+          "video": "videos/qhd2k/seed-48.mp4",
+          "preview": "previews/qhd2k/seed-48.jpg",
+          "video_bytes": 535702,
+          "video_sha256": "23bda8578583db5acc3dc6d3a529f0fd18d094ce2babab470eaa5b389ae38ac6",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 49,
+          "latency_seconds": {
+            "global_sp": 17.073693145997822,
+            "stage2_tdp": 16.427985053975135,
+            "speedup_global_over_tdp": 1.0393053737205855
+          },
+          "peak_used_mib": {
+            "global_sp": 163410.5,
+            "stage2_tdp": 163410.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.985366,
+              "psnr_mean_db": 40.361209
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 672,
+                "width": 2560,
+                "height": 160,
+                "ssim_mean": 0.991134,
+                "psnr_mean_db": 43.077386
+              },
+              {
+                "axis": "vertical",
+                "x": 1216,
+                "y": 0,
+                "width": 160,
+                "height": 1440,
+                "ssim_mean": 0.963558,
+                "psnr_mean_db": 35.482386
+              }
+            ]
+          },
+          "video": "videos/qhd2k/seed-49.mp4",
+          "preview": "previews/qhd2k/seed-49.jpg",
+          "video_bytes": 497531,
+          "video_sha256": "41ddc3a67aaa424022be8b8b6bdd0f6525392f899faf13f744195c0b9135c4a8",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 50,
+          "latency_seconds": {
+            "global_sp": 17.616561111994088,
+            "stage2_tdp": 15.757659489754587,
+            "speedup_global_over_tdp": 1.1179681299401178
+          },
+          "peak_used_mib": {
+            "global_sp": 163410.5,
+            "stage2_tdp": 163410.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.984311,
+              "psnr_mean_db": 40.139714
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 672,
+                "width": 2560,
+                "height": 160,
+                "ssim_mean": 0.984897,
+                "psnr_mean_db": 40.378328
+              },
+              {
+                "axis": "vertical",
+                "x": 1216,
+                "y": 0,
+                "width": 160,
+                "height": 1440,
+                "ssim_mean": 0.967215,
+                "psnr_mean_db": 37.281314
+              }
+            ]
+          },
+          "video": "videos/qhd2k/seed-50.mp4",
+          "preview": "previews/qhd2k/seed-50.jpg",
+          "video_bytes": 521760,
+          "video_sha256": "c363a0935ca97374cb1b6996b1a339cff032d241e9ce42de6597c62fe137e523",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        },
+        {
+          "seed": 51,
+          "latency_seconds": {
+            "global_sp": 16.66930369613692,
+            "stage2_tdp": 15.745457801036537,
+            "speedup_global_over_tdp": 1.0586738033770964
+          },
+          "peak_used_mib": {
+            "global_sp": 163410.5,
+            "stage2_tdp": 163410.5
+          },
+          "quality": {
+            "full_frame": {
+              "ssim_mean": 0.986518,
+              "psnr_mean_db": 40.882617
+            },
+            "overlap_bands": [
+              {
+                "axis": "horizontal",
+                "x": 0,
+                "y": 672,
+                "width": 2560,
+                "height": 160,
+                "ssim_mean": 0.988258,
+                "psnr_mean_db": 41.637032
+              },
+              {
+                "axis": "vertical",
+                "x": 1216,
+                "y": 0,
+                "width": 160,
+                "height": 1440,
+                "ssim_mean": 0.974771,
+                "psnr_mean_db": 37.590117
+              }
+            ]
+          },
+          "video": "videos/qhd2k/seed-51.mp4",
+          "preview": "previews/qhd2k/seed-51.jpg",
+          "video_bytes": 525074,
+          "video_sha256": "12bffb674e56afed4893ff7ac7f770ddd7b17c22b8d7bff8c6167b48fe3d36e0",
+          "video_metadata": {
+            "width": 1280,
+            "height": 360,
+            "frames": 121,
+            "fps": 24.0
+          }
+        }
+      ],
+      "summary": {
+        "latency_seconds": {
+          "global_sp": {
+            "samples": 10,
+            "mean": 17.94863382456824,
+            "min": 16.66930369613692,
+            "max": 21.15317811165005,
+            "stdev": 1.1868130073408087
+          },
+          "stage2_tdp": {
+            "samples": 10,
+            "mean": 16.11210841643624,
+            "min": 15.745457801036537,
+            "max": 16.98397093359381,
+            "stdev": 0.3596595091278624
+          },
+          "speedup_global_over_tdp": {
+            "samples": 10,
+            "mean": 1.1133067849514995,
+            "min": 1.0393053737205855,
+            "max": 1.2454789397813715,
+            "stdev": 0.0550684233682007
+          }
+        },
+        "quality": {
+          "full_frame_ssim": {
+            "samples": 10,
+            "mean": 0.9863022000000001,
+            "min": 0.984217,
+            "max": 0.988159,
+            "stdev": 0.0012913805635830144
+          },
+          "full_frame_psnr_db": {
+            "samples": 10,
+            "mean": 40.511870099999996,
+            "min": 39.354736,
+            "max": 40.947763,
+            "stdev": 0.46606310873516876
+          },
+          "horizontal_overlap_ssim": {
+            "samples": 10,
+            "mean": 0.988166,
+            "min": 0.984897,
+            "max": 0.991134,
+            "stdev": 0.002202197220959099
+          },
+          "vertical_overlap_ssim": {
+            "samples": 10,
+            "mean": 0.9738165999999999,
+            "min": 0.963558,
+            "max": 0.982706,
+            "stdev": 0.006184280834502885
+          }
+        }
+      }
+    }
+  }
+}
