@@ -1,0 +1,43 @@
+{
+  "Original H3": {
+    "scope_ms": 11618.329051,
+    "active_ms": 11597.612898,
+    "skew_ms": 1985.388816,
+    "skew_pct": 17.0884,
+    "categories": {
+      "cuDNN attention": 64.5337,
+      "GEMM": 19.8223,
+      "RDMA barrier": 14.3633,
+      "Other": 1.2807
+    },
+    "source": "results/vllm-omni-h3-sm120-sp8-step03-nsys-20260905T025828Z/h3-analysis.json"
+  },
+  "FastH3 / VSA P4d": {
+    "scope_ms": 5225.109011,
+    "active_ms": 5197.833258,
+    "skew_ms": 568.697322,
+    "skew_pct": 10.8839,
+    "categories": {
+      "GEMM": 54.849,
+      "VSA": 27.137,
+      "RDMA barrier": 9.023,
+      "Layout/index/copy": 3.485,
+      "Other": 5.506
+    },
+    "source": "results/vllm-omni-fasth3-vsa-p4d-sm120-sp8-step03-nsys-20260906T042700Z/h3-analysis.json"
+  },
+  "Quantized Q4/Q5": {
+    "scope_ms": 3503.223878,
+    "active_ms": 3485.2345265,
+    "skew_ms": 423.19658,
+    "skew_pct": 12.0802,
+    "categories": {
+      "GEMM": 39.863,
+      "VSA": 38.473,
+      "RDMA barrier": 9.759,
+      "Layout/reduction/copy": 5.15,
+      "Other": 6.755
+    },
+    "source": "results/vllm-omni-fasth3-vsa-qkv-e4m3-mlp-out-qkv-fp8-o-bundle-sm120-sp8-step3-nsys-20260907T000000Z/h3-analysis.json"
+  }
+}

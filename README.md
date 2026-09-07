@@ -8,6 +8,12 @@ download counts.
 
 ## Research reports
 
+- **MiniMax-H3 cumulative latency optimization: 653.838 s to 14.561 s on 8x
+  RTX PRO 5000-class SM120:**
+  [71-page English PDF](scripts/minimax_h3_pro5000_cumulative_report/minimax_h3_653s_to_14s_cumulative_report.pdf) ·
+  [web report](scripts/minimax_h3_pro5000_cumulative_report/index.html) ·
+  [machine-readable data](scripts/minimax_h3_pro5000_cumulative_report/report_data.json) ·
+  [quality and profiler evidence](scripts/minimax_h3_pro5000_cumulative_report/)
 - **Native Fused SVDQuant for MiniMax-H3 on NVIDIA B300:**
   [HTML](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_svdquant_b300_results/) ·
   [results](scripts/minimax_h3_svdquant_b300_results/results.json) ·

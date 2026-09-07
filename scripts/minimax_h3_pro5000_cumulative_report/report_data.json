@@ -1,0 +1,610 @@
+{
+  "schema": "minimax_h3_cumulative_report_v1",
+  "generated_utc": "2026-09-07T19:02:11.079238+00:00",
+  "headline": {
+    "baseline_s": 653.838,
+    "final_mean_s": 14.561,
+    "samples_s": [
+      14.576,
+      14.555,
+      14.551
+    ],
+    "speedup": 44.90337202115239,
+    "reduction_pct": 97.77299575735886,
+    "target_margin_s": 0.43900000000000006,
+    "media_duration_s": 15.083333,
+    "rtf": 0.9653701870800041
+  },
+  "benchmark": {
+    "gpus": 8,
+    "gpu_class": "NVIDIA RTX PRO 5000-class SM120",
+    "clocks": "node-default/unlocked",
+    "dit": "TP1/SP8",
+    "qwen": "TP8",
+    "frames": 362,
+    "width": 1280,
+    "height": 704,
+    "fps": 24,
+    "audio_hz": 32000,
+    "seed": 1101,
+    "e2e_boundary": "POST through valid H.264/AAC MP4"
+  },
+  "prompt": {
+    "executed_utf8": "傍晚小厨房的真人实拍的手 与手绘发光2d动画 融合在一起的影像。夕阳余晖残留在窗边，生活感十足的小厨房里有旧木桌、洗到一半的马克杯、起雾的玻璃瓶、悬挂的抹布。画面带有智能手机单手拍摄的手抖、近距离对焦的犹豫、逆光曝光波动。要像在家中慌忙拍下某个不可思议事件的自然质感，不要广告影像的精心整理。声音只用厨房环境声与手绘生物柔和的电子音、小小的叫声。",
+    "sha256": "613e0a1beccf83566e3531852c52c2e11daffa3b255222cd67726cdf73c1a563",
+    "official_guide_commit": "d21241f0a4b3acbb34c97dae47fa417b7065e438",
+    "guide_url": "https://github.com/MiniMax-AI/MiniMax-H3/tree/d21241f0a4b3acbb34c97dae47fa417b7065e438/skills/h3-prompt-writing"
+  },
+  "stages": [
+    {
+      "id": "S0",
+      "name": "Original H3 control",
+      "e2e": 653.838,
+      "phase": "A",
+      "status": "baseline",
+      "fidelity": "Original",
+      "principle": "49 diffusion forwards with the original decoder and communication path.",
+      "evidence": "Formal E2E artifact; DiT 633.058 s.",
+      "note": "The denominator for every cumulative speedup claim."
+    },
+    {
+      "id": "S1",
+      "name": "AdaLN TP1 / SP8",
+      "e2e": 605.348,
+      "phase": "A",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Replicate small AdaLN tensors and spend all eight ranks on sequence parallelism.",
+      "evidence": "DiT 584.707 s; -48.490 s E2E.",
+      "note": "Removes tensor-parallel collectives from a latency-dominated batch-one request."
+    },
+    {
+      "id": "S2",
+      "name": "Explicit RDMA Ulysses exchange",
+      "e2e": 592.079,
+      "phase": "A",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Move the large sequence exchange through the topology-aware RDMA path.",
+      "evidence": "DiT 571.264 s; -13.269 s E2E.",
+      "note": "The gain is interconnect-path selection, not model approximation."
+    },
+    {
+      "id": "S3",
+      "name": "Direct Q/K layout",
+      "e2e": 590.562,
+      "phase": "A",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Produce the attention layout directly and delete redundant transposes/copies.",
+      "evidence": "DiT 569.830 s; -1.517 s E2E.",
+      "note": "A small but repeatable layout win before distillation."
+    },
+    {
+      "id": "F0",
+      "name": "Dense FastH3, four forwards",
+      "e2e": 66.785,
+      "phase": "B",
+      "status": "accepted",
+      "fidelity": "Lossy",
+      "principle": "Use the distilled four-step sigma schedule [0.999, 0.749, 0.5, 0.25, 0].",
+      "evidence": "DiT 46.988 s; -523.777 s E2E.",
+      "note": "This is the largest single change and the first explicit quality boundary."
+    },
+    {
+      "id": "P0",
+      "name": "FastH3 + VSA + FlashInfer",
+      "e2e": 43.42,
+      "phase": "B",
+      "status": "accepted",
+      "fidelity": "Lossy",
+      "principle": "Apply visual sparse attention with exact FlashInfer sparse-kernel execution inside the distilled trajectory.",
+      "evidence": "DiT 22.704 s; -23.365 s E2E.",
+      "note": "VSA changes the attention graph; the kernel itself is exact for that sparse graph."
+    },
+    {
+      "id": "P1",
+      "name": "GPU FP32-to-uint8 video pack",
+      "e2e": 36.568,
+      "phase": "C",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Quantize display pixels on GPU and copy uint8 instead of float frames.",
+      "evidence": "-6.852 s E2E.",
+      "note": "Semantics are unchanged at the MP4 contract boundary."
+    },
+    {
+      "id": "P2",
+      "name": "Chunked pinned D2H + background mux",
+      "e2e": 31.399,
+      "phase": "C",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Overlap pinned host copies and CPU PyAV encode/mux with remaining device work.",
+      "evidence": "-5.169 s E2E.",
+      "note": "The POST endpoint still waits for a valid H.264/AAC MP4."
+    },
+    {
+      "id": "P3",
+      "name": "Persistent RDMA communication",
+      "e2e": 30.534,
+      "phase": "C",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Reuse communication resources across layer iterations instead of reinitializing them.",
+      "evidence": "-0.865 s E2E.",
+      "note": "Reduces orchestration and allocator overhead."
+    },
+    {
+      "id": "P4a",
+      "name": "Fused VSA tile packing",
+      "e2e": 30.013,
+      "phase": "C",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Fuse tile selection and packing while preserving selected values and order.",
+      "evidence": "Approximately -0.490 s in matched trials.",
+      "note": "A kernel-launch and memory-traffic optimization."
+    },
+    {
+      "id": "P4c",
+      "name": "Compact VSA untile",
+      "e2e": 29.88,
+      "phase": "C",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Write only the compact valid output domain during sparse-attention reconstruction.",
+      "evidence": "-0.133 s E2E.",
+      "note": "Avoids materializing padding that no downstream operator consumes."
+    },
+    {
+      "id": "P4d",
+      "name": "Direct attention O path",
+      "e2e": 29.873,
+      "phase": "C",
+      "status": "accepted",
+      "fidelity": "Exact / noise-sized",
+      "principle": "Route attention output directly into its consumer.",
+      "evidence": "-0.007 s E2E.",
+      "note": "Retained for structural simplicity; the measured delta is within noise."
+    },
+    {
+      "id": "P5",
+      "name": "Exact VAE/direct Q-to-K cleanup",
+      "e2e": 28.236,
+      "phase": "C",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Consolidate exact decoder and Q-to-K dataflow cleanups.",
+      "evidence": "Q0 control: DiT 21.347 s.",
+      "note": "A mixed cleanup bundle; it is not used to assign per-kernel causality."
+    },
+    {
+      "id": "Q1",
+      "name": "Online FP8 MLP",
+      "e2e": 25.172,
+      "phase": "D",
+      "status": "accepted",
+      "fidelity": "Lossy",
+      "principle": "Use online FP8 for MLP GEMMs while retaining wider precision where sensitivity is higher.",
+      "evidence": "DiT 18.522 s; -3.064 s E2E.",
+      "note": "First low-precision compute boundary."
+    },
+    {
+      "id": "Q2",
+      "name": "MLP + output FP8",
+      "e2e": 24.887,
+      "phase": "D",
+      "status": "accepted",
+      "fidelity": "Lossy",
+      "principle": "Extend FP8 to output projections with calibrated scaling.",
+      "evidence": "DiT 18.124 s; -0.285 s E2E.",
+      "note": "A conservative expansion before QKV/wire bundling."
+    },
+    {
+      "id": "Q5",
+      "name": "QKV E4M3 wire + O bundle",
+      "e2e": 21.649,
+      "phase": "D",
+      "status": "accepted",
+      "fidelity": "Lossy",
+      "principle": "Transmit QKV in E4M3 and bundle output communication to reduce bytes and launch count.",
+      "evidence": "DiT 14.994 s; -3.238 s E2E.",
+      "note": "The accepted precision/communication endpoint before decoder replacement."
+    },
+    {
+      "id": "D1",
+      "name": "TAEH3 decoder, FP32",
+      "e2e": 16.738,
+      "phase": "E",
+      "status": "accepted",
+      "fidelity": "Lossy",
+      "principle": "Replace the full patch-parallel video VAE with the rank-local temporal autoencoder decoder.",
+      "evidence": "Decode 1.554 s; -4.911 s E2E.",
+      "note": "Removes decoder collectives and most video decode compute."
+    },
+    {
+      "id": "D2",
+      "name": "TAEH3 decoder, FP16",
+      "e2e": 16.289,
+      "phase": "E",
+      "status": "accepted",
+      "fidelity": "Lossy",
+      "principle": "Run TAEH3 convolution weights and activations in FP16.",
+      "evidence": "Mean E2E 16.289 s; decode 1.050 s.",
+      "note": "Post-codec FP32-vs-FP16 quality is separately audited."
+    },
+    {
+      "id": "D3",
+      "name": "All-main FP8 coverage",
+      "e2e": 15.634,
+      "phase": "E",
+      "status": "accepted",
+      "fidelity": "Lossy",
+      "principle": "Extend calibrated FP8 coverage across the remaining main DiT GEMM path.",
+      "evidence": "DiT 14.443 s; decode 1.003 s.",
+      "note": "Completes the selected low-precision compute policy."
+    },
+    {
+      "id": "D4",
+      "name": "Persistent RDMA steady state",
+      "e2e": 15.165,
+      "phase": "E",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Keep the optimized communication path persistent through the formal repeated run.",
+      "evidence": "15.146/15.178/15.170 s; mean 15.165 s.",
+      "note": "First result close to the 15-second target."
+    },
+    {
+      "id": "D5",
+      "name": "OMP=28 CPU orchestration",
+      "e2e": 14.671,
+      "phase": "E",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Right-size host parallelism for decode/encode orchestration on this node.",
+      "evidence": "14.680/14.672/14.660 s; mean 14.671 s.",
+      "note": "First formal three-run mean below 15 seconds."
+    },
+    {
+      "id": "D6",
+      "name": "Cross-rank Audio VAE",
+      "e2e": 14.561,
+      "phase": "E",
+      "status": "accepted",
+      "fidelity": "Exact",
+      "principle": "Decode video with TAEH3 on rank 0 while rank 1 independently runs Audio VAE.",
+      "evidence": "14.576/14.555/14.551 s; mean 14.561 s.",
+      "note": "Final accepted result; profiler disabled, valid MP4 returned."
+    }
+  ],
+  "accepted_mainline_ids": [
+    "S0",
+    "S1",
+    "S2",
+    "S3",
+    "F0",
+    "P0",
+    "P1",
+    "P2",
+    "P3",
+    "P4a",
+    "P4c",
+    "P4d",
+    "P5",
+    "Q1",
+    "Q2",
+    "Q5",
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6"
+  ],
+  "side_results": [
+    [
+      "Exact-H3 side control",
+      "TP2/SP4 communication control",
+      646.158,
+      "Not on accepted path"
+    ],
+    [
+      "Exact-H3 side control",
+      "Q chunk = 2",
+      587.398,
+      "Faster single side result; not retained as cumulative parent"
+    ],
+    [
+      "FastH3 reference",
+      "Reference VSA",
+      47.527,
+      "Diagnostic reference"
+    ],
+    [
+      "FastH3 reference",
+      "FlashInfer-only contaminated E2E",
+      52.965,
+      "DiT 27.108 s remains useful; E2E rejected"
+    ],
+    [
+      "FP8 branch",
+      "MLP + QKV E4M3",
+      23.93,
+      "Branch, not additive with Q2"
+    ],
+    [
+      "FP8 branch",
+      "MLP + output + wire",
+      23.679,
+      "Three-run mean branch"
+    ],
+    [
+      "FP8 branch",
+      "+ O bundle",
+      23.168,
+      "Three-run mean branch"
+    ],
+    [
+      "FP8 branch",
+      "MLP + output + QKV compute",
+      23.26,
+      "Alternate branch"
+    ],
+    [
+      "FP8 branch",
+      "+ BF16 wire",
+      22.333,
+      "Alternate branch"
+    ]
+  ],
+  "rejected": [
+    [
+      "Layerwise offload",
+      "~50 s per diffusion step",
+      "PCIe transfers dominated; categorically incompatible with the latency target."
+    ],
+    [
+      "LSA / SymmetricMemory",
+      "Unstable or slower",
+      "The topology/runtime combination did not produce a reliable improvement."
+    ],
+    [
+      "Hybrid attention path",
+      "30.625 vs 30.075 s",
+      "Added dispatch and layout cost."
+    ],
+    [
+      "Q chunk variant",
+      "32.240 vs 31.965 s",
+      "More chunk overhead than locality benefit."
+    ],
+    [
+      "Single-output path",
+      "43.575 vs 43.420 s",
+      "No measurable win."
+    ],
+    [
+      "NVENC",
+      "49.817 vs PyAV 49.494 s",
+      "Slower and produced a different encoded artifact."
+    ],
+    [
+      "VAE temporal prune",
+      "30.518 vs 30.503 s",
+      "No meaningful speedup."
+    ],
+    [
+      "Alternative GEMM backends",
+      "within +/-1.5%",
+      "No robust end-to-end advantage."
+    ],
+    [
+      "FC1 + SwiGLU CuTeDSL",
+      "4.72% slower",
+      "Fusion did not compensate for the generated kernel's efficiency loss."
+    ],
+    [
+      "Gate overlap",
+      "21.714 vs 21.676 s",
+      "Noise-sized regression."
+    ],
+    [
+      "Head-major VSA",
+      "15.785 s",
+      "Layout change regressed the final stack."
+    ],
+    [
+      "KV64",
+      "15.320 s",
+      "Reduced work did not offset scheduling/conversion overhead."
+    ],
+    [
+      "KV64 without LSE",
+      "15.217 s mean",
+      "Still slower than the exact-general selected path."
+    ],
+    [
+      "Same-GPU audio overlap",
+      "15.233 s",
+      "Video and audio competed for one GPU."
+    ],
+    [
+      "Adaptive partial-N32",
+      "+0.645%",
+      "Extra branch/scheduling cost."
+    ],
+    [
+      "KV64 to KV32 / KV16",
+      "+8.3% / +41.7%",
+      "Occupancy and useful-work balance collapsed."
+    ],
+    [
+      "Skip softmax",
+      "Approximate and slower",
+      "A lossy change with no latency benefit."
+    ],
+    [
+      "VAE batch cap 2",
+      "Numerics changed",
+      "Rejected because it crossed an unplanned quality boundary."
+    ]
+  ],
+  "nsys": {
+    "Original H3": {
+      "scope_ms": 11618.329051,
+      "active_ms": 11597.612898,
+      "skew_ms": 1985.388816,
+      "skew_pct": 17.0884,
+      "categories": {
+        "cuDNN attention": 64.5337,
+        "GEMM": 19.8223,
+        "RDMA barrier": 14.3633,
+        "Other": 1.2807
+      },
+      "source": "results/vllm-omni-h3-sm120-sp8-step03-nsys-20260905T025828Z/h3-analysis.json"
+    },
+    "FastH3 / VSA P4d": {
+      "scope_ms": 5225.109011,
+      "active_ms": 5197.833258,
+      "skew_ms": 568.697322,
+      "skew_pct": 10.8839,
+      "categories": {
+        "GEMM": 54.849,
+        "VSA": 27.137,
+        "RDMA barrier": 9.023,
+        "Layout/index/copy": 3.485,
+        "Other": 5.506
+      },
+      "source": "results/vllm-omni-fasth3-vsa-p4d-sm120-sp8-step03-nsys-20260906T042700Z/h3-analysis.json"
+    },
+    "Quantized Q4/Q5": {
+      "scope_ms": 3503.223878,
+      "active_ms": 3485.2345265,
+      "skew_ms": 423.19658,
+      "skew_pct": 12.0802,
+      "categories": {
+        "GEMM": 39.863,
+        "VSA": 38.473,
+        "RDMA barrier": 9.759,
+        "Layout/reduction/copy": 5.15,
+        "Other": 6.755
+      },
+      "source": "results/vllm-omni-fasth3-vsa-qkv-e4m3-mlp-out-qkv-fp8-o-bundle-sm120-sp8-step3-nsys-20260907T000000Z/h3-analysis.json"
+    }
+  },
+  "ncu": {
+    "historical_native_vsa": {
+      "duration_ms": 93.57,
+      "memory_throughput_pct": 34.31,
+      "dram_throughput_pct": 0.81,
+      "l1_pct": 39.25,
+      "l2_pct": 5.18,
+      "compute_pct": 13.31,
+      "issue_slots_busy_pct": 4.69,
+      "sm_busy_pct": 8.01,
+      "l2_hit_pct": 97.34,
+      "registers_per_thread": 162,
+      "dynamic_shared_kb": 49.15,
+      "theoretical_occupancy_pct": 20.83,
+      "achieved_occupancy_pct": 18.71,
+      "branch_efficiency_pct": 97.51,
+      "excess_shared_wavefronts_pct": 79.0,
+      "warning": "Historical native VSA experimental kernel; not the final exact-general FlashInfer kernel."
+    },
+    "exact_matrix": {
+      "scope": "single-GPU synthetic-QKV exact FlashInfer SM120 VSA fine-kernel shape matrix",
+      "status": "passed",
+      "cases": 3,
+      "geomean_p50_ms": 11.724132,
+      "max_cv": 0.0171457,
+      "hashes": "all reference hashes matched"
+    },
+    "scheduler": {
+      "historical_topk64_ms": 14.381,
+      "original_flashinfer_ms": 10.342,
+      "pr_head_ms": 9.87,
+      "production_pr_head_ms": 29.504,
+      "restored_head_local_ms": 22.819,
+      "exact_general_ms": 22.032896,
+      "paired_parent_ms": 23.525841,
+      "paired_candidate_ms": 23.316159,
+      "paired_gain_pct": 0.891
+    }
+  },
+  "quality": [
+    {
+      "filename": "01_original_h3_vs_dense_fasth3.json",
+      "title": "Lossy boundary A: Original H3 -> four-forward FastH3",
+      "left": "Original H3",
+      "right": "Dense FastH3",
+      "rgb_psnr": 10.513883956320422,
+      "rgb_ssim": 0.25581127900552486,
+      "yuv_psnr": 16.233730293828536,
+      "yuv_ssim": 0.7176551988950276,
+      "audio_identical": false,
+      "audio_snr_db": 0.6930886424940351,
+      "evidence_sha256": "57395900540362167e05ef0635943ea5e8da2a1fdc0d4a06b455ae2f4837c704"
+    },
+    {
+      "filename": "02_bf16_vs_fp8_qkv.json",
+      "title": "Lossy boundary B: BF16 compute -> MLP FP8 + QKV E4M3",
+      "left": "BF16 control",
+      "right": "FP8 / E4M3",
+      "rgb_psnr": 12.682128711908048,
+      "rgb_ssim": 0.33571918784530386,
+      "yuv_psnr": 18.55991122360647,
+      "yuv_ssim": 0.7255047348066299,
+      "audio_identical": false,
+      "audio_snr_db": 1.0982605319389367,
+      "evidence_sha256": "fa4236a89d14024fa9458a8b8ac11a08293d4a023f7643328a11cdade78c4658"
+    },
+    {
+      "filename": "03_full_vae_vs_taeh3_fp32.json",
+      "title": "Lossy boundary C: full video VAE -> TAEH3 FP32",
+      "left": "Full VAE",
+      "right": "TAEH3 FP32",
+      "rgb_psnr": 27.633702010702223,
+      "rgb_ssim": 0.8424487651933702,
+      "yuv_psnr": 33.5160173295425,
+      "yuv_ssim": 0.9410997569060774,
+      "audio_identical": true,
+      "audio_snr_db": null,
+      "evidence_sha256": "896e781ca7300dc961c2cb3ab6f9d185bb8a659ed88b1826c0f15aa3662f768d"
+    },
+    {
+      "filename": "04_taeh3_fp32_vs_fp16.json",
+      "title": "Lossy boundary D: TAEH3 FP32 -> TAEH3 FP16",
+      "left": "TAEH3 FP32",
+      "right": "TAEH3 FP16",
+      "rgb_psnr": 39.236022209540586,
+      "rgb_ssim": 0.9542576243093923,
+      "yuv_psnr": 45.22332662493461,
+      "yuv_ssim": 0.9839433232044199,
+      "audio_identical": true,
+      "audio_snr_db": null,
+      "evidence_sha256": "4bbd445af9d7a0ddcc8375d82f6a045c6fef2c7a6e173b6a5a541c058c87b249"
+    },
+    {
+      "filename": "05_taeh3_fp16_vs_all_main_fp8.json",
+      "title": "Lossy boundary E: partial FP8 -> all-main FP8",
+      "left": "Partial FP8",
+      "right": "All-main FP8",
+      "rgb_psnr": 14.9161311147809,
+      "rgb_ssim": 0.4452372182320442,
+      "yuv_psnr": 20.82597959739861,
+      "yuv_ssim": 0.7776405856353592,
+      "audio_identical": false,
+      "audio_snr_db": -1.752809229226001,
+      "evidence_sha256": "e2b95e27085fce92fbe438301f8a12680d38ee3853e0becee599e387b9ef158b"
+    }
+  ],
+  "report_pages": 71,
+  "disclosures": [
+    "D7 AAC pre-encode was implemented but not formally measured.",
+    "No final D6 decoder-focused Nsight capture exists.",
+    "Nsight category GPU times are summed across ranks/streams and are not wall time.",
+    "Quality metrics are diagnostics, not admission thresholds."
+  ]
+}

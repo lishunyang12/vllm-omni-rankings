@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MiniMax-H3 653.838s to 14.561s</title>
+<style>body{font:16px/1.55 system-ui;max-width:1050px;margin:40px auto;padding:0 24px;color:#0f172a}h1{font-size:42px;line-height:1.05}.hero{background:#dbeafe;border-left:6px solid #2563eb;padding:22px}.k{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.k div{background:#f1f5f9;padding:15px}img{max-width:100%}table{border-collapse:collapse;width:100%}th,td{border:1px solid #cbd5e1;padding:8px;text-align:left}a.button{display:inline-block;background:#2563eb;color:white;padding:12px 18px;text-decoration:none;border-radius:6px}code{word-break:break-all}@media(max-width:700px){.k{grid-template-columns:1fr 1fr}}</style></head>
+<body><h1>MiniMax-H3: 653.838 s -> 14.561 s</h1><div class="hero"><b>44.903x speedup, 97.773% latency reduction.</b> A 15.083-second H.264/AAC artifact completes in a 14.561-second three-run mean.</div>
+<p><a class="button" href="minimax_h3_653s_to_14s_cumulative_report.pdf">Open the 71-page English PDF</a> &nbsp; <a href="report_data.json">Machine-readable data</a> &nbsp; <a href="SHA256SUMS.txt">Checksums</a></p>
+<div class="k"><div><b>Baseline</b><br>653.838 s</div><div><b>Final samples</b><br>14.576 / 14.555 / 14.551 s</div><div><b>Target margin</b><br>0.439 s</div><div><b>Media</b><br>362 frames, 1280x704, 24 fps</div></div>
+<h2>Cumulative gradient</h2><img src="figures/e2e_gradient_bar.png" alt="E2E latency gradient">
+<h2>Lossy-boundary audit</h2><p>Every declared lossy boundary has real video screenshots and full 362-frame post-codec metrics. These diagnostics measure trajectory divergence; they are not perceptual admission thresholds.</p>
+<table><tr><th>Boundary</th><th>RGB PSNR</th><th>RGB SSIM</th><th>YUV PSNR</th><th>YUV SSIM</th></tr><tr><td>Lossy boundary A</td><td>10.51</td><td>0.2558</td><td>16.23</td><td>0.7177</td></tr>
+<tr><td>Lossy boundary B</td><td>12.68</td><td>0.3357</td><td>18.56</td><td>0.7255</td></tr>
+<tr><td>Lossy boundary C</td><td>27.63</td><td>0.8424</td><td>33.52</td><td>0.9411</td></tr>
+<tr><td>Lossy boundary D</td><td>39.24</td><td>0.9543</td><td>45.22</td><td>0.9839</td></tr>
+<tr><td>Lossy boundary E</td><td>14.92</td><td>0.4452</td><td>20.83</td><td>0.7776</td></tr></table>
+<h2>Evidence disclosure</h2><p>D7 AAC pre-encoding was implemented but not formally measured. The final decoder-focused Nsight Systems capture was blocked by an external workload before model load; no synthetic timing is substituted. The report explains which conclusions require Nsight Systems versus Nsight Compute.</p>
+<p>Official prompt-writing guide source: <a href="https://github.com/MiniMax-AI/MiniMax-H3/tree/d21241f0a4b3acbb34c97dae47fa417b7065e438/skills/h3-prompt-writing"><code>d21241f0a4b3acbb34c97dae47fa417b7065e438</code></a>. The benchmark used a pre-existing hash-locked Chinese prompt; the guide-conformant English rendering is documentation only.</p>
+</body></html>

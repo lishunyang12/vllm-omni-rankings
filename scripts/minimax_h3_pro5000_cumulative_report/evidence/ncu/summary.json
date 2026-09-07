@@ -1,0 +1,39 @@
+{
+  "historical_native_vsa": {
+    "duration_ms": 93.57,
+    "memory_throughput_pct": 34.31,
+    "dram_throughput_pct": 0.81,
+    "l1_pct": 39.25,
+    "l2_pct": 5.18,
+    "compute_pct": 13.31,
+    "issue_slots_busy_pct": 4.69,
+    "sm_busy_pct": 8.01,
+    "l2_hit_pct": 97.34,
+    "registers_per_thread": 162,
+    "dynamic_shared_kb": 49.15,
+    "theoretical_occupancy_pct": 20.83,
+    "achieved_occupancy_pct": 18.71,
+    "branch_efficiency_pct": 97.51,
+    "excess_shared_wavefronts_pct": 79.0,
+    "warning": "Historical native VSA experimental kernel; not the final exact-general FlashInfer kernel."
+  },
+  "exact_matrix": {
+    "scope": "single-GPU synthetic-QKV exact FlashInfer SM120 VSA fine-kernel shape matrix",
+    "status": "passed",
+    "cases": 3,
+    "geomean_p50_ms": 11.724132,
+    "max_cv": 0.0171457,
+    "hashes": "all reference hashes matched"
+  },
+  "scheduler": {
+    "historical_topk64_ms": 14.381,
+    "original_flashinfer_ms": 10.342,
+    "pr_head_ms": 9.87,
+    "production_pr_head_ms": 29.504,
+    "restored_head_local_ms": 22.819,
+    "exact_general_ms": 22.032896,
+    "paired_parent_ms": 23.525841,
+    "paired_candidate_ms": 23.316159,
+    "paired_gain_pct": 0.891
+  }
+}
