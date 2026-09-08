@@ -9,6 +9,7 @@ b5d7d45c1f8bec20c0ad7c06ce99807bc0dc502f619504eb142f6e49db74f7b7  videos/q0d0-bf
 72749138d49bb1e25ea46fd143585ea194501f17fe2dd8390c28d631c79cd805  videos/qmid-d0-all-main-fp8-bf16-wire-full-h3-vae.mp4
 91f9e079ff25a18f95643c798f976d48578e5529e889c6a5afdab5d2a4f8b4a6  videos/qmid-d1-all-main-fp8-bf16-wire-taeh3-fp16.mp4
 fe43137de4d8cffeb488e35ebd3c7538e3de2111f777efe6c64ecb65f789c6be  metrics/combined-bf16-full-vae-vs-realtime-stack.json
+cbc1925f8aa0a3af695f87e888d9fcf215354f272ca3f55199c06bdb9b8efcd9  metrics/combined-accepted-bf16-wire.json
 b7f5c92a33b173fab98642073c20a853e0dbf44f320203f32fa0df370844c880  metrics/combined-exact-factorial.json
 e8964be214509c6ffe53593fbed94064673173e59f3cb19d007193806dcfc9df  metrics/e4m3-wire-at-full-vae.json
 52f35927f7c15fde2576c51a45f329f0b281b80eb1f2f6c77c16d2cca02c7bbe  metrics/e4m3-wire-at-taeh3.json

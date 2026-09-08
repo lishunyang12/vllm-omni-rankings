@@ -1,22 +1,47 @@
 {
   "schema_version": 2,
-  "experiment_id": "moon-teahouse-taeh3-fp8-e4m3-factorial",
+  "experiment_id": "moon-teahouse-taeh3-fp8-bf16-wire-quality-gated",
   "created_at": "2026-09-08T20:20:00+08:00",
   "scene": "Moon Teahouse Signal",
   "framework": "vLLM-Omni",
   "status": {
     "factorial_complete": true,
-    "reason": "All four exact factorial cells, all four primary single-factor edges, and the exact factorial diagonal are available.",
+    "reason": "The admitted BF16-wire 2x2 matrix, its four single-factor edges, and the accepted cumulative diagonal are available. E4M3-wire experiments are retained only as rejected diagnostics.",
     "available_primary_contrasts": [
       "taeh3_at_bf16",
-      "taeh3_at_fp8",
-      "fp8_e4m3_at_full_vae",
-      "fp8_e4m3_at_taeh3",
-      "combined"
+      "taeh3_at_fp8_bf16_wire",
+      "fp8_compute_at_full_vae",
+      "fp8_compute_at_taeh3",
+      "combined_accepted_bf16_wire"
     ],
     "pending_primary_contrasts": [],
     "diagnostics_complete": true,
-    "diagnostics_reason": "Both exact FP8/BF16-wire qmid cells and all five qmid decomposition contrasts are available; the older observer rung remains a separate historical diagnostic."
+    "diagnostics_reason": "The decoder architecture/dtype and FP8-compute rungs are complete. E4M3-wire and the older observer artifacts remain separately available as rejected or historical diagnostics."
+  },
+  "selection": {
+    "decision": "quality_gated",
+    "default_contrast": "combined_accepted_bf16_wire",
+    "cumulative_endpoint": "qmid_d1_fp8_bf16_taeh3_fp16",
+    "accepted_qkv_transport": "BF16",
+    "selected_artifact_path": [
+      "q0d0_bf16_full_vae",
+      "q0d1_taeh3_fp32",
+      "q0d2_taeh3_fp16",
+      "qmid_d1_fp8_bf16_taeh3_fp16"
+    ],
+    "selected_contrast_path": [
+      "taeh3_fp32_at_bf16",
+      "taeh3_fp16_vs_fp32_at_bf16",
+      "fp8_compute_at_taeh3"
+    ],
+    "rejected_optimization": {
+      "factor": "qkv_transport",
+      "from": "BF16",
+      "to": "E4M3",
+      "decision": "quality_rejected",
+      "included_in_cumulative": false,
+      "reason": "Rejected by complete-video human review because the audio/video quality regression was unacceptable."
+    }
   },
   "hardware": {
     "count": 8,
@@ -79,7 +104,8 @@
   "factors": {
     "precision": {
       "q0": "BF16 main-DiT linear execution and BF16 QKV transport",
-      "q1": "all-main FP8 linear execution and prompt-bound calibrated E4M3 QKV transport"
+      "qmid": "all-main FP8 linear execution and BF16 QKV transport (admitted cumulative endpoint)",
+      "q1": "all-main FP8 linear execution and prompt-bound calibrated E4M3 QKV transport (quality rejected)"
     },
     "decoder": {
       "d0": "full H3 video VAE",
@@ -170,7 +196,13 @@
       "file": "videos/q1d0-all-main-fp8-e4m3-wire-full-h3-vae.mp4",
       "bytes": 24413882,
       "sha256": "7a47441632d1d28f1369944b3f31086fbea9fd11fbe37277006a3338e1d89bf7",
-      "detail": "Exact Q1 full-VAE endpoint: all-main FP8 linears, prompt-bound calibrated E4M3 QKV wire, common reverse-O bundle, and full H3 VAE PP8",
+      "detail": "Rejected E4M3-wire diagnostic: all-main FP8 linears, prompt-bound calibrated E4M3 QKV wire, common reverse-O bundle, and full H3 VAE PP8",
+      "disposition": {
+        "quality": "rejected",
+        "cumulative_eligible": false,
+        "retention": "historical_evidence",
+        "reason": "E4M3 QKV transport failed the complete-video human audio/video quality gate."
+      },
       "timing": {
         "e2e_seconds": 28.007,
         "rtf": 1.857,
@@ -198,7 +230,13 @@
       "file": "videos/q1d1-all-main-fp8-e4m3-wire-taeh3-fp16.mp4",
       "bytes": 23838235,
       "sha256": "52e3f008da700b66964908dd624792c5934bb118512435a2551d1110953724f8",
-      "detail": "Exact Q1D1 factorial endpoint: all-main FP8 linears, prompt-bound calibrated E4M3 QKV wire, common reverse-O bundle, nonpersistent RDMA, and rank-0 TAEH3 FP16 chunk-5 decode",
+      "detail": "Rejected E4M3-wire diagnostic: all-main FP8 linears, prompt-bound calibrated E4M3 QKV wire, common reverse-O bundle, nonpersistent RDMA, and rank-0 TAEH3 FP16 chunk-5 decode",
+      "disposition": {
+        "quality": "rejected",
+        "cumulative_eligible": false,
+        "retention": "historical_evidence",
+        "reason": "E4M3 QKV transport failed the complete-video human audio/video quality gate."
+      },
       "timing": {
         "e2e_seconds": 22.543,
         "rtf": 1.495,
@@ -226,7 +264,12 @@
       "file": "videos/qmid-d0-all-main-fp8-bf16-wire-full-h3-vae.mp4",
       "bytes": 24401419,
       "sha256": "72749138d49bb1e25ea46fd143585ea194501f17fe2dd8390c28d631c79cd805",
-      "detail": "Exact full-VAE precision middle rung: all-main FP8 with static per-tensor weights and dynamic per-token activations, BF16 QKV wire, common reverse-O bundle, and full H3 VAE PP8",
+      "detail": "Admitted FP8-compute rung: all-main FP8 with static per-tensor weights and dynamic per-token activations, BF16 QKV wire, common reverse-O bundle, and full H3 VAE PP8",
+      "disposition": {
+        "quality": "accepted",
+        "cumulative_eligible": true,
+        "role": "alternate_cumulative_rung"
+      },
       "timing": {
         "e2e_seconds": 28.983,
         "rtf": 1.921525,
@@ -252,7 +295,12 @@
       "file": "videos/qmid-d1-all-main-fp8-bf16-wire-taeh3-fp16.mp4",
       "bytes": 24300084,
       "sha256": "91f9e079ff25a18f95643c798f976d48578e5529e889c6a5afdab5d2a4f8b4a6",
-      "detail": "Exact TAEH3 precision middle rung: all-main FP8 with static per-tensor weights and dynamic per-token activations, BF16 QKV wire, common reverse-O bundle, and rank-0 TAEH3 FP16 chunk-5 decode",
+      "detail": "Admitted cumulative endpoint: all-main FP8 with static per-tensor weights and dynamic per-token activations, BF16 QKV wire, common reverse-O bundle, and rank-0 TAEH3 FP16 chunk-5 decode",
+      "disposition": {
+        "quality": "accepted",
+        "cumulative_eligible": true,
+        "role": "cumulative_endpoint"
+      },
       "timing": {
         "e2e_seconds": 23.494,
         "rtf": 1.557613,
@@ -324,7 +372,13 @@
       "file": "videos/optimized-d6-realtime-stack.mp4",
       "bytes": 23838235,
       "sha256": "52e3f008da700b66964908dd624792c5934bb118512435a2551d1110953724f8",
-      "detail": "all-main FP8 · calibrated E4M3 QKV · reverse-O bundle · persistent RDMA · TAEH3 FP16 · cross-rank audio",
+      "detail": "Historical rejected stack: all-main FP8 · calibrated E4M3 QKV · reverse-O bundle · persistent RDMA · TAEH3 FP16 · cross-rank audio",
+      "disposition": {
+        "quality": "rejected",
+        "cumulative_eligible": false,
+        "retention": "historical_performance_evidence",
+        "reason": "Its E4M3 QKV transport failed the complete-video human audio/video quality gate; the 14.561 s result is not an admitted endpoint."
+      },
       "timing": {
         "e2e_seconds": 22.367,
         "rtf": 1.482895,
@@ -370,8 +424,10 @@
     {
       "id": "fp8_e4m3_at_full_vae",
       "label": "BF16/BF16 → FP8/E4M3 at full H3 VAE",
-      "description": "Primary precision edge at fixed full H3 VAE PP8. The high-level precision axis deliberately bundles all-main FP8 linear execution and calibrated E4M3 QKV transport.",
-      "kind": "single-factor",
+      "description": "Rejected historical bundle at fixed full H3 VAE PP8. It combines all-main FP8 linear execution with the E4M3 QKV transport state that failed the quality gate.",
+      "kind": "rejected-diagnostic",
+      "quality_gate": "rejected",
+      "cumulative_eligible": false,
       "factor": "precision_stack",
       "changed_factors": ["precision_stack", "linear_compute", "qkv_transport"],
       "baseline": "q0d0_bf16_full_vae",
@@ -388,8 +444,10 @@
     {
       "id": "taeh3_at_fp8",
       "label": "Full H3 VAE → TAEH3 FP16 at FP8/E4M3",
-      "description": "Primary decoder edge at fixed all-main FP8 linear execution and calibrated E4M3 QKV transport. Audio is required to remain bitwise identical.",
-      "kind": "single-factor",
+      "description": "Historical decoder comparison whose two endpoints inherit the rejected E4M3 QKV transport state. Audio is required to remain bitwise identical.",
+      "kind": "rejected-diagnostic",
+      "quality_gate": "rejected_endpoint_state",
+      "cumulative_eligible": false,
       "factor": "video_decoder",
       "changed_factors": ["video_decoder", "decoder_dtype", "vae_parallelism"],
       "baseline": "q1d0_fp8_e4m3_full_vae",
@@ -406,8 +464,10 @@
     {
       "id": "fp8_e4m3_at_taeh3",
       "label": "BF16/BF16 → FP8/E4M3 at TAEH3 FP16",
-      "description": "Primary precision edge at fixed rank-0 TAEH3 FP16 chunk-5 decode. The high-level precision axis deliberately bundles all-main FP8 linear execution and calibrated E4M3 QKV transport.",
-      "kind": "single-factor",
+      "description": "Rejected historical bundle at fixed rank-0 TAEH3 FP16 chunk-5 decode. It combines all-main FP8 linear execution with E4M3 QKV transport.",
+      "kind": "rejected-diagnostic",
+      "quality_gate": "rejected",
+      "cumulative_eligible": false,
       "factor": "precision_stack",
       "changed_factors": ["precision_stack", "linear_compute", "qkv_transport"],
       "baseline": "q0d2_taeh3_fp16",
@@ -425,7 +485,9 @@
       "id": "fp8_compute_at_full_vae",
       "label": "BF16 → all-main FP8 compute at full H3 VAE",
       "description": "Exact qmid diagnostic at fixed BF16 QKV transport and full H3 VAE PP8; main-DiT linear execution changes from BF16 to all-main FP8.",
-      "kind": "diagnostic",
+      "kind": "single-factor",
+      "quality_gate": "accepted",
+      "cumulative_eligible": true,
       "factor": "linear_compute",
       "changed_factors": ["precision_stack", "linear_compute"],
       "baseline": "q0d0_bf16_full_vae",
@@ -443,7 +505,9 @@
       "id": "e4m3_wire_at_full_vae",
       "label": "BF16 QKV wire → E4M3 QKV wire at full H3 VAE",
       "description": "Exact qmid diagnostic at fixed all-main FP8 linear execution and full H3 VAE PP8; QKV transport changes from BF16 to calibrated E4M3.",
-      "kind": "diagnostic",
+      "kind": "rejected-diagnostic",
+      "quality_gate": "rejected",
+      "cumulative_eligible": false,
       "factor": "qkv_transport",
       "changed_factors": ["precision_stack", "qkv_transport"],
       "baseline": "qmid_d0_fp8_bf16_full_vae",
@@ -461,7 +525,9 @@
       "id": "fp8_compute_at_taeh3",
       "label": "BF16 → all-main FP8 compute at TAEH3 FP16",
       "description": "Exact qmid diagnostic at fixed BF16 QKV transport and rank-0 TAEH3 FP16 chunk-5 decode; main-DiT linear execution changes from BF16 to all-main FP8.",
-      "kind": "diagnostic",
+      "kind": "single-factor",
+      "quality_gate": "accepted",
+      "cumulative_eligible": true,
       "factor": "linear_compute",
       "changed_factors": ["precision_stack", "linear_compute"],
       "baseline": "q0d2_taeh3_fp16",
@@ -479,7 +545,9 @@
       "id": "e4m3_wire_at_taeh3",
       "label": "BF16 QKV wire → E4M3 QKV wire at TAEH3 FP16",
       "description": "Exact qmid diagnostic at fixed all-main FP8 linear execution and rank-0 TAEH3 FP16 chunk-5 decode; QKV transport changes from BF16 to calibrated E4M3.",
-      "kind": "diagnostic",
+      "kind": "rejected-diagnostic",
+      "quality_gate": "rejected",
+      "cumulative_eligible": false,
       "factor": "qkv_transport",
       "changed_factors": ["precision_stack", "qkv_transport"],
       "baseline": "qmid_d1_fp8_bf16_taeh3_fp16",
@@ -497,7 +565,9 @@
       "id": "taeh3_at_fp8_bf16_wire",
       "label": "Full H3 VAE → TAEH3 FP16 at FP8/BF16 wire",
       "description": "Exact qmid decoder diagnostic at fixed all-main FP8 linear execution and BF16 QKV transport. Audio is required to remain bitwise identical.",
-      "kind": "diagnostic",
+      "kind": "single-factor",
+      "quality_gate": "accepted",
+      "cumulative_eligible": true,
       "factor": "video_decoder",
       "changed_factors": ["video_decoder", "decoder_dtype", "vae_parallelism"],
       "baseline": "qmid_d0_fp8_bf16_full_vae",
@@ -548,10 +618,31 @@
       }
     },
     {
-      "id": "combined",
-      "label": "Exact factorial combined diagonal",
-      "description": "The precision and decoder axes move together between exact factorial corners while the common scheduling contract remains fixed; this diagonal is intentionally not attributed to one factor.",
+      "id": "combined_accepted_bf16_wire",
+      "label": "Accepted cumulative stack · FP8 compute + TAEH3 · BF16 QKV wire",
+      "description": "Quality-gated cumulative comparison from the BF16/full-VAE reference to all-main FP8 plus TAEH3 FP16 while QKV transport remains BF16. E4M3 transport is not included.",
       "kind": "combined",
+      "quality_gate": "accepted",
+      "cumulative_eligible": true,
+      "baseline": "q0d0_bf16_full_vae",
+      "candidate": "qmid_d1_fp8_bf16_taeh3_fp16",
+      "changed_factors": ["precision_stack", "linear_compute", "video_decoder", "decoder_dtype", "vae_parallelism"],
+      "evidence_file": "metrics/combined-accepted-bf16-wire.json",
+      "metric_scope": "Complete 362-frame post-codec cumulative diagnostics for the accepted BF16-wire path. Same-seed similarity measures trajectory difference, not human quality; artifact-local one-shot E2E values are not a factor-latency A/B.",
+      "metrics": {
+        "rgb": {"psnr_db": 14.169366, "ssim": 0.429287, "p05_ssim": 0.281525, "min_ssim": 0.23558},
+        "yuv": {"psnr_db": 20.08743, "ssim": 0.785014, "p05_ssim": 0.728038, "min_ssim": 0.717485},
+        "temporal": {"derivative_mae": 13.657514, "p95_derivative_mae": 20.312349, "max_derivative_mae": 62.512731},
+        "audio": {"bit_exact": false, "snr_db": 4.390626, "snr_positive_infinite": false, "rmse": 0.074332, "max_abs": 0.488765}
+      }
+    },
+    {
+      "id": "combined_rejected_e4m3",
+      "label": "Rejected E4M3 factorial diagonal",
+      "description": "Historical full diagonal ending in E4M3 QKV transport. It is retained for audit evidence but is excluded from the cumulative path after failing the human audio/video quality gate.",
+      "kind": "rejected-diagnostic",
+      "quality_gate": "rejected",
+      "cumulative_eligible": false,
       "baseline": "q0d0_bf16_full_vae",
       "candidate": "q1d1_fp8_e4m3_taeh3_fp16",
       "changed_factors": ["precision_stack", "linear_compute", "qkv_transport", "video_decoder", "decoder_dtype", "vae_parallelism"],
@@ -568,7 +659,9 @@
       "id": "legacy_combined_endpoint_diagnostic",
       "label": "Legacy mixed-contract endpoint comparison",
       "description": "Historical endpoint diagnostic: precision, decoder, reverse-O, RDMA lifetime, audio placement, and timing method move together. It is retained for provenance and is not a factorial edge.",
-      "kind": "diagnostic",
+      "kind": "rejected-diagnostic",
+      "quality_gate": "rejected_endpoint_state",
+      "cumulative_eligible": false,
       "baseline": "legacy_q0d0",
       "candidate": "legacy_q1d1_realtime",
       "changed_factors": ["precision_stack", "linear_compute", "qkv_transport", "video_decoder", "decoder_dtype", "reverse_o", "rdma", "audio_decode"],
@@ -603,6 +696,8 @@
   "quality_contract": {
     "shared_student_is_approximate_vs_base_h3": true,
     "fp8_e4m3_is_numerically_approximate": true,
+    "e4m3_qkv_transport_quality_gate": "rejected",
+    "accepted_cumulative_qkv_transport": "BF16",
     "taeh3_is_lossy_vs_full_h3_vae": true,
     "decoder_edges_require_bitwise_identical_decoded_audio": true,
     "precision_edges_allow_joint_audio_video_trajectory_change": true,

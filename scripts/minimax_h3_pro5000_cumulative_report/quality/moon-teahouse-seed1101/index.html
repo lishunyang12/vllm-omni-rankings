@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="color-scheme" content="dark">
-  <title>MiniMax-H3 · Moon Teahouse precision A/B</title>
+  <title>MiniMax-H3 · Moon Teahouse admitted-stack A/B</title>
   <style>
     :root {
       color-scheme: dark;
@@ -18,6 +18,8 @@
       --gold: #ffd675;
       --green: #b8fa74;
       --amber: #ffc66d;
+      --red: #ff9e91;
+      --red-bg: #251311;
     }
     * { box-sizing: border-box; }
     body {
@@ -76,6 +78,7 @@
     .stage small { display: block; color: var(--muted); line-height: 1.35; }
     .stage-status { display: inline-block; margin-top: 6px; border: 1px solid #59616e; border-radius: 999px; padding: 3px 7px; color: var(--muted); font: 700 9px ui-monospace, monospace; }
     .stage-status.available { border-color: #52773b; color: var(--green); }
+    .stage-status.rejected { border-color: #8c4941; color: var(--red); background: var(--red-bg); }
     .isolation-note { padding: 11px 14px; border-top: 1px solid var(--line); color: #c5cad2; font-size: 11px; line-height: 1.55; }
     .isolation-note strong { color: var(--gold); }
     .switcher {
@@ -99,9 +102,18 @@
     .contrast-button.active { color: #17140c; background: var(--gold); border-color: var(--gold); }
     .contrast-button.active span { color: #65501a; }
     .contrast-button:disabled { opacity: .42; cursor: not-allowed; }
+    .contrast-button.rejected { border-color: #6f3934; background: var(--red-bg); color: #ffd0ca; }
+    .contrast-button.rejected span { color: #d9958d; }
+    .contrast-button.rejected.active { border-color: var(--red); background: #b9574d; color: #fff; }
+    .contrast-button.rejected.active span { color: #ffe0dc; }
     .rung-section { margin: -2px 0 12px; padding-top: 8px; border-top: 1px solid var(--line); }
     .rung-section .eyebrow { margin-bottom: 7px; color: var(--muted); }
     .rung-section .switcher { padding-bottom: 0; }
+    .accepted-section { margin: 0 0 12px; }
+    .accepted-section .eyebrow { margin-bottom: 7px; color: var(--green); }
+    .rejected-section { margin-top: 10px; padding: 12px; border: 1px solid #6f3934; border-radius: 13px; background: rgba(37, 19, 17, .82); }
+    .rejected-section .eyebrow { color: var(--red); }
+    .rejected-note { margin: 8px 1px 0; color: #dba49d; font-size: 11px; line-height: 1.5; }
     .contrast-summary {
       display: flex;
       align-items: flex-start;
@@ -126,6 +138,8 @@
       letter-spacing: .08em;
     }
     .kind.combined { color: var(--gold); border-color: #735c28; }
+    .kind.rejected { color: var(--red); border-color: #8c4941; background: var(--red-bg); }
+    .contrast-summary.rejected { border-color: #6f3934; background: rgba(37, 19, 17, .9); }
     .factor-board { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; margin-bottom: 14px; }
     .factor {
       padding: 11px 12px;
@@ -145,6 +159,7 @@
     .head p { color: var(--muted); font-size: 11px; line-height: 1.4; margin: 0; max-width: 78ch; }
     .pill { border: 1px solid #3b4552; border-radius: 999px; padding: 7px 10px; font: 700 10px ui-monospace, monospace; white-space: nowrap; }
     .pill.candidate { color: var(--green); border-color: #537837; }
+    .pill.candidate.rejected { color: var(--red); border-color: #8c4941; }
     video { display: block; width: 100%; aspect-ratio: 20 / 11; background: #000; }
     .timings { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border-top: 1px solid var(--line); }
     .metric { min-width: 0; background: var(--panel); padding: 12px; }
@@ -214,20 +229,20 @@
 <main>
   <header class="top">
     <div>
-      <div class="eyebrow">Factor-isolated full-video review · no extracted frames</div>
+      <div class="eyebrow">Quality-admitted full-video review · no extracted frames</div>
       <h1 id="scene">Moon Teahouse Signal</h1>
     </div>
     <p class="contract" id="contract">Loading the hash-locked request contract…</p>
   </header>
 
-  <p class="notice" id="notice"><strong>Timing and evidence rule:</strong> these cells were generated sequentially as one-shot/no-warmup requests, can inherit host, disk, and JIT caches, and use node-default unlocked GPU clocks. E2E and RTF are artifact-local observations only; do not subtract or divide them to claim a single-factor speedup. PSNR/SSIM are difference diagnostics, not a substitute for human audiovisual review. Full-H3-VAE SM120 exact-op raw-output equivalence under full SP8 remains pending.</p>
+  <p class="notice" id="notice"><strong>Quality admission:</strong> the accepted cumulative path keeps QKV transport in BF16. E4M3-wire artifacts remain available only under <em>Rejected E4M3 diagnostics</em> and are excluded from the cumulative/recommended stack after failing the audiovisual quality gate. <strong>Timing rule:</strong> these cells were generated sequentially as one-shot/no-warmup requests, can inherit host, disk, and JIT caches, and use node-default unlocked GPU clocks. E2E and RTF are artifact-local observations only; do not subtract or divide them to claim a single-factor speedup.</p>
   <p class="progress" id="progress" hidden></p>
   <p class="load-error" id="loadError"></p>
 
   <section class="isolation" aria-labelledby="isolationTitle">
     <div class="isolation-head">
-      <h2 id="isolationTitle">Factor-isolation ladders</h2>
-      <p>Intermediate rungs separate decoder architecture from decoder dtype, and FP8 linear execution from E4M3 communication.</p>
+      <h2 id="isolationTitle">Accepted factor-isolation ladders</h2>
+      <p>The cumulative mainline isolates decoder architecture, decoder dtype, and FP8 linear execution while retaining BF16 QKV transport.</p>
     </div>
     <div class="ladder-scroll">
       <table class="ladder-table">
@@ -245,33 +260,37 @@
             <th scope="row">Precision · full VAE</th>
             <td class="stage"><strong>BF16 / BF16 wire</strong><small>Q0D0 · reference precision</small><span class="stage-status" data-artifact="q0d0_bf16_full_vae" data-ready="exact artifact available">pending</span></td>
             <td class="arrow">→</td>
-            <td class="stage"><strong>all-main FP8 / BF16 wire</strong><small>QmidD0 · static per-tensor weights · dynamic per-token activations</small><span class="stage-status" data-artifact="qmid_d0_fp8_bf16_full_vae" data-ready="exact qmid artifact available">pending</span></td>
-            <td class="arrow">→</td>
-            <td class="stage"><strong>all-main FP8 / E4M3 wire</strong><small>Q1D0 · prompt-bound scale table [50, 3]</small><span class="stage-status" data-artifact="q1d0_fp8_e4m3_full_vae" data-ready="factorial corner available">pending</span></td>
-            <td><small>First isolates FP8 linear compute; then isolates E4M3 QKV transport with full H3 VAE fixed.</small></td>
+            <td class="stage"><strong>all-main FP8 / BF16 wire</strong><small>QmidD0 · accepted endpoint · static per-tensor weights · dynamic per-token activations</small><span class="stage-status" data-artifact="qmid_d0_fp8_bf16_full_vae" data-ready="accepted artifact available">pending</span></td>
+            <td><small>Isolates FP8 linear compute with the full H3 VAE and BF16 QKV transport fixed.</small></td>
           </tr>
           <tr>
             <th scope="row">Precision · TAEH3</th>
             <td class="stage"><strong>BF16 / BF16 wire</strong><small>Q0D2 · TAEH3 FP16</small><span class="stage-status" data-artifact="q0d2_taeh3_fp16" data-ready="factorial corner available">pending</span></td>
             <td class="arrow">→</td>
-            <td class="stage"><strong>all-main FP8 / BF16 wire</strong><small>QmidD1 · static per-tensor weights · dynamic per-token activations</small><span class="stage-status" data-artifact="qmid_d1_fp8_bf16_taeh3_fp16" data-ready="exact qmid artifact available">pending</span></td>
-            <td class="arrow">→</td>
-            <td class="stage"><strong>all-main FP8 / E4M3 wire</strong><small>Q1D1 · TAEH3 FP16</small><span class="stage-status" data-artifact="q1d1_fp8_e4m3_taeh3_fp16" data-ready="factorial corner available">pending</span></td>
-            <td><small>Repeats the FP8-compute and E4M3-wire isolation with TAEH3 fixed.</small></td>
+            <td class="stage"><strong>all-main FP8 / BF16 wire</strong><small>QmidD1 · accepted cumulative endpoint · TAEH3 FP16</small><span class="stage-status" data-artifact="qmid_d1_fp8_bf16_taeh3_fp16" data-ready="accepted artifact available">pending</span></td>
+            <td><small>Repeats the FP8-compute isolation with TAEH3 FP16 fixed; no E4M3 transport is accumulated.</small></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="isolation-note"><strong>Why repeat both decoder lanes?</strong> Full VAE → TAEH3 is measured at Q0, Qmid, and Q1; Q0 → Qmid → Q1 is likewise measured under both decoders. Comparing these conditional edges reveals precision × decoder interaction. The E4M3-only tabs quantify a different stochastic trajectory after transport changes; their PSNR/SSIM values are not quality scores.</div>
+    <div class="isolation-note"><strong>Admission boundary:</strong> the accepted 2×2 ends at all-main FP8 with BF16 QKV wire. Full VAE → TAEH3 is measured under both BF16 and FP8-compute states; BF16 → FP8 compute is measured under both decoders. The E4M3 extension is retained below for auditability but does not feed the cumulative endpoint.</div>
   </section>
 
-  <nav class="switcher" id="switcher" aria-label="A/B contrasts"></nav>
+  <section class="accepted-section">
+    <div class="eyebrow">Accepted cumulative comparisons · BF16 QKV wire retained</div>
+    <nav class="switcher" id="switcher" aria-label="Accepted A/B contrasts"></nav>
+  </section>
   <section class="rung-section" id="rungSection" hidden>
     <div class="eyebrow">Diagnostic rungs · finer attribution inside each axis</div>
     <nav class="switcher" id="rungSwitcher" aria-label="Diagnostic rung contrasts"></nav>
   </section>
+  <section class="rung-section rejected-section" id="rejectedSection" hidden>
+    <div class="eyebrow">Rejected E4M3 diagnostics · evidence retained, not cumulative</div>
+    <nav class="switcher" id="rejectedSwitcher" aria-label="Rejected E4M3 contrasts"></nav>
+    <p class="rejected-note">These tabs preserve the complete q1 videos and measurements for audit. They are not production recommendations and do not contribute to the accepted cumulative result.</p>
+  </section>
 
-  <section class="contrast-summary" aria-live="polite">
+  <section class="contrast-summary" id="contrastSummary" aria-live="polite">
     <div><h2 id="contrastTitle">Loading comparison…</h2><p id="contrastDescription"></p></div>
     <span class="kind" id="contrastKind">A/B</span>
   </section>
@@ -340,12 +359,23 @@ let activeAudio = 'left';
 let state = null;
 
 const EXPECTED = [
+  { id: 'combined_accepted_bf16_wire', label: 'Accepted cumulative stack', hint: 'q0d0 → qmid_d1 · BF16 QKV retained' },
   { id: 'taeh3_at_bf16', label: 'TAEH3 at BF16', hint: 'q0d0 → q0d2' },
-  { id: 'taeh3_at_fp8', label: 'TAEH3 at FP8/E4M3', hint: 'q1d0 → q1d1' },
-  { id: 'fp8_e4m3_at_full_vae', label: 'FP8/E4M3 at full VAE', hint: 'q0d0 → q1d0' },
-  { id: 'fp8_e4m3_at_taeh3', label: 'FP8/E4M3 at TAEH3', hint: 'q0d2 → q1d1' },
-  { id: 'combined', label: 'Combined diagonal', hint: 'q0d0 → q1d1' },
+  { id: 'fp8_compute_at_full_vae', label: 'FP8 compute at full VAE', hint: 'q0d0 → qmid_d0 · BF16 wire' },
+  { id: 'taeh3_at_fp8_bf16_wire', label: 'TAEH3 at FP8/BF16 wire', hint: 'qmid_d0 → qmid_d1' },
+  { id: 'fp8_compute_at_taeh3', label: 'FP8 compute at TAEH3', hint: 'q0d2 → qmid_d1 · BF16 wire' },
 ];
+
+const REJECTED_E4M3_IDS = new Set([
+  'fp8_e4m3_at_full_vae',
+  'taeh3_at_fp8',
+  'fp8_e4m3_at_taeh3',
+  'e4m3_wire_at_full_vae',
+  'e4m3_wire_at_taeh3',
+  'combined',
+  'combined_rejected_e4m3',
+  'legacy_combined_endpoint_diagnostic',
+]);
 
 const FACTOR_LABELS = {
   linear_compute: 'DiT linear compute',
@@ -458,23 +488,57 @@ function normalizeManifest(raw) {
       evidenceFile: null,
     }];
   }
+  if (
+    artifacts.q0d0_bf16_full_vae &&
+    artifacts.qmid_d1_fp8_bf16_taeh3_fp16 &&
+    !contrasts.some(contrast => contrast.id === 'combined_accepted_bf16_wire')
+  ) {
+    contrasts.unshift({
+      id: 'combined_accepted_bf16_wire',
+      label: 'Accepted cumulative stack · FP8 compute + TAEH3, BF16 QKV',
+      description: 'Quality-admitted cumulative comparison: all-main FP8 linear execution and TAEH3 FP16 are enabled together while QKV transport remains BF16. E4M3 is not included.',
+      kind: 'combined',
+      factor: null,
+      changed_factors: ['precision_stack', 'linear_compute', 'video_decoder', 'decoder_dtype', 'vae_parallelism'],
+      left: 'q0d0_bf16_full_vae',
+      right: 'qmid_d1_fp8_bf16_taeh3_fp16',
+      metrics: {},
+      metricScope: 'Complete-video accepted-stack review. A dedicated q0d0-to-qmid_d1 pairwise metric record is not yet published; no E4M3 metric is substituted.',
+      evidenceFile: null,
+      admission: 'accepted',
+    });
+  }
   return { manifest, artifacts, contrasts, mediaSeconds, isV1 };
 }
 
 function expectedSlot(contrast) {
-  if (contrast.kind === 'combined' || contrast.id === 'combined') return EXPECTED[4];
   const id = String(contrast.id).replaceAll('-', '_');
   return EXPECTED.find(slot => slot.id === id) || null;
+}
+
+function isRejectedE4m3(contrast) {
+  if (contrast.kind === 'rejected-diagnostic' || contrast.quality_gate === 'rejected') return true;
+  if (REJECTED_E4M3_IDS.has(contrast.id)) return true;
+  const left = state?.artifacts?.[contrast.left];
+  const right = state?.artifacts?.[contrast.right];
+  return [left, right].some(artifact => String(artifact?.factors?.qkv_transport || '').toUpperCase().includes('E4M3'));
 }
 
 function buildContrastButtons() {
   const nav = $('switcher');
   const rungNav = $('rungSwitcher');
+  const rejectedNav = $('rejectedSwitcher');
   nav.replaceChildren();
   rungNav.replaceChildren();
+  rejectedNav.replaceChildren();
   const bySlot = new Map();
   const extras = [];
+  const rejected = [];
   for (const contrast of state.contrasts) {
+    if (isRejectedE4m3(contrast)) {
+      rejected.push(contrast);
+      continue;
+    }
     const slot = expectedSlot(contrast);
     if (slot && !bySlot.has(slot.id)) bySlot.set(slot.id, contrast);
     else extras.push(contrast);
@@ -488,7 +552,7 @@ function buildContrastButtons() {
     button.dataset.contrast = contrast?.id || '';
     button.append(document.createTextNode(contrast?.label || slot.label));
     const hint = document.createElement('span');
-    hint.textContent = contrast ? (contrast.kind === 'combined' ? 'all declared factors' : slot.hint) : `${slot.hint} · evidence pending`;
+    hint.textContent = contrast ? slot.hint : `${slot.hint} · evidence pending`;
     button.append(hint);
     if (contrast) button.addEventListener('click', () => selectContrast(contrast.id));
     nav.append(button);
@@ -505,7 +569,20 @@ function buildContrastButtons() {
     button.append(hint);
     rungNav.append(button);
   }
+  for (const contrast of rejected) {
+    const button = document.createElement('button');
+    button.className = 'contrast-button rejected';
+    button.type = 'button';
+    button.dataset.contrast = contrast.id;
+    button.append(document.createTextNode(contrast.label));
+    const hint = document.createElement('span');
+    hint.textContent = 'Rejected by quality gate · excluded from cumulative stack';
+    button.append(hint);
+    button.addEventListener('click', () => selectContrast(contrast.id));
+    rejectedNav.append(button);
+  }
   $('rungSection').hidden = extras.length === 0;
+  $('rejectedSection').hidden = rejected.length === 0;
 }
 
 function humanFactor(key) {
@@ -639,17 +716,21 @@ function selectContrast(id) {
     $('loadError').textContent = `Manifest error: contrast “${contrast.label}” references a missing artifact.`;
     return;
   }
+  const rejected = isRejectedE4m3(contrast);
+  const acceptedSlot = !rejected && expectedSlot(contrast);
   document.querySelectorAll('.contrast-button').forEach(button => button.classList.toggle('active', button.dataset.contrast === id));
+  $('contrastSummary')?.classList.toggle('rejected', rejected);
   $('contrastTitle').textContent = contrast.label;
-  $('contrastDescription').textContent = contrast.description || (contrast.factor ? `Only ${humanFactor(contrast.factor)} changes in this declared pair.` : 'All listed optimization factors are combined in this end-to-end pair.');
-  $('contrastKind').textContent = contrast.kind === 'combined' ? 'combined' : contrast.kind === 'diagnostic' ? 'diagnostic' : 'single factor';
-  $('contrastKind').className = `kind${contrast.kind === 'combined' ? ' combined' : ''}`;
+  $('contrastDescription').textContent = `${rejected ? 'Rejected by the audiovisual quality gate and excluded from the accepted cumulative stack. ' : ''}${contrast.description || (contrast.factor ? `Only ${humanFactor(contrast.factor)} changes in this declared pair.` : 'All listed optimization factors are combined in this end-to-end pair.')}`;
+  $('contrastKind').textContent = rejected ? 'rejected' : contrast.id === 'combined_accepted_bf16_wire' ? 'accepted cumulative' : acceptedSlot ? 'accepted factor' : contrast.kind === 'diagnostic' ? 'diagnostic' : 'single factor';
+  $('contrastKind').className = `kind${rejected ? ' rejected' : contrast.id === 'combined_accepted_bf16_wire' ? ' combined' : ''}`;
   $('leftLabel').textContent = left.label;
   $('rightLabel').textContent = right.label;
   $('leftDetail').textContent = left.detail;
   $('rightDetail').textContent = right.detail;
   $('leftSize').textContent = formatBytes(left.bytes);
   $('rightSize').textContent = formatBytes(right.bytes);
+  $('rightSize').classList.toggle('rejected', rejected);
   setTiming($('leftE2E'), left.e2e);
   setTiming($('rightE2E'), right.e2e);
   setTiming($('leftRtf'), left.rtf, true);
@@ -707,18 +788,8 @@ async function boot() {
   $('contract').textContent = `seed ${request.seed ?? 1101} · ${video.frames ?? 362} frames · ${video.width ?? 1280}×${video.height ?? 704} · ${video.fps ?? 24} fps · ${state.mediaSeconds.toFixed(6)} s`;
   const publication = state.manifest.status || {};
   if (typeof publication.factorial_complete === 'boolean') {
-    const exactDecoder = state.contrasts.find(item => item.id === 'taeh3_fp32_at_bf16');
-    const diagnosticsNote = typeof publication.diagnostics_complete === 'boolean'
-      ? ` ${publication.diagnostics_reason || (publication.diagnostics_complete ? 'Exact diagnostic rungs are complete.' : 'Optional diagnostic rungs remain in progress.')}`
-      : '';
-    const availablePrimaryCount = Array.isArray(publication.available_primary_contrasts)
-      ? publication.available_primary_contrasts.filter(id => id !== 'combined').length
-      : 0;
-    const pendingCount = Array.isArray(publication.pending_primary_contrasts) ? publication.pending_primary_contrasts.length : 0;
     $('progress').hidden = false;
-    $('progress').textContent = publication.factorial_complete
-      ? `Publication status: the exact 2×2 factorial matrix is complete.${diagnosticsNote}`
-      : `Publication status: the exact 2×2 factorial matrix is in progress.${availablePrimaryCount ? ` Available primary edges: ${availablePrimaryCount}.` : ''}${exactDecoder ? ` Available diagnostic: ${exactDecoder.label}, under Diagnostic rungs.` : ''}${pendingCount ? ` Pending primary edges: ${pendingCount}.` : ''}${diagnosticsNote}`;
+    $('progress').textContent = 'Accepted mainline: q0/qmid × Full H3 VAE/TAEH3 is available with BF16 QKV transport retained. E4M3 q1 results are preserved below as rejected diagnostics and are not counted toward the cumulative endpoint.';
   }
   document.querySelectorAll('.stage-status[data-artifact]').forEach(badge => {
     const available = Boolean(state.artifacts[badge.dataset.artifact]);
@@ -726,10 +797,14 @@ async function boot() {
     badge.textContent = available ? badge.dataset.ready : 'pending';
   });
   if (state.isV1) {
-    $('notice').innerHTML = '<strong>Schema v1 fallback:</strong> the existing complete-video comparison remains available, but it combines FP8/E4M3 and TAEH3. Its optimized MP4 took 22.367 s as a no-warmup request with lazy compilation. A separate 14.561 s steady-state mean used another hash-locked prompt and is not attributed to this artifact. Sequential cells can inherit host/disk/JIT caches and use unlocked clocks, so artifact E2E/RTF must not be converted into pairwise factor speedups. Full-H3-VAE SM120 exact-op raw-output equivalence under full SP8 remains pending.';
+    $('notice').innerHTML = '<strong>Schema v1 fallback:</strong> only the historical FP8/E4M3 endpoint is available in this fallback and it is rejected from the accepted cumulative path. Load schema v2 to review the BF16-QKV qmid artifacts. Artifact E2E/RTF must not be converted into pairwise factor speedups.';
   }
   buildContrastButtons();
-  const initial = state.contrasts.find(item => item.id === 'combined') || state.contrasts[0];
+  const selectedDefault = state.manifest.selection?.default_contrast || 'combined_accepted_bf16_wire';
+  const initial = state.contrasts.find(item => item.id === selectedDefault && !isRejectedE4m3(item))
+    || EXPECTED.map(slot => state.contrasts.find(item => item.id === slot.id)).find(Boolean)
+    || state.contrasts.find(item => !isRejectedE4m3(item))
+    || state.contrasts[0];
   if (initial) selectContrast(initial.id);
 }
 

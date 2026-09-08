@@ -1,45 +1,46 @@
-# Moon Teahouse FP8/E4M3 x TAEH3 factorial A/B
+# Moon Teahouse quality-gated FP8 x TAEH3 A/B
 
 This directory contains complete MiniMax-H3 MP4 outputs for direct visual and
-audiovisual comparison. Every admitted factorial cell uses the exact same
+audiovisual comparison. Every admitted cell uses the exact same
 prompt, seed, aligned geometry, four-step FastH3 VSA/Data-Free student, and VSA
 top-k. The machine-readable manifest is the authority for which cells and
-contrasts are complete.
+contrasts are complete and which optimizations passed the quality gate.
 
 - [Open the synchronized A/B player](index.html)
 - [Exact Q0D0 control: BF16/BF16 + full H3 VAE](videos/q0d0-bf16-full-h3-vae.mp4)
 - [Exact Q0 decoder diagnostic: TAEH3 FP32](videos/q0d1-bf16-taeh3-fp32.mp4)
 - [Exact Q0 decoder endpoint: TAEH3 FP16](videos/q0d2-bf16-taeh3-fp16.mp4)
-- [Exact Q1D0 endpoint: FP8/E4M3 + full H3 VAE](videos/q1d0-all-main-fp8-e4m3-wire-full-h3-vae.mp4)
-- [Exact Q1D1 endpoint: FP8/E4M3 + TAEH3 FP16](videos/q1d1-all-main-fp8-e4m3-wire-taeh3-fp16.mp4)
-- [Exact QmidD0: FP8/BF16 wire + full H3 VAE](videos/qmid-d0-all-main-fp8-bf16-wire-full-h3-vae.mp4)
-- [Exact QmidD1: FP8/BF16 wire + TAEH3 FP16](videos/qmid-d1-all-main-fp8-bf16-wire-taeh3-fp16.mp4)
+- [Admitted QmidD0: FP8/BF16 wire + full H3 VAE](videos/qmid-d0-all-main-fp8-bf16-wire-full-h3-vae.mp4)
+- [Admitted cumulative endpoint QmidD1: FP8/BF16 wire + TAEH3 FP16](videos/qmid-d1-all-main-fp8-bf16-wire-taeh3-fp16.mp4)
+- [Rejected E4M3 diagnostic Q1D0](videos/q1d0-all-main-fp8-e4m3-wire-full-h3-vae.mp4)
+- [Rejected E4M3 diagnostic Q1D1](videos/q1d1-all-main-fp8-e4m3-wire-taeh3-fp16.mp4)
 - [Full H3 VAE vs TAEH3 FP16 evidence](metrics/taeh3-at-bf16.json)
-- [Full H3 VAE vs TAEH3 FP16 at FP8/E4M3 evidence](metrics/taeh3-at-fp8.json)
-- [BF16/BF16 vs FP8/E4M3 at full H3 VAE evidence](metrics/fp8-e4m3-at-full-vae.json)
-- [BF16/BF16 vs FP8/E4M3 at TAEH3 evidence](metrics/fp8-e4m3-at-taeh3.json)
-- [Exact factorial combined-diagonal evidence](metrics/combined-exact-factorial.json)
+- [Rejected-state TAEH3-at-FP8/E4M3 evidence](metrics/taeh3-at-fp8.json)
+- [Rejected BF16/BF16 vs FP8/E4M3 evidence at full H3 VAE](metrics/fp8-e4m3-at-full-vae.json)
+- [Rejected BF16/BF16 vs FP8/E4M3 evidence at TAEH3](metrics/fp8-e4m3-at-taeh3.json)
+- [Accepted BF16-wire cumulative-diagonal evidence](metrics/combined-accepted-bf16-wire.json)
+- [Rejected E4M3 factorial-diagonal evidence](metrics/combined-exact-factorial.json)
 - [Full H3 VAE vs TAEH3 FP32 evidence](metrics/taeh3-fp32-at-bf16.json)
 - [TAEH3 FP32 vs FP16 evidence](metrics/taeh3-fp16-vs-fp32-at-bf16.json)
 - [FP8 compute at full H3 VAE evidence](metrics/fp8-compute-at-full-vae.json)
-- [E4M3 wire at full H3 VAE evidence](metrics/e4m3-wire-at-full-vae.json)
+- [Rejected E4M3 wire at full H3 VAE evidence](metrics/e4m3-wire-at-full-vae.json)
 - [FP8 compute at TAEH3 evidence](metrics/fp8-compute-at-taeh3.json)
-- [E4M3 wire at TAEH3 evidence](metrics/e4m3-wire-at-taeh3.json)
+- [Rejected E4M3 wire at TAEH3 evidence](metrics/e4m3-wire-at-taeh3.json)
 - [TAEH3 at FP8/BF16 wire evidence](metrics/taeh3-at-fp8-bf16-wire.json)
 - [Historical standard VSA + four-step video](videos/standard-vsa4-bf16-full-vae.mp4)
 - [All-main FP8 + BF16-wire observer video](videos/all-main-fp8-bf16-wire-full-vae-observer.mp4)
-- [Historical optimized real-time-stack video](videos/optimized-d6-realtime-stack.mp4)
+- [Historical rejected-E4M3 real-time-stack video](videos/optimized-d6-realtime-stack.mp4)
 - [Legacy mixed-contract endpoint evidence](metrics/combined-bf16-full-vae-vs-realtime-stack.json)
 - [FP8-compute diagnostic evidence](metrics/precision-bf16-vs-all-main-fp8-bf16-wire.json)
 - [Executed prompt](prompt.txt)
 - [Machine-readable manifest](manifest.json)
 - [SHA-256 checksums](SHA256SUMS.txt)
 
-The current manifest uses schema v2. All four exact factorial cells, all four
-primary single-factor edges, and the exact factorial diagonal are available.
-Both exact FP8/BF16-wire qmid cells and all five qmid decomposition contrasts
-are also complete. The TAEH3-FP32 decoder diagnostic and historical
-FP8/BF16-wire observer rung remain available alongside this exact evidence.
+The current manifest uses schema v2. The admitted matrix is BF16 versus
+all-main FP8 compute, with BF16 QKV transport fixed, crossed with full H3 VAE
+versus TAEH3 FP16. E4M3 QKV transport failed the complete-video human quality
+gate and is excluded from every cumulative, primary, recommended, and default
+comparison. Its MP4s and metrics remain available only as rejected evidence.
 The page never substitutes an artifact from another prompt, seed, geometry, or
 runtime contract.
 
@@ -47,55 +48,51 @@ runtime contract.
 
 The two independent high-level axes are:
 
-- Precision `q`: `q0` is BF16 main-DiT linear execution plus BF16 QKV
-  transport; `q1` is all-main FP8 linear execution plus prompt-bound calibrated
-  E4M3 QKV transport.
+- Precision `q`: `q0` is BF16 main-DiT linear execution and `qmid` is all-main
+  FP8 linear execution. QKV transport remains BF16 in both admitted states.
 - Decoder `d`: `d0` is the full H3 video VAE; `d1` is TAEH3 FP16.
 
-The complete matrix therefore contains `q0d0`, `q0d2`, `q1d0`, and `q1d1`.
+The admitted matrix therefore contains `q0d0`, `q0d2`, `qmid_d0`, and
+`qmid_d1`.
 The primary controls are its four edges and one non-attributable diagonal:
 
 1. TAEH3 at BF16: `q0d0 -> q0d2` (`taeh3_at_bf16`)
-2. TAEH3 at FP8/E4M3: `q1d0 -> q1d1` (`taeh3_at_fp8`)
-3. FP8/E4M3 at full VAE: `q0d0 -> q1d0` (`fp8_e4m3_at_full_vae`)
-4. FP8/E4M3 at TAEH3: `q0d2 -> q1d1` (`fp8_e4m3_at_taeh3`)
-5. Combined diagonal: `q0d0 -> q1d1` (`combined`)
+2. TAEH3 at FP8/BF16 wire: `qmid_d0 -> qmid_d1` (`taeh3_at_fp8_bf16_wire`)
+3. FP8 compute at full VAE: `q0d0 -> qmid_d0` (`fp8_compute_at_full_vae`)
+4. FP8 compute at TAEH3: `q0d2 -> qmid_d1` (`fp8_compute_at_taeh3`)
+5. Accepted cumulative diagonal: `q0d0 -> qmid_d1` (`combined_accepted_bf16_wire`)
 
 The `q0d1_taeh3_fp32` artifact is the optional decoder-dtype middle rung, not a
-core matrix corner. The exact FP16 corner is `q0d2_taeh3_fp16`; the other
-factorial corners use artifact IDs `q0d0_bf16_full_vae`,
-`q1d0_fp8_e4m3_full_vae`, and `q1d1_fp8_e4m3_taeh3_fp16`.
+core matrix corner. The exact FP16 corner is `q0d2_taeh3_fp16`; the admitted
+FP8 corners are `qmid_d0_fp8_bf16_full_vae` and
+`qmid_d1_fp8_bf16_taeh3_fp16`.
 
 Each high-level axis has an optional middle rung for finer attribution. These
 rungs refine the mechanism within an axis; they do not replace the four primary
 2x2 edges.
 
-| Axis | Reference | Diagnostic middle rung | Factorial endpoint | Isolation meaning | Current state |
+| Axis | Reference | Diagnostic middle rung | Admitted endpoint | Isolation meaning | Current state |
 | --- | --- | --- | --- | --- | --- |
-| Decoder | Full H3 VAE at Q0 | TAEH3 FP32 at Q0 | TAEH3 FP16 at Q0 | Full VAE -> TAEH3 FP32 diagnoses decoder architecture; TAEH3 FP32 -> FP16 diagnoses decoder dtype | Q0, Qmid, and Q1 decoder comparisons complete |
-| Precision · full VAE | BF16 compute / BF16 wire (`q0d0`) | all-main FP8 / BF16 wire (`qmid_d0`) | all-main FP8 / E4M3 wire (`q1d0`) | First edge isolates FP8 linear compute; second isolates E4M3 QKV transport | Both exact qmid diagnostics complete |
-| Precision · TAEH3 | BF16 compute / BF16 wire (`q0d2`) | all-main FP8 / BF16 wire (`qmid_d1`) | all-main FP8 / E4M3 wire (`q1d1`) | Repeats the same decomposition with TAEH3 FP16 fixed | Both exact qmid diagnostics complete |
+| Decoder | Full H3 VAE at Q0 | TAEH3 FP32 at Q0 | TAEH3 FP16 at Q0 | Full VAE -> TAEH3 FP32 diagnoses decoder architecture; TAEH3 FP32 -> FP16 diagnoses decoder dtype | Complete |
+| Precision · full VAE | BF16 compute / BF16 wire (`q0d0`) | — | all-main FP8 / BF16 wire (`qmid_d0`) | Isolates FP8 main-DiT linear compute while transport remains BF16 | Complete |
+| Precision · TAEH3 | BF16 compute / BF16 wire (`q0d2`) | — | all-main FP8 / BF16 wire (`qmid_d1`) | Repeats the FP8-compute isolation with TAEH3 FP16 fixed | Complete |
 
-`factorial_complete` refers to the exact four-corner 2x2 and its primary edges;
-`diagnostics_complete` separately records the exact qmid decomposition. The
+`factorial_complete` refers to the admitted BF16-wire four-corner 2x2 and its
+primary edges; `diagnostics_complete` records the finer decoder rungs. The
 older FP8/BF16-wire observer remains useful historical output evidence, but its
 differing scheduling contract and observer overhead exclude it from the exact
 qmid ladder.
 
-Both exact FP8 middle rungs use static symmetric **per-tensor weight** scales and
+Both admitted FP8 endpoints use static symmetric **per-tensor weight** scales and
 dynamic symmetric **per-token activation** scales, with linear outputs returned
-to BF16. The E4M3 wire endpoint adds a prompt-bound static QKV scale table of
-shape `[50, 3]`: one scale for each transformer layer and each Q/K/V component.
-These quantization granularities are independent of VSA's 64-token attention
-tile. The calibration sidecar is valid only for its bound prompt, seed,
-geometry, model revision, and execution contract.
+to BF16. QKV stays BF16 through SP8 Ulysses. The rejected E4M3 experiment used
+a separate prompt-bound `[50, 3]` Q/K/V scale table; that transport conversion
+is not part of the selected path.
 
-Both decoder choices are repeated under both precision states. The decoder
-effect is measured by `q0d0 -> q0d2` and `q1d0 -> q1d1`; the precision effect is
-measured by `q0d0 -> q1d0` and `q0d2 -> q1d1`. If the two decoder edges—or the
-two precision edges—differ, that is a precision-by-decoder interaction. A
-TAEH3 result measured only at BF16 cannot be assumed to hold after FP8/E4M3
-changes the joint audio-video latent trajectory.
+Both decoder choices are repeated under both admitted precision states. The
+decoder effect is measured by `q0d0 -> q0d2` and `qmid_d0 -> qmid_d1`; the FP8
+compute effect is measured by `q0d0 -> qmid_d0` and `q0d2 -> qmid_d1`. This
+keeps BF16 QKV transport invariant across every admitted edge.
 
 ### Edge-admission rules
 
@@ -104,8 +101,9 @@ A pair is labeled as a primary single-factor edge only when:
 1. prompt payload hash, seed, packed geometry, four-step student, VSA tile and
    top-k, TP1/SP8 placement, attention kernel, media shape, and codec contract
    match;
-2. the artifact factor maps differ only on the declared high-level axis (the
-   `q` axis deliberately bundles FP8 compute and E4M3 transport);
+2. the artifact factor maps differ only on the declared high-level axis; the
+   admitted `q` axis changes main-DiT linear compute while QKV transport stays
+   BF16;
 3. both MP4s decode to exactly 362 `yuv420p` frames and 482,400 stereo audio
    sample frames beginning at timestamp zero;
 4. complete evidence records the input byte counts and SHA-256 digests and all
@@ -160,7 +158,7 @@ reports RGB PSNR 39.518 dB / SSIM 0.957604 and YUV PSNR 45.602 dB / SSIM
 were sequential, cache-exposed, no-warmup runs under unlocked clocks, their E2E
 differences and ratios are not decoder speedup measurements.
 
-The `q1d0_fp8_e4m3_full_vae` endpoint keeps the full H3 VAE PP8 decoder and
+The rejected `q1d0_fp8_e4m3_full_vae` diagnostic keeps the full H3 VAE PP8 decoder and
 changes the high-level precision axis to all-main FP8 linear execution plus
 prompt-bound calibrated E4M3 QKV transport. Its artifact-local one-shot E2E was
 28.007 seconds (RTF 1.857). Against Q0D0, the complete 362-frame evidence
@@ -169,9 +167,9 @@ reports RGB PSNR 13.678 dB / SSIM 0.422281 and YUV PSNR 19.617 dB / SSIM
 identical and measures 4.376 dB SNR. These same-seed differences record joint
 audio-video trajectory divergence, not human-perceived quality. This
 sequential no-warmup timing under unlocked clocks is not a precision speedup
-measurement.
+measurement. It is not cumulative-eligible.
 
-The `q1d1_fp8_e4m3_taeh3_fp16` endpoint combines the Q1 precision state with
+The rejected `q1d1_fp8_e4m3_taeh3_fp16` diagnostic combines the Q1 precision state with
 rank-0 TAEH3 FP16 chunk-5 decode while retaining the factorial cells' common
 reverse-O and nonpersistent-RDMA contract. Its artifact-local one-shot E2E was
 22.543 seconds (RTF 1.495). Against Q1D0, the decoder-only edge reports RGB
@@ -182,14 +180,14 @@ sides have 482,400 audio sample frames and measure 4.376 dB SNR. The exact
 Q0D0-to-Q1D1 diagonal reports RGB PSNR 13.800 dB / SSIM 0.423268 and YUV PSNR
 19.738 dB / SSIM 0.785409. These values diagnose same-seed trajectory
 difference rather than human quality, and the one-shot cell timings do not
-establish factor speedups.
+establish factor speedups. Complete-video human review rejected this E4M3-wire
+state, so it is not a primary endpoint.
 
-The Q1D1 MP4 bytes match the historical optimized artifact's digest, but the
-primary contrasts reference the clean Q1D1 artifact ID and its common
-factorial execution contract. The historical mixed-contract comparison remains
-a separate legacy diagnostic.
+The Q1D1 MP4 bytes match the historical optimized artifact's digest. Both are
+retained for auditability, but neither participates in the selected cumulative
+path or default comparison.
 
-### Exact qmid decomposition
+### Accepted BF16-wire cumulative decomposition
 
 `qmid_d0_fp8_bf16_full_vae` and `qmid_d1_fp8_bf16_taeh3_fp16` hold the QKV
 wire in BF16 while changing main-DiT linear execution to all-main FP8. Their
@@ -197,21 +195,25 @@ artifact-local one-shot E2E values were respectively 28.983 seconds (RTF
 1.921525) and 23.494 seconds (RTF 1.557613). The resulting full-video
 diagnostics are:
 
-| Diagnostic edge | RGB PSNR / SSIM | YUV PSNR / SSIM | Decoded audio |
+| Admitted edge | RGB PSNR / SSIM | YUV PSNR / SSIM | Decoded audio |
 | --- | --- | --- | --- |
+| Decoder architecture: `q0d0 -> q0d1` | 27.646 dB / 0.840229 | 33.565 dB / 0.943884 | bitwise identical |
+| Decoder dtype: `q0d1 -> q0d2` | 39.518 dB / 0.957604 | 45.602 dB / 0.985468 | bitwise identical |
 | FP8 compute at full VAE: `q0d0 -> qmid_d0` | 14.041 dB / 0.425039 | 19.962 dB / 0.778650 | 4.391 dB SNR |
-| E4M3 wire at full VAE: `qmid_d0 -> q1d0` | 14.274 dB / 0.432799 | 20.207 dB / 0.778557 | -4.007 dB SNR |
 | FP8 compute at TAEH3: `q0d2 -> qmid_d1` | 14.297 dB / 0.445751 | 20.221 dB / 0.794100 | 4.391 dB SNR |
-| E4M3 wire at TAEH3: `qmid_d1 -> q1d1` | 14.602 dB / 0.451444 | 20.534 dB / 0.794961 | -4.007 dB SNR |
 | TAEH3 at FP8/BF16 wire: `qmid_d0 -> qmid_d1` | 27.579 dB / 0.843021 | 33.497 dB / 0.943440 | bitwise identical |
+| Accepted cumulative diagonal: `q0d0 -> qmid_d1` | 14.169 dB / 0.429287 | 20.087 dB / 0.785014 | 4.391 dB SNR |
 
-The two E4M3-only edges produce substantially different same-seed stochastic
-trajectories after QKV transport changes. Their PSNR/SSIM values—and the
-negative decoded-audio SNR—measure distance between those trajectories; they
-do not establish visual or audio quality degradation. Human review of the
-complete videos remains required. All qmid timings are sequential one-shot,
-no-warmup observations under shared caches and unlocked clocks, so their
-differences and ratios are not factor speedup measurements.
+The selected detailed cumulative path is `q0d0 -> q0d1 -> q0d2 -> qmid_d1`.
+An equivalent two-edge attribution path, `q0d0 -> qmid_d0 -> qmid_d1`, is also
+available. Neither path contains E4M3 transport.
+
+The rejected E4M3-only edges remain available under the page's red rejected
+diagnostics group: `qmid_d0 -> q1d0` and `qmid_d1 -> q1d1`. They are retained
+to show why the optimization was dropped, not as cumulative steps. All cell
+timings are sequential one-shot, no-warmup observations under shared caches
+and unlocked clocks, so their differences and ratios are not factor speedup
+measurements.
 
 The historical `legacy_q0d0` control keeps BF16 main-transformer linear
 execution, BF16 QKV transport, and the full H3 video VAE. Its recorded artifact
@@ -231,17 +233,23 @@ separate matched-geometry steady-state qualification of 14.576 / 14.555 /
 14.551 seconds, mean 14.561 seconds (RTF 0.965), but that qualification used a
 different hash-locked prompt.
 
+That historical `14.561` second result is now explicitly excluded from the
+admitted cumulative headline because its parent E4M3 transport state failed the
+quality gate. A matched BF16-wire full-stack timing must be rerun before a new
+RTF<1 claim can be admitted.
+
 These two historical endpoints also differ in scheduling and timing method.
 Their `legacy_combined_endpoint_diagnostic` comparison is useful for reviewing
 the endpoint outputs but must not be presented as a clean FP8/E4M3 or TAEH3
-effect. The exact factorial-cell reruns now supply all four primary
+effect. The admitted q0/qmid cells supply the four current primary
 single-factor comparisons.
 
 ## Quality boundary
 
 All outputs already use the distilled, trainable-sparse FastH3 student.
-FP8/E4M3 is numerically approximate and can alter the joint audio-video
-denoising trajectory; audio is therefore allowed to differ on precision edges.
+All-main FP8 compute is numerically approximate and can alter the joint
+audio-video denoising trajectory; audio is therefore allowed to differ on FP8
+compute edges. E4M3 QKV transport is a separately rejected approximation.
 TAEH3 is a lossy preview/real-time decoder, not a lossless implementation of the
 full H3 VAE. A decoder-only edge holds the final latent and audio branch fixed,
 so decoded audio must be bitwise identical.
@@ -287,13 +295,13 @@ does not infer a single-factor claim from filenames.
   },
   "contrasts": [
     {
-      "id": "fp8_e4m3_at_full_vae",
+      "id": "fp8_compute_at_full_vae",
       "kind": "single-factor",
-      "factor": "precision_stack",
-      "changed_factors": ["linear_compute", "qkv_transport"],
+      "factor": "linear_compute",
+      "changed_factors": ["precision_stack", "linear_compute"],
       "baseline": "baseline-artifact-id",
       "candidate": "candidate-artifact-id",
-      "evidence_file": "metrics/fp8-e4m3-at-full-vae.json",
+      "evidence_file": "metrics/fp8-compute-at-full-vae.json",
       "metrics": {
         "rgb": { "psnr_db": null, "ssim": null },
         "yuv": { "psnr_db": null, "ssim": null },
@@ -309,7 +317,8 @@ does not infer a single-factor claim from filenames.
 }
 ```
 
-The four single-factor IDs expected by the primary controls are
-`taeh3_at_bf16`, `taeh3_at_fp8`, `fp8_e4m3_at_full_vae`, and
-`fp8_e4m3_at_taeh3`. The end-to-end entry uses `combined`. Other contrast IDs
-are rendered separately as diagnostic rungs.
+The four single-factor IDs expected by the admitted controls are
+`taeh3_at_bf16`, `taeh3_at_fp8_bf16_wire`, `fp8_compute_at_full_vae`, and
+`fp8_compute_at_taeh3`. The admitted end-to-end entry uses
+`combined_accepted_bf16_wire`. E4M3 contrast IDs are rendered separately as
+rejected diagnostics and never enter the cumulative path.
