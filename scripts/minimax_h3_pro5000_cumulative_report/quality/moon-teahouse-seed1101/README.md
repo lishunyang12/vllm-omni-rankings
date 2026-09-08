@@ -12,6 +12,8 @@ contrasts are complete.
 - [Exact Q0 decoder endpoint: TAEH3 FP16](videos/q0d2-bf16-taeh3-fp16.mp4)
 - [Exact Q1D0 endpoint: FP8/E4M3 + full H3 VAE](videos/q1d0-all-main-fp8-e4m3-wire-full-h3-vae.mp4)
 - [Exact Q1D1 endpoint: FP8/E4M3 + TAEH3 FP16](videos/q1d1-all-main-fp8-e4m3-wire-taeh3-fp16.mp4)
+- [Exact QmidD0: FP8/BF16 wire + full H3 VAE](videos/qmid-d0-all-main-fp8-bf16-wire-full-h3-vae.mp4)
+- [Exact QmidD1: FP8/BF16 wire + TAEH3 FP16](videos/qmid-d1-all-main-fp8-bf16-wire-taeh3-fp16.mp4)
 - [Full H3 VAE vs TAEH3 FP16 evidence](metrics/taeh3-at-bf16.json)
 - [Full H3 VAE vs TAEH3 FP16 at FP8/E4M3 evidence](metrics/taeh3-at-fp8.json)
 - [BF16/BF16 vs FP8/E4M3 at full H3 VAE evidence](metrics/fp8-e4m3-at-full-vae.json)
@@ -19,6 +21,11 @@ contrasts are complete.
 - [Exact factorial combined-diagonal evidence](metrics/combined-exact-factorial.json)
 - [Full H3 VAE vs TAEH3 FP32 evidence](metrics/taeh3-fp32-at-bf16.json)
 - [TAEH3 FP32 vs FP16 evidence](metrics/taeh3-fp16-vs-fp32-at-bf16.json)
+- [FP8 compute at full H3 VAE evidence](metrics/fp8-compute-at-full-vae.json)
+- [E4M3 wire at full H3 VAE evidence](metrics/e4m3-wire-at-full-vae.json)
+- [FP8 compute at TAEH3 evidence](metrics/fp8-compute-at-taeh3.json)
+- [E4M3 wire at TAEH3 evidence](metrics/e4m3-wire-at-taeh3.json)
+- [TAEH3 at FP8/BF16 wire evidence](metrics/taeh3-at-fp8-bf16-wire.json)
 - [Historical standard VSA + four-step video](videos/standard-vsa4-bf16-full-vae.mp4)
 - [All-main FP8 + BF16-wire observer video](videos/all-main-fp8-bf16-wire-full-vae-observer.mp4)
 - [Historical optimized real-time-stack video](videos/optimized-d6-realtime-stack.mp4)
@@ -30,12 +37,11 @@ contrasts are complete.
 
 The current manifest uses schema v2. All four exact factorial cells, all four
 primary single-factor edges, and the exact factorial diagonal are available.
-The TAEH3-FP32 decoder diagnostic and historical FP8/BF16-wire observer rung
-remain available alongside the primary matrix. The exact 2x2 matrix is
-complete; optional exact precision-axis qmid diagnostics are still in progress
-and are tracked separately from primary publication status. The page never
-substitutes an artifact from another prompt, seed, geometry, or runtime
-contract.
+Both exact FP8/BF16-wire qmid cells and all five qmid decomposition contrasts
+are also complete. The TAEH3-FP32 decoder diagnostic and historical
+FP8/BF16-wire observer rung remain available alongside this exact evidence.
+The page never substitutes an artifact from another prompt, seed, geometry, or
+runtime contract.
 
 ## 2x2 methodology
 
@@ -66,15 +72,17 @@ rungs refine the mechanism within an axis; they do not replace the four primary
 
 | Axis | Reference | Diagnostic middle rung | Factorial endpoint | Isolation meaning | Current state |
 | --- | --- | --- | --- | --- | --- |
-| Decoder | Full H3 VAE at Q0 | TAEH3 FP32 at Q0 | TAEH3 FP16 at Q0 | Full VAE -> TAEH3 FP32 diagnoses decoder architecture; TAEH3 FP32 -> FP16 diagnoses decoder dtype | Q0 and Q1 primary decoder edges complete; Q0 dtype diagnostics available |
-| Precision | BF16 compute / BF16 QKV wire with full VAE | all-main FP8 / BF16 QKV wire with full VAE | all-main FP8 / E4M3 QKV wire with full VAE | Q0 -> middle diagnoses FP8 linear execution; middle -> Q1 diagnoses E4M3 transport | Both primary precision edges complete; exact qmid refinement remains in progress |
+| Decoder | Full H3 VAE at Q0 | TAEH3 FP32 at Q0 | TAEH3 FP16 at Q0 | Full VAE -> TAEH3 FP32 diagnoses decoder architecture; TAEH3 FP32 -> FP16 diagnoses decoder dtype | Q0, Qmid, and Q1 decoder comparisons complete |
+| Precision · full VAE | BF16 compute / BF16 wire (`q0d0`) | all-main FP8 / BF16 wire (`qmid_d0`) | all-main FP8 / E4M3 wire (`q1d0`) | First edge isolates FP8 linear compute; second isolates E4M3 QKV transport | Both exact qmid diagnostics complete |
+| Precision · TAEH3 | BF16 compute / BF16 wire (`q0d2`) | all-main FP8 / BF16 wire (`qmid_d1`) | all-main FP8 / E4M3 wire (`q1d1`) | Repeats the same decomposition with TAEH3 FP16 fixed | Both exact qmid diagnostics complete |
 
-`factorial_complete` refers only to the exact four-corner 2x2 and its primary
-edges. The published FP8/BF16-wire observer remains useful output evidence, but
-its differing scheduling contract and observer overhead prevent it from closing
-the optional exact qmid diagnostic ladder.
+`factorial_complete` refers to the exact four-corner 2x2 and its primary edges;
+`diagnostics_complete` separately records the exact qmid decomposition. The
+older FP8/BF16-wire observer remains useful historical output evidence, but its
+differing scheduling contract and observer overhead exclude it from the exact
+qmid ladder.
 
-The FP8 middle rung uses static symmetric **per-tensor weight** scales and
+Both exact FP8 middle rungs use static symmetric **per-tensor weight** scales and
 dynamic symmetric **per-token activation** scales, with linear outputs returned
 to BF16. The E4M3 wire endpoint adds a prompt-bound static QKV scale table of
 shape `[50, 3]`: one scale for each transformer layer and each Q/K/V component.
@@ -181,6 +189,30 @@ primary contrasts reference the clean Q1D1 artifact ID and its common
 factorial execution contract. The historical mixed-contract comparison remains
 a separate legacy diagnostic.
 
+### Exact qmid decomposition
+
+`qmid_d0_fp8_bf16_full_vae` and `qmid_d1_fp8_bf16_taeh3_fp16` hold the QKV
+wire in BF16 while changing main-DiT linear execution to all-main FP8. Their
+artifact-local one-shot E2E values were respectively 28.983 seconds (RTF
+1.921525) and 23.494 seconds (RTF 1.557613). The resulting full-video
+diagnostics are:
+
+| Diagnostic edge | RGB PSNR / SSIM | YUV PSNR / SSIM | Decoded audio |
+| --- | --- | --- | --- |
+| FP8 compute at full VAE: `q0d0 -> qmid_d0` | 14.041 dB / 0.425039 | 19.962 dB / 0.778650 | 4.391 dB SNR |
+| E4M3 wire at full VAE: `qmid_d0 -> q1d0` | 14.274 dB / 0.432799 | 20.207 dB / 0.778557 | -4.007 dB SNR |
+| FP8 compute at TAEH3: `q0d2 -> qmid_d1` | 14.297 dB / 0.445751 | 20.221 dB / 0.794100 | 4.391 dB SNR |
+| E4M3 wire at TAEH3: `qmid_d1 -> q1d1` | 14.602 dB / 0.451444 | 20.534 dB / 0.794961 | -4.007 dB SNR |
+| TAEH3 at FP8/BF16 wire: `qmid_d0 -> qmid_d1` | 27.579 dB / 0.843021 | 33.497 dB / 0.943440 | bitwise identical |
+
+The two E4M3-only edges produce substantially different same-seed stochastic
+trajectories after QKV transport changes. Their PSNR/SSIM values—and the
+negative decoded-audio SNR—measure distance between those trajectories; they
+do not establish visual or audio quality degradation. Human review of the
+complete videos remains required. All qmid timings are sequential one-shot,
+no-warmup observations under shared caches and unlocked clocks, so their
+differences and ratios are not factor speedup measurements.
+
 The historical `legacy_q0d0` control keeps BF16 main-transformer linear
 execution, BF16 QKV transport, and the full H3 video VAE. Its recorded artifact
 request completed in 27.995 seconds (RTF 1.856) after one warm-up.
@@ -188,7 +220,8 @@ request completed in 27.995 seconds (RTF 1.856) after one warm-up.
 The `fp8_bf16_wire_observer` diagnostic changes main-DiT linear execution to
 all-main FP8 while retaining BF16 QKV transport and the full H3 video VAE. Its
 32.370-second timer includes validation-observer overhead and is not used as a
-latency comparison.
+latency comparison. It is retained as historical evidence; the two exact qmid
+artifacts above provide the common-contract decomposition.
 
 The historical `legacy_q1d1_realtime` artifact adds all-main FP8, calibrated
 E4M3 QKV transport, reverse-O bundling, persistent RDMA, TAEH3 FP16, corrected

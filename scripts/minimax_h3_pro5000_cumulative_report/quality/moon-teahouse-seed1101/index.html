@@ -242,18 +242,27 @@
             <td><small>First isolates decoder architecture; then isolates TAEH3 numerical dtype.</small></td>
           </tr>
           <tr>
-            <th scope="row">Precision</th>
-            <td class="stage"><strong>BF16 / BF16 wire</strong><small>Q0 · reference precision</small><span class="stage-status" data-artifact="q0d0_bf16_full_vae" data-ready="exact artifact available">pending</span></td>
+            <th scope="row">Precision · full VAE</th>
+            <td class="stage"><strong>BF16 / BF16 wire</strong><small>Q0D0 · reference precision</small><span class="stage-status" data-artifact="q0d0_bf16_full_vae" data-ready="exact artifact available">pending</span></td>
             <td class="arrow">→</td>
-            <td class="stage"><strong>all-main FP8 / BF16 wire</strong><small>static per-tensor weights · dynamic per-token activations</small><span class="stage-status" data-artifact="fp8_bf16_wire_observer" data-ready="observer artifact available">pending</span></td>
+            <td class="stage"><strong>all-main FP8 / BF16 wire</strong><small>QmidD0 · static per-tensor weights · dynamic per-token activations</small><span class="stage-status" data-artifact="qmid_d0_fp8_bf16_full_vae" data-ready="exact qmid artifact available">pending</span></td>
             <td class="arrow">→</td>
-            <td class="stage"><strong>all-main FP8 / E4M3 wire</strong><small>prompt-bound static scales [50, 3] = layer × Q/K/V</small><span class="stage-status" data-artifact="q1d0_fp8_e4m3_full_vae" data-ready="factorial corner available">pending</span></td>
-            <td><small>First diagnoses FP8 linear compute; then isolates E4M3 QKV transport.</small></td>
+            <td class="stage"><strong>all-main FP8 / E4M3 wire</strong><small>Q1D0 · prompt-bound scale table [50, 3]</small><span class="stage-status" data-artifact="q1d0_fp8_e4m3_full_vae" data-ready="factorial corner available">pending</span></td>
+            <td><small>First isolates FP8 linear compute; then isolates E4M3 QKV transport with full H3 VAE fixed.</small></td>
+          </tr>
+          <tr>
+            <th scope="row">Precision · TAEH3</th>
+            <td class="stage"><strong>BF16 / BF16 wire</strong><small>Q0D2 · TAEH3 FP16</small><span class="stage-status" data-artifact="q0d2_taeh3_fp16" data-ready="factorial corner available">pending</span></td>
+            <td class="arrow">→</td>
+            <td class="stage"><strong>all-main FP8 / BF16 wire</strong><small>QmidD1 · static per-tensor weights · dynamic per-token activations</small><span class="stage-status" data-artifact="qmid_d1_fp8_bf16_taeh3_fp16" data-ready="exact qmid artifact available">pending</span></td>
+            <td class="arrow">→</td>
+            <td class="stage"><strong>all-main FP8 / E4M3 wire</strong><small>Q1D1 · TAEH3 FP16</small><span class="stage-status" data-artifact="q1d1_fp8_e4m3_taeh3_fp16" data-ready="factorial corner available">pending</span></td>
+            <td><small>Repeats the FP8-compute and E4M3-wire isolation with TAEH3 fixed.</small></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="isolation-note"><strong>Why repeat both decoder lanes?</strong> Full VAE → TAEH3 is measured once at Q0 and again at Q1; Q0 → Q1 is likewise measured under both decoders. Comparing these conditional edges reveals a precision × decoder interaction—a BF16 decoder result cannot be assumed to hold after FP8/E4M3 changes the joint latent trajectory. <span class="stage-status" data-artifact="q1d1_fp8_e4m3_taeh3_fp16" data-ready="exact Q1D1 artifact available">pending</span></div>
+    <div class="isolation-note"><strong>Why repeat both decoder lanes?</strong> Full VAE → TAEH3 is measured at Q0, Qmid, and Q1; Q0 → Qmid → Q1 is likewise measured under both decoders. Comparing these conditional edges reveals precision × decoder interaction. The E4M3-only tabs quantify a different stochastic trajectory after transport changes; their PSNR/SSIM values are not quality scores.</div>
   </section>
 
   <nav class="switcher" id="switcher" aria-label="A/B contrasts"></nav>
@@ -699,15 +708,17 @@ async function boot() {
   const publication = state.manifest.status || {};
   if (typeof publication.factorial_complete === 'boolean') {
     const exactDecoder = state.contrasts.find(item => item.id === 'taeh3_fp32_at_bf16');
-    const diagnosticsPending = publication.diagnostics_complete === false;
+    const diagnosticsNote = typeof publication.diagnostics_complete === 'boolean'
+      ? ` ${publication.diagnostics_reason || (publication.diagnostics_complete ? 'Exact diagnostic rungs are complete.' : 'Optional diagnostic rungs remain in progress.')}`
+      : '';
     const availablePrimaryCount = Array.isArray(publication.available_primary_contrasts)
       ? publication.available_primary_contrasts.filter(id => id !== 'combined').length
       : 0;
     const pendingCount = Array.isArray(publication.pending_primary_contrasts) ? publication.pending_primary_contrasts.length : 0;
     $('progress').hidden = false;
     $('progress').textContent = publication.factorial_complete
-      ? `Publication status: the exact 2×2 factorial matrix is complete.${diagnosticsPending ? ` ${publication.diagnostics_reason || 'Optional diagnostic rungs remain in progress.'}` : ''}`
-      : `Publication status: the exact 2×2 factorial matrix is in progress.${availablePrimaryCount ? ` Available primary edges: ${availablePrimaryCount}.` : ''}${exactDecoder ? ` Available diagnostic: ${exactDecoder.label}, under Diagnostic rungs.` : ''}${pendingCount ? ` Pending primary edges: ${pendingCount}.` : ''}`;
+      ? `Publication status: the exact 2×2 factorial matrix is complete.${diagnosticsNote}`
+      : `Publication status: the exact 2×2 factorial matrix is in progress.${availablePrimaryCount ? ` Available primary edges: ${availablePrimaryCount}.` : ''}${exactDecoder ? ` Available diagnostic: ${exactDecoder.label}, under Diagnostic rungs.` : ''}${pendingCount ? ` Pending primary edges: ${pendingCount}.` : ''}${diagnosticsNote}`;
   }
   document.querySelectorAll('.stage-status[data-artifact]').forEach(badge => {
     const available = Boolean(state.artifacts[badge.dataset.artifact]);
