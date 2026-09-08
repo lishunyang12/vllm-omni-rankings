@@ -1,0 +1,8 @@
+0aa85f18e5cd54d463b8bc6130103187f484200d19cc78057e3759ffb6d9c416  prompts/prompt-1-tabletop.txt
+094cfe4e1ea9f7198d891af38c82fa9cf45eaaa9bd91b53c1e2d549e805856f3  prompts/prompt-2-pancake.txt
+eb0a4f79a4135fa2e5ea2e555403754e42a839ef9caa51537b365bf0a5f8b070  metrics/prompt-1-cumulative.json
+5ccf223b7fe9da4ccb3a612815c784d35e3e5cf89be0425cda204e469c5e956e  metrics/prompt-2-cumulative.json
+848285db45ac76bd941c8f7b4dbe194f76b0340c6c9d96c012ef49d665c6223b  videos/prompt-1-tabletop-optimized-fp8-bf16-wire-taeh3-fp16.mp4
+55e364011402a42c24afa29abb448f35bd1d71ea8c76a5b7d8b2f186126d749f  videos/prompt-1-tabletop-standard-bf16-full-h3-vae.mp4
+6c7187621532cff7c3b37aaae1e9cb380f3e22ffaebd60c5e6953486c5e06d36  videos/prompt-2-pancake-optimized-fp8-bf16-wire-taeh3-fp16.mp4
+0ef2b1f07f9573d3a96950034a00b017a8c9ccdb4ae9b47f969b115458c5f473  videos/prompt-2-pancake-standard-bf16-full-h3-vae.mp4

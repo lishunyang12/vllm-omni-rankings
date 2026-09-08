@@ -7,6 +7,7 @@ top-k. The machine-readable manifest is the authority for which cells and
 contrasts are complete and which optimizations passed the quality gate.
 
 - [Open the synchronized A/B player](index.html)
+- [Open the two-prompt shape/style generalization A/B](../two-prompt-generalization/index.html)
 - [Exact Q0D0 control: BF16/BF16 + full H3 VAE](videos/q0d0-bf16-full-h3-vae.mp4)
 - [Exact Q0 decoder diagnostic: TAEH3 FP32](videos/q0d1-bf16-taeh3-fp32.mp4)
 - [Exact Q0 decoder endpoint: TAEH3 FP16](videos/q0d2-bf16-taeh3-fp16.mp4)

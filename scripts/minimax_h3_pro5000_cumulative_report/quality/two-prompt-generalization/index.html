@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>MiniMax-H3 · two-prompt quality generalization</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #080a0d;
+      --panel: #11151b;
+      --panel-2: #171c24;
+      --line: #2b323d;
+      --ink: #f4f1e9;
+      --muted: #98a0ad;
+      --cyan: #72ead8;
+      --gold: #ffd675;
+      --green: #b8fa74;
+      --amber: #ffc66d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(950px 620px at 15% -15%, #213a44 0, transparent 62%),
+        radial-gradient(900px 560px at 95% 5%, #3b2f1c 0, transparent 64%),
+        var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    }
+    button { font: inherit; }
+    a { color: var(--cyan); }
+    main { width: min(1580px, 100%); margin: auto; padding: 28px; }
+    header { display: flex; justify-content: space-between; align-items: end; gap: 20px; margin-bottom: 16px; }
+    .eyebrow { color: var(--cyan); font: 700 11px ui-monospace, monospace; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 7px 0 0; font-size: clamp(28px, 4.3vw, 52px); letter-spacing: -.045em; }
+    .contract { max-width: 560px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; text-align: right; }
+    .notice {
+      margin: 0 0 15px;
+      padding: 13px 15px;
+      border: 1px solid #426963;
+      border-radius: 13px;
+      background: rgba(15, 31, 30, .9);
+      color: #c1e7e1;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .notice strong { color: var(--green); }
+    .pending-note { border-color: #735c28; background: #221d12; color: #f3d99f; }
+    .tabs { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 14px; }
+    .tab {
+      min-width: max-content;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 11px 14px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .tab small { display: block; margin-top: 4px; color: var(--muted); }
+    .tab.active { border-color: var(--gold); background: var(--gold); color: #17140c; }
+    .tab.active small { color: #68531c; }
+    .prompt-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 13px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(17, 21, 27, .92);
+    }
+    .prompt-head h2 { margin: 0 0 5px; font-size: 18px; }
+    .prompt-head p { max-width: 95ch; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .shape { flex: 0 0 auto; color: var(--gold); font: 700 11px ui-monospace, monospace; text-align: right; line-height: 1.55; }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: rgba(17, 21, 27, .95); box-shadow: 0 26px 90px rgba(0,0,0,.3); }
+    .card-head { display: flex; justify-content: space-between; gap: 12px; padding: 16px 17px; }
+    .card-head h3 { margin: 0 0 5px; font-size: 15px; }
+    .card-head p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.45; }
+    .pill { flex: 0 0 auto; align-self: flex-start; border: 1px solid #3b4552; border-radius: 999px; padding: 7px 10px; font: 700 10px ui-monospace, monospace; }
+    .pill.candidate { color: var(--green); border-color: #537837; }
+    .player-shell { display: grid; place-items: center; min-height: 340px; background: #000; }
+    video { display: block; width: 100%; max-height: 72vh; object-fit: contain; background: #000; }
+    .artifact-pending { max-width: 34ch; padding: 30px; color: var(--muted); font-size: 12px; line-height: 1.6; text-align: center; }
+    .timings { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border-top: 1px solid var(--line); }
+    .metric { min-width: 0; padding: 12px; background: var(--panel); }
+    .metric span { display: block; color: var(--muted); font-size: 9px; letter-spacing: .09em; text-transform: uppercase; }
+    .metric strong { display: block; overflow: hidden; margin-top: 5px; font: 700 13px ui-monospace, monospace; text-overflow: ellipsis; white-space: nowrap; }
+    .controls { display: flex; align-items: center; gap: 9px; flex-wrap: wrap; margin-top: 14px; padding: 12px; border: 1px solid var(--line); border-radius: 14px; background: rgba(17,21,27,.92); }
+    .controls button { border: 1px solid #3b4552; border-radius: 10px; background: #1a2029; color: var(--ink); padding: 9px 13px; font-weight: 700; cursor: pointer; }
+    .controls button.primary { border-color: var(--gold); background: var(--gold); color: #17140c; }
+    .controls button:disabled { opacity: .42; cursor: not-allowed; }
+    .drift { margin-left: auto; color: var(--cyan); font: 700 11px ui-monospace, monospace; }
+    .details { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; margin-top: 14px; }
+    .detail { padding: 13px 14px; border: 1px solid var(--line); border-radius: 13px; background: var(--panel-2); }
+    .detail h3 { margin: 0 0 8px; color: var(--cyan); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+    .detail p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    footer { margin: 15px 2px 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    .load-error { color: #ffc0b6; }
+    @media (max-width: 920px) {
+      main { padding: 14px; }
+      header, .prompt-head { align-items: flex-start; flex-direction: column; }
+      .contract, .shape { text-align: left; }
+      .grid { grid-template-columns: 1fr; }
+      .details { grid-template-columns: 1fr; }
+      .drift { margin-left: 0; }
+    }
+    @media (max-width: 560px) { .timings { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div>
+      <div class="eyebrow">Complete-video generalization · two prompts</div>
+      <h1>FP8 + TAEH3 quality A/B</h1>
+    </div>
+    <p class="contract">8× RTX PRO 5000 · vLLM-Omni · FastH3 VSA/Data-Free · 4 calls · tile 64 · top-k 162 · TP1/SP8 · NCCL · seed 1101</p>
+  </header>
+
+  <p class="notice"><strong>Candidate under human review:</strong> all-main FP8 compute + <b>BF16 QKV wire</b> + TAEH3 FP16. Artifact generation, structural validation, and diagnostic computation are complete; this is not yet a quality pass. E4M3 transport and skip-softmax are excluded, and NCCL is held constant on both sides.</p>
+  <p class="notice pending-note" id="status">Loading publication status…</p>
+  <div class="tabs" id="tabs" aria-label="Prompt selector"></div>
+
+  <section id="comparison" hidden>
+    <div class="prompt-head">
+      <div><h2 id="promptLabel"></h2><p id="promptSummary"></p></div>
+      <div class="shape" id="promptShape"></div>
+    </div>
+    <div class="grid">
+      <article class="card" id="controlCard"></article>
+      <article class="card" id="candidateCard"></article>
+    </div>
+    <div class="controls">
+      <button class="primary" id="play">Play both</button>
+      <button id="pause">Pause</button>
+      <button id="restart">Restart</button>
+      <button id="audio">Audio: control</button>
+      <span class="drift" id="drift">drift —</span>
+    </div>
+    <div class="details">
+      <div class="detail"><h3>Changed factors</h3><p>BF16 main-DiT linears → all-main FP8, and full H3 VAE PP8 → TAEH3 FP16 rank 0. QKV transport stays BF16.</p></div>
+      <div class="detail"><h3>Explicit exclusions</h3><p>E4M3 QKV wire and skip-softmax are absent. RDMA and reverse-O bundling are also disabled for this new-shape generalization run.</p></div>
+      <div class="detail"><h3>Same-prompt diagnostics</h3><p id="diagnostics">Loading complete-video metrics…</p></div>
+      <div class="detail"><h3>Timing boundary</h3><p>One no-warmup request per artifact. E2E/RTF are artifact provenance only; cache order and unlocked clocks make pairwise speedup attribution invalid.</p></div>
+    </div>
+  </section>
+  <footer>Players use the complete MP4s directly; no extracted-frame proxy is used. The manifest remains authoritative for artifact availability, digests, timings, and review state. <a href="manifest.json">Manifest</a> · <a href="README.md">Method</a></footer>
+</main>
+<script>
+const state = { manifest: null, promptIndex: 0, audio: 'control', raf: null };
+const $ = id => document.getElementById(id);
+const fmtTime = value => Number.isFinite(value) ? `${value.toFixed(3)}s` : 'pending';
+const fmtRtf = value => Number.isFinite(value) ? value.toFixed(3) : 'pending';
+const fmtBytes = value => Number.isFinite(value) ? `${(value / 1048576).toFixed(1)} MiB` : 'pending';
+
+function artifactCard(artifact, role, prompt) {
+  const ready = artifact.available === true;
+  const timing = artifact.timing || {};
+  const detail = role === 'control'
+    ? 'BF16 main-DiT · BF16 QKV wire · full H3 VAE PP8'
+    : 'all-main FP8 · BF16 QKV wire · TAEH3 FP16 rank 0';
+  const media = ready
+    ? `<video id="${role}Video" controls playsinline preload="metadata" src="${artifact.file}" style="aspect-ratio:${prompt.aligned_media.width}/${prompt.aligned_media.height}"></video>`
+    : `<div class="artifact-pending">Full MP4 pending.<br><code>${artifact.file}</code></div>`;
+  return `
+    <div class="card-head">
+      <div><h3>${role === 'control' ? 'Control' : 'Candidate'}</h3><p>${detail}</p></div>
+      <span class="pill ${role === 'candidate' ? 'candidate' : ''}">${ready ? fmtBytes(artifact.bytes) : 'pending'}</span>
+    </div>
+    <div class="player-shell">${media}</div>
+    <div class="timings">
+      <div class="metric"><span>E2E</span><strong>${fmtTime(timing.e2e_seconds)}</strong></div>
+      <div class="metric"><span>RTF</span><strong>${fmtRtf(timing.rtf)}</strong></div>
+      <div class="metric"><span>Frames</span><strong>${prompt.aligned_media.frames}</strong></div>
+      <div class="metric"><span>SHA-256</span><strong title="${artifact.sha256 || ''}">${artifact.sha256 ? artifact.sha256.slice(0, 12) + '…' : 'pending'}</strong></div>
+    </div>`;
+}
+
+function renderPrompt(index) {
+  state.promptIndex = index;
+  const manifest = state.manifest;
+  const prompt = manifest.prompts[index];
+  const control = manifest.artifacts[prompt.control_artifact];
+  const candidate = manifest.artifacts[prompt.candidate_artifact];
+  const comparison = manifest.comparisons.find(item => item.prompt_id === prompt.id);
+  [...document.querySelectorAll('.tab')].forEach((button, i) => button.classList.toggle('active', i === index));
+  $('promptLabel').textContent = prompt.label;
+  $('promptSummary').textContent = prompt.summary;
+  $('promptShape').innerHTML = `${prompt.request.aspect_ratio} · ${prompt.aligned_media.width}×${prompt.aligned_media.height}<br>${prompt.aligned_media.frames} frames · ${prompt.aligned_media.duration_seconds.toFixed(6)}s`;
+  $('controlCard').innerHTML = artifactCard(control, 'control', prompt);
+  $('candidateCard').innerHTML = artifactCard(candidate, 'candidate', prompt);
+  if (comparison?.metrics_summary) {
+    const metrics = comparison.metrics_summary;
+    $('diagnostics').innerHTML = `RGB SSIM ${metrics.rgb_ssim.toFixed(6)} · YUV SSIM ${metrics.yuv_ssim.toFixed(6)} · audio SNR ${metrics.audio_snr_db.toFixed(4)} dB. <a href="${comparison.metrics_file}">Complete metric JSON</a>. Computation passed; human quality decision remains pending.`;
+  } else {
+    $('diagnostics').textContent = 'Same-prompt metric computation pending; human quality decision remains pending.';
+  }
+  state.audio = 'control';
+  applyAudio();
+  const ready = control.available === true && candidate.available === true;
+  ['play', 'pause', 'restart', 'audio'].forEach(id => $(id).disabled = !ready);
+  $('drift').textContent = ready ? 'drift 0 ms' : 'drift —';
+}
+
+function videos() { return [$('controlVideo'), $('candidateVideo')]; }
+function applyAudio() {
+  const [control, candidate] = videos();
+  if (control) control.muted = state.audio !== 'control';
+  if (candidate) candidate.muted = state.audio !== 'candidate';
+  $('audio').textContent = `Audio: ${state.audio}`;
+}
+
+function tick() {
+  const [control, candidate] = videos();
+  if (control && candidate) {
+    const delta = Math.abs(control.currentTime - candidate.currentTime);
+    if (!control.paused && !candidate.paused && delta > .12) candidate.currentTime = control.currentTime;
+    $('drift').textContent = `drift ${Math.round(delta * 1000)} ms`;
+  }
+  state.raf = requestAnimationFrame(tick);
+}
+
+$('play').onclick = async () => {
+  const [control, candidate] = videos();
+  if (!control || !candidate) return;
+  candidate.currentTime = control.currentTime;
+  await Promise.allSettled([control.play(), candidate.play()]);
+};
+$('pause').onclick = () => videos().forEach(video => video?.pause());
+$('restart').onclick = () => videos().forEach(video => { if (video) video.currentTime = 0; });
+$('audio').onclick = () => { state.audio = state.audio === 'control' ? 'candidate' : 'control'; applyAudio(); };
+
+async function boot() {
+  const response = await fetch('manifest.json', { cache: 'no-store' });
+  if (!response.ok) throw new Error(`manifest HTTP ${response.status}`);
+  state.manifest = await response.json();
+  const status = state.manifest.status;
+  $('status').textContent = status.complete
+    ? `Publication state: complete. ${status.reason}`
+    : `Publication state: ${status.state}. ${status.reason}`;
+  const tabs = $('tabs');
+  state.manifest.prompts.forEach((prompt, index) => {
+    const button = document.createElement('button');
+    button.className = 'tab';
+    button.innerHTML = `${index + 1} · ${prompt.label}<small>${prompt.request.aspect_ratio} · ${prompt.aligned_media.frames} frames</small>`;
+    button.onclick = () => renderPrompt(index);
+    tabs.appendChild(button);
+  });
+  $('comparison').hidden = false;
+  renderPrompt(0);
+  tick();
+}
+
+boot().catch(error => {
+  $('status').classList.add('load-error');
+  $('status').textContent = `Unable to load comparison manifest: ${error.message}`;
+});
+</script>
+</body>
+</html>
