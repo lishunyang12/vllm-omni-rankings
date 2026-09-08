@@ -45,24 +45,29 @@ The primary controls are its four edges and one non-attributable diagonal:
 4. FP8/E4M3 at TAEH3: `q0d1 -> q1d1` (`fp8_e4m3_at_taeh3`)
 5. Combined diagonal: `q0d0 -> q1d1` (`combined`)
 
-The precision axis is intentionally one serving factor but contains two
-numerical mechanisms: FP8 linear execution and E4M3 QKV transport. Optional
-diagnostic rungs split it into BF16/BF16-wire -> all-main FP8/BF16-wire ->
-all-main FP8/E4M3. The BF16-wire middle artifact runs with an observer, so its
-video can diagnose trajectory change but its instrumented E2E time is **not** a
-performance result.
+Each high-level axis has an optional middle rung for finer attribution. These
+rungs refine the mechanism within an axis; they do not replace the four primary
+2x2 edges.
 
-In the measured implementation, FP8 linear weights use static symmetric
-per-tensor scaling and activations use dynamic symmetric per-token scaling;
-linear outputs return to BF16. This is not VSA's 64-token attention tile and is
-not per-block quantization. E4M3 QKV transport uses a prompt-bound static scale
-for each of 50 layers and each Q/K/V component (`[50, 3]`), transmits E4M3, and
-restores BF16 on the receiving rank. The calibration sidecar is valid only for
-its bound prompt, seed, geometry, model revision, and execution contract.
+| Axis | Reference | Diagnostic middle rung | Factorial endpoint | Isolation meaning | Current state |
+| --- | --- | --- | --- | --- | --- |
+| Decoder | Full H3 VAE at Q0 | TAEH3 FP32 at Q0 | TAEH3 FP16 at Q0 | Full VAE -> TAEH3 FP32 diagnoses decoder architecture; TAEH3 FP32 -> FP16 diagnoses decoder dtype | Full VAE and TAEH3 FP32 artifacts/evidence available; FP16 endpoint pending |
+| Precision | BF16 compute / BF16 QKV wire with full VAE | all-main FP8 / BF16 QKV wire with full VAE | all-main FP8 / E4M3 QKV wire with full VAE | Q0 -> middle diagnoses FP8 linear execution; middle -> Q1 diagnoses E4M3 transport | Observer middle artifact available but timing-ineligible; exact Q1 endpoint pending |
 
-Likewise, optional decoder rungs split full H3 VAE -> TAEH3 FP32 -> TAEH3
-FP16. These rungs refine attribution within an axis; they do not replace the
-four primary 2x2 edges.
+The FP8 middle rung uses static symmetric **per-tensor weight** scales and
+dynamic symmetric **per-token activation** scales, with linear outputs returned
+to BF16. The E4M3 wire endpoint adds a prompt-bound static QKV scale table of
+shape `[50, 3]`: one scale for each transformer layer and each Q/K/V component.
+These quantization granularities are independent of VSA's 64-token attention
+tile. The calibration sidecar is valid only for its bound prompt, seed,
+geometry, model revision, and execution contract.
+
+Both decoder choices must be repeated under both precision states. The decoder
+effect is measured by `q0d0 -> q0d1` and `q1d0 -> q1d1`; the precision effect is
+measured by `q0d0 -> q1d0` and `q0d1 -> q1d1`. If the two decoder edges—or the
+two precision edges—differ, that is a precision-by-decoder interaction. A
+TAEH3 result measured only at BF16 cannot be assumed to hold after FP8/E4M3
+changes the joint audio-video latent trajectory.
 
 ### Edge-admission rules
 

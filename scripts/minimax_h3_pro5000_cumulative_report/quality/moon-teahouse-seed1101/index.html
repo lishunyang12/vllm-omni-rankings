@@ -57,6 +57,27 @@
       font-size: 11px;
       line-height: 1.5;
     }
+    .isolation {
+      margin: 0 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(17, 21, 27, .9);
+      overflow: hidden;
+    }
+    .isolation-head { padding: 13px 15px 10px; }
+    .isolation-head h2 { margin: 0 0 4px; font-size: 15px; }
+    .isolation-head p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .ladder-scroll { overflow-x: auto; }
+    .ladder-table { width: 100%; min-width: 940px; border-collapse: collapse; font-size: 11px; }
+    .ladder-table th, .ladder-table td { padding: 11px 12px; border-top: 1px solid var(--line); vertical-align: middle; text-align: left; }
+    .ladder-table th { width: 94px; color: var(--cyan); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
+    .ladder-table .arrow { width: 30px; padding-inline: 4px; color: var(--cyan); font-size: 17px; text-align: center; }
+    .stage strong { display: block; margin-bottom: 3px; font-size: 11px; }
+    .stage small { display: block; color: var(--muted); line-height: 1.35; }
+    .stage-status { display: inline-block; margin-top: 6px; border: 1px solid #59616e; border-radius: 999px; padding: 3px 7px; color: var(--muted); font: 700 9px ui-monospace, monospace; }
+    .stage-status.available { border-color: #52773b; color: var(--green); }
+    .isolation-note { padding: 11px 14px; border-top: 1px solid var(--line); color: #c5cad2; font-size: 11px; line-height: 1.55; }
+    .isolation-note strong { color: var(--gold); }
     .switcher {
       display: flex;
       gap: 8px;
@@ -202,6 +223,38 @@
   <p class="notice" id="notice"><strong>Timing and evidence rule:</strong> these cells were generated sequentially as one-shot/no-warmup requests, can inherit host, disk, and JIT caches, and use node-default unlocked GPU clocks. E2E and RTF are artifact-local observations only; do not subtract or divide them to claim a single-factor speedup. PSNR/SSIM are difference diagnostics, not a substitute for human audiovisual review. Full-H3-VAE SM120 exact-op raw-output equivalence under full SP8 remains pending.</p>
   <p class="progress" id="progress" hidden></p>
   <p class="load-error" id="loadError"></p>
+
+  <section class="isolation" aria-labelledby="isolationTitle">
+    <div class="isolation-head">
+      <h2 id="isolationTitle">Factor-isolation ladders</h2>
+      <p>Intermediate rungs separate decoder architecture from decoder dtype, and FP8 linear execution from E4M3 communication.</p>
+    </div>
+    <div class="ladder-scroll">
+      <table class="ladder-table">
+        <tbody>
+          <tr>
+            <th scope="row">Decoder</th>
+            <td class="stage"><strong>Full H3 VAE</strong><small>Q0 latent · full decoder PP8</small><span class="stage-status" data-artifact="q0d0_bf16_full_vae" data-ready="exact artifact available">pending</span></td>
+            <td class="arrow">→</td>
+            <td class="stage"><strong>TAEH3 FP32</strong><small>architecture substitution at Q0</small><span class="stage-status" data-artifact="q0d1_taeh3_fp32" data-ready="diagnostic available">pending</span></td>
+            <td class="arrow">→</td>
+            <td class="stage"><strong>TAEH3 FP16</strong><small>same decoder · lower dtype at Q0</small><span class="stage-status" data-artifact="q0d1_taeh3_fp16" data-ready="factorial corner available">pending</span></td>
+            <td><small>First isolates decoder architecture; then isolates TAEH3 numerical dtype.</small></td>
+          </tr>
+          <tr>
+            <th scope="row">Precision</th>
+            <td class="stage"><strong>BF16 / BF16 wire</strong><small>Q0 · reference precision</small><span class="stage-status" data-artifact="q0d0_bf16_full_vae" data-ready="exact artifact available">pending</span></td>
+            <td class="arrow">→</td>
+            <td class="stage"><strong>all-main FP8 / BF16 wire</strong><small>static per-tensor weights · dynamic per-token activations</small><span class="stage-status" data-artifact="fp8_bf16_wire_observer" data-ready="observer artifact available">pending</span></td>
+            <td class="arrow">→</td>
+            <td class="stage"><strong>all-main FP8 / E4M3 wire</strong><small>prompt-bound static scales [50, 3] = layer × Q/K/V</small><span class="stage-status" data-artifact="q1d0_fp8_e4m3_full_vae" data-ready="factorial corner available">pending</span></td>
+            <td><small>First diagnoses FP8 linear compute; then isolates E4M3 QKV transport.</small></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="isolation-note"><strong>Why repeat both decoder lanes?</strong> Full VAE → TAEH3 is measured once at Q0 and again at Q1; Q0 → Q1 is likewise measured under both decoders. Comparing these conditional edges reveals a precision × decoder interaction—a BF16 decoder result cannot be assumed to hold after FP8/E4M3 changes the joint latent trajectory.</div>
+  </section>
 
   <nav class="switcher" id="switcher" aria-label="A/B contrasts"></nav>
   <section class="rung-section" id="rungSection" hidden>
@@ -652,6 +705,11 @@ async function boot() {
       ? 'Publication status: the exact 2×2 factorial matrix is complete.'
       : `Publication status: the exact 2×2 factorial matrix is in progress.${exactDecoder ? ` Available partial result: ${exactDecoder.label}, under Diagnostic rungs.` : ''}${pendingCount ? ` Pending primary edges: ${pendingCount}.` : ''}`;
   }
+  document.querySelectorAll('.stage-status[data-artifact]').forEach(badge => {
+    const available = Boolean(state.artifacts[badge.dataset.artifact]);
+    badge.classList.toggle('available', available);
+    badge.textContent = available ? badge.dataset.ready : 'pending';
+  });
   if (state.isV1) {
     $('notice').innerHTML = '<strong>Schema v1 fallback:</strong> the existing complete-video comparison remains available, but it combines FP8/E4M3 and TAEH3. Its optimized MP4 took 22.367 s as a no-warmup request with lazy compilation. A separate 14.561 s steady-state mean used another hash-locked prompt and is not attributed to this artifact. Sequential cells can inherit host/disk/JIT caches and use unlocked clocks, so artifact E2E/RTF must not be converted into pairwise factor speedups. Full-H3-VAE SM120 exact-op raw-output equivalence under full SP8 remains pending.';
   }
