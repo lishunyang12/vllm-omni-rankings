@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-08T15:30:15+08:00",
+  "scene": "Moon Teahouse Signal",
+  "framework": "vLLM-Omni",
+  "hardware": {
+    "count": 8,
+    "gpu": "NVIDIA RTX PRO 5000 Blackwell",
+    "architecture": "SM120"
+  },
+  "request": {
+    "task": "t2va",
+    "transformer_partition": "FL2VA",
+    "seed": 1101,
+    "prompt_file": "prompt.txt",
+    "prompt_payload_sha256": "5abb96b31333eea455c241aa17e61d1eaf75d7e78625c80f17302b34ce11fad3",
+    "prompt_file_sha256_with_trailing_lf": "42f62c2ecb9f90880041d51d3fa38fa6c236945ba80b6a862e080151824a50c2",
+    "qwen_presentation_tokens": 457,
+    "prefix_tile_count": 27,
+    "compact_row_count": 95823,
+    "padded_row_count": 105408,
+    "sequence_row_count": 95872,
+    "local_row_count": 11984,
+    "video_shape": [107, 22, 40],
+    "video_tile_count": 1620
+  },
+  "media": {
+    "container": "mp4",
+    "duration_seconds": 15.083333,
+    "video": {
+      "codec": "h264",
+      "frames": 362,
+      "width": 1280,
+      "height": 704,
+      "fps": 24
+    },
+    "audio": {
+      "codec": "aac",
+      "channels": 2,
+      "sample_rate_hz": 32000,
+      "duration_seconds": 15.075
+    }
+  },
+  "shared_model": {
+    "student": "FastH3 VSA/Data-Free",
+    "transformer_evaluations": 4,
+    "vsa_tile_size": 64,
+    "vsa_topk": 162,
+    "vsa_video_tiles": 1620,
+    "eligible_video_attention_retained_fraction": 0.1,
+    "adapter_sha256": "42dc502a2078f166c396a1fa75f29728d1844363652d345d5ef3e2b444ed6470"
+  },
+  "artifacts": {
+    "standard": {
+      "file": "videos/standard-vsa4-bf16-full-vae.mp4",
+      "bytes": 23853250,
+      "sha256": "ab41320e81af278f9c4799a98627119f7b4286bf84a511ddc67f7b9dba997c2c",
+      "request_e2e_seconds": 27.994654,
+      "request_rtf": 1.855999,
+      "stack": ["BF16 main DiT", "BF16 QKV transport", "full H3 video VAE"]
+    },
+    "optimized": {
+      "file": "videos/optimized-d6-realtime-stack.mp4",
+      "bytes": 23838235,
+      "sha256": "52e3f008da700b66964908dd624792c5934bb118512435a2551d1110953724f8",
+      "no_warmup": true,
+      "first_request_e2e_seconds": 22.367,
+      "first_request_rtf": 1.482895,
+      "separate_steady_state_qualification": {
+        "same_geometry_different_hash_locked_prompt": true,
+        "samples_seconds": [14.576, 14.555, 14.551],
+        "mean_seconds": 14.561,
+        "mean_rtf": 0.96537
+      },
+      "stack": [
+        "all-main FP8 linear execution",
+        "prompt-bound calibrated E4M3 QKV transport",
+        "FlashInfer PR #4944 CuTeDSL VSA",
+        "reverse-O bundle",
+        "persistent registered RDMA",
+        "TAEH3 FP16",
+        "28 OMP threads per worker",
+        "rank-1 Audio VAE / rank-0 TAEH3 parallel decode"
+      ],
+      "qkv_scale_sidecar_sha256": "dcf733d74dc250b0730356f8ef6b592a06a8c722e819a301af861726d65d6db3",
+      "qkv_scale_payload_sha256": "7327a8bb32e007345f4622df21d392dfd7976a858ce0480ebc02aa04ff2f27d5",
+      "qkv_validation": {
+        "covered_components": 150,
+        "expected_components": 150,
+        "nonfinite_values": 0,
+        "saturation_count": 0,
+        "peak_utilization": 0.8888888955
+      }
+    }
+  },
+  "quality_contract": {
+    "shared_student_is_approximate_vs_base_h3": true,
+    "optimized_fp8_e4m3_is_numerically_approximate": true,
+    "optimized_taeh3_is_lossy_vs_full_h3_vae": true,
+    "human_review_required": true
+  }
+}

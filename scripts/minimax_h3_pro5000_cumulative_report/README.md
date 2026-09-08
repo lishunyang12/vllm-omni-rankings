@@ -8,6 +8,7 @@ formal three-run mean of **14.561 seconds**.
 - [Web landing page](index.html)
 - [Machine-readable report data](report_data.json)
 - [Artifact checksums](SHA256SUMS.txt)
+- [Moon Teahouse complete-video A/B player](quality/moon-teahouse-seed1101/index.html)
 - [Full 362-frame lossy-boundary comparisons](evidence/quality/)
 - [Representative video frames](screenshots/)
 - [Nsight Systems and Nsight Compute summaries](evidence/)

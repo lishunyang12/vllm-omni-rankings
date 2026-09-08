@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MiniMax-H3 · Moon Teahouse full-video A/B</title>
+  <style>
+    :root{color-scheme:dark;--bg:#090a0d;--panel:#111319;--line:#292d36;--ink:#f5f1e8;--muted:#9299a8;--gold:#ffd675;--cyan:#72ead8;--green:#b8fa74;--amber:#ffc66d}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(1000px 620px at 50% -15%,#25334d 0,transparent 64%),var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+    main{width:min(1660px,100%);margin:auto;padding:26px}.top{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}.eyebrow{color:var(--cyan);font:700 11px ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}.top h1{margin:7px 0 0;font-size:clamp(26px,4vw,48px);letter-spacing:-.045em}.top p{color:var(--muted);margin:0 0 5px;font-size:13px}
+    .notice{margin:0 0 16px;padding:12px 14px;border:1px solid #735c28;border-radius:12px;background:#221d12;color:#f3d99f;font-size:12px;line-height:1.5}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:rgba(17,19,25,.91);box-shadow:0 26px 90px rgba(0,0,0,.32)}.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 17px}.head h2{font-size:15px;margin:0 0 5px}.head p{color:var(--muted);font-size:11px;margin:0;max-width:70ch}.pill{border:1px solid #3b414e;border-radius:999px;padding:7px 10px;font:700 11px ui-monospace,monospace;white-space:nowrap}.pill.fast{color:var(--green);border-color:#537837}
+    video{display:block;width:100%;aspect-ratio:20/11;background:#000}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line)}.metric{background:var(--panel);padding:13px}.metric span{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.1em}.metric strong{display:block;margin-top:5px;font:700 15px ui-monospace,monospace}.good{color:var(--green)}.warn{color:var(--amber)}
+    .controls{margin-top:16px;padding:13px;border:1px solid var(--line);border-radius:15px;background:rgba(17,19,25,.9);display:flex;align-items:center;gap:10px;flex-wrap:wrap}.controls button{border:1px solid #3b414e;border-radius:10px;background:#1a1e26;color:var(--ink);padding:10px 14px;font-weight:700;cursor:pointer}.controls button.primary{background:var(--gold);color:#17140c;border-color:var(--gold)}.controls label{color:var(--muted);font-size:12px;margin-left:auto}.drift{font:700 12px ui-monospace,monospace;color:var(--cyan)}.links{margin-top:13px;color:var(--muted);font-size:12px}.links a{color:var(--cyan)}
+    @media(max-width:900px){main{padding:14px}.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.metrics{grid-template-columns:repeat(2,1fr)}.controls label{margin-left:0}}
+  </style>
+</head>
+<body>
+<main>
+  <header class="top"><div><div class="eyebrow">Direct complete-MP4 comparison · no extracted frames</div><h1>Moon Teahouse Signal</h1></div><p>Same prompt · seed 1101 · 362 frames · 24 fps · 15.083333 s</p></header>
+  <p class="notice"><strong>Timing disclosure:</strong> the optimized artifact was generated immediately with no warm-up, so its 22.367 s first request includes lazy compilation. The same serving stack has a separate same-geometry steady-state qualification of 14.561 s mean (RTF 0.965). The latter used another hash-locked prompt and is not relabeled as this artifact's request time.</p>
+  <div class="grid">
+    <article class="card">
+      <div class="head"><div><h2>Standard VSA + FastH3 four-step</h2><p>BF16 main DiT/QKV transport · full H3 video VAE</p></div><span class="pill">22.7 MiB</span></div>
+      <video id="standard" controls playsinline preload="metadata" src="videos/standard-vsa4-bf16-full-vae.mp4"></video>
+      <div class="metrics"><div class="metric"><span>Artifact request</span><strong>27.995s</strong></div><div class="metric"><span>Artifact RTF</span><strong>1.856</strong></div><div class="metric"><span>Playback</span><strong id="standardTime">0.00s</strong></div><div class="metric"><span>Browser buffer</span><strong id="standardBuffer">0.00s</strong></div></div>
+    </article>
+    <article class="card">
+      <div class="head"><div><h2>Optimized real-time serving stack</h2><p>all-main FP8 · E4M3 QKV · CuTeDSL VSA · reverse-O bundle · persistent RDMA · TAEH3 FP16 · cross-rank audio</p></div><span class="pill fast">22.7 MiB</span></div>
+      <video id="optimized" controls playsinline preload="metadata" src="videos/optimized-d6-realtime-stack.mp4"></video>
+      <div class="metrics"><div class="metric"><span>No-warmup request</span><strong class="warn">22.367s</strong></div><div class="metric"><span>Qualified warm mean</span><strong class="good">14.561s</strong></div><div class="metric"><span>Playback</span><strong id="optimizedTime">0.00s</strong></div><div class="metric"><span>Browser buffer</span><strong id="optimizedBuffer">0.00s</strong></div></div>
+    </article>
+  </div>
+  <div class="controls"><button class="primary" id="play">Play both</button><button id="pause">Pause</button><button id="restart">Restart</button><button id="audio">Audio: standard</button><span class="drift" id="drift">drift 0 ms</span><label><input id="sync" type="checkbox" checked> keep timelines synchronized</label></div>
+  <p class="links">Review the <a href="README.md">experiment contract</a>, <a href="manifest.json">manifest</a>, <a href="prompt.txt">exact prompt</a>, and <a href="SHA256SUMS.txt">checksums</a>. TAEH3 and FP8/E4M3 are explicitly treated as quality boundaries.</p>
+</main>
+<script>
+const s=document.getElementById('standard'),o=document.getElementById('optimized'),$=id=>document.getElementById(id);let audio='standard';
+const fmt=v=>`${Number(v).toFixed(2)}s`,buffered=v=>{if(!v.buffered.length)return 0;for(let i=0;i<v.buffered.length;i++)if(v.currentTime>=v.buffered.start(i)&&v.currentTime<=v.buffered.end(i))return Math.max(0,v.buffered.end(i)-v.currentTime);return 0};
+function tick(){if($('sync').checked&&!s.paused&&!o.paused&&Math.abs(s.currentTime-o.currentTime)>.12)o.currentTime=s.currentTime;$('standardTime').textContent=fmt(s.currentTime);$('optimizedTime').textContent=fmt(o.currentTime);$('standardBuffer').textContent=fmt(buffered(s));$('optimizedBuffer').textContent=fmt(buffered(o));$('drift').textContent=`drift ${Math.round(Math.abs(s.currentTime-o.currentTime)*1000)} ms`;requestAnimationFrame(tick)}
+$('play').onclick=async()=>{if($('sync').checked)o.currentTime=s.currentTime;await Promise.allSettled([s.play(),o.play()])};$('pause').onclick=()=>{s.pause();o.pause()};$('restart').onclick=()=>{s.currentTime=0;o.currentTime=0};$('audio').onclick=()=>{audio=audio==='standard'?'optimized':'standard';s.muted=audio!=='standard';o.muted=audio!=='optimized';$('audio').textContent=`Audio: ${audio}`};o.muted=true;tick();
+</script>
+</body>
+</html>
