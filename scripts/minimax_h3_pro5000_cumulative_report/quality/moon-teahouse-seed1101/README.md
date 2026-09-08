@@ -9,23 +9,33 @@ contrasts are complete.
 - [Open the synchronized A/B player](index.html)
 - [Exact Q0D0 control: BF16/BF16 + full H3 VAE](videos/q0d0-bf16-full-h3-vae.mp4)
 - [Exact Q0 decoder diagnostic: TAEH3 FP32](videos/q0d1-bf16-taeh3-fp32.mp4)
+- [Exact Q0 decoder endpoint: TAEH3 FP16](videos/q0d2-bf16-taeh3-fp16.mp4)
+- [Exact Q1D0 endpoint: FP8/E4M3 + full H3 VAE](videos/q1d0-all-main-fp8-e4m3-wire-full-h3-vae.mp4)
+- [Exact Q1D1 endpoint: FP8/E4M3 + TAEH3 FP16](videos/q1d1-all-main-fp8-e4m3-wire-taeh3-fp16.mp4)
+- [Full H3 VAE vs TAEH3 FP16 evidence](metrics/taeh3-at-bf16.json)
+- [Full H3 VAE vs TAEH3 FP16 at FP8/E4M3 evidence](metrics/taeh3-at-fp8.json)
+- [BF16/BF16 vs FP8/E4M3 at full H3 VAE evidence](metrics/fp8-e4m3-at-full-vae.json)
+- [BF16/BF16 vs FP8/E4M3 at TAEH3 evidence](metrics/fp8-e4m3-at-taeh3.json)
+- [Exact factorial combined-diagonal evidence](metrics/combined-exact-factorial.json)
 - [Full H3 VAE vs TAEH3 FP32 evidence](metrics/taeh3-fp32-at-bf16.json)
-- [Standard VSA + four-step video](videos/standard-vsa4-bf16-full-vae.mp4)
+- [TAEH3 FP32 vs FP16 evidence](metrics/taeh3-fp16-vs-fp32-at-bf16.json)
+- [Historical standard VSA + four-step video](videos/standard-vsa4-bf16-full-vae.mp4)
 - [All-main FP8 + BF16-wire observer video](videos/all-main-fp8-bf16-wire-full-vae-observer.mp4)
-- [Optimized real-time-stack video](videos/optimized-d6-realtime-stack.mp4)
-- [Combined-pair evidence](metrics/combined-bf16-full-vae-vs-realtime-stack.json)
+- [Historical optimized real-time-stack video](videos/optimized-d6-realtime-stack.mp4)
+- [Legacy mixed-contract endpoint evidence](metrics/combined-bf16-full-vae-vs-realtime-stack.json)
 - [FP8-compute diagnostic evidence](metrics/precision-bf16-vs-all-main-fp8-bf16-wire.json)
 - [Executed prompt](prompt.txt)
 - [Machine-readable manifest](manifest.json)
 - [SHA-256 checksums](SHA256SUMS.txt)
 
-The current manifest uses schema v2. At this revision the exact Q0D0 control and
-the Q0 full-H3-VAE -> TAEH3-FP32 decoder diagnostic are available, together
-with the historical combined diagonal and one FP8-compute diagnostic rung. The
-TAEH3-FP32 result is an intermediate decoder rung, not the final `d1` corner;
-all four primary factorial edges remain explicitly pending. The page disables a
-missing edge instead of substituting an artifact from another prompt, seed,
-geometry, or runtime contract.
+The current manifest uses schema v2. All four exact factorial cells, all four
+primary single-factor edges, and the exact factorial diagonal are available.
+The TAEH3-FP32 decoder diagnostic and historical FP8/BF16-wire observer rung
+remain available alongside the primary matrix. The exact 2x2 matrix is
+complete; optional exact precision-axis qmid diagnostics are still in progress
+and are tracked separately from primary publication status. The page never
+substitutes an artifact from another prompt, seed, geometry, or runtime
+contract.
 
 ## 2x2 methodology
 
@@ -36,14 +46,19 @@ The two independent high-level axes are:
   E4M3 QKV transport.
 - Decoder `d`: `d0` is the full H3 video VAE; `d1` is TAEH3 FP16.
 
-The complete matrix therefore contains `q0d0`, `q0d1`, `q1d0`, and `q1d1`.
+The complete matrix therefore contains `q0d0`, `q0d2`, `q1d0`, and `q1d1`.
 The primary controls are its four edges and one non-attributable diagonal:
 
-1. TAEH3 at BF16: `q0d0 -> q0d1` (`taeh3_at_bf16`)
+1. TAEH3 at BF16: `q0d0 -> q0d2` (`taeh3_at_bf16`)
 2. TAEH3 at FP8/E4M3: `q1d0 -> q1d1` (`taeh3_at_fp8`)
 3. FP8/E4M3 at full VAE: `q0d0 -> q1d0` (`fp8_e4m3_at_full_vae`)
-4. FP8/E4M3 at TAEH3: `q0d1 -> q1d1` (`fp8_e4m3_at_taeh3`)
+4. FP8/E4M3 at TAEH3: `q0d2 -> q1d1` (`fp8_e4m3_at_taeh3`)
 5. Combined diagonal: `q0d0 -> q1d1` (`combined`)
+
+The `q0d1_taeh3_fp32` artifact is the optional decoder-dtype middle rung, not a
+core matrix corner. The exact FP16 corner is `q0d2_taeh3_fp16`; the other
+factorial corners use artifact IDs `q0d0_bf16_full_vae`,
+`q1d0_fp8_e4m3_full_vae`, and `q1d1_fp8_e4m3_taeh3_fp16`.
 
 Each high-level axis has an optional middle rung for finer attribution. These
 rungs refine the mechanism within an axis; they do not replace the four primary
@@ -51,8 +66,13 @@ rungs refine the mechanism within an axis; they do not replace the four primary
 
 | Axis | Reference | Diagnostic middle rung | Factorial endpoint | Isolation meaning | Current state |
 | --- | --- | --- | --- | --- | --- |
-| Decoder | Full H3 VAE at Q0 | TAEH3 FP32 at Q0 | TAEH3 FP16 at Q0 | Full VAE -> TAEH3 FP32 diagnoses decoder architecture; TAEH3 FP32 -> FP16 diagnoses decoder dtype | Full VAE and TAEH3 FP32 artifacts/evidence available; FP16 endpoint pending |
-| Precision | BF16 compute / BF16 QKV wire with full VAE | all-main FP8 / BF16 QKV wire with full VAE | all-main FP8 / E4M3 QKV wire with full VAE | Q0 -> middle diagnoses FP8 linear execution; middle -> Q1 diagnoses E4M3 transport | Observer middle artifact available but timing-ineligible; exact Q1 endpoint pending |
+| Decoder | Full H3 VAE at Q0 | TAEH3 FP32 at Q0 | TAEH3 FP16 at Q0 | Full VAE -> TAEH3 FP32 diagnoses decoder architecture; TAEH3 FP32 -> FP16 diagnoses decoder dtype | Q0 and Q1 primary decoder edges complete; Q0 dtype diagnostics available |
+| Precision | BF16 compute / BF16 QKV wire with full VAE | all-main FP8 / BF16 QKV wire with full VAE | all-main FP8 / E4M3 QKV wire with full VAE | Q0 -> middle diagnoses FP8 linear execution; middle -> Q1 diagnoses E4M3 transport | Both primary precision edges complete; exact qmid refinement remains in progress |
+
+`factorial_complete` refers only to the exact four-corner 2x2 and its primary
+edges. The published FP8/BF16-wire observer remains useful output evidence, but
+its differing scheduling contract and observer overhead prevent it from closing
+the optional exact qmid diagnostic ladder.
 
 The FP8 middle rung uses static symmetric **per-tensor weight** scales and
 dynamic symmetric **per-token activation** scales, with linear outputs returned
@@ -62,9 +82,9 @@ These quantization granularities are independent of VSA's 64-token attention
 tile. The calibration sidecar is valid only for its bound prompt, seed,
 geometry, model revision, and execution contract.
 
-Both decoder choices must be repeated under both precision states. The decoder
-effect is measured by `q0d0 -> q0d1` and `q1d0 -> q1d1`; the precision effect is
-measured by `q0d0 -> q1d0` and `q0d1 -> q1d1`. If the two decoder edges—or the
+Both decoder choices are repeated under both precision states. The decoder
+effect is measured by `q0d0 -> q0d2` and `q1d0 -> q1d1`; the precision effect is
+measured by `q0d0 -> q1d0` and `q0d2 -> q1d1`. If the two decoder edges—or the
 two precision edges—differ, that is a precision-by-decoder interaction. A
 TAEH3 result measured only at BF16 cannot be assumed to hold after FP8/E4M3
 changes the joint audio-video latent trajectory.
@@ -120,9 +140,46 @@ The `q0d1_taeh3_fp32` diagnostic holds the Q0 latent path fixed and replaces
 full H3 VAE PP8 with rank-0 TAEH3 FP32 chunk-5 decode. Its artifact-local
 one-shot E2E was 28.783 seconds (RTF 1.908). Decoded audio is bitwise identical;
 the complete 362-frame evidence reports RGB PSNR 27.646 dB / SSIM 0.840229 and
-YUV PSNR 33.565 dB / SSIM 0.943884. Because the two requests were sequential,
-cache-exposed and unlocked-clock runs, the E2E difference is not a decoder
-speedup measurement.
+YUV PSNR 33.565 dB / SSIM 0.943884.
+
+The `q0d2_taeh3_fp16` endpoint keeps the same Q0 latent path and TAEH3 chunk-5
+route while changing decoder execution to FP16. Its artifact-local one-shot E2E
+was 28.055 seconds (RTF 1.860). Against full H3 VAE, the complete 362-frame
+evidence reports RGB PSNR 27.646 dB / SSIM 0.840219 and YUV PSNR 33.564 dB /
+SSIM 0.943887, with bitwise-identical decoded audio. The FP32-to-FP16 diagnostic
+reports RGB PSNR 39.518 dB / SSIM 0.957604 and YUV PSNR 45.602 dB / SSIM
+0.985468, again with bitwise-identical decoded audio. Because these requests
+were sequential, cache-exposed, no-warmup runs under unlocked clocks, their E2E
+differences and ratios are not decoder speedup measurements.
+
+The `q1d0_fp8_e4m3_full_vae` endpoint keeps the full H3 VAE PP8 decoder and
+changes the high-level precision axis to all-main FP8 linear execution plus
+prompt-bound calibrated E4M3 QKV transport. Its artifact-local one-shot E2E was
+28.007 seconds (RTF 1.857). Against Q0D0, the complete 362-frame evidence
+reports RGB PSNR 13.678 dB / SSIM 0.422281 and YUV PSNR 19.617 dB / SSIM
+0.778271. Both sides decode 482,400 stereo sample frames; audio is not bitwise
+identical and measures 4.376 dB SNR. These same-seed differences record joint
+audio-video trajectory divergence, not human-perceived quality. This
+sequential no-warmup timing under unlocked clocks is not a precision speedup
+measurement.
+
+The `q1d1_fp8_e4m3_taeh3_fp16` endpoint combines the Q1 precision state with
+rank-0 TAEH3 FP16 chunk-5 decode while retaining the factorial cells' common
+reverse-O and nonpersistent-RDMA contract. Its artifact-local one-shot E2E was
+22.543 seconds (RTF 1.495). Against Q1D0, the decoder-only edge reports RGB
+PSNR 27.127 dB / SSIM 0.823736 and YUV PSNR 33.072 dB / SSIM 0.936506, with
+bitwise-identical decoded audio. Against Q0D2, the precision edge reports RGB
+PSNR 13.917 dB / SSIM 0.441525 and YUV PSNR 19.857 dB / SSIM 0.794663; both
+sides have 482,400 audio sample frames and measure 4.376 dB SNR. The exact
+Q0D0-to-Q1D1 diagonal reports RGB PSNR 13.800 dB / SSIM 0.423268 and YUV PSNR
+19.738 dB / SSIM 0.785409. These values diagnose same-seed trajectory
+difference rather than human quality, and the one-shot cell timings do not
+establish factor speedups.
+
+The Q1D1 MP4 bytes match the historical optimized artifact's digest, but the
+primary contrasts reference the clean Q1D1 artifact ID and its common
+factorial execution contract. The historical mixed-contract comparison remains
+a separate legacy diagnostic.
 
 The historical `legacy_q0d0` control keeps BF16 main-transformer linear
 execution, BF16 QKV transport, and the full H3 video VAE. Its recorded artifact
@@ -142,9 +199,10 @@ separate matched-geometry steady-state qualification of 14.576 / 14.555 /
 different hash-locked prompt.
 
 These two historical endpoints also differ in scheduling and timing method.
-Their combined comparison is useful for reviewing the endpoint outputs but
-must not be presented as a clean FP8/E4M3 or TAEH3 effect. Exact factorial-cell
-reruns supply the four single-factor claims.
+Their `legacy_combined_endpoint_diagnostic` comparison is useful for reviewing
+the endpoint outputs but must not be presented as a clean FP8/E4M3 or TAEH3
+effect. The exact factorial-cell reruns now supply all four primary
+single-factor comparisons.
 
 ## Quality boundary
 

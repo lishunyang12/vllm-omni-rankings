@@ -238,7 +238,7 @@
             <td class="arrow">→</td>
             <td class="stage"><strong>TAEH3 FP32</strong><small>architecture substitution at Q0</small><span class="stage-status" data-artifact="q0d1_taeh3_fp32" data-ready="diagnostic available">pending</span></td>
             <td class="arrow">→</td>
-            <td class="stage"><strong>TAEH3 FP16</strong><small>same decoder · lower dtype at Q0</small><span class="stage-status" data-artifact="q0d1_taeh3_fp16" data-ready="factorial corner available">pending</span></td>
+            <td class="stage"><strong>TAEH3 FP16</strong><small>same decoder · lower dtype at Q0</small><span class="stage-status" data-artifact="q0d2_taeh3_fp16" data-ready="factorial corner available">pending</span></td>
             <td><small>First isolates decoder architecture; then isolates TAEH3 numerical dtype.</small></td>
           </tr>
           <tr>
@@ -253,7 +253,7 @@
         </tbody>
       </table>
     </div>
-    <div class="isolation-note"><strong>Why repeat both decoder lanes?</strong> Full VAE → TAEH3 is measured once at Q0 and again at Q1; Q0 → Q1 is likewise measured under both decoders. Comparing these conditional edges reveals a precision × decoder interaction—a BF16 decoder result cannot be assumed to hold after FP8/E4M3 changes the joint latent trajectory.</div>
+    <div class="isolation-note"><strong>Why repeat both decoder lanes?</strong> Full VAE → TAEH3 is measured once at Q0 and again at Q1; Q0 → Q1 is likewise measured under both decoders. Comparing these conditional edges reveals a precision × decoder interaction—a BF16 decoder result cannot be assumed to hold after FP8/E4M3 changes the joint latent trajectory. <span class="stage-status" data-artifact="q1d1_fp8_e4m3_taeh3_fp16" data-ready="exact Q1D1 artifact available">pending</span></div>
   </section>
 
   <nav class="switcher" id="switcher" aria-label="A/B contrasts"></nav>
@@ -331,10 +331,10 @@ let activeAudio = 'left';
 let state = null;
 
 const EXPECTED = [
-  { id: 'taeh3_at_bf16', label: 'TAEH3 at BF16', hint: 'q0d0 → q0d1' },
+  { id: 'taeh3_at_bf16', label: 'TAEH3 at BF16', hint: 'q0d0 → q0d2' },
   { id: 'taeh3_at_fp8', label: 'TAEH3 at FP8/E4M3', hint: 'q1d0 → q1d1' },
   { id: 'fp8_e4m3_at_full_vae', label: 'FP8/E4M3 at full VAE', hint: 'q0d0 → q1d0' },
-  { id: 'fp8_e4m3_at_taeh3', label: 'FP8/E4M3 at TAEH3', hint: 'q0d1 → q1d1' },
+  { id: 'fp8_e4m3_at_taeh3', label: 'FP8/E4M3 at TAEH3', hint: 'q0d2 → q1d1' },
   { id: 'combined', label: 'Combined diagonal', hint: 'q0d0 → q1d1' },
 ];
 
@@ -633,7 +633,7 @@ function selectContrast(id) {
   document.querySelectorAll('.contrast-button').forEach(button => button.classList.toggle('active', button.dataset.contrast === id));
   $('contrastTitle').textContent = contrast.label;
   $('contrastDescription').textContent = contrast.description || (contrast.factor ? `Only ${humanFactor(contrast.factor)} changes in this declared pair.` : 'All listed optimization factors are combined in this end-to-end pair.');
-  $('contrastKind').textContent = contrast.kind === 'combined' ? 'combined' : 'single factor';
+  $('contrastKind').textContent = contrast.kind === 'combined' ? 'combined' : contrast.kind === 'diagnostic' ? 'diagnostic' : 'single factor';
   $('contrastKind').className = `kind${contrast.kind === 'combined' ? ' combined' : ''}`;
   $('leftLabel').textContent = left.label;
   $('rightLabel').textContent = right.label;
@@ -699,11 +699,15 @@ async function boot() {
   const publication = state.manifest.status || {};
   if (typeof publication.factorial_complete === 'boolean') {
     const exactDecoder = state.contrasts.find(item => item.id === 'taeh3_fp32_at_bf16');
+    const diagnosticsPending = publication.diagnostics_complete === false;
+    const availablePrimaryCount = Array.isArray(publication.available_primary_contrasts)
+      ? publication.available_primary_contrasts.filter(id => id !== 'combined').length
+      : 0;
     const pendingCount = Array.isArray(publication.pending_primary_contrasts) ? publication.pending_primary_contrasts.length : 0;
     $('progress').hidden = false;
     $('progress').textContent = publication.factorial_complete
-      ? 'Publication status: the exact 2×2 factorial matrix is complete.'
-      : `Publication status: the exact 2×2 factorial matrix is in progress.${exactDecoder ? ` Available partial result: ${exactDecoder.label}, under Diagnostic rungs.` : ''}${pendingCount ? ` Pending primary edges: ${pendingCount}.` : ''}`;
+      ? `Publication status: the exact 2×2 factorial matrix is complete.${diagnosticsPending ? ` ${publication.diagnostics_reason || 'Optional diagnostic rungs remain in progress.'}` : ''}`
+      : `Publication status: the exact 2×2 factorial matrix is in progress.${availablePrimaryCount ? ` Available primary edges: ${availablePrimaryCount}.` : ''}${exactDecoder ? ` Available diagnostic: ${exactDecoder.label}, under Diagnostic rungs.` : ''}${pendingCount ? ` Pending primary edges: ${pendingCount}.` : ''}`;
   }
   document.querySelectorAll('.stage-status[data-artifact]').forEach(badge => {
     const available = Boolean(state.artifacts[badge.dataset.artifact]);

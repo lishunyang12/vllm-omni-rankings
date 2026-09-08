@@ -5,15 +5,18 @@
   "scene": "Moon Teahouse Signal",
   "framework": "vLLM-Omni",
   "status": {
-    "factorial_complete": false,
-    "reason": "Exact single-factor artifacts are being generated; four GPUs are temporarily held by an unrelated benchctl campaign.",
-    "available_primary_contrasts": ["combined"],
-    "pending_primary_contrasts": [
+    "factorial_complete": true,
+    "reason": "All four exact factorial cells, all four primary single-factor edges, and the exact factorial diagonal are available.",
+    "available_primary_contrasts": [
       "taeh3_at_bf16",
       "taeh3_at_fp8",
       "fp8_e4m3_at_full_vae",
-      "fp8_e4m3_at_taeh3"
-    ]
+      "fp8_e4m3_at_taeh3",
+      "combined"
+    ],
+    "pending_primary_contrasts": [],
+    "diagnostics_complete": false,
+    "diagnostics_reason": "Optional exact precision-axis qmid diagnostics remain in progress; the published FP8/BF16-wire observer rung is timing-ineligible."
   },
   "hardware": {
     "count": 8,
@@ -136,6 +139,88 @@
         "output_route": "GPU uint8 + pinned D2H + CPU libx264"
       }
     },
+    "q0d2_taeh3_fp16": {
+      "label": "Q0D2 · BF16/BF16 + TAEH3 FP16",
+      "file": "videos/q0d2-bf16-taeh3-fp16.mp4",
+      "bytes": 23826208,
+      "sha256": "1405f6a4bca9de6eccd6f2c4cbe4d665de4e9c4113a875041c01d89146f10166",
+      "detail": "Exact Q0 decoder endpoint: BF16 main-DiT linears, BF16 QKV wire, common reverse-O bundle, and rank-0 TAEH3 FP16 chunk-5 decode",
+      "timing": {
+        "e2e_seconds": 28.055,
+        "rtf": 1.860000,
+        "method": "one no-warmup request; shared JIT cache and unlocked clocks",
+        "performance_eligible": false
+      },
+      "factors": {
+        "precision_stack": "q0 · BF16/BF16 wire",
+        "linear_compute": "BF16",
+        "qkv_transport": "BF16",
+        "video_decoder": "d1 · TAEH3",
+        "decoder_dtype": "FP16",
+        "vae_parallelism": "rank 0 / VAE1",
+        "vsa_kernel": "CuTeDSL #4944",
+        "reverse_o": "O-bundle kmax 279",
+        "rdma": "nonpersistent RDMA; release after denoise",
+        "audio_decode": "standard route",
+        "output_route": "GPU uint8 + pinned D2H + CPU libx264"
+      }
+    },
+    "q1d0_fp8_e4m3_full_vae": {
+      "label": "Q1D0 · all-main FP8/E4M3 + full H3 VAE",
+      "file": "videos/q1d0-all-main-fp8-e4m3-wire-full-h3-vae.mp4",
+      "bytes": 24413882,
+      "sha256": "7a47441632d1d28f1369944b3f31086fbea9fd11fbe37277006a3338e1d89bf7",
+      "detail": "Exact Q1 full-VAE endpoint: all-main FP8 linears, prompt-bound calibrated E4M3 QKV wire, common reverse-O bundle, and full H3 VAE PP8",
+      "timing": {
+        "e2e_seconds": 28.007,
+        "rtf": 1.857,
+        "method": "one no-warmup request; shared JIT cache and unlocked clocks",
+        "performance_eligible": false
+      },
+      "factors": {
+        "precision_stack": "q1 · all-main FP8/E4M3 wire",
+        "linear_compute": "all-main FP8",
+        "qkv_transport": "E4M3",
+        "video_decoder": "d0 · full H3 VAE",
+        "decoder_dtype": "released mixed precision",
+        "vae_parallelism": "PP8",
+        "vsa_kernel": "CuTeDSL #4944",
+        "reverse_o": "O-bundle kmax 279",
+        "rdma": "nonpersistent RDMA; release after denoise",
+        "audio_decode": "standard route",
+        "output_route": "GPU uint8 + pinned D2H + CPU libx264"
+      },
+      "qkv_scale_sidecar_sha256": "dcf733d74dc250b0730356f8ef6b592a06a8c722e819a301af861726d65d6db3",
+      "qkv_scale_payload_sha256": "7327a8bb32e007345f4622df21d392dfd7976a858ce0480ebc02aa04ff2f27d5"
+    },
+    "q1d1_fp8_e4m3_taeh3_fp16": {
+      "label": "Q1D1 · all-main FP8/E4M3 + TAEH3 FP16",
+      "file": "videos/q1d1-all-main-fp8-e4m3-wire-taeh3-fp16.mp4",
+      "bytes": 23838235,
+      "sha256": "52e3f008da700b66964908dd624792c5934bb118512435a2551d1110953724f8",
+      "detail": "Exact Q1D1 factorial endpoint: all-main FP8 linears, prompt-bound calibrated E4M3 QKV wire, common reverse-O bundle, nonpersistent RDMA, and rank-0 TAEH3 FP16 chunk-5 decode",
+      "timing": {
+        "e2e_seconds": 22.543,
+        "rtf": 1.495,
+        "method": "one no-warmup request; shared JIT cache and unlocked clocks",
+        "performance_eligible": false
+      },
+      "factors": {
+        "precision_stack": "q1 · all-main FP8/E4M3 wire",
+        "linear_compute": "all-main FP8",
+        "qkv_transport": "E4M3",
+        "video_decoder": "d1 · TAEH3",
+        "decoder_dtype": "FP16",
+        "vae_parallelism": "rank 0 / VAE1",
+        "vsa_kernel": "CuTeDSL #4944",
+        "reverse_o": "O-bundle kmax 279",
+        "rdma": "nonpersistent RDMA; release after denoise",
+        "audio_decode": "standard route",
+        "output_route": "GPU uint8 + pinned D2H + CPU libx264"
+      },
+      "qkv_scale_sidecar_sha256": "dcf733d74dc250b0730356f8ef6b592a06a8c722e819a301af861726d65d6db3",
+      "qkv_scale_payload_sha256": "7327a8bb32e007345f4622df21d392dfd7976a858ce0480ebc02aa04ff2f27d5"
+    },
     "legacy_q0d0": {
       "label": "BF16 + full H3 VAE (existing control)",
       "file": "videos/standard-vsa4-bf16-full-vae.mp4",
@@ -213,6 +298,78 @@
   },
   "contrasts": [
     {
+      "id": "taeh3_at_bf16",
+      "label": "Full H3 VAE → TAEH3 FP16 at BF16",
+      "description": "Primary decoder edge at fixed BF16 main-DiT execution and BF16 QKV transport. Audio is required to remain bitwise identical.",
+      "kind": "single-factor",
+      "factor": "video_decoder",
+      "changed_factors": ["video_decoder", "decoder_dtype", "vae_parallelism"],
+      "baseline": "q0d0_bf16_full_vae",
+      "candidate": "q0d2_taeh3_fp16",
+      "evidence_file": "metrics/taeh3-at-bf16.json",
+      "metric_scope": "Complete 362-frame post-codec decoder-edge diagnostics plus exact decoded-audio identity. Artifact-local one-shot E2E values are not a factor-latency A/B.",
+      "metrics": {
+        "rgb": {"psnr_db": 27.645739, "ssim": 0.840219, "p05_ssim": 0.751487, "min_ssim": 0.69123},
+        "yuv": {"psnr_db": 33.5643, "ssim": 0.943887, "p05_ssim": 0.911589, "min_ssim": 0.894916},
+        "temporal": {"derivative_mae": 5.394311, "p95_derivative_mae": 8.371021, "max_derivative_mae": 10.536037},
+        "audio": {"bit_exact": true, "snr_db": null, "snr_positive_infinite": true, "rmse": 0.0, "max_abs": 0.0}
+      }
+    },
+    {
+      "id": "fp8_e4m3_at_full_vae",
+      "label": "BF16/BF16 → FP8/E4M3 at full H3 VAE",
+      "description": "Primary precision edge at fixed full H3 VAE PP8. The high-level precision axis deliberately bundles all-main FP8 linear execution and calibrated E4M3 QKV transport.",
+      "kind": "single-factor",
+      "factor": "precision_stack",
+      "changed_factors": ["precision_stack", "linear_compute", "qkv_transport"],
+      "baseline": "q0d0_bf16_full_vae",
+      "candidate": "q1d0_fp8_e4m3_full_vae",
+      "evidence_file": "metrics/fp8-e4m3-at-full-vae.json",
+      "metric_scope": "Complete 362-frame post-codec precision-edge diagnostics. Low same-seed similarity indicates trajectory divergence, not a human quality score; audio may change on precision edges. Artifact-local one-shot E2E values are not a factor-latency A/B.",
+      "metrics": {
+        "rgb": {"psnr_db": 13.678146, "ssim": 0.422281, "p05_ssim": 0.24162, "min_ssim": 0.219125},
+        "yuv": {"psnr_db": 19.617091, "ssim": 0.778271, "p05_ssim": 0.709233, "min_ssim": 0.704576},
+        "temporal": {"derivative_mae": 13.648566, "p95_derivative_mae": 23.444951, "max_derivative_mae": 63.197047},
+        "audio": {"bit_exact": false, "snr_db": 4.37643, "snr_positive_infinite": false, "rmse": 0.074454, "max_abs": 0.729175}
+      }
+    },
+    {
+      "id": "taeh3_at_fp8",
+      "label": "Full H3 VAE → TAEH3 FP16 at FP8/E4M3",
+      "description": "Primary decoder edge at fixed all-main FP8 linear execution and calibrated E4M3 QKV transport. Audio is required to remain bitwise identical.",
+      "kind": "single-factor",
+      "factor": "video_decoder",
+      "changed_factors": ["video_decoder", "decoder_dtype", "vae_parallelism"],
+      "baseline": "q1d0_fp8_e4m3_full_vae",
+      "candidate": "q1d1_fp8_e4m3_taeh3_fp16",
+      "evidence_file": "metrics/taeh3-at-fp8.json",
+      "metric_scope": "Complete 362-frame post-codec decoder-edge diagnostics plus exact decoded-audio identity. Artifact-local one-shot E2E values are not a factor-latency A/B.",
+      "metrics": {
+        "rgb": {"psnr_db": 27.127287, "ssim": 0.823736, "p05_ssim": 0.733022, "min_ssim": 0.703389},
+        "yuv": {"psnr_db": 33.072089, "ssim": 0.936506, "p05_ssim": 0.904759, "min_ssim": 0.889664},
+        "temporal": {"derivative_mae": 5.544031, "p95_derivative_mae": 9.025886, "max_derivative_mae": 10.978573},
+        "audio": {"bit_exact": true, "snr_db": null, "snr_positive_infinite": true, "rmse": 0.0, "max_abs": 0.0}
+      }
+    },
+    {
+      "id": "fp8_e4m3_at_taeh3",
+      "label": "BF16/BF16 → FP8/E4M3 at TAEH3 FP16",
+      "description": "Primary precision edge at fixed rank-0 TAEH3 FP16 chunk-5 decode. The high-level precision axis deliberately bundles all-main FP8 linear execution and calibrated E4M3 QKV transport.",
+      "kind": "single-factor",
+      "factor": "precision_stack",
+      "changed_factors": ["precision_stack", "linear_compute", "qkv_transport"],
+      "baseline": "q0d2_taeh3_fp16",
+      "candidate": "q1d1_fp8_e4m3_taeh3_fp16",
+      "evidence_file": "metrics/fp8-e4m3-at-taeh3.json",
+      "metric_scope": "Complete 362-frame post-codec precision-edge diagnostics. Low same-seed similarity indicates trajectory divergence, not a human quality score; audio may change on precision edges. Artifact-local one-shot E2E values are not a factor-latency A/B.",
+      "metrics": {
+        "rgb": {"psnr_db": 13.91671, "ssim": 0.441525, "p05_ssim": 0.259472, "min_ssim": 0.227932},
+        "yuv": {"psnr_db": 19.857449, "ssim": 0.794663, "p05_ssim": 0.734724, "min_ssim": 0.716606},
+        "temporal": {"derivative_mae": 12.691797, "p95_derivative_mae": 22.392457, "max_derivative_mae": 63.183375},
+        "audio": {"bit_exact": false, "snr_db": 4.37643, "snr_positive_infinite": false, "rmse": 0.074454, "max_abs": 0.729175}
+      }
+    },
+    {
       "id": "taeh3_fp32_at_bf16",
       "label": "Full H3 VAE → TAEH3 FP32 at BF16",
       "description": "Decoder-path diagnostic at fixed BF16 main-DiT execution and BF16 QKV transport. Audio is required to remain bitwise identical.",
@@ -231,20 +388,55 @@
       }
     },
     {
+      "id": "taeh3_fp16_vs_fp32_at_bf16",
+      "label": "TAEH3 FP32 → FP16 at BF16",
+      "description": "Decoder-dtype diagnostic at fixed BF16 main-DiT execution, BF16 QKV transport, rank-0 TAEH3 architecture, and chunk-5 decode.",
+      "kind": "diagnostic",
+      "factor": "decoder_dtype",
+      "changed_factors": ["decoder_dtype"],
+      "baseline": "q0d1_taeh3_fp32",
+      "candidate": "q0d2_taeh3_fp16",
+      "evidence_file": "metrics/taeh3-fp16-vs-fp32-at-bf16.json",
+      "metric_scope": "Complete 362-frame post-codec decoder-dtype diagnostics plus exact decoded-audio identity. Artifact-local one-shot E2E values are not a factor-latency A/B.",
+      "metrics": {
+        "rgb": {"psnr_db": 39.518315, "ssim": 0.957604, "p05_ssim": 0.949017, "min_ssim": 0.946354},
+        "yuv": {"psnr_db": 45.601804, "ssim": 0.985468, "p05_ssim": 0.982722, "min_ssim": 0.98227},
+        "temporal": {"derivative_mae": 1.748059, "p95_derivative_mae": 2.147249, "max_derivative_mae": 2.301515},
+        "audio": {"bit_exact": true, "snr_db": null, "snr_positive_infinite": true, "rmse": 0.0, "max_abs": 0.0}
+      }
+    },
+    {
       "id": "combined",
-      "label": "Combined endpoint comparison",
-      "description": "FP8 linear execution, E4M3 QKV transport, TAEH3 and several lossless scheduling changes move together; this diagonal is intentionally not attributed to one factor.",
+      "label": "Exact factorial combined diagonal",
+      "description": "The precision and decoder axes move together between exact factorial corners while the common scheduling contract remains fixed; this diagonal is intentionally not attributed to one factor.",
       "kind": "combined",
-      "baseline": "legacy_q0d0",
-      "candidate": "legacy_q1d1_realtime",
-      "changed_factors": ["precision_stack", "linear_compute", "qkv_transport", "video_decoder", "decoder_dtype", "reverse_o", "rdma", "audio_decode"],
-      "evidence_file": "metrics/combined-bf16-full-vae-vs-realtime-stack.json",
-      "metric_scope": "Complete 362-frame post-codec diagnostics. Low same-seed similarity indicates trajectory divergence, not a human quality score.",
+      "baseline": "q0d0_bf16_full_vae",
+      "candidate": "q1d1_fp8_e4m3_taeh3_fp16",
+      "changed_factors": ["precision_stack", "linear_compute", "qkv_transport", "video_decoder", "decoder_dtype", "vae_parallelism"],
+      "evidence_file": "metrics/combined-exact-factorial.json",
+      "metric_scope": "Complete 362-frame post-codec exact-factorial diagonal diagnostics. Low same-seed similarity indicates trajectory divergence, not a human quality score; audio may change when the precision axis changes. Artifact-local one-shot E2E values are not a factor-latency A/B.",
       "metrics": {
         "rgb": {"psnr_db": 13.800234, "ssim": 0.423268, "p05_ssim": 0.247059, "min_ssim": 0.231875},
         "yuv": {"psnr_db": 19.737589, "ssim": 0.785409, "p05_ssim": 0.723445, "min_ssim": 0.711611},
         "temporal": {"derivative_mae": 13.273359, "p95_derivative_mae": 22.557153, "max_derivative_mae": 63.015424},
-        "audio": {"bit_exact": false, "snr_db": 4.369812, "rmse": 0.074459, "max_abs": 0.729132}
+        "audio": {"bit_exact": false, "snr_db": 4.37643, "snr_positive_infinite": false, "rmse": 0.074454, "max_abs": 0.729175}
+      }
+    },
+    {
+      "id": "legacy_combined_endpoint_diagnostic",
+      "label": "Legacy mixed-contract endpoint comparison",
+      "description": "Historical endpoint diagnostic: precision, decoder, reverse-O, RDMA lifetime, audio placement, and timing method move together. It is retained for provenance and is not a factorial edge.",
+      "kind": "diagnostic",
+      "baseline": "legacy_q0d0",
+      "candidate": "legacy_q1d1_realtime",
+      "changed_factors": ["precision_stack", "linear_compute", "qkv_transport", "video_decoder", "decoder_dtype", "reverse_o", "rdma", "audio_decode"],
+      "evidence_file": "metrics/combined-bf16-full-vae-vs-realtime-stack.json",
+      "metric_scope": "Complete 362-frame post-codec legacy mixed-contract diagnostics. Low same-seed similarity indicates trajectory divergence, not a human quality score; no single-factor or latency attribution is valid.",
+      "metrics": {
+        "rgb": {"psnr_db": 13.800234, "ssim": 0.423268, "p05_ssim": 0.247059, "min_ssim": 0.231875},
+        "yuv": {"psnr_db": 19.737589, "ssim": 0.785409, "p05_ssim": 0.723445, "min_ssim": 0.711611},
+        "temporal": {"derivative_mae": 13.273359, "p95_derivative_mae": 22.557153, "max_derivative_mae": 63.015424},
+        "audio": {"bit_exact": false, "snr_db": 4.369812, "snr_positive_infinite": false, "rmse": 0.074459, "max_abs": 0.729132}
       }
     },
     {
