@@ -3,41 +3,678 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>MiniMax-H3 · Moon Teahouse full-video A/B</title>
+  <meta name="color-scheme" content="dark">
+  <title>MiniMax-H3 · Moon Teahouse precision A/B</title>
   <style>
-    :root{color-scheme:dark;--bg:#090a0d;--panel:#111319;--line:#292d36;--ink:#f5f1e8;--muted:#9299a8;--gold:#ffd675;--cyan:#72ead8;--green:#b8fa74;--amber:#ffc66d}
-    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(1000px 620px at 50% -15%,#25334d 0,transparent 64%),var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,sans-serif}
-    main{width:min(1660px,100%);margin:auto;padding:26px}.top{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}.eyebrow{color:var(--cyan);font:700 11px ui-monospace,monospace;letter-spacing:.14em;text-transform:uppercase}.top h1{margin:7px 0 0;font-size:clamp(26px,4vw,48px);letter-spacing:-.045em}.top p{color:var(--muted);margin:0 0 5px;font-size:13px}
-    .notice{margin:0 0 16px;padding:12px 14px;border:1px solid #735c28;border-radius:12px;background:#221d12;color:#f3d99f;font-size:12px;line-height:1.5}.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:rgba(17,19,25,.91);box-shadow:0 26px 90px rgba(0,0,0,.32)}.head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:16px 17px}.head h2{font-size:15px;margin:0 0 5px}.head p{color:var(--muted);font-size:11px;margin:0;max-width:70ch}.pill{border:1px solid #3b414e;border-radius:999px;padding:7px 10px;font:700 11px ui-monospace,monospace;white-space:nowrap}.pill.fast{color:var(--green);border-color:#537837}
-    video{display:block;width:100%;aspect-ratio:20/11;background:#000}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border-top:1px solid var(--line)}.metric{background:var(--panel);padding:13px}.metric span{display:block;color:var(--muted);font-size:9px;text-transform:uppercase;letter-spacing:.1em}.metric strong{display:block;margin-top:5px;font:700 15px ui-monospace,monospace}.good{color:var(--green)}.warn{color:var(--amber)}
-    .controls{margin-top:16px;padding:13px;border:1px solid var(--line);border-radius:15px;background:rgba(17,19,25,.9);display:flex;align-items:center;gap:10px;flex-wrap:wrap}.controls button{border:1px solid #3b414e;border-radius:10px;background:#1a1e26;color:var(--ink);padding:10px 14px;font-weight:700;cursor:pointer}.controls button.primary{background:var(--gold);color:#17140c;border-color:var(--gold)}.controls label{color:var(--muted);font-size:12px;margin-left:auto}.drift{font:700 12px ui-monospace,monospace;color:var(--cyan)}.links{margin-top:13px;color:var(--muted);font-size:12px}.links a{color:var(--cyan)}
-    @media(max-width:900px){main{padding:14px}.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}.metrics{grid-template-columns:repeat(2,1fr)}.controls label{margin-left:0}}
+    :root {
+      color-scheme: dark;
+      --bg: #080a0d;
+      --panel: #11151b;
+      --panel-2: #161b23;
+      --line: #2a313c;
+      --ink: #f4f1e9;
+      --muted: #969eac;
+      --cyan: #72ead8;
+      --gold: #ffd675;
+      --green: #b8fa74;
+      --amber: #ffc66d;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(1000px 620px at 50% -15%, #25334d 0, transparent 64%),
+        var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    }
+    button, input { font: inherit; }
+    a { color: var(--cyan); }
+    main { width: min(1700px, 100%); margin: auto; padding: 26px; }
+    .top { display: flex; align-items: end; justify-content: space-between; gap: 20px; margin-bottom: 16px; }
+    .eyebrow { color: var(--cyan); font: 700 11px ui-monospace, monospace; letter-spacing: .14em; text-transform: uppercase; }
+    h1 { margin: 7px 0 0; font-size: clamp(28px, 4vw, 50px); letter-spacing: -.045em; }
+    .contract { color: var(--muted); margin: 0 0 5px; font-size: 13px; text-align: right; }
+    .notice, .load-error {
+      margin: 0 0 16px;
+      padding: 12px 14px;
+      border: 1px solid #735c28;
+      border-radius: 12px;
+      background: #221d12;
+      color: #f3d99f;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .load-error { display: none; border-color: #783d39; background: #241312; color: #ffc1b8; }
+    .progress {
+      margin: -7px 0 16px;
+      padding: 10px 13px;
+      border: 1px solid #355d59;
+      border-radius: 11px;
+      background: #0f1d1c;
+      color: #bde9e2;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+    .switcher {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 2px 1px 12px;
+      scrollbar-width: thin;
+    }
+    .contrast-button {
+      min-width: max-content;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 10px 13px;
+      cursor: pointer;
+      text-align: left;
+    }
+    .contrast-button span { display: block; color: var(--muted); font-size: 10px; margin-top: 3px; }
+    .contrast-button.active { color: #17140c; background: var(--gold); border-color: var(--gold); }
+    .contrast-button.active span { color: #65501a; }
+    .contrast-button:disabled { opacity: .42; cursor: not-allowed; }
+    .rung-section { margin: -2px 0 12px; padding-top: 8px; border-top: 1px solid var(--line); }
+    .rung-section .eyebrow { margin-bottom: 7px; color: var(--muted); }
+    .rung-section .switcher { padding-bottom: 0; }
+    .contrast-summary {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 0 0 14px;
+      padding: 14px 16px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(17, 21, 27, .9);
+    }
+    .contrast-summary h2 { margin: 0 0 5px; font-size: 17px; }
+    .contrast-summary p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .kind {
+      flex: 0 0 auto;
+      border: 1px solid #47736d;
+      border-radius: 999px;
+      padding: 7px 10px;
+      color: var(--cyan);
+      font: 700 10px ui-monospace, monospace;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+    .kind.combined { color: var(--gold); border-color: #735c28; }
+    .factor-board { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 8px; margin-bottom: 14px; }
+    .factor {
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: rgba(17, 21, 27, .88);
+    }
+    .factor.changed { border-color: #4f817a; background: #11211f; }
+    .factor-name { color: var(--muted); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
+    .factor-values { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 7px; margin-top: 7px; font: 700 11px ui-monospace, monospace; }
+    .factor-values span:last-child { text-align: right; }
+    .factor-arrow { color: var(--cyan); }
+    .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; background: rgba(17, 21, 27, .94); box-shadow: 0 26px 90px rgba(0, 0, 0, .32); }
+    .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 16px 17px; }
+    .head h3 { font-size: 15px; margin: 0 0 5px; }
+    .head p { color: var(--muted); font-size: 11px; line-height: 1.4; margin: 0; max-width: 78ch; }
+    .pill { border: 1px solid #3b4552; border-radius: 999px; padding: 7px 10px; font: 700 10px ui-monospace, monospace; white-space: nowrap; }
+    .pill.candidate { color: var(--green); border-color: #537837; }
+    video { display: block; width: 100%; aspect-ratio: 20 / 11; background: #000; }
+    .timings { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border-top: 1px solid var(--line); }
+    .metric { min-width: 0; background: var(--panel); padding: 12px; }
+    .metric span { display: block; color: var(--muted); font-size: 9px; text-transform: uppercase; letter-spacing: .09em; }
+    .metric strong { display: block; overflow: hidden; margin-top: 5px; font: 700 14px ui-monospace, monospace; text-overflow: ellipsis; white-space: nowrap; }
+    .good { color: var(--green); }
+    .warn { color: var(--amber); }
+    .controls {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: rgba(17, 21, 27, .9);
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+    .controls button { border: 1px solid #3b4552; border-radius: 10px; background: #1a2029; color: var(--ink); padding: 9px 13px; font-weight: 700; cursor: pointer; }
+    .controls button.primary { background: var(--gold); color: #17140c; border-color: var(--gold); }
+    .controls label { color: var(--muted); font-size: 12px; margin-left: auto; }
+    .drift { color: var(--cyan); font: 700 11px ui-monospace, monospace; }
+    .quality { margin-top: 16px; }
+    .section-title { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; margin-bottom: 9px; }
+    .section-title h2 { margin: 0; font-size: 17px; }
+    .section-title p { margin: 0; color: var(--muted); font-size: 11px; }
+    .quality-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+    .quality-card { min-height: 108px; padding: 13px; border: 1px solid var(--line); border-radius: 13px; background: var(--panel); }
+    .quality-card h3 { margin: 0 0 10px; color: var(--cyan); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+    .quality-values { display: flex; gap: 13px; flex-wrap: wrap; }
+    .quality-value span { display: block; color: var(--muted); font-size: 9px; text-transform: uppercase; }
+    .quality-value strong { display: block; margin-top: 4px; font: 700 14px ui-monospace, monospace; }
+    .pending { color: var(--muted); font-size: 11px; line-height: 1.45; }
+    .evidence {
+      margin-top: 14px;
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--panel-2);
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .evidence strong { color: var(--ink); }
+    .evidence a { border: 1px solid #3c5660; border-radius: 9px; padding: 7px 9px; text-decoration: none; }
+    .evidence .spacer { flex: 1; }
+    .hash { max-width: 26ch; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: ui-monospace, monospace; }
+    footer { margin: 14px 2px 0; color: var(--muted); font-size: 11px; line-height: 1.55; }
+    @media (max-width: 1000px) {
+      main { padding: 14px; }
+      .grid { grid-template-columns: 1fr; }
+      .quality-grid { grid-template-columns: repeat(2, 1fr); }
+      .top { align-items: flex-start; flex-direction: column; }
+      .contract { text-align: left; }
+      .controls label { margin-left: 0; }
+    }
+    @media (max-width: 560px) {
+      .quality-grid, .timings { grid-template-columns: repeat(2, 1fr); }
+      .contrast-summary { flex-direction: column; }
+    }
   </style>
 </head>
 <body>
 <main>
-  <header class="top"><div><div class="eyebrow">Direct complete-MP4 comparison · no extracted frames</div><h1>Moon Teahouse Signal</h1></div><p>Same prompt · seed 1101 · 362 frames · 24 fps · 15.083333 s</p></header>
-  <p class="notice"><strong>Timing disclosure:</strong> the optimized artifact was generated immediately with no warm-up, so its 22.367 s first request includes lazy compilation. The same serving stack has a separate same-geometry steady-state qualification of 14.561 s mean (RTF 0.965). The latter used another hash-locked prompt and is not relabeled as this artifact's request time.</p>
-  <div class="grid">
+  <header class="top">
+    <div>
+      <div class="eyebrow">Factor-isolated full-video review · no extracted frames</div>
+      <h1 id="scene">Moon Teahouse Signal</h1>
+    </div>
+    <p class="contract" id="contract">Loading the hash-locked request contract…</p>
+  </header>
+
+  <p class="notice" id="notice"><strong>Timing and evidence rule:</strong> these cells were generated sequentially as one-shot/no-warmup requests, can inherit host, disk, and JIT caches, and use node-default unlocked GPU clocks. E2E and RTF are artifact-local observations only; do not subtract or divide them to claim a single-factor speedup. PSNR/SSIM are difference diagnostics, not a substitute for human audiovisual review. Full-H3-VAE SM120 exact-op raw-output equivalence under full SP8 remains pending.</p>
+  <p class="progress" id="progress" hidden></p>
+  <p class="load-error" id="loadError"></p>
+
+  <nav class="switcher" id="switcher" aria-label="A/B contrasts"></nav>
+  <section class="rung-section" id="rungSection" hidden>
+    <div class="eyebrow">Diagnostic rungs · finer attribution inside each axis</div>
+    <nav class="switcher" id="rungSwitcher" aria-label="Diagnostic rung contrasts"></nav>
+  </section>
+
+  <section class="contrast-summary" aria-live="polite">
+    <div><h2 id="contrastTitle">Loading comparison…</h2><p id="contrastDescription"></p></div>
+    <span class="kind" id="contrastKind">A/B</span>
+  </section>
+
+  <section class="factor-board" id="factorBoard" aria-label="Factor states"></section>
+
+  <section class="grid">
     <article class="card">
-      <div class="head"><div><h2>Standard VSA + FastH3 four-step</h2><p>BF16 main DiT/QKV transport · full H3 video VAE</p></div><span class="pill">22.7 MiB</span></div>
-      <video id="standard" controls playsinline preload="metadata" src="videos/standard-vsa4-bf16-full-vae.mp4"></video>
-      <div class="metrics"><div class="metric"><span>Artifact request</span><strong>27.995s</strong></div><div class="metric"><span>Artifact RTF</span><strong>1.856</strong></div><div class="metric"><span>Playback</span><strong id="standardTime">0.00s</strong></div><div class="metric"><span>Browser buffer</span><strong id="standardBuffer">0.00s</strong></div></div>
+      <div class="head"><div><h3 id="leftLabel">Baseline</h3><p id="leftDetail"></p></div><span class="pill" id="leftSize">—</span></div>
+      <video id="leftVideo" controls playsinline preload="metadata"></video>
+      <div class="timings">
+        <div class="metric"><span>E2E request</span><strong id="leftE2E">—</strong></div>
+        <div class="metric"><span>RTF</span><strong id="leftRtf">—</strong></div>
+        <div class="metric"><span>Playback</span><strong id="leftTime">0.00s</strong></div>
+        <div class="metric"><span>Browser buffer</span><strong id="leftBuffer">0.00s</strong></div>
+      </div>
     </article>
     <article class="card">
-      <div class="head"><div><h2>Optimized real-time serving stack</h2><p>all-main FP8 · E4M3 QKV · CuTeDSL VSA · reverse-O bundle · persistent RDMA · TAEH3 FP16 · cross-rank audio</p></div><span class="pill fast">22.7 MiB</span></div>
-      <video id="optimized" controls playsinline preload="metadata" src="videos/optimized-d6-realtime-stack.mp4"></video>
-      <div class="metrics"><div class="metric"><span>No-warmup request</span><strong class="warn">22.367s</strong></div><div class="metric"><span>Qualified warm mean</span><strong class="good">14.561s</strong></div><div class="metric"><span>Playback</span><strong id="optimizedTime">0.00s</strong></div><div class="metric"><span>Browser buffer</span><strong id="optimizedBuffer">0.00s</strong></div></div>
+      <div class="head"><div><h3 id="rightLabel">Candidate</h3><p id="rightDetail"></p></div><span class="pill candidate" id="rightSize">—</span></div>
+      <video id="rightVideo" controls playsinline preload="metadata"></video>
+      <div class="timings">
+        <div class="metric"><span>E2E request</span><strong id="rightE2E">—</strong></div>
+        <div class="metric"><span>RTF</span><strong id="rightRtf">—</strong></div>
+        <div class="metric"><span>Playback</span><strong id="rightTime">0.00s</strong></div>
+        <div class="metric"><span>Browser buffer</span><strong id="rightBuffer">0.00s</strong></div>
+      </div>
     </article>
+  </section>
+
+  <div class="controls">
+    <button class="primary" id="play">Play both</button>
+    <button id="pause">Pause</button>
+    <button id="restart">Restart</button>
+    <button id="audio">Audio: baseline</button>
+    <span class="drift" id="drift">drift 0 ms</span>
+    <label><input id="sync" type="checkbox" checked> keep timelines synchronized</label>
   </div>
-  <div class="controls"><button class="primary" id="play">Play both</button><button id="pause">Pause</button><button id="restart">Restart</button><button id="audio">Audio: standard</button><span class="drift" id="drift">drift 0 ms</span><label><input id="sync" type="checkbox" checked> keep timelines synchronized</label></div>
-  <p class="links">Review the <a href="README.md">experiment contract</a>, <a href="manifest.json">manifest</a>, <a href="prompt.txt">exact prompt</a>, and <a href="SHA256SUMS.txt">checksums</a>. TAEH3 and FP8/E4M3 are explicitly treated as quality boundaries.</p>
+
+  <section class="quality">
+    <div class="section-title"><h2>Pairwise quality summary</h2><p id="metricScope">Metrics load from this contrast's evidence record.</p></div>
+    <div class="quality-grid" id="qualityGrid"></div>
+  </section>
+
+  <section class="evidence" id="evidence">
+    <strong>Complete evidence</strong>
+    <a id="evidenceDownload" hidden>Download pair JSON</a>
+    <a href="manifest.json" download>Manifest</a>
+    <a href="prompt.txt">Exact prompt</a>
+    <a href="SHA256SUMS.txt">Checksums</a>
+    <span class="spacer"></span>
+    <a id="leftDownload" download>Baseline MP4</a>
+    <a id="rightDownload" download>Candidate MP4</a>
+    <span class="hash" id="pairHashes"></span>
+  </section>
+
+  <footer id="footer">All players stream the original complete MP4 artifacts with <code>preload="metadata"</code>. Codec output remains an additional lossy boundary shared by the compared lanes.</footer>
 </main>
+
 <script>
-const s=document.getElementById('standard'),o=document.getElementById('optimized'),$=id=>document.getElementById(id);let audio='standard';
-const fmt=v=>`${Number(v).toFixed(2)}s`,buffered=v=>{if(!v.buffered.length)return 0;for(let i=0;i<v.buffered.length;i++)if(v.currentTime>=v.buffered.start(i)&&v.currentTime<=v.buffered.end(i))return Math.max(0,v.buffered.end(i)-v.currentTime);return 0};
-function tick(){if($('sync').checked&&!s.paused&&!o.paused&&Math.abs(s.currentTime-o.currentTime)>.12)o.currentTime=s.currentTime;$('standardTime').textContent=fmt(s.currentTime);$('optimizedTime').textContent=fmt(o.currentTime);$('standardBuffer').textContent=fmt(buffered(s));$('optimizedBuffer').textContent=fmt(buffered(o));$('drift').textContent=`drift ${Math.round(Math.abs(s.currentTime-o.currentTime)*1000)} ms`;requestAnimationFrame(tick)}
-$('play').onclick=async()=>{if($('sync').checked)o.currentTime=s.currentTime;await Promise.allSettled([s.play(),o.play()])};$('pause').onclick=()=>{s.pause();o.pause()};$('restart').onclick=()=>{s.currentTime=0;o.currentTime=0};$('audio').onclick=()=>{audio=audio==='standard'?'optimized':'standard';s.muted=audio!=='standard';o.muted=audio!=='optimized';$('audio').textContent=`Audio: ${audio}`};o.muted=true;tick();
+'use strict';
+
+const $ = id => document.getElementById(id);
+const leftVideo = $('leftVideo');
+const rightVideo = $('rightVideo');
+let activeAudio = 'left';
+let state = null;
+
+const EXPECTED = [
+  { id: 'taeh3_at_bf16', label: 'TAEH3 at BF16', hint: 'q0d0 → q0d1' },
+  { id: 'taeh3_at_fp8', label: 'TAEH3 at FP8/E4M3', hint: 'q1d0 → q1d1' },
+  { id: 'fp8_e4m3_at_full_vae', label: 'FP8/E4M3 at full VAE', hint: 'q0d0 → q1d0' },
+  { id: 'fp8_e4m3_at_taeh3', label: 'FP8/E4M3 at TAEH3', hint: 'q0d1 → q1d1' },
+  { id: 'combined', label: 'Combined diagonal', hint: 'q0d0 → q1d1' },
+];
+
+const FACTOR_LABELS = {
+  linear_compute: 'DiT linear compute',
+  precision_stack: 'DiT + QKV precision axis',
+  qkv_transport: 'QKV transport',
+  video_decoder: 'Video decoder',
+  decoder_dtype: 'Decoder dtype',
+  vsa_kernel: 'VSA kernel',
+  reverse_o: 'Reverse-O bundle',
+  rdma: 'Ulysses transport',
+  audio_decode: 'Audio decode placement',
+  omp_threads: 'OMP threads / worker',
+};
+
+const V1_FALLBACK = {
+  schema_version: 1,
+  scene: 'Moon Teahouse Signal',
+  request: { seed: 1101 },
+  media: { duration_seconds: 15.083333, video: { frames: 362, width: 1280, height: 704, fps: 24 } },
+  artifacts: {
+    standard: {
+      label: 'Standard VSA + FastH3 four-step',
+      file: 'videos/standard-vsa4-bf16-full-vae.mp4',
+      bytes: 23853250,
+      request_e2e_seconds: 27.994654,
+      request_rtf: 1.855999,
+      stack: ['BF16 main DiT', 'BF16 QKV transport', 'full H3 video VAE'],
+      factors: { precision_stack: 'q0 · BF16/BF16 wire', linear_compute: 'BF16', qkv_transport: 'BF16', video_decoder: 'd0 · full H3 VAE', decoder_dtype: 'released precision', vsa_kernel: 'CuTeDSL #4944', reverse_o: 'disabled', rdma: 'RDMA Q/K producer-direct' },
+    },
+    optimized: {
+      label: 'Optimized real-time serving stack',
+      file: 'videos/optimized-d6-realtime-stack.mp4',
+      bytes: 23838235,
+      first_request_e2e_seconds: 22.367,
+      first_request_rtf: 1.482895,
+      stack: ['all-main FP8', 'E4M3 QKV', 'CuTeDSL VSA', 'reverse-O bundle', 'persistent RDMA', 'TAEH3 FP16'],
+      factors: { precision_stack: 'q1 · all-main FP8/E4M3 wire', linear_compute: 'all-main FP8', qkv_transport: 'E4M3', video_decoder: 'd1 · TAEH3', decoder_dtype: 'FP16', vsa_kernel: 'CuTeDSL #4944', reverse_o: 'enabled', rdma: 'persistent registered', audio_decode: 'cross-rank' },
+    },
+  },
+};
+
+function objectEntries(value) {
+  if (Array.isArray(value)) return value.map((item, index) => [item.id || `artifact-${index}`, item]);
+  return Object.entries(value || {});
+}
+
+function firstDefined(...values) {
+  return values.find(value => value !== undefined && value !== null);
+}
+
+function normalizeArtifact(id, raw, mediaSeconds) {
+  const timing = raw.timing || {};
+  const e2e = firstDefined(timing.e2e_seconds, timing.request_e2e_seconds, raw.request_e2e_seconds, raw.first_request_e2e_seconds);
+  const rtf = firstDefined(timing.rtf, timing.request_rtf, raw.request_rtf, raw.first_request_rtf, e2e && mediaSeconds ? e2e / mediaSeconds : null);
+  return {
+    ...raw,
+    id,
+    label: raw.label || raw.name || id,
+    file: raw.file || raw.video_file || raw.url,
+    detail: raw.detail || raw.description || (Array.isArray(raw.stack) ? raw.stack.join(' · ') : ''),
+    factors: raw.factors || raw.factor_state || raw.factor_states || {},
+    e2e,
+    rtf,
+  };
+}
+
+function normalizeContrast(raw, index) {
+  const metrics = raw.metrics || raw.quality_summary || raw.summary || {};
+  const evidence = raw.evidence || {};
+  return {
+    ...raw,
+    id: raw.id || `contrast-${index}`,
+    label: raw.label || raw.name || `Contrast ${index + 1}`,
+    description: raw.description || raw.note || '',
+    kind: raw.kind || (raw.factor ? 'single-factor' : 'combined'),
+    factor: raw.factor || raw.changed_factor || null,
+    left: raw.baseline || raw.left || raw.a || raw.artifact_a,
+    right: raw.candidate || raw.right || raw.b || raw.artifact_b,
+    metrics,
+    metricScope: raw.metric_scope || metrics.scope || '',
+    evidenceFile: raw.evidence_file || raw.evidence_url || evidence.file || evidence.url || null,
+  };
+}
+
+function normalizeManifest(raw) {
+  const manifest = raw && raw.artifacts ? raw : V1_FALLBACK;
+  const mediaSeconds = Number(manifest.media?.duration_seconds || 15.083333);
+  const schemaV1 = Number(manifest.schema_version || 1) < 2;
+  const artifacts = Object.fromEntries(objectEntries(manifest.artifacts || manifest.variants).map(([id, artifact]) => {
+    const legacyDefaults = schemaV1 ? (V1_FALLBACK.artifacts[id] || {}) : {};
+    const merged = {
+      ...legacyDefaults,
+      ...artifact,
+      factors: artifact.factors || legacyDefaults.factors || {},
+    };
+    return [id, normalizeArtifact(id, merged, mediaSeconds)];
+  }));
+  let contrasts = (manifest.contrasts || manifest.quality?.contrasts || manifest.ab_tests || []).map(normalizeContrast);
+  const isV1 = schemaV1 || contrasts.length === 0;
+  if (isV1 && artifacts.standard && artifacts.optimized) {
+    contrasts = [{
+      id: 'combined',
+      label: 'Combined stack (v1)',
+      description: 'Legacy manifest comparison. FP8/E4M3 and TAEH3 are combined, so this pair does not attribute quality change to one factor.',
+      kind: 'combined',
+      factor: null,
+      left: 'standard',
+      right: 'optimized',
+      metrics: {},
+      evidenceFile: null,
+    }];
+  }
+  return { manifest, artifacts, contrasts, mediaSeconds, isV1 };
+}
+
+function expectedSlot(contrast) {
+  if (contrast.kind === 'combined' || contrast.id === 'combined') return EXPECTED[4];
+  const id = String(contrast.id).replaceAll('-', '_');
+  return EXPECTED.find(slot => slot.id === id) || null;
+}
+
+function buildContrastButtons() {
+  const nav = $('switcher');
+  const rungNav = $('rungSwitcher');
+  nav.replaceChildren();
+  rungNav.replaceChildren();
+  const bySlot = new Map();
+  const extras = [];
+  for (const contrast of state.contrasts) {
+    const slot = expectedSlot(contrast);
+    if (slot && !bySlot.has(slot.id)) bySlot.set(slot.id, contrast);
+    else extras.push(contrast);
+  }
+  for (const slot of EXPECTED) {
+    const contrast = bySlot.get(slot.id);
+    const button = document.createElement('button');
+    button.className = 'contrast-button';
+    button.type = 'button';
+    button.disabled = !contrast;
+    button.dataset.contrast = contrast?.id || '';
+    button.append(document.createTextNode(contrast?.label || slot.label));
+    const hint = document.createElement('span');
+    hint.textContent = contrast ? (contrast.kind === 'combined' ? 'all declared factors' : slot.hint) : `${slot.hint} · evidence pending`;
+    button.append(hint);
+    if (contrast) button.addEventListener('click', () => selectContrast(contrast.id));
+    nav.append(button);
+  }
+  for (const contrast of extras) {
+    const button = document.createElement('button');
+    button.className = 'contrast-button';
+    button.type = 'button';
+    button.dataset.contrast = contrast.id;
+    button.textContent = contrast.label;
+    button.addEventListener('click', () => selectContrast(contrast.id));
+    const hint = document.createElement('span');
+    hint.textContent = contrast.description || humanFactor(contrast.factor || 'diagnostic rung');
+    button.append(hint);
+    rungNav.append(button);
+  }
+  $('rungSection').hidden = extras.length === 0;
+}
+
+function humanFactor(key) {
+  return FACTOR_LABELS[key] || String(key).replaceAll('_', ' ').replace(/\b\w/g, char => char.toUpperCase());
+}
+
+function renderFactors(left, right, contrast) {
+  const board = $('factorBoard');
+  board.replaceChildren();
+  const keys = [...new Set([...Object.keys(left.factors), ...Object.keys(right.factors)])];
+  if (!keys.length) {
+    const item = document.createElement('div');
+    item.className = 'factor pending';
+    item.textContent = 'Factor states are not present in this manifest revision.';
+    board.append(item);
+    return;
+  }
+  for (const key of keys) {
+    const a = String(firstDefined(left.factors[key], 'shared'));
+    const b = String(firstDefined(right.factors[key], 'shared'));
+    const changed = a !== b;
+    const item = document.createElement('div');
+    item.className = `factor${changed ? ' changed' : ''}`;
+    const isolated = new Set([contrast.factor, ...(contrast.changed_factors || [])]).has(key);
+    item.innerHTML = `<div class="factor-name">${escapeHtml(humanFactor(key))}${isolated ? ' · isolated' : ''}</div><div class="factor-values"><span>${escapeHtml(a)}</span><b class="factor-arrow">${changed ? '→' : '='}</b><span>${escapeHtml(b)}</span></div>`;
+    board.append(item);
+  }
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
+}
+
+function formatSeconds(value) {
+  return Number.isFinite(Number(value)) ? `${Number(value).toFixed(3)}s` : '—';
+}
+
+function formatRtf(value) {
+  return Number.isFinite(Number(value)) ? Number(value).toFixed(3) : '—';
+}
+
+function formatBytes(value) {
+  return Number.isFinite(Number(value)) ? `${(Number(value) / 1048576).toFixed(1)} MiB` : 'MP4';
+}
+
+function shortHash(value) {
+  return value ? `${String(value).slice(0, 10)}…${String(value).slice(-8)}` : 'hash pending';
+}
+
+function attachVideo(video, artifact) {
+  video.pause();
+  video.removeAttribute('src');
+  video.load();
+  if (artifact.file) {
+    video.src = artifact.file;
+    video.preload = 'metadata';
+    video.load();
+  }
+}
+
+function qualityGroup(metrics, name) {
+  const aliases = {
+    rgb: ['rgb', 'decoded_rgb'],
+    yuv: ['yuv', 'decoded_yuv', 'yuv420'],
+    temporal: ['temporal', 'motion', 'frame_delta'],
+    audio: ['audio', 'decoded_audio'],
+  };
+  for (const key of aliases[name]) if (metrics?.[key]) return metrics[key];
+  return null;
+}
+
+function metricLabel(key) {
+  const labels = { psnr_db: 'PSNR', ssim: 'SSIM', lpips: 'LPIPS', tlpips: 'tLPIPS', snr_db: 'SNR', rmse: 'RMSE', max_abs: 'max |Δ|', bit_exact: 'PCM', byte_exact: 'bytes', mean_delta_psnr_db: 'Δ-frame PSNR', delta_psnr_db: 'Δ-frame PSNR', temporal_ssim: 'temporal SSIM' };
+  return labels[key] || humanFactor(key);
+}
+
+function metricValue(key, value) {
+  if (typeof value === 'boolean') return value ? 'bit-exact' : 'different';
+  if (!Number.isFinite(Number(value))) return String(value ?? '—');
+  const number = Number(value);
+  if (key.includes('psnr') || key === 'snr_db') return `${number.toFixed(3)} dB`;
+  if (key.includes('ssim') || key.includes('lpips')) return number.toFixed(6);
+  return Math.abs(number) < .001 && number !== 0 ? number.toExponential(3) : number.toFixed(6);
+}
+
+function renderQuality(contrast) {
+  const grid = $('qualityGrid');
+  grid.replaceChildren();
+  for (const name of ['rgb', 'yuv', 'temporal', 'audio']) {
+    const card = document.createElement('article');
+    card.className = 'quality-card';
+    const title = document.createElement('h3');
+    title.textContent = name === 'yuv' ? 'Decoded YUV' : name === 'rgb' ? 'Decoded RGB' : name[0].toUpperCase() + name.slice(1);
+    card.append(title);
+    const group = qualityGroup(contrast.metrics, name);
+    if (!group || typeof group !== 'object') {
+      const pending = document.createElement('p');
+      pending.className = 'pending';
+      pending.textContent = state.isV1 ? 'Not available in schema v1. Upgrade manifest/evidence before attribution.' : 'Pending for this exact artifact pair.';
+      card.append(pending);
+    } else {
+      const values = document.createElement('div');
+      values.className = 'quality-values';
+      const entries = Object.entries(group).filter(([, value]) => !Array.isArray(value) && (typeof value !== 'object' || value === null)).slice(0, 4);
+      if (!entries.length) values.innerHTML = '<span class="pending">Summary is in the full evidence file.</span>';
+      for (const [key, value] of entries) {
+        const item = document.createElement('div');
+        item.className = 'quality-value';
+        item.innerHTML = `<span>${escapeHtml(metricLabel(key))}</span><strong>${escapeHtml(metricValue(key, value))}</strong>`;
+        values.append(item);
+      }
+      card.append(values);
+    }
+    grid.append(card);
+  }
+  $('metricScope').textContent = contrast.metricScope || 'Pairwise decoded-media diagnostics; inspect the complete videos for semantic, motion, speech, and A/V-sync quality.';
+}
+
+function setTiming(element, value, rtf = false) {
+  element.textContent = rtf ? formatRtf(value) : formatSeconds(value);
+  element.className = Number(value) < (rtf ? 1 : state.mediaSeconds) ? 'good' : Number.isFinite(Number(value)) ? 'warn' : '';
+}
+
+function selectContrast(id) {
+  const contrast = state.contrasts.find(item => item.id === id);
+  if (!contrast) return;
+  const left = state.artifacts[contrast.left];
+  const right = state.artifacts[contrast.right];
+  if (!left || !right) {
+    $('loadError').style.display = 'block';
+    $('loadError').textContent = `Manifest error: contrast “${contrast.label}” references a missing artifact.`;
+    return;
+  }
+  document.querySelectorAll('.contrast-button').forEach(button => button.classList.toggle('active', button.dataset.contrast === id));
+  $('contrastTitle').textContent = contrast.label;
+  $('contrastDescription').textContent = contrast.description || (contrast.factor ? `Only ${humanFactor(contrast.factor)} changes in this declared pair.` : 'All listed optimization factors are combined in this end-to-end pair.');
+  $('contrastKind').textContent = contrast.kind === 'combined' ? 'combined' : 'single factor';
+  $('contrastKind').className = `kind${contrast.kind === 'combined' ? ' combined' : ''}`;
+  $('leftLabel').textContent = left.label;
+  $('rightLabel').textContent = right.label;
+  $('leftDetail').textContent = left.detail;
+  $('rightDetail').textContent = right.detail;
+  $('leftSize').textContent = formatBytes(left.bytes);
+  $('rightSize').textContent = formatBytes(right.bytes);
+  setTiming($('leftE2E'), left.e2e);
+  setTiming($('rightE2E'), right.e2e);
+  setTiming($('leftRtf'), left.rtf, true);
+  setTiming($('rightRtf'), right.rtf, true);
+  attachVideo(leftVideo, left);
+  attachVideo(rightVideo, right);
+  activeAudio = 'left';
+  leftVideo.muted = false;
+  rightVideo.muted = true;
+  $('audio').textContent = 'Audio: baseline';
+  $('leftDownload').href = left.file || '#';
+  $('rightDownload').href = right.file || '#';
+  $('pairHashes').textContent = `${shortHash(left.sha256)} ↔ ${shortHash(right.sha256)}`;
+  $('evidenceDownload').hidden = !contrast.evidenceFile;
+  if (contrast.evidenceFile) {
+    $('evidenceDownload').href = contrast.evidenceFile;
+    $('evidenceDownload').download = '';
+  }
+  renderFactors(left, right, contrast);
+  renderQuality(contrast);
+}
+
+function bufferedAhead(video) {
+  for (let index = 0; index < video.buffered.length; index++) {
+    if (video.currentTime >= video.buffered.start(index) && video.currentTime <= video.buffered.end(index)) return Math.max(0, video.buffered.end(index) - video.currentTime);
+  }
+  return 0;
+}
+
+function tick() {
+  if ($('sync').checked && !leftVideo.paused && !rightVideo.paused && Math.abs(leftVideo.currentTime - rightVideo.currentTime) > .12) rightVideo.currentTime = leftVideo.currentTime;
+  $('leftTime').textContent = formatSeconds(leftVideo.currentTime);
+  $('rightTime').textContent = formatSeconds(rightVideo.currentTime);
+  $('leftBuffer').textContent = formatSeconds(bufferedAhead(leftVideo));
+  $('rightBuffer').textContent = formatSeconds(bufferedAhead(rightVideo));
+  $('drift').textContent = `drift ${Math.round(Math.abs(leftVideo.currentTime - rightVideo.currentTime) * 1000)} ms`;
+  requestAnimationFrame(tick);
+}
+
+async function boot() {
+  let raw;
+  try {
+    const response = await fetch('manifest.json', { cache: 'no-store' });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    raw = await response.json();
+  } catch (error) {
+    raw = V1_FALLBACK;
+    $('loadError').style.display = 'block';
+    $('loadError').textContent = `manifest.json could not be loaded (${error.message}); showing the embedded legacy pair.`;
+  }
+  state = normalizeManifest(raw);
+  const request = state.manifest.request || {};
+  const video = state.manifest.media?.video || {};
+  $('scene').textContent = state.manifest.scene || 'Moon Teahouse Signal';
+  $('contract').textContent = `seed ${request.seed ?? 1101} · ${video.frames ?? 362} frames · ${video.width ?? 1280}×${video.height ?? 704} · ${video.fps ?? 24} fps · ${state.mediaSeconds.toFixed(6)} s`;
+  const publication = state.manifest.status || {};
+  if (typeof publication.factorial_complete === 'boolean') {
+    const exactDecoder = state.contrasts.find(item => item.id === 'taeh3_fp32_at_bf16');
+    const pendingCount = Array.isArray(publication.pending_primary_contrasts) ? publication.pending_primary_contrasts.length : 0;
+    $('progress').hidden = false;
+    $('progress').textContent = publication.factorial_complete
+      ? 'Publication status: the exact 2×2 factorial matrix is complete.'
+      : `Publication status: the exact 2×2 factorial matrix is in progress.${exactDecoder ? ` Available partial result: ${exactDecoder.label}, under Diagnostic rungs.` : ''}${pendingCount ? ` Pending primary edges: ${pendingCount}.` : ''}`;
+  }
+  if (state.isV1) {
+    $('notice').innerHTML = '<strong>Schema v1 fallback:</strong> the existing complete-video comparison remains available, but it combines FP8/E4M3 and TAEH3. Its optimized MP4 took 22.367 s as a no-warmup request with lazy compilation. A separate 14.561 s steady-state mean used another hash-locked prompt and is not attributed to this artifact. Sequential cells can inherit host/disk/JIT caches and use unlocked clocks, so artifact E2E/RTF must not be converted into pairwise factor speedups. Full-H3-VAE SM120 exact-op raw-output equivalence under full SP8 remains pending.';
+  }
+  buildContrastButtons();
+  const initial = state.contrasts.find(item => item.id === 'combined') || state.contrasts[0];
+  if (initial) selectContrast(initial.id);
+}
+
+$('play').addEventListener('click', async () => {
+  if ($('sync').checked) rightVideo.currentTime = leftVideo.currentTime;
+  await Promise.allSettled([leftVideo.play(), rightVideo.play()]);
+});
+$('pause').addEventListener('click', () => { leftVideo.pause(); rightVideo.pause(); });
+$('restart').addEventListener('click', () => { leftVideo.currentTime = 0; rightVideo.currentTime = 0; });
+$('audio').addEventListener('click', () => {
+  activeAudio = activeAudio === 'left' ? 'right' : 'left';
+  leftVideo.muted = activeAudio !== 'left';
+  rightVideo.muted = activeAudio !== 'right';
+  $('audio').textContent = `Audio: ${activeAudio === 'left' ? 'baseline' : 'candidate'}`;
+});
+
+boot();
+tick();
 </script>
 </body>
 </html>

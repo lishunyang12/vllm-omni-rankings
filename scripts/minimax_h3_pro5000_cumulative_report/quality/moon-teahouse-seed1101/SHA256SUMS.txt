@@ -1,3 +1,9 @@
 52e3f008da700b66964908dd624792c5934bb118512435a2551d1110953724f8  videos/optimized-d6-realtime-stack.mp4
 ab41320e81af278f9c4799a98627119f7b4286bf84a511ddc67f7b9dba997c2c  videos/standard-vsa4-bf16-full-vae.mp4
+1e96230b7b0f028e1e411568e15e5c83338d23fa612ab206bb8c7c3f24eceec5  videos/all-main-fp8-bf16-wire-full-vae-observer.mp4
+b5d7d45c1f8bec20c0ad7c06ce99807bc0dc502f619504eb142f6e49db74f7b7  videos/q0d0-bf16-full-h3-vae.mp4
+5481bd3917fce822af8dfd058c3065e48c70d1b40b328437cdb6768e971f3d21  videos/q0d1-bf16-taeh3-fp32.mp4
+fe43137de4d8cffeb488e35ebd3c7538e3de2111f777efe6c64ecb65f789c6be  metrics/combined-bf16-full-vae-vs-realtime-stack.json
+cd04715e67778cc9d3c674a92b73b50ab0f73131917012e55a4fd86a5c955824  metrics/precision-bf16-vs-all-main-fp8-bf16-wire.json
+05a14b7d2c6746e1cf99603cb135ece651edc8ede65a380eb08f9972c1cfd0be  metrics/taeh3-fp32-at-bf16.json
 42f62c2ecb9f90880041d51d3fa38fa6c236945ba80b6a862e080151824a50c2  prompt.txt

@@ -1,12 +1,25 @@
 {
-  "schema_version": 1,
-  "created_at": "2026-09-08T15:30:15+08:00",
+  "schema_version": 2,
+  "experiment_id": "moon-teahouse-taeh3-fp8-e4m3-factorial",
+  "created_at": "2026-09-08T20:20:00+08:00",
   "scene": "Moon Teahouse Signal",
   "framework": "vLLM-Omni",
+  "status": {
+    "factorial_complete": false,
+    "reason": "Exact single-factor artifacts are being generated; four GPUs are temporarily held by an unrelated benchctl campaign.",
+    "available_primary_contrasts": ["combined"],
+    "pending_primary_contrasts": [
+      "taeh3_at_bf16",
+      "taeh3_at_fp8",
+      "fp8_e4m3_at_full_vae",
+      "fp8_e4m3_at_taeh3"
+    ]
+  },
   "hardware": {
     "count": 8,
     "gpu": "NVIDIA RTX PRO 5000 Blackwell",
-    "architecture": "SM120"
+    "architecture": "SM120",
+    "clock_policy": "node-default/unlocked"
   },
   "request": {
     "task": "t2va",
@@ -29,6 +42,7 @@
     "duration_seconds": 15.083333,
     "video": {
       "codec": "h264",
+      "pixel_format": "yuv420p",
       "frames": 362,
       "width": 1280,
       "height": 704,
@@ -37,66 +51,228 @@
     "audio": {
       "codec": "aac",
       "channels": 2,
+      "channel_layout": "stereo",
       "sample_rate_hz": 32000,
+      "decoded_sample_frames": 482400,
       "duration_seconds": 15.075
     }
   },
-  "shared_model": {
+  "fixed_contract": {
     "student": "FastH3 VSA/Data-Free",
     "transformer_evaluations": 4,
     "vsa_tile_size": 64,
     "vsa_topk": 162,
     "vsa_video_tiles": 1620,
     "eligible_video_attention_retained_fraction": 0.1,
-    "adapter_sha256": "42dc502a2078f166c396a1fa75f29728d1844363652d345d5ef3e2b444ed6470"
+    "adapter_sha256": "42dc502a2078f166c396a1fa75f29728d1844363652d345d5ef3e2b444ed6470",
+    "tensor_parallel": 1,
+    "sequence_parallel": 8,
+    "ulysses_transport": "FlashInfer RDMA",
+    "qk_producer_direct": true,
+    "vsa_kernel": "FlashInfer PR #4944 CuTeDSL SM120",
+    "codec": "H.264 yuv420p + stereo AAC",
+    "factorial_generation_policy": "one no-warmup request per cell"
+  },
+  "factors": {
+    "precision": {
+      "q0": "BF16 main-DiT linear execution and BF16 QKV transport",
+      "q1": "all-main FP8 linear execution and prompt-bound calibrated E4M3 QKV transport"
+    },
+    "decoder": {
+      "d0": "full H3 video VAE",
+      "d1": "TAEH3 FP16"
+    }
   },
   "artifacts": {
-    "standard": {
+    "q0d0_bf16_full_vae": {
+      "label": "Q0D0 · BF16/BF16 + full H3 VAE",
+      "file": "videos/q0d0-bf16-full-h3-vae.mp4",
+      "bytes": 23852128,
+      "sha256": "b5d7d45c1f8bec20c0ad7c06ce99807bc0dc502f619504eb142f6e49db74f7b7",
+      "detail": "Exact factorial control: BF16 main-DiT linears, BF16 QKV wire, common reverse-O bundle, full H3 VAE PP8",
+      "timing": {
+        "e2e_seconds": 39.366,
+        "rtf": 2.609901,
+        "method": "one no-warmup request; shared JIT cache and unlocked clocks",
+        "performance_eligible": false
+      },
+      "factors": {
+        "precision_stack": "q0 · BF16/BF16 wire",
+        "linear_compute": "BF16",
+        "qkv_transport": "BF16",
+        "video_decoder": "d0 · full H3 VAE",
+        "decoder_dtype": "released mixed precision",
+        "vae_parallelism": "PP8",
+        "vsa_kernel": "CuTeDSL #4944",
+        "reverse_o": "O-bundle kmax 279",
+        "rdma": "nonpersistent RDMA; release after denoise",
+        "audio_decode": "standard route",
+        "output_route": "GPU uint8 + pinned D2H + CPU libx264"
+      }
+    },
+    "q0d1_taeh3_fp32": {
+      "label": "Q0D1 diagnostic · BF16/BF16 + TAEH3 FP32",
+      "file": "videos/q0d1-bf16-taeh3-fp32.mp4",
+      "bytes": 23825466,
+      "sha256": "5481bd3917fce822af8dfd058c3065e48c70d1b40b328437cdb6768e971f3d21",
+      "detail": "Exact decoder diagnostic: the Q0 latent path is unchanged; full H3 VAE PP8 is replaced by rank-0 TAEH3 FP32 chunk-5 decode",
+      "timing": {
+        "e2e_seconds": 28.783,
+        "rtf": 1.908265,
+        "method": "one no-warmup request; shared JIT cache and unlocked clocks",
+        "performance_eligible": false
+      },
+      "factors": {
+        "precision_stack": "q0 · BF16/BF16 wire",
+        "linear_compute": "BF16",
+        "qkv_transport": "BF16",
+        "video_decoder": "TAEH3",
+        "decoder_dtype": "FP32",
+        "vae_parallelism": "rank 0 / VAE1",
+        "vsa_kernel": "CuTeDSL #4944",
+        "reverse_o": "O-bundle kmax 279",
+        "rdma": "nonpersistent RDMA; release after denoise",
+        "audio_decode": "standard route",
+        "output_route": "GPU uint8 + pinned D2H + CPU libx264"
+      }
+    },
+    "legacy_q0d0": {
+      "label": "BF16 + full H3 VAE (existing control)",
       "file": "videos/standard-vsa4-bf16-full-vae.mp4",
       "bytes": 23853250,
       "sha256": "ab41320e81af278f9c4799a98627119f7b4286bf84a511ddc67f7b9dba997c2c",
-      "request_e2e_seconds": 27.994654,
-      "request_rtf": 1.855999,
-      "stack": ["BF16 main DiT", "BF16 QKV transport", "full H3 video VAE"]
+      "detail": "BF16 main DiT · BF16 QKV transport · full H3 video VAE; generated before the common O-bundle factorial rerun",
+      "timing": {
+        "e2e_seconds": 27.994654,
+        "rtf": 1.855999,
+        "method": "artifact request after one warm-up"
+      },
+      "factors": {
+        "precision_stack": "q0 · BF16/BF16 wire",
+        "linear_compute": "BF16",
+        "qkv_transport": "BF16",
+        "video_decoder": "d0 · full H3 VAE",
+        "decoder_dtype": "released mixed precision",
+        "vsa_kernel": "CuTeDSL #4944",
+        "reverse_o": "disabled",
+        "rdma": "RDMA Q/K producer-direct",
+        "audio_decode": "standard route"
+      }
     },
-    "optimized": {
+    "fp8_bf16_wire_observer": {
+      "label": "all-main FP8 + BF16 QKV wire",
+      "file": "videos/all-main-fp8-bf16-wire-full-vae-observer.mp4",
+      "bytes": 24252345,
+      "sha256": "1e96230b7b0f028e1e411568e15e5c83338d23fa612ab206bb8c7c3f24eceec5",
+      "detail": "all-main FP8 linear execution · BF16 QKV wire · validation observer · full H3 video VAE",
+      "timing": {
+        "e2e_seconds": 32.37,
+        "rtf": 2.145,
+        "method": "instrumented validation request; not a performance result"
+      },
+      "factors": {
+        "precision_stack": "intermediate · FP8/BF16 wire",
+        "linear_compute": "all-main FP8",
+        "qkv_transport": "BF16 + observer",
+        "video_decoder": "d0 · full H3 VAE",
+        "decoder_dtype": "released mixed precision",
+        "vsa_kernel": "CuTeDSL #4944",
+        "reverse_o": "disabled",
+        "rdma": "RDMA Q/K producer-direct",
+        "audio_decode": "standard route"
+      }
+    },
+    "legacy_q1d1_realtime": {
+      "label": "FP8/E4M3 + TAEH3 FP16 (real-time stack)",
       "file": "videos/optimized-d6-realtime-stack.mp4",
       "bytes": 23838235,
       "sha256": "52e3f008da700b66964908dd624792c5934bb118512435a2551d1110953724f8",
-      "no_warmup": true,
-      "first_request_e2e_seconds": 22.367,
-      "first_request_rtf": 1.482895,
-      "separate_steady_state_qualification": {
-        "same_geometry_different_hash_locked_prompt": true,
-        "samples_seconds": [14.576, 14.555, 14.551],
-        "mean_seconds": 14.561,
-        "mean_rtf": 0.96537
+      "detail": "all-main FP8 · calibrated E4M3 QKV · reverse-O bundle · persistent RDMA · TAEH3 FP16 · cross-rank audio",
+      "timing": {
+        "e2e_seconds": 22.367,
+        "rtf": 1.482895,
+        "method": "no-warmup first request including lazy compilation",
+        "separate_same_geometry_steady_state_mean_seconds": 14.561,
+        "separate_same_geometry_steady_state_mean_rtf": 0.96537,
+        "steady_state_prompt_is_different": true
       },
-      "stack": [
-        "all-main FP8 linear execution",
-        "prompt-bound calibrated E4M3 QKV transport",
-        "FlashInfer PR #4944 CuTeDSL VSA",
-        "reverse-O bundle",
-        "persistent registered RDMA",
-        "TAEH3 FP16",
-        "28 OMP threads per worker",
-        "rank-1 Audio VAE / rank-0 TAEH3 parallel decode"
-      ],
+      "factors": {
+        "precision_stack": "q1 · all-main FP8/E4M3 wire",
+        "linear_compute": "all-main FP8",
+        "qkv_transport": "E4M3",
+        "video_decoder": "d1 · TAEH3",
+        "decoder_dtype": "FP16",
+        "vsa_kernel": "CuTeDSL #4944",
+        "reverse_o": "enabled",
+        "rdma": "persistent registered RDMA",
+        "audio_decode": "cross-rank"
+      },
       "qkv_scale_sidecar_sha256": "dcf733d74dc250b0730356f8ef6b592a06a8c722e819a301af861726d65d6db3",
-      "qkv_scale_payload_sha256": "7327a8bb32e007345f4622df21d392dfd7976a858ce0480ebc02aa04ff2f27d5",
-      "qkv_validation": {
-        "covered_components": 150,
-        "expected_components": 150,
-        "nonfinite_values": 0,
-        "saturation_count": 0,
-        "peak_utilization": 0.8888888955
-      }
+      "qkv_scale_payload_sha256": "7327a8bb32e007345f4622df21d392dfd7976a858ce0480ebc02aa04ff2f27d5"
     }
   },
+  "contrasts": [
+    {
+      "id": "taeh3_fp32_at_bf16",
+      "label": "Full H3 VAE → TAEH3 FP32 at BF16",
+      "description": "Decoder-path diagnostic at fixed BF16 main-DiT execution and BF16 QKV transport. Audio is required to remain bitwise identical.",
+      "kind": "diagnostic",
+      "factor": "video_decoder",
+      "changed_factors": ["video_decoder", "decoder_dtype", "vae_parallelism"],
+      "baseline": "q0d0_bf16_full_vae",
+      "candidate": "q0d1_taeh3_fp32",
+      "evidence_file": "metrics/taeh3-fp32-at-bf16.json",
+      "metric_scope": "Complete 362-frame post-codec decoder-path diagnostics plus exact decoded-audio identity. Artifact-local one-shot E2E values are not a factor-latency A/B.",
+      "metrics": {
+        "rgb": {"psnr_db": 27.645908, "ssim": 0.840229, "p05_ssim": 0.751235, "min_ssim": 0.691435},
+        "yuv": {"psnr_db": 33.564631, "ssim": 0.943884, "p05_ssim": 0.91154, "min_ssim": 0.895118},
+        "temporal": {"derivative_mae": 5.394673, "p95_derivative_mae": 8.365815, "max_derivative_mae": 10.534949},
+        "audio": {"bit_exact": true, "snr_db": null, "snr_positive_infinite": true, "rmse": 0.0, "max_abs": 0.0}
+      }
+    },
+    {
+      "id": "combined",
+      "label": "Combined endpoint comparison",
+      "description": "FP8 linear execution, E4M3 QKV transport, TAEH3 and several lossless scheduling changes move together; this diagonal is intentionally not attributed to one factor.",
+      "kind": "combined",
+      "baseline": "legacy_q0d0",
+      "candidate": "legacy_q1d1_realtime",
+      "changed_factors": ["precision_stack", "linear_compute", "qkv_transport", "video_decoder", "decoder_dtype", "reverse_o", "rdma", "audio_decode"],
+      "evidence_file": "metrics/combined-bf16-full-vae-vs-realtime-stack.json",
+      "metric_scope": "Complete 362-frame post-codec diagnostics. Low same-seed similarity indicates trajectory divergence, not a human quality score.",
+      "metrics": {
+        "rgb": {"psnr_db": 13.800234, "ssim": 0.423268, "p05_ssim": 0.247059, "min_ssim": 0.231875},
+        "yuv": {"psnr_db": 19.737589, "ssim": 0.785409, "p05_ssim": 0.723445, "min_ssim": 0.711611},
+        "temporal": {"derivative_mae": 13.273359, "p95_derivative_mae": 22.557153, "max_derivative_mae": 63.015424},
+        "audio": {"bit_exact": false, "snr_db": 4.369812, "rmse": 0.074459, "max_abs": 0.729132}
+      }
+    },
+    {
+      "id": "fp8_compute_bf16_wire_diagnostic",
+      "label": "FP8 compute only · BF16 wire",
+      "description": "Diagnostic rung: BF16 main-DiT compute changes to all-main FP8 while QKV transport and the full H3 VAE remain BF16/full. Observer overhead invalidates latency comparison but not the emitted artifact.",
+      "kind": "diagnostic",
+      "factor": "linear_compute",
+      "changed_factors": ["precision_stack", "linear_compute"],
+      "baseline": "legacy_q0d0",
+      "candidate": "fp8_bf16_wire_observer",
+      "evidence_file": "metrics/precision-bf16-vs-all-main-fp8-bf16-wire.json",
+      "metric_scope": "Complete 362-frame post-codec trajectory-difference diagnostics; PSNR/SSIM do not establish perceptual degradation.",
+      "metrics": {
+        "rgb": {"psnr_db": 13.904671, "ssim": 0.428363, "p05_ssim": 0.308389, "min_ssim": 0.227576},
+        "yuv": {"psnr_db": 19.888146, "ssim": 0.779656, "p05_ssim": 0.727727, "min_ssim": 0.710482},
+        "temporal": {"derivative_mae": 14.394908, "p95_derivative_mae": 22.73769, "max_derivative_mae": 65.152527},
+        "audio": {"bit_exact": false, "snr_db": 7.678569, "rmse": 0.050872, "max_abs": 0.68599}
+      }
+    }
+  ],
   "quality_contract": {
     "shared_student_is_approximate_vs_base_h3": true,
-    "optimized_fp8_e4m3_is_numerically_approximate": true,
-    "optimized_taeh3_is_lossy_vs_full_h3_vae": true,
+    "fp8_e4m3_is_numerically_approximate": true,
+    "taeh3_is_lossy_vs_full_h3_vae": true,
+    "decoder_edges_require_bitwise_identical_decoded_audio": true,
+    "precision_edges_allow_joint_audio_video_trajectory_change": true,
+    "psnr_ssim_are_difference_diagnostics_not_quality_admission": true,
     "human_review_required": true
   }
 }
