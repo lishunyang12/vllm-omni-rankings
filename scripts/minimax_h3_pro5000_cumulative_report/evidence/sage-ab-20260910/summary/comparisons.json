@@ -1,0 +1,30 @@
+{
+  "normal": {
+    "bf16_s": 27.19,
+    "sage_s": 25.905,
+    "delta_s": -1.2850000000000001,
+    "latency_reduction_percent": 4.726002206693638,
+    "speedup": 1.049604323489674
+  },
+  "stages": {
+    "bf16_s": 27.202,
+    "sage_s": 25.929,
+    "delta_s": -1.2730000000000032,
+    "latency_reduction_percent": 4.6798029556650365,
+    "speedup": 1.0490956072351423
+  },
+  "nsys": {
+    "bf16_s": 27.811,
+    "sage_s": 26.599,
+    "delta_s": -1.2119999999999997,
+    "latency_reduction_percent": 4.357987846535543,
+    "speedup": 1.0455656227677732
+  },
+  "dit_untraced_stage_profiler": {
+    "bf16_s": 20.527692,
+    "sage_s": 19.115817,
+    "delta_s": -1.4118749999999984,
+    "latency_reduction_percent": 6.877904247589054,
+    "speedup": 1.07385899331428
+  }
+}

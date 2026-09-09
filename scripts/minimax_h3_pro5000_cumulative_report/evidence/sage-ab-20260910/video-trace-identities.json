@@ -1,0 +1,12 @@
+[
+  {
+    "mode": "bf16",
+    "nsys_video_sha256": "999c3e6596011c0ad9e9549ac923851490b9f10cd2be9efe7126a38ae86d6244",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4691",
+    "nsys_video_sha256": "1f4ddc0ca794573bb02c2b60f84d99bcc8deba9bc2e00fa81762c22bd7283eff",
+    "same_as_normal_video": true
+  }
+]

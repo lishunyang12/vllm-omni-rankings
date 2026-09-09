@@ -1,0 +1,322 @@
+[
+  {
+    "metric": "gpc",
+    "physical_gpu": 0,
+    "window": "full_capture",
+    "sample_count": 30614,
+    "max_mhz": 2377.5336,
+    "mean_mhz": 2208.770270501764,
+    "first_timestamp_ns": -175524121,
+    "last_timestamp_ns": 32427284920
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 0,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4412,
+    "max_mhz": 2376.043,
+    "mean_mhz": 2330.664550339982,
+    "first_timestamp_ns": 3722321513,
+    "last_timestamp_ns": 23759658818
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 1,
+    "window": "full_capture",
+    "sample_count": 30699,
+    "max_mhz": 2377.5358,
+    "mean_mhz": 2237.2119356184567,
+    "first_timestamp_ns": -145779923,
+    "last_timestamp_ns": 32643308670
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 1,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4370,
+    "max_mhz": 2376.7548,
+    "mean_mhz": 2359.242739153318,
+    "first_timestamp_ns": 3718816904,
+    "last_timestamp_ns": 23758955603
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 2,
+    "window": "full_capture",
+    "sample_count": 30323,
+    "max_mhz": 2377.6012,
+    "mean_mhz": 2248.189133139498,
+    "first_timestamp_ns": -231057320,
+    "last_timestamp_ns": 31938494093
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 2,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4343,
+    "max_mhz": 2377.0865,
+    "mean_mhz": 2363.643827953028,
+    "first_timestamp_ns": 3720226210,
+    "last_timestamp_ns": 23759263708
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 3,
+    "window": "full_capture",
+    "sample_count": 30435,
+    "max_mhz": 2377.4972,
+    "mean_mhz": 2189.8270964041726,
+    "first_timestamp_ns": -203829324,
+    "last_timestamp_ns": 32190930816
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 3,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4531,
+    "max_mhz": 2370.081,
+    "mean_mhz": 2267.471102913264,
+    "first_timestamp_ns": 3708286788,
+    "last_timestamp_ns": 23760483632
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 4,
+    "window": "full_capture",
+    "sample_count": 31186,
+    "max_mhz": 2585.6183,
+    "mean_mhz": 2275.2069204723916,
+    "first_timestamp_ns": -37625049,
+    "last_timestamp_ns": 33322068879
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 4,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4416,
+    "max_mhz": 2529.6106,
+    "mean_mhz": 2328.2501474411233,
+    "first_timestamp_ns": 3696942071,
+    "last_timestamp_ns": 23758987783
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 5,
+    "window": "full_capture",
+    "sample_count": 31232,
+    "max_mhz": 2590.6284,
+    "mean_mhz": 2329.3673934711833,
+    "first_timestamp_ns": 928635,
+    "last_timestamp_ns": 33490505184
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 5,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4325,
+    "max_mhz": 2532.6819,
+    "mean_mhz": 2384.0300813410404,
+    "first_timestamp_ns": 3708661522,
+    "last_timestamp_ns": 23758573160
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 6,
+    "window": "full_capture",
+    "sample_count": 30902,
+    "max_mhz": 2646.5818,
+    "mean_mhz": 2332.6824535317132,
+    "first_timestamp_ns": -114173021,
+    "last_timestamp_ns": 32772359089
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 6,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4357,
+    "max_mhz": 2577.1519,
+    "mean_mhz": 2364.229878494377,
+    "first_timestamp_ns": 3708618547,
+    "last_timestamp_ns": 23758804475
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 7,
+    "window": "full_capture",
+    "sample_count": 29840,
+    "max_mhz": 1950.0894,
+    "mean_mhz": 1946.4516051503017,
+    "first_timestamp_ns": -76136096,
+    "last_timestamp_ns": 33057025044
+  },
+  {
+    "metric": "gpc",
+    "physical_gpu": 7,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 5275,
+    "max_mhz": 1950.0724,
+    "mean_mhz": 1948.4793471658768,
+    "first_timestamp_ns": 3705558749,
+    "last_timestamp_ns": 23763663358
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 0,
+    "window": "full_capture",
+    "sample_count": 30614,
+    "max_mhz": 2166.474,
+    "mean_mhz": 1990.88798512883,
+    "first_timestamp_ns": -175524121,
+    "last_timestamp_ns": 32427284920
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 0,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4412,
+    "max_mhz": 2162.12,
+    "mean_mhz": 2121.2830763825928,
+    "first_timestamp_ns": 3722321513,
+    "last_timestamp_ns": 23759658818
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 1,
+    "window": "full_capture",
+    "sample_count": 30699,
+    "max_mhz": 2167.534,
+    "mean_mhz": 2023.1754655948728,
+    "first_timestamp_ns": -145779923,
+    "last_timestamp_ns": 32643308670
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 1,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4370,
+    "max_mhz": 2167.226,
+    "mean_mhz": 2158.4602469107554,
+    "first_timestamp_ns": 3718816904,
+    "last_timestamp_ns": 23758955603
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 2,
+    "window": "full_capture",
+    "sample_count": 30323,
+    "max_mhz": 2164.098,
+    "mean_mhz": 2032.6332194380502,
+    "first_timestamp_ns": -231057320,
+    "last_timestamp_ns": 31938494093
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 2,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4343,
+    "max_mhz": 2162.603,
+    "mean_mhz": 2148.9098818788857,
+    "first_timestamp_ns": 3720226210,
+    "last_timestamp_ns": 23759263708
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 3,
+    "window": "full_capture",
+    "sample_count": 30435,
+    "max_mhz": 2167.535,
+    "mean_mhz": 1994.1301389844916,
+    "first_timestamp_ns": -203829324,
+    "last_timestamp_ns": 32190930816
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 3,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4531,
+    "max_mhz": 2164.364,
+    "mean_mhz": 2112.661306113441,
+    "first_timestamp_ns": 3708286788,
+    "last_timestamp_ns": 23760483632
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 4,
+    "window": "full_capture",
+    "sample_count": 31186,
+    "max_mhz": 2304.277,
+    "mean_mhz": 2011.433084847143,
+    "first_timestamp_ns": -37625049,
+    "last_timestamp_ns": 33322068879
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 4,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4416,
+    "max_mhz": 2275.503,
+    "mean_mhz": 2114.1182563405796,
+    "first_timestamp_ns": 3696942071,
+    "last_timestamp_ns": 23758987783
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 5,
+    "window": "full_capture",
+    "sample_count": 31232,
+    "max_mhz": 2321.888,
+    "mean_mhz": 2039.44314348604,
+    "first_timestamp_ns": 928635,
+    "last_timestamp_ns": 33490505184
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 5,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4325,
+    "max_mhz": 2288.14,
+    "mean_mhz": 2156.37285849711,
+    "first_timestamp_ns": 3708661522,
+    "last_timestamp_ns": 23758573160
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 6,
+    "window": "full_capture",
+    "sample_count": 30902,
+    "max_mhz": 2375.161,
+    "mean_mhz": 2076.601494673581,
+    "first_timestamp_ns": -114173021,
+    "last_timestamp_ns": 32772359089
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 6,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 4357,
+    "max_mhz": 2343.236,
+    "mean_mhz": 2157.7322320403946,
+    "first_timestamp_ns": 3708618547,
+    "last_timestamp_ns": 23758804475
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 7,
+    "window": "full_capture",
+    "sample_count": 29840,
+    "max_mhz": 1798.612,
+    "mean_mhz": 1737.3984492116288,
+    "first_timestamp_ns": -76136096,
+    "last_timestamp_ns": 33057025044
+  },
+  {
+    "metric": "sys",
+    "physical_gpu": 7,
+    "window": "timestamps_inside_fine_vsa_kernels",
+    "sample_count": 5275,
+    "max_mhz": 1797.93,
+    "mean_mhz": 1786.6924123222748,
+    "first_timestamp_ns": 3705558749,
+    "last_timestamp_ns": 23763663358
+  }
+]

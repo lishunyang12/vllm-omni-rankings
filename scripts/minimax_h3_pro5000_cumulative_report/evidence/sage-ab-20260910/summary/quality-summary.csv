@@ -1,0 +1,7 @@
+metric,value
+rgb_global_psnr_db,15.288784982204373
+rgb_mean_frame_ssim,0.4439395883977901
+yuv_global_psnr_db,21.18691066178836
+yuv_mean_frame_ssim,0.7758307430939226
+audio_pcm_snr_db,2.6228587581427343
+audio_pcm_identical,False

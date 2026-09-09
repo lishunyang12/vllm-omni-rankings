@@ -14,6 +14,7 @@ formal three-run mean of **14.561 seconds**.
 - [Representative video frames](screenshots/)
 - [Nsight Systems and Nsight Compute summaries](evidence/)
 - [Raw eight-GPU GPC/SYS and NVML frequency data](evidence/nsys/gpu-frequency-20260909T122900Z/)
+- [VSA + 4-step BF16 vs Sage A/B: videos, Nsight, timings, and PR4951 assessment](evidence/sage-ab-20260910/)
 
 The final samples are `14.576 / 14.555 / 14.551` seconds. The endpoint is an
 HTTP POST through a validated 362-frame, 1280x704, 24 fps H.264 video with

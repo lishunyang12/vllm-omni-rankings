@@ -1,0 +1,94 @@
+{
+  "head_sha": "30751b2ef15776ea00256e9ba979364a1ecf39a3",
+  "specialization_field_order": [
+    "HAS_BLOCK_NUMS",
+    "BLOCK_SIZES_MODE",
+    "FULL_K64_TILES",
+    "UNIFORM_NONEMPTY",
+    "CONTIGUOUS_BLOCK_INDICES"
+  ],
+  "required_h3_tuple": [
+    1,
+    1,
+    0,
+    0,
+    0
+  ],
+  "exported_tuples": [
+    [
+      0,
+      0,
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      0,
+      1,
+      1,
+      1
+    ],
+    [
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    [
+      0,
+      1,
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      2,
+      0,
+      1,
+      1
+    ],
+    [
+      0,
+      3,
+      0,
+      1,
+      1
+    ]
+  ],
+  "matching_count": 0,
+  "h3_geometry": {
+    "batch": 1,
+    "prefix_segments": [
+      121,
+      1206
+    ],
+    "video_shape_thw": [
+      107,
+      22,
+      40
+    ],
+    "flat_video_blocks": null,
+    "selection_pattern": "coarse_topk_sorted",
+    "block_size": 64,
+    "head_dim": 128,
+    "local_heads": 7,
+    "prefix_blocks": 21,
+    "video_blocks": 1620,
+    "logical_blocks": 1641,
+    "video_topk": 162,
+    "video_active_kv_blocks": 183,
+    "tiled_rows": 105024,
+    "valid_rows": 95487,
+    "sp8_aligned_rows": 95488,
+    "ragged_blocks": 322,
+    "active_block_pairs_per_head": 330921,
+    "scheduled_density": 0.1228873463030858,
+    "scheduled_attention_flops": 4857941458944,
+    "dtype": "bfloat16",
+    "softmax_scale": 0.08838834764831845
+  },
+  "verdict": "not directly supported: missing arbitrary-index + per-row-count + ragged-block specialization"
+}
