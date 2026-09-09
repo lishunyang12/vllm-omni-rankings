@@ -26,6 +26,29 @@
     },
     "source": "results/vllm-omni-fasth3-vsa-p4d-sm120-sp8-step03-nsys-20260906T042700Z/h3-analysis.json"
   },
+  "FastH3 / all-main FP8 / BF16 wire": {
+    "scope_ms": 3730.281768,
+    "active_ms": 3712.9808975,
+    "skew_ms": 521.302619,
+    "skew_pct": 13.9749,
+    "categories": {
+      "Fine VSA": 37.4009,
+      "GEMM": 36.2135,
+      "RDMA barrier": 13.5551,
+      "VSA layout": 3.2537,
+      "Pointwise": 2.5244,
+      "Other": 7.0524
+    },
+    "vsa_stage": {
+      "mean_per_rank_ms": 1351.423463,
+      "fine_pct": 84.3394,
+      "non_fine_pct": 15.6606
+    },
+    "qkv_wire": "BF16",
+    "e4m3_qkv_wire": false,
+    "source": "evidence/nsys/vsa-step03-all-main-fp8-bf16-wire-20260909/analysis-full.json",
+    "page": "evidence/nsys/vsa-step03-all-main-fp8-bf16-wire-20260909/"
+  },
   "Quantized Q4/Q5": {
     "scope_ms": 3503.223878,
     "active_ms": 3485.2345265,

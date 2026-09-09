@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "captured_at_utc": "2026-09-09T06:21:08Z",
+  "scope": {
+    "name": "minimax_h3.denoise.step_03",
+    "domain": "vllm_omni.minimax_h3",
+    "wall_ms": 3730.281768,
+    "note": "Nsight tracing changes latency; this wall time is diagnostic and is not a serving benchmark."
+  },
+  "stack": {
+    "framework": "vLLM-Omni",
+    "hardware": "8 x RTX PRO 5000 Blackwell (SM120)",
+    "parallelism": "TP1/SP8",
+    "model": "MiniMax-H3 FL2VA + FastH3 VSA/Data-Free 4-step adapter",
+    "geometry": "1280x720 requested, 1280x704 effective, 362 frames, 24 fps",
+    "vsa": "FlashInfer PR #4944 CuTeDSL, tile 64, top-k 162",
+    "linear_compute": "all-main FP8: 250 main-block linears",
+    "qkv_wire": "BF16",
+    "e4m3_qkv_wire": false,
+    "communication": "FlashInfer PCIe/RDMA, Q/K producer-direct and reverse-O producer-direct",
+    "reverse_o": "direct O-bundle, kmax 279",
+    "clock_policy": "node-default dynamic, unlocked"
+  },
+  "vsa_stage_gpu_time": {
+    "denominator": "sum of NVTX-projected GPU time across eight ranks; stages are not added to step wall time",
+    "total_gpu_ms": 10811.387702,
+    "mean_per_rank_ms": 1351.423463,
+    "mean_per_rank_percent_of_profiled_wall": 36.228455,
+    "fine_attention": {"gpu_ms": 9118.263434, "percent_of_vsa_stage_sum": 84.339436},
+    "topk_q2k": {"gpu_ms": 533.084330, "percent_of_vsa_stage_sum": 4.930767},
+    "tile_pack": {"gpu_ms": 384.598697, "percent_of_vsa_stage_sum": 3.557348},
+    "coarse_qk_scores": {"gpu_ms": 187.757011, "percent_of_vsa_stage_sum": 1.736660},
+    "coarse_pool_qk": {"gpu_ms": 145.951258, "percent_of_vsa_stage_sum": 1.349977},
+    "output_o_bundle": {"gpu_ms": 118.455073, "percent_of_vsa_stage_sum": 1.095651},
+    "output_untile": {"gpu_ms": 117.532923, "percent_of_vsa_stage_sum": 1.087122},
+    "coarse_pv": {"gpu_ms": 98.127373, "percent_of_vsa_stage_sum": 0.907630},
+    "coarse_pool_v": {"gpu_ms": 70.842184, "percent_of_vsa_stage_sum": 0.655255},
+    "coarse_softmax": {"gpu_ms": 36.775419, "percent_of_vsa_stage_sum": 0.340154},
+    "non_fine_overhead": {"gpu_ms": 1693.124268, "percent_of_vsa_stage_sum": 15.660564}
+  },
+  "kernel_gpu_time": {
+    "denominator": "summed kernel duration across devices and streams",
+    "fine_vsa": {"calls": 400, "gpu_ms": 9118.263434, "percent": 37.400899},
+    "gemm": {"calls": 2815, "gpu_ms": 8828.771682, "percent": 36.213474},
+    "rdma_barrier_residency": {"calls": 3193, "gpu_ms": 3304.696752, "percent": 13.555062},
+    "vsa_layout": {"calls": 2400, "gpu_ms": 793.241353, "percent": 3.253683},
+    "h3_pointwise": {"calls": 1987, "gpu_ms": 615.453810, "percent": 2.524442}
+  },
+  "rank_balance": {
+    "fine_vsa_median_rank_ms": 1121.175585,
+    "fine_vsa_rank7_ms": 1364.636104,
+    "rank7_over_median_percent": 21.715,
+    "arrival_skew_sum_ms": 521.302619,
+    "arrival_skew_percent_of_scope_wall": 13.974886,
+    "dominant_latest_rank": 7,
+    "dominant_latest_groups": 179,
+    "dominant_latest_percent": 44.862155,
+    "slot_b0_skew_sum_ms": 199.950877,
+    "slot_b6_skew_sum_ms": 316.184665,
+    "b0_b6_percent_of_total_skew": 99.008814,
+    "caution": "Barrier residency and arrival-skew are synchronization exposure, not RDMA byte-transfer time or guaranteed removable latency."
+  },
+  "validation": {
+    "all_main_fp8_audits": 8,
+    "bf16_qk_direct_rank_markers": 8,
+    "bf16_o_direct_rank_markers": 8,
+    "direct_q2k_rank_markers": 8,
+    "o_bundle_producer_rank_markers": 8,
+    "o_bundle_consumer_rank_markers": 8,
+    "e4m3_qkv_wire_markers": 0,
+    "vsa_fallback_markers": 0,
+    "vsa_fine_kernel_calls": 400,
+    "complete_layer_cycles": 50,
+    "full_device_barrier_groups": 399,
+    "boundary_partial_barrier_groups": 1
+  },
+  "artifacts": {
+    "nsys_report": {
+      "file": "minimax-h3-vsa-all-main-fp8-bf16-wire-sp8-step03.nsys-rep",
+      "bytes": 11372641,
+      "sha256": "504c99206958b22b1dac1e7e408c44966b8bfad48510a65b923852d9e16b975e"
+    },
+    "sqlite": {
+      "file": "minimax-h3-vsa-all-main-fp8-bf16-wire-sp8-step03.sqlite",
+      "bytes": 31383552,
+      "sha256": "e69f0ca725bcd4fd851ff9ab25aaa6cca2af2cbe7ff929ceeb9ac5cc6fa92208"
+    }
+  }
+}

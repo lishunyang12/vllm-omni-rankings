@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MiniMax-H3 VSA · Nsight Systems</title>
+  <style>
+    :root{color-scheme:dark;--bg:#080a0f;--panel:#11151d;--line:#27303f;--ink:#edf3f8;--muted:#98a5b5;--cyan:#63e3d1;--gold:#ffd36f;--blue:#73a7ff}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(1000px 620px at 48% -10%,#1a3751 0,transparent 65%),var(--bg);color:var(--ink);font:14px/1.55 Inter,ui-sans-serif,system-ui,sans-serif}main{width:min(1220px,100%);margin:auto;padding:34px 22px 60px}
+    .eyebrow{color:var(--cyan);font:700 11px ui-monospace,monospace;letter-spacing:.15em;text-transform:uppercase}h1{margin:8px 0 8px;font-size:clamp(32px,6vw,66px);line-height:.98;letter-spacing:-.055em}.lead{max-width:850px;color:var(--muted);font-size:16px}.badges{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 28px}.badge{border:1px solid var(--line);border-radius:999px;padding:7px 10px;color:#c8d4df;font:700 11px ui-monospace,monospace}
+    .hero,.card{border:1px solid var(--line);background:rgba(17,21,29,.9);border-radius:18px}.hero{display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden}.metric{padding:18px;border-right:1px solid var(--line)}.metric:last-child{border:0}.metric span{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.1em}.metric strong{display:block;margin-top:5px;font:700 24px ui-monospace,monospace}.accent{color:var(--cyan)}
+    h2{margin:35px 0 12px;font-size:20px}.grid{display:grid;grid-template-columns:1.25fr .75fr;gap:14px}.card{padding:18px}.bar-row{display:grid;grid-template-columns:150px 1fr 74px;align-items:center;gap:10px;margin:10px 0}.track{height:9px;background:#202733;border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:99px}.bar-row b{text-align:right;font:700 12px ui-monospace,monospace}.callout{border-left:3px solid var(--gold);padding:3px 0 3px 14px;color:#d7dee7}.downloads{display:grid;grid-template-columns:1fr 1fr;gap:12px}.download{display:block;text-decoration:none;color:var(--ink);padding:16px;border:1px solid var(--line);border-radius:14px;background:#0d1118}.download:hover{border-color:var(--cyan)}.download strong{display:block}.download span{color:var(--muted);font-size:12px}.links{display:flex;gap:10px;flex-wrap:wrap}.links a{color:var(--cyan)}code{font-family:ui-monospace,monospace;color:#c6d8ff}.note{color:var(--muted);font-size:12px}
+    @media(max-width:800px){.hero{grid-template-columns:1fr 1fr}.metric:nth-child(2){border-right:0}.metric:nth-child(-n+2){border-bottom:1px solid var(--line)}.grid,.downloads{grid-template-columns:1fr}.bar-row{grid-template-columns:115px 1fr 65px}}
+  </style>
+</head>
+<body><main>
+  <div class="eyebrow">Complete raw trace · eight SM120 GPUs · 9 Sep 2026</div>
+  <h1>MiniMax-H3 VSA<br>under the profiler</h1>
+  <p class="lead">One complete FastH3 denoise forward, with the VSA pipeline split into fine attention, coarse selection, layout and output phases. All-main FP8 compute is retained; QKV communication remains BF16 and the rejected E4M3 wire path is absent.</p>
+  <div class="badges"><span class="badge">vLLM-Omni</span><span class="badge">TP1 / SP8</span><span class="badge">FlashInfer #4944 CuTeDSL</span><span class="badge">tile 64 · top-k 162</span><span class="badge">BF16 QKV wire</span></div>
+  <section class="hero">
+    <div class="metric"><span>Profiled step</span><strong>3.730s</strong></div>
+    <div class="metric"><span>Fine VSA calls</span><strong>400</strong></div>
+    <div class="metric"><span>Fine VSA / kernel time</span><strong class="accent">37.40%</strong></div>
+    <div class="metric"><span>Mean VSA / rank</span><strong>1.351s</strong></div>
+  </section>
+
+  <h2>VSA-stage composition</h2>
+  <div class="grid">
+    <section class="card" id="bars"></section>
+    <aside class="card">
+      <p class="callout"><strong>Fine attention is 84.34%</strong> of the explicitly marked VSA-stage GPU sum. The surrounding coarse, routing, layout and output path is 15.66%.</p>
+      <p><strong>Rank 7 is the outlier.</strong> Its fine VSA time is 1,364.6 ms versus a rank median of 1,121.2 ms, or +21.7%.</p>
+      <p><strong>B0 + B6 explain 99.0%</strong> of reconstructed arrival skew. Rank 7 is latest in 49/49 complete B0 groups and 50/50 B6 groups.</p>
+      <p class="note">Barrier residency is wait exposure, not RDMA transfer time. Nsight tracing changes latency; 3.730s is not the production E2E number.</p>
+    </aside>
+  </div>
+
+  <h2>Complete artifacts</h2>
+  <div class="downloads">
+    <a class="download" href="minimax-h3-vsa-all-main-fp8-bf16-wire-sp8-step03.nsys-rep"><strong>Download full .nsys-rep</strong><span>11.37 MB · Nsight Systems 2025.3.2+</span></a>
+    <a class="download" href="minimax-h3-vsa-all-main-fp8-bf16-wire-sp8-step03.sqlite"><strong>Download full SQLite</strong><span>31.38 MB · all 516,601 exported events</span></a>
+  </div>
+  <p class="links"><a href="analysis-full.md">Full analysis</a><a href="analysis-full.json">Analysis JSON</a><a href="vsa-nvtx-all-ranks.txt">All-rank NVTX projections</a><a href="profile-summary.json">Compact summary</a><a href="SHA256SUMS.txt">SHA-256</a><a href="README.md">Methods and SQL</a></p>
+</main>
+<script>
+const rows=[['Fine attention',84.339],['Top-k / q2k',4.931],['Tile pack',3.557],['Coarse QK',3.087],['Output bundle / untile',2.183],['Coarse PV / V / softmax',1.903]];
+document.getElementById('bars').innerHTML=rows.map(([n,v])=>`<div class="bar-row"><span>${n}</span><div class="track"><div class="fill" style="width:${v}%"></div></div><b>${v.toFixed(2)}%</b></div>`).join('');
+</script>
+</body></html>
