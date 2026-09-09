@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "status": "passed",
+  "date": "2026-09-09",
+  "hardware": "8x RTX PRO 5000 Blackwell (SM120)",
+  "framework": "vLLM-Omni",
+  "schedule": {
+    "model": "MiniMax-H3 FL2VA",
+    "student": "FastH3 VSA/Data-Free",
+    "transformer_forwards": 4,
+    "layers_per_forward": 50,
+    "parallelism": "TP1/SP8",
+    "frames": 362,
+    "fps": 24,
+    "media_seconds": 15.083333,
+    "seed": 1101
+  },
+  "stack": {
+    "vsa": "FlashInfer PR #4259 original SM120 CuTeDSL",
+    "tile_size": 64,
+    "topk": 162,
+    "mlp_compute": "FP8 E4M3, static per-tensor weights and dynamic per-token activations",
+    "qkv_projection": "BF16",
+    "qkv_wire": "BF16",
+    "o_projection": "BF16",
+    "reverse_o_wire": "BF16",
+    "transport": "FlashInfer PR #4876 PCIe/RDMA",
+    "decoder": "TAEH3 FP16",
+    "skip_softmax": false,
+    "e4m3_qkv_wire": false,
+    "custom_capture_markers": false,
+    "request_warmups": 0
+  },
+  "timing": {
+    "e2e_seconds": 25.568,
+    "rtf": 1.695,
+    "trace_window_ms": 25258.29454,
+    "gpu_active_span_median_ms": 25255.8776235,
+    "cold_service_start_seconds": 85.114,
+    "timing_class": "first request under Nsight; includes lazy compile and JIT"
+  },
+  "kernel_composition": {
+    "gemm": {"calls": 15759, "summed_gpu_ms": 54459.839856, "percent": 45.431388},
+    "vsa_attention": {"calls": 1600, "summed_gpu_ms": 35234.334695, "percent": 29.393122},
+    "rdma_barrier": {"calls": 12800, "summed_gpu_ms": 13939.868408, "percent": 11.628892},
+    "nccl": {"calls": 1224, "summed_gpu_ms": 4057.310184, "percent": 3.384682},
+    "vsa_layout": {"calls": 9600, "summed_gpu_ms": 3164.213353, "percent": 2.639644},
+    "h3_pointwise": {"calls": 8032, "summed_gpu_ms": 2407.542877, "percent": 2.008416}
+  },
+  "vsa": {
+    "expected_calls": 1600,
+    "observed_calls": 1600,
+    "median_rank_sum_ms": 4339.600243,
+    "slowest_rank": 7,
+    "slowest_rank_sum_ms": 5280.077845
+  },
+  "barriers": {
+    "groups": 1600,
+    "full_device_groups": 1600,
+    "partial_groups": 0,
+    "layer_cycles": 200,
+    "arrival_skew_sum_ms": 2286.616951,
+    "arrival_skew_percent_of_trace_window": 9.052935,
+    "dominant_latest_rank": 7,
+    "dominant_latest_groups": 728
+  },
+  "output": {
+    "mp4_bytes": 24099536,
+    "rank0_d2h_bytes": 983846913,
+    "rank0_d2h_gpu_ms": 18.398778
+  },
+  "artifacts": {
+    "nsys_report_sha256": "7c0ec5d07d5ecc0f03feb54d6d98a5e9cf35d56cc1a4046f4154d7c3f40291c3",
+    "sqlite_sha256": "53e017aef441ea5e8e5fed39030d55faa92072f7ef653b62cc84e4883d09f144",
+    "sqlite_zst_sha256": "6d76faa71c77e452fbf7963e445c9460c9ad9ad2acb3b42b9cc16ab1631c4100",
+    "mp4_sha256": "7c96c3e66dc6aaecb966de278fc992c58f9e8928b341134c84ddad5cc982714c"
+  }
+}

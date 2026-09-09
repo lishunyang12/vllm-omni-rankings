@@ -49,6 +49,32 @@
     "source": "evidence/nsys/vsa-step03-all-main-fp8-bf16-wire-20260909/analysis-full.json",
     "page": "evidence/nsys/vsa-step03-all-main-fp8-bf16-wire-20260909/"
   },
+  "FastH3 / original CuTeDSL / MLP FP8 / BF16 wire / full E2E": {
+    "scope_ms": 25258.29454,
+    "e2e_seconds": 25.568,
+    "media_seconds": 15.083333,
+    "rtf": 1.695,
+    "request_warmups": 0,
+    "transformer_forwards": 4,
+    "vsa_calls": 1600,
+    "categories": {
+      "GEMM": 45.4314,
+      "Fine VSA": 29.3931,
+      "RDMA barrier": 11.6289,
+      "NCCL": 3.3847,
+      "VSA layout": 2.6396,
+      "Pointwise": 2.0084,
+      "Other": 5.5149
+    },
+    "vsa_kernel": "FlashInfer PR #4259 original SM120 CuTeDSL",
+    "fp8_scope": "MLP FC1/FC2 only",
+    "qkv_wire": "BF16",
+    "o_wire": "BF16",
+    "skip_softmax": false,
+    "custom_capture_markers": false,
+    "source": "evidence/nsys/original-cutedsl-mlp-fp8-bf16-wire-e2e-20260909/analysis-full.json",
+    "page": "evidence/nsys/original-cutedsl-mlp-fp8-bf16-wire-e2e-20260909/"
+  },
   "Quantized Q4/Q5": {
     "scope_ms": 3503.223878,
     "active_ms": 3485.2345265,
