@@ -1,0 +1,33 @@
+{
+  "rendered_at": "2026-09-09T19:11:21.966149+00:00",
+  "indices": [
+    24,
+    108,
+    216,
+    336
+  ],
+  "times_seconds": [
+    1,
+    4.5,
+    9,
+    14
+  ],
+  "sources": [
+    {
+      "mode": "bf16",
+      "path": "runs/bf16-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+      "sha256": "d70399e115ed143eec370f81cc71946b29245d3cb73536b2f16e6739360ff305"
+    },
+    {
+      "mode": "pr4691",
+      "path": "runs/pr4691-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+      "sha256": "f517715d4af55ff15bd5a48211266ca623434aa4db6942a6e3948489e4fe5f0d"
+    },
+    {
+      "mode": "pr4951",
+      "path": "runs/pr4951-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+      "sha256": "af4edbfa994307a9553f19d614115a9d43e0aff322b0fdd394f31e3f6490d921"
+    }
+  ],
+  "review_scope": "Four decoded frames per method; complete video quality metrics are separate."
+}

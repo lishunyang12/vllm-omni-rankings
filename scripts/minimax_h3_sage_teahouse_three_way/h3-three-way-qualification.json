@@ -1,0 +1,136 @@
+{
+  "geometry": {
+    "batch": 1,
+    "prefix_segments": [
+      558,
+      1206
+    ],
+    "video_shape_thw": [
+      107,
+      22,
+      40
+    ],
+    "flat_video_blocks": null,
+    "selection_pattern": "coarse_topk_sorted",
+    "block_size": 64,
+    "head_dim": 128,
+    "local_heads": 7,
+    "prefix_blocks": 28,
+    "video_blocks": 1620,
+    "logical_blocks": 1648,
+    "video_topk": 162,
+    "video_active_kv_blocks": 190,
+    "tiled_rows": 105472,
+    "valid_rows": 95924,
+    "sp8_aligned_rows": 95928,
+    "ragged_blocks": 322,
+    "active_block_pairs_per_head": 353944,
+    "scheduled_density": 0.13032272127438968,
+    "scheduled_attention_flops": 5195920572416,
+    "dtype": "bfloat16",
+    "softmax_scale": 0.08838834764831845
+  },
+  "actual_transport_aligned_rows": 95936,
+  "errors_valid_rows": {
+    "sage_vs_bf16": {
+      "finite": true,
+      "max_abs": 0.005859375,
+      "mean_abs": 0.0004957756027579308,
+      "relative_l2": 0.039364177733659744,
+      "cosine": 0.9992249608039856
+    },
+    "cake_vs_bf16": {
+      "finite": true,
+      "max_abs": 0.005859375,
+      "mean_abs": 0.0004957646015100181,
+      "relative_l2": 0.039363376796245575,
+      "cosine": 0.9992249011993408
+    },
+    "cake_vs_sage": {
+      "finite": true,
+      "max_abs": 0.00048828125,
+      "mean_abs": 3.203373580618063e-06,
+      "relative_l2": 0.000958819582592696,
+      "cosine": 0.9999995231628418
+    }
+  },
+  "timing": {
+    "bf16_provider": {
+      "samples_ms": [
+        24.175794982910155,
+        25.14922180175781,
+        25.111648559570312,
+        25.188787841796874,
+        25.167500305175782,
+        25.23088684082031,
+        25.194009399414064,
+        25.308531188964842,
+        25.249125671386718
+      ],
+      "mean_ms": 25.08616739908854,
+      "median_ms": 25.188787841796874
+    },
+    "sage_prequantized_kernel": {
+      "samples_ms": [
+        14.339372253417968,
+        14.304908752441406,
+        14.422207641601563,
+        14.306343078613281,
+        14.444236755371094,
+        14.353984069824218,
+        14.446611022949218,
+        14.356716918945313,
+        14.461932373046874
+      ],
+      "mean_ms": 14.381812540690104,
+      "median_ms": 14.356716918945313
+    },
+    "cake_prequantized_kernel": {
+      "samples_ms": [
+        14.073382568359374,
+        13.716799926757812,
+        14.172492980957031,
+        13.846488952636719,
+        14.198393249511719,
+        13.890547180175782,
+        14.192294311523437,
+        13.886886596679688,
+        14.179046630859375
+      ],
+      "mean_ms": 14.017370266384548,
+      "median_ms": 14.073382568359374
+    },
+    "sage_including_layout_quant": {
+      "samples_ms": [
+        16.766380310058594,
+        16.633465576171876,
+        16.809184265136718,
+        16.64458312988281,
+        16.823065185546874,
+        16.64716796875,
+        16.8166015625,
+        16.661599731445314,
+        16.812358093261718
+      ],
+      "mean_ms": 16.73493398030599,
+      "median_ms": 16.766380310058594
+    },
+    "cake_including_layout_quant": {
+      "samples_ms": [
+        16.249958801269532,
+        16.14855041503906,
+        16.312287902832033,
+        16.20100555419922,
+        16.328536987304688,
+        16.228025817871092,
+        16.354336547851563,
+        16.24468536376953,
+        16.357037353515626
+      ],
+      "mean_ms": 16.26938052707248,
+      "median_ms": 16.249958801269532
+    }
+  },
+  "note": "Synthetic BF16 inputs, exact prompt geometry and router. Same quantized operands for prequantized comparisons; not a full-model performance claim.",
+  "transport_metadata_note": "Corrected to packed_sequence.py 64-row alignment; fine-attention geometry and measured operands unchanged."
+}

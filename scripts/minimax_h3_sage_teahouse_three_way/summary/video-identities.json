@@ -1,0 +1,191 @@
+[
+  {
+    "mode": "bf16",
+    "measurement": "normal",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/bf16-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25797104,
+    "sha256": "d70399e115ed143eec370f81cc71946b29245d3cb73536b2f16e6739360ff305",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16",
+    "measurement": "normal",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/bf16-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25797104,
+    "sha256": "d70399e115ed143eec370f81cc71946b29245d3cb73536b2f16e6739360ff305",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16",
+    "measurement": "normal",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/bf16-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25797104,
+    "sha256": "d70399e115ed143eec370f81cc71946b29245d3cb73536b2f16e6739360ff305",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16",
+    "measurement": "stages",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/bf16-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25797104,
+    "sha256": "d70399e115ed143eec370f81cc71946b29245d3cb73536b2f16e6739360ff305",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16",
+    "measurement": "stages",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/bf16-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25797104,
+    "sha256": "d70399e115ed143eec370f81cc71946b29245d3cb73536b2f16e6739360ff305",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16",
+    "measurement": "stages",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/bf16-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25797104,
+    "sha256": "d70399e115ed143eec370f81cc71946b29245d3cb73536b2f16e6739360ff305",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16",
+    "measurement": "nsys",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/bf16-nsys/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1.mp4",
+    "bytes": 25797104,
+    "sha256": "d70399e115ed143eec370f81cc71946b29245d3cb73536b2f16e6739360ff305",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4691",
+    "measurement": "normal",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4691-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25508866,
+    "sha256": "f517715d4af55ff15bd5a48211266ca623434aa4db6942a6e3948489e4fe5f0d",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4691",
+    "measurement": "normal",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4691-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25508866,
+    "sha256": "f517715d4af55ff15bd5a48211266ca623434aa4db6942a6e3948489e4fe5f0d",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4691",
+    "measurement": "normal",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4691-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25508866,
+    "sha256": "f517715d4af55ff15bd5a48211266ca623434aa4db6942a6e3948489e4fe5f0d",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4691",
+    "measurement": "stages",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4691-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25508866,
+    "sha256": "f517715d4af55ff15bd5a48211266ca623434aa4db6942a6e3948489e4fe5f0d",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4691",
+    "measurement": "stages",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4691-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25508866,
+    "sha256": "f517715d4af55ff15bd5a48211266ca623434aa4db6942a6e3948489e4fe5f0d",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4691",
+    "measurement": "stages",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4691-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25508866,
+    "sha256": "f517715d4af55ff15bd5a48211266ca623434aa4db6942a6e3948489e4fe5f0d",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4691",
+    "measurement": "nsys",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4691-nsys/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1.mp4",
+    "bytes": 25508866,
+    "sha256": "f517715d4af55ff15bd5a48211266ca623434aa4db6942a6e3948489e4fe5f0d",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4951",
+    "measurement": "normal",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4951-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25330042,
+    "sha256": "af4edbfa994307a9553f19d614115a9d43e0aff322b0fdd394f31e3f6490d921",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4951",
+    "measurement": "normal",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4951-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25330042,
+    "sha256": "af4edbfa994307a9553f19d614115a9d43e0aff322b0fdd394f31e3f6490d921",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4951",
+    "measurement": "normal",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4951-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25330042,
+    "sha256": "af4edbfa994307a9553f19d614115a9d43e0aff322b0fdd394f31e3f6490d921",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4951",
+    "measurement": "stages",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4951-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25330042,
+    "sha256": "af4edbfa994307a9553f19d614115a9d43e0aff322b0fdd394f31e3f6490d921",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4951",
+    "measurement": "stages",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4951-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25330042,
+    "sha256": "af4edbfa994307a9553f19d614115a9d43e0aff322b0fdd394f31e3f6490d921",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4951",
+    "measurement": "stages",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4951-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25330042,
+    "sha256": "af4edbfa994307a9553f19d614115a9d43e0aff322b0fdd394f31e3f6490d921",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "pr4951",
+    "measurement": "nsys",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/runs/pr4951-nsys/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1.mp4",
+    "bytes": 25330042,
+    "sha256": "af4edbfa994307a9553f19d614115a9d43e0aff322b0fdd394f31e3f6490d921",
+    "same_as_normal_video": true
+  }
+]

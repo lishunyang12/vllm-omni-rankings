@@ -1,0 +1,26 @@
+{
+  "request_duration_s": 15,
+  "seed": 1101,
+  "prompt_payload_sha256": "86a513458a785fb9b3cada9289c0336e99ff7a26ad8eaf5dda593784cd7bf288",
+  "original_prompt_payload_sha256": "5abb96b31333eea455c241aa17e61d1eaf75d7e78625c80f17302b34ce11fad3",
+  "shot_intervals_s": [
+    [
+      0,
+      3.4
+    ],
+    [
+      3.4,
+      6.6
+    ],
+    [
+      6.6,
+      15
+    ]
+  ],
+  "final_hold_s": [
+    13.8,
+    15
+  ],
+  "changes": "Explicit shot intervals and final 15-second endpoint; original characters, dialogue, actions, soundscape and music preserved.",
+  "reuses_code_and_cache_from": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-vsa-sage-pr4691-20260910"
+}

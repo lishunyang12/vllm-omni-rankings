@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "url": "http://127.0.0.1:18766/",
+  "at": "2026-09-09T19:50:36.341Z",
+  "checks": [
+    "3 videos load with correct geometry and duration",
+    "3 latency and quality rows, 8 GPU clock rows",
+    "shared seek and 24fps frame advance",
+    "simultaneous 0.5x playback and pause",
+    "only selected audio unmuted",
+    "GPU and pair selection",
+    "desktop and 390px layout"
+  ],
+  "playback": [
+    {
+      "id": "v-bf16",
+      "time": 7.079925,
+      "paused": true,
+      "muted": true,
+      "rate": 0.5,
+      "duration": 15.083333,
+      "width": 1280,
+      "height": 704
+    },
+    {
+      "id": "v-pr4691",
+      "time": 7.079838,
+      "paused": true,
+      "muted": true,
+      "rate": 0.5,
+      "duration": 15.083333,
+      "width": 1280,
+      "height": 704
+    },
+    {
+      "id": "v-pr4951",
+      "time": 7.051676,
+      "paused": true,
+      "muted": false,
+      "rate": 0.5,
+      "duration": 15.083333,
+      "width": 1280,
+      "height": 704
+    }
+  ],
+  "layout": {
+    "viewport": 390,
+    "width": 390,
+    "cards": [
+      {
+        "x": 18,
+        "width": 354
+      },
+      {
+        "x": 18,
+        "width": 354
+      },
+      {
+        "x": 18,
+        "width": 354
+      }
+    ]
+  },
+  "page_errors": [],
+  "failed_requests": [],
+  "media_range_cancellations": 49
+}

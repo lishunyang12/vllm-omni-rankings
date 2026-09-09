@@ -1,0 +1,200 @@
+{
+  "experiment": "H3 teahouse15s BF16 / PR4691 / locally repaired PR4951",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 7427,
+      "sha256": "ce47f952ca87849020840b45817d712d39d0b36b72a0f05be88e945b89026c9a"
+    },
+    {
+      "path": "bf16-warmed.nsys-rep",
+      "bytes": 63088943,
+      "sha256": "db2d42e4cc396a3be732d58e682e97f5c1763ee4e4b1b795a7bab976bcf2ec68"
+    },
+    {
+      "path": "bf16.mp4",
+      "bytes": 25797104,
+      "sha256": "d70399e115ed143eec370f81cc71946b29245d3cb73536b2f16e6739360ff305"
+    },
+    {
+      "path": "browser-validation.json",
+      "bytes": 1329,
+      "sha256": "2d436cb99365ca7044b110e6ec99480a7718699bf88089f7d1032212b49a7eea"
+    },
+    {
+      "path": "cake-adaptation.json",
+      "bytes": 2147,
+      "sha256": "1e3211f759c9696f97fb9407a14eb0c5620f7862b06043d8803d58e1f0461546"
+    },
+    {
+      "path": "h3-three-way-qualification.json",
+      "bytes": 3704,
+      "sha256": "650496eda3f35964ad9556fd6c39ada5be8a4753dbb28aa042aa83f75cc8b146"
+    },
+    {
+      "path": "index.html",
+      "bytes": 198744,
+      "sha256": "f3358b3e55d5e741697502f6eba1555fe570bf0c7fad59a1e24423340a953397"
+    },
+    {
+      "path": "page.js",
+      "bytes": 8000,
+      "sha256": "fa13b27da29b973fff93b4d61c75beb1e4b55e2dc9c419e5c7559539d00b7010"
+    },
+    {
+      "path": "pr4691-warmed.nsys-rep",
+      "bytes": 63639200,
+      "sha256": "bfecd401f1df479e09fb84583a5a61b605f50c294d041dbbae2f3819c47405e4"
+    },
+    {
+      "path": "pr4691.mp4",
+      "bytes": 25508866,
+      "sha256": "f517715d4af55ff15bd5a48211266ca623434aa4db6942a6e3948489e4fe5f0d"
+    },
+    {
+      "path": "pr4951-warmed.nsys-rep",
+      "bytes": 63428666,
+      "sha256": "3e79911abd6c83a741f81f6e17120cdfea7fb2b0ec3ed87060feb898e1de4fa2"
+    },
+    {
+      "path": "pr4951.mp4",
+      "bytes": 25330042,
+      "sha256": "af4edbfa994307a9553f19d614115a9d43e0aff322b0fdd394f31e3f6490d921"
+    },
+    {
+      "path": "prompt-contract.json",
+      "bytes": 679,
+      "sha256": "62e531deef999fd7ef019e937030842d29dadff432fd25d89c88823763f74efa"
+    },
+    {
+      "path": "prompt-geometry.json",
+      "bytes": 532,
+      "sha256": "0fd0d68c4b430e0cb1e9393d4be0340c5c10909cd85c60ad296d25bd581a5747"
+    },
+    {
+      "path": "prompt-original.txt",
+      "bytes": 2070,
+      "sha256": "42f62c2ecb9f90880041d51d3fa38fa6c236945ba80b6a862e080151824a50c2"
+    },
+    {
+      "path": "prompt.txt",
+      "bytes": 2233,
+      "sha256": "449d1debd46eec9854858254be013f634cfb1a585ef1264e56f9af5d5fb24dd9"
+    },
+    {
+      "path": "quality/bf16-poster.jpg",
+      "bytes": 173873,
+      "sha256": "e859e15d9ddd764fc3567b580ace38cd1c8571d64890b9ff3207429ff89c2bc8"
+    },
+    {
+      "path": "quality/bf16-vs-pr4691.json",
+      "bytes": 455466,
+      "sha256": "51e9a9552695d1056ba364b84c7e3eac3138ccbb52cf240a45774508149bfa20"
+    },
+    {
+      "path": "quality/bf16-vs-pr4951.json",
+      "bytes": 455403,
+      "sha256": "06ebfa6a054f1e6889ed0fe686e932ae6e7bc62ed18aff20d06c496525e00872"
+    },
+    {
+      "path": "quality/frames-provenance.json",
+      "bytes": 1005,
+      "sha256": "8ceaaa310190a640e20d9de3e57fb647568131b18cb718b20455255295743375"
+    },
+    {
+      "path": "quality/pr4691-poster.jpg",
+      "bytes": 168599,
+      "sha256": "efd379a76adaa49b26df83709a22928f845a5ca4bc8082ec264d6af928735667"
+    },
+    {
+      "path": "quality/pr4691-vs-pr4951.json",
+      "bytes": 455415,
+      "sha256": "b749c25b20e99a03eedcfb897c1cc191b22f1acdd7fa679c842bce4956b3f0c7"
+    },
+    {
+      "path": "quality/pr4951-poster.jpg",
+      "bytes": 170607,
+      "sha256": "4f1a4129b2914f167c7be84f010f3c13ec31ae12daf1032eaf0a9e9786a138fe"
+    },
+    {
+      "path": "quality/three-way-frames.png",
+      "bytes": 4697050,
+      "sha256": "482db07c4c27c57919bde095d706effd025cee58e3884a13ae064bccaa830beb"
+    },
+    {
+      "path": "raw-data.zip",
+      "bytes": 24384615,
+      "sha256": "e5a8e5f001a1eb7e01025f4b5ee5d1aabe63fd3ceeafc3681e63443595f45286"
+    },
+    {
+      "path": "summary/comparisons.csv",
+      "bytes": 760,
+      "sha256": "485f71531bff1a4df5422380520b9e089692e0d8305d107fae815f13a6a9a748"
+    },
+    {
+      "path": "summary/comparisons.json",
+      "bytes": 1721,
+      "sha256": "f21da5cbf6f096be62ee7387b6ca78f0d071f128dc9d4e9d08aeb4d979b741c0"
+    },
+    {
+      "path": "summary/frequency-summary-all.csv",
+      "bytes": 8985,
+      "sha256": "485691051a71330e70e07fa2eaa568967b264b8c0f4b1cc35001824068b060ff"
+    },
+    {
+      "path": "summary/gpc-vsa-max-mean.csv",
+      "bytes": 2588,
+      "sha256": "2d2b3cce1ea358bba229d3fe9a9d33c3cc11864467e85e1fc18fea6a6cc2c3da"
+    },
+    {
+      "path": "summary/latency-summary.csv",
+      "bytes": 915,
+      "sha256": "b1a7210eecde19fb5fde74bdec4cb61aea2263bfde7855d460d1844b048e9bb6"
+    },
+    {
+      "path": "summary/nsys-fine-kernel-comparisons.csv",
+      "bytes": 1942,
+      "sha256": "d0c5c9cf92082592d763b65533db2a1b38d7ebf686d790ec543ce7f75063e16e"
+    },
+    {
+      "path": "summary/nsys-fine-kernels.csv",
+      "bytes": 1536,
+      "sha256": "e2c54437f0d158ca9db7f14758b9e4362e143e4727846af6626c6ae0a14bb672"
+    },
+    {
+      "path": "summary/nsys-step03-phase-changes.csv",
+      "bytes": 47241,
+      "sha256": "03d33a8bcb916692c1d85c5fbec180c16672d7992d7d71c5f828c29dc41e3ede"
+    },
+    {
+      "path": "summary/nsys-step03-phases.csv",
+      "bytes": 15301,
+      "sha256": "05bb136bb246a40a0ee8cf16584973719d6b36d4d758d8b746d2d1bce4ecf9dd"
+    },
+    {
+      "path": "summary/quality-summary.csv",
+      "bytes": 430,
+      "sha256": "62fe0270887b5d6834fe3c8463cf4207b806d90073367697f33e6281da2dbcd1"
+    },
+    {
+      "path": "summary/report-data.json",
+      "bytes": 242511,
+      "sha256": "f7454aca1e4586851b940309403aac72fea6a47b5ba0350462bde59b0d1fd28e"
+    },
+    {
+      "path": "summary/stage-share-changes.csv",
+      "bytes": 2116,
+      "sha256": "25db350464de8b704d51ffa4831f39c9427f21eaec4a5379922ac8c7b6fd35dc"
+    },
+    {
+      "path": "summary/stage-shares.csv",
+      "bytes": 594,
+      "sha256": "79636e498dfbb317422da61b3f652cdb4e51d5699bf2842fefb700f32d304bf1"
+    },
+    {
+      "path": "summary/video-identities.json",
+      "bytes": 8903,
+      "sha256": "c5d39c88eaa26e852ebec7613a32bf79d94b46660a8e910e7986ba534db78891"
+    }
+  ]
+}

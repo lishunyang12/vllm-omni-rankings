@@ -1,0 +1,50 @@
+{
+  "upstream_head": "30751b2ef15776ea00256e9ba979364a1ecf39a3",
+  "method": "Reproducibly extend pinned PR4951 CUDA exports without changing its schedule.\n\nThis is a local source adaptation, not a new export from the Cake compiler.\nThe arbitrary-index/count path comes from upstream module 2; the valid-token\ncalculation comes verbatim from upstream module 3. The existing score mask is\nalready present in module 2 but optimized away when valid_tokens is constant 64.\n",
+  "variants": [
+    {
+      "name": "cake_sage_block_sparse_attention_h3_ragged_bs0_v1",
+      "specializations": {
+        "BLOCK_SIZES_MODE": 0,
+        "CONTIGUOUS_BLOCK_INDICES": 0,
+        "FULL_K64_TILES": 0,
+        "HAS_BLOCK_NUMS": 1,
+        "UNIFORM_NONEMPTY": 0
+      },
+      "closure": [
+        {
+          "path": "csrc/cake_sage_block_sparse_attention/sm_120a/cake_sage_block_sparse_attention_h3_ragged_bs0_v1_kernel.cu",
+          "bytes": 109667,
+          "sha256": "b3ddd5d514bf4af33c54a813f23705967fa64659acb23ec253be981470080b2d"
+        },
+        {
+          "path": "csrc/cake_sage_block_sparse_attention/sm_120a/cake_sage_block_sparse_attention_h3_ragged_bs0_v1_binding.cu",
+          "bytes": 24256,
+          "sha256": "3796ace44018dcdb7edfebd45d24ef50ca70255c9050234fd25dba45dd17eb4a"
+        }
+      ]
+    },
+    {
+      "name": "cake_sage_block_sparse_attention_h3_ragged_bs1_v1",
+      "specializations": {
+        "BLOCK_SIZES_MODE": 1,
+        "CONTIGUOUS_BLOCK_INDICES": 0,
+        "FULL_K64_TILES": 0,
+        "HAS_BLOCK_NUMS": 1,
+        "UNIFORM_NONEMPTY": 0
+      },
+      "closure": [
+        {
+          "path": "csrc/cake_sage_block_sparse_attention/sm_120a/cake_sage_block_sparse_attention_h3_ragged_bs1_v1_kernel.cu",
+          "bytes": 109912,
+          "sha256": "9f138d7cb3893165162e0bd1a2bb64f116b084c78bc5cad91719290b708742ff"
+        },
+        {
+          "path": "csrc/cake_sage_block_sparse_attention/sm_120a/cake_sage_block_sparse_attention_h3_ragged_bs1_v1_binding.cu",
+          "bytes": 24256,
+          "sha256": "f8a7b99f6c0f588559336c4ef7d37046fb09248ee4cd190cfc9f96b684881b01"
+        }
+      ]
+    }
+  ]
+}
