@@ -13,6 +13,7 @@ formal three-run mean of **14.561 seconds**.
 - [Full 362-frame lossy-boundary comparisons](evidence/quality/)
 - [Representative video frames](screenshots/)
 - [Nsight Systems and Nsight Compute summaries](evidence/)
+- [Raw eight-GPU GPC/SYS and NVML frequency data](evidence/nsys/gpu-frequency-20260909T122900Z/)
 
 The final samples are `14.576 / 14.555 / 14.551` seconds. The endpoint is an
 HTTP POST through a validated 362-frame, 1280x704, 24 fps H.264 video with

@@ -13,7 +13,8 @@ download counts.
   [71-page English PDF](scripts/minimax_h3_pro5000_cumulative_report/minimax_h3_653s_to_14s_cumulative_report.pdf) ·
   [web report](scripts/minimax_h3_pro5000_cumulative_report/index.html) ·
   [machine-readable data](scripts/minimax_h3_pro5000_cumulative_report/report_data.json) ·
-  [quality and profiler evidence](scripts/minimax_h3_pro5000_cumulative_report/)
+  [quality and profiler evidence](scripts/minimax_h3_pro5000_cumulative_report/) ·
+  [raw GPU frequency data](scripts/minimax_h3_pro5000_cumulative_report/evidence/nsys/gpu-frequency-20260909T122900Z/)
 - **Native Fused SVDQuant for MiniMax-H3 on NVIDIA B300:**
   [HTML](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_svdquant_b300_results/) ·
   [results](scripts/minimax_h3_svdquant_b300_results/results.json) ·

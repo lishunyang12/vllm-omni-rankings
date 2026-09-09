@@ -1,0 +1,14 @@
+{
+  "previous_request": "/lustre/raplab/client/sylarl/minimax-h3-native/results/vllm-omni-fasth3-original-cutedsl-mlp-fp8-bf16-wire-e2e-nsys-20260909T085332Z/benchmark/request.txt",
+  "current_request": "/lustre/raplab/client/sylarl/minimax-h3-native/results/h3-gpu-frequency-20260909T122900Z/profile/benchmark/request.txt",
+  "request_bytes_identical": true,
+  "request_sha256": "4e3731700e70978c69f21696d14e40672b488487dd214f67a97683c25c10eec0",
+  "nsys_version": "2025.3.2.474",
+  "nsys_gpu_metrics_devices": "all",
+  "nsys_gpu_metrics_frequency_hz": 1000,
+  "nvml_sample_target_hz": 10,
+  "gpu_clock_or_power_settings_changed": false,
+  "custom_nvtx_added": false,
+  "launch_method": "detached process session; interactive nsys starts after health and stops after MP4 response",
+  "comparison_scope": "200 original fine-VSA kernel calls per GPU; matched step/layer ordinal"
+}

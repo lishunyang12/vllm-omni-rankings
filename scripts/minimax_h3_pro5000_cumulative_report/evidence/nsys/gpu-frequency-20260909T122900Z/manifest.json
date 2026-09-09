@@ -1,0 +1,35 @@
+{
+  "source_sqlite": {
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/results/h3-gpu-frequency-20260909T122900Z/profile/minimax-h3-original-cutedsl-mlp-fp8-bf16-wire-e2e.sqlite",
+    "bytes": 520675328,
+    "sha256": "8ed2941775582b46c7a1b66bcfca2b043f4e57df080bb10620257deee7e3f75b"
+  },
+  "source_nsys_rep": {
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/results/h3-gpu-frequency-20260909T122900Z/profile/minimax-h3-original-cutedsl-mlp-fp8-bf16-wire-e2e.nsys-rep",
+    "bytes": 65662698,
+    "sha256": "2d4029b54e8a7149ca52a360bb1a1c2eecab118e70716ac9151af7e217a1a385"
+  },
+  "source_nvml": {
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/results/h3-gpu-frequency-20260909T122900Z/nvml-frequency.csv",
+    "sha256": "048bfe5efdadf59f8dcc96a8768a14b6d7bdd5bf462300e88dfe47e963a03fed"
+  },
+  "nsys_target_sampling_hz": 1000,
+  "nvml_target_polling_hz_per_gpu": 10,
+  "nsys_exported_rows": {
+    "nsys-gpc-raw.csv": 246429,
+    "nsys-sys-raw.csv": 246429
+  },
+  "nvml_rows_per_gpu": {
+    "0": 5362,
+    "1": 5362,
+    "2": 5362,
+    "3": 5362,
+    "4": 5362,
+    "5": 5362,
+    "6": 5362,
+    "7": 5362
+  },
+  "raw_export_value_conversion": "none",
+  "time_window_filter": "none; all recorded samples",
+  "value_verification": "Every Nsight CSV data row compared field-for-field with the source SQLite; copied NVML file SHA256 verified."
+}
