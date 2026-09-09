@@ -4,6 +4,25 @@ Complete recorded GPC/SYS clock samples and NVML readings from the same H3
 request on eight RTX PRO 5000-class SM120 GPUs on 2026-09-09. This publishes
 an existing capture; no new benchmark was run for this upload.
 
+## GPC summary
+
+[Summary table and methodology](gpc-frequency-summary.md) · [Download summary CSV](gpc-frequency-summary.csv)
+
+| Physical GPU | GPC Max (MHz) | GPC Mean (MHz) | Samples |
+|---:|---:|---:|---:|
+| 0 | 2377.56 | 2308.16 | 30,972 |
+| 1 | 2377.98 | 2317.79 | 30,866 |
+| 2 | 2377.55 | 2312.78 | 30,626 |
+| 3 | 2377.52 | 2298.01 | 31,021 |
+| 4 | 2586.98 | 2383.95 | 31,579 |
+| 5 | 2591.22 | 2403.70 | 31,619 |
+| 6 | 2650.92 | 2413.58 | 31,414 |
+| 7 | 1950.06 | 1946.84 | 28,332 |
+
+These values use all recorded GPC samples, including non-VSA activity and waits.
+Mean is the per-sample arithmetic mean, not time-weighted. Max is the observed
+sample maximum. The raw ZIP remains unchanged; summary files are separate downloads.
+
 ## Downloads
 
 - [Raw frequency data ZIP](h3-frequency-raw-data.zip) — 6.88 MB, including the
