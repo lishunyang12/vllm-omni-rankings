@@ -1,0 +1,967 @@
+[
+  {
+    "label": "v1 overlap",
+    "source": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-overlap-nsys/bf16-overlap-warmed.sqlite",
+    "physical_gpu": 7,
+    "step": 3,
+    "layer": 0,
+    "start_ns": 12932537630,
+    "end_ns": 12961653067,
+    "qkv": {
+      "start": 12932537630,
+      "end": 12946086500,
+      "stream": 7,
+      "pid": 332943230763008,
+      "corr": 324473,
+      "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)"
+    },
+    "gate": {
+      "start": 12946088964,
+      "end": 12950619590,
+      "stream": 7,
+      "pid": 332943230763008,
+      "corr": 324491,
+      "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)"
+    },
+    "norms": [
+      {
+        "start": 12950621190,
+        "end": 12950903591,
+        "stream": 7,
+        "pid": 332943230763008,
+        "corr": 324509,
+        "name": "_rms_norm_rope_kernel"
+      },
+      {
+        "start": 12950905831,
+        "end": 12951214439,
+        "stream": 7,
+        "pid": 332943230763008,
+        "corr": 324516,
+        "name": "_rms_norm_rope_kernel"
+      }
+    ],
+    "windows": [
+      {
+        "phase": "QKV",
+        "index": 0,
+        "start": 12951221127,
+        "end": 12954398792
+      },
+      {
+        "phase": "QKV",
+        "index": 1,
+        "start": 12954481096,
+        "end": 12957652074
+      },
+      {
+        "phase": "QKV",
+        "index": 2,
+        "start": 12958355914,
+        "end": 12961653067
+      }
+    ],
+    "samples": [
+      {
+        "timestamp": 12933285823,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12933285823,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12933285823,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12934285823,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12934285823,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12934285823,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12935285823,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12935285823,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12935285823,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12936285824,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12936285824,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12936285824,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12937285824,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12937285824,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12937285824,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12938285825,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12938285825,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12938285825,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12939285825,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12939285825,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12939285825,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12940285826,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12940285826,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12940285826,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12941285826,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12941285826,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12941285826,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12942285827,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12942285827,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12942285827,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12943285827,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12943285827,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12943285827,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12944285828,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12944285828,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12944285828,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12945285828,
+        "metric": 7,
+        "raw_percent": 95
+      },
+      {
+        "timestamp": 12945285828,
+        "metric": 21,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12945285828,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12946285828,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12946285828,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12946285828,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12947285829,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12947285829,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12947285829,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12948285829,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12948285829,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12948285829,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12949285830,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12949285830,
+        "metric": 21,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12949285830,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12950285830,
+        "metric": 7,
+        "raw_percent": 93
+      },
+      {
+        "timestamp": 12950285830,
+        "metric": 21,
+        "raw_percent": 4
+      },
+      {
+        "timestamp": 12950285830,
+        "metric": 22,
+        "raw_percent": 5
+      },
+      {
+        "timestamp": 12951285831,
+        "metric": 7,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12951285831,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12951285831,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12952285831,
+        "metric": 7,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12952285831,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12952285831,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12953285832,
+        "metric": 7,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12953285832,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12953285832,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12954285832,
+        "metric": 7,
+        "raw_percent": 3
+      },
+      {
+        "timestamp": 12954285832,
+        "metric": 21,
+        "raw_percent": 73
+      },
+      {
+        "timestamp": 12954285832,
+        "metric": 22,
+        "raw_percent": 71
+      },
+      {
+        "timestamp": 12955285832,
+        "metric": 7,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12955285832,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12955285832,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12956285833,
+        "metric": 7,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12956285833,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12956285833,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12957285833,
+        "metric": 7,
+        "raw_percent": 57
+      },
+      {
+        "timestamp": 12957285833,
+        "metric": 21,
+        "raw_percent": 29
+      },
+      {
+        "timestamp": 12957285833,
+        "metric": 22,
+        "raw_percent": 27
+      },
+      {
+        "timestamp": 12958285834,
+        "metric": 7,
+        "raw_percent": 97
+      },
+      {
+        "timestamp": 12958285834,
+        "metric": 21,
+        "raw_percent": 70
+      },
+      {
+        "timestamp": 12958285834,
+        "metric": 22,
+        "raw_percent": 65
+      },
+      {
+        "timestamp": 12959285834,
+        "metric": 7,
+        "raw_percent": 94
+      },
+      {
+        "timestamp": 12959285834,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12959285834,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12960285835,
+        "metric": 7,
+        "raw_percent": 91
+      },
+      {
+        "timestamp": 12960285835,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12960285835,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12961285835,
+        "metric": 7,
+        "raw_percent": 44
+      },
+      {
+        "timestamp": 12961285835,
+        "metric": 21,
+        "raw_percent": 24
+      },
+      {
+        "timestamp": 12961285835,
+        "metric": 22,
+        "raw_percent": 27
+      }
+    ],
+    "qkv_gemm_ms": 13.54887,
+    "gate_gemm_ms": 4.530626,
+    "gate_overlap_ms": 0.0,
+    "projection_through_qkv_transfer_ms": 29.115437,
+    "method": "GPU7 step3layer0. Gate-v2 identity from gate NVTX and CUDA API correlation; previous gate and fused QKV inferred from model source order. RDMA windows span the opening-barrier end to closing-barrier start and may include completion/scheduling waits: gate_overlap_ms is overlap with these windows, not measured PCIe payload-active duration. Raw sampled counters, not interval averages. Diagnostic trace timings, not normal-request speed claims."
+  },
+  {
+    "label": "v2 gate overlap",
+    "source": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-nsys/bf16-overlap-warmed.sqlite",
+    "physical_gpu": 7,
+    "step": 3,
+    "layer": 0,
+    "start_ns": 12466521961,
+    "end_ns": 12492518988,
+    "qkv": {
+      "start": 12466521961,
+      "end": 12480077515,
+      "stream": 7,
+      "pid": 341008189489152,
+      "corr": 329385,
+      "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)"
+    },
+    "gate": {
+      "start": 12480681707,
+      "end": 12485217515,
+      "stream": 36,
+      "pid": 341008189489152,
+      "corr": 329485,
+      "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)"
+    },
+    "norms": [
+      {
+        "start": 12480080203,
+        "end": 12480363371,
+        "stream": 7,
+        "pid": 341008189489152,
+        "corr": 329403,
+        "name": "_rms_norm_rope_kernel"
+      },
+      {
+        "start": 12480366027,
+        "end": 12480678475,
+        "stream": 7,
+        "pid": 341008189489152,
+        "corr": 329410,
+        "name": "_rms_norm_rope_kernel"
+      }
+    ],
+    "windows": [
+      {
+        "phase": "QKV",
+        "index": 0,
+        "start": 12480688459,
+        "end": 12485161483
+      },
+      {
+        "phase": "QKV",
+        "index": 1,
+        "start": 12485246411,
+        "end": 12488417036
+      },
+      {
+        "phase": "QKV",
+        "index": 2,
+        "start": 12489294956,
+        "end": 12492518988
+      }
+    ],
+    "samples": [
+      {
+        "timestamp": 12467168905,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12467168905,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12467168905,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12468168905,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12468168905,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12468168905,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12469168905,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12469168905,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12469168905,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12470168905,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12470168905,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12470168905,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12471168905,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12471168905,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12471168905,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12472168905,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12472168905,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12472168905,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12473168906,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12473168906,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12473168906,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12474168906,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12474168906,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12474168906,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12475168906,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12475168906,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12475168906,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12476168906,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12476168906,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12476168906,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12477168906,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12477168906,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12477168906,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12478168906,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12478168906,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12478168906,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12479168906,
+        "metric": 7,
+        "raw_percent": 95
+      },
+      {
+        "timestamp": 12479168906,
+        "metric": 21,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12479168906,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12480168907,
+        "metric": 7,
+        "raw_percent": 99
+      },
+      {
+        "timestamp": 12480168907,
+        "metric": 21,
+        "raw_percent": 38
+      },
+      {
+        "timestamp": 12480168907,
+        "metric": 22,
+        "raw_percent": 39
+      },
+      {
+        "timestamp": 12481168907,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12481168907,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12481168907,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12482168907,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12482168907,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12482168907,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12483168907,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12483168907,
+        "metric": 21,
+        "raw_percent": 56
+      },
+      {
+        "timestamp": 12483168907,
+        "metric": 22,
+        "raw_percent": 54
+      },
+      {
+        "timestamp": 12484168907,
+        "metric": 7,
+        "raw_percent": 100
+      },
+      {
+        "timestamp": 12484168907,
+        "metric": 21,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12484168907,
+        "metric": 22,
+        "raw_percent": 1
+      },
+      {
+        "timestamp": 12485168907,
+        "metric": 7,
+        "raw_percent": 7
+      },
+      {
+        "timestamp": 12485168907,
+        "metric": 21,
+        "raw_percent": 74
+      },
+      {
+        "timestamp": 12485168907,
+        "metric": 22,
+        "raw_percent": 75
+      },
+      {
+        "timestamp": 12486168907,
+        "metric": 7,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12486168907,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12486168907,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12487168908,
+        "metric": 7,
+        "raw_percent": 0
+      },
+      {
+        "timestamp": 12487168908,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12487168908,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12488168908,
+        "metric": 7,
+        "raw_percent": 67
+      },
+      {
+        "timestamp": 12488168908,
+        "metric": 21,
+        "raw_percent": 20
+      },
+      {
+        "timestamp": 12488168908,
+        "metric": 22,
+        "raw_percent": 17
+      },
+      {
+        "timestamp": 12489168908,
+        "metric": 7,
+        "raw_percent": 97
+      },
+      {
+        "timestamp": 12489168908,
+        "metric": 21,
+        "raw_percent": 66
+      },
+      {
+        "timestamp": 12489168908,
+        "metric": 22,
+        "raw_percent": 68
+      },
+      {
+        "timestamp": 12490168908,
+        "metric": 7,
+        "raw_percent": 91
+      },
+      {
+        "timestamp": 12490168908,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12490168908,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12491168908,
+        "metric": 7,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12491168908,
+        "metric": 21,
+        "raw_percent": 82
+      },
+      {
+        "timestamp": 12491168908,
+        "metric": 22,
+        "raw_percent": 81
+      },
+      {
+        "timestamp": 12492168908,
+        "metric": 7,
+        "raw_percent": 36
+      },
+      {
+        "timestamp": 12492168908,
+        "metric": 21,
+        "raw_percent": 27
+      },
+      {
+        "timestamp": 12492168908,
+        "metric": 22,
+        "raw_percent": 24
+      }
+    ],
+    "qkv_gemm_ms": 13.555554,
+    "gate_gemm_ms": 4.535808,
+    "gate_overlap_ms": 4.473024,
+    "projection_through_qkv_transfer_ms": 25.997027,
+    "method": "GPU7 step3layer0. Gate-v2 identity from gate NVTX and CUDA API correlation; previous gate and fused QKV inferred from model source order. RDMA windows span the opening-barrier end to closing-barrier start and may include completion/scheduling waits: gate_overlap_ms is overlap with these windows, not measured PCIe payload-active duration. Raw sampled counters, not interval averages. Diagnostic trace timings, not normal-request speed claims."
+  }
+]

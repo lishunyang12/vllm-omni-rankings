@@ -1,0 +1,1656 @@
+{
+  "runs": [
+    {
+      "tag": "v1-fixed-cache-normal",
+      "samples_s": [
+        25.141,
+        25.082,
+        25.13
+      ],
+      "mean_s": 25.117666666666665,
+      "median_s": 25.13,
+      "summary": {
+        "case": "vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct",
+        "status": "ok",
+        "cold_start_s": "145.274",
+        "warmup_s": "31.213",
+        "e2e_s": "25.118",
+        "encoder_s": "-",
+        "dit_s": "-",
+        "decode_total_s": "-",
+        "video_vae_path_s": "-",
+        "audio_vae_s": "-",
+        "pipeline_forward_s": "-",
+        "engine_exec_s": "25.029000",
+        "stage_gen_s": "25.081741",
+        "async_output_residual_wait_s": "0.022667",
+        "postprocess_s": "0.000000",
+        "stage_unattributed_residual_s": "0.030074",
+        "mp4_encode_s": "0.000003",
+        "api_http_residual_s": "0.035922",
+        "denoise_updates": "4",
+        "avg_profiled_step_ms": "-",
+        "media_s": "15.083333",
+        "rtf": "1.665",
+        "peak_gpu_mib": "63761",
+        "output": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v1-fixed-cache-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+        "github_url": "-"
+      },
+      "videos": [
+        {
+          "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v1-fixed-cache-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+          "bytes": 25614803,
+          "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        },
+        {
+          "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v1-fixed-cache-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+          "bytes": 25614803,
+          "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        },
+        {
+          "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v1-fixed-cache-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+          "bytes": 25614803,
+          "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        }
+      ],
+      "contract": {
+        "hardware": [
+          {
+            "index": "0",
+            "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+            "pci.bus_id": "00000000:06:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "1",
+            "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+            "pci.bus_id": "00000000:09:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "2",
+            "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+            "pci.bus_id": "00000000:76:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "3",
+            "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+            "pci.bus_id": "00000000:79:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "4",
+            "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+            "pci.bus_id": "00000000:86:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "5",
+            "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+            "pci.bus_id": "00000000:89:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "6",
+            "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+            "pci.bus_id": "00000000:F6:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "7",
+            "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+            "pci.bus_id": "00000000:F9:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          }
+        ],
+        "model_diff_sha256": "fbf7352eab0e4a12bbadf29ab8d003e13488d71c65ac0b82078fa2b44f6b9f6f",
+        "untracked_sources_sha256": "5a22464ad67a524e9bb7372fe287f889bc572321c2b0bbe5b2934f73f272326e",
+        "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e"
+      },
+      "cache_contract_sha256": "02ce852ef7e60c4ae8184d1f4e3d51b3fed1a9c96c7c054a79f4f14412d49626"
+    },
+    {
+      "tag": "v2-gate-normal",
+      "samples_s": [
+        24.408,
+        24.272,
+        24.341
+      ],
+      "mean_s": 24.340333333333334,
+      "median_s": 24.341,
+      "summary": {
+        "case": "vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct",
+        "status": "ok",
+        "cold_start_s": "135.225",
+        "warmup_s": "30.940",
+        "e2e_s": "24.340",
+        "encoder_s": "-",
+        "dit_s": "-",
+        "decode_total_s": "-",
+        "video_vae_path_s": "-",
+        "audio_vae_s": "-",
+        "pipeline_forward_s": "-",
+        "engine_exec_s": "24.258333",
+        "stage_gen_s": "24.304907",
+        "async_output_residual_wait_s": "0.020000",
+        "postprocess_s": "0.000000",
+        "stage_unattributed_residual_s": "0.026574",
+        "mp4_encode_s": "0.000007",
+        "api_http_residual_s": "0.035420",
+        "denoise_updates": "4",
+        "avg_profiled_step_ms": "-",
+        "media_s": "15.083333",
+        "rtf": "1.614",
+        "peak_gpu_mib": "63523",
+        "output": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+        "github_url": "-"
+      },
+      "videos": [
+        {
+          "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+          "bytes": 25614803,
+          "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        },
+        {
+          "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+          "bytes": 25614803,
+          "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        },
+        {
+          "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+          "bytes": 25614803,
+          "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        }
+      ],
+      "contract": {
+        "hardware": [
+          {
+            "index": "0",
+            "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+            "pci.bus_id": "00000000:06:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "1",
+            "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+            "pci.bus_id": "00000000:09:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "2",
+            "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+            "pci.bus_id": "00000000:76:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "3",
+            "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+            "pci.bus_id": "00000000:79:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "4",
+            "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+            "pci.bus_id": "00000000:86:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "5",
+            "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+            "pci.bus_id": "00000000:89:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "6",
+            "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+            "pci.bus_id": "00000000:F6:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "7",
+            "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+            "pci.bus_id": "00000000:F9:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          }
+        ],
+        "model_diff_sha256": "fbf7352eab0e4a12bbadf29ab8d003e13488d71c65ac0b82078fa2b44f6b9f6f",
+        "untracked_sources_sha256": "5a22464ad67a524e9bb7372fe287f889bc572321c2b0bbe5b2934f73f272326e",
+        "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e"
+      },
+      "cache_contract_sha256": "02ce852ef7e60c4ae8184d1f4e3d51b3fed1a9c96c7c054a79f4f14412d49626"
+    },
+    {
+      "tag": "v2-gate-stages",
+      "samples_s": [
+        24.297,
+        24.561,
+        24.123
+      ],
+      "mean_s": 24.327,
+      "median_s": 24.297,
+      "summary": {
+        "case": "vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct",
+        "status": "ok",
+        "cold_start_s": "140.259",
+        "warmup_s": "30.709",
+        "e2e_s": "24.327",
+        "encoder_s": "0.122079",
+        "dit_s": "17.513935",
+        "decode_total_s": "6.604369",
+        "video_vae_path_s": "6.008166",
+        "audio_vae_s": "0.128754",
+        "pipeline_forward_s": "24.239406",
+        "engine_exec_s": "24.243667",
+        "stage_gen_s": "24.291905",
+        "async_output_residual_wait_s": "0.021667",
+        "postprocess_s": "0.000000",
+        "stage_unattributed_residual_s": "0.026571",
+        "mp4_encode_s": "0.000003",
+        "api_http_residual_s": "0.035092",
+        "denoise_updates": "4",
+        "avg_profiled_step_ms": "4348.224",
+        "media_s": "15.083333",
+        "rtf": "1.613",
+        "peak_gpu_mib": "63523",
+        "output": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+        "github_url": "-"
+      },
+      "videos": [
+        {
+          "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+          "bytes": 25614803,
+          "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        },
+        {
+          "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+          "bytes": 25614803,
+          "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        },
+        {
+          "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+          "bytes": 25614803,
+          "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        }
+      ],
+      "contract": {
+        "hardware": [
+          {
+            "index": "0",
+            "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+            "pci.bus_id": "00000000:06:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "1",
+            "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+            "pci.bus_id": "00000000:09:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "2",
+            "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+            "pci.bus_id": "00000000:76:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "3",
+            "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+            "pci.bus_id": "00000000:79:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "4",
+            "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+            "pci.bus_id": "00000000:86:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "5",
+            "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+            "pci.bus_id": "00000000:89:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "6",
+            "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+            "pci.bus_id": "00000000:F6:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "7",
+            "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+            "pci.bus_id": "00000000:F9:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          }
+        ],
+        "model_diff_sha256": "fbf7352eab0e4a12bbadf29ab8d003e13488d71c65ac0b82078fa2b44f6b9f6f",
+        "untracked_sources_sha256": "5a22464ad67a524e9bb7372fe287f889bc572321c2b0bbe5b2934f73f272326e",
+        "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e"
+      },
+      "cache_contract_sha256": "02ce852ef7e60c4ae8184d1f4e3d51b3fed1a9c96c7c054a79f4f14412d49626"
+    },
+    {
+      "tag": "v2-gate-nsys",
+      "samples_s": [
+        25.114
+      ],
+      "mean_s": 25.114,
+      "median_s": 25.114,
+      "summary": {
+        "case": "vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct",
+        "status": "ok",
+        "cold_start_s": "145.291",
+        "warmup_s": "31.611",
+        "e2e_s": "25.114",
+        "encoder_s": "0.125064",
+        "dit_s": "17.867837",
+        "decode_total_s": "7.023089",
+        "video_vae_path_s": "6.284863",
+        "audio_vae_s": "0.133490",
+        "pipeline_forward_s": "25.011701",
+        "engine_exec_s": "25.019000",
+        "stage_gen_s": "25.078625",
+        "async_output_residual_wait_s": "0.022000",
+        "postprocess_s": "0.000000",
+        "stage_unattributed_residual_s": "0.037625",
+        "mp4_encode_s": "0.000010",
+        "api_http_residual_s": "0.035365",
+        "denoise_updates": "4",
+        "avg_profiled_step_ms": "4454.309",
+        "media_s": "15.083333",
+        "rtf": "1.665",
+        "peak_gpu_mib": "63551",
+        "output": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-nsys/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1.mp4",
+        "github_url": "-"
+      },
+      "videos": [
+        {
+          "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-nsys/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1.mp4",
+          "bytes": 25614803,
+          "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        }
+      ],
+      "contract": {
+        "hardware": [
+          {
+            "index": "0",
+            "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+            "pci.bus_id": "00000000:06:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "1",
+            "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+            "pci.bus_id": "00000000:09:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "2",
+            "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+            "pci.bus_id": "00000000:76:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "3",
+            "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+            "pci.bus_id": "00000000:79:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "4",
+            "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+            "pci.bus_id": "00000000:86:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "5",
+            "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+            "pci.bus_id": "00000000:89:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "6",
+            "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+            "pci.bus_id": "00000000:F6:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          },
+          {
+            "index": "7",
+            "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+            "pci.bus_id": "00000000:F9:00.0",
+            "gpu.power.current_limit": 350.0,
+            "gpu.power.default_limit": 350.0
+          }
+        ],
+        "model_diff_sha256": "fbf7352eab0e4a12bbadf29ab8d003e13488d71c65ac0b82078fa2b44f6b9f6f",
+        "untracked_sources_sha256": "5a22464ad67a524e9bb7372fe287f889bc572321c2b0bbe5b2934f73f272326e",
+        "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e"
+      },
+      "cache_contract_sha256": "02ce852ef7e60c4ae8184d1f4e3d51b3fed1a9c96c7c054a79f4f14412d49626"
+    }
+  ],
+  "reductions": {
+    "v2_vs_fresh_v1_percent": 3.094767295263623,
+    "v2_vs_original_bf16_base_percent": 5.516018839604575,
+    "v2_vs_fresh_v1_seconds": 0.7773333333333312
+  },
+  "stages": [
+    {
+      "name": "Encoder",
+      "baseline_s": 0.122781,
+      "candidate_s": 0.122079
+    },
+    {
+      "name": "DiT",
+      "baseline_s": 18.293431,
+      "candidate_s": 17.513935
+    },
+    {
+      "name": "Decode total",
+      "baseline_s": 6.661873,
+      "candidate_s": 6.604369
+    },
+    {
+      "name": "Video VAE path",
+      "baseline_s": 6.099832,
+      "candidate_s": 6.008166
+    },
+    {
+      "name": "Audio VAE",
+      "baseline_s": 0.128605,
+      "candidate_s": 0.128754
+    }
+  ],
+  "stage_scope": "Baseline stages from earlier v1 four-way campaign, candidate stages collected independently; no profiling latency substituted for normal requests.",
+  "video_sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+  "video_and_audio": "All formal MP4 bytes match both fresh v1 control and original BF16 videos; this implies identical encoded video/audio and decoded pixels/PCM for the same decoder.",
+  "gate_timelines": [
+    {
+      "label": "v1 overlap",
+      "source": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-overlap-nsys/bf16-overlap-warmed.sqlite",
+      "physical_gpu": 7,
+      "step": 3,
+      "layer": 0,
+      "start_ns": 12932537630,
+      "end_ns": 12961653067,
+      "qkv": {
+        "start": 12932537630,
+        "end": 12946086500,
+        "stream": 7,
+        "pid": 332943230763008,
+        "corr": 324473,
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)"
+      },
+      "gate": {
+        "start": 12946088964,
+        "end": 12950619590,
+        "stream": 7,
+        "pid": 332943230763008,
+        "corr": 324491,
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)"
+      },
+      "norms": [
+        {
+          "start": 12950621190,
+          "end": 12950903591,
+          "stream": 7,
+          "pid": 332943230763008,
+          "corr": 324509,
+          "name": "_rms_norm_rope_kernel"
+        },
+        {
+          "start": 12950905831,
+          "end": 12951214439,
+          "stream": 7,
+          "pid": 332943230763008,
+          "corr": 324516,
+          "name": "_rms_norm_rope_kernel"
+        }
+      ],
+      "windows": [
+        {
+          "phase": "QKV",
+          "index": 0,
+          "start": 12951221127,
+          "end": 12954398792
+        },
+        {
+          "phase": "QKV",
+          "index": 1,
+          "start": 12954481096,
+          "end": 12957652074
+        },
+        {
+          "phase": "QKV",
+          "index": 2,
+          "start": 12958355914,
+          "end": 12961653067
+        }
+      ],
+      "samples": [
+        {
+          "timestamp": 12933285823,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12933285823,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12933285823,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12934285823,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12934285823,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12934285823,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12935285823,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12935285823,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12935285823,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12936285824,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12936285824,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12936285824,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12937285824,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12937285824,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12937285824,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12938285825,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12938285825,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12938285825,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12939285825,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12939285825,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12939285825,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12940285826,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12940285826,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12940285826,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12941285826,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12941285826,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12941285826,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12942285827,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12942285827,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12942285827,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12943285827,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12943285827,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12943285827,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12944285828,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12944285828,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12944285828,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12945285828,
+          "metric": 7,
+          "raw_percent": 95
+        },
+        {
+          "timestamp": 12945285828,
+          "metric": 21,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12945285828,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12946285828,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12946285828,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12946285828,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12947285829,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12947285829,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12947285829,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12948285829,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12948285829,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12948285829,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12949285830,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12949285830,
+          "metric": 21,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12949285830,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12950285830,
+          "metric": 7,
+          "raw_percent": 93
+        },
+        {
+          "timestamp": 12950285830,
+          "metric": 21,
+          "raw_percent": 4
+        },
+        {
+          "timestamp": 12950285830,
+          "metric": 22,
+          "raw_percent": 5
+        },
+        {
+          "timestamp": 12951285831,
+          "metric": 7,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12951285831,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12951285831,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12952285831,
+          "metric": 7,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12952285831,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12952285831,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12953285832,
+          "metric": 7,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12953285832,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12953285832,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12954285832,
+          "metric": 7,
+          "raw_percent": 3
+        },
+        {
+          "timestamp": 12954285832,
+          "metric": 21,
+          "raw_percent": 73
+        },
+        {
+          "timestamp": 12954285832,
+          "metric": 22,
+          "raw_percent": 71
+        },
+        {
+          "timestamp": 12955285832,
+          "metric": 7,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12955285832,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12955285832,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12956285833,
+          "metric": 7,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12956285833,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12956285833,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12957285833,
+          "metric": 7,
+          "raw_percent": 57
+        },
+        {
+          "timestamp": 12957285833,
+          "metric": 21,
+          "raw_percent": 29
+        },
+        {
+          "timestamp": 12957285833,
+          "metric": 22,
+          "raw_percent": 27
+        },
+        {
+          "timestamp": 12958285834,
+          "metric": 7,
+          "raw_percent": 97
+        },
+        {
+          "timestamp": 12958285834,
+          "metric": 21,
+          "raw_percent": 70
+        },
+        {
+          "timestamp": 12958285834,
+          "metric": 22,
+          "raw_percent": 65
+        },
+        {
+          "timestamp": 12959285834,
+          "metric": 7,
+          "raw_percent": 94
+        },
+        {
+          "timestamp": 12959285834,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12959285834,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12960285835,
+          "metric": 7,
+          "raw_percent": 91
+        },
+        {
+          "timestamp": 12960285835,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12960285835,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12961285835,
+          "metric": 7,
+          "raw_percent": 44
+        },
+        {
+          "timestamp": 12961285835,
+          "metric": 21,
+          "raw_percent": 24
+        },
+        {
+          "timestamp": 12961285835,
+          "metric": 22,
+          "raw_percent": 27
+        }
+      ],
+      "qkv_gemm_ms": 13.54887,
+      "gate_gemm_ms": 4.530626,
+      "gate_overlap_ms": 0.0,
+      "projection_through_qkv_transfer_ms": 29.115437,
+      "method": "GPU7 step3layer0. Gate-v2 identity from gate NVTX and CUDA API correlation; previous gate and fused QKV inferred from model source order. RDMA windows span the opening-barrier end to closing-barrier start and may include completion/scheduling waits: gate_overlap_ms is overlap with these windows, not measured PCIe payload-active duration. Raw sampled counters, not interval averages. Diagnostic trace timings, not normal-request speed claims."
+    },
+    {
+      "label": "v2 gate overlap",
+      "source": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v2-gate-nsys/bf16-overlap-warmed.sqlite",
+      "physical_gpu": 7,
+      "step": 3,
+      "layer": 0,
+      "start_ns": 12466521961,
+      "end_ns": 12492518988,
+      "qkv": {
+        "start": 12466521961,
+        "end": 12480077515,
+        "stream": 7,
+        "pid": 341008189489152,
+        "corr": 329385,
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)"
+      },
+      "gate": {
+        "start": 12480681707,
+        "end": 12485217515,
+        "stream": 36,
+        "pid": 341008189489152,
+        "corr": 329485,
+        "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)"
+      },
+      "norms": [
+        {
+          "start": 12480080203,
+          "end": 12480363371,
+          "stream": 7,
+          "pid": 341008189489152,
+          "corr": 329403,
+          "name": "_rms_norm_rope_kernel"
+        },
+        {
+          "start": 12480366027,
+          "end": 12480678475,
+          "stream": 7,
+          "pid": 341008189489152,
+          "corr": 329410,
+          "name": "_rms_norm_rope_kernel"
+        }
+      ],
+      "windows": [
+        {
+          "phase": "QKV",
+          "index": 0,
+          "start": 12480688459,
+          "end": 12485161483
+        },
+        {
+          "phase": "QKV",
+          "index": 1,
+          "start": 12485246411,
+          "end": 12488417036
+        },
+        {
+          "phase": "QKV",
+          "index": 2,
+          "start": 12489294956,
+          "end": 12492518988
+        }
+      ],
+      "samples": [
+        {
+          "timestamp": 12467168905,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12467168905,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12467168905,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12468168905,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12468168905,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12468168905,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12469168905,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12469168905,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12469168905,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12470168905,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12470168905,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12470168905,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12471168905,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12471168905,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12471168905,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12472168905,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12472168905,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12472168905,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12473168906,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12473168906,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12473168906,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12474168906,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12474168906,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12474168906,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12475168906,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12475168906,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12475168906,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12476168906,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12476168906,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12476168906,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12477168906,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12477168906,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12477168906,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12478168906,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12478168906,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12478168906,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12479168906,
+          "metric": 7,
+          "raw_percent": 95
+        },
+        {
+          "timestamp": 12479168906,
+          "metric": 21,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12479168906,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12480168907,
+          "metric": 7,
+          "raw_percent": 99
+        },
+        {
+          "timestamp": 12480168907,
+          "metric": 21,
+          "raw_percent": 38
+        },
+        {
+          "timestamp": 12480168907,
+          "metric": 22,
+          "raw_percent": 39
+        },
+        {
+          "timestamp": 12481168907,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12481168907,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12481168907,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12482168907,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12482168907,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12482168907,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12483168907,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12483168907,
+          "metric": 21,
+          "raw_percent": 56
+        },
+        {
+          "timestamp": 12483168907,
+          "metric": 22,
+          "raw_percent": 54
+        },
+        {
+          "timestamp": 12484168907,
+          "metric": 7,
+          "raw_percent": 100
+        },
+        {
+          "timestamp": 12484168907,
+          "metric": 21,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12484168907,
+          "metric": 22,
+          "raw_percent": 1
+        },
+        {
+          "timestamp": 12485168907,
+          "metric": 7,
+          "raw_percent": 7
+        },
+        {
+          "timestamp": 12485168907,
+          "metric": 21,
+          "raw_percent": 74
+        },
+        {
+          "timestamp": 12485168907,
+          "metric": 22,
+          "raw_percent": 75
+        },
+        {
+          "timestamp": 12486168907,
+          "metric": 7,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12486168907,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12486168907,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12487168908,
+          "metric": 7,
+          "raw_percent": 0
+        },
+        {
+          "timestamp": 12487168908,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12487168908,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12488168908,
+          "metric": 7,
+          "raw_percent": 67
+        },
+        {
+          "timestamp": 12488168908,
+          "metric": 21,
+          "raw_percent": 20
+        },
+        {
+          "timestamp": 12488168908,
+          "metric": 22,
+          "raw_percent": 17
+        },
+        {
+          "timestamp": 12489168908,
+          "metric": 7,
+          "raw_percent": 97
+        },
+        {
+          "timestamp": 12489168908,
+          "metric": 21,
+          "raw_percent": 66
+        },
+        {
+          "timestamp": 12489168908,
+          "metric": 22,
+          "raw_percent": 68
+        },
+        {
+          "timestamp": 12490168908,
+          "metric": 7,
+          "raw_percent": 91
+        },
+        {
+          "timestamp": 12490168908,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12490168908,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12491168908,
+          "metric": 7,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12491168908,
+          "metric": 21,
+          "raw_percent": 82
+        },
+        {
+          "timestamp": 12491168908,
+          "metric": 22,
+          "raw_percent": 81
+        },
+        {
+          "timestamp": 12492168908,
+          "metric": 7,
+          "raw_percent": 36
+        },
+        {
+          "timestamp": 12492168908,
+          "metric": 21,
+          "raw_percent": 27
+        },
+        {
+          "timestamp": 12492168908,
+          "metric": 22,
+          "raw_percent": 24
+        }
+      ],
+      "qkv_gemm_ms": 13.555554,
+      "gate_gemm_ms": 4.535808,
+      "gate_overlap_ms": 4.473024,
+      "projection_through_qkv_transfer_ms": 25.997027,
+      "method": "GPU7 step3layer0. Gate-v2 identity from gate NVTX and CUDA API correlation; previous gate and fused QKV inferred from model source order. RDMA windows span the opening-barrier end to closing-barrier start and may include completion/scheduling waits: gate_overlap_ms is overlap with these windows, not measured PCIe payload-active duration. Raw sampled counters, not interval averages. Diagnostic trace timings, not normal-request speed claims."
+    }
+  ],
+  "compile_drift": {
+    "config_differences": [
+      {
+        "path": "cw/3796734131e7e3b630ec2656ee57a2e2dfd5cbdb188c849ae0395b513204b9a8.best_config",
+        "old": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 8192,
+          "num_warps": 16,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 53,
+          "triton_cache_hash": "P54ELT7YTHS66EOARTNAFRPO35NO4PHWBEW7JQ3OSIDFF2TDLAYQ"
+        },
+        "new": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 53,
+          "triton_cache_hash": "RUMU2NIXBALIKARUMRAYU7IQ5LNV5EYXRBKT6JAOA5U5T4OEITQA"
+        }
+      },
+      {
+        "path": "ul/80478eac59d0a09390a3954895f24955d61ed42cdef8d0748358f3f40562a148.best_config",
+        "old": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 38,
+          "triton_cache_hash": "LQDFNY4CEKA53UF7A37COQFF2C56UTAQWGSTV6UKWZTZM6VGZNVQ"
+        },
+        "new": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 8192,
+          "num_warps": 16,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 74,
+          "triton_cache_hash": "JL7PLS3X67LZK2DDCZAWMBQUCWT3C2HCAVXEYJMCPBO7KF5RPNTQ"
+        }
+      },
+      {
+        "path": "6f/48c697954dd377217c399da638c58e1814c9d3aef9e19dd9a508a06cf944c36c.best_config",
+        "old": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 55,
+          "triton_cache_hash": "RUMU2NIXBALIKARUMRAYU7IQ5LNV5EYXRBKT6JAOA5U5T4OEITQA"
+        },
+        "new": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 8192,
+          "num_warps": 16,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 57,
+          "triton_cache_hash": "P54ELT7YTHS66EOARTNAFRPO35NO4PHWBEW7JQ3OSIDFF2TDLAYQ"
+        }
+      },
+      {
+        "path": "yg/2a30abb728d31874d2154a7caf9119841d9a55e7a9cd43c353e435e21e108e60.best_config",
+        "old": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 8192,
+          "num_warps": 16,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 42,
+          "triton_cache_hash": "JL7PLS3X67LZK2DDCZAWMBQUCWT3C2HCAVXEYJMCPBO7KF5RPNTQ"
+        },
+        "new": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 93,
+          "triton_cache_hash": "LQDFNY4CEKA53UF7A37COQFF2C56UTAQWGSTV6UKWZTZM6VGZNVQ"
+        }
+      },
+      {
+        "path": "lm/4a4d5bcd006ce9897211fb7a336bda5bd8c5da27af7e3a98d3adcebdc867afe5.best_config",
+        "old": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 8192,
+          "num_warps": 16,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 55,
+          "triton_cache_hash": "P54ELT7YTHS66EOARTNAFRPO35NO4PHWBEW7JQ3OSIDFF2TDLAYQ"
+        },
+        "new": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 4096,
+          "num_warps": 16,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 55,
+          "triton_cache_hash": "RUMU2NIXBALIKARUMRAYU7IQ5LNV5EYXRBKT6JAOA5U5T4OEITQA"
+        }
+      },
+      {
+        "path": "gg/ea2041fbf07f7d4791672d81e3c91e1d1743bb002fc650e25deaa6f5e6626747.best_config",
+        "old": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 8192,
+          "num_warps": 16,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 41,
+          "triton_cache_hash": "JL7PLS3X67LZK2DDCZAWMBQUCWT3C2HCAVXEYJMCPBO7KF5RPNTQ"
+        },
+        "new": {
+          "XBLOCK": 1,
+          "R0_BLOCK": 1024,
+          "num_warps": 8,
+          "num_stages": 1,
+          "configs_hash": "a099475831642be0678a86f6240ab8c02b04d23e9227756cfb04b342994499f7",
+          "found_by_coordesc": false,
+          "time_taken_ms": 57,
+          "triton_cache_hash": "LQDFNY4CEKA53UF7A37COQFF2C56UTAQWGSTV6UKWZTZM6VGZNVQ"
+        }
+      }
+    ],
+    "cache_control": {
+      "started": "2026-09-10T09:31:08.596759+00:00",
+      "state": "completed",
+      "completed": [
+        {
+          "case": "v1-cache-control",
+          "finished": "2026-09-10T09:37:21.863792+00:00",
+          "summary": {
+            "case": "vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct",
+            "status": "ok",
+            "cold_start_s": "145.267",
+            "warmup_s": "31.208",
+            "e2e_s": "25.067",
+            "encoder_s": "-",
+            "dit_s": "-",
+            "decode_total_s": "-",
+            "video_vae_path_s": "-",
+            "audio_vae_s": "-",
+            "pipeline_forward_s": "-",
+            "engine_exec_s": "24.970000",
+            "stage_gen_s": "25.029913",
+            "async_output_residual_wait_s": "0.023000",
+            "postprocess_s": "0.000000",
+            "stage_unattributed_residual_s": "0.036913",
+            "mp4_encode_s": "0.000000",
+            "api_http_residual_s": "0.037087",
+            "denoise_updates": "4",
+            "avg_profiled_step_ms": "-",
+            "media_s": "15.083333",
+            "rtf": "1.662",
+            "peak_gpu_mib": "63739",
+            "output": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/lossless-v2/runs/v1-cache-control/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1.mp4",
+            "github_url": "-"
+          }
+        }
+      ],
+      "current": "v1-cache-control",
+      "compute_apps": "",
+      "gpu_usage": "0, 4, 0\n1, 4, 0\n2, 4, 0\n3, 4, 0\n4, 4, 0\n5, 4, 0\n6, 4, 0\n7, 4, 0",
+      "consecutive_idle_samples": 3,
+      "updated": "2026-09-10T09:37:21.885901+00:00",
+      "case_started": "2026-09-10T09:31:49.644942+00:00",
+      "video_sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+      "matches_original": true,
+      "finished": "2026-09-10T09:37:21.885880+00:00"
+    },
+    "fresh_cache_diagnostic_video_sha256": "9dfd5dacd4cb1e5d293fe621fc85422ac741371b213d98be4f3e12c0db84815a",
+    "note": "Initial cache-cold v1 control is excluded from speed/lossless claims: its output changed with gate overlap disabled. Six previously selected RMSNorm reduction configurations differed. Reusing a copy of the original compiler cache restored the original MP4; formal A/B pins and checks those selections."
+  }
+}

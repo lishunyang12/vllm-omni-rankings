@@ -1,0 +1,6 @@
+name,baseline_s,candidate_s
+Encoder,0.122781,0.122079
+DiT,18.293431,17.513935
+Decode total,6.661873,6.604369
+Video VAE path,6.099832,6.008166
+Audio VAE,0.128605,0.128754

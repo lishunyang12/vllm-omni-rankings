@@ -163,3 +163,16 @@ Individual cases use `bash run_model_case.sh MODE normal|stages|nsys`.
 The campaign waits for eight free GPUs before each case and preserves
 the benchmark's route and GPU health validation. The optional independent
 GPU-balance benchmark is disabled, as recorded in every run.
+
+## Compiler selections and bitwise reproducibility
+
+All four original modes reused one compiler cache. During a later lossless
+experiment, a new cache selected six different RMSNorm reduction configurations
+(e.g. R0_BLOCK 8192 versus 4096); even the gate-disabled control changed its video.
+The initial cold-cache control is therefore excluded from that later A/B.
+`compile-config-snapshot.json` records 80 selected configurations present in the
+original cache, including configurations that may not be active in each mode.
+The later gate experiment uses a copy and explicitly checks that these selections
+do not change. Bitwise video reproducibility requires holding the selected
+reduction kernels fixed as well as prompt, seed, weights, precision and schedule.
+No bitwise guarantee is made across independent compiler autotuning sessions.

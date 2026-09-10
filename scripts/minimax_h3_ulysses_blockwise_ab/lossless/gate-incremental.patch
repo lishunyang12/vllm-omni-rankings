@@ -1,0 +1,112 @@
+--- a/vllm_omni/diffusion/models/minimax_h3/minimax_h3_transformer.py
++++ b/vllm_omni/diffusion/models/minimax_h3/minimax_h3_transformer.py
+@@ -517,6 +517,7 @@
+             os.getenv("VLLM_OMNI_H3_EXPERIMENT_OVERLAP", "0") == "1"
+             and prefix.startswith("blocks.")
+         )
++        self._h3_lossless_gate = self._h3_ulysses_overlap and os.getenv("VLLM_OMNI_H3_LOSSLESS_GATE", "0") == "1"
+         self._gate_quant_config = quant_config
+         self._gate_prefix = f"{prefix}.to_gate_compress"
+         self.attention = Attention(
+@@ -638,6 +639,7 @@
+         vsa_prefix_segments: tuple[int, ...] = (),
+         gate_compress: torch.Tensor | None = None,
+         gate_input: torch.Tensor | None = None,
++        lossless_gate_input: torch.Tensor | None = None,
+         qk_norm_rope: tuple[
+             torch.Tensor,
+             torch.Tensor,
+@@ -942,7 +944,7 @@
+                 ),
+                 **(
+                     {"vsa_h3_prefix_segments": vsa_prefix_segments}
+-                    if gate_batched is not None and video_layout is not None and video_layout.video_spans
++                    if (gate_batched is not None or lossless_gate_input is not None) and video_layout is not None and video_layout.video_spans
+                     else {}
+                 ),
+             },
+@@ -966,7 +968,8 @@
+             from vllm_omni.diffusion.attention.ops.h3_overlap_experiment import run
+ 
+             return run(self.attention, q_batched, k_batched, v_batched, metadata,
+-                       self._project_attention_chunk).squeeze(0)
++                       self._project_attention_chunk, gate_input=lossless_gate_input,
++                       gate_projector=self.to_gate_compress).squeeze(0)
+         return self.attention(q_batched, k_batched, v_batched, metadata).squeeze(0)
+ 
+     def forward(
+@@ -1012,8 +1015,11 @@
+         v = v.view(total, self.num_kv_heads, self.head_dim)
+         gate_compress = None
+         gate_input = None
++        lossless_gate_input = None
+         if self.to_gate_compress is not None:
+-            if getattr(self, "_use_vsa_gate_compute_overlap", False):
++            if self._h3_lossless_gate:
++                lossless_gate_input = x
++            elif getattr(self, "_use_vsa_gate_compute_overlap", False):
+                 gate_input = x
+             else:
+                 gate_result = self.to_gate_compress(x)
+@@ -1061,6 +1067,7 @@
+             vsa_prefix_segments=vsa_prefix_segments,
+             gate_compress=gate_compress,
+             gate_input=gate_input,
++            lossless_gate_input=lossless_gate_input,
+             qk_norm_rope=qk_norm_rope,
+             qk_observer_boundary_is_post_rope=rope_table is not None,
+         )
+--- a/vllm_omni/diffusion/attention/ops/h3_overlap_experiment.py
++++ b/vllm_omni/diffusion/attention/ops/h3_overlap_experiment.py
+@@ -7,6 +7,7 @@
+ 
+ logger = init_logger(__name__)
+ _BUNDLE_LOGGED = False
++_GATE_LOGGED = False
+ 
+ ACTIVE = ContextVar('h3_overlap_experiment', default=None)
+ 
+@@ -16,7 +17,7 @@
+     return torch.cuda.Stream(device=device,priority=-1), torch.cuda.Stream(device=device)
+ 
+ 
+-def run(attention, query, key, value, metadata, projector):
++def run(attention, query, key, value, metadata, projector, *, gate_input=None, gate_projector=None):
+     assert ACTIVE.get() is None, 'overlap forward cannot be nested'
+     impl = attention.attention
+     assert impl.h3_kernel_backend == 'flashinfer' and impl.topk == 162
+@@ -29,12 +30,34 @@
+     token = ACTIVE.set(state)
+     try:
+         with torch.cuda.stream(comm), torch.cuda.nvtx.range('h3.overlap.attention'):
++            if gate_input is not None:
++                assert gate_input.shape == (11992,5376) and gate_input.dtype == torch.bfloat16
++                assert not gate_input.requires_grad and gate_input.is_contiguous()
++                assert gate_projector is not None and 'gate_compress' not in metadata.extra
++                assert 'vsa_h3_prefix_segments' in metadata.extra
++                # Q/K norm+RoPE have already been submitted to caller. Gate
++                # uses exactly the original GEMM on the same side stream as
++                # QK preparation and reverse gate/O. It has no dependency on
++                # received Q/K; preprocessing only inspects its shape/dtype.
++                side.wait_stream(comm)
++                with torch.cuda.stream(side), torch.cuda.nvtx.range('h3.lossless.gate_gemm'):
++                    gate_input.record_stream(side)
++                    gate_result = gate_projector(gate_input)
++                    gate = gate_result[0] if isinstance(gate_result,tuple) else gate_result
++                    assert gate.shape == (11992,7168) and gate.dtype == torch.bfloat16
++                    metadata.extra['gate_compress'] = gate.view(1,11992,56,128)
++                global _GATE_LOGGED
++                if not _GATE_LOGGED:
++                    logger.info('H3_LOSSLESS_GATE rank=%d M=11992 N=7168 K=5376 dtype=bf16 shape_unchanged=1 stream=overlap_side',dist.get_rank())
++                    _GATE_LOGGED = True
+             out = attention(query,key,value,metadata)
+             assert state['projected'], 'chunked reverse/projector did not run'
+         caller.wait_stream(comm)
+         out.record_stream(caller)
+         return out
+     finally:
++        # Also cover exceptions before the normal preparation/reverse joins.
++        caller.wait_stream(side)
+         caller.wait_stream(comm)
+         ACTIVE.reset(token)
+ 

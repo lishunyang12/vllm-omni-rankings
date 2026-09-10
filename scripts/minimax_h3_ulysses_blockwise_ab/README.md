@@ -27,3 +27,5 @@ TMA 描述符使用独立内存池，避免原生 cuMemcpyHtoD 初始化与前�
 - FP8 blockwise · 重叠调度：[视频](fp8-overlap.mp4) · [原生 Nsight](fp8-overlap-warmed.nsys-rep)
 
 [原始数据 ZIP](raw-data.zip) · [清单](manifest.json) · [SHA256](SHA256SUMS.txt)
+
+[新增：BF16 gate 重叠的完整无损 A/B、视频与 Nsight](lossless/index.html) · [静态报告](lossless/README.md)

@@ -2,8 +2,8 @@
   "files": [
     {
       "path": "README.md",
-      "bytes": 2743,
-      "sha256": "6da61659e10fd606ec2ce1b5d849bdda282fbf3870fcc4cf113ba64dca554395"
+      "bytes": 2869,
+      "sha256": "7fe90659fdc0f3de84eb7be8bb83452b68b0f2c74a02296bbc96186a04e8b549"
     },
     {
       "path": "bf16-base-warmed.nsys-rep",
@@ -31,6 +31,11 @@
       "sha256": "9e33fa03eaf55e9539fba6efa70d5a51758293ea9e83d0f45255a98f4cfba04e"
     },
     {
+      "path": "compile-config-snapshot.json",
+      "bytes": 30737,
+      "sha256": "c80a9d317ab9d7d66c13c0a7dd7e82f82f61fdd0af625f73fde2bbfce4549ccf"
+    },
+    {
       "path": "fp8-base-warmed.nsys-rep",
       "bytes": 62896593,
       "sha256": "cdbf5cb60bd10d5fc2ad20b8b080add83704e89bf386b36c4ab47c14d8f86029"
@@ -52,8 +57,123 @@
     },
     {
       "path": "index.html",
-      "bytes": 310598,
-      "sha256": "5b204f675e1411a55b9d425d9f0399bfa1677c5ec9649be63c86afc10753407a"
+      "bytes": 310964,
+      "sha256": "ad221d82b51a183ac354f4b24619847e57f487ff800f5722c44ecbdc575c4d44"
+    },
+    {
+      "path": "lossless/README.md",
+      "bytes": 2181,
+      "sha256": "f222eae890653da661f092aef4d78d884a26cbaca038d5fa3bc772072cc4c000"
+    },
+    {
+      "path": "lossless/communication-options.md",
+      "bytes": 4862,
+      "sha256": "2016f38975fbaae97007dcac5d829503919854688bd1aa31b008176026e42ae2"
+    },
+    {
+      "path": "lossless/compile-config-differences.json",
+      "bytes": 4722,
+      "sha256": "01e316e31b3de69e40167693c05ed795551be3f6d9d1014312464902a03559c0"
+    },
+    {
+      "path": "lossless/control-drift-quality.json",
+      "bytes": 455181,
+      "sha256": "33030cd4928de676de4391dc6f7f29b7c4524268349d8a415025d0b72174b798"
+    },
+    {
+      "path": "lossless/data.json",
+      "bytes": 50370,
+      "sha256": "2c58dbc4699a165fd9029795c7ab905eeb618509ee2642ed57c11982e141cc26"
+    },
+    {
+      "path": "lossless/gate-incremental.patch",
+      "bytes": 5479,
+      "sha256": "624d22213438c1bf6c2bcc35fe21e511914beff517afd924b98ab6660fb5fd76"
+    },
+    {
+      "path": "lossless/gate-timelines.json",
+      "bytes": 20729,
+      "sha256": "6871ed4211c6f04ed20dad20600b885dfcff7702fc68736fbe53f2f99ce335a5"
+    },
+    {
+      "path": "lossless/gate-timelines.png",
+      "bytes": 141262,
+      "sha256": "e609dc62f2fa44872611010b738041efbd27ddcb7d1f2d504ffede0844b28fda"
+    },
+    {
+      "path": "lossless/gate-timelines.svg",
+      "bytes": 111886,
+      "sha256": "d0ecf40f99ad23c2decbd77b8512bf5a75e205a1d666058188ee93c3e974b798"
+    },
+    {
+      "path": "lossless/index.html",
+      "bytes": 6511,
+      "sha256": "c9c39405c26499525d66d7bb89715d79e9111fb7faac12d1d05c80d9fc23810a"
+    },
+    {
+      "path": "lossless/latencies.csv",
+      "bytes": 268,
+      "sha256": "2008846b8c8efc9a1e970d2261219d4a49a18e43a509df3575024ff1042fbb49"
+    },
+    {
+      "path": "lossless/lossless-micros.png",
+      "bytes": 93421,
+      "sha256": "1afdcb5046e0725738ccd8a5a2e8fe3e5ed21937203c57fa3f2fb7e0e07fc127"
+    },
+    {
+      "path": "lossless/lossless-micros.svg",
+      "bytes": 87030,
+      "sha256": "5d0fd82d20217bdb5b1a355c4db25680bd5f0471972033acf541b1bff9d25ddb"
+    },
+    {
+      "path": "lossless/micro-v1.json",
+      "bytes": 94130,
+      "sha256": "3d804b7d830c9a55b9f1fe283983cae45dfff7fa31dea7391e17e7451d3657ca"
+    },
+    {
+      "path": "lossless/player.js",
+      "bytes": 667,
+      "sha256": "ffbeb01f965db5c3b5d15b84f16cecbcca00e4eb98fc794b14dfd92ff51965b0"
+    },
+    {
+      "path": "lossless/raw-data.zip",
+      "bytes": 6135920,
+      "sha256": "36495c5375fcad150463024498ae3cb5de27b36e3c8cca897976daf8f05bbe0b"
+    },
+    {
+      "path": "lossless/stage-breakdown.png",
+      "bytes": 34111,
+      "sha256": "29eb388cf9460f04c3d3ac9e786f5846f8fae4794b71931c13a94427e35f83dd"
+    },
+    {
+      "path": "lossless/stage-breakdown.svg",
+      "bytes": 35527,
+      "sha256": "3eec4d0c07d549f53bb394176edebf42b1dbde42f55d1bc040d50b36d8d94176"
+    },
+    {
+      "path": "lossless/stages.csv",
+      "bytes": 176,
+      "sha256": "ea94e30da5387852072c6aa0f64eec31bc49709138e1c39d791ab968c1349e11"
+    },
+    {
+      "path": "lossless/transport-capacity.json",
+      "bytes": 1850,
+      "sha256": "15ee8e33e74a3ddbee373498c3bc16babc98d6c142d635fbd47dced3b7bb5734"
+    },
+    {
+      "path": "lossless/v1-control.mp4",
+      "bytes": 25614803,
+      "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+    },
+    {
+      "path": "lossless/v2-gate-warmed.nsys-rep",
+      "bytes": 73603724,
+      "sha256": "8a6a977e046d5436796eaff2d8f1d3d7cd9c524c8ebd5d37ff137554cbe06ab6"
+    },
+    {
+      "path": "lossless/v2-gate.mp4",
+      "bytes": 25614803,
+      "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
     },
     {
       "path": "micro/blockwise-smoke.json",
@@ -127,8 +247,8 @@
     },
     {
       "path": "page.css",
-      "bytes": 5559,
-      "sha256": "f2dd1bade54b733cb9c68cf8509f562a16dba9e9a6dd5cea184e30d51039c292"
+      "bytes": 5611,
+      "sha256": "1381200b6d85bb72947df8b94230557d30d7ba2ada950cf861703b52903074fb"
     },
     {
       "path": "page.js",
@@ -227,13 +347,13 @@
     },
     {
       "path": "raw-data.zip",
-      "bytes": 29622567,
-      "sha256": "0fed256e981f41e15678a4e8d4192b40f36e71c7aace5d9f85ecc22aaae4618c"
+      "bytes": 29628832,
+      "sha256": "049e6ab3fe691908e1890fe27edda81dc05a3516bb8f2496e2c48c066c4e7a0f"
     },
     {
       "path": "report-methodology.md",
-      "bytes": 9897,
-      "sha256": "af3f82275812788a9b4ff16d8e0406e97ce6952572bf10d5d1280befcbe67d33"
+      "bytes": 10739,
+      "sha256": "4373c2f95d02a85ec7a0e287420a025dda3d3aa350985dace54c835c05f23a70"
     },
     {
       "path": "summary/comparisons.csv",

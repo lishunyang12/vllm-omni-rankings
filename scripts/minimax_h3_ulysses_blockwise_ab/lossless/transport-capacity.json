@@ -1,0 +1,73 @@
+{
+  "scope": "Read-only re-evaluation of unchanged FlashInfer sysfs auto-selection, no explicit NIC override; not a live verbs connection counter.",
+  "source_sha256": "ba42ce2e36e059babfc2c0f093d555e9dd917525501787acfdc047982c05eb02",
+  "ranks": [
+    {
+      "rank": 0,
+      "physical_gpu": 0,
+      "pci": "00000000:06:00.0",
+      "numa": 0,
+      "auto_selected_nic": "mlx5_2",
+      "port_rate": "400 Gb/sec (4X NDR)"
+    },
+    {
+      "rank": 1,
+      "physical_gpu": 4,
+      "pci": "00000000:86:00.0",
+      "numa": 1,
+      "auto_selected_nic": "mlx5_6",
+      "port_rate": "400 Gb/sec (4X NDR)"
+    },
+    {
+      "rank": 2,
+      "physical_gpu": 1,
+      "pci": "00000000:09:00.0",
+      "numa": 0,
+      "auto_selected_nic": "mlx5_3",
+      "port_rate": "400 Gb/sec (4X NDR)"
+    },
+    {
+      "rank": 3,
+      "physical_gpu": 5,
+      "pci": "00000000:89:00.0",
+      "numa": 1,
+      "auto_selected_nic": "mlx5_7",
+      "port_rate": "400 Gb/sec (4X NDR)"
+    },
+    {
+      "rank": 4,
+      "physical_gpu": 2,
+      "pci": "00000000:76:00.0",
+      "numa": 0,
+      "auto_selected_nic": "mlx5_0",
+      "port_rate": "400 Gb/sec (4X NDR)"
+    },
+    {
+      "rank": 5,
+      "physical_gpu": 6,
+      "pci": "00000000:F6:00.0",
+      "numa": 1,
+      "auto_selected_nic": "mlx5_4",
+      "port_rate": "400 Gb/sec (4X NDR)"
+    },
+    {
+      "rank": 6,
+      "physical_gpu": 3,
+      "pci": "00000000:79:00.0",
+      "numa": 0,
+      "auto_selected_nic": "mlx5_1",
+      "port_rate": "400 Gb/sec (4X NDR)"
+    },
+    {
+      "rank": 7,
+      "physical_gpu": 7,
+      "pci": "00000000:F9:00.0",
+      "numa": 1,
+      "auto_selected_nic": "mlx5_5",
+      "port_rate": "400 Gb/sec (4X NDR)"
+    }
+  ],
+  "baseline_gpu7_effective_send_gb_s": 47.443992998671455,
+  "nominal_port_gb_s": 50,
+  "nominal_rate_fraction": 0.948879859973429
+}
