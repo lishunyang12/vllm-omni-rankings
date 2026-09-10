@@ -1,0 +1,613 @@
+diff --git a/vllm_omni/diffusion/attention/backends/fastvideo_vsa.py b/vllm_omni/diffusion/attention/backends/fastvideo_vsa.py
+index af42bbd..1b8ce57 100644
+--- a/vllm_omni/diffusion/attention/backends/fastvideo_vsa.py
++++ b/vllm_omni/diffusion/attention/backends/fastvideo_vsa.py
+@@ -261,6 +261,12 @@ if not hasattr(torch.ops.vllm_omni, "fastvideo_h3_vsa_bhsd"):
+ _fastvideo_h3_vsa_bhsd_op = torch.ops.vllm_omni.fastvideo_h3_vsa_bhsd
+ 
+ 
++@functools.lru_cache(maxsize=None)
++def _h3_cake_descriptor_pool(device_index: int):
++    with torch.cuda.device(device_index):
++        return torch.cuda.MemPool()
++
++
+ @functools.lru_cache(maxsize=None)
+ def _h3_cake_tma_workspace(device_index: int, stream_id: int, binding: tuple) -> torch.Tensor:
+     """Keep an immutable descriptor slot for each exact tensor binding/stream.
+@@ -271,7 +277,13 @@ def _h3_cake_tma_workspace(device_index: int, stream_id: int, binding: tuple) ->
+     slot for each binding also avoids remapping a descriptor still in use by
+     an earlier asynchronous launch on a non-default stream.
+     """
+-    return torch.empty(512, device=torch.device("cuda", device_index), dtype=torch.uint8)
++    # Native descriptor initialization uses cuMemcpyHtoD, outside the PyTorch
++    # current stream. A fresh workspace from the ordinary pool may still have
++    # pending writes by a prior tensor on a non-blocking stream. Reserve a pool
++    # used exclusively for these lifetime-retained descriptors so that the
++    # initializer never races with a previous owner of the allocation.
++    with torch.cuda.use_mem_pool(_h3_cake_descriptor_pool(device_index), device=device_index):
++        return torch.empty(512, device=torch.device("cuda", device_index), dtype=torch.uint8)
+ 
+ 
+ def _flashinfer_h3_vsa_q2k_bshd_impl(
+@@ -1272,49 +1284,58 @@ class FastVideoVSAImpl(AttentionImpl):
+                     scope="process",
+                 )
+ 
+-        with _h3_vsa_nvtx_stage("vsa.layout.tile_pack"):
+-            if use_fused_tile_pack:
+-                assert qkv_source_rows is not None
+-                if fp8_qkv_scales is not None:
+-                    q_tiled = h3_vsa_fp8_dequant_tile_pack(
+-                        query,
+-                        qkv_source_rows,
+-                        fp8_qkv_scales[0],
+-                    )
+-                    k_tiled = h3_vsa_fp8_dequant_tile_pack(
+-                        key,
+-                        qkv_source_rows,
+-                        fp8_qkv_scales[1],
+-                    )
+-                    v_tiled = h3_vsa_fp8_dequant_tile_pack(
+-                        value,
+-                        qkv_source_rows,
+-                        fp8_qkv_scales[2],
+-                    )
++        from vllm_omni.diffusion.attention.ops.h3_overlap_experiment import prepared
++
++        overlap_prepared = prepared()
++        if overlap_prepared is not None:
++            assert use_fused_tile_pack and fp8_qkv_scales is None and gate is None
++            q_tiled, k_tiled, q_pool, k_pool, scores, q2k_idx, q2k_num = overlap_prepared
++            with _h3_vsa_nvtx_stage("vsa.layout.tile_pack_v"):
++                v_tiled = h3_vsa_tile_pack(value, qkv_source_rows)
++        else:
++            with _h3_vsa_nvtx_stage("vsa.layout.tile_pack"):
++                if use_fused_tile_pack:
++                    assert qkv_source_rows is not None
++                    if fp8_qkv_scales is not None:
++                        q_tiled = h3_vsa_fp8_dequant_tile_pack(
++                            query,
++                            qkv_source_rows,
++                            fp8_qkv_scales[0],
++                        )
++                        k_tiled = h3_vsa_fp8_dequant_tile_pack(
++                            key,
++                            qkv_source_rows,
++                            fp8_qkv_scales[1],
++                        )
++                        v_tiled = h3_vsa_fp8_dequant_tile_pack(
++                            value,
++                            qkv_source_rows,
++                            fp8_qkv_scales[2],
++                        )
++                    else:
++                        q_tiled = h3_vsa_tile_pack(query, qkv_source_rows)
++                        k_tiled = h3_vsa_tile_pack(key, qkv_source_rows)
++                        v_tiled = h3_vsa_tile_pack(value, qkv_source_rows)
+                 else:
+-                    q_tiled = h3_vsa_tile_pack(query, qkv_source_rows)
+-                    k_tiled = h3_vsa_tile_pack(key, qkv_source_rows)
+-                    v_tiled = h3_vsa_tile_pack(value, qkv_source_rows)
+-            else:
+-                assert not fp8_qkv_transport
+-                q_tiled = torch.zeros(target_shape, device=query.device, dtype=query.dtype)
+-                k_tiled = torch.zeros_like(q_tiled)
+-                v_tiled = torch.zeros_like(q_tiled)
+-                q_tiled[:, non_pad] = query[:, partition]
+-                k_tiled[:, non_pad] = key[:, partition]
+-                v_tiled[:, non_pad] = value[:, partition]
+-
+-        with _h3_vsa_nvtx_stage("vsa.coarse.pool_qk"):
+-            q_pool = _pool_h3_tiles(
+-                q_tiled[:, : logical_blocks * H3_VSA_EFFECTIVE_TILE_SIZE],
+-                sizes,
+-            )
+-            k_pool = _pool_h3_tiles(
+-                k_tiled[:, : logical_blocks * H3_VSA_EFFECTIVE_TILE_SIZE],
+-                sizes,
+-            )
+-        with _h3_vsa_nvtx_stage("vsa.coarse.qk_scores"):
+-            scores = torch.matmul(q_pool, k_pool.transpose(-2, -1)) * self.softmax_scale
++                    assert not fp8_qkv_transport
++                    q_tiled = torch.zeros(target_shape, device=query.device, dtype=query.dtype)
++                    k_tiled = torch.zeros_like(q_tiled)
++                    v_tiled = torch.zeros_like(q_tiled)
++                    q_tiled[:, non_pad] = query[:, partition]
++                    k_tiled[:, non_pad] = key[:, partition]
++                    v_tiled[:, non_pad] = value[:, partition]
++
++            with _h3_vsa_nvtx_stage("vsa.coarse.pool_qk"):
++                q_pool = _pool_h3_tiles(
++                    q_tiled[:, : logical_blocks * H3_VSA_EFFECTIVE_TILE_SIZE],
++                    sizes,
++                )
++                k_pool = _pool_h3_tiles(
++                    k_tiled[:, : logical_blocks * H3_VSA_EFFECTIVE_TILE_SIZE],
++                    sizes,
++                )
++            with _h3_vsa_nvtx_stage("vsa.coarse.qk_scores"):
++                scores = torch.matmul(q_pool, k_pool.transpose(-2, -1)) * self.softmax_scale
+         kernel_sizes = sizes
+ 
+         logger.info_once(
+@@ -1337,12 +1358,13 @@ class FastVideoVSAImpl(AttentionImpl):
+                     scope="process",
+                 )
+                 with _h3_vsa_nvtx_stage("vsa.route.topk_q2k"):
+-                    q2k_idx, q2k_num = _build_h3_ordered_q2k_indices(
+-                        scores,
+-                        prefix_blocks,
+-                        video_blocks,
+-                        self.topk,
+-                    )
++                    if overlap_prepared is None:
++                        q2k_idx, q2k_num = _build_h3_ordered_q2k_indices(
++                            scores,
++                            prefix_blocks,
++                            video_blocks,
++                            self.topk,
++                        )
+                 with _h3_vsa_nvtx_stage("vsa.fine.block_sparse_attention"):
+                     output = _flashinfer_h3_vsa_q2k_bshd_op(
+                         q_tiled.contiguous(),
+@@ -1478,6 +1500,11 @@ class FastVideoVSAImpl(AttentionImpl):
+                     )
+                     fine_aligned[:, : untile.numel()].copy_(output[:, untile])
+ 
++            from vllm_omni.diffusion.attention.ops.h3_overlap_experiment import publish_reverse
++
++            if publish_reverse(fine_aligned, compressed, owner_route):
++                return fine_aligned
++
+             expected_bundle_shape = (
+                 fine_aligned.shape[0],
+                 owner_route.sp_world_size * (owner_route.local_rows + owner_route.kmax),
+@@ -1693,6 +1720,14 @@ class FastVideoVSAImpl(AttentionImpl):
+                     plan = state.get("plan") if isinstance(state, dict) else None
+                     if not isinstance(plan, H3VSAOwnerRoutePlan):
+                         raise RuntimeError("H3 VSA reverse-O bundle plan disappeared after producer execution")
++                    from vllm_omni.diffusion.attention.ops.h3_overlap_experiment import ACTIVE
++
++                    overlap_state = ACTIVE.get()
++                    if overlap_state is not None:
++                        fine, _coarse, owner_plan = overlap_state["reverse"]
++                        if output is not fine or owner_plan is not plan or output.shape[1] != original_seq_len:
++                            raise RuntimeError("H3 chunked reverse-O producer lost its fine/route identity")
++                        return output
+                     expected_bundle_rows = plan.sp_world_size * (plan.local_rows + plan.kmax)
+                     if output.shape[1] != expected_bundle_rows:
+                         raise ValueError(
+diff --git a/vllm_omni/diffusion/attention/parallel/ulysses.py b/vllm_omni/diffusion/attention/parallel/ulysses.py
+index e84ca8f..e0dbb87 100644
+--- a/vllm_omni/diffusion/attention/parallel/ulysses.py
++++ b/vllm_omni/diffusion/attention/parallel/ulysses.py
+@@ -961,6 +961,9 @@ class UlyssesParallelAttention:
+                                 "k",
+                                 self._use_sync,
+                             )
++                            from vllm_omni.diffusion.attention.ops.h3_overlap_experiment import before_v
++
++                            value = before_v(query, key, value, attn_metadata, self._ulysses_pg)
+                             value = flashinfer_ulysses_qkv_fwd(
+                                 value,
+                                 group_name,
+@@ -1458,6 +1461,11 @@ class UlyssesParallelAttention:
+                 "MiniMax-H3 VSA FP8 QKV transport requires BF16 attention "
+                 f"output before reverse Ulysses, got {attn_output.dtype}"
+             )
++        from vllm_omni.diffusion.attention.ops.h3_overlap_experiment import finish_reverse
++
++        projected = finish_reverse(attn_output, ctx)
++        if projected is not None:
++            return projected
+         self._validate_o_bundle_producer_output(attn_output, ctx)
+ 
+         if ctx.joint_len > 0:
+diff --git a/vllm_omni/diffusion/model_loader/diffusers_loader.py b/vllm_omni/diffusion/model_loader/diffusers_loader.py
+index 7069e50..5b370c3 100644
+--- a/vllm_omni/diffusion/model_loader/diffusers_loader.py
++++ b/vllm_omni/diffusion/model_loader/diffusers_loader.py
+@@ -157,6 +157,13 @@ class DiffusersPipelineLoader(HWRLoaderMixin):
+     def __init__(self, load_config: LoadConfig, od_config: OmniDiffusionConfig):
+         self.load_config = load_config
+         self.od_config = od_config
++        if os.getenv("VLLM_OMNI_H3_EXPERIMENT_BLOCKWISE", "0") == "1":
++            from vllm_omni.diffusion.models.minimax_h3.blockwise_experiment import configure
++            from vllm_omni.quantization.component_config import ComponentQuantizationConfig
++
++            od_config.quantization_config = ComponentQuantizationConfig(
++                {"transformer": configure(od_config.quantization_config)}
++            )
+         self.quant_config = od_config.quantization_config
+         self.parallel_config = od_config.parallel_config
+         self.host_weight_plan: HostWeightPlan | None = None
+diff --git a/vllm_omni/diffusion/models/minimax_h3/fp8_contract.py b/vllm_omni/diffusion/models/minimax_h3/fp8_contract.py
+index 2ca554c..4a3cafc 100644
+--- a/vllm_omni/diffusion/models/minimax_h3/fp8_contract.py
++++ b/vllm_omni/diffusion/models/minimax_h3/fp8_contract.py
+@@ -640,6 +640,11 @@ def resolve_minimax_h3_dit_quant_mode(
+     arch: Any,
+ ) -> str:
+     """Resolve the QKV-calibration identity for this exact DiT instance."""
++    from .blockwise_experiment import H3BlockwiseConfig, MODE
++
++    if type(quant_config) is H3BlockwiseConfig:
++        _validate_production_arch(arch)
++        return MODE
+     scope = os.getenv(MINIMAX_H3_FP8_SCOPE_ENV, "none")
+     if scope not in {
+         MINIMAX_H3_MLP_FP8_SCOPE,
+diff --git a/vllm_omni/diffusion/models/minimax_h3/minimax_h3_transformer.py b/vllm_omni/diffusion/models/minimax_h3/minimax_h3_transformer.py
+index 8858bcd..6f92105 100644
+--- a/vllm_omni/diffusion/models/minimax_h3/minimax_h3_transformer.py
++++ b/vllm_omni/diffusion/models/minimax_h3/minimax_h3_transformer.py
+@@ -133,6 +133,10 @@ def _validate_adaln_cache_quant_config(
+     # should not eagerly import vLLM's full FP8 implementation.
+     from vllm.model_executor.layers.quantization.fp8 import Fp8Config
+ 
++    from .blockwise_experiment import H3BlockwiseConfig
++
++    if type(quant_config) is H3BlockwiseConfig:
++        return
+     if type(quant_config) is Fp8Config and quant_config.is_checkpoint_fp8_serialized is False:
+         return
+ 
+@@ -509,6 +513,10 @@ class MiniMaxH3Attention(nn.Module):
+         # a sparse student and before checkpoint loading begins.
+         self.to_gate_compress: ColumnParallelLinear | None = None
+         self._gate_hidden_size = arch.hidden_size
++        self._h3_ulysses_overlap = (
++            os.getenv("VLLM_OMNI_H3_EXPERIMENT_OVERLAP", "0") == "1"
++            and prefix.startswith("blocks.")
++        )
+         self._gate_quant_config = quant_config
+         self._gate_prefix = f"{prefix}.to_gate_compress"
+         self.attention = Attention(
+@@ -952,6 +960,13 @@ class MiniMaxH3Attention(nn.Module):
+                 chunks=self._qchunk_count,
+                 output_projector=self._project_attention_chunk,
+             )
++        if self._h3_ulysses_overlap:
++            if not h3_vsa_attention_active or self._qchunk_count or fp8_qkv_scales is not None:
++                raise RuntimeError("H3 overlap requires main-block BF16-wire VSA without query chunking")
++            from vllm_omni.diffusion.attention.ops.h3_overlap_experiment import run
++
++            return run(self.attention, q_batched, k_batched, v_batched, metadata,
++                       self._project_attention_chunk).squeeze(0)
+         return self.attention(q_batched, k_batched, v_batched, metadata).squeeze(0)
+ 
+     def forward(
+@@ -1049,7 +1064,7 @@ class MiniMaxH3Attention(nn.Module):
+             qk_norm_rope=qk_norm_rope,
+             qk_observer_boundary_is_post_rope=rope_table is not None,
+         )
+-        if self._qchunk_count:
++        if self._qchunk_count or self._h3_ulysses_overlap:
+             return out
+         out = out.reshape(total, self.num_heads * self.head_dim)
+         out, _ = self.out_proj(out)
+@@ -1765,6 +1780,9 @@ class MiniMaxH3DiTModel(nn.Module):
+         if self.adaln_cache is not None:
+             self.adaln_cache.load(self.video_patch_proj.weight.device)
+         audit_minimax_h3_mlp_fp8_runtime(self)
++        from .blockwise_experiment import audit
++
++        audit(self)
+ 
+     def validate_restored_host_weights(self) -> None:
+         """Validate mixed-precision invariants after lease-backed restore."""
+diff --git a/vllm_omni/diffusion/models/minimax_h3/pipeline_minimax_h3.py b/vllm_omni/diffusion/models/minimax_h3/pipeline_minimax_h3.py
+index f01c09e..021e3b8 100644
+--- a/vllm_omni/diffusion/models/minimax_h3/pipeline_minimax_h3.py
++++ b/vllm_omni/diffusion/models/minimax_h3/pipeline_minimax_h3.py
+@@ -1446,7 +1446,7 @@ class MiniMaxH3Pipeline(
+             adaln_cache_model_variant=expected_partition,
+         )
+         self._qkv_transport_dit_quant_mode = resolve_minimax_h3_dit_quant_mode(
+-            transformer_quant_config,
++            self.transformer.quant_config,
+             self.transformer.arch,
+         )
+         if ref2va_model_path is not None:
+--- /dev/null
++++ b/vllm_omni/diffusion/attention/ops/h3_overlap_chunks.py
+@@ -0,0 +1,49 @@
++"""Experimental row-chunk producer; uses the existing BF16 gate kernel.
++
++Each chunk duplicates the owner's existing compact coarse tail. This keeps
++the current native collective and its completion/abort protocol unchanged.
++The additional bytes are measured and reported by the benchmark.
++"""
++import torch
++import triton
++import triton.language as tl
++
++from vllm_omni.diffusion.attention.ops.minimax_h3_vsa_o_bundle import _h3_vsa_o_bundle_local_gate_kernel
++
++
++@triton.jit
++def _produce(fine, coarse, owners, out, coarse_row_stride, coarse_head_stride,
++             ROWS: tl.constexpr, OFFSET: tl.constexpr, COUNT: tl.constexpr,
++             TAIL: tl.constexpr, WIDTH: tl.constexpr, BLOCK: tl.constexpr):
++    row = tl.program_id(0)
++    owner = row // (COUNT + TAIL)
++    within = row % (COUNT + TAIL)
++    col = tl.program_id(1) * BLOCK + tl.arange(0, BLOCK)
++    fine_row = owner * ROWS + OFFSET + within
++    fine_value = tl.load(fine + fine_row * WIDTH + col, (within < COUNT) & (col < WIDTH), other=0)
++    tile = tl.load(owners + owner * TAIL + (within - COUNT), within >= COUNT, other=-1)
++    coarse_offset = tile * coarse_row_stride + (col // 128) * coarse_head_stride + col % 128
++    coarse_value = tl.load(coarse + coarse_offset, (within >= COUNT) & (tile >= 0) & (col < WIDTH), other=0)
++    value = tl.where(within < COUNT, fine_value, coarse_value)
++    tl.store(out + row * WIDTH + col, value, col < WIDTH)
++
++
++def produce(fine, coarse, owner_tiles, landing, start, count):
++    assert fine.shape == (1, 95936, 7, 128) and fine.is_contiguous()
++    assert coarse.shape == (1, 1648, 7, 128) and coarse.stride(-1) == 1
++    assert 0 <= start < start + count <= 11992
++    assert landing.shape == (1, 8*(count+270), 7, 128) and landing.is_contiguous()
++    _produce[(8*(count+270), triton.cdiv(896, 1024))](
++        fine, coarse, owner_tiles, landing, coarse.stride(1), coarse.stride(2), ROWS=11992, OFFSET=start, COUNT=count,
++        TAIL=270, WIDTH=896, BLOCK=1024, num_warps=8)
++
++
++def gate_chunk(bundle, gate, row_map, count):
++    """The source kernel's unchanged BF16 multiply then BF16 add, on a row slice."""
++    assert bundle.shape == (1, count+270, 56, 128) and bundle.is_contiguous()
++    assert gate.shape == (1, count, 56, 128) and gate.is_contiguous()
++    assert row_map.shape == (count,) and row_map.dtype == torch.int32
++    _h3_vsa_o_bundle_local_gate_kernel[(count, 7)](
++        bundle, gate, row_map, *bundle.stride(), *gate.stride(),
++        local_rows=count, head_dim=128, row_width=7168, feature_block=1024, num_warps=8)
++    return bundle[:, :count]
+--- /dev/null
++++ b/vllm_omni/diffusion/attention/ops/h3_overlap_experiment.py
+@@ -0,0 +1,159 @@
++"""Opt-in, geometry-bound real-model integration of the validated RDMA schedule."""
++from contextvars import ContextVar
++from functools import lru_cache
++import torch
++import torch.distributed as dist
++from vllm.logger import init_logger
++
++logger = init_logger(__name__)
++_BUNDLE_LOGGED = False
++
++ACTIVE = ContextVar('h3_overlap_experiment', default=None)
++
++
++@lru_cache(None)
++def streams(device):
++    return torch.cuda.Stream(device=device,priority=-1), torch.cuda.Stream(device=device)
++
++
++def run(attention, query, key, value, metadata, projector):
++    assert ACTIVE.get() is None, 'overlap forward cannot be nested'
++    impl = attention.attention
++    assert impl.h3_kernel_backend == 'flashinfer' and impl.topk == 162
++    assert query.shape == key.shape == value.shape == (1,11992,56,128)
++    assert query.dtype == key.dtype == value.dtype == torch.bfloat16
++    caller = torch.cuda.current_stream()
++    comm,side = streams(query.device)
++    comm.wait_stream(caller)
++    state = dict(comm=comm,side=side,projector=projector,impl=impl,prepared=None,reverse=None,projected=False)
++    token = ACTIVE.set(state)
++    try:
++        with torch.cuda.stream(comm), torch.cuda.nvtx.range('h3.overlap.attention'):
++            out = attention(query,key,value,metadata)
++            assert state['projected'], 'chunked reverse/projector did not run'
++        caller.wait_stream(comm)
++        out.record_stream(caller)
++        return out
++    finally:
++        caller.wait_stream(comm)
++        ACTIVE.reset(token)
++
++
++def before_v(query,key,value,metadata,group):
++    active = ACTIVE.get()
++    if active is None:
++        return value
++    from vllm_omni.diffusion.distributed.flashinfer_ulysses import _state_for
++    from vllm_omni.diffusion.attention.backends.fastvideo_vsa import (
++        _get_h3_layout, _get_h3_tile_metadata, _get_h3_tiled_source_rows,
++        _pool_h3_tiles, _build_h3_ordered_q2k_indices, h3_vsa_tile_pack,
++    )
++    state = _state_for(value,group,8)
++    assert state.communicator is not None
++    out = state.output(value,op='scatter_heads',slot='v')
++    landing = state.communicator.input_buffer(out,value.shape)
++    landing.copy_(value)
++    layout = _get_h3_layout(metadata)
++    assert layout == ((558,1206),(107,22,40),1764), layout
++    prefix,shape,_ = layout
++    active['side'].wait_stream(active['comm'])
++    with torch.cuda.stream(active['side']), torch.cuda.nvtx.range('h3.overlap.qk_prepare'):
++        _,sizes,_,_,prefix_blocks,video_blocks = _get_h3_tile_metadata(prefix,shape,query.device)
++        maps = _get_h3_tiled_source_rows(prefix,shape,105472,query.device)
++        q = h3_vsa_tile_pack(query[:,:95924],maps)
++        k = h3_vsa_tile_pack(key[:,:95924],maps)
++        qp = _pool_h3_tiles(q,sizes)
++        kp = _pool_h3_tiles(k,sizes)
++        scores = torch.matmul(qp,kp.transpose(-2,-1))*active['impl'].softmax_scale
++        idx,num = _build_h3_ordered_q2k_indices(scores,prefix_blocks,video_blocks,162)
++        active['prepared'] = (q,k,qp,kp,scores,idx,num)
++    return landing
++
++
++def prepared():
++    active = ACTIVE.get()
++    if active is None:
++        return None
++    result = active['prepared']
++    assert result is not None, 'forward QK preparation hook did not run'
++    active['comm'].wait_stream(active['side'])
++    for tensor in result:
++        tensor.record_stream(active['comm'])
++    return result
++
++
++def publish_reverse(fine,coarse,plan):
++    active = ACTIVE.get()
++    if active is None:
++        return False
++    assert active['reverse'] is None
++    active['reverse'] = (fine,coarse,plan)
++    return True
++
++
++def finish_reverse(attn_output,ctx):
++    active = ACTIVE.get()
++    if active is None:
++        return None
++    from vllm_omni.diffusion.distributed.flashinfer_ulysses import _state_for
++    from vllm_omni.diffusion.attention.ops.h3_overlap_chunks import produce,gate_chunk
++    from vllm_omni.diffusion.attention.ops.minimax_h3_vsa_owner_route import h3_vsa_owner_route_plan_is_trusted
++    fine,coarse,plan = active['reverse']
++    assert fine is attn_output
++    assert set(ctx.o_bundle_state) == {'plan'} and ctx.o_bundle_state['plan'] is plan
++    assert ctx.strict_a2a_backend == 'flashinfer-pcie' and ctx.joint_len == 0 and not ctx.use_uaa
++    assert h3_vsa_owner_route_plan_is_trusted(plan)
++    assert plan.local_rows == 11992 and plan.kmax == 270 and plan.sp_world_size == 8
++    gate = ctx.o_bundle_gate_local
++    assert gate is not None and gate.shape == (1,11992,56,128)
++    rank = dist.get_rank(ctx.ulysses_pg)
++    state = _state_for(fine,ctx.ulysses_pg,8)
++    comm = state.communicator
++    assert comm is not None
++    # Cache these maps on the trusted, geometry-bound route's CPU tensors.
++    tiles,row_map = route_maps(plan,rank,fine.device)
++    count = 2998
++    result = torch.empty(1,11992,5376,device=fine.device,dtype=torch.bfloat16)
++    for index in range(4):
++        start = index*count
++        shape = (1,8*(count+270),7,128)
++        prototype = state.registered_shape_prototype(shape,dtype=fine.dtype,device=fine.device)
++        out = state.output(prototype,op='gather_heads',slot=f'h3_o_chunk4_{index}')
++        landing = comm.input_buffer(out,shape)
++        with torch.cuda.nvtx.range(f'h3.overlap.o_produce.{index}'):
++            produce(fine,coarse,tiles,landing,start,count)
++        with torch.cuda.nvtx.range(f'h3.overlap.o_rdma.{index}'):
++            comm.gather_heads(landing,out=out)
++        active['side'].wait_stream(active['comm'])
++        with torch.cuda.stream(active['side']), torch.cuda.nvtx.range(f'h3.overlap.o_gate_project.{index}'):
++            view = gate_chunk(out,gate[:,start:start+count],row_map[start:start+count],count)
++            projected = active['projector'](view)
++            result[:,start:start+count].copy_(projected)
++    active['comm'].wait_stream(active['side'])
++    result.record_stream(active['side'])
++    gate.record_stream(active['side'])
++    active['projected'] = True
++    # Separate markers bind the validator to the chunked protocol and its
++    # actual volume; they do not impersonate the original whole-bundle path.
++    if not state.o_producer_direct_logged:
++        logger.info('H3_OVERLAP_EXCHANGE rank=%d group=%s chunks=4 rows=2998 tail=270 remote_bytes=163975168 direct=1 completed=1',
++                    rank,ctx.ulysses_pg.group_name)
++        state.o_producer_direct_logged = True
++    state.o_producer_direct_expected = None
++    global _BUNDLE_LOGGED
++    if not _BUNDLE_LOGGED:
++        logger.info('H3_OVERLAP_BUNDLE rank=%d fine_rows=95936 local_rows=11992 coarse_rows=1648 chunks=4 tail=270 gate=bf16 projector=active',rank)
++        _BUNDLE_LOGGED = True
++    return result
++
++
++_ROUTE_MAPS = {}
++
++
++def route_maps(plan,rank,device):
++    key = (id(plan),rank,device)
++    if key not in _ROUTE_MAPS:
++        _ROUTE_MAPS[key] = (plan,plan.owner_tile_ids.to(device),plan.local_row_to_tail[rank].to(device))
++    saved,tiles,row_map = _ROUTE_MAPS[key]
++    assert saved is plan
++    return tiles,row_map
+--- /dev/null
++++ b/vllm_omni/diffusion/models/minimax_h3/blockwise_experiment.py
+@@ -0,0 +1,84 @@
++"""Isolated H3 online E4M3 blockwise experiment; BF16 checkpoint and wire.
++
++Quantize the fused FastH3 weights after loading, in exactly 200 main-block
++linears. This is a distinct contract from the existing per-tensor FP8 lane.
++"""
++import os
++import re
++import json
++from collections import Counter
++import torch
++from vllm.logger import init_logger
++from vllm.model_executor.layers.linear import LinearBase, UnquantizedLinearMethod
++from vllm.model_executor.layers.quantization.fp8 import Fp8Config
++from vllm.model_executor.layers.quantization.online.fp8 import Fp8PerBlockOnlineLinearMethod
++from vllm.model_executor.layers.quantization.utils.quant_utils import kFp8Dynamic128Sym, kFp8Static128BlockSym
++
++ENV = 'VLLM_OMNI_H3_EXPERIMENT_BLOCKWISE'
++MODE = 'qkv-o-mlp-fp8-e4m3fn-a1x128-w128x128-online-v1'
++TARGET = re.compile(r'^blocks\.(\d+)\.(attn\.(qkv_proj|out_proj)|mlp\.(fc1|fc2))$')
++logger = init_logger(__name__)
++
++
++class H3BlockwiseConfig(Fp8Config):
++    def __init__(self):
++        super().__init__(is_checkpoint_fp8_serialized=False, activation_scheme='dynamic')
++
++    def get_quant_method(self, layer, prefix):
++        if isinstance(layer, LinearBase):
++            match = TARGET.fullmatch(prefix)
++            if match and int(match[1]) < 50:
++                return Fp8PerBlockOnlineLinearMethod()
++            return UnquantizedLinearMethod()
++        return None
++
++
++def configure(quant_config):
++    if os.getenv(ENV, '0') != '1':
++        return quant_config
++    if quant_config is not None:
++        raise ValueError('Blockwise experiment requires an otherwise BF16 DiT config')
++    if os.getenv('VLLM_OMNI_MINIMAX_H3_FP8_SCOPE', 'none') != 'none':
++        raise ValueError('Blockwise experiment cannot reuse the per-tensor FP8 contract')
++    if os.getenv('VLLM_OMNI_FLASHINFER_ULYSSES_QKV_E4M3_TRANSPORT', '0') != '0':
++        raise ValueError('Blockwise compute A/B requires unchanged BF16 QKV wire')
++    return H3BlockwiseConfig()
++
++
++def audit(model):
++    if type(model.quant_config) is not H3BlockwiseConfig:
++        return
++    if getattr(model, '_blockwise_experiment_audited', False):
++        return
++    assert torch.cuda.get_device_capability() == (12, 0)
++    assert torch.distributed.get_world_size() == 8
++    expected = {f'blocks.{i}.{suffix}' for i in range(50) for suffix in ('attn.qkv_proj','attn.out_proj','mlp.fc1','mlp.fc2')}
++    found = set()
++    kernels = Counter()
++    for name, module in model.named_modules():
++        method = getattr(module, 'quant_method', None)
++        if name not in expected:
++            if isinstance(module, LinearBase):
++                assert type(method) is UnquantizedLinearMethod, (name, type(method))
++            continue
++        assert type(method) is Fp8PerBlockOnlineLinearMethod, (name, type(method))
++        assert method.activation_quant_key == kFp8Dynamic128Sym
++        assert method.weight_quant_key == kFp8Static128BlockSym
++        assert method.input_dtype == method.out_dtype == torch.bfloat16
++        assert module.tp_size == 1 and module.weight_block_size == [128,128]
++        assert module.weight.dtype == torch.float8_e4m3fn
++        assert module.weight.device.type == 'cuda'
++        assert module._already_called_process_weights_after_loading
++        assert module.input_scale is None
++        n,k = module.weight.shape
++        scales = module.weight_scale_inv
++        assert scales.shape == ((n+127)//128,(k+127)//128), (name,scales.shape)
++        assert scales.dtype == torch.float32 and torch.isfinite(scales).all() and (scales > 0).all()
++        kernel = type(method.fp8_linear).__name__
++        assert kernel == 'CutlassFp8BlockScaledMMKernel', (name, kernel)
++        kernels[kernel] += 1
++        found.add(name)
++    assert found == expected, sorted(expected-found)
++    marker = dict(rank=torch.distributed.get_rank(),status='ok',mode=MODE,modules=len(found),qkv=50,o=50,mlp_fc1=50,mlp_fc2=50,activation_group=[1,128],weight_group=[128,128],kernels=dict(kernels),wire='bfloat16',gate='bfloat16',fallbacks=0)
++    logger.info('H3_BLOCKWISE_AUDIT %s',json.dumps(marker,sort_keys=True))
++    model._blockwise_experiment_audited = True

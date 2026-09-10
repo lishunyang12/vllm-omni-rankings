@@ -1,0 +1,70 @@
+[
+  {
+    "name": "qkv",
+    "shape": [
+      11992,
+      21504,
+      5376
+    ],
+    "kernel": "CutlassFp8BlockScaledMMKernel",
+    "weight_scale_shape": [
+      168,
+      42
+    ],
+    "relative_l2": 0.03696979582309723,
+    "cosine": 0.9993165135383606,
+    "bf16_ms": 13.548035049438477,
+    "fp8_blockwise_ms": 7.110746288299561
+  },
+  {
+    "name": "o",
+    "shape": [
+      11992,
+      5376,
+      7168
+    ],
+    "kernel": "CutlassFp8BlockScaledMMKernel",
+    "weight_scale_shape": [
+      42,
+      56
+    ],
+    "relative_l2": 0.03696693480014801,
+    "cosine": 0.9993165731430054,
+    "bf16_ms": 4.493733596801758,
+    "fp8_blockwise_ms": 2.5458216190338137
+  },
+  {
+    "name": "mlp_fc1",
+    "shape": [
+      11992,
+      28672,
+      5376
+    ],
+    "kernel": "CutlassFp8BlockScaledMMKernel",
+    "weight_scale_shape": [
+      224,
+      42
+    ],
+    "relative_l2": 0.036966484040021896,
+    "cosine": 0.9993166327476501,
+    "bf16_ms": 19.524440383911134,
+    "fp8_blockwise_ms": 9.402316856384278
+  },
+  {
+    "name": "mlp_fc2",
+    "shape": [
+      11992,
+      5376,
+      14336
+    ],
+    "kernel": "CutlassFp8BlockScaledMMKernel",
+    "weight_scale_shape": [
+      42,
+      112
+    ],
+    "relative_l2": 0.03696926683187485,
+    "cosine": 0.9993164539337158,
+    "bf16_ms": 9.52683753967285,
+    "fp8_blockwise_ms": 5.058524036407471
+  }
+]

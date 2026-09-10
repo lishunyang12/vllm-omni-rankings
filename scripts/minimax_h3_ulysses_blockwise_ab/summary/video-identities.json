@@ -1,0 +1,254 @@
+[
+  {
+    "mode": "bf16-base",
+    "measurement": "normal",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-base-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-base",
+    "measurement": "normal",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-base-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-base",
+    "measurement": "normal",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-base-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-base",
+    "measurement": "stages",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-base-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-base",
+    "measurement": "stages",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-base-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-base",
+    "measurement": "stages",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-base-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-base",
+    "measurement": "nsys",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-base-nsys/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-overlap",
+    "measurement": "normal",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-overlap-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-overlap",
+    "measurement": "normal",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-overlap-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-overlap",
+    "measurement": "normal",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-overlap-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-overlap",
+    "measurement": "stages",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-overlap-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-overlap",
+    "measurement": "stages",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-overlap-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-overlap",
+    "measurement": "stages",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-overlap-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "bf16-overlap",
+    "measurement": "nsys",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/bf16-overlap-nsys/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1.mp4",
+    "bytes": 25614803,
+    "sha256": "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-base",
+    "measurement": "normal",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-base-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-base",
+    "measurement": "normal",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-base-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-base",
+    "measurement": "normal",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-base-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-base",
+    "measurement": "stages",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-base-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-base",
+    "measurement": "stages",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-base-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-base",
+    "measurement": "stages",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-base-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-base",
+    "measurement": "nsys",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-base-nsys/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-overlap",
+    "measurement": "normal",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-overlap-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-overlap",
+    "measurement": "normal",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-overlap-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-overlap",
+    "measurement": "normal",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-overlap-normal/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-overlap",
+    "measurement": "stages",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-overlap-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-1.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-overlap",
+    "measurement": "stages",
+    "repeat": 2,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-overlap-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-2.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-overlap",
+    "measurement": "stages",
+    "repeat": 3,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-overlap-stages/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1-repeat-3.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  },
+  {
+    "mode": "fp8-overlap",
+    "measurement": "nsys",
+    "repeat": 1,
+    "path": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-overlap-nsys/vllm-omni-tp1-sp8-fasth3-vsa-flashinfer-topk162-rdma-qk-direct/out_t2va1.mp4",
+    "bytes": 25526565,
+    "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+    "same_as_normal_video": true
+  }
+]

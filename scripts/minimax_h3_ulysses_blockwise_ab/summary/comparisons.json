@@ -1,0 +1,102 @@
+[
+  {
+    "reference": "bf16-base",
+    "candidate": "bf16-overlap",
+    "measurement": "normal_e2e",
+    "reference_s": 25.761333333333333,
+    "candidate_s": 25.135333333333335,
+    "delta_s": -0.6259999999999977,
+    "latency_reduction_percent": 2.429998447285331,
+    "speedup": 1.0249051799591544
+  },
+  {
+    "reference": "bf16-base",
+    "candidate": "bf16-overlap",
+    "measurement": "dit_untraced",
+    "reference_s": 18.948946,
+    "candidate_s": 18.293431,
+    "delta_s": -0.6555149999999976,
+    "latency_reduction_percent": 3.459374468637977,
+    "speedup": 1.0358333546069076
+  },
+  {
+    "reference": "fp8-base",
+    "candidate": "fp8-overlap",
+    "measurement": "normal_e2e",
+    "reference_s": 20.984666666666666,
+    "candidate_s": 20.586333333333332,
+    "delta_s": -0.39833333333333343,
+    "latency_reduction_percent": 1.8982113924452815,
+    "speedup": 1.0193494065642255
+  },
+  {
+    "reference": "fp8-base",
+    "candidate": "fp8-overlap",
+    "measurement": "dit_untraced",
+    "reference_s": 14.305261,
+    "candidate_s": 13.830493,
+    "delta_s": -0.4747679999999992,
+    "latency_reduction_percent": 3.3188349377197612,
+    "speedup": 1.0343276266435333
+  },
+  {
+    "reference": "bf16-base",
+    "candidate": "fp8-base",
+    "measurement": "normal_e2e",
+    "reference_s": 25.761333333333333,
+    "candidate_s": 20.984666666666666,
+    "delta_s": -4.776666666666667,
+    "latency_reduction_percent": 18.5420009316288,
+    "speedup": 1.227626520951806
+  },
+  {
+    "reference": "bf16-base",
+    "candidate": "fp8-base",
+    "measurement": "dit_untraced",
+    "reference_s": 18.948946,
+    "candidate_s": 14.305261,
+    "delta_s": -4.643685,
+    "latency_reduction_percent": 24.506297078476024,
+    "speedup": 1.3246137906886144
+  },
+  {
+    "reference": "bf16-overlap",
+    "candidate": "fp8-overlap",
+    "measurement": "normal_e2e",
+    "reference_s": 25.135333333333335,
+    "candidate_s": 20.586333333333332,
+    "delta_s": -4.549000000000003,
+    "latency_reduction_percent": 18.098029334535724,
+    "speedup": 1.2209718421606568
+  },
+  {
+    "reference": "bf16-overlap",
+    "candidate": "fp8-overlap",
+    "measurement": "dit_untraced",
+    "reference_s": 18.293431,
+    "candidate_s": 13.830493,
+    "delta_s": -4.462938000000001,
+    "latency_reduction_percent": 24.39639671748838,
+    "speedup": 1.3226882801647057
+  },
+  {
+    "reference": "bf16-base",
+    "candidate": "fp8-overlap",
+    "measurement": "normal_e2e",
+    "reference_s": 25.761333333333333,
+    "candidate_s": 20.586333333333332,
+    "delta_s": -5.175000000000001,
+    "latency_reduction_percent": 20.08824595000259,
+    "speedup": 1.2513803656147282
+  },
+  {
+    "reference": "bf16-base",
+    "candidate": "fp8-overlap",
+    "measurement": "dit_untraced",
+    "reference_s": 18.948946,
+    "candidate_s": 13.830493,
+    "delta_s": -5.118452999999999,
+    "latency_reduction_percent": 27.011808466813925,
+    "speedup": 1.3700846383422485
+  }
+]

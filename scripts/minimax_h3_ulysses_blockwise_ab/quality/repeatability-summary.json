@@ -1,0 +1,34 @@
+[
+  {
+    "mode": "bf16-base",
+    "rgb_mean_mse": 0.0,
+    "rgb_ssim": 1.0,
+    "rgb_psnr_db": "\u221e",
+    "audio_identical": true,
+    "audio_snr_db": "\u221e"
+  },
+  {
+    "mode": "bf16-overlap",
+    "rgb_mean_mse": 0.0,
+    "rgb_ssim": 1.0,
+    "rgb_psnr_db": "\u221e",
+    "audio_identical": true,
+    "audio_snr_db": "\u221e"
+  },
+  {
+    "mode": "fp8-base",
+    "rgb_mean_mse": 0.0,
+    "rgb_ssim": 1.0,
+    "rgb_psnr_db": "\u221e",
+    "audio_identical": true,
+    "audio_snr_db": "\u221e"
+  },
+  {
+    "mode": "fp8-overlap",
+    "rgb_mean_mse": 0.0,
+    "rgb_ssim": 1.0,
+    "rgb_psnr_db": "\u221e",
+    "audio_identical": true,
+    "audio_snr_db": "\u221e"
+  }
+]

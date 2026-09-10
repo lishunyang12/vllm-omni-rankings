@@ -1,0 +1,1496 @@
+{
+  "protocol": {
+    "case": "all",
+    "warmup": 5,
+    "trials": 8,
+    "iters": 8,
+    "comm_priority": -1,
+    "output": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/validated.json"
+  },
+  "torch_version": "2.13.0+cu132",
+  "source_sha256": "bfcbbbc06a2bb7a1572bb0ba196200e73188c51ffebfee491426a5413ce220a8",
+  "scope": "Synthetic H3 geometry; actual all-RDMA transport; wall-time max across eight ranks; dynamic clocks.",
+  "rank_to_physical": [
+    0,
+    4,
+    1,
+    5,
+    2,
+    6,
+    3,
+    7
+  ],
+  "started_utc": "2026-09-10T06:12:01.369081+00:00",
+  "experiment_source_sha256": {
+    "support.py": "51c83302b668a2305f8a698b1cae245cf64532dcfadb58aa035dd30fa1e483ec",
+    "chunked_o.py": "c7b39f5cebd14caea0d8a2827dab029a9ced560aa9e8328ccdcc1a19e18aa233",
+    "benchmark_overlap.py": "9a655c876bfb14fc5ba1973c5268713f34f52866a309c6c76016469f45d68ff5"
+  },
+  "transport": "rdma",
+  "route_reason": "single-node 8-rank all-RDMA route planned: per-rank mlx5 RoCE to every peer (FLASHINFER_ULYSSES_PCIE_ROUTE=rdma)",
+  "forward": {
+    "timings": {
+      "serial": {
+        "samples_ms": [
+          13.648462656419724,
+          13.3224738528952,
+          13.343129656277597,
+          13.580350496340543,
+          13.30681424587965,
+          13.302757986821234,
+          13.311300368513912,
+          13.336978503502905
+        ],
+        "mean_ms": 13.394033470831346,
+        "median_ms": 13.329726178199053,
+        "stdev_ms": 0.13794339648018206
+      },
+      "overlap": {
+        "samples_ms": [
+          11.451947502791882,
+          10.841841401997954,
+          10.865043383091688,
+          10.974952136166394,
+          11.23008638387546,
+          10.81303198589012,
+          11.499143962282687,
+          10.83677273709327
+        ],
+        "mean_ms": 11.064102436648682,
+        "median_ms": 10.919997759629041,
+        "stdev_ms": 0.2875817918540069
+      },
+      "overlap_prestage_v": {
+        "samples_ms": [
+          10.621262597851455,
+          11.044624261558056,
+          11.23904000269249,
+          10.598200664389879,
+          10.503009136300534,
+          10.5095652397722,
+          10.61766897328198,
+          10.546258126851171
+        ],
+        "mean_ms": 10.70995362533722,
+        "median_ms": 10.607934818835929,
+        "stdev_ms": 0.2753143273553559
+      }
+    },
+    "checks_by_rank": [
+      [
+        {
+          "pattern": "random",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        },
+        {
+          "pattern": "changed_with_zeros",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        },
+        {
+          "pattern": "changed_with_zeros",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        },
+        {
+          "pattern": "changed_with_zeros",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        },
+        {
+          "pattern": "changed_with_zeros",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        },
+        {
+          "pattern": "changed_with_zeros",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        },
+        {
+          "pattern": "changed_with_zeros",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        },
+        {
+          "pattern": "changed_with_zeros",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        },
+        {
+          "pattern": "changed_with_zeros",
+          "operands_metadata_bitwise": [
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "cake_output_bitwise": true
+        }
+      ]
+    ],
+    "scope": "Q/K/V real RDMA + QK tile/pool/coarse routing + V tile pack. Fine kernel checked but excluded from timings."
+  },
+  "reverse": {
+    "timings": {
+      "whole_serial": {
+        "samples_ms": [
+          8.544714713934809,
+          8.543664822354913,
+          8.542648574803025,
+          8.539123635273427,
+          8.546580967959017,
+          8.534605149179697,
+          8.540204842574894,
+          8.622085500974208
+        ],
+        "mean_ms": 8.551703525881749,
+        "median_ms": 8.543156698578969,
+        "stdev_ms": 0.028680872807005525
+      },
+      "chunks2_serial": {
+        "samples_ms": [
+          9.008764231111854,
+          9.105328237637877,
+          9.006443026009947,
+          9.004928113427013,
+          9.040451026521623,
+          9.002861857879907,
+          9.126171644311398,
+          9.053612011484802
+        ],
+        "mean_ms": 9.043570018548053,
+        "median_ms": 9.024607628816739,
+        "stdev_ms": 0.04853258629539923
+      },
+      "chunks2_overlap": {
+        "samples_ms": [
+          7.368806458543986,
+          7.476694125216454,
+          7.3683065129444,
+          7.367367739789188,
+          7.369238999672234,
+          7.364254153799266,
+          7.365261611994356,
+          7.36758136190474
+        ],
+        "mean_ms": 7.380938870483078,
+        "median_ms": 7.36794393742457,
+        "stdev_ms": 0.03872887901952187
+      },
+      "chunks2_preproduce_overlap": {
+        "samples_ms": [
+          7.386076089460403,
+          7.373868895228952,
+          7.467464252840728,
+          7.369377766735852,
+          7.369812752585858,
+          7.370681501924992,
+          7.523156760726124,
+          7.374176348093897
+        ],
+        "mean_ms": 7.404326795949601,
+        "median_ms": 7.374022621661425,
+        "stdev_ms": 0.05833570352871644
+      },
+      "chunks4_serial": {
+        "samples_ms": [
+          9.583827515598387,
+          9.380094474181533,
+          9.174308099318296,
+          9.17672662762925,
+          9.175589249935001,
+          9.17445553932339,
+          9.175946761388332,
+          9.177729254588485
+        ],
+        "mean_ms": 9.252334690245334,
+        "median_ms": 9.176336694508791,
+        "stdev_ms": 0.15183209482732996
+      },
+      "chunks4_overlap": {
+        "samples_ms": [
+          6.550735037308186,
+          6.785929785110056,
+          6.548002653289586,
+          6.549870129674673,
+          6.559247383847833,
+          6.60158897517249,
+          6.53613539179787,
+          6.540611619129777
+        ],
+        "mean_ms": 6.584015121916309,
+        "median_ms": 6.55030258349143,
+        "stdev_ms": 0.08403952081660641
+      },
+      "chunks4_preproduce_overlap": {
+        "samples_ms": [
+          6.676612247247249,
+          6.62692089099437,
+          6.629601994063705,
+          6.6624764003790915,
+          6.6281757317483425,
+          6.625847017858177,
+          6.627345806919038,
+          6.626910821069032
+        ],
+        "mean_ms": 6.637986363784876,
+        "median_ms": 6.62776076933369,
+        "stdev_ms": 0.01987088475520857
+      }
+    },
+    "checks_by_rank": [
+      [
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        }
+      ],
+      [
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "random",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 2,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": false,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        },
+        {
+          "pattern": "changed_with_padding",
+          "chunks": 4,
+          "preproduce": true,
+          "gate": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          },
+          "projection": {
+            "bitwise_equal": true,
+            "max_abs_error": 0.0,
+            "relative_l2": 0.0,
+            "finite": true
+          }
+        }
+      ]
+    ],
+    "remote_bytes_by_chunks": {
+      "1": 153814528,
+      "2": 157201408,
+      "4": 163975168
+    },
+    "scope": "Real reverse-O producer + RDMA + original BF16 gate arithmetic + synthetic H3-shaped output projection. Chunked producers repeat the 270-row coarse tail; all extra traffic and barriers included. No full-model validation."
+  }
+}

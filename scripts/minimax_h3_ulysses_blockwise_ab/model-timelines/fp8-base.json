@@ -1,0 +1,1405 @@
+{
+  "summary": {
+    "mode": "fp8-base",
+    "physical_gpu": 7,
+    "step": 3,
+    "layer": 0,
+    "source": "/lustre/raplab/client/sylarl/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/runs/fp8-base-nsys/fp8-base-warmed.sqlite",
+    "gpu_start_ns": 10508302729,
+    "gpu_end_ns": 10548631076,
+    "gpu_span_ms": 40.328347,
+    "metric_instance": 5,
+    "forward_transfer_interior_ms": 9.513663,
+    "reverse_transfer_interior_ms": 3.245663,
+    "forward_compute_overlap_ms": 0.0,
+    "reverse_compute_overlap_ms": 0.0,
+    "method": "200 fine kernels per GPU, exactly 50 within NVTX minimax_h3.denoise.step_03; select its first layer (layer0). QKV=last6 preceding barriers; O=next2/8 barriers. Optimized endpoint from containing NVTX and correlated GPU kernels/copies, including final output assembly; baseline endpoint from first GEMM after final O barrier, inferred out_proj from model source order. RDMA windows are barrier interiors; percentages are raw individual GPU Metrics samples, not interval averages. Compute overlap counts kernels only. Profiling timings are not unprofiled latency claims.",
+    "forward_remote_payload_bytes": 451282944,
+    "reverse_remote_payload_bytes": 153814528,
+    "forward_effective_send_gb_s": 47.43524591947392,
+    "reverse_effective_send_gb_s": 47.39078826113494
+  },
+  "kernels": [
+    {
+      "start": 10508302729,
+      "end": 10508306729,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264734,
+      "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)"
+    },
+    {
+      "start": 10511483113,
+      "end": 10511487145,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264751,
+      "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)"
+    },
+    {
+      "start": 10511545641,
+      "end": 10511562281,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264765,
+      "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)"
+    },
+    {
+      "start": 10514730632,
+      "end": 10514737704,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264775,
+      "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)"
+    },
+    {
+      "start": 10514787944,
+      "end": 10515141960,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264785,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10515144744,
+      "end": 10515148392,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264801,
+      "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)"
+    },
+    {
+      "start": 10518317320,
+      "end": 10518322408,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264811,
+      "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)"
+    },
+    {
+      "start": 10518505448,
+      "end": 10518826920,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264844,
+      "name": "_h3_vsa_tile_pack_kernel"
+    },
+    {
+      "start": 10518829096,
+      "end": 10519153544,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264857,
+      "name": "_h3_vsa_tile_pack_kernel"
+    },
+    {
+      "start": 10519155176,
+      "end": 10519479720,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264870,
+      "name": "_h3_vsa_tile_pack_kernel"
+    },
+    {
+      "start": 10519482376,
+      "end": 10519656744,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264884,
+      "name": "void at::native::reduce_kernel<(int)128, (int)4, at::native::ReduceOp<c10::BFloat16, at::native::func_wrapper_t<float, at::native::sum_functor<c10::BFloat16, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4, (int)8>>(T3)"
+    },
+    {
+      "start": 10519658856,
+      "end": 10519660552,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264895,
+      "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::<unnamed>::launch_clamp_scalar(at::TensorIteratorBase &, c10::Scalar, c10::Scalar, at::native::detail::ClampLimits)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)"
+    },
+    {
+      "start": 10519662760,
+      "end": 10519673320,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264906,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10519674952,
+      "end": 10519845960,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264923,
+      "name": "void at::native::reduce_kernel<(int)128, (int)4, at::native::ReduceOp<c10::BFloat16, at::native::func_wrapper_t<float, at::native::sum_functor<c10::BFloat16, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4, (int)8>>(T3)"
+    },
+    {
+      "start": 10519849032,
+      "end": 10519850728,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264934,
+      "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::<unnamed>::launch_clamp_scalar(at::TensorIteratorBase &, c10::Scalar, c10::Scalar, at::native::detail::ClampLimits)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)"
+    },
+    {
+      "start": 10519853128,
+      "end": 10519863240,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264945,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10519865448,
+      "end": 10520320295,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264963,
+      "name": "void cutlass::Kernel2<cutlass_80_simt_sgemm_128x32_8x5_tn_align1>(T1::Params)"
+    },
+    {
+      "start": 10520322119,
+      "end": 10520422727,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264973,
+      "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AUnaryFunctor<float, float, float, at::native::binary_internal::MulFunctor<float>>, std::array<char *, (unsigned long)2>>(int, T2, T3)"
+    },
+    {
+      "start": 10520424807,
+      "end": 10520553063,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264999,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 7)]::operator ()() const::[lambda(float) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10520555815,
+      "end": 10520557639,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265009,
+      "name": "void at::native::mbtopk::fill<unsigned int, unsigned int>(T1 *, T1, T2)"
+    },
+    {
+      "start": 10520571975,
+      "end": 10520680839,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265019,
+      "name": "void at::native::mbtopk::computeBlockDigitCounts<float, unsigned int, unsigned int, (int)2>(at::cuda::detail::TensorInfo<const T1, T2>, unsigned int, unsigned int *, unsigned int, T2, int, int, unsigned int, T3, T3 *, short *)"
+    },
+    {
+      "start": 10520683559,
+      "end": 10520701319,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265022,
+      "name": "at::native::mbtopk::computeDigitCumSum(short *, unsigned int *, unsigned int)"
+    },
+    {
+      "start": 10520704039,
+      "end": 10520734535,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265025,
+      "name": "void at::native::mbtopk::computeBlockwiseWithinKCounts<unsigned int, float>(T1 *, short *, unsigned int *, unsigned int *, unsigned int, int, bool, unsigned int *, T2 *, unsigned int *, T1 *, unsigned int)"
+    },
+    {
+      "start": 10520736871,
+      "end": 10520813191,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265028,
+      "name": "void at::native::mbtopk::computeBlockDigitCounts<float, unsigned int, unsigned int, (int)2>(at::cuda::detail::TensorInfo<const T1, T2>, unsigned int, unsigned int *, unsigned int, T2, int, int, unsigned int, T3, T3 *, short *)"
+    },
+    {
+      "start": 10520814663,
+      "end": 10520832263,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265031,
+      "name": "at::native::mbtopk::computeDigitCumSum(short *, unsigned int *, unsigned int)"
+    },
+    {
+      "start": 10520835079,
+      "end": 10520866343,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265034,
+      "name": "void at::native::mbtopk::computeBlockwiseWithinKCounts<unsigned int, float>(T1 *, short *, unsigned int *, unsigned int *, unsigned int, int, bool, unsigned int *, T2 *, unsigned int *, T1 *, unsigned int)"
+    },
+    {
+      "start": 10520867943,
+      "end": 10520941063,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265037,
+      "name": "void at::native::mbtopk::computeBlockDigitCounts<float, unsigned int, unsigned int, (int)2>(at::cuda::detail::TensorInfo<const T1, T2>, unsigned int, unsigned int *, unsigned int, T2, int, int, unsigned int, T3, T3 *, short *)"
+    },
+    {
+      "start": 10520943687,
+      "end": 10520961255,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265040,
+      "name": "at::native::mbtopk::computeDigitCumSum(short *, unsigned int *, unsigned int)"
+    },
+    {
+      "start": 10520964167,
+      "end": 10520995463,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265043,
+      "name": "void at::native::mbtopk::computeBlockwiseWithinKCounts<unsigned int, float>(T1 *, short *, unsigned int *, unsigned int *, unsigned int, int, bool, unsigned int *, T2 *, unsigned int *, T1 *, unsigned int)"
+    },
+    {
+      "start": 10520996935,
+      "end": 10521069351,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265046,
+      "name": "void at::native::mbtopk::computeBlockDigitCounts<float, unsigned int, unsigned int, (int)2>(at::cuda::detail::TensorInfo<const T1, T2>, unsigned int, unsigned int *, unsigned int, T2, int, int, unsigned int, T3, T3 *, short *)"
+    },
+    {
+      "start": 10521070631,
+      "end": 10521088199,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265049,
+      "name": "at::native::mbtopk::computeDigitCumSum(short *, unsigned int *, unsigned int)"
+    },
+    {
+      "start": 10521091143,
+      "end": 10521122663,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265052,
+      "name": "void at::native::mbtopk::computeBlockwiseWithinKCounts<unsigned int, float>(T1 *, short *, unsigned int *, unsigned int *, unsigned int, int, bool, unsigned int *, T2 *, unsigned int *, T1 *, unsigned int)"
+    },
+    {
+      "start": 10521123879,
+      "end": 10521125735,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265055,
+      "name": "void at::native::mbtopk::computeBlockwiseKthCounts<unsigned int>(T1 *, short *, unsigned int, unsigned int, unsigned int *)"
+    },
+    {
+      "start": 10521127975,
+      "end": 10521129095,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265079,
+      "name": "void at_cuda_detail::cub::detail::scan_by_key::DeviceScanByKeyInitKernel<at_cuda_detail::cub::ReduceByKeyScanTileState<unsigned int, int, (bool)1>, thrust::_V_300200_SM_750_800_860_900_1000_1200::transform_iterator<at::native::mbtopk::BlockIdxToKey, thrust::_V_300200_SM_750_800_860_900_1000_1200::counting_iterator<unsigned int, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::compile_time_value<(int)1>>, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default>, unsigned long long>(T1, T2, cuda::std::__4::iterator_traits<T2>::value_type *, T3, int)"
+    },
+    {
+      "start": 10521132103,
+      "end": 10521138311,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265087,
+      "name": "void at_cuda_detail::cub::detail::scan_by_key::DeviceScanByKeyKernel<at_cuda_detail::cub::detail::scan_by_key::policy_hub<thrust::_V_300200_SM_750_800_860_900_1000_1200::transform_iterator<at::native::mbtopk::BlockIdxToKey, thrust::_V_300200_SM_750_800_860_900_1000_1200::counting_iterator<unsigned int, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::compile_time_value<(int)1>>, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default>, unsigned int, unsigned int, cuda::std::__4::plus<void>>::Policy1000, thrust::_V_300200_SM_750_800_860_900_1000_1200::transform_iterator<at::native::mbtopk::BlockIdxToKey, thrust::_V_300200_SM_750_800_860_900_1000_1200::counting_iterator<unsigned int, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::compile_time_value<(int)1>>, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default>, unsigned int *, unsigned int *, at_cuda_detail::cub::ReduceByKeyScanTileState<unsigned int, int, (bool)1>, cuda::std::__4::equal_to<void>, cuda::std::__4::plus<void>, at_cuda_detail::cub::NullType, unsigned long long, unsigned int, unsigned int>(T2, T11 *, T3, T4, T5, int, T6, T7, T8, T9)"
+    },
+    {
+      "start": 10521140327,
+      "end": 10521141447,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265115,
+      "name": "void at_cuda_detail::cub::detail::scan_by_key::DeviceScanByKeyInitKernel<at_cuda_detail::cub::ReduceByKeyScanTileState<unsigned int, int, (bool)1>, thrust::_V_300200_SM_750_800_860_900_1000_1200::transform_iterator<at::native::mbtopk::BlockIdxToKey, thrust::_V_300200_SM_750_800_860_900_1000_1200::counting_iterator<unsigned int, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::compile_time_value<(int)1>>, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default>, unsigned long long>(T1, T2, cuda::std::__4::iterator_traits<T2>::value_type *, T3, int)"
+    },
+    {
+      "start": 10521144391,
+      "end": 10521149511,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265123,
+      "name": "void at_cuda_detail::cub::detail::scan_by_key::DeviceScanByKeyKernel<at_cuda_detail::cub::detail::scan_by_key::policy_hub<thrust::_V_300200_SM_750_800_860_900_1000_1200::transform_iterator<at::native::mbtopk::BlockIdxToKey, thrust::_V_300200_SM_750_800_860_900_1000_1200::counting_iterator<unsigned int, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::compile_time_value<(int)1>>, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default>, unsigned int, unsigned int, cuda::std::__4::plus<void>>::Policy1000, thrust::_V_300200_SM_750_800_860_900_1000_1200::transform_iterator<at::native::mbtopk::BlockIdxToKey, thrust::_V_300200_SM_750_800_860_900_1000_1200::counting_iterator<unsigned int, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::compile_time_value<(int)1>>, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default, thrust::_V_300200_SM_750_800_860_900_1000_1200::use_default>, unsigned int *, unsigned int *, at_cuda_detail::cub::ReduceByKeyScanTileState<unsigned int, int, (bool)1>, cuda::std::__4::equal_to<void>, cuda::std::__4::plus<void>, at_cuda_detail::cub::NullType, unsigned long long, unsigned int, unsigned int>(T2, T11 *, T3, T4, T5, int, T6, T7, T8, T9)"
+    },
+    {
+      "start": 10521152583,
+      "end": 10521295751,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265130,
+      "name": "void at::native::mbtopk::gatherTopK<float, unsigned int, (int)2>(at::cuda::detail::TensorInfo<const T1, T2>, T2, T2, bool, unsigned int, T2, at::cuda::detail::TensorInfo<T1, T2>, T2, at::cuda::detail::TensorInfo<long, T2>, T2, unsigned int, unsigned int, T1 *, unsigned int *, unsigned int *, unsigned int)"
+    },
+    {
+      "start": 10521297991,
+      "end": 10521598599,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265134,
+      "name": "void at::native::radixSortKVInPlace<(int)2, (int)-1, (int)32, (int)32, float, long, unsigned int>(at::cuda::detail::TensorInfo<T5, T7>, T7, T7, T7, at::cuda::detail::TensorInfo<T6, T7>, T7, bool)"
+    },
+    {
+      "start": 10521601127,
+      "end": 10521607399,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265148,
+      "name": "void at::native::unrolled_elementwise_kernel<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)], std::array<char *, (unsigned long)2>, (int)4, TrivialOffsetCalculator<(int)1, unsigned int>, TrivialOffsetCalculator<(int)1, unsigned int>, at::native::memory::LoadWithCast<(int)1>, at::native::memory::StoreWithCast<(int)1>>(int, T1, T2, T4, T5, T6, T7)"
+    },
+    {
+      "start": 10521619719,
+      "end": 10521620743,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265181,
+      "name": "void <unnamed>::elementwise_kernel_with_index<int, at::native::arange_cuda_out(const c10::Scalar &, const c10::Scalar &, const c10::Scalar &, at::Tensor &)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 4)]::operator ()() const::[lambda(long) (instance 1)]>(T1, T2, function_traits<T2>::result_type *)"
+    },
+    {
+      "start": 10521623655,
+      "end": 10521630823,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265188,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 4)]::operator ()() const::[lambda(long) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10521643879,
+      "end": 10521941479,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265200,
+      "name": "void at::native::radixSortKVInPlace<(int)2, (int)-1, (int)32, (int)32, int, long, unsigned int>(at::cuda::detail::TensorInfo<T5, T7>, T7, T7, T7, at::cuda::detail::TensorInfo<T6, T7>, T7, bool)"
+    },
+    {
+      "start": 10521942951,
+      "end": 10521977895,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265214,
+      "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<int>, std::array<char *, (unsigned long)1>>(int, T2, T3)"
+    },
+    {
+      "start": 10521980295,
+      "end": 10521981319,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265228,
+      "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::FillFunctor<int>, std::array<char *, (unsigned long)1>>(int, T2, T3)"
+    },
+    {
+      "start": 10521984199,
+      "end": 10521985287,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265246,
+      "name": "void <unnamed>::elementwise_kernel_with_index<int, at::native::arange_cuda_out(const c10::Scalar &, const c10::Scalar &, const c10::Scalar &, at::Tensor &)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(long) (instance 1)]>(T1, T2, function_traits<T2>::result_type *)"
+    },
+    {
+      "start": 10521988167,
+      "end": 10521990375,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265257,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10521992295,
+      "end": 10522000423,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265271,
+      "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::CUDAFunctorOnSelf_add<int>, std::array<char *, (unsigned long)2>>(int, T2, T3)"
+    },
+    {
+      "start": 10522002759,
+      "end": 10522010055,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265279,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10522012999,
+      "end": 10522015239,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265290,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10522016743,
+      "end": 10522017927,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265301,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)2, void at::native::gpu_kernel_impl_nocast<at::native::FillFunctor<int>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10522020967,
+      "end": 10522434599,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265318,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10522436615,
+      "end": 10522845063,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265336,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10522847239,
+      "end": 10523255463,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265354,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10523256871,
+      "end": 10523498407,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265380,
+      "name": "_quantize_sage_q_kernel"
+    },
+    {
+      "start": 10523500615,
+      "end": 10523853159,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265436,
+      "name": "_sage_kv_stats_partial_kernel"
+    },
+    {
+      "start": 10523854919,
+      "end": 10523875431,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265443,
+      "name": "_sage_kv_stats_finalize_kernel"
+    },
+    {
+      "start": 10523877447,
+      "end": 10524347655,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265453,
+      "name": "_quantize_sage_kv_kernel"
+    },
+    {
+      "start": 10524386023,
+      "end": 10540410469,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265493,
+      "name": "kernel_cake_sage_block_sparse_attention_h3_ragged_bs1_v1"
+    },
+    {
+      "start": 10540413029,
+      "end": 10540818181,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265505,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10540820485,
+      "end": 10540993957,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265528,
+      "name": "void at::native::reduce_kernel<(int)128, (int)4, at::native::ReduceOp<c10::BFloat16, at::native::func_wrapper_t<float, at::native::sum_functor<c10::BFloat16, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4, (int)8>>(T3)"
+    },
+    {
+      "start": 10540996645,
+      "end": 10540998373,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265539,
+      "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::<unnamed>::launch_clamp_scalar(at::TensorIteratorBase &, c10::Scalar, c10::Scalar, at::native::detail::ClampLimits)::[lambda() (instance 1)]::operator ()() const::[lambda() (instance 3)]::operator ()() const::[lambda(int) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)"
+    },
+    {
+      "start": 10541000773,
+      "end": 10541010757,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265550,
+      "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)"
+    },
+    {
+      "start": 10541012997,
+      "end": 10541117317,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265563,
+      "name": "void <unnamed>::softmax_warp_forward<float, float, float, (int)11, (bool)0, (bool)0, (int)32>(T2 *, const T1 *, int, int, int, const bool *, int, bool)"
+    },
+    {
+      "start": 10541119941,
+      "end": 10541413893,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265581,
+      "name": "void cutlass::Kernel2<cutlass_80_simt_sgemm_128x32_8x5_nn_align1>(T1::Params)"
+    },
+    {
+      "start": 10541415493,
+      "end": 10541418149,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265594,
+      "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::bfloat16_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda(float) (instance 1)], std::array<char *, (unsigned long)2>>(int, T2, T3)"
+    },
+    {
+      "start": 10541419621,
+      "end": 10541712581,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265611,
+      "name": "_h3_vsa_tile_pack_kernel"
+    },
+    {
+      "start": 10541714725,
+      "end": 10542009797,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265618,
+      "name": "_h3_vsa_o_bundle_kernel"
+    },
+    {
+      "start": 10542011717,
+      "end": 10542016069,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265628,
+      "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)"
+    },
+    {
+      "start": 10545261732,
+      "end": 10545270852,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265638,
+      "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)"
+    },
+    {
+      "start": 10545356452,
+      "end": 10545818436,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265654,
+      "name": "_h3_vsa_o_bundle_local_gate_kernel"
+    },
+    {
+      "start": 10545819876,
+      "end": 10546297668,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265668,
+      "name": "triton_per_fused__to_copy_abs_clamp_clone_cutlass_scaled_mm_div_max_permute_squeeze_transpose_view_0"
+    },
+    {
+      "start": 10546298916,
+      "end": 10548631076,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265696,
+      "name": "void cutlass::device_kernel<vllm::cutlass_3x_gemm_fp8_blockwise<cutlass::bfloat16_t, (int)1, (int)128, (int)128, cute::tuple<cute::C<(int)128>, cute::C<(int)128>, cute::C<(int)128>>, cute::tuple<cute::C<(int)1>, cute::C<(int)1>, cute::C<(int)1>>, cutlass::epilogue::collective::EpilogueScheduleAuto, cutlass::gemm::collective::KernelScheduleAuto, (bool)0>::GemmKernel>(T1::Params)"
+    }
+  ],
+  "copies": [
+    {
+      "start": 10508315241,
+      "end": 10508316489,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264736,
+      "bytes": 64,
+      "copy_kind": 2
+    },
+    {
+      "start": 10508340617,
+      "end": 10508381449,
+      "stream": 208,
+      "pid": 333783819616256,
+      "corr": 264747,
+      "bytes": 21489664,
+      "copy_kind": 8
+    },
+    {
+      "start": 10511489609,
+      "end": 10511490057,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264753,
+      "bytes": 64,
+      "copy_kind": 2
+    },
+    {
+      "start": 10511564361,
+      "end": 10511564841,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264767,
+      "bytes": 64,
+      "copy_kind": 2
+    },
+    {
+      "start": 10511580425,
+      "end": 10511615401,
+      "stream": 208,
+      "pid": 333783819616256,
+      "corr": 264771,
+      "bytes": 21489664,
+      "copy_kind": 8
+    },
+    {
+      "start": 10514744904,
+      "end": 10514745384,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264777,
+      "bytes": 64,
+      "copy_kind": 2
+    },
+    {
+      "start": 10515151464,
+      "end": 10515151912,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264803,
+      "bytes": 64,
+      "copy_kind": 2
+    },
+    {
+      "start": 10515166728,
+      "end": 10515204552,
+      "stream": 208,
+      "pid": 333783819616256,
+      "corr": 264807,
+      "bytes": 21489664,
+      "copy_kind": 8
+    },
+    {
+      "start": 10518330952,
+      "end": 10518331432,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 264813,
+      "bytes": 64,
+      "copy_kind": 2
+    },
+    {
+      "start": 10521609255,
+      "end": 10521616551,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265163,
+      "bytes": 7348320,
+      "copy_kind": 8
+    },
+    {
+      "start": 10521633863,
+      "end": 10521641191,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265194,
+      "bytes": 7348320,
+      "copy_kind": 8
+    },
+    {
+      "start": 10524357191,
+      "end": 10524357991,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265477,
+      "bytes": 128,
+      "copy_kind": 1
+    },
+    {
+      "start": 10524365351,
+      "end": 10524365735,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265482,
+      "bytes": 128,
+      "copy_kind": 1
+    },
+    {
+      "start": 10524372455,
+      "end": 10524372839,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265487,
+      "bytes": 128,
+      "copy_kind": 1
+    },
+    {
+      "start": 10524379559,
+      "end": 10524379911,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265492,
+      "bytes": 128,
+      "copy_kind": 1
+    },
+    {
+      "start": 10542018117,
+      "end": 10542018565,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265630,
+      "bytes": 64,
+      "copy_kind": 2
+    },
+    {
+      "start": 10542037189,
+      "end": 10542069765,
+      "stream": 208,
+      "pid": 333783819616256,
+      "corr": 265634,
+      "bytes": 21973504,
+      "copy_kind": 8
+    },
+    {
+      "start": 10545275460,
+      "end": 10545275940,
+      "stream": 7,
+      "pid": 333783819616256,
+      "corr": 265640,
+      "bytes": 64,
+      "copy_kind": 2
+    }
+  ],
+  "transfers": [
+    {
+      "phase": "QKV",
+      "index": 0,
+      "start": 10508306729,
+      "end": 10511483113
+    },
+    {
+      "phase": "QKV",
+      "index": 1,
+      "start": 10511562281,
+      "end": 10514730632
+    },
+    {
+      "phase": "QKV",
+      "index": 2,
+      "start": 10515148392,
+      "end": 10518317320
+    },
+    {
+      "phase": "O",
+      "index": 0,
+      "start": 10542016069,
+      "end": 10545261732
+    }
+  ],
+  "metric_names": {
+    "7": "SMs Active [Throughput %]",
+    "21": "PCIe RX Throughput [Throughput %]",
+    "22": "PCIe TX Throughput [Throughput %]"
+  },
+  "samples": [
+    {
+      "timestamp": 10508827721,
+      "metric": 7,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10508827721,
+      "metric": 21,
+      "raw_percent": 82
+    },
+    {
+      "timestamp": 10508827721,
+      "metric": 22,
+      "raw_percent": 81
+    },
+    {
+      "timestamp": 10509827721,
+      "metric": 7,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10509827721,
+      "metric": 21,
+      "raw_percent": 82
+    },
+    {
+      "timestamp": 10509827721,
+      "metric": 22,
+      "raw_percent": 81
+    },
+    {
+      "timestamp": 10510827721,
+      "metric": 7,
+      "raw_percent": 3
+    },
+    {
+      "timestamp": 10510827721,
+      "metric": 21,
+      "raw_percent": 73
+    },
+    {
+      "timestamp": 10510827721,
+      "metric": 22,
+      "raw_percent": 72
+    },
+    {
+      "timestamp": 10511827721,
+      "metric": 7,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10511827721,
+      "metric": 21,
+      "raw_percent": 82
+    },
+    {
+      "timestamp": 10511827721,
+      "metric": 22,
+      "raw_percent": 81
+    },
+    {
+      "timestamp": 10512827720,
+      "metric": 7,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10512827720,
+      "metric": 21,
+      "raw_percent": 82
+    },
+    {
+      "timestamp": 10512827720,
+      "metric": 22,
+      "raw_percent": 81
+    },
+    {
+      "timestamp": 10513827720,
+      "metric": 7,
+      "raw_percent": 4
+    },
+    {
+      "timestamp": 10513827720,
+      "metric": 21,
+      "raw_percent": 73
+    },
+    {
+      "timestamp": 10513827720,
+      "metric": 22,
+      "raw_percent": 70
+    },
+    {
+      "timestamp": 10514827720,
+      "metric": 7,
+      "raw_percent": 35
+    },
+    {
+      "timestamp": 10514827720,
+      "metric": 21,
+      "raw_percent": 54
+    },
+    {
+      "timestamp": 10514827720,
+      "metric": 22,
+      "raw_percent": 55
+    },
+    {
+      "timestamp": 10515827720,
+      "metric": 7,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10515827720,
+      "metric": 21,
+      "raw_percent": 82
+    },
+    {
+      "timestamp": 10515827720,
+      "metric": 22,
+      "raw_percent": 81
+    },
+    {
+      "timestamp": 10516827720,
+      "metric": 7,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10516827720,
+      "metric": 21,
+      "raw_percent": 82
+    },
+    {
+      "timestamp": 10516827720,
+      "metric": 22,
+      "raw_percent": 81
+    },
+    {
+      "timestamp": 10517827720,
+      "metric": 7,
+      "raw_percent": 32
+    },
+    {
+      "timestamp": 10517827720,
+      "metric": 21,
+      "raw_percent": 39
+    },
+    {
+      "timestamp": 10517827720,
+      "metric": 22,
+      "raw_percent": 37
+    },
+    {
+      "timestamp": 10518827720,
+      "metric": 7,
+      "raw_percent": 98
+    },
+    {
+      "timestamp": 10518827720,
+      "metric": 21,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10518827720,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10519827720,
+      "metric": 7,
+      "raw_percent": 94
+    },
+    {
+      "timestamp": 10519827720,
+      "metric": 21,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10519827720,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10520827719,
+      "metric": 7,
+      "raw_percent": 91
+    },
+    {
+      "timestamp": 10520827719,
+      "metric": 21,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10520827719,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10521827719,
+      "metric": 7,
+      "raw_percent": 96
+    },
+    {
+      "timestamp": 10521827719,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10521827719,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10522827719,
+      "metric": 7,
+      "raw_percent": 99
+    },
+    {
+      "timestamp": 10522827719,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10522827719,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10523827719,
+      "metric": 7,
+      "raw_percent": 94
+    },
+    {
+      "timestamp": 10523827719,
+      "metric": 21,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10523827719,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10524827719,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10524827719,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10524827719,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10525827719,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10525827719,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10525827719,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10526827719,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10526827719,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10526827719,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10527827719,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10527827719,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10527827719,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10528827718,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10528827718,
+      "metric": 21,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10528827718,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10529827718,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10529827718,
+      "metric": 21,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10529827718,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10530827718,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10530827718,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10530827718,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10531827718,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10531827718,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10531827718,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10532827718,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10532827718,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10532827718,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10533827718,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10533827718,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10533827718,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10534827718,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10534827718,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10534827718,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10535827718,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10535827718,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10535827718,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10536827717,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10536827717,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10536827717,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10537827717,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10537827717,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10537827717,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10538827717,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10538827717,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10538827717,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10539827717,
+      "metric": 7,
+      "raw_percent": 61
+    },
+    {
+      "timestamp": 10539827717,
+      "metric": 21,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10539827717,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10540827717,
+      "metric": 7,
+      "raw_percent": 92
+    },
+    {
+      "timestamp": 10540827717,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10540827717,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10541827717,
+      "metric": 7,
+      "raw_percent": 21
+    },
+    {
+      "timestamp": 10541827717,
+      "metric": 21,
+      "raw_percent": 64
+    },
+    {
+      "timestamp": 10541827717,
+      "metric": 22,
+      "raw_percent": 66
+    },
+    {
+      "timestamp": 10542827717,
+      "metric": 7,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10542827717,
+      "metric": 21,
+      "raw_percent": 81
+    },
+    {
+      "timestamp": 10542827717,
+      "metric": 22,
+      "raw_percent": 81
+    },
+    {
+      "timestamp": 10543827717,
+      "metric": 7,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10543827717,
+      "metric": 21,
+      "raw_percent": 81
+    },
+    {
+      "timestamp": 10543827717,
+      "metric": 22,
+      "raw_percent": 81
+    },
+    {
+      "timestamp": 10544827716,
+      "metric": 7,
+      "raw_percent": 47
+    },
+    {
+      "timestamp": 10544827716,
+      "metric": 21,
+      "raw_percent": 35
+    },
+    {
+      "timestamp": 10544827716,
+      "metric": 22,
+      "raw_percent": 32
+    },
+    {
+      "timestamp": 10545827716,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10545827716,
+      "metric": 21,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10545827716,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10546827716,
+      "metric": 7,
+      "raw_percent": 100
+    },
+    {
+      "timestamp": 10546827716,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10546827716,
+      "metric": 22,
+      "raw_percent": 1
+    },
+    {
+      "timestamp": 10547827716,
+      "metric": 7,
+      "raw_percent": 97
+    },
+    {
+      "timestamp": 10547827716,
+      "metric": 21,
+      "raw_percent": 0
+    },
+    {
+      "timestamp": 10547827716,
+      "metric": 22,
+      "raw_percent": 1
+    }
+  ]
+}

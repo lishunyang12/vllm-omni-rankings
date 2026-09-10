@@ -1,0 +1,54 @@
+{
+  "scope": "Real VSA backend, simulated equal-rank exchange; not SP8/end-to-end qualification",
+  "asynchronous": true,
+  "results": [
+    {
+      "precision": "bf16",
+      "pattern": 0,
+      "bitwise_equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    },
+    {
+      "precision": "fp8",
+      "pattern": 0,
+      "bitwise_equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    },
+    {
+      "precision": "bf16",
+      "pattern": 1,
+      "bitwise_equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    },
+    {
+      "precision": "fp8",
+      "pattern": 1,
+      "bitwise_equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    },
+    {
+      "precision": "bf16",
+      "pattern": 2,
+      "bitwise_equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    },
+    {
+      "precision": "fp8",
+      "pattern": 2,
+      "bitwise_equal": true,
+      "finite": true,
+      "max_abs": 0.0,
+      "relative_l2": 0.0
+    }
+  ]
+}

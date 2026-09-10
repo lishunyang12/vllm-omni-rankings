@@ -1,0 +1,1042 @@
+[
+  {
+    "mode": "bf16-base",
+    "measurement": "normal",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T07:32:26Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 2,
+        "preflight": "2026-09-10T07:32:54Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 3,
+        "preflight": "2026-09-10T07:33:21Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  },
+  {
+    "mode": "bf16-base",
+    "measurement": "stages",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T07:59:55Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 2,
+        "preflight": "2026-09-10T08:00:23Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 3,
+        "preflight": "2026-09-10T08:00:51Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  },
+  {
+    "mode": "bf16-base",
+    "measurement": "nsys",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T08:54:20Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  },
+  {
+    "mode": "bf16-overlap",
+    "measurement": "normal",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T07:39:29Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 2,
+        "preflight": "2026-09-10T07:39:55Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 3,
+        "preflight": "2026-09-10T07:40:22Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  },
+  {
+    "mode": "bf16-overlap",
+    "measurement": "stages",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T08:15:16Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 2,
+        "preflight": "2026-09-10T08:15:43Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 3,
+        "preflight": "2026-09-10T08:16:10Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  },
+  {
+    "mode": "bf16-overlap",
+    "measurement": "nsys",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T09:01:04Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  },
+  {
+    "mode": "fp8-base",
+    "measurement": "normal",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T07:46:28Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 2,
+        "preflight": "2026-09-10T07:46:51Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 3,
+        "preflight": "2026-09-10T07:47:13Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  },
+  {
+    "mode": "fp8-base",
+    "measurement": "stages",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T08:40:34Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 2,
+        "preflight": "2026-09-10T08:40:57Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 3,
+        "preflight": "2026-09-10T08:41:19Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  },
+  {
+    "mode": "fp8-base",
+    "measurement": "nsys",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T09:07:35Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  },
+  {
+    "mode": "fp8-overlap",
+    "measurement": "normal",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T07:53:06Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 2,
+        "preflight": "2026-09-10T07:53:29Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 3,
+        "preflight": "2026-09-10T07:53:51Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  },
+  {
+    "mode": "fp8-overlap",
+    "measurement": "stages",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T08:47:23Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 2,
+        "preflight": "2026-09-10T08:47:45Z exclusive",
+        "foreign_process_log_bytes": 0
+      },
+      {
+        "repeat": 3,
+        "preflight": "2026-09-10T08:48:07Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  },
+  {
+    "mode": "fp8-overlap",
+    "measurement": "nsys",
+    "hardware": [
+      {
+        "index": "0",
+        "uuid": "GPU-1c189c11-e797-a795-cefd-495b190afebc",
+        "pci.bus_id": "00000000:06:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "1",
+        "uuid": "GPU-b54052c1-bb48-57e1-3f97-97be7e985728",
+        "pci.bus_id": "00000000:09:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "2",
+        "uuid": "GPU-e085789b-29cd-d6df-496b-5dad5c4b5c43",
+        "pci.bus_id": "00000000:76:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "3",
+        "uuid": "GPU-32501c40-fd27-a9d6-76fe-084c5e444e6f",
+        "pci.bus_id": "00000000:79:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "4",
+        "uuid": "GPU-dd0e5f62-6fe7-1934-1afa-6c5be5a4aad4",
+        "pci.bus_id": "00000000:86:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "5",
+        "uuid": "GPU-1532cfd2-4280-c32d-153c-1ea7a2152ef8",
+        "pci.bus_id": "00000000:89:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "6",
+        "uuid": "GPU-b50a8d05-d205-c7cf-a973-6f19cf00daa6",
+        "pci.bus_id": "00000000:F6:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      },
+      {
+        "index": "7",
+        "uuid": "GPU-e971a79f-ce70-f7e7-4a38-5159f9d7c291",
+        "pci.bus_id": "00000000:F9:00.0",
+        "gpu.power.current_limit": 350.0,
+        "gpu.power.default_limit": 350.0,
+        "gpu.power.requested_limit": 350.0
+      }
+    ],
+    "model_diff_sha256": "10b9a6b28933ac244b64e9dc74af65506fe164922326bf24a1d79fb66f6e19bd",
+    "untracked_sources_sha256": "39906255f3dd14e5fd1c6ba6ac8bf3d557c313bad54832f7271c6fc248bcd0a6",
+    "benchmark_sha256": "6b5f6d0222e4ec553ea150d8f87836c0485914a0bc0e246f5d8f7464e531c94e",
+    "request_exclusivity_checks": [
+      {
+        "repeat": 1,
+        "preflight": "2026-09-10T09:14:03Z exclusive",
+        "foreign_process_log_bytes": 0
+      }
+    ]
+  }
+]

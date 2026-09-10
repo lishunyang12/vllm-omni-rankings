@@ -1,0 +1,31 @@
+{
+  "prompt_tokens": 558,
+  "prefix_segments": [
+    558,
+    1206
+  ],
+  "video_shape_thw": [
+    107,
+    22,
+    40
+  ],
+  "prefix_tile_count": 28,
+  "video_tile_count": 1620,
+  "compact_row_count": 95924,
+  "padded_row_count": 105472,
+  "sequence_row_count": 95936,
+  "local_row_count": 11992,
+  "o_bundle_kmax": 270,
+  "owner_tile_counts": [
+    208,
+    270,
+    240,
+    270,
+    240,
+    240,
+    260,
+    240
+  ],
+  "ragged_blocks": 322,
+  "alignment_source": "minimax_h3_packed_sequence (64 rows), exact CPU owner plan"
+}
