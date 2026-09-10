@@ -57,8 +57,8 @@
     },
     {
       "path": "index.html",
-      "bytes": 310964,
-      "sha256": "ad221d82b51a183ac354f4b24619847e57f487ff800f5722c44ecbdc575c4d44"
+      "bytes": 311008,
+      "sha256": "471797a625a88db66b7e085eef4188890743089ea2341faeeb17fd1df928efbb"
     },
     {
       "path": "lossless/README.md",
@@ -347,8 +347,8 @@
     },
     {
       "path": "raw-data.zip",
-      "bytes": 29628832,
-      "sha256": "049e6ab3fe691908e1890fe27edda81dc05a3516bb8f2496e2c48c066c4e7a0f"
+      "bytes": 29628856,
+      "sha256": "d8d4988a0ca7a4612c8f676a00fd27fab2e52f6d2e4926173a27f09efb6c8e94"
     },
     {
       "path": "report-methodology.md",

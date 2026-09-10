@@ -8,6 +8,10 @@ download counts.
 
 ## Research reports
 
+- **MiniMax-H3 Ulysses communication overlap and blockwise FP8 on 8x SM120:**
+  [four-way comparison](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_ulysses_blockwise_ab/) ·
+  [lossless BF16 gate overlap](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_ulysses_blockwise_ab/lossless/) ·
+  [measurements, videos, and native Nsight traces](scripts/minimax_h3_ulysses_blockwise_ab/README.md)
 - **MiniMax-H3 moon teahouse, 15 seconds: BF16 VSA vs Sage PR4691 vs locally
   adapted Cake PR4951 on 8x SM120:**
   [three-video comparison](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_sage_teahouse_three_way/) ·
