@@ -1,0 +1,12 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>RunningHub VDN · 工作流核验</title><link rel="stylesheet" href="styles.css"><style>main{max-width:850px;margin:4rem auto;padding:0 1.5rem;line-height:1.9}h1{font-size:2rem;line-height:1.4}h2{font-size:1.2rem;margin-top:2rem}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:.7rem;border-bottom:1px solid #394341}code{overflow-wrap:anywhere}a{text-decoration:underline}</style></head><body><main>
+<a href="index.html">← 返回视频与耗时比较</a>
+<h1>这份 RunningHub VDN 工作流能借鉴什么</h1>
+<p>已公开下载并检查完整工作流，以及对应节点源码和模型文件头。它确实连接了<strong>单图 Ref2VA</strong>输入；这份核验没有在 RunningHub 提交生成任务，也没有证明其达到 15 秒生成延迟。</p>
+<table><tr><th>项目</th><th>下载图中的实际配置</th></tr><tr><td>任务</td><td>单图 Ref2VA；首帧、尾帧输入均未连接</td></tr><tr><td>画幅与长度</td><td>1152 × 640，362 帧，24fps，约 15.083 秒</td></tr><tr><td>采样</td><td>OpenVDN DMD8，8 次模型计算，视频/音频 shift 12/3</td></tr><tr><td>主模型</td><td>约 34.04 GB 完整 INT8 ConvRot；AdaLN 保留 2688 列</td></tr><tr><td>其他组件</td><td>Qwen3-VL NVFP4/AWQ、FP16 视频 VAE、FP32 音频 VAE</td></tr></table>
+<p>以上来自<a href="https://www.runninghub.cn/post/2096241438156742657/">用户提供的 RunningHub 工作流</a>及<a href="https://huggingface.co/t8star/Vdn-Minimax-H3-Comfy/tree/d6aa5dfc669a749dc9364a36f3b6d4d1545a53e8">固定版本模型包</a>。它使用完整 INT8 底模，没有选择另一个约 21 GB 的曲线剪枝版本。</p>
+<h2>Sol-Attn 连线不等于两种加速相加</h2><p>原图串接了 Sol-Attn，但当前 T8 1.79.2 会由 VDN 执行自己的 attention；保留上游节点不代表调用它。旧版本的行为不同，而下载图没有锁定全部节点版本。参见<a href="https://github.com/T8mars/comfyui-minimax-h3-audio-T8/blob/93cefbf5d15ff8e263fa707b8a55c19454459431/h3_t8/vdn_h3_advanced.py">实际实现</a>。</p>
+<h2>与本页实验有什么区别</h2><p>本页仅测试 VDN，保留官方 OpenVDN 参考与 vLLM-Omni INT8 接入两组。官方 163.977 秒来自独立官方实现，不是 vLLM-Omni 成绩。本页使用 1344 × 768 的 FL2VA 首尾帧样例，像素量比下载图更高。原图属于 ComfyUI 单卡执行方式，也不同于本页的八卡配置。现有 INT8 移植卡量化的是 VDN 新增分支；RunningHub 图量化的是整个主模型，不能视为同一实现。</p><p>值得借鉴的是参考图条件接入、整模型量化和组件调度。迁入 vLLM-Omni 仍需验证量化分组、权重排列、LoRA 合并和多卡计算。当前没有同条件证据证明这份工作流更快、画质最好或逐字节无损。</p>
+<p>官方 OpenVDN 已明确支持 FL2VA；T8 提供额外的 Ref2VA 接入。参见<a href="https://github.com/OpenVDN/vdn-minimax-h3#supporting-fl2va-i2va-and-l2va">官方任务说明</a>与<a href="https://github.com/T8mars/comfyui-minimax-h3-audio-T8/tree/93cefbf5d15ff8e263fa707b8a55c19454459431/examples/workflows/10-speed">T8 工作流说明</a>。</p>
+<p><small>核验日期：2026-09-13。以上是公开配置与源码核验，性能及质量只以实际生成结果为准。</small></p>
+</main></body></html>

@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-09-12T22:03:08.959321+00:00",
+  "experiment": {
+    "id": "minimax-h3-fl2va-vdn-20260913",
+    "title": "VDN 峡谷飞行 · 官方参考与 vLLM-Omni 接入",
+    "status": "in_progress",
+    "hardware_summary": "8 × NVIDIA RTX PRO 5000（实测 CUDA SM120）",
+    "software_summary": "仅测试 VDN：官方 OpenVDN 参考与 vLLM-Omni 的 VDN INT8 接入。",
+    "run_conditions": "官方独立实现已完成；vLLM-Omni 接入尚未通过八卡 attention 数值资格。",
+    "e2e_comparable": false,
+    "timing_note": "官方参考的 163.977 秒来自独立 OpenVDN 实现，从已缓存条件读取计到完整 MP4；它不是 vLLM-Omni 成绩，也不是完整请求 E2E。"
+  },
+  "fixture": {
+    "id": "openvdn-canyon-flight-fl2va-15s",
+    "manifest": "assets/fixture.json",
+    "sha256": "8cf8ee8a92539fb029ba032a53ad403d72d79aabb93adfd1f504d936be637650",
+    "task": "fl2va",
+    "seed": 42,
+    "width": 1344,
+    "height": 768,
+    "fps": 24,
+    "requested_duration_s": 15,
+    "planned_frames": 362,
+    "planned_duration_s": 15.083333333333334,
+    "first_image": "assets/first-1344x768.png",
+    "last_image": "assets/last-1344x768.png",
+    "prompt": "assets/prompt-15s.txt"
+  },
+  "methods": [
+    {
+      "id": "vdn8",
+      "name": "官方 OpenVDN · 8 NFE",
+      "subtitle": "OFFICIAL REFERENCE / NOT VLLM-OMNI",
+      "status": "completed",
+      "status_note": "运行与产物检查通过；画质待人工对比",
+      "model": "OpenVDN MiniMax H3 FL2VA",
+      "planned_nfe": 8,
+      "actual_nfe": 8,
+      "precision": "FP8 大线性层 / BF16 其余路径",
+      "video": "videos/vdn8-4f813d9149f68b03.mp4",
+      "timing": {
+        "e2e_s": 163.97704759566113,
+        "e2e_label": "官方缓存条件 → 完整 MP4",
+        "dit_s": 112.9167960761115,
+        "vae_s": null,
+        "post_denoise_s": 51.023204690776765,
+        "samples": 3,
+        "statistic": "三次正式请求中位数 · 每次取最大 rank 跨度",
+        "scope": "已缓存的文本/首末帧条件读取 → 8 NFE 去噪 → rank 0 原视频/音频解码 → 完整 MP4及末端同步；不含模型加载、暖机或实际文本/图像条件编码，不是完整请求 E2E。各阶段独立取最大 rank 后取中位数，不能相加。",
+        "warmup": "1 次完整暖机；其后 3 次正式生成"
+      },
+      "artifact": {
+        "frames": 362,
+        "duration_s": 15.083333,
+        "width": 1344,
+        "height": 768,
+        "fps": 24,
+        "sha256": "4f813d9149f68b036a989950d7aa477e76e0576c8f699780d9965eb5d0f4e634"
+      },
+      "quality_notes": [
+        "163.977 秒是官方独立实现的参考结果，不是 vLLM-Omni 测试成绩。",
+        "保留完整 362 帧 / 24 fps；此为已缓存条件的官方 5+3 卡路径，不能直接与完整请求 E2E 求速度比。",
+        "本 1344×768 首末帧条件任务不与历史 T2VA / FastH3 约 22 秒请求配对。",
+        "同 seed；官方 CUDA 与原生 CPU 随机数布局不同，不等于同一初始噪声。"
+      ],
+      "receipt": "receipts/vdn8-0e926560abf63e09.json"
+    },
+    {
+      "id": "vdn8-int8",
+      "name": "vLLM-Omni · VDN INT8",
+      "subtitle": "VLLM-OMNI PORT / QUALIFICATION PENDING",
+      "status": "blocked",
+      "status_note": "八卡 attention 数值资格未通过，正在定位；尚无完整视频或耗时",
+      "model": "OpenVDN H3 · vLLM-Omni INT8 分支移植",
+      "planned_nfe": 8,
+      "actual_nfe": null,
+      "precision": null,
+      "video": null,
+      "timing": {
+        "e2e_s": null,
+        "dit_s": null,
+        "vae_s": null,
+        "samples": null,
+        "statistic": null,
+        "scope": null,
+        "warmup": null,
+        "e2e_label": "vLLM-Omni 耗时（待测）"
+      },
+      "artifact": {
+        "frames": null,
+        "duration_s": null,
+        "width": null,
+        "height": null,
+        "fps": null,
+        "sha256": null
+      },
+      "quality_notes": [
+        "当前接入保留 BF16 主干，仅新增 VDN 分支使用 INT8 ConvRot；尚未通过完整八卡 attention 数值资格。",
+        "与 RunningHub 整个主模型 INT8 方案不同；单层 INT8 算子通过不代表整条多卡路径通过。"
+      ],
+      "receipt": null
+    }
+  ]
+}

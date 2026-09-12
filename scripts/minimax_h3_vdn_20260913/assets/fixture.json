@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "id": "openvdn-canyon-flight-fl2va-15s",
+  "title": "峡谷飞行 · 首末帧条件",
+  "task": "fl2va",
+  "source_repository": "https://github.com/OpenVDN/vdn-minimax-h3",
+  "source_commit": "2f740c9291431d89d4f2330743b093fac4390d09",
+  "source_prompt_url": "https://github.com/OpenVDN/vdn-minimax-h3/blob/2f740c9291431d89d4f2330743b093fac4390d09/prompts/README.md#imageexample_fl2vapt",
+  "official_prompt_cache": {
+    "source_url": "https://raw.githubusercontent.com/OpenVDN/vdn-minimax-h3/2f740c9291431d89d4f2330743b093fac4390d09/prompts/image/example_fl2va.pt",
+    "sha256": "e1a6068cba19ba724ce0c95fd270d9ef68ee0d0e2393e84e0e0a7f69e9fab40c",
+    "prompt_characters": 6688,
+    "keyframe_anchors": [
+      "first",
+      "last"
+    ],
+    "encoded_canvas": [
+      1344,
+      768
+    ],
+    "reuse_cached_text_embeddings": false
+  },
+  "assets": [
+    {
+      "role": "first",
+      "file": "first.png",
+      "sha256": "01d2994b1d6c00941ac93ca384032b60b19e6815a04d7683fb5cd802d66a27b4",
+      "bytes": 2327308,
+      "source_url": "https://raw.githubusercontent.com/OpenVDN/vdn-minimax-h3/2f740c9291431d89d4f2330743b093fac4390d09/prompts/image/first.png",
+      "acquisition": "byte-verified local checkout of official repository"
+    },
+    {
+      "role": "last",
+      "file": "last.png",
+      "sha256": "edf40cf34961395d10c6577cb3d1be226385fd42aa0dbc5ce9f7b0485e79bccf",
+      "bytes": 2549143,
+      "source_url": "https://raw.githubusercontent.com/OpenVDN/vdn-minimax-h3/2f740c9291431d89d4f2330743b093fac4390d09/prompts/image/last.png",
+      "acquisition": "byte-verified local checkout of official repository"
+    }
+  ],
+  "original": {
+    "prompt_file": "prompt-original.txt",
+    "prompt_sha256": "64ec614190ffd12c640a9625dd503225c3ebdaedd6445e8e66736bff87dea305",
+    "prompt_duration_seconds": 14.3,
+    "config_num_frames": 345,
+    "config_fps": 24,
+    "config_duration_seconds": 14.375,
+    "default_seed": 42,
+    "config_source_url": "https://github.com/OpenVDN/vdn-minimax-h3/blob/2f740c9291431d89d4f2330743b093fac4390d09/configs/inference/8nfe_tuned_fp8.yaml",
+    "seed_source_url": "https://github.com/OpenVDN/vdn-minimax-h3/blob/2f740c9291431d89d4f2330743b093fac4390d09/src/config/inference.py"
+  },
+  "comparison": {
+    "prompt_file": "prompt-15s.txt",
+    "prompt_sha256": "4d2152bc9e19dc0f9d9ead7b65bacd3d62014d0996be3d1eda49254b5e12bc23",
+    "requested_duration_seconds": 15,
+    "requested_num_frames": 360,
+    "fps": 24,
+    "expected_output_duration_seconds": 15.083333333333334,
+    "seed": 42,
+    "width": 1344,
+    "height": 768,
+    "frame_indices": [
+      0,
+      -1
+    ],
+    "source_image_dimensions": [
+      1360,
+      768
+    ],
+    "preprocessing": "All methods receive the same prepared RGB 1344x768 PNGs. First is Lanczos stretch; last is Lanczos cover-resize plus center crop, matching the official OpenVDN keyframe preprocessor. Re-encode each method from these identical files and the adapted text.",
+    "adaptation": "Two literal duration edits only: 14.30-second → 15.00-second; 14.3-second → 15-second. All action beats, references and source default seed retained. This is a 15-second request adapted from the official 14.3-second example.",
+    "status": "ready",
+    "input_images": [
+      "first-1344x768.png",
+      "last-1344x768.png"
+    ],
+    "actual_planned_frames": 362,
+    "frame_policy": "Both pipelines align 360 requested frames to 362. Preserve all 362 generated frames and the final keyframe anchor; do not trim the final two frames. Publish actual ffprobe frame count/duration."
+  },
+  "cuda_initialized": false,
+  "prepared_assets": [
+    {
+      "role": "first",
+      "file": "first-1344x768.png",
+      "source_file": "first.png",
+      "source_sha256": "01d2994b1d6c00941ac93ca384032b60b19e6815a04d7683fb5cd802d66a27b4",
+      "sha256": "995af96a5bb08fb62fc8ff53910f7c7d752054762f35714253c24d00524724a2",
+      "rgb_pixel_sha256": "c726e91624b5f3edc446da567ab6825b754390346c0c86204f9a4799db217c6c",
+      "width": 1344,
+      "height": 768,
+      "operation": {
+        "kind": "stretch",
+        "resample": "LANCZOS",
+        "size": [
+          1344,
+          768
+        ]
+      }
+    },
+    {
+      "role": "last",
+      "file": "last-1344x768.png",
+      "source_file": "last.png",
+      "source_sha256": "edf40cf34961395d10c6577cb3d1be226385fd42aa0dbc5ce9f7b0485e79bccf",
+      "sha256": "bb9bb24b66a7f4c83de7a9591bf0d8df6c3c717c1496e231405aeeb1f3a22002",
+      "rgb_pixel_sha256": "18f5c5ce17bc4309e266e7590e35b67bc37fdad691ca3f7847abf4f37e50c4b2",
+      "width": 1344,
+      "height": 768,
+      "operation": {
+        "kind": "cover_resize_then_center_crop",
+        "scale": 1.0,
+        "resized_size": [
+          1360,
+          768
+        ],
+        "crop_box": [
+          8,
+          0,
+          1352,
+          768
+        ],
+        "resample": "LANCZOS"
+      }
+    }
+  ],
+  "frame_alignment_evidence": {
+    "official_vdn_source": "src/inference/render.py:88 align_num_frames(num_frames,17,5)",
+    "native_source": "v49 pipeline_minimax_h3.py:_resolve_shape calls minimax_h3_align_frame_count",
+    "root_decision": "362 complete frames at 24 fps; preserve last anchor instead of trimming to 360"
+  }
+}

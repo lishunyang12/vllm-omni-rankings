@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1111">
+  <meta name="description" content="聚焦 VDN：展示官方 OpenVDN 首末帧视频参考及 vLLM-Omni INT8 接入进度。官方耗时不代表 vLLM-Omni 成绩。">
+  <title>VDN / Motion Study — 官方参考与 vLLM-Omni 接入</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#comparison">跳到视频对比</a>
+  <header class="masthead shell">
+    <a class="brand" href="#" aria-label="H3 Motion Study 首页"><span class="brand-mark">H3<span>↗</span></span><span>MOTION<br>STUDY <b>01</b></span></a>
+    <nav aria-label="页面导航"><a href="#comparison">对比</a><a href="#conditions">首末帧</a><a href="#methodology">测试说明</a></nav>
+    <span class="header-note"><span class="status-dot"></span><span id="page-status">等待实验结果</span></span>
+  </header>
+
+  <main>
+    <section class="hero shell" aria-labelledby="hero-title">
+      <div class="eyebrow"><span class="line"></span> FIRST + LAST FRAME · VIDEO + AUDIO</div>
+      <div class="hero-grid">
+        <div><h1 id="hero-title">同一段旅程，<br><span>聚焦 VDN。</span></h1><p class="hero-copy">从窗前俯冲入峡谷，穿过水道，追随飞剑抵达天际。<br class="desktop">把动作连续性、首末帧保持与生成速度放在一起看。</p></div>
+        <div class="scenario"><span class="micro">SCENE 001 / CANYON FLIGHT</span><p>一镜到底的<br>峡谷飞行</p><div class="scenario-tags"><span>FL2VA</span><span>SEED 42</span><span>1344 × 768</span></div></div>
+      </div>
+      <div class="contract-strip"><p><b>相同输入</b><span>两张参考图 · 同一提示词 · 同一种子</span></p><p><b>15 秒请求</b><span>计划对齐为 362 帧 / 24 fps ≈ 15.083 秒</span></p><p><b id="completed-count">1 / 2 已完成</b><span>仅展示真实视频与已记录耗时</span></p></div>
+    </section>
+
+    <section id="comparison" class="comparison shell" aria-labelledby="comparison-title">
+      <div class="section-heading"><div><span class="section-number">01 / COMPARE</span><h2 id="comparison-title">看动作，也看等待时间</h2></div><div class="view-toggle" role="group" aria-label="选择 VDN 实现"><button type="button" data-view="all" aria-pressed="true">并排比较</button><button type="button" data-view="vdn8" aria-pressed="false">官方参考</button><button type="button" data-view="vdn8-int8" aria-pressed="false">vLLM-Omni 接入</button></div></div>
+      <div id="load-error" class="notice error" role="alert" hidden></div>
+      <p class="notice">官方 OpenVDN 的 163.977 秒为独立实现参考；vLLM-Omni 接入仍在数值验证，尚无完整视频或实测耗时。</p>
+      <div id="method-grid" class="method-grid"></div>
+      <noscript><p class="notice">同步播放需要 JavaScript。参考图与测试说明仍可阅读，实测数据可下载 <a href="results.json">results.json</a>。</p></noscript>
+
+      <div class="transport" aria-label="同步视频播放控制">
+        <div class="transport-top"><div class="play-group"><button id="play" class="play-button" type="button" disabled aria-label="同步播放"><span id="play-icon" aria-hidden="true">▶</span><span id="play-label">同步播放</span></button><button id="restart" class="icon-button" type="button" disabled aria-label="回到开始" title="回到开始">↺</button><button id="previous-frame" class="icon-button frame-step" type="button" disabled aria-label="后退一帧" title="后退一帧">−1f</button><button id="next-frame" class="icon-button frame-step" type="button" disabled aria-label="前进一帧" title="前进一帧">+1f</button></div><div class="audio-group"><label for="audio-source">音频</label><select id="audio-source"><option value="muted">全部静音</option></select><label class="sr-only" for="playback-rate">播放速度</label><select id="playback-rate"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="1.5">1.5×</option></select></div></div>
+        <div class="timeline-row"><output id="time-current">00:00.000</output><input id="timeline" type="range" min="0" max="15.083333" step="0.001" value="0" disabled aria-label="共同播放时间"><span id="time-duration">00:15.083</span></div>
+        <div class="transport-bottom"><span id="playback-status" role="status" aria-live="polite">视频生成完成后可同步播放。</span><span>同一时间轴 · 单路音频 · <kbd>Space</kbd> 播放</span></div>
+      </div>
+      <div class="beat-strip" aria-label="提示词中的动作观察点"><span class="micro">观察动作节点</span><button data-time="0.5" type="button">00.5 <span>俯冲起步</span></button><button data-time="3.5" type="button">03.5 <span>布料与水轮</span></button><button data-time="7.5" type="button">07.5 <span>穿越隧道</span></button><button data-time="10.5" type="button">10.5 <span>追逐飞剑</span></button><button data-time="13" type="button">13.0 <span>巨鸟掠过</span></button></div>
+    </section>
+
+    <section id="conditions" class="conditions shell" aria-labelledby="conditions-title">
+      <div class="section-heading"><div><span class="section-number">02 / SHARED INPUT</span><h2 id="conditions-title">同一开始，同一目的地</h2></div><p class="section-aside">官方 OpenVDN 首末帧实例<br>全部方法使用同一份预处理 PNG</p></div>
+      <div class="reference-grid"><figure><a href="assets/first-1344x768.png" target="_blank" rel="noopener"><img src="assets/first-1344x768.png" width="1344" height="768" alt="首帧：蓝袍青年抱着白猫，从木窗望向金色峡谷城市" loading="lazy"></a><figcaption><span><b>01</b> 首帧条件</span><span>FIRST FRAME · 1344 × 768</span></figcaption></figure><figure><a href="assets/last-1344x768.png" target="_blank" rel="noopener"><img src="assets/last-1344x768.png" width="1344" height="768" alt="末帧：巨鸟与白衣飞剑人在峡谷城市上空飞行" loading="lazy"></a><figcaption><span><b>02</b> 末帧条件</span><span>LAST FRAME · 1344 × 768</span></figcaption></figure></div>
+      <div class="source-note"><span class="note-mark">i</span><p>官方提示词为 <b>14.3 秒</b>，示例配置为 345 帧。本次仅将两处总时长改为 15 秒，保留动作节点、参考图及 seed 42。生成保留完整 362 帧，避免裁掉末帧条件；这是官方样例的 15 秒延展。</p></div>
+      <details class="prompt-details"><summary><span>查看完整提示词与输入校验值</span><span class="micro">PROMPT + PROVENANCE <span aria-hidden="true">↗</span></span></summary><div class="prompt-content"><div class="prompt-actions"><a href="assets/prompt-15s.txt" download>本次提示词 ↗</a><a href="assets/prompt-original.txt" download>官方原提示词 ↗</a><a href="assets/fixture.json" download>输入清单 / SHA-256 ↗</a></div><p class="fine-print">首图 Lanczos 缩放，末图等比覆盖后居中裁切，统一为 1344 × 768；两套原图一并保留于来源清单。全部方法须重新编码新文本，不能复用官方原时长的提示词嵌入。</p><pre id="prompt-text">正在读取提示词…</pre></div></details>
+    </section>
+
+    <section id="methodology" class="methodology shell" aria-labelledby="methodology-title">
+      <div class="section-heading"><div><span class="section-number">03 / READING THE RESULTS</span><h2 id="methodology-title">耗时各有边界，画面自己说话</h2></div><a href="results.json" class="text-link" download>下载实测数据 ↗</a></div>
+      <div class="methodology-grid"><article><span class="small-icon">↔</span><h3>完整生成耗时 / E2E</h3><p>以每条记录公布的起止边界为准。输入编码、去噪、解码和封装是否计入，随结果明确列出；口径不同不计算加速比。</p></article><article><span class="small-icon">◷</span><h3>去噪与生成后处理</h3><p>官方参考分别报告去噪跨度，以及包含视频/音频解码、MP4 封装与同步的后处理跨度。后者不是纯 VAE 时间，各阶段不能直接相加。</p></article><article><span class="small-icon">◎</span><h3>质量与动作</h3><p>对照首末帧、运镜连续性、动作完成、冻结与跳切，以及声音对应的动作节点。相同 seed 不表示不同模型应产生相同画面。</p></article></div>
+      <div id="run-context" class="run-context"><span class="micro">TEST ENVIRONMENT</span><p>实际硬件、软件版本与运行条件将在完成后随记录公布。</p></div>
+    </section>
+  </main>
+
+  <footer class="footer shell"><div><span class="brand-mark">H3<span>↗</span></span><p>一组条件输入，一份可追溯的比较。</p></div><div class="footer-links"><a href="runninghub.html">RunningHub Ref2VA 核验 ↗</a><a href="https://github.com/OpenVDN/vdn-minimax-h3/tree/2f740c9291431d89d4f2330743b093fac4390d09/prompts/image" target="_blank" rel="noopener">官方参考图 ↗</a><a href="https://github.com/OpenVDN/vdn-minimax-h3/blob/2f740c9291431d89d4f2330743b093fac4390d09/prompts/README.md#imageexample_fl2vapt" target="_blank" rel="noopener">官方提示词 ↗</a><a href="assets/OpenVDN-NOTICE.txt">来源声明</a><a href="assets/OpenVDN-LICENSE.txt">Apache 2.0</a></div><p class="footer-fine">参考图与原始样例：OpenVDN / MiniMax H3。此页为独立实验记录，与模型作者无隶属关系。<span id="updated-at"></span></p></footer>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

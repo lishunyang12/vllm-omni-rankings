@@ -1,0 +1,447 @@
+{
+  "schema": "h3-public-official-vdn-v1",
+  "status": "PASS",
+  "method": "vdn8",
+  "scope": "已缓存的文本/首末帧条件读取 → 8 NFE 去噪 → rank 0 原视频/音频解码 → 完整 MP4及末端同步；不含模型加载、暖机或实际文本/图像条件编码，不是完整请求 E2E。各阶段独立取最大 rank 后取中位数，不能相加。",
+  "not_full_request_e2e": true,
+  "formal_samples": 3,
+  "warmup_samples": 1,
+  "aggregation": "median of three per-request maximum-rank spans; stages are not additive",
+  "medians_seconds": {
+    "cached_condition_to_mp4_s": 163.97704759566113,
+    "dit_s": 112.9167960761115,
+    "post_denoise_s": 51.023204690776765,
+    "rank0_post_denoise_s": 51.02318231295794
+  },
+  "selected_media_sample": "measured-01",
+  "selection_rule": "middle sample by cached-condition-to-MP4 span",
+  "video": "videos/vdn8-4f813d9149f68b03.mp4",
+  "samples": [
+    {
+      "name": "warmup-01",
+      "kind": "warmup",
+      "timings_by_rank": [
+        {
+          "rank": 0,
+          "load_condition_cache_seconds": 0.05739865405485034,
+          "denoise_seconds": 126.78945049922913,
+          "post_denoise_to_complete_mp4_seconds": 51.542864616028965,
+          "cached_condition_to_complete_mp4_seconds": 178.38971376931295
+        },
+        {
+          "rank": 1,
+          "load_condition_cache_seconds": 0.05647745402529836,
+          "denoise_seconds": 126.79041363717988,
+          "post_denoise_to_complete_mp4_seconds": 51.54287885595113,
+          "cached_condition_to_complete_mp4_seconds": 178.3897699471563
+        },
+        {
+          "rank": 2,
+          "load_condition_cache_seconds": 0.057546129915863276,
+          "denoise_seconds": 126.78906508814543,
+          "post_denoise_to_complete_mp4_seconds": 51.542838647030294,
+          "cached_condition_to_complete_mp4_seconds": 178.3894498650916
+        },
+        {
+          "rank": 3,
+          "load_condition_cache_seconds": 0.056385606061667204,
+          "denoise_seconds": 126.79047612566501,
+          "post_denoise_to_complete_mp4_seconds": 51.54285122733563,
+          "cached_condition_to_complete_mp4_seconds": 178.3897129590623
+        },
+        {
+          "rank": 4,
+          "load_condition_cache_seconds": 0.057398233097046614,
+          "denoise_seconds": 126.78949994919822,
+          "post_denoise_to_complete_mp4_seconds": 51.54286496574059,
+          "cached_condition_to_complete_mp4_seconds": 178.38976314803585
+        },
+        {
+          "rank": 5,
+          "load_condition_cache_seconds": 0.0558836180716753,
+          "denoise_seconds": 126.7909631151706,
+          "post_denoise_to_complete_mp4_seconds": 51.54288098588586,
+          "cached_condition_to_complete_mp4_seconds": 178.38972771912813
+        },
+        {
+          "rank": 6,
+          "load_condition_cache_seconds": 0.05715645803138614,
+          "denoise_seconds": 126.7897429028526,
+          "post_denoise_to_complete_mp4_seconds": 51.54288013605401,
+          "cached_condition_to_complete_mp4_seconds": 178.389779496938
+        },
+        {
+          "rank": 7,
+          "load_condition_cache_seconds": 0.05645939474925399,
+          "denoise_seconds": 126.79042327729985,
+          "post_denoise_to_complete_mp4_seconds": 51.542889955919236,
+          "cached_condition_to_complete_mp4_seconds": 178.38977262796834
+        }
+      ],
+      "cached_condition_to_mp4_s": 178.389779496938,
+      "dit_s": 126.7909631151706,
+      "post_denoise_s": 51.542889955919236,
+      "rank0_post_denoise_s": 51.542864616028965,
+      "media": {
+        "sha256": "2990323a4b20eb0ddfe8dd65f94163e6194aa09642775c8b402c955bacaf8a4f",
+        "bytes": 9145202,
+        "frames": 362,
+        "width": 1344,
+        "height": 768,
+        "fps": 24,
+        "duration_s": 15.083333,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "audio_channels": 2,
+        "audio_sample_rate": 32000,
+        "audio_duration_s": 15.075,
+        "audio_minus_video_duration_s": -0.008333000000000368
+      }
+    },
+    {
+      "name": "measured-01",
+      "kind": "measured",
+      "timings_by_rank": [
+        {
+          "rank": 0,
+          "load_condition_cache_seconds": 0.03706920659169555,
+          "denoise_seconds": 112.9167960761115,
+          "post_denoise_to_complete_mp4_seconds": 51.02318231295794,
+          "cached_condition_to_complete_mp4_seconds": 163.97704759566113
+        },
+        {
+          "rank": 1,
+          "load_condition_cache_seconds": 0.04398661898449063,
+          "denoise_seconds": 112.90976959699765,
+          "post_denoise_to_complete_mp4_seconds": 51.02319287182763,
+          "cached_condition_to_complete_mp4_seconds": 163.97694908780977
+        },
+        {
+          "rank": 2,
+          "load_condition_cache_seconds": 0.04513958189636469,
+          "denoise_seconds": 112.90863752318546,
+          "post_denoise_to_complete_mp4_seconds": 51.02316224295646,
+          "cached_condition_to_complete_mp4_seconds": 163.9769393480383
+        },
+        {
+          "rank": 3,
+          "load_condition_cache_seconds": 0.04636087501421571,
+          "denoise_seconds": 112.90739893121645,
+          "post_denoise_to_complete_mp4_seconds": 51.02316704299301,
+          "cached_condition_to_complete_mp4_seconds": 163.97692684922367
+        },
+        {
+          "rank": 4,
+          "load_condition_cache_seconds": 0.045740868896245956,
+          "denoise_seconds": 112.9081833329983,
+          "post_denoise_to_complete_mp4_seconds": 51.02303685620427,
+          "cached_condition_to_complete_mp4_seconds": 163.97696105809882
+        },
+        {
+          "rank": 5,
+          "load_condition_cache_seconds": 0.04633451486006379,
+          "denoise_seconds": 112.90742002008483,
+          "post_denoise_to_complete_mp4_seconds": 51.02319048298523,
+          "cached_condition_to_complete_mp4_seconds": 163.97694501793012
+        },
+        {
+          "rank": 6,
+          "load_condition_cache_seconds": 0.045748149044811726,
+          "denoise_seconds": 112.90799011802301,
+          "post_denoise_to_complete_mp4_seconds": 51.02320226235315,
+          "cached_condition_to_complete_mp4_seconds": 163.97694052942097
+        },
+        {
+          "rank": 7,
+          "load_condition_cache_seconds": 0.044566885102540255,
+          "denoise_seconds": 112.90919273113832,
+          "post_denoise_to_complete_mp4_seconds": 51.023204690776765,
+          "cached_condition_to_complete_mp4_seconds": 163.97696430701762
+        }
+      ],
+      "cached_condition_to_mp4_s": 163.97704759566113,
+      "dit_s": 112.9167960761115,
+      "post_denoise_s": 51.023204690776765,
+      "rank0_post_denoise_s": 51.02318231295794,
+      "media": {
+        "sha256": "4f813d9149f68b036a989950d7aa477e76e0576c8f699780d9965eb5d0f4e634",
+        "bytes": 9108263,
+        "frames": 362,
+        "width": 1344,
+        "height": 768,
+        "fps": 24,
+        "duration_s": 15.083333,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "audio_channels": 2,
+        "audio_sample_rate": 32000,
+        "audio_duration_s": 15.075,
+        "audio_minus_video_duration_s": -0.008333000000000368
+      }
+    },
+    {
+      "name": "measured-02",
+      "kind": "measured",
+      "timings_by_rank": [
+        {
+          "rank": 0,
+          "load_condition_cache_seconds": 0.034476255998015404,
+          "denoise_seconds": 112.8701887242496,
+          "post_denoise_to_complete_mp4_seconds": 51.024306091014296,
+          "cached_condition_to_complete_mp4_seconds": 163.9289710712619
+        },
+        {
+          "rank": 1,
+          "load_condition_cache_seconds": 0.04676293535158038,
+          "denoise_seconds": 112.85782207688317,
+          "post_denoise_to_complete_mp4_seconds": 51.024322089739144,
+          "cached_condition_to_complete_mp4_seconds": 163.9289071019739
+        },
+        {
+          "rank": 2,
+          "load_condition_cache_seconds": 0.045712319668382406,
+          "denoise_seconds": 112.85889127198607,
+          "post_denoise_to_complete_mp4_seconds": 51.02429641131312,
+          "cached_condition_to_complete_mp4_seconds": 163.92890000296757
+        },
+        {
+          "rank": 3,
+          "load_condition_cache_seconds": 0.045323718804866076,
+          "denoise_seconds": 112.85926780290902,
+          "post_denoise_to_complete_mp4_seconds": 51.02431223122403,
+          "cached_condition_to_complete_mp4_seconds": 163.9289037529379
+        },
+        {
+          "rank": 4,
+          "load_condition_cache_seconds": 0.044271212071180344,
+          "denoise_seconds": 112.86033344920725,
+          "post_denoise_to_complete_mp4_seconds": 51.024316160939634,
+          "cached_condition_to_complete_mp4_seconds": 163.92892082221806
+        },
+        {
+          "rank": 5,
+          "load_condition_cache_seconds": 0.04556028265506029,
+          "denoise_seconds": 112.85902511933818,
+          "post_denoise_to_complete_mp4_seconds": 51.02433688985184,
+          "cached_condition_to_complete_mp4_seconds": 163.92892229184508
+        },
+        {
+          "rank": 6,
+          "load_condition_cache_seconds": 0.04581432696431875,
+          "denoise_seconds": 112.85877524502575,
+          "post_denoise_to_complete_mp4_seconds": 51.024333589710295,
+          "cached_condition_to_complete_mp4_seconds": 163.92892316170037
+        },
+        {
+          "rank": 7,
+          "load_condition_cache_seconds": 0.044968876987695694,
+          "denoise_seconds": 112.85960501572117,
+          "post_denoise_to_complete_mp4_seconds": 51.02433993993327,
+          "cached_condition_to_complete_mp4_seconds": 163.92891383264214
+        }
+      ],
+      "cached_condition_to_mp4_s": 163.9289710712619,
+      "dit_s": 112.8701887242496,
+      "post_denoise_s": 51.02433993993327,
+      "rank0_post_denoise_s": 51.024306091014296,
+      "media": {
+        "sha256": "abb4b16ac89910978841b087c199605bfc45dafd9f3eb80624977ce0500abaad",
+        "bytes": 9055039,
+        "frames": 362,
+        "width": 1344,
+        "height": 768,
+        "fps": 24,
+        "duration_s": 15.083333,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "audio_channels": 2,
+        "audio_sample_rate": 32000,
+        "audio_duration_s": 15.075,
+        "audio_minus_video_duration_s": -0.008333000000000368
+      }
+    },
+    {
+      "name": "measured-03",
+      "kind": "measured",
+      "timings_by_rank": [
+        {
+          "rank": 0,
+          "load_condition_cache_seconds": 0.035619169007986784,
+          "denoise_seconds": 112.92605058522895,
+          "post_denoise_to_complete_mp4_seconds": 51.01852523814887,
+          "cached_condition_to_complete_mp4_seconds": 163.9801949923858
+        },
+        {
+          "rank": 1,
+          "load_condition_cache_seconds": 0.04611573973670602,
+          "denoise_seconds": 112.91545125609264,
+          "post_denoise_to_complete_mp4_seconds": 51.01855087792501,
+          "cached_condition_to_complete_mp4_seconds": 163.98011787375435
+        },
+        {
+          "rank": 2,
+          "load_condition_cache_seconds": 0.04595021391287446,
+          "denoise_seconds": 112.91561914188787,
+          "post_denoise_to_complete_mp4_seconds": 51.018539648037404,
+          "cached_condition_to_complete_mp4_seconds": 163.98010900383815
+        },
+        {
+          "rank": 3,
+          "load_condition_cache_seconds": 0.04492463730275631,
+          "denoise_seconds": 112.91663694893941,
+          "post_denoise_to_complete_mp4_seconds": 51.01854752795771,
+          "cached_condition_to_complete_mp4_seconds": 163.98010911419988
+        },
+        {
+          "rank": 4,
+          "load_condition_cache_seconds": 0.04474377213045955,
+          "denoise_seconds": 112.91696847090498,
+          "post_denoise_to_complete_mp4_seconds": 51.01841663103551,
+          "cached_condition_to_complete_mp4_seconds": 163.98012887407094
+        },
+        {
+          "rank": 5,
+          "load_condition_cache_seconds": 0.043792443349957466,
+          "denoise_seconds": 112.91779033280909,
+          "post_denoise_to_complete_mp4_seconds": 51.018537858035415,
+          "cached_condition_to_complete_mp4_seconds": 163.98012063419446
+        },
+        {
+          "rank": 6,
+          "load_condition_cache_seconds": 0.0447669611312449,
+          "denoise_seconds": 112.9167867959477,
+          "post_denoise_to_complete_mp4_seconds": 51.018579497002065,
+          "cached_condition_to_complete_mp4_seconds": 163.980133254081
+        },
+        {
+          "rank": 7,
+          "load_condition_cache_seconds": 0.052415426820516586,
+          "denoise_seconds": 112.90914453892037,
+          "post_denoise_to_complete_mp4_seconds": 51.01856229826808,
+          "cached_condition_to_complete_mp4_seconds": 163.98012226400897
+        }
+      ],
+      "cached_condition_to_mp4_s": 163.9801949923858,
+      "dit_s": 112.92605058522895,
+      "post_denoise_s": 51.018579497002065,
+      "rank0_post_denoise_s": 51.01852523814887,
+      "media": {
+        "sha256": "2d65fe7358d31aaa62f86d9a32e90fc6c1d975b69df182990108ce6d9cdf7e34",
+        "bytes": 9159832,
+        "frames": 362,
+        "width": 1344,
+        "height": 768,
+        "fps": 24,
+        "duration_s": 15.083333,
+        "video_codec": "h264",
+        "audio_codec": "aac",
+        "audio_channels": 2,
+        "audio_sample_rate": 32000,
+        "audio_duration_s": 15.075,
+        "audio_minus_video_duration_s": -0.008333000000000368
+      }
+    }
+  ],
+  "hardware": [
+    {
+      "rank": 0,
+      "gpu_model": "NVIDIA Graphics Device",
+      "capability": [
+        12,
+        0
+      ]
+    },
+    {
+      "rank": 1,
+      "gpu_model": "NVIDIA Graphics Device",
+      "capability": [
+        12,
+        0
+      ]
+    },
+    {
+      "rank": 2,
+      "gpu_model": "NVIDIA Graphics Device",
+      "capability": [
+        12,
+        0
+      ]
+    },
+    {
+      "rank": 3,
+      "gpu_model": "NVIDIA Graphics Device",
+      "capability": [
+        12,
+        0
+      ]
+    },
+    {
+      "rank": 4,
+      "gpu_model": "NVIDIA Graphics Device",
+      "capability": [
+        12,
+        0
+      ]
+    },
+    {
+      "rank": 5,
+      "gpu_model": "NVIDIA Graphics Device",
+      "capability": [
+        12,
+        0
+      ]
+    },
+    {
+      "rank": 6,
+      "gpu_model": "NVIDIA Graphics Device",
+      "capability": [
+        12,
+        0
+      ]
+    },
+    {
+      "rank": 7,
+      "gpu_model": "NVIDIA Graphics Device",
+      "capability": [
+        12,
+        0
+      ]
+    }
+  ],
+  "configuration": {
+    "nfe": 8,
+    "precision": "FP8 large linears / BF16 remaining model path",
+    "fp8_linears": 363,
+    "softmax_ranks": 5,
+    "linear_ranks": 3,
+    "softmax_backend": "decomposed",
+    "inference_kernels": true,
+    "seed": 42,
+    "git_commit": "2f740c9291431d89d4f2330743b093fac4390d09",
+    "checkpoint_fingerprint_sha256": "ed41d7d0da21357b45de7ea11275e2300786601d8d64cdb1daed125e2edad8ed"
+  },
+  "inputs": {
+    "fixture_sha256": "8cf8ee8a92539fb029ba032a53ad403d72d79aabb93adfd1f504d936be637650",
+    "prompt_sha256": "4d2152bc9e19dc0f9d9ead7b65bacd3d62014d0996be3d1eda49254b5e12bc23",
+    "prompt_cache_sha256": "c791b9fa659dcd191aa6fb8b4fb87c8c679043014411b7f7d0e36794e1b4d6bc",
+    "initial_noise": {
+      "canonical_override": false,
+      "note": "同 seed；官方 CUDA 与原生 CPU 随机数布局不同，不等于同一初始噪声。"
+    }
+  },
+  "audit": {
+    "outer_completed": true,
+    "timing_valid": true,
+    "source_unchanged": true,
+    "no_foreign_gpu_sample": true,
+    "raw_result_sha256": "0e926560abf63e09fb6e8c3433a888b0909b4324464e8aa6f120b47e450ca46b",
+    "outer_status_sha256": "a7c233628b7558a7e427e6220de5ad6a1c954a5d86d80240768e35d5a1590d78",
+    "source_receipt_sha256": "ae80258c8c0bbf98c2a278b2a704726909c18b29468b226eea4c7c395680592f",
+    "importer_sha256": "8ad2ba67183425161f9c7cb1d8d610eaf7261d29df846bd09c76ec6d85af3d45"
+  },
+  "limitations": [
+    "去噪后跨度包括视频/音频解码、MP4封装和末端同步，并非纯 VAE 时间。",
+    "这是 1344×768、362 帧的首末帧条件生成；与历史 T2VA / FastH3 约 22 秒请求不构成配对实验。",
+    "首末帧、运动和音画同步仍需媒体质量审核；这里的 PASS 仅指运行与产物检查。"
+  ]
+}
