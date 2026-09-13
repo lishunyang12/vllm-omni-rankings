@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="FastH3 MXFP8 与 blockwise FP8 的原始视频同步对比。相同提示词、相同 seed，两组均展示第 1 次正式请求。">
+  <title>FastH3 · FP8 视频对比</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header class="intro">
+      <div class="eyebrow"><span class="dot"></span> FASTH3 / PRECISION STUDY <span class="date">2026.09.14</span></div>
+      <h1>看画面，听差别。</h1>
+      <p class="subtitle">MXFP8 与 blockwise FP8，使用相同提示词和 seed。<br class="mobile-break">并排播放，停在同一时刻检查细节。</p>
+      <div class="chips" aria-label="共同视频规格"><span>茶馆场景 · seed 1101</span><span>15.08 秒 · 含音频</span><span>1280 × 704 · 24 fps</span><span>FastH3 VSA · 4 步</span></div>
+    </header>
+
+    <section class="comparison" aria-label="原始视频对比">
+      <article class="video-card blockwise">
+        <div class="card-heading"><div><span class="label">A / BLOCKWISE</span><h2>Blockwise FP8</h2></div><span class="precision">A1×128 / W128×128</span></div>
+        <div class="video-wrap"><video id="blockwise" controls playsinline preload="metadata" muted aria-label="Blockwise FP8 第 1 次正式请求视频"><source src="videos/blockwise.mp4" type="video/mp4">浏览器不支持视频播放，请使用下方下载链接。</video></div>
+        <div class="card-footer"><div><strong>17.919<span> s</span></strong><span class="metric-label">三次请求平均</span></div><div class="sample">当前视频：正式请求 1<br><b>17.928 s</b></div><a href="videos/blockwise.mp4" download="fasth3-blockwise-request1.mp4" class="download" aria-label="下载 Blockwise FP8 原始 MP4">原始 MP4 <span aria-hidden="true">↗</span></a></div>
+      </article>
+      <article class="video-card mxfp8">
+        <div class="card-heading"><div><span class="label">B / MXFP8</span><h2>MXFP8</h2></div><span class="precision">32 元素 · E8M0 scale</span></div>
+        <div class="video-wrap"><video id="mxfp8" controls playsinline preload="metadata" aria-label="MXFP8 第 1 次正式请求视频"><source src="videos/mxfp8.mp4" type="video/mp4">浏览器不支持视频播放，请使用下方下载链接。</video></div>
+        <div class="card-footer"><div><strong>17.924<span> s</span></strong><span class="metric-label">三次请求平均</span></div><div class="sample">当前视频：正式请求 1<br><b>17.959 s</b></div><a href="videos/mxfp8.mp4" download="fasth3-mxfp8-request1.mp4" class="download" aria-label="下载 MXFP8 原始 MP4">原始 MP4 <span aria-hidden="true">↗</span></a></div>
+      </article>
+    </section>
+
+    <section class="transport" aria-label="同步播放控制">
+      <div class="transport-main">
+        <button id="play-both" type="button" class="primary" disabled><span id="play-icon" aria-hidden="true">▶</span> <span id="play-label">同时播放</span></button>
+        <button id="reset-both" type="button" disabled>↺ 从头播放</button>
+        <button id="sync-both" type="button" disabled>重新对齐</button>
+        <div class="control-select"><label for="audio-source">音频</label><select id="audio-source"><option value="mxfp8">MXFP8</option><option value="blockwise">Blockwise FP8</option><option value="none">静音</option></select></div>
+        <div class="control-select"><label for="playback-speed">速度</label><select id="playback-speed"><option value="1">1×</option><option value="0.5">0.5×</option><option value="0.25">0.25×</option></select></div>
+      </div>
+      <div class="timeline-row"><output id="current-time" for="timeline">00:00.00</output><input id="timeline" type="range" min="0" max="15.083333" step="0.041666667" value="0" disabled aria-label="两个视频的共同时间轴"><span id="duration">00:15.08</span></div>
+      <div class="transport-bottom"><p id="playback-status" role="status" aria-live="polite">正在读取视频信息…</p><span>慢放不改变下载文件 · 可用各播放器控件全屏</span></div>
+    </section>
+
+    <aside class="observation"><span class="observation-mark" aria-hidden="true">≈</span><p><strong>这轮速度基本持平。</strong> 均值相差 5 ms，小于本轮样本波动。此页供人工检查画面和声音，尚未得出质量结论。</p></aside>
+
+    <details class="protocol">
+      <summary><span>评测配置与精度范围</span><span class="summary-hint">同配置 · 第 1 次正式输出</span></summary>
+      <div class="protocol-content">
+        <p>两边均选取第 1 次正式请求的原始 MP4；没有按画面或速度挑选样本，网页未重新编码视频。本次采用历史茶馆提示词（teahouse15s），seed <code>1101</code>。</p>
+        <div class="table-scroll"><table><thead><tr><th scope="col">项目</th><th scope="col">两组共同配置</th></tr></thead><tbody>
+          <tr><th scope="row">模型 / 硬件</th><td>FastH3 VSA/Data-Free · 4 步 · 8 × SM120 · TP 1 / SP 8</td></tr>
+          <tr><th scope="row">视频 / 音频</th><td>请求 1280 × 720，实际 1280 × 704 · 362 帧 / 24 fps · H.264 / AAC 双声道 32 kHz</td></tr>
+          <tr><th scope="row">保留的优化</th><td>精确 AdaLN 预计算缓存；组件常驻，无 offload；完整原生 H3 VAE 与输出流水</td></tr>
+          <tr><th scope="row">Attention / 通信</th><td>CAKE attention（INT8 QK / FP8 PV）；BF16 RDMA 通信</td></tr>
+          <tr><th scope="row">主干量化范围</th><td>200 个 QKV、out、FC1、FC2 投影模块。AdaLN、norm、gate、time embedder、encoder、视频与音频 VAE 保持原精度</td></tr>
+          <tr><th scope="row">量化差别</th><td>Blockwise：A1×128 / W128×128，FP32 scale。MXFP8：A1×32 / W1×32，每 32 元素共享 E8M0 scale。两组均为 A8W8</td></tr>
+          <tr><th scope="row">共同执行条件</th><td>相同投影编译边界；关闭会绕过量化接口的 BF16 V-split；已检查实际量化调用，无 BF16 回退</td></tr>
+          <tr><th scope="row">输出编码</th><td>原始 H.264，CRF 18 / ultrafast / yuv420p；网页直接播放生成文件</td></tr>
+          <tr><th scope="row">计时范围</th><td>客户端发起请求至完整 MP4 写入；每组 1 次预热、3 次正式请求，排除模型加载与预热</td></tr>
+        </tbody></table></div>
+        <div class="timing-grid"><div><h3>Blockwise FP8 · 正式请求</h3><p>17.928 / 17.904 / 17.925 s</p></div><div><h3>MXFP8 · 正式请求</h3><p>17.959 / 17.926 / 17.887 s</p></div></div>
+        <p class="limitation">本轮两组均包含有损数值路径，未运行同配置 BF16 整模对照。媒体格式与调用检查通过不代表感知质量等价。三次连续请求用于快速对比，尚无随机化的独立重复实验。</p>
+      </div>
+    </details>
+    <footer>FastH3 视频对比 · 原始输出 · 2026-09-14</footer>
+    <noscript><p class="no-script">共同播放控制需要 JavaScript。仍可使用上方各播放器的原生控件播放和下载视频。</p></noscript>
+  </main>
+</body>
+</html>

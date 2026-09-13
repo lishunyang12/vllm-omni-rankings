@@ -1,0 +1,54 @@
+{
+  "title": "FastH3 MXFP8 vs blockwise FP8",
+  "selection": "First formal request from both arms; all three formal MP4 hashes match within each arm.",
+  "quality_assessment": "Pending visual and audio review",
+  "configuration": {
+    "gpus": 8,
+    "architecture": "SM120",
+    "model": "FastH3 VSA/Data-Free",
+    "denoiser_evaluations": 4,
+    "prompt": "historical teahouse15s",
+    "seed": 1101,
+    "width": 1280,
+    "height": 704,
+    "frames": 362,
+    "fps": 24,
+    "video_codec": "H264",
+    "video_crf": 18,
+    "video_preset": "ultrafast",
+    "audio_codec": "AAC",
+    "audio_sample_rate": 32000,
+    "audio_channels": 2,
+    "offload": false,
+    "adaln_cache": "exact",
+    "vae": "native full H3 VAE"
+  },
+  "videos": [
+    {
+      "mode": "blockwise",
+      "file": "videos/blockwise.mp4",
+      "bytes": 25526565,
+      "sha256": "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e",
+      "request_seconds": 17.928,
+      "three_request_mean_seconds": 17.919,
+      "three_request_seconds": [
+        17.928,
+        17.904,
+        17.925
+      ]
+    },
+    {
+      "mode": "mxfp8",
+      "file": "videos/mxfp8.mp4",
+      "bytes": 25676695,
+      "sha256": "58c439dc38ef48a5912b406ed42b5d54c5f4884a993b5941c1350cd8e1c5d1fb",
+      "request_seconds": 17.959,
+      "three_request_mean_seconds": 17.924,
+      "three_request_seconds": [
+        17.959,
+        17.926,
+        17.887
+      ]
+    }
+  ]
+}
