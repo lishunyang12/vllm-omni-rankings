@@ -195,12 +195,15 @@
       if (!seeking && performance.now() - lastHardSync > 250) void alignBoth(video.currentTime);
     });
     video.addEventListener("ended", () => { pauseBoth("播放完成 · 可从头播放或拖动时间轴复查"); });
-    video.addEventListener("error", () => {
+    const onMediaError = () => {
       mediaError = true;
       pauseBoth();
       updateControls();
       announce("有视频加载失败，请刷新重试或使用对应的原始 MP4 下载链接。", true);
-    });
+    };
+    video.addEventListener("error", onMediaError);
+    // A failed <source> can leave video.error unset and does not bubble.
+    video.querySelectorAll("source").forEach(source => source.addEventListener("error", onMediaError));
     video.addEventListener("volumechange", () => {
       // Native controls may unmute a track. Keep one audible source at a time.
       if (!video.muted && audioSource.value !== video.id) {
