@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "pdf_pages": 24,
+  "archived_pdf_pages": 71,
+  "pdf_sha256": "ced29f1358de49016badf6cecb999bff64a986a066ba2d6fb5515e270e60f40c",
+  "original_pdf_sha256_unchanged": "a7d1fe30a1fad2688d2f54272250099950944112f4715abe84922e800293fa04",
+  "checked_gain_rows": 14,
+  "all_gains_gt_0_100s": true,
+  "formal_mean_s": 14.9692,
+  "all_five_under_15s": true,
+  "html_local_links_checked": 22,
+  "pdf_public_links_resolved_locally": 6,
+  "source_snapshots_verified": 6,
+  "scope": "Document/artifact checks only. All 24 PDF pages were separately rendered for visual review. No GPU benchmark run."
+}

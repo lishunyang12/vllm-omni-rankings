@@ -1,55 +1,66 @@
-# MiniMax-H3 cumulative optimization report
+# MiniMax-H3 cumulative optimization — revised full-VAE edition
 
-This directory contains the evidence-backed English report for the cumulative
-MiniMax-H3 text-to-video-with-audio latency path from **653.838 seconds** to a
-formal three-run mean of **14.561 seconds**.
+The updated **24-page PDF** follows the restored **27.4937s BF16 VSA baseline**
+through profiling-driven pipelines and selected precision changes to a five-request
+mean of **14.9692s** with the **full H3 VAE and BF16 communication**.
+All five final requests are below 15 seconds.
 
-- [71-page PDF](minimax_h3_653s_to_14s_cumulative_report.pdf)
-- [Web landing page](index.html)
-- [Machine-readable report data](report_data.json)
-- [Artifact checksums](SHA256SUMS.txt)
-- [Moon Teahouse complete-video A/B player](quality/moon-teahouse-seed1101/index.html)
-- [Two-prompt shape/style generalization A/B](quality/two-prompt-generalization/index.html)
-- [Full 362-frame lossy-boundary comparisons](evidence/quality/)
-- [Representative video frames](screenshots/)
-- [Nsight Systems and Nsight Compute summaries](evidence/)
-- [Raw eight-GPU GPC/SYS and NVML frequency data](evidence/nsys/gpu-frequency-20260909T122900Z/)
-- [VSA + 4-step BF16 vs Sage A/B: videos, Nsight, timings, and PR4951 assessment](evidence/sage-ab-20260910/)
+- [Revised PDF — original download path](minimax_h3_653s_to_14s_cumulative_report.pdf)
+- [Web report](index.html)
+- [中文累计优化表与来源](update-20260914/adopted-cumulative.zh.md)
+- [Current measurements, quality and source identities](update-20260914/data.json)
+- [Cumulative chart, SVG](update-20260914/figures/final-cumulative.svg)
+- [Every adopted measured comparison, SVG](update-20260914/figures/adopted-comparisons.svg)
+- [Checksums](SHA256SUMS.txt)
 
-The final samples are `14.576 / 14.555 / 14.551` seconds. The endpoint is an
-HTTP POST through a validated 362-frame, 1280x704, 24 fps H.264 video with
-stereo 32 kHz AAC. The deliverable duration is 15.083333 seconds, so the final
-mean is faster than real time and has 0.439 seconds of margin against the strict
-15-second target.
+The revision explicitly includes gate projection overlap, QK/V preparation,
+QKV producer splitting, four-chunk O return/projection, dependency reordering,
+VAE pairing/batching, allocator changes, RDMA retention, activation quantization
+fusion and the final O producer lookahead. Only adopted additions with measured
+complete-request savings greater than 0.100s are listed as gain rows. Each
+round retains its own control; unpaired precision checkpoints are not assigned
+invented single-factor gains.
 
-## Evidence policy
+## Correction and original archive
 
-Distillation, VSA, FP8/E4M3, and TAEH3 are explicitly treated as lossy or
-approximate boundaries. Each boundary has real MP4 screenshots and full-video
-post-codec PSNR/SSIM evidence. The metrics diagnose trajectory differences;
-they are not presented as a perceptual admission threshold.
+The old **14.561s** result inherited E4M3 QKV transport that subsequently failed
+complete-video human quality review. It is superseded as a recommended endpoint.
+TAEH3 was retired from the selected full-VAE profile, not declared to have failed
+its own quality gate. See the [later quality record](quality/moon-teahouse-seed1101/README.md).
 
-The report distinguishes measured, exact, lossy, implemented-only, and
-rejected work. D7 AAC pre-encoding was implemented but never received a clean
-formal A/B. A final decoder-focused Nsight Systems run was blocked by an
-external GPU workload before model load, so no D7 timing or synthetic final
-timeline is claimed.
+The [original 71-page PDF](archive-20260907/minimax_h3_653s_to_14s_cumulative_report.pdf)
+is archived byte for byte with its original data and generator. The revised PDF
+retains 12 original foundation pages and labels their measurements as historical.
+The original 653.838s and current endpoint use different contracts; no matched
+653.838 / 14.9692 speedup is claimed.
 
-The benchmark used a hash-locked Chinese prompt. The official MiniMax-H3
-prompt-writing guide at commit
-[`d21241f0a4b3acbb34c97dae47fa417b7065e438`](https://github.com/MiniMax-AI/MiniMax-H3/tree/d21241f0a4b3acbb34c97dae47fa417b7065e438/skills/h3-prompt-writing)
-is used to organize the English documentation rendering; that rendering is not
-misrepresented as the executed prompt.
+## Quality and timing scope
 
-## Regeneration
+VAE MXFP8 versus the preceding full-VAE reference: SSIM **0.978920**, PSNR
+**43.041443 dB**, all **362 decoded frames**, codec effects included; identical
+audio PCM. Later scheduling changes preserve six corresponding complete MP4s
+byte for byte (one warmup and five formal requests). This is not a six-prompt
+quality study. FastH3, VSA, Sage/CAKE and MXFP8 remain approximate.
 
-The checked-in PDF and figures are self-contained. Regenerating the contact
-sheets requires the original local benchmark MP4 artifacts at the paths encoded
-in `generate_report.py`.
+Final formal samples: `14.973 / 14.975 / 14.968 / 14.954 / 14.976` seconds.
+Timing spans client POST to complete MP4 saved; loading, warmup and post-run
+validation are excluded. Eight SM120 GPUs, four ConnectX-8 groups, full video
+VAE parallel8, 362 frames, 1280×704, 24 fps, H.264/AAC. Clocks are unlocked;
+cohorts are sequential. No new GPU testing was performed for this revision.
+
+## Regenerate
 
 ```bash
 python scripts/minimax_h3_pro5000_cumulative_report/generate_report.py
 ```
 
-The generator requires `av`, `matplotlib`, `numpy`, `Pillow`, `pypdf`, and
-`reportlab`. It asserts that the resulting PDF contains at least 50 pages.
+The default entrypoint now builds the revised PDF using the checked-in archived
+PDF, evidence and figures. It needs `matplotlib`, `numpy`, `Pillow`, `pypdf`,
+`reportlab`, and system DejaVu Sans fonts. No model, GPU or original video files
+are needed. The preserved frame comparison and original Nsight image are inputs.
+The generator checks page geometry, source-archive identity, required numerical
+content and the greater-than-0.100s selection rule. SVG charts are regenerated.
+
+Source evidence snapshots retain their original relative links and historical
+wording. Their manifest records where they came from; they do not replace the
+revised selection and qualification statements above.

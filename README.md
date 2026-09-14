@@ -16,13 +16,12 @@ download counts.
   adapted Cake PR4951 on 8x SM120:**
   [three-video comparison](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_sage_teahouse_three_way/) ·
   [measurements, videos, and native Nsight traces](scripts/minimax_h3_sage_teahouse_three_way/README.md)
-- **MiniMax-H3 cumulative latency optimization: 653.838 s to 14.561 s on 8x
-  RTX PRO 5000-class SM120:**
-  [71-page English PDF](scripts/minimax_h3_pro5000_cumulative_report/minimax_h3_653s_to_14s_cumulative_report.pdf) ·
+- **MiniMax-H3 revised cumulative optimization: restored 27.4937s BF16 VSA baseline to a full-VAE 14.9692s profile:**
+  [24-page revised PDF](scripts/minimax_h3_pro5000_cumulative_report/minimax_h3_653s_to_14s_cumulative_report.pdf) ·
   [web report](scripts/minimax_h3_pro5000_cumulative_report/index.html) ·
-  [machine-readable data](scripts/minimax_h3_pro5000_cumulative_report/report_data.json) ·
-  [quality and profiler evidence](scripts/minimax_h3_pro5000_cumulative_report/) ·
-  [raw GPU frequency data](scripts/minimax_h3_pro5000_cumulative_report/evidence/nsys/gpu-frequency-20260909T122900Z/)
+  [中文累计优化表](scripts/minimax_h3_pro5000_cumulative_report/update-20260914/adopted-cumulative.zh.md) ·
+  [current measurements and quality](scripts/minimax_h3_pro5000_cumulative_report/update-20260914/data.json).
+  The old E4M3-wire 14.561s recommendation is superseded; the original 653.838s report remains archived with its historical contract.
 - **Native Fused SVDQuant for MiniMax-H3 on NVIDIA B300:**
   [HTML](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_svdquant_b300_results/) ·
   [results](scripts/minimax_h3_svdquant_b300_results/results.json) ·

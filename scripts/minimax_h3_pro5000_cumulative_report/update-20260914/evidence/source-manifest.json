@@ -1,0 +1,32 @@
+[
+  {
+    "file": "historical-cumulative.md",
+    "original_source": "experiments/h3-cumulative-optimization-20260911/README.md",
+    "sha256": "ce02543d3932ed395f2bb169bb83ea0bcc4ad81c5ee8053d27c3ce10c5d94de6"
+  },
+  {
+    "file": "pipeline-profile-breakdown.md",
+    "original_source": "experiments/h3-ulysses-overlap-20260910/optimization-breakdown/README.md",
+    "sha256": "31f8dd43c71e53d5c200bd6ea96b154625b95333e7c1dde7906df35a557ad852"
+  },
+  {
+    "file": "qkv-split-results.md",
+    "original_source": "experiments/h3-ulysses-overlap-20260910/lossless-v10-vsplit/r2-results.md",
+    "sha256": "20eba77798eab52a69eeee0ef4879ae4938f3cca3827bacb1e23b0cd4b06e920"
+  },
+  {
+    "file": "vae-paired-b2-results.md",
+    "original_source": "experiments/h3-ulysses-overlap-20260910/lossless-v26-postrun-audit/SELECTED_RESULTS.md",
+    "sha256": "a59658c875e348a6cdd14b466ed05f9f37f89d2d2debdc4402a6fdbf04802f9f"
+  },
+  {
+    "file": "allocator-results.md",
+    "original_source": "experiments/h3-ulysses-overlap-20260910/lossless-v55-allocator/reports/RESULT_r2.md",
+    "sha256": "4267069cd9dbb0f1748c3022b38e9504d8e8d0566826548ab9e9f837aaa3af75"
+  },
+  {
+    "file": "dit-mxfp8-results.md",
+    "original_source": "experiments/fasth3-mxfp8-vs-blockwise-20260914/reports/comparison.zh.md",
+    "sha256": "8b31a85ab85c1d2aff853f37365997e8a80e1e66e3d4027efb1ecf86a99b1574"
+  }
+]

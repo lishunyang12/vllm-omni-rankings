@@ -606,8 +606,5 @@
     "No final D6 decoder-focused Nsight capture exists.",
     "Nsight category GPU times are summed across ranks/streams and are not wall time.",
     "Quality metrics are diagnostics, not admission thresholds."
-  ],
-  "edition_status": "SUPERSEDED_HISTORICAL",
-  "current_revision": "update-20260914/data.json",
-  "later_quality_correction": "E4M3 QKV transport and its dependent 14.561s endpoint were excluded after complete-video human quality review."
+  ]
 }
