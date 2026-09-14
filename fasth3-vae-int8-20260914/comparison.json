@@ -1,0 +1,52 @@
+{
+  "scope": "current best + online VAE INT8 ConvRot vs current best",
+  "seed": 1101,
+  "frames": 362,
+  "fps": 24,
+  "videos": [
+    {
+      "side": "baseline",
+      "arm": "model-vae-r1",
+      "file": "videos/baseline.mp4",
+      "bytes": 25676695,
+      "sha256": "58c439dc38ef48a5912b406ed42b5d54c5f4884a993b5941c1350cd8e1c5d1fb",
+      "formal_s": [
+        17.451,
+        17.396,
+        17.402,
+        17.413,
+        17.422
+      ],
+      "mean_s": 17.416800000000002,
+      "request_1_s": 17.451
+    },
+    {
+      "side": "candidate",
+      "arm": "model-vae-int8-r2",
+      "file": "videos/candidate.mp4",
+      "bytes": 25668981,
+      "sha256": "7cb441646ea6b45e229a89cd32898dc15717fd6728fd35efed59c0987c71a874",
+      "formal_s": [
+        16.112,
+        16.059,
+        16.078,
+        16.053,
+        16.061
+      ],
+      "mean_s": 16.0726,
+      "request_1_s": 16.112
+    }
+  ],
+  "saved_s": 1.3442000000000007,
+  "reduction_percent": 7.717835652932804,
+  "video_metrics": {
+    "ssim_all": 0.980014,
+    "psnr_average": 43.526532,
+    "frames": 362,
+    "scope": "all decoded MP4 frames; includes codec effects"
+  },
+  "audio_pcm_identical": true,
+  "quantization": "144 VAE decoder linears; online FP32 -> INT8 ConvRot-256 W8A8",
+  "precision_note": "VAE INT8 output is approximate; this is not a lossless change",
+  "limitation": "Separate non-interleaved cohorts; single prompt/seed quality sample; decoded MP4 metrics include codec effects"
+}
