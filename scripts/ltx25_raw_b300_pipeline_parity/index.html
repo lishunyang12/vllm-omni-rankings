@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>LTX-2.5 official parity · B300 BF16 cuDNN</title>
-  <meta name="description" content="Eight paired Official LTX-2.5 and vLLM-Omni videos, native first-second metrics, resident warm E2E latency, and speedup.">
+  <meta name="description" content="Official LTX-2.5 parity, MiniMax-H3, and a 60-video Global-SP versus Stage-2 TDP resolution study on NVIDIA B300.">
   <style>
     :root{color-scheme:dark;--bg:#07090e;--panel:#111722;--panel2:#0c1119;--line:#2a3547;--text:#f5f7fb;--muted:#9eabba;--mint:#69e5b9;--blue:#8aa8ff;--amber:#f4c873}
     *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 8% 0,rgba(80,115,255,.20),transparent 34rem),radial-gradient(circle at 95% 1%,rgba(44,222,168,.13),transparent 30rem),var(--bg);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,sans-serif}
     main{width:min(1600px,calc(100% - 30px));margin:auto;padding:54px 0 80px}header{max-width:1120px}.eyebrow{color:var(--mint);font-weight:800;letter-spacing:.13em;text-transform:uppercase;font-size:.78rem}h1{margin:9px 0 12px;font-size:clamp(2.6rem,6vw,5.7rem);line-height:.96;letter-spacing:-.055em}.lead{max-width:980px;color:var(--muted);font-size:1.08rem}.chips{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 34px}.chip{padding:6px 11px;border:1px solid var(--line);border-radius:999px;background:rgba(17,23,34,.9)}
     .prompt,.method,.pipeline{border:1px solid var(--line);border-radius:20px;background:rgba(17,23,34,.94);padding:21px;margin:20px 0}.prompt blockquote{margin:12px 0 0;border-left:3px solid var(--blue);padding:12px 16px;color:#dce4f2;background:#151e2c;border-radius:0 12px 12px 0}.method-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.method-grid div{padding:13px;border:1px solid var(--line);border-radius:12px;background:var(--panel2)}.method-grid strong{display:block;color:var(--mint)}h2{margin:0;font-size:1.5rem}.meta{color:var(--muted);margin:5px 0 15px}.tasks{display:grid;grid-template-columns:1fr;gap:24px}.task{min-width:0;border-top:1px solid var(--line);padding-top:15px}.task h3{margin:0 0 3px;font-size:1.08rem}.numbers{font-variant-numeric:tabular-nums;color:var(--mint);margin:6px 0}.latency{font-variant-numeric:tabular-nums;color:var(--amber);margin:6px 0 12px}.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px}figure{margin:0;min-width:0;overflow:hidden;border:1px solid var(--line);border-radius:13px;background:#030509}video{display:block;width:100%;aspect-ratio:16/9;object-fit:contain;background:#020305}figcaption{display:flex;justify-content:space-between;gap:8px;padding:9px 10px;color:var(--muted)}a{color:var(--mint)}code{color:var(--blue);overflow-wrap:anywhere}.table-wrap{overflow-x:auto}table{width:100%;min-width:980px;border-collapse:collapse;margin-top:14px;font-variant-numeric:tabular-nums}th,td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}th:not(:first-child),td:not(:first-child){text-align:right}.note{color:var(--muted)}footer{margin-top:28px;color:var(--muted)}
-    @media(max-width:1000px){.method-grid{grid-template-columns:1fr 1fr}}@media(max-width:720px){main{width:calc(100% - 18px);padding-top:30px}.tasks,.method-grid,.pair{grid-template-columns:1fr}.pipeline,.prompt,.method{padding:14px}h1{font-size:3rem}}
+    .study-resolutions{display:grid;gap:22px;margin-top:22px}.study-resolution{border-top:1px solid var(--line);padding-top:17px}.study-resolution h3{margin:0 0 3px}.study-cases{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.study-case video{aspect-ratio:32/9}.study-case figcaption{display:block}.study-case figcaption strong{color:var(--mint)}.study-case figcaption span{display:block;font-variant-numeric:tabular-nums}.study-case figcaption a{float:right}.study-callout{border-left:3px solid var(--amber);padding:11px 14px;background:#171914;color:#dfe3d7;margin:15px 0;border-radius:0 10px 10px 0}
+    @media(max-width:1000px){.method-grid{grid-template-columns:1fr 1fr}.study-cases{grid-template-columns:1fr}}@media(max-width:720px){main{width:calc(100% - 18px);padding-top:30px}.tasks,.method-grid,.pair{grid-template-columns:1fr}.pipeline,.prompt,.method{padding:14px}h1{font-size:3rem}.study-case video{aspect-ratio:16/9}}
   </style>
 </head>
 <body>
@@ -52,6 +53,22 @@
     <div class="table-wrap"><table id="minimax-latency-table"><thead><tr><th>Task</th><th>Warm sample 1</th><th>Warm sample 2</th><th>Warm mean</th><th>Generation / playback</th></tr></thead><tbody></tbody></table></div>
     <div class="pair" id="minimax-videos"></div>
     <p class="note">Each task receives one excluded full 50-step warm-up followed by two timed requests. Timing starts before the loopback <code>POST /v1/videos/sync</code> and stops only after the complete MP4 body is received; startup, model load, warm-up, file writing, and validation are excluded. These clips align the difficult prompt, seed, GPU count, FPS, and approximately five-second playback with the LTX gallery. This is intentionally not an equal-compute or same-backend speedup claim: LTX above uses 1920×1088, 121 frames, and cuDNN; MiniMax-H3 uses 1344×768, 124 frames, and TRTLLM_ATTN.</p>
+  </section>
+  <section class="pipeline" id="ltx25-tdp-resolution-study">
+    <div class="eyebrow">Appendix · LTX-2.5 multi-GPU resolution study × 4 B300</div>
+    <h2>Global structure first · local high-resolution detail second</h2>
+    <p class="meta">The official difficult prompt is rerun for ten seeds at delivery 1920×1080, DCI 2K 2048×1080, and QHD 2K 2560×1440. Every seed is generated once with global Ulysses SP in both stages and once with Stage-2 tiled data parallelism. This is the complete 60-video measured matrix, not a smoke test.</p>
+    <div class="method-grid">
+      <div><strong>Stage 1</strong>4-way Ulysses SP · full-frame global attention</div>
+      <div><strong>Stage 2 · baseline</strong>global SP · matched two-step TDP sigma schedule</div>
+      <div><strong>Stage 2 · TDP</strong>2×2 latent grid · 5-cell overlap · local attention</div>
+      <div><strong>User path</strong>resident <code>vllm serve</code> · sync videos API · complete MP4</div>
+    </div>
+    <p class="study-callout">The two paths deliberately share prompt, seed, Stage 1, internal aligned shape, frame count, FPS, denoise schedule, attention backend, and server process. TDP is approximate local attention, so SSIM/PSNR describe the controlled visual change; they are not bit-parity gates. Global-SP clips at non-64-aligned delivery sizes are cropped only for scoring and presentation.</p>
+    <div class="table-wrap"><table id="tdp-study-table"><thead><tr><th>Delivery resolution</th><th>Internal shape</th><th>Global SP mean</th><th>Stage-2 TDP mean</th><th>Mean speedup</th><th>Full SSIM</th><th>PSNR</th><th>H/V overlap SSIM</th></tr></thead><tbody></tbody></table></div>
+    <p class="note" id="tdp-study-provenance">Loading measured provenance…</p>
+    <div class="study-resolutions" id="tdp-study-gallery"></div>
+    <p class="note">Each resolution/mode pair receives one shape-specific excluded warm-up. Seeds 42–51 are then measured sequentially with alternating Global-SP/TDP order. Latency covers <code>POST /v1/videos/sync</code> through receipt of the complete MP4; startup, warm-up, file writes, decode validation, metrics, and page encoding are excluded. All source clips must decode to exactly 121 frames at 24 FPS before a case is published. Implementation: <a href="https://github.com/vllm-project/vllm-omni/pull/6430">vLLM-Omni Draft PR #6430</a>.</p>
   </section>
   <footer>Official uses pinned raw LTX-2.5 split artifacts and the pinned Lightricks runtime. vLLM-Omni uses the equivalent materialized checkpoint at head <code>f7e2d68364fd</code>. Both sides use BF16 cuDNN attention, the same connector weights, prompt, conditioning, schedules, and RNG seed. Distilled one-stage is the official DistilledPipeline Stage 1 extraction because Lightricks does not publish a standalone Stage 1 CLI.</footer>
 </main>
@@ -112,8 +129,33 @@ function renderMiniMax(data){
   }
   document.querySelector("#minimax-videos").innerHTML=video("minimax-appendix/videos/minimax-h3-t2va-seed-42.mp4","MiniMax-H3 · T2VA · exact timed response")+video("minimax-appendix/videos/minimax-h3-fl2va-seed-42.mp4","MiniMax-H3 · first-frame FL2VA · exact timed response");
 }
+function rangeText(metric,unit=""){
+  return fmt(metric.mean,2)+unit+" · "+fmt(metric.min,2)+"–"+fmt(metric.max,2)+unit;
+}
+function studyVideo(item,label){
+  const latency=item.latency_seconds;
+  return "<figure class=\"study-case\"><video controls playsinline preload=\"none\" poster=\"tdp-resolution-study/"+item.preview+"\"><source src=\"tdp-resolution-study/"+item.video+"\" type=\"video/mp4\"></video><figcaption><a href=\"tdp-resolution-study/"+item.video+"\">open MP4 ↗</a><strong>seed "+item.seed+" · "+label+"</strong><span>Global "+seconds(latency.global_sp)+" · TDP "+seconds(latency.stage2_tdp)+" · "+fmt(latency.speedup_global_over_tdp,2)+"×</span><span>SSIM "+fmt(item.quality.full_frame.ssim_mean,6)+" · PSNR "+fmt(item.quality.full_frame.psnr_mean_db,2)+" dB</span></figcaption></figure>";
+}
+function renderTDPStudy(data){
+  const order=["1080p","dci2k","qhd2k"];
+  const display={"1080p":"1080p · 1920×1080","dci2k":"DCI 2K · 2048×1080","qhd2k":"QHD 2K · 2560×1440"};
+  const tbody=document.querySelector("#tdp-study-table tbody");
+  const gallery=document.querySelector("#tdp-study-gallery");
+  document.querySelector("#tdp-study-provenance").innerHTML="4× NVIDIA B300 SXM6 AC · <code>"+data.provenance.attention_backend+"</code> · vLLM-Omni <code>"+data.provenance.vllm_omni_revision.slice(0,12)+"</code> · torch "+data.provenance.software_versions.torch+" · CUDA "+data.provenance.software_versions.cuda+". Table values are mean across ten measured seeds; latency cells also show min–max.";
+  for(const key of order){
+    const entry=data.resolutions[key];
+    const latency=entry.summary.latency_seconds;
+    const quality=entry.summary.quality;
+    tbody.insertAdjacentHTML("beforeend","<tr><td>"+display[key]+"</td><td>"+entry.internal.width+"×"+entry.internal.height+"</td><td>"+rangeText(latency.global_sp," s")+"</td><td>"+rangeText(latency.stage2_tdp," s")+"</td><td>"+fmt(latency.speedup_global_over_tdp.mean,2)+"×</td><td>"+fmt(quality.full_frame_ssim.mean,6)+"</td><td>"+fmt(quality.full_frame_psnr_db.mean,2)+" dB</td><td>"+fmt(quality.horizontal_overlap_ssim.mean,6)+" / "+fmt(quality.vertical_overlap_ssim.mean,6)+"</td></tr>");
+    const section=document.createElement("div");
+    section.className="study-resolution";
+    section.innerHTML="<h3>"+display[key]+" · ten official-prompt seeds</h3><p class=\"meta\">Internal compute shape "+entry.internal.width+"×"+entry.internal.height+" · Global mean "+seconds(latency.global_sp.mean)+" · TDP mean "+seconds(latency.stage2_tdp.mean)+" · mean speedup "+fmt(latency.speedup_global_over_tdp.mean,2)+"× · full-frame SSIM "+fmt(quality.full_frame_ssim.mean,6)+"</p><div class=\"study-cases\">"+entry.cases.map(item=>studyVideo(item,display[key])).join("")+"</div>";
+    gallery.appendChild(section);
+  }
+}
 Promise.all([load("metrics.json"),load("warm-e2e.json"),load("contract.json")]).then(values=>render(values[0],values[1],values[2])).catch(error=>{document.querySelector("#gallery").innerHTML="<section class=\"pipeline\"><h2>Result data failed to load</h2><p class=\"meta\">"+error.message+"</p></section>"});
 fetch("minimax-appendix/warm-e2e.json",{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("MiniMax appendix: HTTP "+response.status);return response.json()}).then(renderMiniMax).catch(error=>{document.querySelector("#minimax-videos").innerHTML="<p class=\"meta\">MiniMax appendix failed to load: "+error.message+"</p>"});
+fetch("tdp-resolution-study/results.json",{cache:"no-store"}).then(response=>{if(!response.ok)throw new Error("TDP study: HTTP "+response.status);return response.json()}).then(renderTDPStudy).catch(error=>{document.querySelector("#tdp-study-gallery").innerHTML="<p class=\"meta\">TDP resolution study failed to load: "+error.message+"</p>"});
 </script>
 </body>
 </html>
