@@ -1,0 +1,265 @@
+{
+  "status": "PASS",
+  "generated": "2026-09-15T17:17:33.633384+00:00",
+  "prompt": "integrated_multimodal_description: [Shot 1] Cinematic live-action fantasy inside a small wooden teahouse suspended beneath a colossal moon, shown in a symmetrical wide shot through open paper doors. An elderly tea master in an indigo robe, with silver hair pinned high and a warm gravelly Mandarin voice (S1), pours glowing tea into two porcelain cups while a young female radio astronomer in a cream flight suit, with a clear fast Mandarin voice (S2), adjusts a brass receiver beside her. The camera pushes in with small amplitude at slow speed as lunar dust drifts upward instead of falling, and the tea master says: <d>[Chinese] 月亮不是沉默，只是等我们听见。</d> [Shot 2] At 00:03.400, the camera cuts to a macro close-up of the tea surface. Concentric ripples become a precise star map, tiny points of light connect across the cup, and the receiver needle snaps toward a distant signal. The astronomer leans into the eyepiece, her face illuminated by moving constellations, and replies: <d>[Chinese] 信号锁定了。</d> [Shot 3] At 00:06.600, the shot cuts outside to a sweeping arc around the teahouse as the vast moon slowly opens into layered mechanical petals, revealing a luminous blue core. The two women step onto the balcony without changing clothes or positions relative to each other; the tea master raises her cup while the astronomer sends one narrow beam from the receiver into the core. The camera pulls out with large amplitude at slow speed until the teahouse becomes a warm point against the unfolding lunar structure.\noverall_soundscape: Porcelain touches wood with delicate clicks above the soft hiss of boiling water and the papery flutter of the doors. A low receiver hum gains harmonics as the signal locks, followed by distant metal plates shifting across the moon and a soft pressure wave moving through airborne dust.\nnon_diegetic_music: Slow guzheng harmonics over sustained glassy synthesizer tones at 68 BPM. A restrained taiko pulse enters when the lunar petals open, then resolves into one long bowed-cymbal shimmer.",
+  "prompt_sha256": "5abb96b31333eea455c241aa17e61d1eaf75d7e78625c80f17302b34ce11fad3",
+  "prompt_file_sha256": "42f62c2ecb9f90880041d51d3fa38fa6c236945ba80b6a862e080151824a50c2",
+  "seed": 1101,
+  "nfe": 4,
+  "configuration_table": {
+    "DiT": [
+      "BF16",
+      "FP8 E4M3 · W per-tensor / A per-token",
+      "MXFP8 E4M3 · 32 元素块"
+    ],
+    "VSA": [
+      "上游 Triton · sparsity 0.9",
+      "FlashInfer CuTeDSL SM120 · top-k 162",
+      "CAKE / Sage · top-k 162"
+    ],
+    "QKV 传输": [
+      "BF16 · NCCL RDMA",
+      "E4M3 · FlashInfer RDMA",
+      "BF16 · FlashInfer RDMA"
+    ],
+    "视频解码": [
+      "完整 H3 VAE",
+      "TAEH3 FP16 · chunk 5",
+      "完整 H3 VAE · MXFP8 优化"
+    ],
+    "并行": [
+      "TP1 / SP8 + FSDP 权重分片",
+      "TP1 / SP8",
+      "TP1 / SP8"
+    ],
+    "测量": [
+      "1 次预热 + 1 次正式生成",
+      "1 次预热 + 1 次正式生成",
+      "1 次预热 + 1 次正式生成"
+    ]
+  },
+  "limitations": [
+    "三组使用同一完整 prompt、seed 和 4 次 DiT forward。原版为官方完整 VSA Data-Free checkpoint；另两组使用此前发布的 VSA Data-Free LoRA。不同权重形式、实现和精度可能改变生成轨迹。",
+    "三组实际输出均为 1280×704。原版明确请求高度 704，以满足上游 32 倍数检查；另两组保留历史请求高度 720，由原有路径向下对齐到 704。",
+    "三组均请求 362 帧。原版沿用上游 ffmpeg -shortest 封装，实际视频轨为 361 帧（15.042 秒），含音频的 MP4 为 15.075 秒；另两组为 362 帧（15.083 秒）。原始文件直接展示，未补帧；已用相同音轨长度的 CPU 合成输入复现这一个末帧差异。",
+    "原版基于上游 FastVideo 提交 3196835，仅修正输入检查：让 15 秒上限接受 VAE 对齐后的 362 帧。权重、推理算法和 kernel 未修改。使用原生 Triton VSA、关闭 FA4、非 VSA 注意力使用 Torch SDPA，启用 FSDP 权重分片和 all profile 融合。",
+    "原版请求了区域编译，但上游规则会对 Triton VSA 自动关闭 DiT 编译，因此本次 DiT 实际为 eager；VAE 编译正常启用。",
+    "当前最佳沿用既有优化开关，在独立副本中适配本次提示词的输入与 RDMA 输出分块形状；400 次 QK/V 拆分及 400 次输出打包检查均逐字节一致。",
+    "历史组对应指定页面的 FP8/E4M3 + TAEH3 FP16 (real-time stack)。该组的 E4M3 QKV 传输曾在历史主观质量评审中退回，此处保留用于直接比较。",
+    "每个耗时来自本次预热后的单次完整生成。原版边界为 VideoGenerator.generate() 至保存视频完成；vLLM-Omni 边界为本地 HTTP 请求至完整 MP4 返回。",
+    "这里同时涉及运行框架、注意力、传输和 VAE 的变化；这些耗时不用于归因纯 DiT per-tensor → MXFP8 收益。历史 14.561 秒来自另一条 prompt，未套用于本次视频。",
+    "历史组重新生成的全部解码画面与指定页面逐字节一致；解码音频未逐字节复现，波形相关系数 0.999299、SNR 28.53 dB。页面播放本次新生成的视频。"
+  ],
+  "historical_reproduction": {
+    "rows": [
+      {
+        "label": "historical_public",
+        "mp4_sha256": "52e3f008da700b66964908dd624792c5934bb118512435a2551d1110953724f8",
+        "bytes": 23838235,
+        "yuv420p": "SHA256=6a7d3571395bb8f677268fea58b25f81b95a8c11c06feea00298f7ffa03c2ce5",
+        "pcm_s16le": "SHA256=99b08bfd4d77d1d91c8e1b4f10411aa8c2fac2db16f8d4841c7a33eaeba451ce"
+      },
+      {
+        "label": "fresh_reproduction",
+        "mp4_sha256": "c7e783336ce078fae693656a9b951652f670271a24bed838056ce09c3d5c82cd",
+        "bytes": 23839531,
+        "yuv420p": "SHA256=6a7d3571395bb8f677268fea58b25f81b95a8c11c06feea00298f7ffa03c2ce5",
+        "pcm_s16le": "SHA256=e30f0d2ffbe261f3a81a8f45fae8511577a9a61d27726d28df025b1c31b24524"
+      }
+    ],
+    "video_byteexact": true,
+    "audio_byteexact": false,
+    "decoded_audio_metrics": {
+      "sample_frames": 482400,
+      "sample_rate": 32000,
+      "channels": 2,
+      "rmse": 0.005595125545935548,
+      "max_abs": 0.07603535428643227,
+      "snr_db": 28.529939267156056,
+      "correlation": 0.9992987499732836,
+      "bit_exact": false
+    }
+  },
+  "runs": [
+    {
+      "id": "original",
+      "label": "原版 FastH3",
+      "subtitle": "上游 FastVideo · 官方完整 VSA Data-Free",
+      "description": "上游推理实现、原生 Triton VSA、完整 H3 VAE；仅修正 15 秒帧数校验。",
+      "framework": "FastVideo",
+      "filename": "original.mp4",
+      "bytes": 13101703,
+      "sha256": "ba0b07ec5b1127176762fc3eb1ef0b182bfe054e744a4f694f6a18e296a9f018",
+      "e2e_seconds": 46.621,
+      "width": 1280,
+      "height": 704,
+      "frames": 361,
+      "fps": 24,
+      "duration_seconds": 15.075,
+      "full_media_decode": "PASS",
+      "source_unchanged": true,
+      "timing_valid": true,
+      "run_id": "original-r6-9659fe89fa0d7e085fc6e2e9",
+      "path_audit": {
+        "status": "PASS",
+        "upstream_commit": "3196835913ce9e97b23888b32643a1207cc5ee70",
+        "communication": "NCCL NET/IB GDRDMA",
+        "invocation_sha256": "60365c36acdafc7815ff735cc8b8132b7b913943257b027dbc914482f91aebca",
+        "dit_execution": "eager (upstream Triton VSA policy)",
+        "vae_compile": true,
+        "checkpoint_model": "FastVideo/FastVideo-FastH3-4-step-Preview-v1-VSA-DataFree",
+        "checkpoint_revision": "b65818d41939b5085451074fe8ca8b799f8d4921",
+        "checkpoint_files_verified": 16,
+        "input_validation_fix": {
+          "status": "PASS",
+          "upstream_commit": "3196835913ce9e97b23888b32643a1207cc5ee70",
+          "changed_files": [
+            "fastvideo/pipelines/basic/minimax_h3/stages/minimax_h3_input_preparation.py"
+          ],
+          "patch_sha256": "89be5dadfca4ce7b6cc1dd0d7b4096499d20a7fffeea0623f2374fa6018c158a",
+          "tests": {
+            "120": 124,
+            "124": 124,
+            "345": 345,
+            "360": 362,
+            "362": 362,
+            "0": "rejected",
+            "-1": "rejected",
+            "363": "rejected",
+            "379": "rejected",
+            "362.0": "rejected"
+          },
+          "inference_implementation_unchanged": true,
+          "scope": "Input validation upper bound aligned to the existing causal-VAE grid; no change to weights, scheduling, kernels, model arithmetic, or media generation."
+        },
+        "upstream_mux_shortest": {
+          "status": "PASS",
+          "input_video_frames": 362,
+          "fps": 24,
+          "audio_sample_frames": 482400,
+          "audio_sample_rate": 32000,
+          "output_video_frames": 361,
+          "output_video_duration": 15.041667,
+          "scope": "Synthetic CPU reproduction of the unchanged upstream rawvideo + AAC ffmpeg -shortest save route."
+        }
+      },
+      "historical_mp4_byteexact": null
+    },
+    {
+      "id": "historical",
+      "label": "历史实时方案",
+      "subtitle": "FP8/E4M3 + TAEH3 FP16",
+      "description": "复现指定历史方案：per-tensor FP8 权重、per-token 激活、E4M3 传输与 TAEH3 FP16。",
+      "framework": "vLLM-Omni",
+      "filename": "historical.mp4",
+      "bytes": 23839531,
+      "sha256": "c7e783336ce078fae693656a9b951652f670271a24bed838056ce09c3d5c82cd",
+      "e2e_seconds": 14.927,
+      "width": 1280,
+      "height": 704,
+      "frames": 362,
+      "fps": 24,
+      "duration_seconds": 15.083333,
+      "full_media_decode": "PASS",
+      "source_unchanged": true,
+      "timing_valid": true,
+      "run_id": "historical-r1-af0b38614783f1f6c935c29f",
+      "path_audit": {
+        "status": "PASS",
+        "checks": {
+          "flashinfer-rdma-validation.txt": "650af1523d46fb5677b6189d59a64c1ad5540a838fa6f345040c67d738424319",
+          "vsa-validation.txt": "4db07b37e59c37ad5143f3dae4544553a343972efb646030f99f44e1dad34bfc",
+          "mlp-fp8-runtime-validation.txt": "0b4aace1ca1cc4d1198df0619c62e254c5a33204d9b266c86eccb654e43eabe0",
+          "taeh3-runtime-validation.txt": "35bd855871b33f88abc37749ad31137923bfcdf916c635b0409e0d499f7374c2"
+        },
+        "communication": "FlashInfer custom RDMA"
+      },
+      "historical_mp4_byteexact": false
+    },
+    {
+      "id": "current",
+      "label": "当前最佳方案",
+      "subtitle": "DiT MXFP8 + 完整 H3 VAE",
+      "description": "当前优化配置：DiT MXFP8、CAKE/Sage、融合 SwiGLU 与完整 H3 VAE 优化。",
+      "framework": "vLLM-Omni",
+      "filename": "current.mp4",
+      "bytes": 23398818,
+      "sha256": "b4eb88a362c68af80084c1d08ca1cddf4adc73b616e9b3fbd74e2e5e688555a2",
+      "e2e_seconds": 14.973,
+      "width": 1280,
+      "height": 704,
+      "frames": 362,
+      "fps": 24,
+      "duration_seconds": 15.083333,
+      "full_media_decode": "PASS",
+      "source_unchanged": true,
+      "timing_valid": true,
+      "run_id": "current-best-r5-f770741af7f776dca7047f46",
+      "path_audit": {
+        "status": "PASS",
+        "checks": {
+          "flashinfer-rdma-validation.txt": "cbd54f5193fa73233f71ecf2d7b4eb5a58de2b504f8f33b447b9ba9f2b987c98",
+          "vsa-validation.txt": "618d263bba8b5019f2f34e232d48dc021fc60d1d1cfd37e6f9a9ee30854e2872"
+        },
+        "communication": "FlashInfer custom RDMA",
+        "quantization": {
+          "status": "PASS",
+          "mode": "mxfp8",
+          "ranks": 8,
+          "modules_per_rank": 200,
+          "nfe_per_rank": 8,
+          "projection_calls_per_nfe": 350,
+          "projection_calls_per_rank": 2800,
+          "requests": [
+            "warmup-1",
+            "measured-1"
+          ],
+          "fc2_compiled_boundary": "h3_quant_ab::swiglu_fc2",
+          "fused_fc2_modules": 50,
+          "fused_fc2_calls_per_nfe": 50,
+          "fused_fc2_calls_per_rank": 400,
+          "bf16_gate": true,
+          "wire": "bfloat16",
+          "compiled_boundary": "h3_quant_ab::projection",
+          "full_model_quality_claim": false
+        },
+        "split_and_output_validation": {
+          "status": "PASS",
+          "raw_byteexact_gates": 400,
+          "rank_nfe_receipts": 64,
+          "local_input_rows": 11984,
+          "output_raw_byteexact_gates": 400,
+          "output_rank_nfe_receipts": 64
+        },
+        "prompt_geometry": {
+          "status": "PASS",
+          "qwen_tokens": 457,
+          "audio_rows": 1206,
+          "compact_rows": 95823,
+          "prefix_tiles": 27,
+          "padded_rows": 105408,
+          "aligned_rows": 95872,
+          "local_rows": 11984,
+          "logical_blocks": 1647,
+          "kmax": 279,
+          "owner_tile_counts": [
+            207,
+            260,
+            240,
+            279,
+            240,
+            240,
+            260,
+            240
+          ],
+          "chunks": 4,
+          "chunk_rows": 2996,
+          "output_remote_bytes_per_rank": 164326400,
+          "aligned_map_sha256": "30cf8ca6c25fe5425a535f06cb3ceedb3a89434f9906da4707224e75c84ec6ee",
+          "scope": "Independent CPU coordinate construction and unchanged trusted owner-route builder; runtime byte gates still required."
+        }
+      },
+      "historical_mp4_byteexact": null
+    }
+  ]
+}

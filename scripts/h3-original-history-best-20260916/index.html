@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FastH3 · 三个版本，一段月下茶馆</title>
+<style>
+:root{color-scheme:dark;--bg:#111613;--panel:#1b231e;--line:#34423a;--text:#edf3ed;--sub:#acbcb0;--green:#c8e6af;--amber:#e9c993}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Noto Sans",sans-serif}main{max-width:1680px;margin:auto;padding:48px 36px 32px}a{color:var(--green);text-underline-offset:4px}.eyebrow{font:12px/1.4 monospace;letter-spacing:.15em;color:var(--green);text-transform:uppercase}h1{font-size:clamp(30px,4vw,56px);letter-spacing:-.05em;margin:16px 0 8px;font-weight:600;line-height:1.2}.intro{color:var(--sub);max-width:900px;margin:16px 0 24px}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}.chip{border:1px solid var(--line);border-radius:30px;padding:5px 12px;font-size:12px;color:#d3dfd5}.toolbar{display:flex;align-items:center;flex-wrap:wrap;gap:12px;background:var(--panel);border:1px solid var(--line);padding:15px 18px;border-radius:12px;margin:0 0 24px;position:sticky;top:8px;z-index:2;box-shadow:0 8px 24px #0003}button,select{font:inherit;border:1px solid #63746a;border-radius:6px;padding:8px 12px;background:#27392e;color:var(--text);cursor:pointer}button:disabled{opacity:.45;cursor:wait}#play{background:var(--green);color:#162014;border:0;font-weight:650;min-width:100px}label{font-size:13px;color:var(--sub)}#seek{flex:1;min-width:100px;accent-color:var(--green)}#time{font:12px monospace;min-width:110px;color:var(--sub)}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}.card-head{padding:20px 20px 14px;min-height:126px}.number{font:11px monospace;letter-spacing:.12em;color:var(--sub)}h2{font-size:21px;line-height:1.3;margin:8px 0}.subtitle{font-size:12px;color:var(--sub)}video{display:block;width:100%;aspect-ratio:20/11;background:#080b09}.card-body{padding:18px 20px}.stat{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:13px;margin-bottom:12px}.stat strong{font-size:27px;font-weight:550;font-variant-numeric:tabular-nums}.stat span{color:var(--sub);font-size:12px}.details{font-size:13px;color:#c0cec3;margin:0;min-height:66px}.download{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-size:12px}.current{border-color:#7c986d}.current .number{color:var(--green)}.historical .number{color:var(--amber)}.section{margin-top:40px;padding-top:24px;border-top:1px solid var(--line)}h3{font-size:20px;font-weight:550;margin:0 0 16px}.table-wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px;min-width:680px;text-align:left}th,td{padding:13px 16px;border-bottom:1px solid var(--line)}th{color:var(--sub);font-weight:500}td:first-child{color:var(--sub)}.note{font-size:13px;color:var(--sub);max-width:1160px}.note li{margin:7px 0}details{border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin-top:16px}summary{cursor:pointer;font-size:14px;color:#d4e2d7}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:13px/1.7 system-ui;color:var(--sub)}footer{margin-top:32px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;color:var(--sub)}.error{color:#ffd0b5;font-size:14px}button:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--amber);outline-offset:3px}
+@media(max-width:1050px){main{padding:32px 20px}.cards{gap:12px}.card-head,.card-body{padding:16px}.card-head{min-height:140px}h2{font-size:18px}.details{min-height:92px}.download{align-items:flex-start;gap:8px;flex-direction:column}}
+@media(max-width:760px){main{padding:24px 16px}.cards{grid-template-columns:1fr}.card-head{min-height:0}.details{min-height:0}.toolbar{gap:8px;padding:12px;position:static}.toolbar label{font-size:12px}.toolbar select{max-width:190px}#seek{order:5;flex-basis:65%}#time{order:6;min-width:80px}h1{font-size:34px}.download{flex-direction:row}.section{margin-top:28px}}
+</style>
+</head>
+<body><main>
+<div class="eyebrow">FastH3 / Moon Teahouse / Three-way comparison</div>
+<h1>三个版本，同一段月下茶馆。</h1>
+<p class="intro">原版 FastH3、此前的 FP8/E4M3 + TAEH3 实时方案，以及当前最佳优化。使用同一完整提示词与 seed，直接比较画面、动作和声音。</p>
+<div class="chips"><span class="chip">15 秒视频</span><span class="chip">seed 1101</span><span class="chip">4 次 DiT forward</span><span class="chip">VSA Data-Free</span><span class="chip" id="geometry">加载视频信息…</span><span class="chip">8 × RTX PRO 5000</span></div>
+<div class="toolbar" aria-label="同步播放控制">
+<button id="play" disabled>同步播放</button><button id="reset" disabled>回到开头</button>
+<label for="audio">声音</label><select id="audio"><option value="0">原版 FastH3</option><option value="1">历史实时方案</option><option value="2">当前最佳方案</option><option value="none">全部静音</option></select>
+<input id="seek" aria-label="共同播放进度" type="range" min="0" max="15.083333" step="0.01" value="0"><output id="time">0.00 / 15.08 s</output>
+</div>
+<p id="error" role="alert" class="error" hidden></p>
+<div class="cards" id="cards"></div>
+<section class="section"><h3>这三组各自运行了什么</h3><div class="table-wrap"><table><thead><tr><th>配置</th><th>原版 FastH3</th><th>历史实时方案</th><th>当前最佳方案</th></tr></thead><tbody id="config"></tbody></table></div>
+<ul class="note" id="notes"></ul>
+</section>
+<section class="section"><h3>提示词与可核查记录</h3><p class="note">沿用历史页面的完整 Moon Teahouse prompt。三组均重新生成，并检查视频、音频、执行路径与运行期间的源码完整性。</p>
+<details><summary>查看完整提示词</summary><pre id="prompt"></pre></details>
+<details><summary>视频 SHA256</summary><pre id="hashes"></pre></details>
+</section>
+<footer><span id="generated">生成时间待载入</span><span><a href="manifest.json">配置与校验记录</a> · <a href="report.md">对比报告</a> · <a href="https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_pro5000_cumulative_report/quality/moon-teahouse-seed1101/">历史页面</a></span></footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);let videos=[],playing=false;
+const fail=e=>{$('error').hidden=false;$('error').textContent=String(e.message||e);};
+const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function setAudio(){videos.forEach((v,i)=>v.muted=String(i)!==$ ('audio').value)}
+function pause(){videos.forEach(v=>v.pause());playing=false;$('play').textContent='同步播放'}
+function seek(t){videos.forEach(v=>v.currentTime=t);$('seek').value=t;}
+async function boot(){
+ const res=await fetch('manifest.json');if(!res.ok)throw Error('配置载入失败');const m=await res.json();if(m.status!=='PASS'||m.runs.length!==3)throw Error('视频校验未完成');
+ m.runs.forEach((r,i)=>{const card=document.createElement('article');card.className='card '+(['original','historical','current'][i]);card.innerHTML=`<div class="card-head"><div class="number">0${i+1} / ${escape(r.framework)}</div><h2>${escape(r.label)}</h2><div class="subtitle">${escape(r.subtitle)}</div></div><video playsinline preload="auto" aria-label="${escape(r.label)}"></video><div class="card-body"><div class="stat"><strong>${Number(r.e2e_seconds).toFixed(3)}<small> s</small></strong><span>预热后完整生成</span></div><p class="details">${escape(r.description)}</p><div class="download"><a href="videos/${escape(r.filename)}" download>下载完整 MP4 ↗</a><span>${(r.bytes/1048576).toFixed(1)} MiB · ${r.frames} 帧</span></div></div>`;$('cards').append(card);const v=card.querySelector('video');v.src='videos/'+r.filename;v.muted=i!==0;videos.push(v)});
+ $('geometry').textContent=m.runs[0].width+' × '+m.runs[0].height+' · 24 fps';
+ Object.entries(m.configuration_table).forEach(([k,values])=>{const tr=document.createElement('tr');tr.innerHTML=[k,...values].map(x=>`<td>${escape(x)}</td>`).join('');$('config').append(tr)});
+ m.limitations.forEach(t=>{const li=document.createElement('li');li.textContent=t;$('notes').append(li)});
+ $('prompt').textContent=m.prompt;$('hashes').textContent=m.runs.map(r=>r.label+'\n'+r.sha256).join('\n\n');$('generated').textContent='生成于 '+m.generated;
+ await Promise.all(videos.map(v=>new Promise((ok,no)=>{if(v.readyState>=1)return ok();v.addEventListener('loadedmetadata',ok,{once:true});v.addEventListener('error',()=>no(Error('视频载入失败：'+v.src)),{once:true}) })));$('seek').max=Math.min(...videos.map(v=>v.duration));$('play').disabled=false;$('reset').disabled=false;
+ videos.forEach(v=>v.addEventListener('ended',pause));
+}
+$('play').onclick=async()=>{try{if(playing){pause();return}const t=videos[0].currentTime;seek(t>Number($('seek').max)-.05?0:t);setAudio();await Promise.all(videos.map(v=>v.play()));playing=true;$('play').textContent='暂停全部'}catch(e){pause();fail(e)}};
+$('reset').onclick=()=>{pause();seek(0)};$('audio').onchange=setAudio;$('seek').oninput=()=>seek(Number($('seek').value));
+function tick(){if(videos.length){const t=videos[0].currentTime;if(playing){videos.slice(1).forEach(v=>{if(Math.abs(v.currentTime-t)>.12)v.currentTime=t});$('seek').value=t}$('time').textContent=t.toFixed(2)+' / '+Number($('seek').max).toFixed(2)+' s'}requestAnimationFrame(tick)}
+boot().catch(fail);tick();
+</script></body></html>
