@@ -1,0 +1,14 @@
+@font-face {
+  font-family: H3Chinese;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(noto-sans-sc-subset-0.ttf) format('truetype');
+}
+@font-face {
+  font-family: H3Chinese;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(noto-sans-sc-subset-1.ttf) format('truetype');
+}
