@@ -15,23 +15,24 @@
 <body><main>
 <div class="eyebrow">FastH3 / Moon Teahouse / Three-way comparison</div>
 <h1>三个版本，同一段月下茶馆。</h1>
-<p class="intro">原版 FastH3、此前的 FP8/E4M3 + TAEH3 实时方案，以及当前最佳优化。使用同一完整提示词与 seed，直接比较画面、动作和声音。</p>
+<p class="intro">原版 FastH3、此前的 FP8/E4M3 + TAEH3 实时方案，以及当前 VAE 优化方案。使用同一完整提示词与 seed，直接比较画面、动作和声音。</p>
 <div class="chips"><span class="chip">15 秒视频</span><span class="chip">seed 1101</span><span class="chip">4 次 DiT forward</span><span class="chip">VSA Data-Free</span><span class="chip" id="geometry">加载视频信息…</span><span class="chip">8 × RTX PRO 5000</span></div>
 <div class="toolbar" aria-label="同步播放控制">
 <button id="play" disabled>同步播放</button><button id="reset" disabled>回到开头</button>
-<label for="audio">声音</label><select id="audio"><option value="0">原版 FastH3</option><option value="1">历史实时方案</option><option value="2">当前最佳方案</option><option value="none">全部静音</option></select>
+<label for="audio">声音</label><select id="audio"><option value="0">原版 FastH3</option><option value="1">历史实时方案</option><option value="2">当前 VAE 优化方案</option><option value="none">全部静音</option></select>
 <input id="seek" aria-label="共同播放进度" type="range" min="0" max="15.083333" step="0.01" value="0"><output id="time">0.00 / 15.08 s</output>
 </div>
 <p id="error" role="alert" class="error" hidden></p>
 <div class="cards" id="cards"></div>
-<section class="section"><h3>这三组各自运行了什么</h3><div class="table-wrap"><table><thead><tr><th>配置</th><th>原版 FastH3</th><th>历史实时方案</th><th>当前最佳方案</th></tr></thead><tbody id="config"></tbody></table></div>
-<ul class="note" id="notes"></ul>
+<section class="section" id="vae-experiment" hidden><h3>本轮 VAE 精度与通信重叠实验</h3><p class="note" id="vae-decision"></p><div class="table-wrap"><table><thead><tr><th>VAE 精度</th><th>提前分批 gather</th><th>完整生成</th><th>画面比较</th><th>实验视频</th></tr></thead><tbody id="vae-rows"></tbody></table></div><p class="note" id="vae-previous"></p></section>
+<section class="section"><h3>这三组各自运行了什么</h3><div class="table-wrap"><table><thead><tr><th>配置</th><th>原版 FastH3</th><th>历史实时方案</th><th>当前 VAE 优化方案</th></tr></thead><tbody id="config"></tbody></table></div>
+<details><summary>配置与校验说明</summary><ul class="note" id="notes"></ul></details>
 </section>
 <section class="section"><h3>提示词与可核查记录</h3><p class="note">沿用历史页面的完整 Moon Teahouse prompt。三组均重新生成，并检查视频、音频、执行路径与运行期间的源码完整性。</p>
 <details><summary>查看完整提示词</summary><pre id="prompt"></pre></details>
 <details><summary>视频 SHA256</summary><pre id="hashes"></pre></details>
 </section>
-<footer><span id="generated">生成时间待载入</span><span><a href="manifest.json">配置与校验记录</a> · <a href="report.md">对比报告</a> · <a href="https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_pro5000_cumulative_report/quality/moon-teahouse-seed1101/">历史页面</a></span></footer>
+<footer><span id="generated">生成时间待载入</span><span><a href="manifest.json">配置与校验记录</a> · <a href="report.md">对比报告</a> · <a href="vae-audit.json">VAE 审计</a> · <a href="vae-changes.patch">VAE 改动</a> · <a href="https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_pro5000_cumulative_report/quality/moon-teahouse-seed1101/">历史页面</a></span></footer>
 </main>
 <script>
 const $=id=>document.getElementById(id);let videos=[],playing=false;
@@ -46,6 +47,7 @@ async function boot(){
  $('geometry').textContent=m.runs[0].width+' × '+m.runs[0].height+' · 24 fps';
  Object.entries(m.configuration_table).forEach(([k,values])=>{const tr=document.createElement('tr');tr.innerHTML=[k,...values].map(x=>`<td>${escape(x)}</td>`).join('');$('config').append(tr)});
  m.limitations.forEach(t=>{const li=document.createElement('li');li.textContent=t;$('notes').append(li)});
+ if(m.vae_experiment){const e=m.vae_experiment;$('vae-experiment').hidden=false;$('vae-decision').textContent=e.decision;e.runs.forEach(r=>{const tr=document.createElement('tr');const quality=r.baseline_mp4_byteexact?'MP4 逐字节一致':r.quality?.ssim!==undefined?'SSIM '+Number(r.quality.ssim).toFixed(4):'有损量化 · 见报告';tr.innerHTML=`<td>${escape(r.vae_precision)}</td><td>${r.early_gather?'开启':'关闭'}</td><td>${r.e2e_seconds.toFixed(3)} s</td><td>${escape(quality)}</td><td><a href="videos/${escape(r.filename)}" download>下载候选 MP4</a></td>`;$('vae-rows').append(tr)});$('vae-previous').innerHTML=`上一版当前最佳：${e.previous_e2e_seconds.toFixed(3)} s · <a href="videos/previous-current.mp4" download>下载上一版视频</a>。各组为预热后单次正式请求；小幅差值不能单独证明稳定收益。`;}
  $('prompt').textContent=m.prompt;$('hashes').textContent=m.runs.map(r=>r.label+'\n'+r.sha256).join('\n\n');$('generated').textContent='生成于 '+m.generated;
  await Promise.all(videos.map(v=>new Promise((ok,no)=>{if(v.readyState>=1)return ok();v.addEventListener('loadedmetadata',ok,{once:true});v.addEventListener('error',()=>no(Error('视频载入失败：'+v.src)),{once:true}) })));$('seek').max=Math.min(...videos.map(v=>v.duration));$('play').disabled=false;$('reset').disabled=false;
  videos.forEach(v=>v.addEventListener('ended',pause));

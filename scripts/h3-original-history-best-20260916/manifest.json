@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "generated": "2026-09-15T17:17:33.633384+00:00",
+  "generated": "2026-09-15T18:23:52.165828+00:00",
   "prompt": "integrated_multimodal_description: [Shot 1] Cinematic live-action fantasy inside a small wooden teahouse suspended beneath a colossal moon, shown in a symmetrical wide shot through open paper doors. An elderly tea master in an indigo robe, with silver hair pinned high and a warm gravelly Mandarin voice (S1), pours glowing tea into two porcelain cups while a young female radio astronomer in a cream flight suit, with a clear fast Mandarin voice (S2), adjusts a brass receiver beside her. The camera pushes in with small amplitude at slow speed as lunar dust drifts upward instead of falling, and the tea master says: <d>[Chinese] 月亮不是沉默，只是等我们听见。</d> [Shot 2] At 00:03.400, the camera cuts to a macro close-up of the tea surface. Concentric ripples become a precise star map, tiny points of light connect across the cup, and the receiver needle snaps toward a distant signal. The astronomer leans into the eyepiece, her face illuminated by moving constellations, and replies: <d>[Chinese] 信号锁定了。</d> [Shot 3] At 00:06.600, the shot cuts outside to a sweeping arc around the teahouse as the vast moon slowly opens into layered mechanical petals, revealing a luminous blue core. The two women step onto the balcony without changing clothes or positions relative to each other; the tea master raises her cup while the astronomer sends one narrow beam from the receiver into the core. The camera pulls out with large amplitude at slow speed until the teahouse becomes a warm point against the unfolding lunar structure.\noverall_soundscape: Porcelain touches wood with delicate clicks above the soft hiss of boiling water and the papery flutter of the doors. A low receiver hum gains harmonics as the signal locks, followed by distant metal plates shifting across the moon and a soft pressure wave moving through airborne dust.\nnon_diegetic_music: Slow guzheng harmonics over sustained glassy synthesizer tones at 68 BPM. A restrained taiko pulse enters when the lunar petals open, then resolves into one long bowed-cymbal shimmer.",
   "prompt_sha256": "5abb96b31333eea455c241aa17e61d1eaf75d7e78625c80f17302b34ce11fad3",
   "prompt_file_sha256": "42f62c2ecb9f90880041d51d3fa38fa6c236945ba80b6a862e080151824a50c2",
@@ -25,7 +25,7 @@
     "视频解码": [
       "完整 H3 VAE",
       "TAEH3 FP16 · chunk 5",
-      "完整 H3 VAE · MXFP8 优化"
+      "完整 H3 VAE · NVFP4 · 提前 gather"
     ],
     "并行": [
       "TP1 / SP8 + FSDP 权重分片",
@@ -48,7 +48,12 @@
     "历史组对应指定页面的 FP8/E4M3 + TAEH3 FP16 (real-time stack)。该组的 E4M3 QKV 传输曾在历史主观质量评审中退回，此处保留用于直接比较。",
     "每个耗时来自本次预热后的单次完整生成。原版边界为 VideoGenerator.generate() 至保存视频完成；vLLM-Omni 边界为本地 HTTP 请求至完整 MP4 返回。",
     "这里同时涉及运行框架、注意力、传输和 VAE 的变化；这些耗时不用于归因纯 DiT per-tensor → MXFP8 收益。历史 14.561 秒来自另一条 prompt，未套用于本次视频。",
-    "历史组重新生成的全部解码画面与指定页面逐字节一致；解码音频未逐字节复现，波形相关系数 0.999299、SNR 28.53 dB。页面播放本次新生成的视频。"
+    "历史组重新生成的全部解码画面与指定页面逐字节一致；解码音频未逐字节复现，波形相关系数 0.999299、SNR 28.53 dB。页面播放本次新生成的视频。",
+    "本轮只变更视频 VAE。DiT、提示词、seed、音频路径、362 帧和分块拼接数学保持相同；VAE 精度变化属于有损量化，不视为逐字节等价。",
+    "提前 gather 保留 B4/B3 解码顺序和 FP32 通信数据，每轮先传前 4 个 tile，再计算后 3 个 tile；21 次分批 gather 覆盖原来的 11 轮，全部 588 个 tile 不变。VAE 使用现有 NCCL gather；DiT 保持 FlashInfer RDMA。",
+    "本轮完整生成耗时均为 1 次预热后的单次正式 HTTP 请求，不能据此认定小幅差值是稳定收益。独占校验不通过的尝试不纳入表格。",
+    "独立 VAE 测试使用合成 latent、8 卡和原始 FP32 输出，按基线/提前/提前/基线交错计时；GPU 顺序为 0–7，完整模型沿用 0,4,1,5,2,6,3,7。该测试用于调度正确性和机制诊断，不代替完整请求耗时。",
+    "独立 VAE 基线中位数 3.087443 秒，提前 gather 为 3.086844 秒，差约 0.6 毫秒。两种调度的 trace 均有 NCCL SendRecv 与 GEMM 同时执行；profile 中 NCCL kernel 时长包含等待，不能等同于纯传输时间或加速收益。"
   ],
   "historical_reproduction": {
     "rows": [
@@ -78,6 +83,157 @@
       "snr_db": 28.529939267156056,
       "correlation": 0.9992987499732836,
       "bit_exact": false
+    }
+  },
+  "vae_experiment": {
+    "previous_e2e_seconds": 14.973,
+    "previous_video_sha256": "b4eb88a362c68af80084c1d08ca1cddf4adc73b616e9b3fbd74e2e5e688555a2",
+    "selected": "nvfp4-early-r1",
+    "decision": "本轮展示 NVFP4 + 提前 gather 的组合视频：单次完整请求 14.444 秒，较上一版 14.973 秒少 0.529 秒（3.53%）。NVFP4 单独为 14.472 秒，新增提前 gather 只再少 28 毫秒；独立 VAE 交错测试未显示稳定额外收益。NVFP4 是有损量化，全部 362 帧平均 SSIM 为 0.9721、PSNR 为 40.06 dB；音频 PCM 一致。组合视频与 NVFP4 单独版本逐字节一致，上一版 MXFP8 和各候选均保留下载。",
+    "runs": [
+      {
+        "tag": "mxfp8-early-r1",
+        "filename": "mxfp8-early-r1.mp4",
+        "sha256": "b4eb88a362c68af80084c1d08ca1cddf4adc73b616e9b3fbd74e2e5e688555a2",
+        "bytes": 23398818,
+        "e2e_seconds": 14.938,
+        "vae_precision": "MXFP8",
+        "early_gather": true,
+        "baseline_mp4_byteexact": true,
+        "audio_pcm_byteexact": true,
+        "full_media_decode": "PASS",
+        "source_unchanged": true,
+        "timing_valid": true,
+        "run_id": "mxfp8-early-r1-c72f12ea14c294ea71eb57b5",
+        "quality": null
+      },
+      {
+        "tag": "nvfp4-r3",
+        "filename": "nvfp4-r3.mp4",
+        "sha256": "061b79b418dbae623ede09a203f4b0f83fb231f6f7ab381d50cb310ea7865fab",
+        "bytes": 24089498,
+        "e2e_seconds": 14.472,
+        "vae_precision": "NVFP4",
+        "early_gather": false,
+        "baseline_mp4_byteexact": false,
+        "audio_pcm_byteexact": true,
+        "full_media_decode": "PASS",
+        "source_unchanged": true,
+        "timing_valid": true,
+        "run_id": "nvfp4-r3-0c2928b82bca10a842bac42a",
+        "quality": {
+          "status": "PASS",
+          "scope": "Decoded 8-bit YUV frames from final H264 MP4; same DiT/prompt/seed; metrics are not perceptual acceptance",
+          "reference": "previous current best MXFP8 VAE",
+          "frames": 362,
+          "ssim": 0.972081,
+          "ssim_min": 0.962034,
+          "ssim_min_frame": 316,
+          "psnr_db": 40.057057
+        }
+      },
+      {
+        "tag": "nvfp4-early-r1",
+        "filename": "nvfp4-early-r1.mp4",
+        "sha256": "061b79b418dbae623ede09a203f4b0f83fb231f6f7ab381d50cb310ea7865fab",
+        "bytes": 24089498,
+        "e2e_seconds": 14.444,
+        "vae_precision": "NVFP4",
+        "early_gather": true,
+        "baseline_mp4_byteexact": false,
+        "audio_pcm_byteexact": true,
+        "full_media_decode": "PASS",
+        "source_unchanged": true,
+        "timing_valid": true,
+        "run_id": "nvfp4-early-r1-944cc48cb8eec5cd5e04b43b",
+        "quality": {
+          "status": "PASS",
+          "scope": "Decoded 8-bit YUV frames from final H264 MP4; same DiT/prompt/seed; metrics are not perceptual acceptance",
+          "reference": "previous current best MXFP8 VAE",
+          "frames": 362,
+          "ssim": 0.972081,
+          "ssim_min": 0.962034,
+          "ssim_min_frame": 316,
+          "psnr_db": 40.057057
+        }
+      }
+    ],
+    "previous_video": {
+      "filename": "previous-current.mp4",
+      "sha256": "b4eb88a362c68af80084c1d08ca1cddf4adc73b616e9b3fbd74e2e5e688555a2",
+      "bytes": 23398818
+    },
+    "independent_vae_check": {
+      "status": "PASS",
+      "scope": "VAE-only synthetic latent, original FP32 pixel equality, rank-zero diagnostic trace; separate from full video E2E",
+      "raw_fp32_byteexact_all_ranks": true,
+      "timing": {
+        "baseline": {
+          "samples_seconds": [
+            3.0888195037841797,
+            3.0860660150647163
+          ],
+          "median_seconds": 3.087442759424448
+        },
+        "early": {
+          "samples_seconds": [
+            3.0869020465761423,
+            3.0867851292714477
+          ],
+          "median_seconds": 3.086843587923795
+        }
+      },
+      "traces": {
+        "baseline": {
+          "gather_kernels": 11,
+          "gemm_kernels": 4995,
+          "gather_gpu_ms": 241.95046484375,
+          "gather_overlapping_gemm_ms": 134.183919921875,
+          "gather_overlapping_compute_ms": 228.4510595703125,
+          "gather_streams": [
+            20
+          ],
+          "gemm_streams": [
+            7
+          ],
+          "sample_gather_kernel": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<4096ul>)",
+          "sample_gemm_kernel": "void cutlass::Kernel2<cutlass_80_wmma_tensorop_f16_s161616gemm_f16_32x32_64x1_nn_align8>(cutlass_80_wmma_tensorop_f16_s161616gemm_f16_32x32_64x1_nn_align8::Params)"
+        },
+        "early": {
+          "gather_kernels": 21,
+          "gemm_kernels": 4995,
+          "gather_gpu_ms": 1935.6035107421876,
+          "gather_overlapping_gemm_ms": 1090.1461611328125,
+          "gather_overlapping_compute_ms": 1777.62193359375,
+          "gather_streams": [
+            20
+          ],
+          "gemm_streams": [
+            7
+          ],
+          "sample_gather_kernel": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<4096ul>)",
+          "sample_gemm_kernel": "void cutlass::Kernel2<cutlass_80_wmma_tensorop_f16_s161616gemm_f16_32x32_64x1_nn_align8>(cutlass_80_wmma_tensorop_f16_s161616gemm_f16_32x32_64x1_nn_align8::Params)"
+        }
+      }
+    },
+    "source_delta": {
+      "status": "PASS",
+      "changed_files": [
+        "vllm_omni/diffusion/models/minimax_h3/online_nvfp4.py",
+        "vllm_omni/diffusion/models/minimax_h3/paired_vae.py",
+        "vllm_omni/diffusion/models/minimax_h3/vae.py"
+      ],
+      "dit_source_unchanged": true,
+      "old_hashes": {
+        "vllm_omni/diffusion/models/minimax_h3/online_nvfp4.py": null,
+        "vllm_omni/diffusion/models/minimax_h3/paired_vae.py": "49d9ed1c32866d0495181fead32bba22e31fc57398e7799683dbcd025fdd8129",
+        "vllm_omni/diffusion/models/minimax_h3/vae.py": "f40e765b6f751db62d52b031307e004a9be73dc792e9ade102214637f1689e5a"
+      },
+      "new_hashes": {
+        "vllm_omni/diffusion/models/minimax_h3/online_nvfp4.py": "13b1d61a6ba99a987fbbfd82d68ac639cb1d2a755a39db8187046bb5c4d42462",
+        "vllm_omni/diffusion/models/minimax_h3/paired_vae.py": "5fd6f57e4028ccc4e3f4b72c475886e6ad25fcfad7077043111ebc90e5806816",
+        "vllm_omni/diffusion/models/minimax_h3/vae.py": "cc2c18ef8502ee0e051777f56b9de1713ace587609713cb024b30b4c7f067648"
+      }
     }
   },
   "runs": [
@@ -178,14 +334,14 @@
     },
     {
       "id": "current",
-      "label": "当前最佳方案",
-      "subtitle": "DiT MXFP8 + 完整 H3 VAE",
-      "description": "当前优化配置：DiT MXFP8、CAKE/Sage、融合 SwiGLU 与完整 H3 VAE 优化。",
+      "label": "当前 VAE 优化方案",
+      "subtitle": "DiT MXFP8 + H3 VAE NVFP4",
+      "description": "完整 H3 VAE NVFP4；有损量化。B4/B3 分批传输与解码重叠。",
       "framework": "vLLM-Omni",
       "filename": "current.mp4",
-      "bytes": 23398818,
-      "sha256": "b4eb88a362c68af80084c1d08ca1cddf4adc73b616e9b3fbd74e2e5e688555a2",
-      "e2e_seconds": 14.973,
+      "bytes": 24089498,
+      "sha256": "061b79b418dbae623ede09a203f4b0f83fb231f6f7ab381d50cb310ea7865fab",
+      "e2e_seconds": 14.444,
       "width": 1280,
       "height": 704,
       "frames": 362,
@@ -194,7 +350,7 @@
       "full_media_decode": "PASS",
       "source_unchanged": true,
       "timing_valid": true,
-      "run_id": "current-best-r5-f770741af7f776dca7047f46",
+      "run_id": "nvfp4-early-r1-944cc48cb8eec5cd5e04b43b",
       "path_audit": {
         "status": "PASS",
         "checks": {
@@ -257,6 +413,17 @@
           "output_remote_bytes_per_rank": 164326400,
           "aligned_map_sha256": "30cf8ca6c25fe5425a535f06cb3ceedb3a89434f9906da4707224e75c84ec6ee",
           "scope": "Independent CPU coordinate construction and unchanged trusted owner-route builder; runtime byte gates still required."
+        },
+        "vae_experiment": {
+          "precision": "NVFP4",
+          "early_gather": true,
+          "modules_per_rank": 144,
+          "ranks": 8,
+          "dit_raw_byteexact_gates": 800,
+          "media_byteexact_to_previous": false,
+          "audio_pcm_byteexact": true,
+          "source_unchanged": true,
+          "timing_valid": true
         }
       },
       "historical_mp4_byteexact": null

@@ -1,0 +1,226 @@
+{
+  "status": "PASS",
+  "source_delta": {
+    "status": "PASS",
+    "changed_files": [
+      "vllm_omni/diffusion/models/minimax_h3/online_nvfp4.py",
+      "vllm_omni/diffusion/models/minimax_h3/paired_vae.py",
+      "vllm_omni/diffusion/models/minimax_h3/vae.py"
+    ],
+    "dit_source_unchanged": true,
+    "old_hashes": {
+      "vllm_omni/diffusion/models/minimax_h3/online_nvfp4.py": null,
+      "vllm_omni/diffusion/models/minimax_h3/paired_vae.py": "49d9ed1c32866d0495181fead32bba22e31fc57398e7799683dbcd025fdd8129",
+      "vllm_omni/diffusion/models/minimax_h3/vae.py": "f40e765b6f751db62d52b031307e004a9be73dc792e9ade102214637f1689e5a"
+    },
+    "new_hashes": {
+      "vllm_omni/diffusion/models/minimax_h3/online_nvfp4.py": "13b1d61a6ba99a987fbbfd82d68ac639cb1d2a755a39db8187046bb5c4d42462",
+      "vllm_omni/diffusion/models/minimax_h3/paired_vae.py": "5fd6f57e4028ccc4e3f4b72c475886e6ad25fcfad7077043111ebc90e5806816",
+      "vllm_omni/diffusion/models/minimax_h3/vae.py": "cc2c18ef8502ee0e051777f56b9de1713ace587609713cb024b30b4c7f067648"
+    }
+  },
+  "probe": {
+    "status": "PASS",
+    "scope": "Real H3 first-block weights at B1/B3/B4 geometry; includes quantization cost.",
+    "rows": [
+      {
+        "layer": "attn.to_qkv",
+        "batch": 1,
+        "median_ms": {
+          "mxfp8": 0.1474496006965637,
+          "nvfp4": 0.12046079635620117
+        },
+        "rrms_to_fp16": {
+          "mxfp8": 0.037367500364780426,
+          "nvfp4": 0.13615752756595612
+        },
+        "dequantized_dense_rrms": 1.9662495105876587e-05
+      },
+      {
+        "layer": "attn.to_qkv",
+        "batch": 3,
+        "median_ms": {
+          "mxfp8": 0.36737918853759766,
+          "nvfp4": 0.2593791961669922
+        },
+        "rrms_to_fp16": {
+          "mxfp8": 0.03727932646870613,
+          "nvfp4": 0.13655804097652435
+        },
+        "dequantized_dense_rrms": 2.005184614972677e-05
+      },
+      {
+        "layer": "attn.to_qkv",
+        "batch": 4,
+        "median_ms": {
+          "mxfp8": 0.47800321578979493,
+          "nvfp4": 0.3377984046936035
+        },
+        "rrms_to_fp16": {
+          "mxfp8": 0.03722669184207916,
+          "nvfp4": 0.1364995390176773
+        },
+        "dequantized_dense_rrms": 1.9806417185463943e-05
+      },
+      {
+        "layer": "attn.to_out",
+        "batch": 1,
+        "median_ms": {
+          "mxfp8": 0.07793279886245727,
+          "nvfp4": 0.09704319834709167
+        },
+        "rrms_to_fp16": {
+          "mxfp8": 0.03749619424343109,
+          "nvfp4": 0.13585500419139862
+        },
+        "dequantized_dense_rrms": 1.9988452550023794e-05
+      },
+      {
+        "layer": "ff.w1",
+        "batch": 1,
+        "median_ms": {
+          "mxfp8": 0.33498239517211914,
+          "nvfp4": 0.22298879623413087
+        },
+        "rrms_to_fp16": {
+          "mxfp8": 0.03743687644600868,
+          "nvfp4": 0.13513940572738647
+        },
+        "dequantized_dense_rrms": 1.9927545508835465e-05
+      },
+      {
+        "layer": "ff.w1",
+        "batch": 3,
+        "median_ms": {
+          "mxfp8": 0.890278434753418,
+          "nvfp4": 0.5414720058441163
+        },
+        "rrms_to_fp16": {
+          "mxfp8": 0.03756655007600784,
+          "nvfp4": 0.13508674502372742
+        },
+        "dequantized_dense_rrms": 1.9655471987789497e-05
+      },
+      {
+        "layer": "ff.w1",
+        "batch": 4,
+        "median_ms": {
+          "mxfp8": 1.1783807754516602,
+          "nvfp4": 0.7079743862152099
+        },
+        "rrms_to_fp16": {
+          "mxfp8": 0.037578802555799484,
+          "nvfp4": 0.13512378931045532
+        },
+        "dequantized_dense_rrms": 1.997151593968738e-05
+      },
+      {
+        "layer": "ff.w2",
+        "batch": 1,
+        "median_ms": {
+          "mxfp8": 0.23772799968719482,
+          "nvfp4": 0.18377599716186524
+        },
+        "rrms_to_fp16": {
+          "mxfp8": 0.03728125989437103,
+          "nvfp4": 0.13421805202960968
+        },
+        "dequantized_dense_rrms": 2.7817806767416187e-05
+      },
+      {
+        "layer": "ff.w2",
+        "batch": 3,
+        "median_ms": {
+          "mxfp8": 0.5624896049499511,
+          "nvfp4": 0.5677120208740234
+        },
+        "rrms_to_fp16": {
+          "mxfp8": 0.03725568577647209,
+          "nvfp4": 0.13411357998847961
+        },
+        "dequantized_dense_rrms": 2.824337570928037e-05
+      },
+      {
+        "layer": "ff.w2",
+        "batch": 4,
+        "median_ms": {
+          "mxfp8": 0.7261504173278809,
+          "nvfp4": 0.7528063774108886
+        },
+        "rrms_to_fp16": {
+          "mxfp8": 0.03724874183535576,
+          "nvfp4": 0.13416241109371185
+        },
+        "dequantized_dense_rrms": 2.8419432055670768e-05
+      }
+    ]
+  },
+  "scheduling": {
+    "status": "PASS",
+    "scope": "VAE-only synthetic latent, original FP32 pixel equality, rank-zero diagnostic trace; separate from full video E2E",
+    "raw_fp32_byteexact_all_ranks": true,
+    "timing": {
+      "baseline": {
+        "samples_seconds": [
+          3.0888195037841797,
+          3.0860660150647163
+        ],
+        "median_seconds": 3.087442759424448
+      },
+      "early": {
+        "samples_seconds": [
+          3.0869020465761423,
+          3.0867851292714477
+        ],
+        "median_seconds": 3.086843587923795
+      }
+    },
+    "traces": {
+      "baseline": {
+        "gather_kernels": 11,
+        "gemm_kernels": 4995,
+        "gather_gpu_ms": 241.95046484375,
+        "gather_overlapping_gemm_ms": 134.183919921875,
+        "gather_overlapping_compute_ms": 228.4510595703125,
+        "gather_streams": [
+          20
+        ],
+        "gemm_streams": [
+          7
+        ],
+        "sample_gather_kernel": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<4096ul>)",
+        "sample_gemm_kernel": "void cutlass::Kernel2<cutlass_80_wmma_tensorop_f16_s161616gemm_f16_32x32_64x1_nn_align8>(cutlass_80_wmma_tensorop_f16_s161616gemm_f16_32x32_64x1_nn_align8::Params)"
+      },
+      "early": {
+        "gather_kernels": 21,
+        "gemm_kernels": 4995,
+        "gather_gpu_ms": 1935.6035107421876,
+        "gather_overlapping_gemm_ms": 1090.1461611328125,
+        "gather_overlapping_compute_ms": 1777.62193359375,
+        "gather_streams": [
+          20
+        ],
+        "gemm_streams": [
+          7
+        ],
+        "sample_gather_kernel": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<4096ul>)",
+        "sample_gemm_kernel": "void cutlass::Kernel2<cutlass_80_wmma_tensorop_f16_s161616gemm_f16_32x32_64x1_nn_align8>(cutlass_80_wmma_tensorop_f16_s161616gemm_f16_32x32_64x1_nn_align8::Params)"
+      }
+    }
+  },
+  "visual_review": {
+    "candidate_sha256": "061b79b418dbae623ede09a203f4b0f83fb231f6f7ab381d50cb310ea7865fab",
+    "reference_sha256": "b4eb88a362c68af80084c1d08ca1cddf4adc73b616e9b3fbd74e2e5e688555a2",
+    "inspected_timestamps_seconds": [
+      2,
+      7.5,
+      12.5
+    ],
+    "observations": "查看人脸、手部、室内中景和远景屋顶：未见明显结构异常，细节存在量化差异。此项为三个时间点的静帧检查，不是全视频主观无损保证。",
+    "metrics": {
+      "ssim": 0.972081,
+      "psnr_db": 40.057057,
+      "frames": 362
+    }
+  }
+}
