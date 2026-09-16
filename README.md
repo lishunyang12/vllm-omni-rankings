@@ -8,6 +8,9 @@ download counts.
 
 ## Research reports
 
+- **H3 narrated cartoon: complete 15-second request Nsight trace (2026-09-17):**
+  [native trace and capture notes](scripts/h3-cartoon-full15s-nsys-20260917/README.md).
+  Eight ranks, all four DiT forwards, full video/audio VAE and MP4 completion; the profiled request took 28.399s.
 - **MiniMax-H3 Ulysses communication overlap and blockwise FP8 on 8x SM120:**
   [four-way comparison](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_ulysses_blockwise_ab/) ·
   [lossless BF16 gate overlap](https://lishunyang12.github.io/vllm-omni-rankings/scripts/minimax_h3_ulysses_blockwise_ab/lossless/) ·
