@@ -67,3 +67,7 @@ Stdlib only, no dependencies.
 - Some entries are the upstream base weights an integration builds on, not omni-specific checkpoints.
 - Gated repos (HTTP 401) appear with a `gated` badge and no counts; add an `HF_TOKEN`
   secret and authenticate the API call to fill them in.
+
+## H3 full-request hardware metrics (2026-09-17)
+
+[Eight-GPU hardware metrics, PCIe read/write, and full 15-second-request Nsight trace](scripts/h3-cartoon-full15s-gpumetrics-20260917/).

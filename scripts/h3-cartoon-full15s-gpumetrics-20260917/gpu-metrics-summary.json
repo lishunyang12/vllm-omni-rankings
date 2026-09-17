@@ -1,0 +1,188 @@
+{
+  "nominal_sampling_hz": 1000,
+  "window": "first CUDA kernel start to last CUDA kernel end",
+  "window_seconds": 13.843226604,
+  "summary": "Arithmetic sample means and percentiles",
+  "plot_bin_seconds": 0.1,
+  "clock_conversion": "(SQLite raw signed value & 0xffffffff) / 1e6 MHz",
+  "other_gpu_process_present_during_capture": true,
+  "other_process_physical_gpu": 3,
+  "per_gpu": [
+    {
+      "physical_gpu": 0,
+      "rank": 0,
+      "sm_active_percent": {
+        "samples": 13803,
+        "mean": 87.67702673331884,
+        "median": 100.0,
+        "p10": 51.0,
+        "p90": 100.0,
+        "min": 0.0,
+        "max": 100.0
+      },
+      "gpc_clock_mhz": {
+        "samples": 13803,
+        "mean": 2233.870576370934,
+        "median": 2238.9906,
+        "p10": 1965.51132,
+        "p90": 2549.33794,
+        "min": 1850.2086,
+        "max": 2590.6033
+      }
+    },
+    {
+      "physical_gpu": 1,
+      "rank": 2,
+      "sm_active_percent": {
+        "samples": 13809,
+        "mean": 86.74755594177711,
+        "median": 100.0,
+        "p10": 48.0,
+        "p90": 100.0,
+        "min": 0.0,
+        "max": 100.0
+      },
+      "gpc_clock_mhz": {
+        "samples": 13809,
+        "mean": 2214.172423842639,
+        "median": 2205.7906,
+        "p10": 1952.62202,
+        "p90": 2543.4025,
+        "min": 1848.195,
+        "max": 2592.5559
+      }
+    },
+    {
+      "physical_gpu": 2,
+      "rank": 4,
+      "sm_active_percent": {
+        "samples": 13809,
+        "mean": 87.77934680280975,
+        "median": 100.0,
+        "p10": 51.0,
+        "p90": 100.0,
+        "min": 0.0,
+        "max": 100.0
+      },
+      "gpc_clock_mhz": {
+        "samples": 13809,
+        "mean": 2177.7847895012674,
+        "median": 2147.1519,
+        "p10": 1928.2935,
+        "p90": 2528.63292,
+        "min": 1814.1934,
+        "max": 2568.0044
+      }
+    },
+    {
+      "physical_gpu": 3,
+      "rank": 6,
+      "sm_active_percent": {
+        "samples": 13813,
+        "mean": 87.77687685513646,
+        "median": 100.0,
+        "p10": 52.0,
+        "p90": 100.0,
+        "min": 0.0,
+        "max": 100.0
+      },
+      "gpc_clock_mhz": {
+        "samples": 13813,
+        "mean": 2181.466198778542,
+        "median": 2135.2937,
+        "p10": 1931.6682799999999,
+        "p90": 2556.92554,
+        "min": 1818.1169,
+        "max": 2598.7367
+      }
+    },
+    {
+      "physical_gpu": 4,
+      "rank": 1,
+      "sm_active_percent": {
+        "samples": 13807,
+        "mean": 85.1121170420801,
+        "median": 99.0,
+        "p10": 41.0,
+        "p90": 100.0,
+        "min": 0.0,
+        "max": 100.0
+      },
+      "gpc_clock_mhz": {
+        "samples": 13807,
+        "mean": 2267.8809797543277,
+        "median": 2266.5825,
+        "p10": 2007.68274,
+        "p90": 2584.52446,
+        "min": 1901.1698,
+        "max": 2617.2993
+      }
+    },
+    {
+      "physical_gpu": 5,
+      "rank": 3,
+      "sm_active_percent": {
+        "samples": 13814,
+        "mean": 86.27718256840886,
+        "median": 100.0,
+        "p10": 46.0,
+        "p90": 100.0,
+        "min": 0.0,
+        "max": 100.0
+      },
+      "gpc_clock_mhz": {
+        "samples": 13814,
+        "mean": 2232.952275845736,
+        "median": 2219.84805,
+        "p10": 1973.72292,
+        "p90": 2575.2898400000004,
+        "min": 1863.2426,
+        "max": 2614.1513
+      }
+    },
+    {
+      "physical_gpu": 6,
+      "rank": 5,
+      "sm_active_percent": {
+        "samples": 13806,
+        "mean": 86.1870925684485,
+        "median": 100.0,
+        "p10": 47.0,
+        "p90": 100.0,
+        "min": 0.0,
+        "max": 100.0
+      },
+      "gpc_clock_mhz": {
+        "samples": 13806,
+        "mean": 2226.7945993715052,
+        "median": 2223.6691499999997,
+        "p10": 1966.53755,
+        "p90": 2561.02495,
+        "min": 1856.9752,
+        "max": 2595.3982
+      }
+    },
+    {
+      "physical_gpu": 7,
+      "rank": 7,
+      "sm_active_percent": {
+        "samples": 13813,
+        "mean": 87.50307681169913,
+        "median": 100.0,
+        "p10": 51.0,
+        "p90": 100.0,
+        "min": 0.0,
+        "max": 100.0
+      },
+      "gpc_clock_mhz": {
+        "samples": 13813,
+        "mean": 2184.863759281112,
+        "median": 2155.1857,
+        "p10": 1936.59064,
+        "p90": 2534.42194,
+        "min": 1824.1123,
+        "max": 2574.6888
+      }
+    }
+  ]
+}
