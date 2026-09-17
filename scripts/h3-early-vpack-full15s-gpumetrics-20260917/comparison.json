@@ -1,0 +1,305 @@
+{
+  "off": {
+    "qkv_interval_us": {
+      "q": {
+        "count": 1600,
+        "median": 3170.0575,
+        "p10": 3167.437,
+        "p90": 3172.984,
+        "minimum": 3164.402,
+        "maximum": 4261.374
+      },
+      "k": {
+        "count": 1600,
+        "median": 3390.1075,
+        "p10": 3166.546,
+        "p90": 3785.147,
+        "minimum": 3162.577,
+        "maximum": 3929.692
+      },
+      "v": {
+        "count": 1600,
+        "median": 3229.3050000000003,
+        "p10": 3221.257,
+        "p90": 3238.994,
+        "minimum": 3165.705,
+        "maximum": 3788.199
+      }
+    },
+    "v_pack": {
+      "closing_end_to_pack_start_us": {
+        "count": 1600,
+        "median": 177.1845,
+        "p10": 172.129,
+        "p90": 188.705,
+        "minimum": 166.593,
+        "maximum": 458.435
+      },
+      "closing_end_to_fine_start_us": {
+        "count": 1600,
+        "median": 1587.9450000000002,
+        "p10": 1580.492,
+        "p90": 1601.739,
+        "minimum": 1485.739,
+        "maximum": 1973.382
+      },
+      "pack_end_to_fine_start_us": {
+        "count": 1600,
+        "median": 1103.4615,
+        "p10": 1098.6,
+        "p90": 1109.826,
+        "minimum": 1001.159,
+        "maximum": 1493.22
+      },
+      "closing_end_to_host_return_us": {
+        "count": 1600,
+        "median": 9.312000000000001,
+        "p10": 5.195,
+        "p90": 11.822,
+        "minimum": 3.223,
+        "maximum": 17.428
+      },
+      "host_return_to_pack_api_us": {
+        "count": 1600,
+        "median": 159.902,
+        "p10": 156.597,
+        "p90": 171.287,
+        "minimum": 152.607,
+        "maximum": 442.982
+      },
+      "pack_api_to_gpu_us": {
+        "count": 1600,
+        "median": 8.0155,
+        "p10": 7.334,
+        "p90": 8.59,
+        "minimum": 5.757,
+        "maximum": 10.176
+      },
+      "qk_ready_relative_to_v_closing_end_us": {
+        "count": 1600,
+        "median": -920.6765,
+        "p10": -1088.579,
+        "p90": -888.259,
+        "minimum": -2459.495,
+        "maximum": -857.635
+      },
+      "pack_duration_us": {
+        "count": 1600,
+        "median": 306.7375,
+        "p10": 305.537,
+        "p90": 308.226,
+        "minimum": 303.681,
+        "maximum": 312.002
+      }
+    },
+    "hardware_channels": 200,
+    "hardware_samples": 3243825,
+    "diagnostic_severity_counts": {
+      "1": 101,
+      "2": 40
+    },
+    "diagnostic_warning_counts": {
+      "Scheduling information is absent. The thread activity is deduced based on OS runtime libraries traces. This is inaccurate and does not take into account asynchronous interrupts and exception faults.": 1,
+      "Not all NVTX events might have been collected.": 11,
+      "No NVTX events collected. Does the process use NVTX?": 3,
+      "CUDA profiling might have not been started correctly.": 1,
+      "No CUDA events collected. Does the process use CUDA?": 3,
+      "Not all CUDA events might have been collected.": 10,
+      "Not all OS runtime libraries events might have been collected.": 11
+    }
+  },
+  "on": {
+    "qkv_interval_us": {
+      "q": {
+        "count": 1600,
+        "median": 3169.8785,
+        "p10": 3167.125,
+        "p90": 3173.288,
+        "minimum": 3164.487,
+        "maximum": 3383.208
+      },
+      "k": {
+        "count": 1600,
+        "median": 3310.486,
+        "p10": 3166.471,
+        "p90": 3721.85,
+        "minimum": 3162.725,
+        "maximum": 3844.762
+      },
+      "v": {
+        "count": 1600,
+        "median": 3230.0245,
+        "p10": 3220.197,
+        "p90": 3240.715,
+        "minimum": 3166.599,
+        "maximum": 3602.248
+      }
+    },
+    "v_pack": {
+      "closing_end_to_pack_start_us": {
+        "count": 1600,
+        "median": 19.584,
+        "p10": 15.264,
+        "p90": 22.88,
+        "minimum": 11.616,
+        "maximum": 41.088
+      },
+      "closing_end_to_fine_start_us": {
+        "count": 1600,
+        "median": 1428.9955,
+        "p10": 1422.595,
+        "p90": 1439.048,
+        "minimum": 1412.067,
+        "maximum": 1623.114
+      },
+      "pack_end_to_fine_start_us": {
+        "count": 1600,
+        "median": 1101.8584999999998,
+        "p10": 1096.45,
+        "p90": 1110.343,
+        "minimum": 1086.664,
+        "maximum": 1275.816
+      },
+      "closing_end_to_host_return_us": {
+        "count": 1600,
+        "median": 1.779,
+        "p10": -6.631,
+        "p90": 9.465,
+        "minimum": -17.129,
+        "maximum": 16.154
+      },
+      "host_return_to_pack_api_us": {
+        "count": 1600,
+        "median": 0.51,
+        "p10": 0.36,
+        "p90": 0.72,
+        "minimum": 0.27,
+        "maximum": 1.72
+      },
+      "pack_api_to_gpu_us": {
+        "count": 1600,
+        "median": 16.73,
+        "p10": 8.684,
+        "p90": 27.292,
+        "minimum": 4.5,
+        "maximum": 46.05
+      },
+      "qk_ready_relative_to_v_closing_end_us": {
+        "count": 1600,
+        "median": -945.6175000000001,
+        "p10": -1353.474,
+        "p90": -905.155,
+        "minimum": -2053.454,
+        "maximum": -860.29
+      },
+      "pack_duration_us": {
+        "count": 1600,
+        "median": 308.065,
+        "p10": 306.945,
+        "p90": 309.536,
+        "minimum": 305.538,
+        "maximum": 313.505
+      }
+    },
+    "hardware_channels": 200,
+    "hardware_samples": 3235275,
+    "diagnostic_severity_counts": {
+      "1": 40,
+      "2": 40
+    },
+    "diagnostic_warning_counts": {
+      "Scheduling information is absent. The thread activity is deduced based on OS runtime libraries traces. This is inaccurate and does not take into account asynchronous interrupts and exception faults.": 1,
+      "Not all NVTX events might have been collected.": 11,
+      "No NVTX events collected. Does the process use NVTX?": 3,
+      "CUDA profiling might have not been started correctly.": 1,
+      "No CUDA events collected. Does the process use CUDA?": 3,
+      "Not all CUDA events might have been collected.": 10,
+      "Not all OS runtime libraries events might have been collected.": 11
+    }
+  },
+  "media_sha256": {
+    "warmup-bytecheck": "e5d3c2dc42cf6af72bfcda5de619b5ecca659ddf744a2b383859334c6ab1638f",
+    "warmup-baseline": "cee4a41cd4a38fa8d9649c8b58e4bc9c5e800a3e82ecbd6e53aa65bb81b0c69f",
+    "normal-0-off": "cee4a41cd4a38fa8d9649c8b58e4bc9c5e800a3e82ecbd6e53aa65bb81b0c69f",
+    "normal-0-on": "cee4a41cd4a38fa8d9649c8b58e4bc9c5e800a3e82ecbd6e53aa65bb81b0c69f",
+    "normal-1-on": "cee4a41cd4a38fa8d9649c8b58e4bc9c5e800a3e82ecbd6e53aa65bb81b0c69f",
+    "normal-1-off": "cee4a41cd4a38fa8d9649c8b58e4bc9c5e800a3e82ecbd6e53aa65bb81b0c69f",
+    "normal-2-off": "cee4a41cd4a38fa8d9649c8b58e4bc9c5e800a3e82ecbd6e53aa65bb81b0c69f",
+    "normal-2-on": "cee4a41cd4a38fa8d9649c8b58e4bc9c5e800a3e82ecbd6e53aa65bb81b0c69f",
+    "profile-off": "cee4a41cd4a38fa8d9649c8b58e4bc9c5e800a3e82ecbd6e53aa65bb81b0c69f",
+    "profile-on": "cee4a41cd4a38fa8d9649c8b58e4bc9c5e800a3e82ecbd6e53aa65bb81b0c69f"
+  },
+  "all_warmed_media_byte_identical": true,
+  "all_warmed_media_match_qualified_original": true,
+  "cold_media_matches_qualified_original_cold": true,
+  "qualified_media_references": {
+    "cold": "e5d3c2dc42cf6af72bfcda5de619b5ecca659ddf744a2b383859334c6ab1638f",
+    "warm": "cee4a41cd4a38fa8d9649c8b58e4bc9c5e800a3e82ecbd6e53aa65bb81b0c69f"
+  },
+  "normal_http_seconds": {
+    "off": {
+      "samples": [
+        13.647515889024362,
+        13.687591879977845,
+        13.717523931991309
+      ],
+      "median": 13.687591879977845
+    },
+    "on": {
+      "samples": [
+        13.651754343998618,
+        13.709816040005535,
+        13.721235376084223
+      ],
+      "median": 13.709816040005535
+    }
+  },
+  "full_model_bytechecks": {
+    "status": "PASS",
+    "comparisons": 1600,
+    "ranks": {
+      "2": {
+        "rank": 2,
+        "checked": 200,
+        "status": "PASS"
+      },
+      "7": {
+        "rank": 7,
+        "checked": 200,
+        "status": "PASS"
+      },
+      "6": {
+        "rank": 6,
+        "checked": 200,
+        "status": "PASS"
+      },
+      "4": {
+        "rank": 4,
+        "checked": 200,
+        "status": "PASS"
+      },
+      "0": {
+        "rank": 0,
+        "checked": 200,
+        "status": "PASS"
+      },
+      "1": {
+        "rank": 1,
+        "checked": 200,
+        "status": "PASS"
+      },
+      "5": {
+        "rank": 5,
+        "checked": 200,
+        "status": "PASS"
+      },
+      "3": {
+        "rank": 3,
+        "checked": 200,
+        "status": "PASS"
+      }
+    }
+  },
+  "v_gap_reduction_percent": 88.9471144484986,
+  "status": "PASS"
+}

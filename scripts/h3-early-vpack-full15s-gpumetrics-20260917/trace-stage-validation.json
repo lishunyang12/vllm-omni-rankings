@@ -1,0 +1,54 @@
+{
+  "off": {
+    "status": "PASS",
+    "stages": {
+      "h3.profile.audio_vae": 1,
+      "h3.profile.decode": 8,
+      "h3.profile.dit": 8,
+      "h3.profile.dit.step_01": 8,
+      "h3.profile.dit.step_02": 8,
+      "h3.profile.dit.step_03": 8,
+      "h3.profile.dit.step_04": 8,
+      "h3.profile.encoder": 8,
+      "h3.profile.output.audio_mux_finalize": 1,
+      "h3.profile.output.d2h_wait": 22,
+      "h3.profile.output.finish": 1,
+      "h3.profile.output.submit_u8_d2h": 22,
+      "h3.profile.output.video_encode_mux": 22,
+      "h3.profile.prepare_request": 8,
+      "h3.profile.rdma.release": 8,
+      "h3.profile.request": 8,
+      "h3.profile.video_vae": 8
+    },
+    "cuda_start_warning_pids": [
+      30593
+    ],
+    "cuda_start_warning_is_outside_eight_ranks": true
+  },
+  "on": {
+    "status": "PASS",
+    "stages": {
+      "h3.profile.audio_vae": 1,
+      "h3.profile.decode": 8,
+      "h3.profile.dit": 8,
+      "h3.profile.dit.step_01": 8,
+      "h3.profile.dit.step_02": 8,
+      "h3.profile.dit.step_03": 8,
+      "h3.profile.dit.step_04": 8,
+      "h3.profile.encoder": 8,
+      "h3.profile.output.audio_mux_finalize": 1,
+      "h3.profile.output.d2h_wait": 22,
+      "h3.profile.output.finish": 1,
+      "h3.profile.output.submit_u8_d2h": 22,
+      "h3.profile.output.video_encode_mux": 22,
+      "h3.profile.prepare_request": 8,
+      "h3.profile.rdma.release": 8,
+      "h3.profile.request": 8,
+      "h3.profile.video_vae": 8
+    },
+    "cuda_start_warning_pids": [
+      30593
+    ],
+    "cuda_start_warning_is_outside_eight_ranks": true
+  }
+}

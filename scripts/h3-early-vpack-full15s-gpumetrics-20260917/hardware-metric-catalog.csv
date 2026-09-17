@@ -1,0 +1,26 @@
+metric_id,metric_name,display_conversion
+0,GPC Clock Frequency [MHz],unsigned_32_bit_Hz * 1e-6
+1,SYS Clock Frequency [MHz],unsigned_32_bit_Hz * 1e-6
+2,Sync Copy Engine Active [Throughput %],raw_value
+3,Sync Copy Engine Active [Cycles Active],raw_value
+4,Async Copy Engine Active 0 [Throughput %],raw_value
+5,Async Copy Engine Active 0 [Cycles Active],raw_value
+6,GR Active [Throughput %],raw_value
+7,SMs Active [Throughput %],raw_value
+8,SM Issue [Throughput %],raw_value
+9,Tensor Active [Throughput %],raw_value
+10,Vertex/Tess/Geometry Warps in Flight [Throughput %],raw_value
+11,Vertex/Tess/Geometry Warps in Flight [Avg],raw_value * 0.5
+12,Vertex/Tess/Geometry Warps in Flight [Avg Warps per Cycle],raw_value * 0.5
+13,Pixel Warps in Flight [Throughput %],raw_value
+14,Pixel Warps in Flight [Avg],raw_value * 0.5
+15,Pixel Warps in Flight [Avg Warps per Cycle],raw_value * 0.5
+16,Compute Warps in Flight [Throughput %],raw_value
+17,Compute Warps in Flight [Avg],raw_value * 0.5
+18,Compute Warps in Flight [Avg Warps per Cycle],raw_value * 0.5
+19,DRAM Read Bandwidth [Throughput %],raw_value
+20,DRAM Write Bandwidth [Throughput %],raw_value
+21,PCIe RX Throughput [Throughput %],raw_value
+22,PCIe TX Throughput [Throughput %],raw_value
+23,PCIe Read Requests to BAR1 [Requests],raw_value
+24,PCIe Write Requests to BAR1 [Requests],raw_value

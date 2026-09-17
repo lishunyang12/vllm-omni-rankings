@@ -1,0 +1,322 @@
+[
+  [
+    1,
+    "Profiling has started."
+  ],
+  [
+    1,
+    "Number of GPU Metrics events collected: \t129419."
+  ],
+  [
+    2,
+    "Scheduling information is absent. The thread activity is deduced based on OS runtime libraries traces. This is inaccurate and does not take into account asynchronous interrupts and exception faults."
+  ],
+  [
+    2,
+    "Not all NVTX events might have been collected."
+  ],
+  [
+    2,
+    "No NVTX events collected. Does the process use NVTX?"
+  ],
+  [
+    2,
+    "Not all NVTX events might have been collected."
+  ],
+  [
+    2,
+    "No NVTX events collected. Does the process use NVTX?"
+  ],
+  [
+    2,
+    "Not all NVTX events might have been collected."
+  ],
+  [
+    2,
+    "No NVTX events collected. Does the process use NVTX?"
+  ],
+  [
+    2,
+    "Not all NVTX events might have been collected."
+  ],
+  [
+    1,
+    "Number of NVTX events collected: \t4882."
+  ],
+  [
+    2,
+    "Not all NVTX events might have been collected."
+  ],
+  [
+    1,
+    "Number of NVTX events collected: \t5078."
+  ],
+  [
+    2,
+    "Not all NVTX events might have been collected."
+  ],
+  [
+    1,
+    "Number of NVTX events collected: \t4883."
+  ],
+  [
+    2,
+    "Not all NVTX events might have been collected."
+  ],
+  [
+    1,
+    "Number of NVTX events collected: \t4878."
+  ],
+  [
+    2,
+    "Not all NVTX events might have been collected."
+  ],
+  [
+    1,
+    "Number of NVTX events collected: \t4880."
+  ],
+  [
+    2,
+    "Not all NVTX events might have been collected."
+  ],
+  [
+    1,
+    "Number of NVTX events collected: \t4879."
+  ],
+  [
+    2,
+    "Not all NVTX events might have been collected."
+  ],
+  [
+    1,
+    "Number of NVTX events collected: \t4879."
+  ],
+  [
+    2,
+    "Not all NVTX events might have been collected."
+  ],
+  [
+    1,
+    "Number of NVTX events collected: \t4882."
+  ],
+  [
+    2,
+    "CUDA profiling might have not been started correctly."
+  ],
+  [
+    2,
+    "No CUDA events collected. Does the process use CUDA?"
+  ],
+  [
+    2,
+    "Not all CUDA events might have been collected."
+  ],
+  [
+    2,
+    "No CUDA events collected. Does the process use CUDA?"
+  ],
+  [
+    2,
+    "Not all CUDA events might have been collected."
+  ],
+  [
+    2,
+    "No CUDA events collected. Does the process use CUDA?"
+  ],
+  [
+    2,
+    "Not all CUDA events might have been collected."
+  ],
+  [
+    1,
+    "Number of CUDA events collected: \t368325."
+  ],
+  [
+    2,
+    "Not all CUDA events might have been collected."
+  ],
+  [
+    1,
+    "Number of CUDA events collected: \t368013."
+  ],
+  [
+    2,
+    "Not all CUDA events might have been collected."
+  ],
+  [
+    1,
+    "Number of CUDA events collected: \t369843."
+  ],
+  [
+    2,
+    "Not all CUDA events might have been collected."
+  ],
+  [
+    1,
+    "Number of CUDA events collected: \t367687."
+  ],
+  [
+    2,
+    "Not all CUDA events might have been collected."
+  ],
+  [
+    1,
+    "Number of CUDA events collected: \t369892."
+  ],
+  [
+    2,
+    "Not all CUDA events might have been collected."
+  ],
+  [
+    1,
+    "Number of CUDA events collected: \t369483."
+  ],
+  [
+    2,
+    "Not all CUDA events might have been collected."
+  ],
+  [
+    1,
+    "Number of CUDA events collected: \t368609."
+  ],
+  [
+    2,
+    "Not all CUDA events might have been collected."
+  ],
+  [
+    1,
+    "Number of CUDA events collected: \t367857."
+  ],
+  [
+    2,
+    "Not all OS runtime libraries events might have been collected."
+  ],
+  [
+    1,
+    "Number of OS runtime libraries events collected: \t4."
+  ],
+  [
+    2,
+    "Not all OS runtime libraries events might have been collected."
+  ],
+  [
+    1,
+    "Number of OS runtime libraries events collected: \t492."
+  ],
+  [
+    2,
+    "Not all OS runtime libraries events might have been collected."
+  ],
+  [
+    1,
+    "Number of OS runtime libraries events collected: \t34653."
+  ],
+  [
+    2,
+    "Not all OS runtime libraries events might have been collected."
+  ],
+  [
+    1,
+    "Number of OS runtime libraries events collected: \t14151."
+  ],
+  [
+    2,
+    "Not all OS runtime libraries events might have been collected."
+  ],
+  [
+    1,
+    "Number of OS runtime libraries events collected: \t82438."
+  ],
+  [
+    2,
+    "Not all OS runtime libraries events might have been collected."
+  ],
+  [
+    1,
+    "Number of OS runtime libraries events collected: \t14195."
+  ],
+  [
+    2,
+    "Not all OS runtime libraries events might have been collected."
+  ],
+  [
+    1,
+    "Number of OS runtime libraries events collected: \t14141."
+  ],
+  [
+    2,
+    "Not all OS runtime libraries events might have been collected."
+  ],
+  [
+    1,
+    "Number of OS runtime libraries events collected: \t14144."
+  ],
+  [
+    2,
+    "Not all OS runtime libraries events might have been collected."
+  ],
+  [
+    1,
+    "Number of OS runtime libraries events collected: \t14152."
+  ],
+  [
+    2,
+    "Not all OS runtime libraries events might have been collected."
+  ],
+  [
+    1,
+    "Number of OS runtime libraries events collected: \t14142."
+  ],
+  [
+    2,
+    "Not all OS runtime libraries events might have been collected."
+  ],
+  [
+    1,
+    "Number of OS runtime libraries events collected: \t14151."
+  ],
+  [
+    1,
+    "Profiling has stopped."
+  ],
+  [
+    1,
+    "Number of CUPTI events produced: \t3, CUPTI buffers: 50."
+  ],
+  [
+    1,
+    "Number of CUPTI events produced: \t3, CUPTI buffers: 50."
+  ],
+  [
+    1,
+    "Number of CUPTI events produced: \t481216, CUPTI buffers: 50."
+  ],
+  [
+    1,
+    "Number of CUPTI events produced: \t479963, CUPTI buffers: 50."
+  ],
+  [
+    1,
+    "Number of CUPTI events produced: \t481060, CUPTI buffers: 50."
+  ],
+  [
+    1,
+    "Number of CUPTI events produced: \t477580, CUPTI buffers: 50."
+  ],
+  [
+    1,
+    "Number of CUPTI events produced: \t439475, CUPTI buffers: 50."
+  ],
+  [
+    1,
+    "Number of CUPTI events produced: \t480967, CUPTI buffers: 50."
+  ],
+  [
+    1,
+    "Number of CUPTI events produced: \t477878, CUPTI buffers: 50."
+  ],
+  [
+    1,
+    "Number of CUPTI events produced: \t479098, CUPTI buffers: 50."
+  ]
+]
