@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LTX-2.5 4K: Global SP vs Stage-2 TDP</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #090b10;
+      color: #edf1f7;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    main { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 64px; }
+    .eyebrow { color: #91a4c7; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    h1 { margin: 10px 0 12px; font-size: clamp(2rem, 5vw, 4.3rem); line-height: 1.02; letter-spacing: -0.045em; }
+    .lede { max-width: 860px; margin: 0 0 28px; color: #aeb9cb; font-size: 1.05rem; line-height: 1.65; }
+    .panel { overflow: hidden; border: 1px solid #273044; border-radius: 18px; background: #10141d; box-shadow: 0 20px 70px #0008; }
+    video, img { display: block; width: 100%; height: auto; background: #000; }
+    .labels { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #273044; }
+    .labels div { padding: 13px 18px; font-weight: 700; }
+    .labels div + div { border-left: 1px solid #273044; }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0; }
+    .metric { min-height: 132px; padding: 20px; border: 1px solid #273044; border-radius: 14px; background: #10141d; }
+    .metric span { color: #91a4c7; font-size: 0.84rem; }
+    .metric strong { display: block; margin-top: 9px; font-size: 1.72rem; }
+    .metric small { display: block; margin-top: 7px; color: #aeb9cb; line-height: 1.45; }
+    h2 { margin: 40px 0 14px; font-size: 1.5rem; }
+    table { width: 100%; border-collapse: collapse; overflow: hidden; border: 1px solid #273044; border-radius: 12px; background: #10141d; }
+    th, td { padding: 13px 15px; border-bottom: 1px solid #273044; text-align: left; }
+    th { color: #91a4c7; font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    tr:last-child td { border-bottom: 0; }
+    .note { padding: 16px 18px; border-left: 3px solid #6ea8fe; background: #111a29; color: #b9c6da; line-height: 1.6; }
+    a { color: #8db9ff; }
+    footer { margin-top: 32px; color: #7f8ba0; font-size: 0.9rem; }
+    @media (max-width: 720px) {
+      main { width: min(100% - 20px, 1180px); padding-top: 28px; }
+      .grid { grid-template-columns: 1fr; }
+      .labels div { padding: 10px; font-size: 0.82rem; }
+      th, td { padding: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">vLLM-Omni · NVIDIA B300 · 4K text-to-video</div>
+    <h1>Global SP vs Stage-2 TDP</h1>
+    <p class="lede">
+      LTX-2.5 keeps four-way global Ulysses sequence parallelism in Stage 1,
+      then compares global attention with a 2x2 grid of overlapping local
+      Stage-2 tiles. Prompt, seed, sigma schedule, frames, and backend are held fixed.
+    </p>
+
+    <section class="panel">
+      <video controls muted playsinline preload="metadata" poster="preview.jpg">
+        <source src="ltx25_global_sp_vs_stage2_tdp_sbs.mp4" type="video/mp4">
+        Your browser does not support H.264 MP4 playback.
+      </video>
+      <div class="labels">
+        <div>Global SP · matched schedule</div>
+        <div>Stage-2 tiled data parallel</div>
+      </div>
+    </section>
+
+    <section class="grid" aria-label="headline metrics">
+      <div class="metric">
+        <span>Request speedup</span>
+        <strong>0.932x</strong>
+        <small>TDP is 7.3% slower in this single-seed run.</small>
+      </div>
+      <div class="metric">
+        <span>Full-frame similarity</span>
+        <strong>0.9205 SSIM</strong>
+        <small>31.78 dB PSNR over all 121 frames.</small>
+      </div>
+      <div class="metric">
+        <span>Overlap-band similarity</span>
+        <strong>0.9205 / 0.9215</strong>
+        <small>Horizontal / vertical SSIM; no obvious visual seam.</small>
+      </div>
+    </section>
+
+    <h2>End-to-end result</h2>
+    <table>
+      <thead>
+        <tr><th>Mode</th><th>Request latency</th><th>Worker peak reserved memory</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Global SP</td><td>36.6778 s</td><td>232,806 MiB</td></tr>
+        <tr><td>Stage-2 TDP</td><td>39.3526 s</td><td>233,902 MiB</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Overlap diagnostics</h2>
+    <table>
+      <thead>
+        <tr><th>Region</th><th>SSIM</th><th>PSNR</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Full frame</td><td>0.920476</td><td>31.783358 dB</td></tr>
+        <tr><td>Horizontal overlap band</td><td>0.920530</td><td>33.386542 dB</td></tr>
+        <tr><td>Vertical overlap band</td><td>0.921495</td><td>28.926828 dB</td></tr>
+      </tbody>
+    </table>
+
+    <h2>Interpretation</h2>
+    <p class="note">
+      The tiled path successfully generates a coherent 3840x2160 video, but it
+      is not a performance win in this configuration. Full-resolution latent
+      handling, tile assembly, all-reduce, and VAE decode outweigh the local
+      attention savings. TDP is approximate local attention, so similarity is
+      reported as a diagnostic rather than a parity gate.
+    </p>
+
+    <h2>Frames 0, 60, and 120</h2>
+    <section class="panel"><img src="preview.jpg" alt="Three side-by-side LTX-2.5 comparison frames"></section>
+
+    <footer>
+      4 x NVIDIA B300 SXM6 AC · BF16 CUDNN_ATTN · 3840x2160 · 121 frames · 24 FPS · seed 42 ·
+      <a href="results.json">results.json</a> · <a href="README.md">methodology</a>
+    </footer>
+  </main>
+</body>
+</html>

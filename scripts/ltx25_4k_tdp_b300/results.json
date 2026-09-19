@@ -1,0 +1,156 @@
+{
+  "comparison": "global_sp_matched_schedule_vs_stage2_tdp",
+  "controlled_inputs": {
+    "model": "Lightricks/LTX-2.5-Diffusers",
+    "prompt": "A cinematic aerial shot following a sailboat through a fjord at sunrise.",
+    "negative_prompt": null,
+    "seed": 42,
+    "target_width": 3840,
+    "target_height": 2160,
+    "internal_width": 3840,
+    "internal_height": 2176,
+    "num_frames": 121,
+    "fps": 24,
+    "num_inference_steps": 8,
+    "stage_2_sigmas": [
+      0.625,
+      0.4,
+      0.0
+    ],
+    "gpus": "0,1,2,3"
+  },
+  "geometry": {
+    "grid": [
+      2,
+      2
+    ],
+    "latent_overlap": 5,
+    "pixel_overlap_bands": [
+      {
+        "axis": "horizontal",
+        "x": 0,
+        "y": 1024,
+        "width": 3840,
+        "height": 160
+      },
+      {
+        "axis": "vertical",
+        "x": 1856,
+        "y": 0,
+        "width": 160,
+        "height": 2160
+      }
+    ]
+  },
+  "global_sp": {
+    "video": "global_sp_internal.mp4 (local 4K benchmark artifact; not published)",
+    "metadata": {
+      "width": 3840,
+      "height": 2176,
+      "fps": 24.0,
+      "frames": 121
+    },
+    "request_seconds": 36.6778,
+    "peak_memory_mib": 232806.0,
+    "profiler_events": {
+      "LTX2DistilledTwoStagePipeline.text_encoder.forward": {
+        "samples": 8,
+        "min_seconds": 0.049937,
+        "mean_seconds": 1.41335875,
+        "max_seconds": 2.796402
+      },
+      "LTX2DistilledTwoStagePipeline.vae.encode": {
+        "samples": 8,
+        "min_seconds": 0.009994,
+        "mean_seconds": 0.7056955,
+        "max_seconds": 1.496988
+      },
+      "LTX2DistilledTwoStagePipeline.forward": {
+        "samples": 8,
+        "min_seconds": 13.40968,
+        "mean_seconds": 24.53454525,
+        "max_seconds": 35.843811
+      },
+      "LTX2DistilledTwoStagePipeline.vae.decode": {
+        "samples": 2,
+        "min_seconds": 0.008325,
+        "mean_seconds": 3.688638,
+        "max_seconds": 7.368951
+      }
+    }
+  },
+  "stage2_tdp": {
+    "video": "stage2_tdp.mp4 (local 4K benchmark artifact; not published)",
+    "metadata": {
+      "width": 3840,
+      "height": 2160,
+      "fps": 24.0,
+      "frames": 121
+    },
+    "request_seconds": 39.3526,
+    "peak_memory_mib": 233902.0,
+    "profiler_events": {
+      "LTX2DistilledTwoStagePipeline.text_encoder.forward": {
+        "samples": 8,
+        "min_seconds": 0.049909,
+        "mean_seconds": 0.945778125,
+        "max_seconds": 1.851378
+      },
+      "LTX2DistilledTwoStagePipeline.vae.encode": {
+        "samples": 8,
+        "min_seconds": 0.0103,
+        "mean_seconds": 0.09137125,
+        "max_seconds": 0.175413
+      },
+      "LTX2DistilledTwoStagePipeline.forward": {
+        "samples": 8,
+        "min_seconds": 8.658166,
+        "mean_seconds": 13.05912975,
+        "max_seconds": 29.825297
+      },
+      "LTX2DistilledTwoStagePipeline.vae.decode": {
+        "samples": 2,
+        "min_seconds": 0.0083,
+        "mean_seconds": 3.5822175,
+        "max_seconds": 7.156135
+      }
+    }
+  },
+  "performance": {
+    "request_speedup": 0.932029903996178
+  },
+  "video_similarity": {
+    "full_frame": {
+      "ssim_mean": 0.920476,
+      "psnr_mean_db": 31.783358
+    },
+    "overlap_bands": [
+      {
+        "axis": "horizontal",
+        "x": 0,
+        "y": 1024,
+        "width": 3840,
+        "height": 160,
+        "ssim_mean": 0.92053,
+        "psnr_mean_db": 33.386542
+      },
+      {
+        "axis": "vertical",
+        "x": 1856,
+        "y": 0,
+        "width": 160,
+        "height": 2160,
+        "ssim_mean": 0.921495,
+        "psnr_mean_db": 28.926828
+      }
+    ]
+  },
+  "side_by_side": "ltx25_global_sp_vs_stage2_tdp_sbs.mp4",
+  "notes": [
+    "The baseline uses global Ulysses SP in both stages and the same two-step Stage-2 sigma schedule as TDP.",
+    "The baseline generates the aligned internal resolution; metrics crop it to the requested target resolution.",
+    "Video metrics exclude audio. TDP intentionally returns full-context Stage-1 audio.",
+    "TDP is approximate local attention, so SSIM/PSNR are diagnostics rather than bit-parity gates.",
+    "The published side-by-side MP4 is a 1920x540 H.264 preview of the local 3840x1080 comparison master."
+  ]
+}
