@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="920" viewBox="0 0 1200 920">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#617283"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="30" y="36" fill="#202c38" font-family="Georgia,serif" font-size="24" text-anchor="start" font-weight="bold">Harness contracts: intention, evidence and playback</text>
+<text x="30" y="65" fill="#586674" font-family="Arial,sans-serif" font-size="14" text-anchor="start" font-weight="normal">The public reply queue and the separate research world ledger serve different deployment roles.</text>
+<rect x="25" y="100" width="360" height="115" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="205.0" y="129" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Public production controller</text>
+<text x="205.0" y="156" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Real chat → durable inbox → reply queue</text>
+<text x="205.0" y="179" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Whole-answer identity across windows</text>
+<rect x="435" y="100" width="330" height="115" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="600.0" y="129" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Research action planner</text>
+<text x="600.0" y="156" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Extract → map against available actions</text>
+<text x="600.0" y="179" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Snapshot state + context digest</text>
+<rect x="815" y="100" width="360" height="115" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="995.0" y="129" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Pure phase compiler</text>
+<text x="995.0" y="156" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Before / after states + timed beats</text>
+<text x="995.0" y="179" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Predictions do not change memory</text>
+<polyline points="765,157 815,157" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="25" y="295" width="360" height="115" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="205.0" y="324" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">H3 rendering contract</text>
+<text x="205.0" y="351" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Reference image + accepted raw AV tail</text>
+<text x="205.0" y="374" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Exact words / once-only action prompt</text>
+<polyline points="205,215 205,295" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="995,215 995,255 205,255 205,295" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<text x="590" y="245" fill="#202c38" font-family="Arial,sans-serif" font-size="14" text-anchor="middle" font-weight="normal">Private renderer adapter; not automatic public admission</text>
+<rect x="435" y="295" width="330" height="115" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="600.0" y="324" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Media and boundary checks</text>
+<text x="600.0" y="351" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Decode · drift · AV overlap · seam</text>
+<text x="600.0" y="374" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Same-parent retry / withhold</text>
+<polyline points="385,352 435,352" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="815" y="295" width="360" height="115" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="995.0" y="324" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Semantic action review</text>
+<text x="995.0" y="351" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Explicit observed state + evidence</text>
+<text x="995.0" y="374" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Separate from pixel-quality checks</text>
+<polyline points="765,352 815,352" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<text x="600" y="463" fill="#202c38" font-family="Arial,sans-serif" font-size="21" text-anchor="middle" font-weight="bold">Research receipt lifecycle</text>
+<rect x="25" y="495" width="250" height="100" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="150.0" y="524" fill="#202c38" font-family="Arial,sans-serif" font-size="14" text-anchor="middle" font-weight="bold">Prepared</text>
+<text x="150.0" y="551" fill="#202c38" font-family="Arial,sans-serif" font-size="13" text-anchor="middle" font-weight="normal">Immutable phase request</text>
+<rect x="325" y="495" width="250" height="100" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="450.0" y="524" fill="#202c38" font-family="Arial,sans-serif" font-size="14" text-anchor="middle" font-weight="bold">Generated</text>
+<text x="450.0" y="551" fill="#202c38" font-family="Arial,sans-serif" font-size="13" text-anchor="middle" font-weight="normal">Media exists; world unchanged</text>
+<rect x="625" y="495" width="250" height="100" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="750.0" y="524" fill="#202c38" font-family="Arial,sans-serif" font-size="14" text-anchor="middle" font-weight="bold">Verified</text>
+<text x="750.0" y="551" fill="#202c38" font-family="Arial,sans-serif" font-size="13" text-anchor="middle" font-weight="normal">Review matches expected state</text>
+<rect x="925" y="495" width="250" height="100" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="1050.0" y="524" fill="#202c38" font-family="Arial,sans-serif" font-size="14" text-anchor="middle" font-weight="bold">Played</text>
+<text x="1050.0" y="551" fill="#202c38" font-family="Arial,sans-serif" font-size="13" text-anchor="middle" font-weight="normal">Commit state and memory</text>
+<polyline points="275,545 325,545" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="575,545 625,545" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="875,545 925,545" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="35" y="690" width="535" height="120" rx="7" fill="#f2f4f6" stroke="#b7c4cf"/>
+<text x="302.5" y="719" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Reject, cancel or reconcile</text>
+<text x="302.5" y="746" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Failed review → rollback; unknown playback → uncertain</text>
+<text x="302.5" y="769" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Cancel at a boundary, preserve completed effects</text>
+<text x="302.5" y="792" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">A duplicated receipt must not repeat an action</text>
+<rect x="625" y="690" width="535" height="120" rx="7" fill="#f2f4f6" stroke="#b7c4cf"/>
+<text x="892.5" y="719" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Scope of the guarantee</text>
+<text x="892.5" y="746" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Ledger transitions can be checked deterministically</text>
+<text x="892.5" y="769" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">They cannot make generated object motion correct</text>
+<text x="892.5" y="792" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">A simulated observation cannot certify real footage</text>
+<polyline points="750,595 750,648 300,648 300,690" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<text x="600" y="868" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">A requested action, generated candidate, accepted video and observed played effect are distinct records.</text>
+</svg>

@@ -54,6 +54,8 @@ This separation resolves a practical conflict. The clean reference specifies **w
 
 The evaluated live profile uses `reference-interior-side-liaozhai-tea-v1.png`, an authored 1672×941 image. It depicts the selected interior side-view composition and provides the reference for the character, book, lotus-window setting and table arrangement. The Ref2VA input preparation downsizes references according to the output-area “match” policy and aligns dimensions to a 32-pixel grid; it does not upscale small inputs under this policy.
 
+![Production scene reference, embedded from the exact input PNG. Zhiwei holds the open paper book beside a lotus window; the table contains incense, dragon-beard candy, bamboo slips, one celadon teapot and one teacup. This is the image supplied twice as Picture 1 and Picture 2, not a generated video frame or a three-view identity set.](figures/production-scene-reference.png)
+
 The request contains **two copies of this same image**, named by order as Picture 1 and Picture 2. The prompt explicitly identifies Picture 2 as a repeat of Picture 1 and asks for stable appearance while continuing the incoming motion and pose. These are two conditioning blocks containing one distinct view; they are not a front/side/back identity dataset. The H3 semantic encoder receives the images and their condition labels, while the visual encoder produces the reference latents used by the joint generator.
 
 Both blocks remain present on successive requests. Reuse of their encoded values preserves the same conditioning contract; it does not turn a reference into a forced first frame. The reference image is also distinct from `tea-quality-anchor.png`, the manually reviewed frame used only by the publication screen. Their separate hashes and dimensions are included in [the method manifest](evidence/continuity-design.json).
@@ -65,6 +67,10 @@ Current voice generation is prompt-only: no external audio-reference file is att
 The persistent reference is useful when the camera, room and outfit should remain stable. It can conflict with an intended permanent change: a reference showing an open window or an earlier outfit continues to condition subsequent generation after a request to change that state. The prompt and scene ledger can express the intended change, but they do not remove contradictory visual evidence automatically.
 
 In the current public profile, the selected scene reference remains fixed. Automatic replacement with an action-specific image or a visually verified updated world state is not an established capability. A future scene-change protocol would need to coordinate the reference revision, intended state and accepted tail, then validate the transition. Merely recording “window closed” in the ledger does not demonstrate that the pixels show a closed window.
+
+![Experimental closed-leaf reference from subsequent private action development. A built-in image-generation edit changes the near shutter while retaining the intended identity, camera and tabletop arrangement. This image is a requested state target; it is not evidence that H3 successfully performed the action. It has not replaced the production reference.](figures/experimental-window-reference.png)
+
+The second image is an **experimental asset**, prepared after the report's fixed performance cohorts. It is shown here to make the reference inputs inspectable, not to add an action-success result to the evaluation. Its edit asks for only the near shutter to close, with the far leaf and visible pond opening preserved. Subsequent generated motion must still be reviewed for hand contact, unintended movement of other leaves, state retention and scene continuity. The [reference-image manifest](evidence/reference-images.json) records both source filenames, dimensions, byte hashes and the complete image-edit prompt. Both PNGs are embedded directly in this HTML at their original resolution.
 
 ## 3. Continuation method
 

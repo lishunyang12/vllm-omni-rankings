@@ -187,6 +187,62 @@ Generation and playback advance independently. With one-clip lookahead, the prod
 
 Prometheus and Grafana expose generation latency, validation/publication overhead, playback budget, queue depth, reply milestones, relay waiting, transport output and GPU activity. The useful latency chain is **arrival → text ready → selected → media ready → local playback → first meaningful response within the clip → viewer presentation**. The current instrumentation covers local milestones; screenshot values and local relay timestamps do not measure Twitch player buffering or perceptual response onset. Method-source hashes are included in the [live-logic manifest](evidence/live-logic.json).
 
+### 3.7 Harness architecture and evidence contracts
+
+The harness translates conversation into a bounded audiovisual workload and records what happened at each boundary. It does not replace the video model's physical reasoning. The implemented public path uses a durable chat inbox, reply queue, segment scheduler, continuity controller and playback receipts. A separate research path adds explicit object state, multi-action planning and review-gated state transitions. These paths share the rendering stack but must not be described as one fully deployed autonomous world simulator.
+
+![Harness architecture and evidence contracts. Solid connections identify an implemented control or receipt dependency; the private action path and its additional semantic review are distinguished from public queue admission. Neither a prompt nor a generated file is sufficient evidence of a completed physical action.](figures/harness-contracts.svg)
+
+**TABLECAPTION: Harness components, responsibilities and deployment scope.** Source hashes and the actual local routing probe are retained in the [harness manifest](evidence/harness-system.json).
+
+| Component | Responsibility | State or output | Scope |
+|---|---|---|---|
+| Chat inbox and text worker | Deduplicate real messages, bound waiting work and retain viewer context | Message identity, arrival time, expiry, same-viewer dialogue | Public control path |
+| Public dialogue policy | Produce a relevant complete answer; obtain only relevant scene facts | Natural utterance text, language, attention and delivery mode | Public control path; not a fixed total-answer character limit |
+| Reply queue and segment scheduler | Preserve turn identity and consecutive answer delivery | Queued, selected, generated, relay-started and relay-finished records | Public control path |
+| Action registry and research planner | Extract affirmative requests, map only available capabilities, refuse unsupported substitutions | Validated decision with at most three action identifiers | Separate research path |
+| Pure action compiler | Arrange dependencies, object contact, one action cycle and persistent exit state | A sequence of before/after states and timed prompt beats | Separate research path; desired effects remain predictions |
+| World ledger and grounding | Record state revisions, provenance, pending work and viewer-specific dialogue | SQLite transactions and a digest of the planning context | Separate research path |
+| Renderer and continuity controller | Attach clean references and the accepted raw AV suffix; screen candidates | Video, original PCM, hashes, raw-tail checkpoint and timing | Shared generation machinery; private override requires a non-broadcast run |
+| Review and playback adapter | Compare an explicit observation with the expected state; commit only after confirmed playback | Verified/played receipts or rejection/uncertainty | Research contract; no general automatic visual verifier has been established |
+
+The research state includes book location, hand ownership, mouth state, gaze, tea availability, coarse cup fill, candy history and the near window leaf. Outfit, room and exterior variants require exact prepared references. The ledger deliberately does not infer an exact candy count, tea temperature, invisible scene geometry or a viewer's current screen. Window reachability and hinge type must be supplied and verified; a private geometry hypothesis is not public action qualification.
+
+Planning uses a state snapshot and context digest. Admission checks the digest again, preventing an answer planned against an old scene from silently entering a changed world. Effect records retain the source action and viewer relation. Replaying the same playback receipt is idempotent. Cancellation preserves already completed effects and recovers held objects at a segment boundary; it does not reverse time or rewrite an in-flight diffusion request. An uncertain playback result requires reconciliation before further dependent work.
+
+**TABLECAPTION: Research receipt lifecycle and the claim each stage permits.** The private GPU probe follows predicted states to collect footage; it does not automatically invoke the observed-world commit path.
+
+| Receipt stage | What is known | Permitted statement | State advancement |
+|---|---|---|---|
+| Prepared | A validated phase and expected exit state exist | The action is planned | None |
+| Generated | A candidate media artifact exists | The candidate was generated | None |
+| Verified | Explicit review passes and its observed state matches the phase contract | The candidate meets the supplied review | None until playback |
+| Played | The verified segment has a confirmed local playback receipt | The reviewed local effect can enter memory | Transactional state, provenance and memory update |
+| Rejected / uncertain | Review failed or playback outcome is unresolved | Completion is not established | Rollback or reconciliation required |
+
+### 3.8 Prompt construction and action execution
+
+There are two distinct prompt interfaces. The language planner receives character policy, selected facts, recent dialogue and the viewer's message. The audiovisual renderer receives the current phase, exact speech where applicable, clean visual conditioning and the accepted motion/audio context. The language-model answer is not itself a complete video prompt.
+
+The public dialogue policy allows an answer to expand when the question needs it. Speech is then divided into speakable windows, preserving turn identity and viewer attention across boundaries. The older research writer remains more restrictive: its current contract allows at most two lines, with twenty Chinese characters or twelve English words per line. That research constraint must not be presented as the public conversation policy or as a desired universal limit.
+
+For object interaction, the compiler first establishes the necessary hand state. In the current private tea/food recipes, a held book is placed on the table once; a subsequent bite, sip or pour follows in one generation window. Rest keeps the book on the table, and picking it up is an explicit later instruction. This avoids repeatedly inserting a fresh pickup phase or forcing the reference image's reading pose at every boundary. The prompt names the existing object, contact sequence, single operation, release point and persistent exit state. Only actually present props are included.
+
+**TABLECAPTION: Renderer prompt fields and their intended function.** Exact transmitted examples appear in Appendix B.1.
+
+| Field | Example function | Evidence boundary |
+|---|---|---|
+| Scene and identity | Same adult character, side camera, book, lotus study and present props | A conditioning instruction, not identity verification |
+| Entrance state | Book on the table, empty hand, current window angle | Must correspond to the accepted incoming scene |
+| Timed beats | Continue overlap; reach and grip; sip; set down and release | Timing directives are approximate model control |
+| Exit state | Same cup back on the table; no second reach | Predicted until the generated motion is reviewed |
+| Voice and soundscape | Exact words if speaking; otherwise quiet room tone and action sounds | No per-answer external voice waveform in this profile |
+| Reference suffix | Picture 2 repeats Picture 1 | Two blocks of one image, not two independent views |
+
+A request from the held-book state typically plans one approximately five-second placement window followed by one approximately five-second action window. If the book is already on the table, the placement phase is omitted. These are planned media durations, not chat-response latency measurements: queue occupancy, current generation, local playback and Twitch buffering remain additional clocks.
+
+Finite private samples show recognizable eating, sipping and pouring cycles with subsequent hold phases. Window work remains experimental: a state-specific reference can preserve a closure in one sample, yet other shutters may move without the intended contact; a more explicit spatial prompt also produced an uncommanded reopening. These outcomes belong in limitations and diagnostic evidence. A positive coarse motion example does not establish arbitrary action control, precise prop conservation or a long-run success rate.
+
 ## 4. Reference and continuation method
 
 ![Reference-conditioned continuation. Clean appearance inputs, the prior raw AV suffix and the next instruction have separate roles. Exact video overlap and independent screening constrain acceptance; failure returns to the same accepted parent.](figures/reference-continuation.svg)
@@ -215,6 +271,8 @@ This separation resolves a practical conflict. The clean reference specifies **w
 
 The evaluated live profile uses `reference-interior-side-liaozhai-tea-v1.png`, an authored 1672×941 image. It depicts the selected interior side-view composition and provides the reference for the character, book, lotus-window setting and table arrangement. The Ref2VA input preparation downsizes references according to the output-area “match” policy and aligns dimensions to a 32-pixel grid; it does not upscale small inputs under this policy.
 
+![Production scene reference, embedded from the exact input PNG. Zhiwei holds the open paper book beside a lotus window; the table contains incense, dragon-beard candy, bamboo slips, one celadon teapot and one teacup. This is the image supplied twice as Picture 1 and Picture 2, not a generated video frame or a three-view identity set.](figures/production-scene-reference.png)
+
 The request contains **two copies of this same image**, named by order as Picture 1 and Picture 2. The prompt explicitly identifies Picture 2 as a repeat of Picture 1 and asks for stable appearance while continuing the incoming motion and pose. These are two conditioning blocks containing one distinct view; they are not a front/side/back identity dataset. The H3 semantic encoder receives the images and their condition labels, while the visual encoder produces the reference latents used by the joint generator.
 
 Both blocks remain present on successive requests. Reuse of their encoded values preserves the same conditioning contract; it does not turn a reference into a forced first frame. The reference image is also distinct from `tea-quality-anchor.png`, the manually reviewed frame used only by the publication screen. Their separate hashes and dimensions are included in [the method manifest](evidence/continuity-design.json).
@@ -226,6 +284,10 @@ Current voice generation is prompt-only: no external audio-reference file is att
 The persistent reference is useful when the camera, room and outfit should remain stable. It can conflict with an intended permanent change: a reference showing an open window or an earlier outfit continues to condition subsequent generation after a request to change that state. The prompt and scene ledger can express the intended change, but they do not remove contradictory visual evidence automatically.
 
 In the current public profile, the selected scene reference remains fixed. Automatic replacement with an action-specific image or a visually verified updated world state is not an established capability. A future scene-change protocol would need to coordinate the reference revision, intended state and accepted tail, then validate the transition. Merely recording “window closed” in the ledger does not demonstrate that the pixels show a closed window.
+
+![Experimental closed-leaf reference from subsequent private action development. A built-in image-generation edit changes the near shutter while retaining the intended identity, camera and tabletop arrangement. This image is a requested state target; it is not evidence that H3 successfully performed the action. It has not replaced the production reference.](figures/experimental-window-reference.png)
+
+The second image is an **experimental asset**, prepared after the report's fixed performance cohorts. It is shown here to make the reference inputs inspectable, not to add an action-success result to the evaluation. Its edit asks for only the near shutter to close, with the far leaf and visible pond opening preserved. Subsequent generated motion must still be reviewed for hand contact, unintended movement of other leaves, state retention and scene continuity. The [reference-image manifest](evidence/reference-images.json) records both source filenames, dimensions, byte hashes and the complete image-edit prompt. Both PNGs are embedded directly in this HTML at their original resolution.
 
 ### 4.4 Opening and continuation geometry
 
@@ -834,3 +896,55 @@ The local analyzer uses the retained paths recorded in its trace catalog. To rep
 The [continuity protocol manifest](evidence/continuity-design.json) records the selected model, reference roles, temporal geometry and inspected-source hashes. The [continuity ablation records](evidence/continuity-ablation.json) contain all 180 sanitized segment records and 177 measured boundaries. Unchecked prefix-equality fields are null, rather than recorded as failed checks.
 
 This HTML embeds its vector figures, presentation code and evidence downloads. It can be read offline without adjacent files. Raw Nsight traces, model weights, media and latent checkpoints are not embedded. Rebuilding the paper requires the source modules and data; rerunning a historical experiment additionally requires its original artifacts and configuration.
+
+### B.1 Inspectable prompt examples
+
+The gallery distinguishes source policy templates from exact H3 prompt strings saved in transmitted request records. Original Chinese policy text is retained verbatim; explanatory text is in English. Each renderer example identifies its reference, geometry, seed and intended state changes. The transmitted Picture 2 suffix is included. These are private research requests, not proof that the actions succeeded or were broadcast. [Download all prompt examples](evidence/prompt-examples.json)
+
+PROMPT_EXPLORER
+
+### B.2 ICML writing references
+
+The following ten papers were verified against the official ICML proceedings. Their PDFs were collected locally, and the opening ten pages of each PDF were inspected for problem framing, method organization, figures and evaluation presentation. The recommendations below are our editorial interpretation. These papers are **writing references, not evaluated H3 baselines or evidence that their methods are implemented in this system**. Links lead to the official paper records and PDFs; the report does not reproduce their figures or prose.
+
+**TABLECAPTION: Ten ICML papers and a concrete writing pattern to borrow.** Publication year is the proceedings year, not the first arXiv date.
+
+| Paper | Venue | Inspect | Apply to this report |
+|---|---|---|---|
+| [Fast Inference from Transformers via Speculative Decoding](https://proceedings.mlr.press/v202/leviathan23a.html) · [PDF](https://proceedings.mlr.press/v202/leviathan23a/leviathan23a.pdf) | ICML 2023 | Algorithm 1, the analysis of arithmetic work versus latency, and the execution trace in Figure 5 | State exactly what an optimization preserves. Separate extra computation, parallelism and measured wall-clock benefit. Do not equate more FLOPs with greater latency. |
+| [Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads](https://proceedings.mlr.press/v235/cai24b.html) · [PDF](https://raw.githubusercontent.com/mlresearch/v235/main/assets/cai24b/cai24b.pdf) | ICML 2024 | Figure 2's mechanism view, Figure 3's speed/quality presentation, and variant ablations | Give variants distinct names and fidelity contracts. Put end-to-end speed beside quality evidence; do not pool materially different model variants. |
+| [Break the Sequential Dependency of LLM Inference Using Lookahead Decoding](https://proceedings.mlr.press/v235/fu24a.html) · [PDF](https://raw.githubusercontent.com/mlresearch/v235/main/assets/fu24a/fu24a.pdf) | ICML 2024 | Table 1's experimental settings, Section 5.1 and Section 5.4 | Put hardware, parallelism, model and workload beside results. Separate the mechanism's potential from the speedup obtained by an actual implementation. |
+| [FlexGen: High-Throughput Generative Inference of Large Language Models with a Single GPU](https://proceedings.mlr.press/v202/sheng23a.html) · [PDF](https://proceedings.mlr.press/v202/sheng23a/sheng23a.pdf) | ICML 2023 | The compute graph and schedule figures; Tables 4 and 5 | Define the operating objective first, then show scheduling and controlled ablations. A throughput-oriented workload is not an interactive response-time benchmark. |
+| [DéjàVu: KV-cache Streaming for Fast, Fault-tolerant Generative LLM Serving](https://proceedings.mlr.press/v235/strati24a.html) · [PDF](https://raw.githubusercontent.com/mlresearch/v235/main/assets/strati24a/strati24a.pdf) | ICML 2024 | Figure 5's system view, Figure 6's implementation decomposition and Table 1's primitive interface | Explain the harness through interfaces, data ownership and recovery. Separate a persistent state mechanism from the applications that consume it. |
+| [SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models](https://proceedings.mlr.press/v202/xiao23c.html) · [PDF](https://proceedings.mlr.press/v202/xiao23c/xiao23c.pdf) | ICML 2023 | The outlier motivation, Figure 6's operator precision map and accuracy tables | Show where each precision is used. Distinguish an equivalent algebraic transform from approximate low-bit arithmetic and separately evaluate accuracy, memory and latency. |
+| [KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache](https://proceedings.mlr.press/v235/liu24bz.html) · [PDF](https://raw.githubusercontent.com/mlresearch/v235/main/assets/liu24bz/liu24bz.pdf) | ICML 2024 | Figure 2's distribution evidence, Figure 3's algorithm and Figure 4's memory/throughput comparison | Present the measured bottleneck before the optimization. Report the deployment consequence of memory savings rather than treating reduced bytes as automatic speedup. |
+| [Improved Denoising Diffusion Probabilistic Models](https://proceedings.mlr.press/v139/nichol21a.html) · [PDF](https://proceedings.mlr.press/v139/nichol21a/nichol21a.pdf) | ICML 2021 | Schedule/objective ablation tables and the sampling-speed section | Give one controlled question to each experiment. Plot quality against sampling cost rather than selecting a fast point without its quality context. |
+| [Consistency Models](https://proceedings.mlr.press/v202/song23a.html) · [PDF](https://proceedings.mlr.press/v202/song23a/song23a.pdf) | ICML 2023 | Figure 2's method explanation, Figure 3's factor ablations and Figure 4's sampling comparison | Introduce the mechanism before the result and label training routes and sampling budgets. Its use of “consistency” does not substantiate temporal identity preservation in our avatar. |
+| [History-Guided Video Diffusion](https://proceedings.mlr.press/v267/song25b.html) · [PDF](https://raw.githubusercontent.com/mlresearch/v267/main/assets/song25b/song25b.pdf) | ICML 2025 | History-conditioning diagrams, the long-rollout example and quantitative comparisons | Visualize the history/reference contract and retain timed rollout evidence. Its learned model and guidance do not transfer into H3 merely through a prompt or citation. |
+
+### B.3 What belongs in the report
+
+This is a systems technical report adopting academic exposition, not a claim of ICML acceptance or a new trained foundation model. Its central argument is that a particular combination of model task, serving implementation, continuation protocol and interaction controller supports a bounded five-second streaming workload. Every claimed benefit needs a named configuration, a measurement scope and an explicit limit.
+
+**TABLECAPTION: Editorial inclusion and claim boundaries.** “Include” means describe with the stated evidence, not promote an aspiration to an achieved result.
+
+| Material | Placement and treatment | Required evidence | Do not claim |
+|---|---|---|---|
+| Problem and objective | Main introduction: playback deadline, interaction delay, quality and continuity | Explicit clocks and workload geometry | Backend real-time factor is a viewer-response guarantee |
+| FastH3 → Ref2VA Turbo | Main model-selection section | Task path, adapter, resolution, frame count and conditioning | Shortening media from 15 s to 5 s is an isolated 3× infrastructure speedup |
+| Exact optimizations | Main methods, grouped by the work they remove | Correctness scope plus matched timing where available | The entire stack is lossless because one cache is exact |
+| Sage, MXFP8 and NVFP4 | Main precision/fidelity table and quality discussion | Operator coverage, selected policy and applicable comparisons | Approximate arithmetic is numerically identical to BF16 |
+| Nsight traces | Main bottleneck and scheduling figures | Trace provenance, instrumented versus unprofiled runs, CPU versus GPU scopes | CPU NVTX ranges are GPU kernel time or additive critical-path costs |
+| Latency and throughput | Main evaluation | Sample count, matched configuration, P50/P95, deadline misses and all clock definitions | Kernel speed, request-ready time and Twitch-viewer latency are interchangeable |
+| Reference images and motion context | Main method with actual embedded images | Input roles, dimensions, hashes, raw-tail and prefix mechanisms | Two copies are independent views, or reference conditioning prevents all drift |
+| Harness | Main interface/lifecycle diagram and compact tables | Deployed path versus research path, ledger and receipt contracts | A planned/generated action is an observed completed effect |
+| Prompt design | Compact structure in main text; complete examples in B.1 | Captured request versus source template, reference and state provenance | The model reliably obeys every temporal or physical instruction |
+| Action samples | Finite qualitative evidence and limitations | Full phase sequence, persistence checks and retained failures | Arbitrary actions, unrestricted object manipulation or universal success |
+| Long-run quality | Evaluation and limitations | Duration, checkpoints, drift/seam measures and failure cases | Infinite duration, 24-hour stability or no degradation without such tests |
+| Audio | Separate model, decoder and transport discussion | PCM/AAC distinction, intelligibility/speaker evidence when actually measured | No clipping implies natural, intelligible or faithful speech |
+| Optimization history | Appendix A, with only decision-changing findings in the main text | Retained experiment records, rejected branches and baseline definitions | Every historical attempt is cumulative or still enabled |
+| Reproduction material | Configuration, hashes, prompt/source excerpts and artifact index | Enough detail to inspect or rerun within access constraints | Credentials, stream keys, private viewer content or unsupported implementation details |
+
+The main text should follow **problem → design → mechanism → controlled evidence → limitation**. An overview figure should explain the information flow, a precision table should expose approximation boundaries, and each performance figure should answer one measurable question. Full prompts, historical logs and parameter detail belong in expandable or downloadable appendices. Rejected experiments remain visible when they explain a design choice; repeated descriptions of the same optimization should be consolidated.
+
+Numerical observations are retained at their original scope. Missing comparisons are stated as missing. A gallery frame illustrates an instance; a success-rate claim needs a defined sample population and review rubric. A deterministic state-machine test validates control behavior, not the video model's visual compliance. The literature reading list supplies presentation examples and conceptual context, not experimental evidence for our implementation.

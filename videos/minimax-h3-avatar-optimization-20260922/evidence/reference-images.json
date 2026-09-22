@@ -1,0 +1,35 @@
+{
+  "images": [
+    {
+      "source": "assets/zhiwei-lotus-v1/reference-interior-side-liaozhai-tea-v1.png",
+      "embedded_as": "figures/production-scene-reference.png",
+      "role": "production reference; repeated as two image-conditioning blocks",
+      "bytes": 2139416,
+      "sha256": "41f1f15af74b88d9b11117bc73b0af560f9128aeb32c0093f0b92e019e826376",
+      "dimensions": [
+        1672,
+        941
+      ]
+    },
+    {
+      "source": "experiments/food-tea-window-20260922/assets/window-near-closed-v1.png",
+      "embedded_as": "figures/experimental-window-reference.png",
+      "role": "private experimental target; not deployed or action-qualified",
+      "bytes": 2152171,
+      "sha256": "0d8254f9d7e32203872ed95fad5831baceb2afb666c722ad8c2cd960daf4bd00",
+      "dimensions": [
+        1672,
+        941
+      ]
+    }
+  ],
+  "experimental_edit": {
+    "tool": "built-in image_gen",
+    "input": "assets/zhiwei-lotus-v1/reference-interior-side-liaozhai-tea-v1.png",
+    "output": "window-near-closed-v1.png",
+    "prompt": "Use case: precise-object-edit.\nAsset type: private H3 interactive-avatar state reference, a matched same-camera endpoint for closing ONE window leaf.\nInput image 1 is the EDIT TARGET. Preserve the entire image as closely as possible; edit only the near wooden window shutter.\nPrimary edit: The viewer-right window leaf, the one immediately beside the woman's left side in the image and nearest to her seat, is now fully CLOSED across its own portion of the existing opening. Rotate that SAME rigid rectangular dark wooden lattice-and-paper shutter about its existing vertical hinge, into the plane of the window frame. Its thin translucent cream paper inserts obscure the pond behind that closed leaf. The far viewer-left leaf stays exactly as before, open, and the lotus pond remains visible through the remaining left portion of the opening. Show a physically plausible closed shutter, not a curtain, not a new wall or a new panel. Only ONE leaf changes angle.\nInvariants: exact same adult woman, face, freckles, hair, expression, ink-green hanfu, hand pose holding the same open book, physical cover text “聊斋志异”, chair, fixed side-view camera, aspect ratio and crop. Keep the incense burner and its smoke, ONE candy plate, bamboo slips, ONE celadon teapot and ONE teacup all at exactly the same positions. Retain the original face illumination and exposure; only subtle local occlusion behind the closed shutter changes. Preserve fine skin detail and all decorative wood geometry.\nNo additional people, no mirror, no cloth, no extra objects, no annotations or text overlay. This is a reference-frame edit, not a redesigned scene.",
+    "status": "private_experimental_reference",
+    "production_asset_replaced": false
+  },
+  "performance_cohorts_unchanged": true
+}

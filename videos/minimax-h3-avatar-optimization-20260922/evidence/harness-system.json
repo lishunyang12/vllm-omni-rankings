@@ -1,0 +1,210 @@
+{
+  "scope": "Source inspection plus private action evidence; not a declaration of live deployment",
+  "broadcast": false,
+  "observed_world_updated": false,
+  "sources": {
+    "app/avatar_chat_inbox.py": {
+      "bytes": 7963,
+      "sha256": "d59f94e3728a9e5807a4c7f0e0eb8a7ba0b92f8b680854c664143b274e6c0128"
+    },
+    "app/avatar_text_worker.py": {
+      "bytes": 4987,
+      "sha256": "b0cfdd192954f46f4e0060b9c97eef80196731d38a57aaae31eca939f3c574de"
+    },
+    "app/avatar_text.py": {
+      "bytes": 18777,
+      "sha256": "6c58c76bb580f658c4d1e89271a5beddc3aad55ec21588931561f88ef97ac132"
+    },
+    "app/avatar_zhiwei_dialogue.py": {
+      "bytes": 18986,
+      "sha256": "80f8db53a6f5b7fb007d3edd21f10e46f5634fcb3e5551315d2675673eeb1ca2"
+    },
+    "app/avatar_agent_replies.py": {
+      "bytes": 22578,
+      "sha256": "38e16d401c0f99dc666455fc1fe819ddabf437a6a3e1883782a610c5ba48b56d"
+    },
+    "app/avatar_short_prompt.py": {
+      "bytes": 8533,
+      "sha256": "b2f9de55420c7e7187b69cd65b49d9f0ea5fc65b4c2dcc0837ca343d8da02118"
+    },
+    "app/avatar_zhiwei_actions.py": {
+      "bytes": 7775,
+      "sha256": "e3f0e802a3305ef94968880f7ef91e50e266ff8c86bd3412f1ed1d7e48696f86"
+    },
+    "app/avatar_continuous.py": {
+      "bytes": 12092,
+      "sha256": "b01da56c20042dc5424363d2002652707f8aa3c7b31410a3b03fa5818ce416ef"
+    },
+    "app/avatar_world/actions.py": {
+      "bytes": 17238,
+      "sha256": "e9b397ec2019839025b0cd547499ed03d067a44f41df8781760aaaedb46dff04"
+    },
+    "app/avatar_world/planner.py": {
+      "bytes": 23252,
+      "sha256": "15e55baba87d34238de6b1663ea876b838aa5bf57ee0adcbf23dbccf46720c4c"
+    },
+    "app/avatar_world/interaction_lab.py": {
+      "bytes": 23539,
+      "sha256": "dda9a44d16ff2cfa46f2c6d54ca38bb7d8705969fceb0fc71a056d545cbadc27"
+    },
+    "app/avatar_world/grounding.py": {
+      "bytes": 494,
+      "sha256": "649e0e1bc2b860956b61fe6e575e24d25fd28ef26ce3d6e885b43046aa2493af"
+    },
+    "app/avatar_world/runtime.py": {
+      "bytes": 34104,
+      "sha256": "4b4216891d59bf27e82994c03f6d55bfeb8a5b67b66e069058feaa45986fc94a"
+    },
+    "app/avatar_world/prompts.py": {
+      "bytes": 6613,
+      "sha256": "c34f0a4bca9f1680e16f5ae3eaf37aec4eb7568d125f26d7af6d5b4332e7433a"
+    },
+    "app/benchmark_short_ref2va.py": {
+      "bytes": 14140,
+      "sha256": "35fb62be418749e454a450b4f7e0fd109875d00970825637d84984c34e984d01"
+    },
+    "scripts/probe_interaction_lab.py": {
+      "bytes": 10340,
+      "sha256": "bc53645b1d3027a435acda4f2235d7d57c4ef7fe9b9ddc100aeb67a717428857"
+    }
+  },
+  "routing": {
+    "mode": "private_planner_probe",
+    "broadcast": false,
+    "observed_state_updated": false,
+    "rows": [
+      {
+        "message": "!ask 拿一块龙须酥吃一口",
+        "decision": {
+          "intent": "act",
+          "actions": [
+            "taste_candy"
+          ],
+          "utterances": [],
+          "language": "Mandarin Chinese"
+        },
+        "seconds": 0.32216981798410416,
+        "phases": [
+          "place_book",
+          "take_one_bite"
+        ]
+      },
+      {
+        "message": "!ask 喝一口茶",
+        "decision": {
+          "intent": "act",
+          "actions": [
+            "sip_tea"
+          ],
+          "utterances": [],
+          "language": "Mandarin Chinese"
+        },
+        "seconds": 0.2744871829636395,
+        "phases": [
+          "place_book",
+          "lift_and_sip"
+        ]
+      },
+      {
+        "message": "!ask 给杯子添点茶",
+        "decision": {
+          "intent": "act",
+          "actions": [
+            "pour_tea"
+          ],
+          "utterances": [],
+          "language": "Mandarin Chinese"
+        },
+        "seconds": 0.2888502220157534,
+        "phases": [
+          "place_book",
+          "pour_once"
+        ]
+      },
+      {
+        "message": "!ask 把你旁边那扇窗关上",
+        "decision": {
+          "intent": "act",
+          "actions": [
+            "close_window_leaf"
+          ],
+          "utterances": [],
+          "language": "Mandarin Chinese"
+        },
+        "seconds": 0.2736139891203493,
+        "phases": [
+          "place_book",
+          "operate_leaf_once"
+        ]
+      },
+      {
+        "message": "!ask 先吃一口酥，再喝一口茶",
+        "decision": {
+          "intent": "act",
+          "actions": [
+            "taste_candy",
+            "sip_tea"
+          ],
+          "utterances": [],
+          "language": "Mandarin Chinese"
+        },
+        "seconds": 0.3557929079979658,
+        "phases": [
+          "place_book",
+          "take_one_bite",
+          "lift_and_sip"
+        ]
+      },
+      {
+        "message": "!ask 别吃酥了，喝口茶吧",
+        "decision": {
+          "intent": "act",
+          "actions": [
+            "sip_tea"
+          ],
+          "utterances": [],
+          "language": "Mandarin Chinese"
+        },
+        "seconds": 0.2714952959213406,
+        "phases": [
+          "place_book",
+          "lift_and_sip"
+        ]
+      },
+      {
+        "message": "!ask 停下，先别喝了",
+        "decision": {
+          "intent": "cancel",
+          "actions": [],
+          "utterances": [],
+          "language": "Mandarin Chinese"
+        },
+        "seconds": 0.1573318389710039,
+        "phases": [
+          "hold_current_state"
+        ]
+      },
+      {
+        "message": "!ask 杯子里是什么？",
+        "decision": {
+          "intent": "answer",
+          "actions": [],
+          "utterances": [
+            "杯里是桂花乌龙茶。"
+          ],
+          "language": "Mandarin Chinese"
+        },
+        "seconds": 0.9278954891487956,
+        "phases": [
+          "answer"
+        ]
+      }
+    ]
+  },
+  "caveats": [
+    "Source policies and captured renderer requests have different provenance.",
+    "The research writer retains two-line/20-Chinese-character limits; the public dialogue path permits longer complete answers.",
+    "Photometric admission is not semantic action verification.",
+    "The first attempt to vary seeds was overridden by ContinuousGenerator; corrected trials record effective seeds."
+  ]
+}

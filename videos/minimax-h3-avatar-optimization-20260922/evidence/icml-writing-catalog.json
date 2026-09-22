@@ -1,0 +1,197 @@
+[
+  {
+    "id": "speculative-decoding",
+    "title": "Fast Inference from Transformers via Speculative Decoding",
+    "year": "2023",
+    "authors": [
+      "Yaniv Leviathan",
+      "Matan Kalman",
+      "Yossi Matias"
+    ],
+    "venue": "International Conference on Machine Learning",
+    "official_url": "https://proceedings.mlr.press/v202/leviathan23a.html",
+    "pdf_url": "https://proceedings.mlr.press/v202/leviathan23a/leviathan23a.pdf",
+    "pdf_sha256": "b287adca11d8126e86dfd6facf162f74f2f6dcfefdef9130af7dde35b08e1d1d",
+    "pdf_bytes": 479566,
+    "total_pdf_pages": 13,
+    "pages_inspected_for_style": 10
+  },
+  {
+    "id": "medusa",
+    "title": "Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads",
+    "year": "2024",
+    "authors": [
+      "Tianle Cai",
+      "Yuhong Li",
+      "Zhengyang Geng",
+      "Hongwu Peng",
+      "Jason D. Lee",
+      "Deming Chen",
+      "Tri Dao"
+    ],
+    "venue": "International Conference on Machine Learning",
+    "official_url": "https://proceedings.mlr.press/v235/cai24b.html",
+    "pdf_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/cai24b/cai24b.pdf",
+    "pdf_sha256": "99b404204057b0f3fdaf3cca9f024ffba82dcb62a4e8934cdcb89519c94359f5",
+    "pdf_bytes": 1970523,
+    "total_pdf_pages": 27,
+    "pages_inspected_for_style": 10
+  },
+  {
+    "id": "lookahead-decoding",
+    "title": "Break the Sequential Dependency of LLM Inference Using Lookahead Decoding",
+    "year": "2024",
+    "authors": [
+      "Yichao Fu",
+      "Peter Bailis",
+      "Ion Stoica",
+      "Hao Zhang"
+    ],
+    "venue": "International Conference on Machine Learning",
+    "official_url": "https://proceedings.mlr.press/v235/fu24a.html",
+    "pdf_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/fu24a/fu24a.pdf",
+    "pdf_sha256": "b04a936f01543226ba4803a7316b4c10edea9840b0ea5aa684b926d81b4c0eb4",
+    "pdf_bytes": 925568,
+    "total_pdf_pages": 20,
+    "pages_inspected_for_style": 10
+  },
+  {
+    "id": "flexgen",
+    "title": "FlexGen: High-Throughput Generative Inference of Large Language Models with a Single GPU",
+    "year": "2023",
+    "authors": [
+      "Ying Sheng",
+      "Lianmin Zheng",
+      "Binhang Yuan",
+      "Zhuohan Li",
+      "Max Ryabinin",
+      "Beidi Chen",
+      "Percy Liang",
+      "Christopher Re",
+      "Ion Stoica",
+      "Ce Zhang"
+    ],
+    "venue": "International Conference on Machine Learning",
+    "official_url": "https://proceedings.mlr.press/v202/sheng23a.html",
+    "pdf_url": "https://proceedings.mlr.press/v202/sheng23a/sheng23a.pdf",
+    "pdf_sha256": "7cd9673c37640011d38ef4b8595f5e1e09a85b1f803a3734f19c97ca66c75b9e",
+    "pdf_bytes": 524133,
+    "total_pdf_pages": 23,
+    "pages_inspected_for_style": 10
+  },
+  {
+    "id": "dejavu",
+    "title": "DéjàVu: KV-cache Streaming for Fast, Fault-tolerant Generative LLM Serving",
+    "year": "2024",
+    "authors": [
+      "Foteini Strati",
+      "Sara Mcallister",
+      "Amar Phanishayee",
+      "Jakub Tarnawski",
+      "Ana Klimovic"
+    ],
+    "venue": "International Conference on Machine Learning",
+    "official_url": "https://proceedings.mlr.press/v235/strati24a.html",
+    "pdf_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/strati24a/strati24a.pdf",
+    "pdf_sha256": "6e4694a830765c7d018b2973ea5e1009aee59912efd4f6e7150bbca3e1415bcb",
+    "pdf_bytes": 2245741,
+    "total_pdf_pages": 27,
+    "pages_inspected_for_style": 10
+  },
+  {
+    "id": "smoothquant",
+    "title": "SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models",
+    "year": "2023",
+    "authors": [
+      "Guangxuan Xiao",
+      "Ji Lin",
+      "Mickael Seznec",
+      "Hao Wu",
+      "Julien Demouth",
+      "Song Han"
+    ],
+    "venue": "International Conference on Machine Learning",
+    "official_url": "https://proceedings.mlr.press/v202/xiao23c.html",
+    "pdf_url": "https://proceedings.mlr.press/v202/xiao23c/xiao23c.pdf",
+    "pdf_sha256": "551636e4e0bd9dda9b01186473bc46c72c56e0c190a28fe6b7ed4fa80055372e",
+    "pdf_bytes": 5203060,
+    "total_pdf_pages": 13,
+    "pages_inspected_for_style": 10
+  },
+  {
+    "id": "kivi",
+    "title": "KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache",
+    "year": "2024",
+    "authors": [
+      "Zirui Liu",
+      "Jiayi Yuan",
+      "Hongye Jin",
+      "Shaochen Zhong",
+      "Zhaozhuo Xu",
+      "Vladimir Braverman",
+      "Beidi Chen",
+      "Xia Hu"
+    ],
+    "venue": "International Conference on Machine Learning",
+    "official_url": "https://proceedings.mlr.press/v235/liu24bz.html",
+    "pdf_url": "https://raw.githubusercontent.com/mlresearch/v235/main/assets/liu24bz/liu24bz.pdf",
+    "pdf_sha256": "205965fbe86d1f0e3194dc88f47d830b1fa73a47ebeb2cb9a8e8351454e999b6",
+    "pdf_bytes": 1979912,
+    "total_pdf_pages": 13,
+    "pages_inspected_for_style": 10
+  },
+  {
+    "id": "improved-ddpm",
+    "title": "Improved Denoising Diffusion Probabilistic Models",
+    "year": "2021",
+    "authors": [
+      "Alexander Quinn Nichol",
+      "Prafulla Dhariwal"
+    ],
+    "venue": "International Conference on Machine Learning",
+    "official_url": "https://proceedings.mlr.press/v139/nichol21a.html",
+    "pdf_url": "http://proceedings.mlr.press/v139/nichol21a/nichol21a.pdf",
+    "pdf_sha256": "e365be4acbef22492cbe7c534019a025981cd88598c1e8e04f40d588f024d39d",
+    "pdf_bytes": 1167544,
+    "total_pdf_pages": 10,
+    "pages_inspected_for_style": 10
+  },
+  {
+    "id": "consistency-models",
+    "title": "Consistency Models",
+    "year": "2023",
+    "authors": [
+      "Yang Song",
+      "Prafulla Dhariwal",
+      "Mark Chen",
+      "Ilya Sutskever"
+    ],
+    "venue": "International Conference on Machine Learning",
+    "official_url": "https://proceedings.mlr.press/v202/song23a.html",
+    "pdf_url": "https://proceedings.mlr.press/v202/song23a/song23a.pdf",
+    "pdf_sha256": "8f65127c770a8e8994777010ed36dfcf64fc38f840042778eef7fe8ab2c12e10",
+    "pdf_bytes": 9793005,
+    "total_pdf_pages": 42,
+    "pages_inspected_for_style": 10
+  },
+  {
+    "id": "history-guided-video",
+    "title": "History-Guided Video Diffusion",
+    "year": "2025",
+    "authors": [
+      "Kiwhan Song",
+      "Boyuan Chen",
+      "Max Simchowitz",
+      "Yilun Du",
+      "Russ Tedrake",
+      "Vincent Sitzmann"
+    ],
+    "venue": "International Conference on Machine Learning",
+    "official_url": "https://proceedings.mlr.press/v267/song25b.html",
+    "pdf_url": "https://raw.githubusercontent.com/mlresearch/v267/main/assets/song25b/song25b.pdf",
+    "pdf_sha256": "58c8dd61dac37483c59642b5e52a98ecef5bcbd3fde26cdfdda87846235966df",
+    "pdf_bytes": 13257308,
+    "total_pdf_pages": 39,
+    "pages_inspected_for_style": 10
+  }
+]

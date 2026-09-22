@@ -95,6 +95,7 @@ The supplied dashboard image displays generation P50/P95 values of 3.66/3.67 s, 
     # The vector architecture already expresses this path; omit the duplicate ASCII block.
     architecture = re.sub(r'```text\nTwitch public chat.*?```\n*', '', architecture, flags=re.S)
     live_logic = (ROOT / 'live-logic.md').read_text().strip()
+    live_logic += '\n\n' + (ROOT / 'harness.md').read_text().strip()
     live_logic = live_logic.replace('### 3.4 Live program and interaction policy', '### 3.4 Live program and interaction policy\n\n![Live control and scheduling. Active answer segments retain priority, queued interactions replace idle reading, and relay receipts bound generation lookahead. This diagram shows control policy, not guaranteed visual execution.](figures/live-control.svg)')
     audio = '![Native audio flow. H3 jointly generates audio and video; the FP32 audio decoder produces PCM that is preserved through validation and resampled for one final broadcast AAC encode. Generated speech content and transport distortion remain separate diagnoses.](figures/audio-path.svg)\n\n' + shift(numbered(r, 11), '6')
     parts = [
@@ -114,13 +115,19 @@ The demonstration presents an established character and scene through a public b
         ('9. Future work', numbered(r, 15)),
         ('10. Conclusion', conclusion),
         ('Appendix A. Historical record', '### A.1 Early trajectory and rejected branches\n\n' + h['Early trajectory, including rejected branches'] + '\n\n### A.2 Scheduling overlap and negative retests\n\n' + h['Exact overlap branch and negative retests'] + '\n\n### A.3 Consolidated decision ledger\n\n' + ledger + '\n\n### A.4 Indexed experiment families\n\nThe full descriptions, document hashes and evidence status are retained in the embedded [history inventory](evidence/history-inventory.json). The index below identifies the scope without repeating the methods discussed in the main text.\n\n' + family_index),
-        ('Appendix B. Reproducibility', reproducibility),
+        ('Appendix B. Reproducibility', reproducibility + '''\n\n### B.1 Inspectable prompt examples
+
+The gallery distinguishes source policy templates from exact H3 prompt strings saved in transmitted request records. Original Chinese policy text is retained verbatim; explanatory text is in English. Each renderer example identifies its reference, geometry, seed and intended state changes. The transmitted Picture 2 suffix is included. These are private research requests, not proof that the actions succeeded or were broadcast. [Download all prompt examples](evidence/prompt-examples.json)
+
+PROMPT_EXPLORER
+
+''' + (ROOT / 'editorial-scope.md').read_text()),
     ]
     raw = '# ' + TITLE + '\n\n' + '\n\n'.join('## ' + title + '\n\n' + body for title, body in parts)
     raw = re.sub(r'\*\*Table \d+\. (.+?)\*\*', r'**TABLECAPTION: \1**', raw)
     raw = raw.replace('Figures 1–2', 'the continuity figures')
     raw = raw.replace('See the branch tables below.', 'See Appendix A.2.')
-    (ROOT / 'paper.md').write_text(raw + '\n')
+    (ROOT / 'paper.md').write_text(raw.rstrip() + '\n')
     return raw
 
 
@@ -131,7 +138,34 @@ CSS = '''
 '''
 
 
+CSS += '''
+.prompt-card{margin:14px 0;border:1px solid #c4cdd5;border-radius:4px;padding:12px 16px;break-inside:avoid}.prompt-card summary{cursor:pointer;font:600 14px/1.5 system-ui,sans-serif}.prompt-meta{font:12px/1.6 system-ui,sans-serif;color:#59616b}.prompt-source{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.6}.prompt-source code{white-space:inherit;overflow-wrap:inherit}.prompt-tools{display:flex;gap:10px;margin:15px 0}
+'''
+
+
+def prompt_gallery():
+    rows=json.loads((ROOT/'evidence/prompt-examples.json').read_text())
+    content='<div class="prompt-tools"><button type="button" onclick="document.querySelectorAll(\'.prompt-card\').forEach(x=>x.open=true)">Expand all prompts</button><button type="button" onclick="document.querySelectorAll(\'.prompt-card\').forEach(x=>x.open=false)">Collapse all</button></div>'
+    for i,row in enumerate(rows):
+        content+='<details class="prompt-card" id="prompt-'+html.escape(row['id'],quote=True)+'"'+(' open' if i==0 else '')+'><summary>'+html.escape(row['title'])+' · '+html.escape(row['kind'])+'</summary>'
+        meta=row['scope']+'. '+row['note']
+        if 'geometry' in row:
+            g=row['geometry']
+            meta+=f" Reference: {row['reference_image']}; {row['reference_copies']} image blocks; {row['external_audio_references']} external audio references. {g['width']}×{g['height']}, {g['fps']} fps, {g['window_frames']} frames, {g['overlap_frames']} overlapping frames; seed {row['seed']}."
+        else:meta+=' Source: '+row['source']+'.'
+        # Preserve the exact captured text without literal trailing whitespace in HTML.
+        prompt_html = re.sub(r'[ \t]+(?=\n|$)', lambda m: ''.join(f'&#{ord(c)};' for c in m[0]), html.escape(row['prompt']))
+        content+='<p class="prompt-meta">'+html.escape(meta)+'</p><pre class="prompt-source"><code>'+prompt_html+'</code></pre>'
+        if 'intended_state_delta' in row:
+            content+='<p class="prompt-meta">Intended state change, not an observed-state commit:</p><pre class="prompt-source"><code>'+html.escape(json.dumps(row['intended_state_delta'],ensure_ascii=False,indent=2))+'</code></pre>'
+        content+='<p class="prompt-meta">Prompt SHA256: '+row['prompt_sha256']+'</p></details>'
+    return content
+
+
 def main():
+    global CSS
+    font=base64.b64encode((ROOT/'fonts/prompt-cjk-subset.otf').read_bytes()).decode()
+    CSS += '@font-face{font-family:H3PromptCJK;src:url(data:font/otf;base64,'+font+');font-display:swap}.prompt-source,.prompt-source code{font-family:ui-monospace,SFMono-Regular,Consolas,H3PromptCJK,monospace}'
     raw = compose()
     md = MarkdownIt('commonmark', {'html': False}).enable('table')
     tokens = md.parse(raw)
@@ -186,6 +220,7 @@ def main():
         svg = svg.replace('<svg ', '<svg role="img" aria-label="' + html.escape(alt, quote=True) + '" ', 1)
         return f'<figure id="figure-{figure_number}">' + svg + f'<figcaption><strong>Figure {figure_number}.</strong> ' + html.escape(alt) + '</figcaption></figure>'
     body = re.sub(r'<p><img src="(figures/[^\"]+\.(?:svg|png))" alt="([^\"]*)"\s*/?></p>', embed_figure, body)
+    body = body.replace('<p>PROMPT_EXPLORER</p>',prompt_gallery())
     attachments = {}
     def local_link(m):
         href = html.unescape(m.group(1))
@@ -203,7 +238,7 @@ def main():
         return 'href="#' + key + '"'
     body = re.sub(r'href="([^"]+)"', local_link, body)
     # Include source manuscript and all builders in the single-file artifact.
-    for name in ('paper.md', 'report.md', 'continuity.md', 'history.md', 'live-logic.md'):
+    for name in ('paper.md', 'report.md', 'continuity.md', 'history.md', 'live-logic.md', 'harness.md', 'editorial-scope.md', 'build_harness.py', 'evidence/icml-writing-catalog.json', 'fonts/NotoSansCJK-LICENSE.txt'):
         attachments[name] = 'evidence-' + name.replace('.', '-')
     body += '<h2 id="appendix-c-embedded-evidence">Appendix C. Embedded evidence</h2><p>Each link downloads a byte-for-byte evidence or source file embedded in this HTML. No network request is required. Hashes identify the bundled version, not a new experiment.</p><ul class="attachment-list">'
     for name, key in sorted(attachments.items()):
@@ -220,7 +255,7 @@ const links=[...document.querySelectorAll('nav a')];
 document.getElementById('toc-search').addEventListener('input',e=>{const q=e.target.value.toLowerCase();for(const a of links)a.hidden=!a.textContent.toLowerCase().includes(q)});
 if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting)for(const a of links)a.classList.toggle('active',a.hash==='#'+e.target.id)},{rootMargin:'-8% 0px -78% 0px'});document.querySelectorAll('main h2,main h3').forEach(h=>observer.observe(h))}
 </script>'''
-    page = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="A self-contained systems paper on H3 Turbo streaming, performance engineering, reference conditioning and temporal consistency."><title>' + TITLE + ' — ' + SUBTITLE + '</title><style>' + CSS + '</style></head><body><div class="layout"><aside aria-label="Table of contents"><h2>Contents</h2><label for="toc-search">Find a section</label><input id="toc-search" type="search" placeholder="Filter headings"><nav>' + nav + '</nav></aside><main><header class="paper-head"><h1>' + TITLE + '</h1><p class="subtitle">' + SUBTITLE + '</p><div class="metadata">SYLAR · Systems technical report · 22 September 2026<br>Eight SM120 / GB202 GPUs · Retrospective experiments and bounded production observations</div><div class="tools"><span>Self-contained HTML · English</span><button type="button" onclick="window.print()">Print / save PDF</button><a href="#appendix-c-embedded-evidence">Embedded evidence</a></div></header>' + body + '<footer class="paper-footer">All figures and downloadable evidence are embedded. This revision uses retained measurements and CPU analysis; it does not introduce a new GPU experiment. Production statistics refer to the stated September 22 checkpoints.</footer></main></div>' + script + '</body></html>'
+    page = '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="A self-contained systems paper on H3 Turbo streaming, performance engineering, reference conditioning and temporal consistency."><title>' + TITLE + ' — ' + SUBTITLE + '</title><style>' + CSS + '</style></head><body><div class="layout"><aside aria-label="Table of contents"><h2>Contents</h2><label for="toc-search">Find a section</label><input id="toc-search" type="search" placeholder="Filter headings"><nav>' + nav + '</nav></aside><main><header class="paper-head"><h1>' + TITLE + '</h1><p class="subtitle">' + SUBTITLE + '</p><div class="metadata">SYLAR · Systems technical report · 22 September 2026<br>Eight SM120 / GB202 GPUs · Retrospective experiments and bounded production observations</div><div class="tools"><span>Self-contained HTML · English</span><button type="button" onclick="window.print()">Print / save PDF</button><a href="#appendix-c-embedded-evidence">Embedded evidence</a></div></header>' + body + '<footer class="paper-footer">All figures and downloadable evidence are embedded. Performance statistics retain their stated September 22 cohorts. Additional action prompts and state-reference examples are explicitly marked as private research.</footer></main></div>' + script + '</body></html>'
     (ROOT / 'index.html').write_text(page)
     print(json.dumps({'single_html': 'index.html', 'bytes': len(page.encode()), 'tables': table_number, 'figures': figure_number, 'embedded_files': len(attachments)}))
 
