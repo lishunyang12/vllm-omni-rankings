@@ -1,0 +1,4828 @@
+{
+  "method": "Read-only reanalysis of historical instrumented traces; no new GPU capture. NVTX ranges include CPU submission/waits; nested ranges and devices cannot be summed into E2E savings. Kernel interval union includes communication wait and is not SM utilization.",
+  "traces": {
+    "config_a_15s": {
+      "sqlite": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-vae-lossless-overlap-20260918/traces/fasth3-config-a-vae-lossless-hardware-metrics.sqlite",
+      "sqlite_bytes": 323694592,
+      "sqlite_sha256": "6058f9ddcd96bef2ccfd26bb41fe240cee14fbecf4e49db6be759d0aaeb07408",
+      "nvtx_cpu_ranges": {
+        "h3.profile.request": {
+          "count": 8,
+          "median_ms": 15414.566384,
+          "min_ms": 15414.488546,
+          "max_ms": 15455.607629,
+          "sum_across_ranges_ms": 123357.89944500002
+        },
+        "h3.profile.prepare_request": {
+          "count": 8,
+          "median_ms": 112.7587305,
+          "min_ms": 112.646552,
+          "max_ms": 112.847919,
+          "sum_across_ranges_ms": 902.0440939999999
+        },
+        "h3.profile.encoder": {
+          "count": 8,
+          "median_ms": 112.251464,
+          "min_ms": 112.122961,
+          "max_ms": 112.423646,
+          "sum_across_ranges_ms": 898.1468189999999
+        },
+        "h3.profile.dit": {
+          "count": 8,
+          "median_ms": 12655.7912585,
+          "min_ms": 12655.290167,
+          "max_ms": 12656.120692,
+          "sum_across_ranges_ms": 101245.798545
+        },
+        "h3.profile.dit.step_01": {
+          "count": 8,
+          "median_ms": 4412.118928,
+          "min_ms": 4411.788623,
+          "max_ms": 4425.918259,
+          "sum_across_ranges_ms": 35313.998187000005
+        },
+        "h3.profile.dit.step_02": {
+          "count": 8,
+          "median_ms": 2696.468068,
+          "min_ms": 2696.424429,
+          "max_ms": 2696.683225,
+          "sum_across_ranges_ms": 21572.085232
+        },
+        "h3.profile.dit.step_03": {
+          "count": 8,
+          "median_ms": 2701.0437695,
+          "min_ms": 2700.98575,
+          "max_ms": 2701.193876,
+          "sum_across_ranges_ms": 21608.492621999998
+        },
+        "h3.profile.dit.step_04": {
+          "count": 8,
+          "median_ms": 2702.1053065,
+          "min_ms": 2701.875035,
+          "max_ms": 2702.196859,
+          "sum_across_ranges_ms": 21616.616063
+        },
+        "h3.profile.decode": {
+          "count": 8,
+          "median_ms": 2646.1056740000004,
+          "min_ms": 2645.675962,
+          "max_ms": 2686.839174,
+          "sum_across_ranges_ms": 21209.133532
+        },
+        "h3.profile.rdma.release": {
+          "count": 8,
+          "median_ms": 0.007115,
+          "min_ms": 0.00665,
+          "max_ms": 0.008,
+          "sum_across_ranges_ms": 0.057170000000000006
+        },
+        "h3.profile.video_vae": {
+          "count": 8,
+          "median_ms": 2645.957707,
+          "min_ms": 2587.933105,
+          "max_ms": 2646.271392,
+          "sum_across_ranges_ms": 21109.89468
+        },
+        "h3.profile.audio_vae": {
+          "count": 1,
+          "median_ms": 57.625119,
+          "min_ms": 57.625119,
+          "max_ms": 57.625119,
+          "sum_across_ranges_ms": 57.625119
+        },
+        "h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "median_ms": 174.39759,
+          "min_ms": 174.39759,
+          "max_ms": 174.39759,
+          "sum_across_ranges_ms": 174.39759
+        },
+        "h3.profile.output.submit_u8_d2h": {
+          "count": 22,
+          "median_ms": 0.206316,
+          "min_ms": 0.179727,
+          "max_ms": 0.766727,
+          "sum_across_ranges_ms": 5.539473
+        },
+        "h3.profile.output.d2h_wait": {
+          "count": 22,
+          "median_ms": 26.914586999999997,
+          "min_ms": 0.02182,
+          "max_ms": 65.263757,
+          "sum_across_ranges_ms": 695.37491
+        },
+        "h3.profile.output.video_encode_mux": {
+          "count": 22,
+          "median_ms": 25.050034,
+          "min_ms": 6.457859,
+          "max_ms": 33.550162,
+          "sum_across_ranges_ms": 555.2294079999999
+        },
+        "h3.profile.output.finish": {
+          "count": 1,
+          "median_ms": 40.190649,
+          "min_ms": 40.190649,
+          "max_ms": 40.190649,
+          "sum_across_ranges_ms": 40.190649
+        },
+        "h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "median_ms": 8.310637,
+          "min_ms": 8.310637,
+          "max_ms": 8.310637,
+          "sum_across_ranges_ms": 8.310637
+        }
+      },
+      "devices": [
+        {
+          "device_id": 0,
+          "kernel_calls": 90124,
+          "kernel_sum_ms": 17670.942295,
+          "kernel_interval_union_ms": 14323.928909,
+          "first_to_last_kernel_span_ms": 15408.403347
+        },
+        {
+          "device_id": 1,
+          "kernel_calls": 78515,
+          "kernel_sum_ms": 19718.418415,
+          "kernel_interval_union_ms": 14351.499346,
+          "first_to_last_kernel_span_ms": 15408.781586
+        },
+        {
+          "device_id": 2,
+          "kernel_calls": 78515,
+          "kernel_sum_ms": 19090.155044,
+          "kernel_interval_union_ms": 14424.937116,
+          "first_to_last_kernel_span_ms": 15407.663434
+        },
+        {
+          "device_id": 3,
+          "kernel_calls": 78515,
+          "kernel_sum_ms": 19518.064101,
+          "kernel_interval_union_ms": 14404.980474,
+          "first_to_last_kernel_span_ms": 15407.846829
+        },
+        {
+          "device_id": 4,
+          "kernel_calls": 78189,
+          "kernel_sum_ms": 19475.848343,
+          "kernel_interval_union_ms": 14545.594988,
+          "first_to_last_kernel_span_ms": 15408.846798
+        },
+        {
+          "device_id": 5,
+          "kernel_calls": 78189,
+          "kernel_sum_ms": 19586.599521,
+          "kernel_interval_union_ms": 14411.109317,
+          "first_to_last_kernel_span_ms": 15405.386243
+        },
+        {
+          "device_id": 6,
+          "kernel_calls": 78189,
+          "kernel_sum_ms": 19360.140565,
+          "kernel_interval_union_ms": 14522.47481,
+          "first_to_last_kernel_span_ms": 15407.720798
+        },
+        {
+          "device_id": 7,
+          "kernel_calls": 78189,
+          "kernel_sum_ms": 19551.258357,
+          "kernel_interval_union_ms": 14480.582102,
+          "first_to_last_kernel_span_ms": 15408.56729
+        }
+      ],
+      "transfers": [
+        {
+          "device_id": 0,
+          "kind": "Device-to-Device",
+          "calls": 2889,
+          "bytes": 86078660176,
+          "gpu_sum_ms": 137.868873,
+          "over_10MB_calls": 1655,
+          "over_10MB_bytes": 78404196352,
+          "over_10MB_gpu_sum_ms": 120.844467
+        },
+        {
+          "device_id": 0,
+          "kind": "Device-to-Host",
+          "calls": 2989,
+          "bytes": 987340432,
+          "gpu_sum_ms": 24.530112,
+          "over_10MB_calls": 22,
+          "over_10MB_bytes": 978616320,
+          "over_10MB_gpu_sum_ms": 18.100888
+        },
+        {
+          "device_id": 0,
+          "kind": "Host-to-Device",
+          "calls": 177,
+          "bytes": 20083217010,
+          "gpu_sum_ms": 818.994761,
+          "over_10MB_calls": 105,
+          "over_10MB_bytes": 20074444800,
+          "over_10MB_gpu_sum_ms": 818.738025
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Device",
+          "calls": 2844,
+          "bytes": 81067712048,
+          "gpu_sum_ms": 129.26906,
+          "over_10MB_calls": 1613,
+          "over_10MB_bytes": 73393248256,
+          "over_10MB_gpu_sum_ms": 112.789253
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Host",
+          "calls": 2966,
+          "bytes": 4864912,
+          "gpu_sum_ms": 5.931488,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 1,
+          "kind": "Host-to-Device",
+          "calls": 162,
+          "bytes": 20078529674,
+          "gpu_sum_ms": 823.698024,
+          "over_10MB_calls": 105,
+          "over_10MB_bytes": 20074444800,
+          "over_10MB_gpu_sum_ms": 823.57588
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Device",
+          "calls": 2844,
+          "bytes": 81067712048,
+          "gpu_sum_ms": 130.51164,
+          "over_10MB_calls": 1613,
+          "over_10MB_bytes": 73393248256,
+          "over_10MB_gpu_sum_ms": 113.90162
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Host",
+          "calls": 2966,
+          "bytes": 4864912,
+          "gpu_sum_ms": 6.003203,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 2,
+          "kind": "Host-to-Device",
+          "calls": 162,
+          "bytes": 20078529674,
+          "gpu_sum_ms": 818.600465,
+          "over_10MB_calls": 105,
+          "over_10MB_bytes": 20074444800,
+          "over_10MB_gpu_sum_ms": 818.484657
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Device",
+          "calls": 2844,
+          "bytes": 81067712048,
+          "gpu_sum_ms": 129.946279,
+          "over_10MB_calls": 1613,
+          "over_10MB_bytes": 73393248256,
+          "over_10MB_gpu_sum_ms": 113.08164
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Host",
+          "calls": 2966,
+          "bytes": 4864912,
+          "gpu_sum_ms": 6.537897,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 3,
+          "kind": "Host-to-Device",
+          "calls": 162,
+          "bytes": 20078529674,
+          "gpu_sum_ms": 823.744034,
+          "over_10MB_calls": 105,
+          "over_10MB_bytes": 20074444800,
+          "over_10MB_gpu_sum_ms": 823.621634
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Device",
+          "calls": 2844,
+          "bytes": 81067712048,
+          "gpu_sum_ms": 134.358197,
+          "over_10MB_calls": 1613,
+          "over_10MB_bytes": 73393248256,
+          "over_10MB_gpu_sum_ms": 113.124985
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Host",
+          "calls": 2966,
+          "bytes": 4864912,
+          "gpu_sum_ms": 6.468282,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 4,
+          "kind": "Host-to-Device",
+          "calls": 162,
+          "bytes": 20078529674,
+          "gpu_sum_ms": 827.325391,
+          "over_10MB_calls": 105,
+          "over_10MB_bytes": 20074444800,
+          "over_10MB_gpu_sum_ms": 827.207662
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Device",
+          "calls": 2844,
+          "bytes": 81067712048,
+          "gpu_sum_ms": 130.305384,
+          "over_10MB_calls": 1613,
+          "over_10MB_bytes": 73393248256,
+          "over_10MB_gpu_sum_ms": 113.489366
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Host",
+          "calls": 2966,
+          "bytes": 4864912,
+          "gpu_sum_ms": 6.497435,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 5,
+          "kind": "Host-to-Device",
+          "calls": 162,
+          "bytes": 20078529674,
+          "gpu_sum_ms": 828.113357,
+          "over_10MB_calls": 105,
+          "over_10MB_bytes": 20074444800,
+          "over_10MB_gpu_sum_ms": 827.993325
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Device",
+          "calls": 2844,
+          "bytes": 81067712048,
+          "gpu_sum_ms": 138.697738,
+          "over_10MB_calls": 1613,
+          "over_10MB_bytes": 73393248256,
+          "over_10MB_gpu_sum_ms": 113.907533
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Host",
+          "calls": 2966,
+          "bytes": 4864912,
+          "gpu_sum_ms": 6.40687,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 6,
+          "kind": "Host-to-Device",
+          "calls": 162,
+          "bytes": 20078529674,
+          "gpu_sum_ms": 828.368844,
+          "over_10MB_calls": 105,
+          "over_10MB_bytes": 20074444800,
+          "over_10MB_gpu_sum_ms": 828.246156
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Device",
+          "calls": 2844,
+          "bytes": 81067712048,
+          "gpu_sum_ms": 133.046544,
+          "over_10MB_calls": 1613,
+          "over_10MB_bytes": 73393248256,
+          "over_10MB_gpu_sum_ms": 115.51822
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Host",
+          "calls": 2966,
+          "bytes": 4864912,
+          "gpu_sum_ms": 6.026721,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 7,
+          "kind": "Host-to-Device",
+          "calls": 162,
+          "bytes": 20078529674,
+          "gpu_sum_ms": 828.590015,
+          "over_10MB_calls": 105,
+          "over_10MB_bytes": 20074444800,
+          "over_10MB_gpu_sum_ms": 828.475935
+        }
+      ],
+      "top_kernels": [
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16832gemm_block_scaled_ue8m0xe4m3_ue8m0xe4m3_f32_bf16_bf16_128x128x128_1x1x1_0_tnn_align16_q_bias_bf16_relu",
+          "calls": 10800,
+          "gpu_sum_ms": 27278.737294
+        },
+        {
+          "name": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 168,
+          "gpu_sum_ms": 16401.860211
+        },
+        {
+          "name": "kernel_cake_sage_block_sparse_attention_h3_ragged_bs1_v1_grid_constant_r1",
+          "calls": 1200,
+          "gpu_sum_ms": 16026.214858
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x64_64x3_tn_align8>(T1::Params)",
+          "calls": 3728,
+          "gpu_sum_ms": 13536.393197
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)",
+          "calls": 3200,
+          "gpu_sum_ms": 13102.11944
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl<at::native::BinaryFunctor<float, float, float, at::native::binary_internal::DivFunctor<float>>>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 4800,
+          "gpu_sum_ms": 11333.948239
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)128, (int)4, at::native::ReduceOp<c10::BFloat16, at::native::func_wrapper_t<float, at::native::sum_functor<c10::BFloat16, float, float>::operator ()(at::TensorIterator &)::[lambda(float, float) (instance 1)]>, unsigned int, float, (int)4, (int)8>>(T3)",
+          "calls": 4800,
+          "gpu_sum_ms": 10514.071267
+        },
+        {
+          "name": "kernel_cutlass_kernel_flashinfercute_dslsparsesm120_blk64flash_fwd_sm120BlockSparseAttnForwardSm120Blk64_object_at__tensor0000o12811101213_tensor0000o12811101213_tensor0000o12810111213_te_0",
+          "calls": 400,
+          "gpu_sum_ms": 9837.789623
+        },
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16864gemm_block_scaled_ue4m3xe2m1_ue4m3xe2m1_f32_f16_f16_128x128x256_1x1x1_0_tnn_align32_o_vs16_bias_f16_relu",
+          "calls": 39312,
+          "gpu_sum_ms": 6776.813488
+        },
+        {
+          "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)",
+          "calls": 22400,
+          "gpu_sum_ms": 3415.699103
+        },
+        {
+          "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<(int)64, (int)128, (int)128, (int)4, (bool)0, (bool)0, cutlass::half_t, Flash_kernel_traits<(int)64, (int)128, (int)128, (int)4, cutlass::half_t>>, (bool)0, (bool)0, (bool)0, (bool)0, (bool)0, (bool)1, (bool)0, (bool)0>(pytorch_flash::Flash_fwd_params)",
+          "calls": 6048,
+          "gpu_sum_ms": 3245.340357
+        },
+        {
+          "name": "_h3_vsa_tile_pack_kernel",
+          "calls": 6400,
+          "gpu_sum_ms": 2211.26136
+        },
+        {
+          "name": "void comfy::<unnamed>::quantize_nvfp4_kernel<__half, __nv_fp4x2_e2m1, __nv_fp8_e4m3, (bool)1, (bool)0>(const T1 *, const float *, T2 *, T3 *, unsigned long, unsigned long, unsigned long, unsigned long, float)",
+          "calls": 39312,
+          "gpu_sum_ms": 1531.800843
+        },
+        {
+          "name": "void vllm::act_and_mul_kernel<c10::Half, __half2, &vllm::silu_kernel<c10::Half>, &vllm::packed_silu_kernel<__half2>, (bool)1, (bool)1, (bool)0, (bool)1>(T1 *, const T1 *, int, float, float, float)",
+          "calls": 6048,
+          "gpu_sum_ms": 1505.323253
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AbsFunctor<c10::Half>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 39312,
+          "gpu_sum_ms": 1364.472198
+        },
+        {
+          "name": "_rms_norm_rope_kernel",
+          "calls": 3200,
+          "gpu_sum_ms": 944.688653
+        },
+        {
+          "name": "_scaled_residual_exact_kernel",
+          "calls": 12096,
+          "gpu_sum_ms": 914.13484
+        },
+        {
+          "name": "_silu_mxfp8_cuda_kernel",
+          "calls": 1200,
+          "gpu_sum_ms": 854.263569
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<c10::Half, at::native::func_wrapper_t<c10::Half, at::native::MaxNanFunctor<c10::Half>>, unsigned int, c10::Half, (int)4, (int)4>>(T3)",
+          "calls": 39312,
+          "gpu_sum_ms": 743.777116
+        },
+        {
+          "name": "_indexed_gate_rms_norm_scale_shift_kernel",
+          "calls": 1600,
+          "gpu_sum_ms": 706.001748
+        }
+      ],
+      "gpu_inventory": [
+        {
+          "id": 6,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 5,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 4,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 7,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 3,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 2,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 1,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 0,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        }
+      ]
+    },
+    "bf16_prefetch_1088": {
+      "sqlite": "${TMP}/h3-infra-1088-20260921/request-cuda.sqlite",
+      "sqlite_bytes": 50126848,
+      "sqlite_sha256": "76aa65cca6c6b05bc319c041cf0486f57fd5efe511995d6f25aa170c1041f0e5",
+      "nvtx_cpu_ranges": {
+        "h3.profile.prepare_request": {
+          "count": 1,
+          "median_ms": 598.199641,
+          "min_ms": 598.199641,
+          "max_ms": 598.199641,
+          "sum_across_ranges_ms": 598.199641
+        },
+        "h3.profile.encoder": {
+          "count": 8,
+          "median_ms": 279.2926895,
+          "min_ms": 263.316208,
+          "max_ms": 281.461678,
+          "sum_across_ranges_ms": 2223.2100600000003
+        },
+        "h3.profile.dit": {
+          "count": 8,
+          "median_ms": 4312.6284350000005,
+          "min_ms": 4312.278954,
+          "max_ms": 4312.872926,
+          "sum_across_ranges_ms": 34500.971688000005
+        },
+        "h3.profile.dit.step_01": {
+          "count": 8,
+          "median_ms": 1544.9519540000001,
+          "min_ms": 1541.071575,
+          "max_ms": 1546.857495,
+          "sum_across_ranges_ms": 12356.835642999999
+        },
+        "h3.profile.dit.step_02": {
+          "count": 8,
+          "median_ms": 913.8789804999999,
+          "min_ms": 913.693777,
+          "max_ms": 913.944505,
+          "sum_across_ranges_ms": 7310.801826000001
+        },
+        "h3.profile.dit.step_03": {
+          "count": 8,
+          "median_ms": 910.3864375,
+          "min_ms": 910.23536,
+          "max_ms": 910.420827,
+          "sum_across_ranges_ms": 7282.8709929999995
+        },
+        "h3.profile.dit.step_04": {
+          "count": 8,
+          "median_ms": 911.1555430000001,
+          "min_ms": 911.02082,
+          "max_ms": 911.282727,
+          "sum_across_ranges_ms": 7289.219265999999
+        },
+        "h3.profile.decode": {
+          "count": 8,
+          "median_ms": 623.323627,
+          "min_ms": 623.214668,
+          "max_ms": 644.200945,
+          "sum_across_ranges_ms": 5007.569402000001
+        },
+        "h3.profile.rdma.release": {
+          "count": 8,
+          "median_ms": 0.010875,
+          "min_ms": 0.00867,
+          "max_ms": 0.01345,
+          "sum_across_ranges_ms": 0.08970999999999998
+        },
+        "h3.profile.video_vae": {
+          "count": 8,
+          "median_ms": 623.257623,
+          "min_ms": 600.630871,
+          "max_ms": 623.476165,
+          "sum_across_ranges_ms": 4963.620233000001
+        },
+        "h3.profile.audio_vae": {
+          "count": 1,
+          "median_ms": 21.875056,
+          "min_ms": 21.875056,
+          "max_ms": 21.875056,
+          "sum_across_ranges_ms": 21.875056
+        },
+        "h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "median_ms": 118.3069,
+          "min_ms": 118.3069,
+          "max_ms": 118.3069,
+          "sum_across_ranges_ms": 118.3069
+        },
+        "h3.profile.output.submit_u8_d2h": {
+          "count": 8,
+          "median_ms": 0.066314,
+          "min_ms": 0.05131,
+          "max_ms": 0.102339,
+          "sum_across_ranges_ms": 0.541735
+        },
+        "h3.profile.output.d2h_wait": {
+          "count": 8,
+          "median_ms": 10.173612,
+          "min_ms": 0.01765,
+          "max_ms": 45.458891,
+          "sum_across_ranges_ms": 112.235344
+        },
+        "h3.profile.output.video_encode_mux": {
+          "count": 8,
+          "median_ms": 14.2900075,
+          "min_ms": 3.965802,
+          "max_ms": 17.035404,
+          "sum_across_ranges_ms": 107.767219
+        },
+        "h3.profile.output.finish": {
+          "count": 1,
+          "median_ms": 19.8099,
+          "min_ms": 19.8099,
+          "max_ms": 19.8099,
+          "sum_across_ranges_ms": 19.8099
+        },
+        "h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "median_ms": 2.024286,
+          "min_ms": 2.024286,
+          "max_ms": 2.024286,
+          "sum_across_ranges_ms": 2.024286
+        }
+      },
+      "devices": [
+        {
+          "device_id": 0,
+          "kernel_calls": 43613,
+          "kernel_sum_ms": 4530.617388,
+          "kernel_interval_union_ms": 4488.594866,
+          "first_to_last_kernel_span_ms": 5511.183491
+        },
+        {
+          "device_id": 1,
+          "kernel_calls": 25991,
+          "kernel_sum_ms": 4693.106481,
+          "kernel_interval_union_ms": 4542.965881,
+          "first_to_last_kernel_span_ms": 5510.622574
+        },
+        {
+          "device_id": 2,
+          "kernel_calls": 25645,
+          "kernel_sum_ms": 4645.85111,
+          "kernel_interval_union_ms": 4542.732626,
+          "first_to_last_kernel_span_ms": 5513.141194
+        },
+        {
+          "device_id": 3,
+          "kernel_calls": 25645,
+          "kernel_sum_ms": 4692.366651,
+          "kernel_interval_union_ms": 4548.002552,
+          "first_to_last_kernel_span_ms": 5511.054977
+        },
+        {
+          "device_id": 4,
+          "kernel_calls": 20455,
+          "kernel_sum_ms": 4745.288716,
+          "kernel_interval_union_ms": 4559.278733,
+          "first_to_last_kernel_span_ms": 5513.102168
+        },
+        {
+          "device_id": 5,
+          "kernel_calls": 20455,
+          "kernel_sum_ms": 4741.503125,
+          "kernel_interval_union_ms": 4556.245003,
+          "first_to_last_kernel_span_ms": 5509.986158
+        },
+        {
+          "device_id": 6,
+          "kernel_calls": 20455,
+          "kernel_sum_ms": 4747.621935,
+          "kernel_interval_union_ms": 4560.732572,
+          "first_to_last_kernel_span_ms": 5513.236676
+        },
+        {
+          "device_id": 7,
+          "kernel_calls": 20455,
+          "kernel_sum_ms": 4734.949647,
+          "kernel_interval_union_ms": 4552.060496,
+          "first_to_last_kernel_span_ms": 5510.467584
+        }
+      ],
+      "transfers": [
+        {
+          "device_id": 0,
+          "kind": "Device-to-Device",
+          "calls": 1076,
+          "bytes": 15551291997,
+          "gpu_sum_ms": 15.399816,
+          "over_10MB_calls": 223,
+          "over_10MB_bytes": 10475147264,
+          "over_10MB_gpu_sum_ms": 7.624925
+        },
+        {
+          "device_id": 0,
+          "kind": "Device-to-Host",
+          "calls": 1896,
+          "bytes": 250627651,
+          "gpu_sum_ms": 8.112708,
+          "over_10MB_calls": 8,
+          "over_10MB_bytes": 237774848,
+          "over_10MB_gpu_sum_ms": 4.787015
+        },
+        {
+          "device_id": 0,
+          "kind": "Host-to-Device",
+          "calls": 299,
+          "bytes": 38576943506,
+          "gpu_sum_ms": 1415.800726,
+          "over_10MB_calls": 201,
+          "over_10MB_bytes": 38546708480,
+          "over_10MB_gpu_sum_ms": 1415.030862
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Device",
+          "calls": 1060,
+          "bytes": 15230646781,
+          "gpu_sum_ms": 15.013982,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.504321
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 4.705309,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.546315
+        },
+        {
+          "device_id": 1,
+          "kind": "Host-to-Device",
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_sum_ms": 1433.157179,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1432.701015
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Device",
+          "calls": 1060,
+          "bytes": 15230646781,
+          "gpu_sum_ms": 15.035157,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.646246
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 4.540638,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.407948
+        },
+        {
+          "device_id": 2,
+          "kind": "Host-to-Device",
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_sum_ms": 1422.089677,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1421.654441
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Device",
+          "calls": 1060,
+          "bytes": 15230646781,
+          "gpu_sum_ms": 14.808983,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.618739
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 4.598191,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.523632
+        },
+        {
+          "device_id": 3,
+          "kind": "Host-to-Device",
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_sum_ms": 1421.023559,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1420.664163
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.695972,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.517915
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 4.464115,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.343216
+        },
+        {
+          "device_id": 4,
+          "kind": "Host-to-Device",
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_sum_ms": 1429.256407,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1428.818608
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.569318,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.513772
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 4.69063,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.581387
+        },
+        {
+          "device_id": 5,
+          "kind": "Host-to-Device",
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_sum_ms": 1427.903887,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1427.586508
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.536675,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.629461
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 4.698908,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.563123
+        },
+        {
+          "device_id": 6,
+          "kind": "Host-to-Device",
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_sum_ms": 1435.909997,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1435.569514
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.395654,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.575293
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 4.669091,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.52606
+        },
+        {
+          "device_id": 7,
+          "kind": "Host-to-Device",
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_sum_ms": 1428.365368,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1427.956438
+        }
+      ],
+      "top_kernels": [
+        {
+          "name": "kernel_cake_sage_block_sparse_attention_h3_ragged_bs1_v1_grid_constant_r1",
+          "calls": 1200,
+          "gpu_sum_ms": 7834.403607
+        },
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16832gemm_block_scaled_ue8m0xe4m3_ue8m0xe4m3_f32_bf16_bf16_128x128x128_1x1x1_0_tnn_align16_q_bias_bf16_relu",
+          "calls": 4800,
+          "gpu_sum_ms": 7240.359003
+        },
+        {
+          "name": "cudnn_generated_fort_native_sdpa_sm120_flash_fprop_f16_knob_3_64x64x128_4x1x1_cga1x1x1_kernel0_0",
+          "calls": 464,
+          "gpu_sum_ms": 4677.019283
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)",
+          "calls": 800,
+          "gpu_sum_ms": 3383.57881
+        },
+        {
+          "name": "ncclDevKernel_Broadcast_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 128,
+          "gpu_sum_ms": 2225.828547
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x64_64x3_tn_align8>(T1::Params)",
+          "calls": 3152,
+          "gpu_sum_ms": 2094.931448
+        },
+        {
+          "name": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 56,
+          "gpu_sum_ms": 2060.56721
+        },
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16864gemm_block_scaled_ue4m3xe2m1_ue4m3xe2m1_f32_f16_f16_128x128x256_1x1x1_0_tnn_align32_o_vs16_bias_f16_relu",
+          "calls": 9072,
+          "gpu_sum_ms": 1331.642354
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_f32_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 800,
+          "gpu_sum_ms": 1304.171134
+        },
+        {
+          "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<(int)64, (int)128, (int)128, (int)4, (bool)0, (bool)0, cutlass::half_t, Flash_kernel_traits<(int)64, (int)128, (int)128, (int)4, cutlass::half_t>>, (bool)0, (bool)0, (bool)0, (bool)0, (bool)0, (bool)1, (bool)0, (bool)0>(pytorch_flash::Flash_fwd_params)",
+          "calls": 1584,
+          "gpu_sum_ms": 652.966467
+        },
+        {
+          "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)",
+          "calls": 12800,
+          "gpu_sum_ms": 563.304557
+        },
+        {
+          "name": "void comfy::<unnamed>::quantize_nvfp4_kernel<__half, __nv_fp4x2_e2m1, __nv_fp8_e4m3, (bool)1, (bool)0>(const T1 *, const float *, T2 *, T3 *, unsigned long, unsigned long, unsigned long, unsigned long, float)",
+          "calls": 9288,
+          "gpu_sum_ms": 322.844102
+        },
+        {
+          "name": "void vllm::act_and_mul_kernel<c10::Half, __half2, &vllm::silu_kernel<c10::Half>, &vllm::packed_silu_kernel<__half2>, (bool)1, (bool)1, (bool)0, (bool)1>(T1 *, const T1 *, int, float, float, float)",
+          "calls": 1584,
+          "gpu_sum_ms": 295.386074
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AbsFunctor<c10::Half>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 9288,
+          "gpu_sum_ms": 264.005388
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 4072,
+          "gpu_sum_ms": 260.205861
+        },
+        {
+          "name": "_rms_norm_rope_kernel",
+          "calls": 3200,
+          "gpu_sum_ms": 234.141596
+        },
+        {
+          "name": "_silu_mxfp8_cuda_kernel",
+          "calls": 1200,
+          "gpu_sum_ms": 210.14507
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_u32_TREE_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 24,
+          "gpu_sum_ms": 192.763626
+        },
+        {
+          "name": "_scaled_residual_exact_kernel",
+          "calls": 3168,
+          "gpu_sum_ms": 191.131604
+        },
+        {
+          "name": "_sage_kv_stats_partial_kernel",
+          "calls": 1200,
+          "gpu_sum_ms": 160.077214
+        }
+      ],
+      "gpu_inventory": [
+        {
+          "id": 6,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 5,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 4,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 7,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 3,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 2,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 1,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 0,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        }
+      ]
+    },
+    "bf16_resident_online_mx_1088": {
+      "sqlite": "${TMP}/h3-infra-1088-20260921/resident-cuda.sqlite",
+      "sqlite_bytes": 50802688,
+      "sqlite_sha256": "dc3738d1c38bc43f86ae78971709713aa7bceaf0b6ff6cfee927526c6ee955a9",
+      "nvtx_cpu_ranges": {
+        "h3.profile.prepare_request": {
+          "count": 1,
+          "median_ms": 594.777873,
+          "min_ms": 594.777873,
+          "max_ms": 594.777873,
+          "sum_across_ranges_ms": 594.777873
+        },
+        "h3.profile.encoder": {
+          "count": 8,
+          "median_ms": 277.1916125,
+          "min_ms": 259.752471,
+          "max_ms": 280.44441,
+          "sum_across_ranges_ms": 2205.8123029999997
+        },
+        "h3.profile.dit": {
+          "count": 8,
+          "median_ms": 4349.857703,
+          "min_ms": 4349.722989,
+          "max_ms": 4350.079545,
+          "sum_across_ranges_ms": 34799.122938
+        },
+        "h3.profile.dit.step_01": {
+          "count": 8,
+          "median_ms": 1464.5169525000001,
+          "min_ms": 1459.567703,
+          "max_ms": 1468.643153,
+          "sum_across_ranges_ms": 11715.814994
+        },
+        "h3.profile.dit.step_02": {
+          "count": 8,
+          "median_ms": 952.3570275,
+          "min_ms": 952.311178,
+          "max_ms": 952.441336,
+          "sum_across_ranges_ms": 7618.948157000001
+        },
+        "h3.profile.dit.step_03": {
+          "count": 8,
+          "median_ms": 950.035848,
+          "min_ms": 949.988529,
+          "max_ms": 950.123606,
+          "sum_across_ranges_ms": 7600.356703
+        },
+        "h3.profile.dit.step_04": {
+          "count": 8,
+          "median_ms": 951.626262,
+          "min_ms": 951.519948,
+          "max_ms": 951.819915,
+          "sum_across_ranges_ms": 7613.182984
+        },
+        "h3.profile.decode": {
+          "count": 8,
+          "median_ms": 615.5652895,
+          "min_ms": 615.469761,
+          "max_ms": 635.380139,
+          "sum_across_ranges_ms": 4944.225356999999
+        },
+        "h3.profile.rdma.release": {
+          "count": 8,
+          "median_ms": 0.0067399999999999995,
+          "min_ms": 0.00559,
+          "max_ms": 0.0096,
+          "sum_across_ranges_ms": 0.05668000000000001
+        },
+        "h3.profile.video_vae": {
+          "count": 8,
+          "median_ms": 615.5015605,
+          "min_ms": 593.608289,
+          "max_ms": 615.626379,
+          "sum_across_ranges_ms": 4902.20479
+        },
+        "h3.profile.audio_vae": {
+          "count": 1,
+          "median_ms": 21.2737,
+          "min_ms": 21.2737,
+          "max_ms": 21.2737,
+          "sum_across_ranges_ms": 21.2737
+        },
+        "h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "median_ms": 117.146009,
+          "min_ms": 117.146009,
+          "max_ms": 117.146009,
+          "sum_across_ranges_ms": 117.146009
+        },
+        "h3.profile.output.submit_u8_d2h": {
+          "count": 8,
+          "median_ms": 0.066484,
+          "min_ms": 0.05214,
+          "max_ms": 0.084838,
+          "sum_across_ranges_ms": 0.526914
+        },
+        "h3.profile.output.d2h_wait": {
+          "count": 8,
+          "median_ms": 10.256335,
+          "min_ms": 0.01224,
+          "max_ms": 44.976609,
+          "sum_across_ranges_ms": 110.186772
+        },
+        "h3.profile.output.video_encode_mux": {
+          "count": 8,
+          "median_ms": 13.795293999999998,
+          "min_ms": 3.690132,
+          "max_ms": 16.505503,
+          "sum_across_ranges_ms": 103.39321000000001
+        },
+        "h3.profile.output.finish": {
+          "count": 1,
+          "median_ms": 18.780343,
+          "min_ms": 18.780343,
+          "max_ms": 18.780343,
+          "sum_across_ranges_ms": 18.780343
+        },
+        "h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "median_ms": 2.001344,
+          "min_ms": 2.001344,
+          "max_ms": 2.001344,
+          "sum_across_ranges_ms": 2.001344
+        }
+      },
+      "devices": [
+        {
+          "device_id": 0,
+          "kernel_calls": 44813,
+          "kernel_sum_ms": 4604.35136,
+          "kernel_interval_union_ms": 4561.627142,
+          "first_to_last_kernel_span_ms": 5536.65501
+        },
+        {
+          "device_id": 1,
+          "kernel_calls": 27191,
+          "kernel_sum_ms": 4772.301173,
+          "kernel_interval_union_ms": 4622.328756,
+          "first_to_last_kernel_span_ms": 5536.345255
+        },
+        {
+          "device_id": 2,
+          "kernel_calls": 26845,
+          "kernel_sum_ms": 4722.071922,
+          "kernel_interval_union_ms": 4623.310239,
+          "first_to_last_kernel_span_ms": 5536.930256
+        },
+        {
+          "device_id": 3,
+          "kernel_calls": 26845,
+          "kernel_sum_ms": 4773.607989,
+          "kernel_interval_union_ms": 4630.340499,
+          "first_to_last_kernel_span_ms": 5536.765064
+        },
+        {
+          "device_id": 4,
+          "kernel_calls": 21655,
+          "kernel_sum_ms": 4818.921639,
+          "kernel_interval_union_ms": 4635.215696,
+          "first_to_last_kernel_span_ms": 5539.829381
+        },
+        {
+          "device_id": 5,
+          "kernel_calls": 21655,
+          "kernel_sum_ms": 4815.637363,
+          "kernel_interval_union_ms": 4632.639231,
+          "first_to_last_kernel_span_ms": 5536.063016
+        },
+        {
+          "device_id": 6,
+          "kernel_calls": 21655,
+          "kernel_sum_ms": 4823.61124,
+          "kernel_interval_union_ms": 4639.614679,
+          "first_to_last_kernel_span_ms": 5540.133799
+        },
+        {
+          "device_id": 7,
+          "kernel_calls": 21655,
+          "kernel_sum_ms": 4818.280143,
+          "kernel_interval_union_ms": 4636.515325,
+          "first_to_last_kernel_span_ms": 5536.44603
+        }
+      ],
+      "transfers": [
+        {
+          "device_id": 0,
+          "kind": "Device-to-Device",
+          "calls": 1076,
+          "bytes": 15551291997,
+          "gpu_sum_ms": 15.679836,
+          "over_10MB_calls": 223,
+          "over_10MB_bytes": 10475147264,
+          "over_10MB_gpu_sum_ms": 7.783458
+        },
+        {
+          "device_id": 0,
+          "kind": "Device-to-Host",
+          "calls": 1896,
+          "bytes": 250627651,
+          "gpu_sum_ms": 5.570423,
+          "over_10MB_calls": 8,
+          "over_10MB_bytes": 237774848,
+          "over_10MB_gpu_sum_ms": 4.650484
+        },
+        {
+          "device_id": 0,
+          "kind": "Host-to-Device",
+          "calls": 99,
+          "bytes": 41775506,
+          "gpu_sum_ms": 1.149318,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 0.344194
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Device",
+          "calls": 1060,
+          "bytes": 15230646781,
+          "gpu_sum_ms": 14.951711,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.343948
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 2.380711,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.687013
+        },
+        {
+          "device_id": 1,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.532194,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Device",
+          "calls": 1060,
+          "bytes": 15230646781,
+          "gpu_sum_ms": 14.868363,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.361361
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 1.181379,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 0.477953
+        },
+        {
+          "device_id": 2,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.513345,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Device",
+          "calls": 1060,
+          "bytes": 15230646781,
+          "gpu_sum_ms": 14.621254,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.364096
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 1.263717,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 0.565922
+        },
+        {
+          "device_id": 3,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.450625,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.744645,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.515288
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 2.113901,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.410345
+        },
+        {
+          "device_id": 4,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.31133,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.603509,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.498507
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 2.262853,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.571042
+        },
+        {
+          "device_id": 5,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.486016,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.496743,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.545021
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 2.189742,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.494441
+        },
+        {
+          "device_id": 6,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.379682,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.351681,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.500787
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 1.258405,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 0.55997
+        },
+        {
+          "device_id": 7,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.408929,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        }
+      ],
+      "top_kernels": [
+        {
+          "name": "kernel_cake_sage_block_sparse_attention_h3_ragged_bs1_v1_grid_constant_r1",
+          "calls": 1200,
+          "gpu_sum_ms": 7728.947413
+        },
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16832gemm_block_scaled_ue8m0xe4m3_ue8m0xe4m3_f32_bf16_bf16_128x128x128_1x1x1_0_tnn_align16_q_bias_bf16_relu",
+          "calls": 4800,
+          "gpu_sum_ms": 7089.665261
+        },
+        {
+          "name": "cudnn_generated_fort_native_sdpa_sm120_flash_fprop_f16_knob_3_64x64x128_4x1x1_cga1x1x1_kernel0_0",
+          "calls": 464,
+          "gpu_sum_ms": 4601.163285
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)",
+          "calls": 800,
+          "gpu_sum_ms": 3285.356575
+        },
+        {
+          "name": "ncclDevKernel_Broadcast_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 128,
+          "gpu_sum_ms": 2212.245269
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x64_64x3_tn_align8>(T1::Params)",
+          "calls": 3152,
+          "gpu_sum_ms": 2061.764617
+        },
+        {
+          "name": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 56,
+          "gpu_sum_ms": 2035.779629
+        },
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16864gemm_block_scaled_ue4m3xe2m1_ue4m3xe2m1_f32_f16_f16_128x128x256_1x1x1_0_tnn_align32_o_vs16_bias_f16_relu",
+          "calls": 9072,
+          "gpu_sum_ms": 1314.650644
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_f32_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 800,
+          "gpu_sum_ms": 1306.439844
+        },
+        {
+          "name": "_mxfp8_quant_kernel",
+          "calls": 8400,
+          "gpu_sum_ms": 1299.832667
+        },
+        {
+          "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<(int)64, (int)128, (int)128, (int)4, (bool)0, (bool)0, cutlass::half_t, Flash_kernel_traits<(int)64, (int)128, (int)128, (int)4, cutlass::half_t>>, (bool)0, (bool)0, (bool)0, (bool)0, (bool)0, (bool)1, (bool)0, (bool)0>(pytorch_flash::Flash_fwd_params)",
+          "calls": 1584,
+          "gpu_sum_ms": 639.757573
+        },
+        {
+          "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)",
+          "calls": 12800,
+          "gpu_sum_ms": 495.023886
+        },
+        {
+          "name": "void comfy::<unnamed>::quantize_nvfp4_kernel<__half, __nv_fp4x2_e2m1, __nv_fp8_e4m3, (bool)1, (bool)0>(const T1 *, const float *, T2 *, T3 *, unsigned long, unsigned long, unsigned long, unsigned long, float)",
+          "calls": 9288,
+          "gpu_sum_ms": 321.690234
+        },
+        {
+          "name": "void vllm::act_and_mul_kernel<c10::Half, __half2, &vllm::silu_kernel<c10::Half>, &vllm::packed_silu_kernel<__half2>, (bool)1, (bool)1, (bool)0, (bool)1>(T1 *, const T1 *, int, float, float, float)",
+          "calls": 1584,
+          "gpu_sum_ms": 293.562153
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AbsFunctor<c10::Half>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 9288,
+          "gpu_sum_ms": 261.762869
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 4072,
+          "gpu_sum_ms": 258.231305
+        },
+        {
+          "name": "_rms_norm_rope_kernel",
+          "calls": 3200,
+          "gpu_sum_ms": 235.2808
+        },
+        {
+          "name": "_silu_mxfp8_cuda_kernel",
+          "calls": 1200,
+          "gpu_sum_ms": 209.425796
+        },
+        {
+          "name": "_scaled_residual_exact_kernel",
+          "calls": 3168,
+          "gpu_sum_ms": 186.521443
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_u32_TREE_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 24,
+          "gpu_sum_ms": 185.344817
+        }
+      ],
+      "gpu_inventory": [
+        {
+          "id": 6,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 5,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 4,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 7,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 3,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 2,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 1,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 0,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        }
+      ]
+    },
+    "all_bf16_weights_1088": {
+      "sqlite": "${TMP}/h3-bf16-comparison-20260921-01/weights-cuda.sqlite",
+      "sqlite_bytes": 49074176,
+      "sqlite_sha256": "bd54e84c3298032545762fa8ae5236d57adeb6109b0ac93cf40869dfae506929",
+      "nvtx_cpu_ranges": {
+        "h3.profile.prepare_request": {
+          "count": 1,
+          "median_ms": 599.091659,
+          "min_ms": 599.091659,
+          "max_ms": 599.091659,
+          "sum_across_ranges_ms": 599.091659
+        },
+        "h3.profile.encoder": {
+          "count": 8,
+          "median_ms": 283.448723,
+          "min_ms": 259.714186,
+          "max_ms": 285.479062,
+          "sum_across_ranges_ms": 2246.082923
+        },
+        "h3.profile.dit": {
+          "count": 8,
+          "median_ms": 5953.568319,
+          "min_ms": 5953.224138,
+          "max_ms": 5953.85385,
+          "sum_across_ranges_ms": 47628.391512
+        },
+        "h3.profile.dit.step_01": {
+          "count": 8,
+          "median_ms": 1502.821767,
+          "min_ms": 1491.472038,
+          "max_ms": 1505.477698,
+          "sum_across_ranges_ms": 12007.423461
+        },
+        "h3.profile.dit.step_02": {
+          "count": 8,
+          "median_ms": 1935.5558409999999,
+          "min_ms": 1935.391997,
+          "max_ms": 1935.817203,
+          "sum_across_ranges_ms": 15484.680633
+        },
+        "h3.profile.dit.step_03": {
+          "count": 8,
+          "median_ms": 1242.8599495,
+          "min_ms": 1242.708031,
+          "max_ms": 1242.939298,
+          "sum_across_ranges_ms": 9942.720957
+        },
+        "h3.profile.dit.step_04": {
+          "count": 8,
+          "median_ms": 1243.8390715,
+          "min_ms": 1243.587269,
+          "max_ms": 1244.040464,
+          "sum_across_ranges_ms": 9950.778939
+        },
+        "h3.profile.decode": {
+          "count": 8,
+          "median_ms": 624.2477329999999,
+          "min_ms": 623.907228,
+          "max_ms": 644.912735,
+          "sum_across_ranges_ms": 5014.142283
+        },
+        "h3.profile.rdma.release": {
+          "count": 8,
+          "median_ms": 0.005955,
+          "min_ms": 0.00569,
+          "max_ms": 0.01042,
+          "sum_across_ranges_ms": 0.05425000000000001
+        },
+        "h3.profile.video_vae": {
+          "count": 8,
+          "median_ms": 624.1422095,
+          "min_ms": 601.691155,
+          "max_ms": 624.404821,
+          "sum_across_ranges_ms": 4970.695556000001
+        },
+        "h3.profile.audio_vae": {
+          "count": 1,
+          "median_ms": 21.821407,
+          "min_ms": 21.821407,
+          "max_ms": 21.821407,
+          "sum_across_ranges_ms": 21.821407
+        },
+        "h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "median_ms": 122.108408,
+          "min_ms": 122.108408,
+          "max_ms": 122.108408,
+          "sum_across_ranges_ms": 122.108408
+        },
+        "h3.profile.output.submit_u8_d2h": {
+          "count": 8,
+          "median_ms": 0.065799,
+          "min_ms": 0.05177,
+          "max_ms": 0.087869,
+          "sum_across_ranges_ms": 0.527843
+        },
+        "h3.profile.output.d2h_wait": {
+          "count": 8,
+          "median_ms": 10.4555795,
+          "min_ms": 0.00891,
+          "max_ms": 45.409271,
+          "sum_across_ranges_ms": 112.87729800000001
+        },
+        "h3.profile.output.video_encode_mux": {
+          "count": 8,
+          "median_ms": 14.2437305,
+          "min_ms": 4.008868,
+          "max_ms": 17.984187,
+          "sum_across_ranges_ms": 109.101036
+        },
+        "h3.profile.output.finish": {
+          "count": 1,
+          "median_ms": 19.732545,
+          "min_ms": 19.732545,
+          "max_ms": 19.732545,
+          "sum_across_ranges_ms": 19.732545
+        },
+        "h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "median_ms": 1.970124,
+          "min_ms": 1.970124,
+          "max_ms": 1.970124,
+          "sum_across_ranges_ms": 1.970124
+        }
+      },
+      "devices": [
+        {
+          "device_id": 0,
+          "kernel_calls": 42563,
+          "kernel_sum_ms": 6216.920362,
+          "kernel_interval_union_ms": 6174.567126,
+          "first_to_last_kernel_span_ms": 7150.524731
+        },
+        {
+          "device_id": 1,
+          "kernel_calls": 24941,
+          "kernel_sum_ms": 6394.623399,
+          "kernel_interval_union_ms": 6240.770149,
+          "first_to_last_kernel_span_ms": 7155.012661
+        },
+        {
+          "device_id": 2,
+          "kernel_calls": 24595,
+          "kernel_sum_ms": 6358.026262,
+          "kernel_interval_union_ms": 6253.550045,
+          "first_to_last_kernel_span_ms": 7157.321998
+        },
+        {
+          "device_id": 3,
+          "kernel_calls": 24595,
+          "kernel_sum_ms": 5703.515085,
+          "kernel_interval_union_ms": 5558.380315,
+          "first_to_last_kernel_span_ms": 7155.652888
+        },
+        {
+          "device_id": 4,
+          "kernel_calls": 19405,
+          "kernel_sum_ms": 5869.025156,
+          "kernel_interval_union_ms": 5683.497048,
+          "first_to_last_kernel_span_ms": 7157.530104
+        },
+        {
+          "device_id": 5,
+          "kernel_calls": 19405,
+          "kernel_sum_ms": 6451.555512,
+          "kernel_interval_union_ms": 6265.363832,
+          "first_to_last_kernel_span_ms": 7154.576406
+        },
+        {
+          "device_id": 6,
+          "kernel_calls": 19405,
+          "kernel_sum_ms": 6453.617321,
+          "kernel_interval_union_ms": 6265.838042,
+          "first_to_last_kernel_span_ms": 7154.468702
+        },
+        {
+          "device_id": 7,
+          "kernel_calls": 19405,
+          "kernel_sum_ms": 5843.939722,
+          "kernel_interval_union_ms": 5659.917791,
+          "first_to_last_kernel_span_ms": 7156.056805
+        }
+      ],
+      "transfers": [
+        {
+          "device_id": 0,
+          "kind": "Device-to-Device",
+          "calls": 1076,
+          "bytes": 15551291997,
+          "gpu_sum_ms": 15.605057,
+          "over_10MB_calls": 223,
+          "over_10MB_bytes": 10475147264,
+          "over_10MB_gpu_sum_ms": 7.700865
+        },
+        {
+          "device_id": 0,
+          "kind": "Device-to-Host",
+          "calls": 1896,
+          "bytes": 250627651,
+          "gpu_sum_ms": 5.755469,
+          "over_10MB_calls": 8,
+          "over_10MB_bytes": 237774848,
+          "over_10MB_gpu_sum_ms": 4.837703
+        },
+        {
+          "device_id": 0,
+          "kind": "Host-to-Device",
+          "calls": 99,
+          "bytes": 41775506,
+          "gpu_sum_ms": 1.147591,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 0.32893
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Device",
+          "calls": 1060,
+          "bytes": 15230646781,
+          "gpu_sum_ms": 15.056155,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.432668
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 2.306831,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.615948
+        },
+        {
+          "device_id": 1,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.313026,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Device",
+          "calls": 1060,
+          "bytes": 15230646781,
+          "gpu_sum_ms": 15.005581,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.455588
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 2.257077,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 1.55819
+        },
+        {
+          "device_id": 2,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.299042,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Device",
+          "calls": 1060,
+          "bytes": 15230646781,
+          "gpu_sum_ms": 14.697236,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.42728
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 1.316814,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 0.622438
+        },
+        {
+          "device_id": 3,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.315716,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.792135,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.533268
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 1.205748,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 0.50375
+        },
+        {
+          "device_id": 4,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.314339,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.647756,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.528248
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 1.091308,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 0.396355
+        },
+        {
+          "device_id": 5,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.303364,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.497279,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.539688
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 1.217007,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 0.522502
+        },
+        {
+          "device_id": 6,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.308806,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 15230548477,
+          "gpu_sum_ms": 14.429321,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 10163720192,
+          "over_10MB_gpu_sum_ms": 7.51506
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12897858,
+          "gpu_sum_ms": 1.298505,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11540480,
+          "over_10MB_gpu_sum_ms": 0.600324
+        },
+        {
+          "device_id": 7,
+          "kind": "Host-to-Device",
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_sum_ms": 0.338179,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        }
+      ],
+      "top_kernels": [
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)",
+          "calls": 3200,
+          "gpu_sum_ms": 13427.05125
+        },
+        {
+          "name": "kernel_cake_sage_block_sparse_attention_h3_ragged_bs1_v1_grid_constant_r1",
+          "calls": 1200,
+          "gpu_sum_ms": 7982.065463
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x64_64x3_tn_align8>(T1::Params)",
+          "calls": 5552,
+          "gpu_sum_ms": 6777.802424
+        },
+        {
+          "name": "cudnn_generated_fort_native_sdpa_sm120_flash_fprop_f16_knob_3_64x64x128_4x1x1_cga1x1x1_kernel0_0",
+          "calls": 464,
+          "gpu_sum_ms": 4693.53975
+        },
+        {
+          "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)",
+          "calls": 12800,
+          "gpu_sum_ms": 4605.981502
+        },
+        {
+          "name": "ncclDevKernel_Broadcast_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 128,
+          "gpu_sum_ms": 2252.957673
+        },
+        {
+          "name": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 56,
+          "gpu_sum_ms": 2073.828289
+        },
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16864gemm_block_scaled_ue4m3xe2m1_ue4m3xe2m1_f32_f16_f16_128x128x256_1x1x1_0_tnn_align32_o_vs16_bias_f16_relu",
+          "calls": 9072,
+          "gpu_sum_ms": 1335.786051
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_f32_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 800,
+          "gpu_sum_ms": 1307.311246
+        },
+        {
+          "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<(int)64, (int)128, (int)128, (int)4, (bool)0, (bool)0, cutlass::half_t, Flash_kernel_traits<(int)64, (int)128, (int)128, (int)4, cutlass::half_t>>, (bool)0, (bool)0, (bool)0, (bool)0, (bool)0, (bool)1, (bool)0, (bool)0>(pytorch_flash::Flash_fwd_params)",
+          "calls": 1584,
+          "gpu_sum_ms": 656.027977
+        },
+        {
+          "name": "triton_poi_fused_mul_silu_slice_0",
+          "calls": 1600,
+          "gpu_sum_ms": 392.003615
+        },
+        {
+          "name": "void comfy::<unnamed>::quantize_nvfp4_kernel<__half, __nv_fp4x2_e2m1, __nv_fp8_e4m3, (bool)1, (bool)0>(const T1 *, const float *, T2 *, T3 *, unsigned long, unsigned long, unsigned long, unsigned long, float)",
+          "calls": 9288,
+          "gpu_sum_ms": 323.225904
+        },
+        {
+          "name": "void vllm::act_and_mul_kernel<c10::Half, __half2, &vllm::silu_kernel<c10::Half>, &vllm::packed_silu_kernel<__half2>, (bool)1, (bool)1, (bool)0, (bool)1>(T1 *, const T1 *, int, float, float, float)",
+          "calls": 1584,
+          "gpu_sum_ms": 286.701426
+        },
+        {
+          "name": "_rms_norm_rope_kernel",
+          "calls": 3200,
+          "gpu_sum_ms": 264.018058
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AbsFunctor<c10::Half>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 9288,
+          "gpu_sum_ms": 262.158328
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 4072,
+          "gpu_sum_ms": 259.460251
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_u32_TREE_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 24,
+          "gpu_sum_ms": 189.613223
+        },
+        {
+          "name": "_scaled_residual_exact_kernel",
+          "calls": 3168,
+          "gpu_sum_ms": 188.663731
+        },
+        {
+          "name": "_sage_kv_stats_partial_kernel",
+          "calls": 1200,
+          "gpu_sum_ms": 159.884039
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<c10::Half, at::native::func_wrapper_t<c10::Half, at::native::MaxNanFunctor<c10::Half>>, unsigned int, c10::Half, (int)4, (int)4>>(T3)",
+          "calls": 9288,
+          "gpu_sum_ms": 149.467858
+        }
+      ],
+      "gpu_inventory": [
+        {
+          "id": 6,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 5,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 4,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 7,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 3,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 2,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 1,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 0,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        }
+      ]
+    },
+    "cache_1": {
+      "sqlite": "${TMP}/h3-lotus-20260921/cache-capture.1.sqlite",
+      "sqlite_bytes": 43159552,
+      "sqlite_sha256": "f5a9f7d9395b670a9c44d8abb2263f30baf99c55d3e6bb2d8744fc5e324707fb",
+      "nvtx_cpu_ranges": {
+        "h3.profile.prepare_request": {
+          "count": 1,
+          "median_ms": 562.476763,
+          "min_ms": 562.476763,
+          "max_ms": 562.476763,
+          "sum_across_ranges_ms": 562.476763
+        },
+        "h3.profile.encoder": {
+          "count": 8,
+          "median_ms": 263.147043,
+          "min_ms": 258.303978,
+          "max_ms": 265.733512,
+          "sum_across_ranges_ms": 2103.6856940000002
+        },
+        "h3.profile.dit": {
+          "count": 8,
+          "median_ms": 3638.984935,
+          "min_ms": 3638.543074,
+          "max_ms": 3639.305109,
+          "sum_across_ranges_ms": 29111.609626
+        },
+        "h3.profile.dit.step_01": {
+          "count": 8,
+          "median_ms": 1589.507036,
+          "min_ms": 1585.461691,
+          "max_ms": 1591.407993,
+          "sum_across_ranges_ms": 12711.510806
+        },
+        "h3.profile.dit.step_02": {
+          "count": 8,
+          "median_ms": 674.851839,
+          "min_ms": 674.77751,
+          "max_ms": 674.976906,
+          "sum_across_ranges_ms": 5398.946446
+        },
+        "h3.profile.dit.step_03": {
+          "count": 8,
+          "median_ms": 674.659272,
+          "min_ms": 674.584604,
+          "max_ms": 675.159972,
+          "sum_across_ranges_ms": 5397.72615
+        },
+        "h3.profile.dit.step_04": {
+          "count": 8,
+          "median_ms": 673.384948,
+          "min_ms": 672.949366,
+          "max_ms": 673.430926,
+          "sum_across_ranges_ms": 5386.713977
+        },
+        "h3.profile.decode": {
+          "count": 8,
+          "median_ms": 493.5280525,
+          "min_ms": 493.246448,
+          "max_ms": 506.163854,
+          "sum_across_ranges_ms": 3960.579037
+        },
+        "h3.profile.rdma.release": {
+          "count": 8,
+          "median_ms": 0.009174999999999999,
+          "min_ms": 0.0074,
+          "max_ms": 0.01221,
+          "sum_across_ranges_ms": 0.075348
+        },
+        "h3.profile.video_vae": {
+          "count": 8,
+          "median_ms": 493.4677635,
+          "min_ms": 461.052853,
+          "max_ms": 493.627071,
+          "sum_across_ranges_ms": 3915.131942
+        },
+        "h3.profile.audio_vae": {
+          "count": 1,
+          "median_ms": 26.354641,
+          "min_ms": 26.354641,
+          "max_ms": 26.354641,
+          "sum_across_ranges_ms": 26.354641
+        },
+        "h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "median_ms": 116.027094,
+          "min_ms": 116.027094,
+          "max_ms": 116.027094,
+          "sum_across_ranges_ms": 116.027094
+        },
+        "h3.profile.output.submit_u8_d2h": {
+          "count": 8,
+          "median_ms": 0.066973,
+          "min_ms": 0.054679,
+          "max_ms": 0.937552,
+          "sum_across_ranges_ms": 1.414991
+        },
+        "h3.profile.output.d2h_wait": {
+          "count": 8,
+          "median_ms": 15.568628499999999,
+          "min_ms": 0.01071,
+          "max_ms": 57.491297,
+          "sum_across_ranges_ms": 200.184277
+        },
+        "h3.profile.output.video_encode_mux": {
+          "count": 8,
+          "median_ms": 11.9378945,
+          "min_ms": 3.172867,
+          "max_ms": 16.71902,
+          "sum_across_ranges_ms": 93.151694
+        },
+        "h3.profile.output.finish": {
+          "count": 1,
+          "median_ms": 16.381357,
+          "min_ms": 16.381357,
+          "max_ms": 16.381357,
+          "sum_across_ranges_ms": 16.381357
+        },
+        "h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "median_ms": 1.590848,
+          "min_ms": 1.590848,
+          "max_ms": 1.590848,
+          "sum_across_ranges_ms": 1.590848
+        }
+      },
+      "devices": [
+        {
+          "device_id": 0,
+          "kernel_calls": 36881,
+          "kernel_sum_ms": 3370.71666,
+          "kernel_interval_union_ms": 3334.114976,
+          "first_to_last_kernel_span_ms": 4660.881676
+        },
+        {
+          "device_id": 1,
+          "kernel_calls": 20481,
+          "kernel_sum_ms": 3626.436633,
+          "kernel_interval_union_ms": 3551.966805,
+          "first_to_last_kernel_span_ms": 4653.024383
+        },
+        {
+          "device_id": 2,
+          "kernel_calls": 20461,
+          "kernel_sum_ms": 3711.599626,
+          "kernel_interval_union_ms": 3651.432971,
+          "first_to_last_kernel_span_ms": 4644.836639
+        },
+        {
+          "device_id": 3,
+          "kernel_calls": 20461,
+          "kernel_sum_ms": 3617.073101,
+          "kernel_interval_union_ms": 3546.79917,
+          "first_to_last_kernel_span_ms": 4651.047196
+        },
+        {
+          "device_id": 4,
+          "kernel_calls": 20461,
+          "kernel_sum_ms": 3728.987994,
+          "kernel_interval_union_ms": 3657.643872,
+          "first_to_last_kernel_span_ms": 4653.956127
+        },
+        {
+          "device_id": 5,
+          "kernel_calls": 20461,
+          "kernel_sum_ms": 3469.55978,
+          "kernel_interval_union_ms": 3400.541814,
+          "first_to_last_kernel_span_ms": 4655.220104
+        },
+        {
+          "device_id": 6,
+          "kernel_calls": 19483,
+          "kernel_sum_ms": 3605.281449,
+          "kernel_interval_union_ms": 3412.489536,
+          "first_to_last_kernel_span_ms": 4651.339003
+        },
+        {
+          "device_id": 7,
+          "kernel_calls": 19118,
+          "kernel_sum_ms": 3804.657974,
+          "kernel_interval_union_ms": 3645.439859,
+          "first_to_last_kernel_span_ms": 4647.299302
+        }
+      ],
+      "transfers": [
+        {
+          "device_id": 0,
+          "kind": "Device-to-Device",
+          "calls": 1071,
+          "bytes": 12492766469,
+          "gpu_sum_ms": 10.592077,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 8386101248,
+          "over_10MB_gpu_sum_ms": 4.330234
+        },
+        {
+          "device_id": 0,
+          "kind": "Device-to-Host",
+          "calls": 1898,
+          "bytes": 207537311,
+          "gpu_sum_ms": 7.942921,
+          "over_10MB_calls": 8,
+          "over_10MB_bytes": 189788160,
+          "over_10MB_gpu_sum_ms": 3.812885
+        },
+        {
+          "device_id": 0,
+          "kind": "Host-to-Device",
+          "calls": 305,
+          "bytes": 38570548734,
+          "gpu_sum_ms": 1416.687359,
+          "over_10MB_calls": 201,
+          "over_10MB_bytes": 38546350080,
+          "over_10MB_gpu_sum_ms": 1415.88976
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Device",
+          "calls": 1058,
+          "bytes": 12242998437,
+          "gpu_sum_ms": 10.044804,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8143880192,
+          "over_10MB_gpu_sum_ms": 4.140143
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12277918,
+          "gpu_sum_ms": 4.404466,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11182080,
+          "over_10MB_gpu_sum_ms": 1.304155
+        },
+        {
+          "device_id": 1,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545092046,
+          "gpu_sum_ms": 1414.20773,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1413.853395
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Device",
+          "calls": 1058,
+          "bytes": 12242998437,
+          "gpu_sum_ms": 10.114972,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8143880192,
+          "over_10MB_gpu_sum_ms": 4.19522
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12277918,
+          "gpu_sum_ms": 4.418035,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11182080,
+          "over_10MB_gpu_sum_ms": 1.323259
+        },
+        {
+          "device_id": 2,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545092046,
+          "gpu_sum_ms": 1405.950237,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1405.703966
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Device",
+          "calls": 1058,
+          "bytes": 12242998437,
+          "gpu_sum_ms": 9.864319,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8143880192,
+          "over_10MB_gpu_sum_ms": 4.15518
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12277918,
+          "gpu_sum_ms": 4.427321,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11182080,
+          "over_10MB_gpu_sum_ms": 1.330941
+        },
+        {
+          "device_id": 3,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545092046,
+          "gpu_sum_ms": 1414.540387,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1414.247684
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Device",
+          "calls": 1058,
+          "bytes": 12242998437,
+          "gpu_sum_ms": 9.857303,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8143880192,
+          "over_10MB_gpu_sum_ms": 4.222683
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12277918,
+          "gpu_sum_ms": 4.409662,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11182080,
+          "over_10MB_gpu_sum_ms": 1.305952
+        },
+        {
+          "device_id": 4,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545092046,
+          "gpu_sum_ms": 1403.04199,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1402.741511
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Device",
+          "calls": 1058,
+          "bytes": 12242998437,
+          "gpu_sum_ms": 9.691151,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8143880192,
+          "over_10MB_gpu_sum_ms": 4.21147
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12277918,
+          "gpu_sum_ms": 4.609574,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11182080,
+          "over_10MB_gpu_sum_ms": 1.486712
+        },
+        {
+          "device_id": 5,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545092046,
+          "gpu_sum_ms": 1413.762411,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1413.408685
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Device",
+          "calls": 1058,
+          "bytes": 12242998437,
+          "gpu_sum_ms": 9.604158,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8143880192,
+          "over_10MB_gpu_sum_ms": 4.166751
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12277918,
+          "gpu_sum_ms": 4.497184,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11182080,
+          "over_10MB_gpu_sum_ms": 1.344864
+        },
+        {
+          "device_id": 6,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545092046,
+          "gpu_sum_ms": 1413.495982,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1413.097486
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Device",
+          "calls": 1059,
+          "bytes": 12243031205,
+          "gpu_sum_ms": 9.563428,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8143880192,
+          "over_10MB_gpu_sum_ms": 4.123929
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Host",
+          "calls": 1884,
+          "bytes": 12277918,
+          "gpu_sum_ms": 4.406507,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 11182080,
+          "over_10MB_gpu_sum_ms": 1.325274
+        },
+        {
+          "device_id": 7,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545092046,
+          "gpu_sum_ms": 1407.568449,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1407.296162
+        }
+      ],
+      "top_kernels": [
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16832gemm_block_scaled_ue8m0xe4m3_ue8m0xe4m3_f32_bf16_bf16_128x128x128_1x1x1_0_tnn_align16_q_bias_bf16_relu",
+          "calls": 4800,
+          "gpu_sum_ms": 5593.75859
+        },
+        {
+          "name": "kernel_cake_sage_block_sparse_attention_h3_ragged_bs1_v1_grid_constant_r1",
+          "calls": 1200,
+          "gpu_sum_ms": 5066.765744
+        },
+        {
+          "name": "cudnn_generated_fort_native_sdpa_sm120_flash_fprop_f16_knob_3_64x64x128_4x1x1_cga1x1x1_kernel0_0",
+          "calls": 464,
+          "gpu_sum_ms": 3089.413002
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_64x256_32x4_tn_align8>(T1::Params)",
+          "calls": 800,
+          "gpu_sum_ms": 2502.147814
+        },
+        {
+          "name": "ncclDevKernel_Broadcast_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 128,
+          "gpu_sum_ms": 1916.274943
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x64_64x3_tn_align8>(T1::Params)",
+          "calls": 3336,
+          "gpu_sum_ms": 1723.613154
+        },
+        {
+          "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)",
+          "calls": 12800,
+          "gpu_sum_ms": 1541.53742
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_f32_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 800,
+          "gpu_sum_ms": 1264.025512
+        },
+        {
+          "name": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 32,
+          "gpu_sum_ms": 1178.205554
+        },
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16864gemm_block_scaled_ue4m3xe2m1_ue4m3xe2m1_f32_f16_f16_128x128x256_1x1x1_0_tnn_align32_o_vs16_bias_f16_relu",
+          "calls": 6984,
+          "gpu_sum_ms": 1059.282611
+        },
+        {
+          "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<(int)64, (int)128, (int)128, (int)4, (bool)0, (bool)0, cutlass::half_t, Flash_kernel_traits<(int)64, (int)128, (int)128, (int)4, cutlass::half_t>>, (bool)0, (bool)0, (bool)0, (bool)0, (bool)0, (bool)1, (bool)0, (bool)0>(pytorch_flash::Flash_fwd_params)",
+          "calls": 1152,
+          "gpu_sum_ms": 527.854935
+        },
+        {
+          "name": "void comfy::<unnamed>::quantize_nvfp4_kernel<__half, __nv_fp4x2_e2m1, __nv_fp8_e4m3, (bool)1, (bool)0>(const T1 *, const float *, T2 *, T3 *, unsigned long, unsigned long, unsigned long, unsigned long, float)",
+          "calls": 7236,
+          "gpu_sum_ms": 267.217196
+        },
+        {
+          "name": "void vllm::act_and_mul_kernel<c10::Half, __half2, &vllm::silu_kernel<c10::Half>, &vllm::packed_silu_kernel<__half2>, (bool)1, (bool)1, (bool)0, (bool)1>(T1 *, const T1 *, int, float, float, float)",
+          "calls": 1152,
+          "gpu_sum_ms": 260.727446
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_u32_TREE_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 24,
+          "gpu_sum_ms": 254.162915
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AbsFunctor<c10::Half>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 7236,
+          "gpu_sum_ms": 227.317093
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 4072,
+          "gpu_sum_ms": 200.208483
+        },
+        {
+          "name": "_rms_norm_rope_kernel",
+          "calls": 3200,
+          "gpu_sum_ms": 176.653548
+        },
+        {
+          "name": "_scaled_residual_exact_kernel",
+          "calls": 2304,
+          "gpu_sum_ms": 159.426274
+        },
+        {
+          "name": "_silu_mxfp8_cuda_kernel",
+          "calls": 1200,
+          "gpu_sum_ms": 158.510163
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<c10::Half, at::native::func_wrapper_t<c10::Half, at::native::MaxNanFunctor<c10::Half>>, unsigned int, c10::Half, (int)4, (int)4>>(T3)",
+          "calls": 7236,
+          "gpu_sum_ms": 120.784231
+        }
+      ],
+      "gpu_inventory": [
+        {
+          "id": 6,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 5,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 4,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 7,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 3,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 2,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 1,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 0,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        }
+      ]
+    },
+    "cache_2": {
+      "sqlite": "${TMP}/h3-lotus-20260921/cache-capture.2.sqlite",
+      "sqlite_bytes": 44670976,
+      "sqlite_sha256": "4bbd845f5e04867f771d9f48247a8ff4c86c9458741ba9a5bcb3ccba8a005394",
+      "nvtx_cpu_ranges": {
+        "h3.profile.prepare_request": {
+          "count": 1,
+          "median_ms": 876.387666,
+          "min_ms": 876.387666,
+          "max_ms": 876.387666,
+          "sum_across_ranges_ms": 876.387666
+        },
+        "h3.profile.encoder": {
+          "count": 8,
+          "median_ms": 388.04382150000004,
+          "min_ms": 368.473608,
+          "max_ms": 390.053372,
+          "sum_across_ranges_ms": 3086.0544339999997
+        },
+        "h3.profile.dit": {
+          "count": 8,
+          "median_ms": 3802.6691535,
+          "min_ms": 3802.417594,
+          "max_ms": 3802.969563,
+          "sum_across_ranges_ms": 30421.570766999997
+        },
+        "h3.profile.dit.step_01": {
+          "count": 8,
+          "median_ms": 1598.755964,
+          "min_ms": 1593.023822,
+          "max_ms": 1601.259439,
+          "sum_across_ranges_ms": 12781.601094000001
+        },
+        "h3.profile.dit.step_02": {
+          "count": 8,
+          "median_ms": 726.0716485,
+          "min_ms": 725.915732,
+          "max_ms": 726.157407,
+          "sum_across_ranges_ms": 5808.477142000001
+        },
+        "h3.profile.dit.step_03": {
+          "count": 8,
+          "median_ms": 724.6651715,
+          "min_ms": 724.583219,
+          "max_ms": 724.875113,
+          "sum_across_ranges_ms": 5797.473322
+        },
+        "h3.profile.dit.step_04": {
+          "count": 8,
+          "median_ms": 722.20423,
+          "min_ms": 721.990449,
+          "max_ms": 722.285123,
+          "sum_across_ranges_ms": 5777.496775
+        },
+        "h3.profile.decode": {
+          "count": 8,
+          "median_ms": 495.085502,
+          "min_ms": 494.844317,
+          "max_ms": 507.155344,
+          "sum_across_ranges_ms": 3972.701328
+        },
+        "h3.profile.rdma.release": {
+          "count": 8,
+          "median_ms": 0.00809,
+          "min_ms": 0.00668,
+          "max_ms": 0.0102,
+          "sum_across_ranges_ms": 0.066649
+        },
+        "h3.profile.video_vae": {
+          "count": 8,
+          "median_ms": 495.01119800000004,
+          "min_ms": 465.503445,
+          "max_ms": 495.457935,
+          "sum_across_ranges_ms": 3930.6786660000002
+        },
+        "h3.profile.audio_vae": {
+          "count": 1,
+          "median_ms": 23.83797,
+          "min_ms": 23.83797,
+          "max_ms": 23.83797,
+          "sum_across_ranges_ms": 23.83797
+        },
+        "h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "median_ms": 107.878044,
+          "min_ms": 107.878044,
+          "max_ms": 107.878044,
+          "sum_across_ranges_ms": 107.878044
+        },
+        "h3.profile.output.submit_u8_d2h": {
+          "count": 8,
+          "median_ms": 0.065234,
+          "min_ms": 0.051989,
+          "max_ms": 0.092348,
+          "sum_across_ranges_ms": 0.5343
+        },
+        "h3.profile.output.d2h_wait": {
+          "count": 8,
+          "median_ms": 16.347838,
+          "min_ms": 0.01036,
+          "max_ms": 57.705352,
+          "sum_across_ranges_ms": 202.04347800000002
+        },
+        "h3.profile.output.video_encode_mux": {
+          "count": 8,
+          "median_ms": 11.5041275,
+          "min_ms": 3.133468,
+          "max_ms": 16.835828,
+          "sum_across_ranges_ms": 89.72614999999999
+        },
+        "h3.profile.output.finish": {
+          "count": 1,
+          "median_ms": 15.424466,
+          "min_ms": 15.424466,
+          "max_ms": 15.424466,
+          "sum_across_ranges_ms": 15.424466
+        },
+        "h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "median_ms": 1.411842,
+          "min_ms": 1.411842,
+          "max_ms": 1.411842,
+          "sum_across_ranges_ms": 1.411842
+        }
+      },
+      "devices": [
+        {
+          "device_id": 0,
+          "kernel_calls": 42733,
+          "kernel_sum_ms": 3889.232504,
+          "kernel_interval_union_ms": 3851.979768,
+          "first_to_last_kernel_span_ms": 5141.481493
+        },
+        {
+          "device_id": 1,
+          "kernel_calls": 20490,
+          "kernel_sum_ms": 4159.386539,
+          "kernel_interval_union_ms": 4077.767464,
+          "first_to_last_kernel_span_ms": 5155.916329
+        },
+        {
+          "device_id": 2,
+          "kernel_calls": 20470,
+          "kernel_sum_ms": 4211.912541,
+          "kernel_interval_union_ms": 4144.971798,
+          "first_to_last_kernel_span_ms": 5154.967234
+        },
+        {
+          "device_id": 3,
+          "kernel_calls": 20470,
+          "kernel_sum_ms": 4128.038808,
+          "kernel_interval_union_ms": 4050.973629,
+          "first_to_last_kernel_span_ms": 5154.401609
+        },
+        {
+          "device_id": 4,
+          "kernel_calls": 20470,
+          "kernel_sum_ms": 4215.810246,
+          "kernel_interval_union_ms": 4137.799761,
+          "first_to_last_kernel_span_ms": 5153.978622
+        },
+        {
+          "device_id": 5,
+          "kernel_calls": 20470,
+          "kernel_sum_ms": 4009.790977,
+          "kernel_interval_union_ms": 3933.712852,
+          "first_to_last_kernel_span_ms": 5153.750357
+        },
+        {
+          "device_id": 6,
+          "kernel_calls": 19492,
+          "kernel_sum_ms": 4179.899793,
+          "kernel_interval_union_ms": 3981.719463,
+          "first_to_last_kernel_span_ms": 5154.148131
+        },
+        {
+          "device_id": 7,
+          "kernel_calls": 19127,
+          "kernel_sum_ms": 4286.861189,
+          "kernel_interval_union_ms": 4121.729414,
+          "first_to_last_kernel_span_ms": 5152.78443
+        }
+      ],
+      "transfers": [
+        {
+          "device_id": 0,
+          "kind": "Device-to-Device",
+          "calls": 1073,
+          "bytes": 13157292192,
+          "gpu_sum_ms": 11.56141,
+          "over_10MB_calls": 216,
+          "over_10MB_bytes": 8845750272,
+          "over_10MB_gpu_sum_ms": 5.013621
+        },
+        {
+          "device_id": 0,
+          "kind": "Device-to-Host",
+          "calls": 1904,
+          "bytes": 213557737,
+          "gpu_sum_ms": 7.546255,
+          "over_10MB_calls": 8,
+          "over_10MB_bytes": 195409920,
+          "over_10MB_gpu_sum_ms": 3.973525
+        },
+        {
+          "device_id": 0,
+          "kind": "Host-to-Device",
+          "calls": 309,
+          "bytes": 38589621844,
+          "gpu_sum_ms": 1417.042059,
+          "over_10MB_calls": 202,
+          "over_10MB_bytes": 38564505600,
+          "over_10MB_gpu_sum_ms": 1416.141741
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Device",
+          "calls": 1059,
+          "bytes": 12901257280,
+          "gpu_sum_ms": 11.347921,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8603529216,
+          "over_10MB_gpu_sum_ms": 5.155753
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Host",
+          "calls": 1888,
+          "bytes": 18102503,
+          "gpu_sum_ms": 5.456555,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 16803840,
+          "over_10MB_gpu_sum_ms": 2.339351
+        },
+        {
+          "device_id": 1,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545609124,
+          "gpu_sum_ms": 1419.580984,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1419.322457
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Device",
+          "calls": 1059,
+          "bytes": 12901257280,
+          "gpu_sum_ms": 11.283479,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8603529216,
+          "over_10MB_gpu_sum_ms": 5.094694
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Host",
+          "calls": 1888,
+          "bytes": 18102503,
+          "gpu_sum_ms": 5.147084,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 16803840,
+          "over_10MB_gpu_sum_ms": 2.058649
+        },
+        {
+          "device_id": 2,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545609124,
+          "gpu_sum_ms": 1405.944983,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1405.69484
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Device",
+          "calls": 1059,
+          "bytes": 12901257280,
+          "gpu_sum_ms": 11.079065,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8603529216,
+          "over_10MB_gpu_sum_ms": 5.062895
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Host",
+          "calls": 1888,
+          "bytes": 18102503,
+          "gpu_sum_ms": 5.278863,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 16803840,
+          "over_10MB_gpu_sum_ms": 2.167226
+        },
+        {
+          "device_id": 3,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545609124,
+          "gpu_sum_ms": 1419.81374,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1419.440814
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Device",
+          "calls": 1059,
+          "bytes": 12901257280,
+          "gpu_sum_ms": 11.035834,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8603529216,
+          "over_10MB_gpu_sum_ms": 5.10774
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Host",
+          "calls": 1888,
+          "bytes": 18102503,
+          "gpu_sum_ms": 5.307356,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 16803840,
+          "over_10MB_gpu_sum_ms": 2.210015
+        },
+        {
+          "device_id": 4,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545609124,
+          "gpu_sum_ms": 1409.804042,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1409.552554
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Device",
+          "calls": 1059,
+          "bytes": 12901257280,
+          "gpu_sum_ms": 10.827438,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8603529216,
+          "over_10MB_gpu_sum_ms": 5.066924
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Host",
+          "calls": 1888,
+          "bytes": 18102503,
+          "gpu_sum_ms": 5.274309,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 16803840,
+          "over_10MB_gpu_sum_ms": 2.153237
+        },
+        {
+          "device_id": 5,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545609124,
+          "gpu_sum_ms": 1415.954714,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1415.692987
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Device",
+          "calls": 1059,
+          "bytes": 12901257280,
+          "gpu_sum_ms": 10.668669,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8603529216,
+          "over_10MB_gpu_sum_ms": 4.973086
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Host",
+          "calls": 1888,
+          "bytes": 18102503,
+          "gpu_sum_ms": 5.388064,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 16803840,
+          "over_10MB_gpu_sum_ms": 2.243232
+        },
+        {
+          "device_id": 6,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545609124,
+          "gpu_sum_ms": 1420.49597,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1420.173314
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Device",
+          "calls": 1060,
+          "bytes": 12901290048,
+          "gpu_sum_ms": 10.812411,
+          "over_10MB_calls": 212,
+          "over_10MB_bytes": 8603529216,
+          "over_10MB_gpu_sum_ms": 5.140432
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Host",
+          "calls": 1888,
+          "bytes": 18102503,
+          "gpu_sum_ms": 5.504683,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 16803840,
+          "over_10MB_gpu_sum_ms": 2.383063
+        },
+        {
+          "device_id": 7,
+          "kind": "Host-to-Device",
+          "calls": 272,
+          "bytes": 38545609124,
+          "gpu_sum_ms": 1409.798489,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1409.432475
+        }
+      ],
+      "top_kernels": [
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16832gemm_block_scaled_ue8m0xe4m3_ue8m0xe4m3_f32_bf16_bf16_128x128x128_1x1x1_0_tnn_align16_q_bias_bf16_relu",
+          "calls": 4800,
+          "gpu_sum_ms": 5920.21286
+        },
+        {
+          "name": "kernel_cake_sage_block_sparse_attention_h3_ragged_bs1_v1_grid_constant_r1",
+          "calls": 1200,
+          "gpu_sum_ms": 5575.211566
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x64_64x3_tn_align8>(T1::Params)",
+          "calls": 3552,
+          "gpu_sum_ms": 3934.980074
+        },
+        {
+          "name": "ncclDevKernel_Broadcast_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 128,
+          "gpu_sum_ms": 3494.421022
+        },
+        {
+          "name": "cudnn_generated_fort_native_sdpa_sm120_flash_fprop_f16_knob_3_64x64x128_4x1x1_cga1x1x1_kernel0_0",
+          "calls": 464,
+          "gpu_sum_ms": 3278.576709
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_f32_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 800,
+          "gpu_sum_ms": 1868.032847
+        },
+        {
+          "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)",
+          "calls": 12800,
+          "gpu_sum_ms": 1461.239379
+        },
+        {
+          "name": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 32,
+          "gpu_sum_ms": 1246.305391
+        },
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16864gemm_block_scaled_ue4m3xe2m1_ue4m3xe2m1_f32_f16_f16_128x128x256_1x1x1_0_tnn_align32_o_vs16_bias_f16_relu",
+          "calls": 6984,
+          "gpu_sum_ms": 1065.907892
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x128_32x4_tn_align8>(T1::Params)",
+          "calls": 1416,
+          "gpu_sum_ms": 884.648897
+        },
+        {
+          "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<(int)64, (int)128, (int)128, (int)4, (bool)0, (bool)0, cutlass::half_t, Flash_kernel_traits<(int)64, (int)128, (int)128, (int)4, cutlass::half_t>>, (bool)0, (bool)0, (bool)0, (bool)0, (bool)0, (bool)1, (bool)0, (bool)0>(pytorch_flash::Flash_fwd_params)",
+          "calls": 1152,
+          "gpu_sum_ms": 533.197686
+        },
+        {
+          "name": "void comfy::<unnamed>::quantize_nvfp4_kernel<__half, __nv_fp4x2_e2m1, __nv_fp8_e4m3, (bool)1, (bool)0>(const T1 *, const float *, T2 *, T3 *, unsigned long, unsigned long, unsigned long, unsigned long, float)",
+          "calls": 7236,
+          "gpu_sum_ms": 267.600421
+        },
+        {
+          "name": "void vllm::act_and_mul_kernel<c10::Half, __half2, &vllm::silu_kernel<c10::Half>, &vllm::packed_silu_kernel<__half2>, (bool)1, (bool)1, (bool)0, (bool)1>(T1 *, const T1 *, int, float, float, float)",
+          "calls": 1152,
+          "gpu_sum_ms": 260.642962
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_u32_TREE_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 24,
+          "gpu_sum_ms": 231.744389
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AbsFunctor<c10::Half>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 7236,
+          "gpu_sum_ms": 227.75561
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 3864,
+          "gpu_sum_ms": 213.537323
+        },
+        {
+          "name": "_rms_norm_rope_kernel",
+          "calls": 3200,
+          "gpu_sum_ms": 181.084395
+        },
+        {
+          "name": "_silu_mxfp8_cuda_kernel",
+          "calls": 1200,
+          "gpu_sum_ms": 168.076439
+        },
+        {
+          "name": "_scaled_residual_exact_kernel",
+          "calls": 2304,
+          "gpu_sum_ms": 158.263711
+        },
+        {
+          "name": "sm80_xmma_fprop_implicit_gemm_tf32f32_tf32f32_f32_nhwckrsc_nchw_tilesize128x128x16_stage4_warpsize2x2x1_g1_tensor16x8x8_alignc4_execute_kernel__5x_cudnn",
+          "calls": 318,
+          "gpu_sum_ms": 131.750151
+        }
+      ],
+      "gpu_inventory": [
+        {
+          "id": 6,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 5,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 4,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 7,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 3,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 2,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 1,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 0,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        }
+      ]
+    },
+    "cache_3": {
+      "sqlite": "${TMP}/h3-lotus-20260921/cache-capture.3.sqlite",
+      "sqlite_bytes": 37564416,
+      "sqlite_sha256": "c77834769ea817e251830111aa4f56d1ea53e975e336e890f643f9868cbd0eb8",
+      "nvtx_cpu_ranges": {
+        "h3.profile.prepare_request": {
+          "count": 1,
+          "median_ms": 117.123572,
+          "min_ms": 117.123572,
+          "max_ms": 117.123572,
+          "sum_across_ranges_ms": 117.123572
+        },
+        "h3.profile.encoder": {
+          "count": 8,
+          "median_ms": 23.187178000000003,
+          "min_ms": 3.214797,
+          "max_ms": 23.533596,
+          "sum_across_ranges_ms": 165.503018
+        },
+        "h3.profile.dit": {
+          "count": 8,
+          "median_ms": 3657.316414,
+          "min_ms": 3657.109578,
+          "max_ms": 3657.788395,
+          "sum_across_ranges_ms": 29259.10942
+        },
+        "h3.profile.dit.step_01": {
+          "count": 8,
+          "median_ms": 1450.75873,
+          "min_ms": 1446.540348,
+          "max_ms": 1454.707747,
+          "sum_across_ranges_ms": 11606.186039
+        },
+        "h3.profile.dit.step_02": {
+          "count": 8,
+          "median_ms": 725.549454,
+          "min_ms": 725.356203,
+          "max_ms": 725.757355,
+          "sum_across_ranges_ms": 5804.405083000001
+        },
+        "h3.profile.dit.step_03": {
+          "count": 8,
+          "median_ms": 724.1694215,
+          "min_ms": 724.004109,
+          "max_ms": 724.228326,
+          "sum_across_ranges_ms": 5793.2498749999995
+        },
+        "h3.profile.dit.step_04": {
+          "count": 8,
+          "median_ms": 724.3491280000001,
+          "min_ms": 724.265985,
+          "max_ms": 724.53556,
+          "sum_across_ranges_ms": 5794.876323
+        },
+        "h3.profile.decode": {
+          "count": 8,
+          "median_ms": 496.4230755,
+          "min_ms": 495.968934,
+          "max_ms": 508.599556,
+          "sum_across_ranges_ms": 3983.1274630000003
+        },
+        "h3.profile.rdma.release": {
+          "count": 8,
+          "median_ms": 0.008654499999999999,
+          "min_ms": 0.007969,
+          "max_ms": 0.0109,
+          "sum_across_ranges_ms": 0.071857
+        },
+        "h3.profile.video_vae": {
+          "count": 8,
+          "median_ms": 496.369372,
+          "min_ms": 467.714601,
+          "max_ms": 496.522623,
+          "sum_across_ranges_ms": 3941.924303
+        },
+        "h3.profile.audio_vae": {
+          "count": 1,
+          "median_ms": 23.603034,
+          "min_ms": 23.603034,
+          "max_ms": 23.603034,
+          "sum_across_ranges_ms": 23.603034
+        },
+        "h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "median_ms": 111.580231,
+          "min_ms": 111.580231,
+          "max_ms": 111.580231,
+          "sum_across_ranges_ms": 111.580231
+        },
+        "h3.profile.output.submit_u8_d2h": {
+          "count": 8,
+          "median_ms": 0.067939,
+          "min_ms": 0.062109,
+          "max_ms": 0.454531,
+          "sum_across_ranges_ms": 1.06772
+        },
+        "h3.profile.output.d2h_wait": {
+          "count": 8,
+          "median_ms": 16.0323345,
+          "min_ms": 0.01218,
+          "max_ms": 57.915869,
+          "sum_across_ranges_ms": 198.21263499999998
+        },
+        "h3.profile.output.video_encode_mux": {
+          "count": 8,
+          "median_ms": 11.650030000000001,
+          "min_ms": 3.103159,
+          "max_ms": 15.661201,
+          "sum_across_ranges_ms": 90.20240100000001
+        },
+        "h3.profile.output.finish": {
+          "count": 1,
+          "median_ms": 15.967035,
+          "min_ms": 15.967035,
+          "max_ms": 15.967035,
+          "sum_across_ranges_ms": 15.967035
+        },
+        "h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "median_ms": 1.908782,
+          "min_ms": 1.908782,
+          "max_ms": 1.908782,
+          "sum_across_ranges_ms": 1.908782
+        }
+      },
+      "devices": [
+        {
+          "device_id": 0,
+          "kernel_calls": 27884,
+          "kernel_sum_ms": 3319.542943,
+          "kernel_interval_union_ms": 3281.468833,
+          "first_to_last_kernel_span_ms": 4244.387057
+        },
+        {
+          "device_id": 1,
+          "kernel_calls": 17333,
+          "kernel_sum_ms": 3484.077985,
+          "kernel_interval_union_ms": 3399.331333,
+          "first_to_last_kernel_span_ms": 4249.921448
+        },
+        {
+          "device_id": 2,
+          "kernel_calls": 17313,
+          "kernel_sum_ms": 3483.70781,
+          "kernel_interval_union_ms": 3412.993994,
+          "first_to_last_kernel_span_ms": 4248.98177
+        },
+        {
+          "device_id": 3,
+          "kernel_calls": 17313,
+          "kernel_sum_ms": 3469.674046,
+          "kernel_interval_union_ms": 3389.526991,
+          "first_to_last_kernel_span_ms": 4249.869599
+        },
+        {
+          "device_id": 4,
+          "kernel_calls": 17313,
+          "kernel_sum_ms": 3486.963243,
+          "kernel_interval_union_ms": 3406.53225,
+          "first_to_last_kernel_span_ms": 4249.670616
+        },
+        {
+          "device_id": 5,
+          "kernel_calls": 17313,
+          "kernel_sum_ms": 3253.850126,
+          "kernel_interval_union_ms": 3174.632592,
+          "first_to_last_kernel_span_ms": 4249.614469
+        },
+        {
+          "device_id": 6,
+          "kernel_calls": 16335,
+          "kernel_sum_ms": 3574.064955,
+          "kernel_interval_union_ms": 3374.482191,
+          "first_to_last_kernel_span_ms": 4249.634728
+        },
+        {
+          "device_id": 7,
+          "kernel_calls": 15970,
+          "kernel_sum_ms": 3558.317515,
+          "kernel_interval_union_ms": 3390.706017,
+          "first_to_last_kernel_span_ms": 4249.484734
+        }
+      ],
+      "transfers": [
+        {
+          "device_id": 0,
+          "kind": "Device-to-Device",
+          "calls": 1057,
+          "bytes": 13084873080,
+          "gpu_sum_ms": 11.465733,
+          "over_10MB_calls": 213,
+          "over_10MB_bytes": 8795338752,
+          "over_10MB_gpu_sum_ms": 4.957041
+        },
+        {
+          "device_id": 0,
+          "kind": "Device-to-Host",
+          "calls": 1780,
+          "bytes": 196354644,
+          "gpu_sum_ms": 7.010318,
+          "over_10MB_calls": 7,
+          "over_10MB_bytes": 178606080,
+          "over_10MB_gpu_sum_ms": 3.270296
+        },
+        {
+          "device_id": 0,
+          "kind": "Host-to-Device",
+          "calls": 280,
+          "bytes": 38546777355,
+          "gpu_sum_ms": 1420.014274,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1419.724867
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Device",
+          "calls": 1049,
+          "bytes": 12841371992,
+          "gpu_sum_ms": 11.31038,
+          "over_10MB_calls": 209,
+          "over_10MB_bytes": 8553117696,
+          "over_10MB_gpu_sum_ms": 5.116043
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Host",
+          "calls": 1776,
+          "bytes": 1291327,
+          "gpu_sum_ms": 3.083062,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 1,
+          "kind": "Host-to-Device",
+          "calls": 269,
+          "bytes": 38545445664,
+          "gpu_sum_ms": 1420.080085,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1419.818454
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Device",
+          "calls": 1049,
+          "bytes": 12841371992,
+          "gpu_sum_ms": 11.353492,
+          "over_10MB_calls": 209,
+          "over_10MB_bytes": 8553117696,
+          "over_10MB_gpu_sum_ms": 5.180179
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Host",
+          "calls": 1776,
+          "bytes": 1291327,
+          "gpu_sum_ms": 3.071192,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 2,
+          "kind": "Host-to-Device",
+          "calls": 269,
+          "bytes": 38545445664,
+          "gpu_sum_ms": 1409.493863,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1409.132905
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Device",
+          "calls": 1049,
+          "bytes": 12841371992,
+          "gpu_sum_ms": 11.137673,
+          "over_10MB_calls": 209,
+          "over_10MB_bytes": 8553117696,
+          "over_10MB_gpu_sum_ms": 5.135959
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Host",
+          "calls": 1776,
+          "bytes": 1291327,
+          "gpu_sum_ms": 3.09317,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 3,
+          "kind": "Host-to-Device",
+          "calls": 269,
+          "bytes": 38545445664,
+          "gpu_sum_ms": 1420.346797,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1420.097709
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Device",
+          "calls": 1049,
+          "bytes": 12841371992,
+          "gpu_sum_ms": 11.085084,
+          "over_10MB_calls": 209,
+          "over_10MB_bytes": 8553117696,
+          "over_10MB_gpu_sum_ms": 5.162142
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Host",
+          "calls": 1776,
+          "bytes": 1291327,
+          "gpu_sum_ms": 3.082912,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 4,
+          "kind": "Host-to-Device",
+          "calls": 269,
+          "bytes": 38545445664,
+          "gpu_sum_ms": 1405.305235,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1404.941972
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Device",
+          "calls": 1049,
+          "bytes": 12841371992,
+          "gpu_sum_ms": 10.878043,
+          "over_10MB_calls": 209,
+          "over_10MB_bytes": 8553117696,
+          "over_10MB_gpu_sum_ms": 5.137478
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Host",
+          "calls": 1776,
+          "bytes": 1291327,
+          "gpu_sum_ms": 3.088524,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 5,
+          "kind": "Host-to-Device",
+          "calls": 269,
+          "bytes": 38545445664,
+          "gpu_sum_ms": 1423.770448,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1423.44421
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Device",
+          "calls": 1049,
+          "bytes": 12841371992,
+          "gpu_sum_ms": 10.601792,
+          "over_10MB_calls": 209,
+          "over_10MB_bytes": 8553117696,
+          "over_10MB_gpu_sum_ms": 4.93008
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Host",
+          "calls": 1776,
+          "bytes": 1291327,
+          "gpu_sum_ms": 3.087872,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 6,
+          "kind": "Host-to-Device",
+          "calls": 269,
+          "bytes": 38545445664,
+          "gpu_sum_ms": 1415.913762,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1415.601442
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Device",
+          "calls": 1050,
+          "bytes": 12841404760,
+          "gpu_sum_ms": 10.721917,
+          "over_10MB_calls": 209,
+          "over_10MB_bytes": 8553117696,
+          "over_10MB_gpu_sum_ms": 5.064274
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Host",
+          "calls": 1776,
+          "bytes": 1291327,
+          "gpu_sum_ms": 3.066452,
+          "over_10MB_calls": 0,
+          "over_10MB_bytes": 0,
+          "over_10MB_gpu_sum_ms": 0.0
+        },
+        {
+          "device_id": 7,
+          "kind": "Host-to-Device",
+          "calls": 269,
+          "bytes": 38545445664,
+          "gpu_sum_ms": 1417.799641,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1417.431803
+        }
+      ],
+      "top_kernels": [
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16832gemm_block_scaled_ue8m0xe4m3_ue8m0xe4m3_f32_bf16_bf16_128x128x128_1x1x1_0_tnn_align16_q_bias_bf16_relu",
+          "calls": 4800,
+          "gpu_sum_ms": 5945.193724
+        },
+        {
+          "name": "kernel_cake_sage_block_sparse_attention_h3_ragged_bs1_v1_grid_constant_r1",
+          "calls": 1200,
+          "gpu_sum_ms": 5595.709979
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x64_64x3_tn_align8>(T1::Params)",
+          "calls": 1488,
+          "gpu_sum_ms": 3617.753294
+        },
+        {
+          "name": "cudnn_generated_fort_native_sdpa_sm120_flash_fprop_f16_knob_3_64x64x128_4x1x1_cga1x1x1_kernel0_0",
+          "calls": 464,
+          "gpu_sum_ms": 3291.476292
+        },
+        {
+          "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)",
+          "calls": 12800,
+          "gpu_sum_ms": 1788.290205
+        },
+        {
+          "name": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 32,
+          "gpu_sum_ms": 1274.411383
+        },
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16864gemm_block_scaled_ue4m3xe2m1_ue4m3xe2m1_f32_f16_f16_128x128x256_1x1x1_0_tnn_align32_o_vs16_bias_f16_relu",
+          "calls": 6984,
+          "gpu_sum_ms": 1069.678687
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x128_32x4_tn_align8>(T1::Params)",
+          "calls": 400,
+          "gpu_sum_ms": 789.91631
+        },
+        {
+          "name": "ncclDevKernel_Broadcast_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 56,
+          "gpu_sum_ms": 658.108974
+        },
+        {
+          "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<(int)64, (int)128, (int)128, (int)4, (bool)0, (bool)0, cutlass::half_t, Flash_kernel_traits<(int)64, (int)128, (int)128, (int)4, cutlass::half_t>>, (bool)0, (bool)0, (bool)0, (bool)0, (bool)0, (bool)1, (bool)0, (bool)0>(pytorch_flash::Flash_fwd_params)",
+          "calls": 1152,
+          "gpu_sum_ms": 536.197142
+        },
+        {
+          "name": "void comfy::<unnamed>::quantize_nvfp4_kernel<__half, __nv_fp4x2_e2m1, __nv_fp8_e4m3, (bool)1, (bool)0>(const T1 *, const float *, T2 *, T3 *, unsigned long, unsigned long, unsigned long, unsigned long, float)",
+          "calls": 7236,
+          "gpu_sum_ms": 268.079472
+        },
+        {
+          "name": "void vllm::act_and_mul_kernel<c10::Half, __half2, &vllm::silu_kernel<c10::Half>, &vllm::packed_silu_kernel<__half2>, (bool)1, (bool)1, (bool)0, (bool)1>(T1 *, const T1 *, int, float, float, float)",
+          "calls": 1152,
+          "gpu_sum_ms": 260.748249
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_u32_TREE_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 40,
+          "gpu_sum_ms": 229.280299
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AbsFunctor<c10::Half>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 7236,
+          "gpu_sum_ms": 227.670178
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 2832,
+          "gpu_sum_ms": 207.922162
+        },
+        {
+          "name": "_rms_norm_rope_kernel",
+          "calls": 3200,
+          "gpu_sum_ms": 181.15763
+        },
+        {
+          "name": "_silu_mxfp8_cuda_kernel",
+          "calls": 1200,
+          "gpu_sum_ms": 168.164673
+        },
+        {
+          "name": "_scaled_residual_exact_kernel",
+          "calls": 2304,
+          "gpu_sum_ms": 157.716822
+        },
+        {
+          "name": "_sage_kv_stats_partial_kernel",
+          "calls": 1200,
+          "gpu_sum_ms": 125.039807
+        },
+        {
+          "name": "void at::native::reduce_kernel<(int)512, (int)1, at::native::ReduceOp<c10::Half, at::native::func_wrapper_t<c10::Half, at::native::MaxNanFunctor<c10::Half>>, unsigned int, c10::Half, (int)4, (int)4>>(T3)",
+          "calls": 7236,
+          "gpu_sum_ms": 121.164777
+        }
+      ],
+      "gpu_inventory": [
+        {
+          "id": 6,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 5,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 4,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 7,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 3,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 2,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 1,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 0,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        }
+      ]
+    },
+    "cache_4": {
+      "sqlite": "${TMP}/h3-lotus-20260921/cache-capture.4.sqlite",
+      "sqlite_bytes": 43266048,
+      "sqlite_sha256": "1f986141dbbd734befcdfcf01221907b6585416ac4f73628507a21a0edfe05b4",
+      "nvtx_cpu_ranges": {
+        "h3.profile.prepare_request": {
+          "count": 1,
+          "median_ms": 475.590986,
+          "min_ms": 475.590986,
+          "max_ms": 475.590986,
+          "sum_across_ranges_ms": 475.590986
+        },
+        "h3.profile.encoder": {
+          "count": 8,
+          "median_ms": 391.214949,
+          "min_ms": 373.170135,
+          "max_ms": 392.20979,
+          "sum_across_ranges_ms": 3111.5801009999996
+        },
+        "h3.profile.dit": {
+          "count": 8,
+          "median_ms": 3945.8364315,
+          "min_ms": 3945.644421,
+          "max_ms": 3946.065633,
+          "sum_across_ranges_ms": 31566.626837000003
+        },
+        "h3.profile.dit.step_01": {
+          "count": 8,
+          "median_ms": 1727.5414,
+          "min_ms": 1723.383912,
+          "max_ms": 1731.474693,
+          "sum_across_ranges_ms": 13821.100285
+        },
+        "h3.profile.dit.step_02": {
+          "count": 8,
+          "median_ms": 729.2541765,
+          "min_ms": 729.224147,
+          "max_ms": 729.427753,
+          "sum_across_ranges_ms": 5834.304367
+        },
+        "h3.profile.dit.step_03": {
+          "count": 8,
+          "median_ms": 728.8608489999999,
+          "min_ms": 728.832755,
+          "max_ms": 729.0582,
+          "sum_across_ranges_ms": 5831.183827000001
+        },
+        "h3.profile.dit.step_04": {
+          "count": 8,
+          "median_ms": 727.3745985,
+          "min_ms": 727.200587,
+          "max_ms": 727.461842,
+          "sum_across_ranges_ms": 5818.839910000001
+        },
+        "h3.profile.decode": {
+          "count": 8,
+          "median_ms": 497.158436,
+          "min_ms": 497.079973,
+          "max_ms": 509.444659,
+          "sum_across_ranges_ms": 3989.540296
+        },
+        "h3.profile.rdma.release": {
+          "count": 8,
+          "median_ms": 0.00823,
+          "min_ms": 0.007009,
+          "max_ms": 0.01074,
+          "sum_across_ranges_ms": 0.067248
+        },
+        "h3.profile.video_vae": {
+          "count": 8,
+          "median_ms": 497.0898075,
+          "min_ms": 468.630524,
+          "max_ms": 497.22747,
+          "sum_across_ranges_ms": 3948.4034890000003
+        },
+        "h3.profile.audio_vae": {
+          "count": 1,
+          "median_ms": 23.637935,
+          "min_ms": 23.637935,
+          "max_ms": 23.637935,
+          "sum_across_ranges_ms": 23.637935
+        },
+        "h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "median_ms": 100.557688,
+          "min_ms": 100.557688,
+          "max_ms": 100.557688,
+          "sum_across_ranges_ms": 100.557688
+        },
+        "h3.profile.output.submit_u8_d2h": {
+          "count": 8,
+          "median_ms": 0.0666085,
+          "min_ms": 0.050009,
+          "max_ms": 0.088008,
+          "sum_across_ranges_ms": 0.528998
+        },
+        "h3.profile.output.d2h_wait": {
+          "count": 8,
+          "median_ms": 16.440206500000002,
+          "min_ms": 0.00894,
+          "max_ms": 57.83815,
+          "sum_across_ranges_ms": 202.45384099999998
+        },
+        "h3.profile.output.video_encode_mux": {
+          "count": 8,
+          "median_ms": 11.594811499999999,
+          "min_ms": 3.119518,
+          "max_ms": 16.998755,
+          "sum_across_ranges_ms": 89.82099000000001
+        },
+        "h3.profile.output.finish": {
+          "count": 1,
+          "median_ms": 16.063663,
+          "min_ms": 16.063663,
+          "max_ms": 16.063663,
+          "sum_across_ranges_ms": 16.063663
+        },
+        "h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "median_ms": 1.783935,
+          "min_ms": 1.783935,
+          "max_ms": 1.783935,
+          "sum_across_ranges_ms": 1.783935
+        }
+      },
+      "devices": [
+        {
+          "device_id": 0,
+          "kernel_calls": 31050,
+          "kernel_sum_ms": 3523.271226,
+          "kernel_interval_union_ms": 3484.745823,
+          "first_to_last_kernel_span_ms": 4900.943534
+        },
+        {
+          "device_id": 1,
+          "kernel_calls": 20499,
+          "kernel_sum_ms": 3778.935757,
+          "kernel_interval_union_ms": 3693.983606,
+          "first_to_last_kernel_span_ms": 4903.99142
+        },
+        {
+          "device_id": 2,
+          "kernel_calls": 20479,
+          "kernel_sum_ms": 3826.433636,
+          "kernel_interval_union_ms": 3756.329571,
+          "first_to_last_kernel_span_ms": 4903.418633
+        },
+        {
+          "device_id": 3,
+          "kernel_calls": 20479,
+          "kernel_sum_ms": 3760.336068,
+          "kernel_interval_union_ms": 3680.21234,
+          "first_to_last_kernel_span_ms": 4903.855767
+        },
+        {
+          "device_id": 4,
+          "kernel_calls": 20479,
+          "kernel_sum_ms": 3834.370386,
+          "kernel_interval_union_ms": 3753.464161,
+          "first_to_last_kernel_span_ms": 4902.55009
+        },
+        {
+          "device_id": 5,
+          "kernel_calls": 20479,
+          "kernel_sum_ms": 3627.461362,
+          "kernel_interval_union_ms": 3548.569327,
+          "first_to_last_kernel_span_ms": 4903.976127
+        },
+        {
+          "device_id": 6,
+          "kernel_calls": 19501,
+          "kernel_sum_ms": 3802.045886,
+          "kernel_interval_union_ms": 3601.950197,
+          "first_to_last_kernel_span_ms": 4902.473535
+        },
+        {
+          "device_id": 7,
+          "kernel_calls": 19136,
+          "kernel_sum_ms": 3912.627155,
+          "kernel_interval_union_ms": 3744.90903,
+          "first_to_last_kernel_span_ms": 4904.885461
+        }
+      ],
+      "transfers": [
+        {
+          "device_id": 0,
+          "kind": "Device-to-Device",
+          "calls": 1074,
+          "bytes": 13169925064,
+          "gpu_sum_ms": 11.553732,
+          "over_10MB_calls": 217,
+          "over_10MB_bytes": 8871061504,
+          "over_10MB_gpu_sum_ms": 5.010455
+        },
+        {
+          "device_id": 0,
+          "kind": "Device-to-Host",
+          "calls": 1900,
+          "bytes": 213796543,
+          "gpu_sum_ms": 7.77134,
+          "over_10MB_calls": 8,
+          "over_10MB_bytes": 196044800,
+          "over_10MB_gpu_sum_ms": 3.992149
+        },
+        {
+          "device_id": 0,
+          "kind": "Host-to-Device",
+          "calls": 304,
+          "bytes": 38576802631,
+          "gpu_sum_ms": 1420.826915,
+          "over_10MB_calls": 202,
+          "over_10MB_bytes": 38565140480,
+          "over_10MB_gpu_sum_ms": 1420.473635
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Device",
+          "calls": 1061,
+          "bytes": 12926551912,
+          "gpu_sum_ms": 11.354713,
+          "over_10MB_calls": 213,
+          "over_10MB_bytes": 8628840448,
+          "over_10MB_gpu_sum_ms": 5.154951
+        },
+        {
+          "device_id": 1,
+          "kind": "Device-to-Host",
+          "calls": 1896,
+          "bytes": 18738346,
+          "gpu_sum_ms": 5.290733,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 17438720,
+          "over_10MB_gpu_sum_ms": 2.234167
+        },
+        {
+          "device_id": 1,
+          "kind": "Host-to-Device",
+          "calls": 274,
+          "bytes": 38545604148,
+          "gpu_sum_ms": 1415.629479,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1415.2626
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Device",
+          "calls": 1061,
+          "bytes": 12926551912,
+          "gpu_sum_ms": 11.418575,
+          "over_10MB_calls": 213,
+          "over_10MB_bytes": 8628840448,
+          "over_10MB_gpu_sum_ms": 5.223908
+        },
+        {
+          "device_id": 2,
+          "kind": "Device-to-Host",
+          "calls": 1896,
+          "bytes": 18738346,
+          "gpu_sum_ms": 5.280103,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 17438720,
+          "over_10MB_gpu_sum_ms": 2.225208
+        },
+        {
+          "device_id": 2,
+          "kind": "Host-to-Device",
+          "calls": 274,
+          "bytes": 38545604148,
+          "gpu_sum_ms": 1409.488397,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1409.120398
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Device",
+          "calls": 1061,
+          "bytes": 12926551912,
+          "gpu_sum_ms": 11.196414,
+          "over_10MB_calls": 213,
+          "over_10MB_bytes": 8628840448,
+          "over_10MB_gpu_sum_ms": 5.188782
+        },
+        {
+          "device_id": 3,
+          "kind": "Device-to-Host",
+          "calls": 1896,
+          "bytes": 18738346,
+          "gpu_sum_ms": 5.22296,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 17438720,
+          "over_10MB_gpu_sum_ms": 2.174938
+        },
+        {
+          "device_id": 3,
+          "kind": "Host-to-Device",
+          "calls": 274,
+          "bytes": 38545604148,
+          "gpu_sum_ms": 1415.994006,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1415.732983
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Device",
+          "calls": 1061,
+          "bytes": 12926551912,
+          "gpu_sum_ms": 11.140094,
+          "over_10MB_calls": 213,
+          "over_10MB_bytes": 8628840448,
+          "over_10MB_gpu_sum_ms": 5.211358
+        },
+        {
+          "device_id": 4,
+          "kind": "Device-to-Host",
+          "calls": 1896,
+          "bytes": 18738346,
+          "gpu_sum_ms": 5.212603,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 17438720,
+          "over_10MB_gpu_sum_ms": 2.139518
+        },
+        {
+          "device_id": 4,
+          "kind": "Host-to-Device",
+          "calls": 274,
+          "bytes": 38545604148,
+          "gpu_sum_ms": 1409.545162,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1409.287626
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Device",
+          "calls": 1061,
+          "bytes": 12926551912,
+          "gpu_sum_ms": 10.964869,
+          "over_10MB_calls": 213,
+          "over_10MB_bytes": 8628840448,
+          "over_10MB_gpu_sum_ms": 5.207142
+        },
+        {
+          "device_id": 5,
+          "kind": "Device-to-Host",
+          "calls": 1896,
+          "bytes": 18738346,
+          "gpu_sum_ms": 5.255777,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 17438720,
+          "over_10MB_gpu_sum_ms": 2.187188
+        },
+        {
+          "device_id": 5,
+          "kind": "Host-to-Device",
+          "calls": 274,
+          "bytes": 38545604148,
+          "gpu_sum_ms": 1417.741649,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1417.479346
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Device",
+          "calls": 1061,
+          "bytes": 12926551912,
+          "gpu_sum_ms": 10.682493,
+          "over_10MB_calls": 213,
+          "over_10MB_bytes": 8628840448,
+          "over_10MB_gpu_sum_ms": 4.987584
+        },
+        {
+          "device_id": 6,
+          "kind": "Device-to-Host",
+          "calls": 1896,
+          "bytes": 18738346,
+          "gpu_sum_ms": 5.379872,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 17438720,
+          "over_10MB_gpu_sum_ms": 2.269344
+        },
+        {
+          "device_id": 6,
+          "kind": "Host-to-Device",
+          "calls": 274,
+          "bytes": 38545604148,
+          "gpu_sum_ms": 1420.422082,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1420.127298
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Device",
+          "calls": 1062,
+          "bytes": 12926584680,
+          "gpu_sum_ms": 10.732044,
+          "over_10MB_calls": 213,
+          "over_10MB_bytes": 8628840448,
+          "over_10MB_gpu_sum_ms": 5.056456
+        },
+        {
+          "device_id": 7,
+          "kind": "Device-to-Host",
+          "calls": 1896,
+          "bytes": 18738346,
+          "gpu_sum_ms": 5.25585,
+          "over_10MB_calls": 1,
+          "over_10MB_bytes": 17438720,
+          "over_10MB_gpu_sum_ms": 2.191928
+        },
+        {
+          "device_id": 7,
+          "kind": "Host-to-Device",
+          "calls": 274,
+          "bytes": 38545604148,
+          "gpu_sum_ms": 1411.605968,
+          "over_10MB_calls": 200,
+          "over_10MB_bytes": 38535168000,
+          "over_10MB_gpu_sum_ms": 1411.231474
+        }
+      ],
+      "top_kernels": [
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16832gemm_block_scaled_ue8m0xe4m3_ue8m0xe4m3_f32_bf16_bf16_128x128x128_1x1x1_0_tnn_align16_q_bias_bf16_relu",
+          "calls": 4800,
+          "gpu_sum_ms": 5962.290153
+        },
+        {
+          "name": "kernel_cake_sage_block_sparse_attention_h3_ragged_bs1_v1_grid_constant_r1",
+          "calls": 1200,
+          "gpu_sum_ms": 5608.11942
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x64_64x3_tn_align8>(T1::Params)",
+          "calls": 3552,
+          "gpu_sum_ms": 3998.88536
+        },
+        {
+          "name": "cudnn_generated_fort_native_sdpa_sm120_flash_fprop_f16_knob_3_64x64x128_4x1x1_cga1x1x1_kernel0_0",
+          "calls": 464,
+          "gpu_sum_ms": 3302.345443
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_f32_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 800,
+          "gpu_sum_ms": 1806.205569
+        },
+        {
+          "name": "flashinfer::comm::ulysses_pcie::UlyssesPcieBarrier(unsigned long *, flashinfer::comm::ulysses_pcie::PeerSignalPointers, int, int, unsigned long *)",
+          "calls": 12800,
+          "gpu_sum_ms": 1411.76087
+        },
+        {
+          "name": "ncclDevKernel_SendRecv(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 32,
+          "gpu_sum_ms": 1276.843991
+        },
+        {
+          "name": "cutlass3x_sm120_bstensorop_s16864gemm_block_scaled_ue4m3xe2m1_ue4m3xe2m1_f32_f16_f16_128x128x256_1x1x1_0_tnn_align32_o_vs16_bias_f16_relu",
+          "calls": 6984,
+          "gpu_sum_ms": 1072.136971
+        },
+        {
+          "name": "void cutlass::Kernel2<cutlass_80_tensorop_bf16_s16816gemm_relu_bf16_128x128_32x4_tn_align8>(T1::Params)",
+          "calls": 616,
+          "gpu_sum_ms": 823.032029
+        },
+        {
+          "name": "ncclDevKernel_Broadcast_RING_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 144,
+          "gpu_sum_ms": 737.906556
+        },
+        {
+          "name": "void pytorch_flash::flash_fwd_kernel<Flash_fwd_kernel_traits<(int)64, (int)128, (int)128, (int)4, (bool)0, (bool)0, cutlass::half_t, Flash_kernel_traits<(int)64, (int)128, (int)128, (int)4, cutlass::half_t>>, (bool)0, (bool)0, (bool)0, (bool)0, (bool)0, (bool)1, (bool)0, (bool)0>(pytorch_flash::Flash_fwd_params)",
+          "calls": 1152,
+          "gpu_sum_ms": 537.602148
+        },
+        {
+          "name": "void comfy::<unnamed>::quantize_nvfp4_kernel<__half, __nv_fp4x2_e2m1, __nv_fp8_e4m3, (bool)1, (bool)0>(const T1 *, const float *, T2 *, T3 *, unsigned long, unsigned long, unsigned long, unsigned long, float)",
+          "calls": 7236,
+          "gpu_sum_ms": 268.318365
+        },
+        {
+          "name": "void vllm::act_and_mul_kernel<c10::Half, __half2, &vllm::silu_kernel<c10::Half>, &vllm::packed_silu_kernel<__half2>, (bool)1, (bool)1, (bool)0, (bool)1>(T1 *, const T1 *, int, float, float, float)",
+          "calls": 1152,
+          "gpu_sum_ms": 260.668538
+        },
+        {
+          "name": "void at::native::vectorized_elementwise_kernel<(int)4, at::native::AbsFunctor<c10::Half>, std::array<char *, (unsigned long)2>>(int, T2, T3)",
+          "calls": 7236,
+          "gpu_sum_ms": 227.801549
+        },
+        {
+          "name": "ncclDevKernel_AllReduce_Sum_u32_TREE_LL(ncclDevKernelArgsStorage<(unsigned long)4096>)",
+          "calls": 40,
+          "gpu_sum_ms": 227.077811
+        },
+        {
+          "name": "void at::native::elementwise_kernel<(int)128, (int)4, void at::native::gpu_kernel_impl_nocast<at::native::direct_copy_kernel_cuda(at::TensorIteratorBase &)::[lambda() (instance 3)]::operator ()() const::[lambda() (instance 12)]::operator ()() const::[lambda(c10::BFloat16) (instance 1)]>(at::TensorIteratorBase &, const T1 &)::[lambda(int) (instance 1)]>(int, T3)",
+          "calls": 3864,
+          "gpu_sum_ms": 215.307274
+        },
+        {
+          "name": "_rms_norm_rope_kernel",
+          "calls": 3200,
+          "gpu_sum_ms": 181.390837
+        },
+        {
+          "name": "_silu_mxfp8_cuda_kernel",
+          "calls": 1200,
+          "gpu_sum_ms": 168.199373
+        },
+        {
+          "name": "_scaled_residual_exact_kernel",
+          "calls": 2304,
+          "gpu_sum_ms": 158.181193
+        },
+        {
+          "name": "_sage_kv_stats_partial_kernel",
+          "calls": 1200,
+          "gpu_sum_ms": 125.001523
+        }
+      ],
+      "gpu_inventory": [
+        {
+          "id": 6,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 5,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 4,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 7,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 3,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 2,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 1,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        },
+        {
+          "id": 0,
+          "name": "NVIDIA Graphics Device",
+          "chipName": "GB202",
+          "totalMemory": 76368642048,
+          "smCount": 110,
+          "computeMajor": 12,
+          "computeMinor": 0
+        }
+      ]
+    }
+  }
+}

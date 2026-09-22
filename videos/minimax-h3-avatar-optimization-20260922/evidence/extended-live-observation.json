@@ -1,0 +1,74 @@
+{
+  "observed_at": 1790080481.1012971,
+  "observed_at_utc": "2026-09-22T12:34:41.101297+00:00",
+  "scope": "Later read-only observation during report assembly. All accepted continuations at read time, opening excluded. The original 102-clip mixed snapshot remains unchanged. No viewer identities or messages.",
+  "publication": {
+    "count": 456,
+    "mean": 3.840887703348192,
+    "p50": 3.671656992053613,
+    "p95": 4.114816277520731,
+    "max": 5.895209081005305
+  },
+  "http": {
+    "count": 456,
+    "mean": 3.723654250522438,
+    "p50": 3.556343514472246,
+    "p95": 3.998556189762894,
+    "max": 5.780373485991731
+  },
+  "outside_http": {
+    "count": 456,
+    "mean": 0.11723345282575394,
+    "p50": 0.11626983841415495,
+    "p95": 0.12326673464849591,
+    "max": 0.13460685196332633
+  },
+  "deadline_misses": 2,
+  "by_action": {
+    "rest": {
+      "count": 266,
+      "mean": 3.742522224427649,
+      "p50": 3.6638752279104665,
+      "p95": 4.075298131792806,
+      "max": 5.895209081005305
+    },
+    "shake_head": {
+      "count": 1,
+      "mean": 3.929346024990082,
+      "p50": 3.929346024990082,
+      "p95": 3.929346024990082,
+      "max": 3.929346024990082
+    },
+    "speak": {
+      "count": 163,
+      "mean": 4.002689914605037,
+      "p50": 3.975850858958438,
+      "p95": 4.193261655513197,
+      "max": 4.289630753919482
+    },
+    "turn_page": {
+      "count": 25,
+      "mean": 3.822352241780609,
+      "p50": 3.6662054141052067,
+      "p95": 4.4970508457161475,
+      "max": 4.661770445061848
+    },
+    "wave": {
+      "count": 1,
+      "mean": 4.007272878894582,
+      "p50": 4.007272878894582,
+      "p95": 4.007272878894582,
+      "max": 4.007272878894582
+    }
+  },
+  "relay": {
+    "updated_at": 1790080480.8564076,
+    "status": "streaming_new_clip",
+    "clips_played": 455,
+    "generated_media_seconds": 2256.2499999999936,
+    "waiting_screen_seconds": 1.8333333333333344,
+    "waiting_events": 2,
+    "av_clock_delta_ms": 8.333333333333334
+  },
+  "interpretation": "Later short waiting intervals disprove a zero-underrun claim for the whole session. Initial zero waits apply only to the earlier bounded snapshot."
+}

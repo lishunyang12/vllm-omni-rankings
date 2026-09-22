@@ -1,0 +1,21 @@
+{
+  "scope": "Distribution metadata read from backend virtualenv; editable source overlays can differ from installed wheel metadata. Runtime source identity remains authoritative.",
+  "python": "3.12.13",
+  "packages": {
+    "torch": "2.13.0+cu132",
+    "triton": "3.7.1",
+    "vllm": "0.28.0",
+    "vllm-omni": "0.28.0rc2.dev62+gad1bb0f97",
+    "flashinfer-python": "0.6.16.post3",
+    "transformers": "5.14.1",
+    "diffusers": "0.40.0",
+    "av": "18.1.0",
+    "numpy": "2.3.5",
+    "fastapi": "0.136.3",
+    "uvicorn": "0.52.4",
+    "qwen-tts": "not registered under this distribution name",
+    "nvidia-cuda-runtime-cu12": "not registered under this distribution name",
+    "nvidia-cuda-runtime": "13.2.75",
+    "nvidia-nccl-cu12": "not registered under this distribution name"
+  }
+}

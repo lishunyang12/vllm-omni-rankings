@@ -1,0 +1,3245 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Measured H3 avatar optimization history, current five-second technology stack, latency boundaries and Nsight evidence."><title>From 15-second generation to a five-second interactive avatar</title><style>
+:root{--ink:#172c3a;--muted:#566b7a;--blue:#205b93;--line:#dbe3e9;--paper:#fff;--soft:#f2f6f8;--accent:#087f75}
+*{box-sizing:border-box}[hidden]{display:none!important}html{scroll-behavior:smooth;scroll-padding-top:28px}body{margin:0;background:var(--soft);color:var(--ink);font:16px/1.7 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--blue);text-underline-offset:3px}a:hover{color:var(--accent)}
+.top{padding:48px max(32px,calc((100vw - 1360px)/2));background:#142c3d;color:white;border-bottom:5px solid #30ac9b}.top .eyebrow{font:600 12px/1.5 system-ui;letter-spacing:.17em;text-transform:uppercase;color:#a7d9d2}.top h1{font-size:clamp(30px,4vw,49px);line-height:1.14;max-width:960px;margin:18px 0}.top p{max-width:890px;color:#d4e1e9;margin:16px 0}.top a{color:#c5ece7}.top .links{display:flex;gap:22px;flex-wrap:wrap;font-size:14px}
+.layout{max-width:1440px;margin:auto;display:grid;grid-template-columns:254px minmax(0,1fr);gap:30px;padding:30px 32px 70px}aside{position:sticky;top:20px;height:calc(100vh - 40px);overflow:auto;padding:10px 4px;font-size:13px}aside h2{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}aside a{display:block;padding:6px 10px;border-left:2px solid transparent;text-decoration:none;color:#365268;line-height:1.45}aside a:hover,aside a.active{background:#e3eef0;border-color:var(--accent)}aside input{width:100%;border:1px solid #c4d2dc;border-radius:6px;background:white;padding:9px;margin-bottom:14px;color:var(--ink)}
+main{min-width:0;background:white;border:1px solid var(--line);border-radius:12px;padding:36px 42px;box-shadow:0 6px 24px #163c4f06}main>h1{font-size:28px;line-height:1.3;margin-top:0}h2{font-size:26px;line-height:1.3;margin:52px 0 20px;padding-top:24px;border-top:2px solid var(--line)}h3{font-size:19px;line-height:1.4;margin-top:30px;overflow-wrap:anywhere}p{margin:15px 0}strong{font-weight:700}.table-wrap{overflow:auto;margin:22px 0;border:1px solid var(--line);border-radius:7px}table{border-collapse:collapse;width:100%;font-size:13px;line-height:1.5}th,td{padding:12px 13px;vertical-align:top;border-bottom:1px solid var(--line);min-width:90px}th{text-align:left;background:#eaf0f4;font-weight:650;color:#16354c}tr:last-child td{border-bottom:0}tbody tr:nth-child(even){background:#f8fafb}td:first-child{font-weight:550}code{font:12.5px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;background:#eff3f6;padding:2px 4px;border-radius:3px;overflow-wrap:anywhere}pre{padding:20px;background:#132d3e;color:#e1f0f6;border-radius:7px;overflow:auto;font:12.5px/1.75 ui-monospace,Consolas,monospace}pre code{background:none;padding:0;color:inherit;overflow-wrap:normal}blockquote{border-left:4px solid var(--accent);margin:20px 0;padding:4px 20px;background:#eef7f4}li{margin:8px 0}img,svg{max-width:100%;height:auto}.figure{border:1px solid var(--line);padding:16px;margin:25px 0;background:white;border-radius:8px}.figure svg{display:block;width:100%}.figure figcaption{color:var(--muted);font-size:12px;line-height:1.5;margin-top:12px}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:8px 0 28px}.metric{padding:18px 15px;border:1px solid #d2e2e5;border-radius:8px;background:#f6faf9}.metric b{display:block;font-size:27px;color:#176862}.metric span{display:block;font-size:12px;color:var(--muted);line-height:1.5}.scope{font-size:13px;color:var(--muted);padding:14px 18px;border-left:3px solid var(--accent);background:#f2f7f7}.footer{margin-top:50px;padding-top:18px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}button{font:inherit;padding:8px 12px;border:1px solid #b6c9d3;background:#fff;border-radius:5px;cursor:pointer}
+@media(max-width:1000px){.layout{grid-template-columns:210px minmax(0,1fr);gap:18px;padding:22px 18px}main{padding:25px}.metrics{grid-template-columns:repeat(2,1fr)}}@media(max-width:760px){.layout{display:block;padding:14px}aside{position:static;height:auto;max-height:240px;margin-bottom:20px}main{padding:22px 17px;border-radius:8px}.top{padding:28px 24px}h2{font-size:23px}table{min-width:650px}.metrics{gap:8px}}
+@media print{body{background:white;font-size:10pt}aside,.top,.metrics,button{display:none}.layout{display:block;max-width:none;padding:0}main{border:0;box-shadow:none;padding:0}h2{break-after:avoid;margin-top:26px;font-size:17pt}h3{break-after:avoid}.figure{break-inside:avoid;padding:5px}pre{white-space:pre-wrap;background:#f0f4f6;color:black}table{font-size:8pt;min-width:0}th,td{padding:6px}.table-wrap{overflow:visible;border:0}a{color:inherit}p{orphans:3;widows:3}}
+</style></head><body><header class="top"><div class="eyebrow">H3 Engineering · measured systems report · September 2026</div><h1>From 15-second generation to a five-second interactive avatar</h1><p>The current technology stack, the optimization decisions that shaped the demo, and the evidence behind both retained changes and rollbacks.</p><div class="links"><a href="index.html">Current system</a><a href="history.html">All recorded history</a><a href="report.md">Markdown source</a><a href="evidence/nsys-reanalysis.json">Nsight evidence</a></div></header><div class="layout"><aside><h2>On this page</h2><label for="toc-search">Find a section</label><input id="toc-search" type="search" placeholder="Filter section titles"><nav><a href="#1-what-this-report-establishes">1. What this report establishes</a><a href="#2-the-operator-s-decisions-reconstructed-from-requirements-and-evidence">2. The operator&#x27;s decisions, reconstructed from requirements and evidence</a><a href="#3-the-15-second-five-second-migration-is-a-workload-change">3. The 15-second → five-second migration is a workload change</a><a href="#4-current-complete-technology-stack">4. Current complete technology stack</a><a href="#5-what-carries-over-and-what-does-not">5. What carries over, and what does not</a><a href="#6-the-weight-residency-decision-what-nsight-actually-showed">6. The weight-residency decision: what Nsight actually showed</a><a href="#7-video-reconstruction-and-output-exact-improvements-around-a-lossy-decoder">7. Video reconstruction and output: exact improvements around a lossy decoder</a><a href="#8-exact-input-reuse-makes-the-five-second-workload-affordable">8. Exact input reuse makes the five-second workload affordable</a><a href="#9-current-measured-latency-and-response-budget">9. Current measured latency and response budget</a><a href="#10-why-five-seconds-remains-the-live-choice">10. Why five seconds remains the live choice</a><a href="#11-audio-fidelity-continuity-and-removal-of-unnecessary-dependencies">11. Audio fidelity, continuity and removal of unnecessary dependencies</a><a href="#12-continuity-and-the-quality-reliability-cost-of-the-demo">12. Continuity and the quality/reliability cost of the demo</a><a href="#13-recorded-optimization-history-ledger">13. Recorded optimization-history ledger</a><a href="#14-nsight-analysis-reproducible-scope-and-interpretation">14. Nsight analysis: reproducible scope and interpretation</a><a href="#15-remaining-work-ordered-by-value-to-this-demo">15. Remaining work, ordered by value to this demo</a><a href="#16-evidence-package-and-reproducibility">16. Evidence package and reproducibility</a></nav></aside><main><div class="metrics"><div class="metric"><b>4.958 s</b><span>New media per continuation</span></div><div class="metric"><b>3.972 s</b><span>Publication P50 · 102 clips</span></div><div class="metric"><b>4.205 s</b><span>Publication P95 · same sample</span></div><div class="metric"><b>8 traces</b><span>Historical Nsight reanalysis</span></div></div><p class="scope">Snapshot: 22 Sep 2026, 12:05 UTC. Warm mixed production, including 50 spoken clips. These timings are not chat-to-viewer response latency. The previous stream stopped on brightness drift; indefinite coherence remains unresolved.</p><h1 id="from-15-second-generation-to-a-five-second-interactive-h3-avatar">From 15-second generation to a five-second interactive H3 avatar</h1>
+<p><strong>Current system, optimization history, Nsight evidence, and the decisions behind the demo</strong><br />
+Engineering review · 22 September 2026 · Eight SM120 / GB202 GPUs</p>
+<p><a href="history.html">Complete historical appendix</a> · <a href="evidence/history-inventory.json">Evidence inventory</a></p>
+<h2 id="1-what-this-report-establishes">1. What this report establishes</h2>
+<p>The project first demonstrated that a roughly 15-second audiovisual clip could be generated in less than its playback duration. It then changed the workload into an interactive avatar: a continuing character must answer newly arriving messages, preserve motion and scene state, maintain intelligible speech, and deliver a continuous Twitch stream. These are different optimization objectives.</p>
+<p>The current production path generates a <strong>124-frame window at 24 fps</strong>, retaining five overlapping frames and publishing <strong>119 new frames, or 4.958333 seconds</strong>, after the opening. It uses native H3 joint audio/video generation, a four-step Ref2VA Turbo adapter, dense Sage attention, resident MXFP8 main projections, an NVFP4 video decoder, and an FP32 audio decoder. The answer planner is a separate local Qwen3-4B model. No per-answer TTS or external voice-reference waveform is required in the selected prompt-only voice mode.</p>
+<p>At the report's fixed production snapshot, <strong>102 accepted continuations</strong> had a <strong>3.972 s publication median, 4.205 s P95, 4.807 s maximum</strong>, and no request exceeded its 4.958 s playback budget. The relay had transmitted 101 clips with <strong>zero recorded buffer underruns</strong>. This includes 50 spoken clips; their publication median was 3.977 s. It is a bounded observation of the current mixed live workload, with the text service sharing the host, not an isolated benchmark or an unlimited-duration guarantee. <a href="evidence/current-live-observation.json">Current receipts</a></p>
+<p>The later checkpoint at <strong>12:34:41 UTC</strong> extends the same session to <strong>456 accepted continuations</strong>, including 163 spoken clips. It records <strong>two producer deadline misses</strong> and <strong>two relay waiting intervals totaling 1.833 seconds</strong> across 455 transmitted clips. Thus the early zero-underrun result does not hold for the entire longer session. Both observations are retained, with their different workload mixes. <a href="evidence/extended-live-observation.json">Extended receipts</a></p>
+<p>The previous session stopped after clip 871: both attempts at the next continuation failed the luminance-drift screen. The controller withheld those candidates, and the stream went offline. The newly authorized restart uses a fresh opening and the original quality checks. This failure belongs in the engineering result: adequate throughput has been demonstrated, but indefinite scene stability and automatic recovery have not.</p>
+<p>The report follows the architectural depth and evidence discipline of the supplied <a href="https://github.com/lishunyang12/vllm-omni-rankings/blob/main/videos/minimax_h3_analysis_report.html">MiniMax H3 analysis report</a>. Its measurements here come from this project's local experiments and receipts. Earlier model-level comparisons are background; they are not multiplied into a single advertised speedup.</p>
+<h3 id="three-separate-meanings-of-real-time">Three separate meanings of “real time”</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Required measurement</th>
+<th>Current conclusion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Can generation keep up with playback?</td>
+<td>Producer work divided by newly published media duration; include retries and tail latency</td>
+<td>Yes in the bounded current sample</td>
+</tr>
+<tr>
+<td>How quickly does a viewer get a response?</td>
+<td>Arrival → selection → generation → first response sample transmitted → viewer presentation</td>
+<td>Local components are instrumented; full viewer-end onset distribution is not established</td>
+</tr>
+<tr>
+<td>Can the avatar remain coherent indefinitely?</td>
+<td>Long-run identity, lighting, objects, speech, motion and failure recovery</td>
+<td>Not established; a real brightness-drift stop was reproduced</td>
+</tr>
+</tbody>
+</table></div>
+<p>A stream can have a generation ratio below one and still respond slowly because it has queued future footage. It can also be fast and visually wrong. These are independent acceptance dimensions.</p>
+<h2 id="2-the-operator-s-decisions-reconstructed-from-requirements-and-evidence">2. The operator's decisions, reconstructed from requirements and evidence</h2>
+<p>The requirement column paraphrases explicit development requests. The engineering rationale is an interpretation of those requests together with the experiments; it is not a claim to know an unstated motivation.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Requirement or observation</th>
+<th>Decision made for the demo</th>
+<th>Evidence and cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The earlier FastH3 path already produced a 15-second clip in about 13 seconds</td>
+<td>Preserve that as a throughput reference; adapt the serving system for interaction</td>
+<td>Warm complete-MP4 measurements reached 13.549 s, then separately qualified 13.304 s and 13.261 s configurations; these are different campaigns</td>
+</tr>
+<tr>
+<td>Viewers should be able to influence what happens next</td>
+<td>Move from long completed clips to roughly five-second rolling Ref2VA windows</td>
+<td>Shorter commitment horizon; fixed preparation, reference and output costs recur more frequently</td>
+</tr>
+<tr>
+<td>The character's face and scene matter more than a headline resolution</td>
+<td>Select 960×544 for the live baseline while testing larger shapes separately</td>
+<td>BF16-first 1088×608 took 5.611 s per 4.958 s continuation; the then-requested 4.5 s target was not achieved</td>
+</tr>
+<tr>
+<td>Protecting the first diffusion step visibly helped quality</td>
+<td>Introduce original BF16 first-step projections and attention</td>
+<td>Longer quality retention in one soak; 4.492 s versus 3.888 s median in a paired configuration family; drift was delayed, not eliminated</td>
+</tr>
+<tr>
+<td>Real-time headroom remained tight; explicitly try Sage/MXFP8 in step one</td>
+<td>Temporarily use all four low-precision steps in production</td>
+<td>Live idle median 4.575 → 3.857 s in the historical operational comparison; this is a lossy tradeoff, not an infrastructure-only gain</td>
+</tr>
+<tr>
+<td>“Keep weights resident instead of moving them”</td>
+<td>Test original BF16 residency and on-demand MXFP8 weight packing; revert after measurement</td>
+<td>Large weight copies disappeared, but complete request median increased 5.611 → 5.704 s</td>
+</tr>
+<tr>
+<td>“Can we remove MXFP8 entirely?”</td>
+<td>Test resident original BF16 projections separately from attention precision</td>
+<td>960×544 all-BF16 projections still took 5.060 s median; 1088×608 took 6.568 s with mixed attention or 7.343 s with BF16 attention</td>
+</tr>
+<tr>
+<td>Do not interrupt a turn by looking back at the book</td>
+<td>Keep one answer identity and viewer attention across its multiple generated segments</td>
+<td>Whole-answer scheduling and prompt corrections; a video boundary is not a conversational ending</td>
+</tr>
+<tr>
+<td>Voice references seemed to add complexity and unnatural speech</td>
+<td>Test and select prompt-only native H3 voice after review</td>
+<td>Removes the TTS/reference-input dependency; a three-clip trial took 4.049–4.161 s including sample preparation; voice stability remains a separate quality question</td>
+</tr>
+<tr>
+<td>Avoid constant BGM; keep environmental and action sound</td>
+<td>Preserve native generated ambient PCM; use accompaniment only for explicit singing</td>
+<td>Ordinary reading/dialogue has no added music bed; singing uses H3-authored accompaniment instructions</td>
+</tr>
+<tr>
+<td>Make the response faster without degrading the picture</td>
+<td>Reduce lookahead from two clips to one, bypass the LLM for supported direct gestures, cache unchanged inputs, remove duplicate validation decode</td>
+<td>Lower queue delay and exact work reduction; less reserve to absorb retries</td>
+</tr>
+<tr>
+<td>Try approximately two-second generation</td>
+<td>Implement and test 56/73-frame experimental shapes; retain 124 live</td>
+<td>56-frame mixed-workload mean exceeds its 2.125 s playback duration; speech fragmentation and unintended subtitles also appeared</td>
+</tr>
+<tr>
+<td>Keep the camera and movement continuous</td>
+<td>Carry raw AV latent state; preserve the accepted prefix; retry from the same accepted parent</td>
+<td>Avoids periodic reference-image cuts; does not eliminate accumulated model error</td>
+</tr>
+<tr>
+<td>Add mirror, cloth, water, clothing and window interactions</td>
+<td>Reuse a stateful planner, but keep unqualified recipes in a private research profile</td>
+<td>An eat → wipe → read sample exists; window control and mirror reflection still fail visual acceptance</td>
+</tr>
+</tbody>
+</table></div>
+<p>The resulting operating point is a deliberate compromise: preserve exact engineering optimizations, use explicitly accepted approximate model kernels where necessary, reduce queueing, and reject visibly deteriorating output. It is not an all-lossless model or a fully solved persistent world.</p>
+<h2 id="3-the-15-second-five-second-migration-is-a-workload-change">3. The 15-second → five-second migration is a workload change</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Earlier throughput demonstration</th>
+<th>Current interactive avatar</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Main task</td>
+<td>FastH3 T2VA / VSA long clip</td>
+<td>H3 Ref2VA Turbo rolling continuation</td>
+</tr>
+<tr>
+<td>Video geometry</td>
+<td>1280×704, 362 frames, 24 fps</td>
+<td>960×544, 124 source frames; 119 new continuation frames</td>
+</tr>
+<tr>
+<td>Media duration</td>
+<td>15.0833 s for the 362-frame output</td>
+<td>Opening 5.1667 s; each continuation 4.9583 s</td>
+</tr>
+<tr>
+<td>Attention</td>
+<td>VSA sparsity plus Sage in the selected fast path</td>
+<td>Dense Sage; all eligible KV blocks retained</td>
+</tr>
+<tr>
+<td>Conditioning</td>
+<td>Authored long-clip prompt</td>
+<td>Fixed character reference, new line/action prompt and previous raw AV tail</td>
+</tr>
+<tr>
+<td>Scheduler</td>
+<td>Complete a standalone request</td>
+<td>One logical continuous session with bounded future footage</td>
+</tr>
+<tr>
+<td>Deadline</td>
+<td>Finish a long MP4 within its playback duration</td>
+<td>Publish the next accepted continuation before its playback slot</td>
+</tr>
+<tr>
+<td>Output consumer</td>
+<td>Benchmark/player</td>
+<td>Persistent relay, public chat, continuous encoder, Twitch player</td>
+</tr>
+<tr>
+<td>Quality objective</td>
+<td>Accepted finite sample</td>
+<td>Face, voice, lighting, props and actions across many requests</td>
+</tr>
+</tbody>
+</table></div>
+<p>It would be misleading to divide a historical 13.3 s long-clip result by a current 4.0 s short-clip result and call that a 3.3× infrastructure speedup. Resolution, duration, conditioning, task partition, attention policy and timing boundaries all changed.</p>
+<p>The practical gain is a smaller <strong>commitment horizon</strong>. Once a diffusion request has started, the system does not rewrite its middle with a newly received comment. A shorter window permits a new request sooner. That benefit must be paid for with enough throughput margin to cover repeated conditioning, decoding and publication.</p>
+<p>For continuation window length <code>F</code>, overlap <code>O=5</code>, and <code>fps=24</code>:</p>
+<pre><code class="language-text">new_media_seconds D = (F - O) / fps
+producer_ratio     = total producer work / total new media
+mean headroom      = D - mean producer time
+viewer latency     = admission + planning/scheduling + generation/checks
+                     + ready-to-play backlog + within-clip response onset
+                     + Twitch delivery/player buffering
+</code></pre>
+<p>Planning and generation can overlap, so their complete durations should not automatically be added as serial work. A turn's dispatch time is constrained by both input readiness and generator availability. Increasing the buffer hides occasional overruns; it does not fix average production slower than playback.</p>
+<h2 id="4-current-complete-technology-stack">4. Current complete technology stack</h2>
+<h3 id="4-1-request-to-viewer-path">4.1 Request-to-viewer path</h3>
+<figure class="figure"><svg role="img" aria-label="Current live architecture and the accepted-state feedback loop" xmlns:xlink="http://www.w3.org/1999/xlink" width="800.39952pt" height="620.39952pt" viewBox="0 0 800.39952 620.39952" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="architecture-figure_1">
+  <g id="architecture-patch_1">
+   <path d="M 0 620.39952 
+L 800.39952 620.39952 
+L 800.39952 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="architecture-axes_1">
+   <g id="architecture-patch_2">
+    <path d="M 31.494531 143.301063 
+L 240.141676 143.301063 
+Q 247.287126 143.301063 247.287126 136.855268 
+L 247.287126 67.885262 
+Q 247.287126 61.439467 240.141676 61.439467 
+L 31.494531 61.439467 
+Q 24.34908 61.439467 24.34908 67.885262 
+L 24.34908 136.855268 
+Q 24.34908 143.301063 31.494531 143.301063 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #edf4f7; stroke: #bfd1dc; stroke-linejoin: miter"/>
+   </g>
+   <g id="architecture-patch_3">
+    <path d="M 31.494531 256.102476 
+L 240.141676 256.102476 
+Q 247.287126 256.102476 247.287126 249.656681 
+L 247.287126 174.24088 
+Q 247.287126 167.795085 240.141676 167.795085 
+L 31.494531 167.795085 
+Q 24.34908 167.795085 24.34908 174.24088 
+L 24.34908 249.656681 
+Q 24.34908 256.102476 31.494531 256.102476 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #edf4f7; stroke: #bfd1dc; stroke-linejoin: miter"/>
+   </g>
+   <g id="architecture-patch_4">
+    <path d="M 31.494531 375.349684 
+L 240.141676 375.349684 
+Q 247.287126 375.349684 247.287126 368.903889 
+L 247.287126 290.26519 
+Q 247.287126 283.819395 240.141676 283.819395 
+L 31.494531 283.819395 
+Q 24.34908 283.819395 24.34908 290.26519 
+L 24.34908 368.903889 
+Q 24.34908 375.349684 31.494531 375.349684 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #edf4f7; stroke: #bfd1dc; stroke-linejoin: miter"/>
+   </g>
+   <g id="architecture-patch_5">
+    <path d="M 295.876187 143.301063 
+L 761.759539 143.301063 
+Q 768.904989 143.301063 768.904989 136.855268 
+L 768.904989 67.885262 
+Q 768.904989 61.439467 761.759539 61.439467 
+L 295.876187 61.439467 
+Q 288.730737 61.439467 288.730737 67.885262 
+L 288.730737 136.855268 
+Q 288.730737 143.301063 295.876187 143.301063 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #edf4f7; stroke: #bfd1dc; stroke-linejoin: miter"/>
+   </g>
+   <g id="architecture-patch_6">
+    <path d="M 295.876187 262.548271 
+L 761.759539 262.548271 
+Q 768.904989 262.548271 768.904989 256.102476 
+L 768.904989 174.24088 
+Q 768.904989 167.795085 761.759539 167.795085 
+L 295.876187 167.795085 
+Q 288.730737 167.795085 288.730737 174.24088 
+L 288.730737 256.102476 
+Q 288.730737 262.548271 295.876187 262.548271 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #edf4f7; stroke: #bfd1dc; stroke-linejoin: miter"/>
+   </g>
+   <g id="architecture-patch_7">
+    <path d="M 295.876187 388.241274 
+L 761.759539 388.241274 
+Q 768.904989 388.241274 768.904989 381.795479 
+L 768.904989 296.710985 
+Q 768.904989 290.26519 761.759539 290.26519 
+L 295.876187 290.26519 
+Q 288.730737 290.26519 288.730737 296.710985 
+L 288.730737 381.795479 
+Q 288.730737 388.241274 295.876187 388.241274 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #edf4f7; stroke: #bfd1dc; stroke-linejoin: miter"/>
+   </g>
+   <g id="architecture-patch_8">
+    <path d="M 295.876187 510.711379 
+L 761.759539 510.711379 
+Q 768.904989 510.711379 768.904989 504.265584 
+L 768.904989 425.626885 
+Q 768.904989 419.18109 761.759539 419.18109 
+L 295.876187 419.18109 
+Q 288.730737 419.18109 288.730737 425.626885 
+L 288.730737 504.265584 
+Q 288.730737 510.711379 295.876187 510.711379 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #edf7f3; stroke: #bfd1dc; stroke-linejoin: miter"/>
+   </g>
+   <g id="architecture-patch_9">
+    <path d="M 31.494531 613.8441 
+L 761.759539 613.8441 
+Q 768.904989 613.8441 768.904989 607.398304 
+L 768.904989 548.09699 
+Q 768.904989 541.651195 761.759539 541.651195 
+L 31.494531 541.651195 
+Q 24.34908 541.651195 24.34908 548.09699 
+L 24.34908 607.398304 
+Q 24.34908 613.8441 31.494531 613.8441 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #edf4f7; stroke: #bfd1dc; stroke-linejoin: miter"/>
+   </g>
+   <g id="architecture-patch_10">
+    <path d="M 135.818103 144.658665 
+Q 135.818103 161.548051 135.818103 164.765459 
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: none; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 138.418103 159.565459 
+L 135.818103 164.765459 
+L 133.218103 159.565459 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #7790a2; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="architecture-patch_11">
+    <path d="M 135.818103 257.45812 
+Q 135.818103 277.112527 135.818103 280.785736 
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: none; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 138.418103 275.585736 
+L 135.818103 280.785736 
+L 133.218103 275.585736 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #7790a2; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="architecture-patch_12">
+    <path d="M 247.287765 327.583651 
+Q 247.424332 114.320121 275.105884 107.817848 
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: none; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 269.449119 106.475831 
+L 275.105884 107.817848 
+L 270.638212 111.53805 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #7790a2; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="architecture-patch_13">
+    <path d="M 528.817863 144.658665 
+Q 528.817863 161.548051 528.817863 164.765459 
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: none; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 531.417863 159.565459 
+L 528.817863 164.765459 
+L 526.217863 159.565459 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #7790a2; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="architecture-patch_14">
+    <path d="M 528.817863 263.903915 
+Q 528.817863 283.558322 528.817863 287.231531 
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: none; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 531.417863 282.031531 
+L 528.817863 287.231531 
+L 526.217863 282.031531 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #7790a2; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="architecture-patch_15">
+    <path d="M 528.817863 389.598585 
+Q 528.817863 412.054888 528.817863 416.150906 
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: none; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 531.417863 410.950906 
+L 528.817863 416.150906 
+L 526.217863 410.950906 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #7790a2; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="architecture-patch_16">
+    <path d="M 528.817863 512.06869 
+Q 528.817863 534.524994 528.817863 538.621011 
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: none; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 531.417863 533.421011 
+L 528.817863 538.621011 
+L 526.217863 533.421011 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #7790a2; stroke: #7790a2; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="architecture-patch_17">
+    <path d="M 288.711712 462.944331 
+Q 287.036318 375.290799 139.495849 374.715531 
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #087f75; stroke-width: 1.5; stroke-linecap: round"/>
+    <path d="M 144.685672 377.335786 
+L 139.495849 374.715531 
+L 144.705947 372.135826 
+z
+" clip-path="url(#architecture-p63c0e8dcf0)" style="fill: #087f75; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #087f75; stroke-width: 1.5; stroke-linecap: round"/>
+   </g>
+   <g id="architecture-text_1">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="135.818103" y="85.912236" transform="rotate(-0 135.818103 85.912236)">Public chat / !ask</text>
+   </g>
+   <g id="architecture-text_2">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="135.818103" y="110.892254" transform="rotate(-0 135.818103 110.892254)">Timestamped inbox · deduplication</text>
+   </g>
+   <g id="architecture-text_3">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="135.818103" y="192.267853" transform="rotate(-0 135.818103 192.267853)">Control and dialogue</text>
+   </g>
+   <g id="architecture-text_4">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #172c3a" transform="translate(72.286541 217.247872)">Direct supported actions OR</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #172c3a" transform="translate(82.004431 232.547872)">local Qwen3-4B planner</text>
+   </g>
+   <g id="architecture-text_5">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="135.818103" y="308.292164" transform="rotate(-0 135.818103 308.292164)">Next-window scheduler</text>
+   </g>
+   <g id="architecture-text_6">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #172c3a" transform="translate(56.145603 333.272182)">Whole-answer queue + scene facts</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #172c3a" transform="translate(92.492947 348.572182)">One-clip lookahead</text>
+   </g>
+   <g id="architecture-text_7">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="528.817863" y="85.912236" transform="rotate(-0 528.817863 85.912236)">Persistent model service · vLLM-Omni</text>
+   </g>
+   <g id="architecture-text_8">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="528.817863" y="110.892254" transform="rotate(-0 528.817863 110.892254)">Exact reference/conditioning reuse · fused Turbo adapter · exact AdaLN</text>
+   </g>
+   <g id="architecture-text_9">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="528.817863" y="192.267853" transform="rotate(-0 528.817863 192.267853)">Four-step joint audio/video DiT</text>
+   </g>
+   <g id="architecture-text_10">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #172c3a" transform="translate(411.677238 217.247872)">TP1 / SP8 · dense Sage · resident MXFP8 projections</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #172c3a" transform="translate(432.264035 232.547872)">BF16 RDMA transport · fused SwiGLU / FC2</text>
+   </g>
+   <g id="architecture-text_11">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="528.817863" y="314.737959" transform="rotate(-0 528.817863 314.737959)">Decode and package</text>
+   </g>
+   <g id="architecture-text_12">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #172c3a" transform="translate(435.659426 340.23618)">Video VAE PP8 / NVFP4 + FP32 audio VAE</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #172c3a" transform="translate(405.189504 355.017977)">GPU RGB packing → pinned D2H → MP4 + original PCM</text>
+   </g>
+   <g id="architecture-text_13">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="528.817863" y="443.653859" transform="rotate(-0 528.817863 443.653859)">Accepted media and state</text>
+   </g>
+   <g id="architecture-text_14">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #172c3a" transform="translate(395.745129 468.633877)">Decode / drift / seam / speech checks → atomic publication</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #172c3a" transform="translate(400.681066 483.933877)">Accepted raw AV tail; one same-parent retry on rejection</text>
+   </g>
+   <g id="architecture-text_15">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="396.627035" y="566.123964" transform="rotate(-0 396.627035 566.123964)">Persistent FFmpeg → Twitch → viewer</text>
+   </g>
+   <g id="architecture-text_16">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="396.627035" y="591.103982" transform="rotate(-0 396.627035 591.103982)">Continuous frame/sample clock · native PCM input · final H.264 / AAC broadcast</text>
+   </g>
+   <g id="architecture-text_17">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #087f75" x="32.209076" y="439.163055" transform="rotate(-0 32.209076 439.163055)">Accepted state only</text>
+   </g>
+   <g id="architecture-text_18">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #087f75" transform="translate(32.209076 459.30041)">No hidden image reset;</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #087f75" transform="translate(32.209076 470.102871)">failed candidates are withheld.</text>
+   </g>
+   <g id="architecture-text_19">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="7.2" y="17.077969" transform="rotate(-0 7.2 17.077969)">Generation, playback and conversation advance on separate clocks</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="architecture-p63c0e8dcf0">
+   <rect x="7.2" y="33.077969" width="785.99952" height="580.121551"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>Current live architecture and the accepted-state feedback loop</figcaption></figure>
+<pre><code class="language-text">Twitch public chat / !ask
+    ↓
+Listener → SQLite inbox (deduplication, timestamps, expiry)
+    ↓
+Direct supported-action route OR local Qwen3-4B text planner
+    ↓
+Reply queue + character/scene facts + answer segmentation
+    ↓
+Bounded next-window scheduler (one-clip lookahead)
+    ↓
+Timed H3 prompt + two clean image reference blocks + accepted raw AV tail
+    ↓
+vLLM-Omni diffusion service
+    ├─ semantic/reference conditioning and exact caches
+    ├─ four joint audiovisual DiT evaluations across eight GPUs
+    ├─ parallel tiled video VAE + FP32 audio VAE
+    └─ byte packing, host transfer, MP4/PCM outputs
+    ↓
+Full AV validity + drift samples + seam/prefix + speech-audibility checks
+    ↓ accepted only
+Atomic media receipt + raw-tail checkpoint + scene/queue commit
+    ↓
+Persistent FFmpeg relay: native PCM → resample → one final broadcast AAC
+    ↓
+Twitch ingest → HLS/player → viewer
+</code></pre>
+<h3 id="4-2-components-and-responsibilities">4.2 Components and responsibilities</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Current implementation</th>
+<th>Why it is present</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Character and environment</td>
+<td>Zhiwei lotus-study persona; authored scene facts; reference image and timed prompts</td>
+<td>Stable identity, grounded object descriptions and repeatable behavior</td>
+</tr>
+<tr>
+<td>Input transport</td>
+<td><code>avatar_chat_inbox.py</code></td>
+<td>Receive public messages without blocking GPU generation</td>
+</tr>
+<tr>
+<td>Language planning</td>
+<td><code>avatar_text_worker.py</code>, <code>avatar_text.py</code>, <code>avatar_zhiwei_dialogue.py</code>; local Qwen3-4B-Instruct-2507</td>
+<td>Convert dialogue into a reply and supported action; avoid a heavyweight remote planning dependency</td>
+</tr>
+<tr>
+<td>Direct action compiler</td>
+<td><code>avatar_zhiwei_actions.py</code> and public action routing</td>
+<td>Familiar commands such as nod/wave/read can bypass a model call</td>
+</tr>
+<tr>
+<td>Durable work queue</td>
+<td><code>avatar_agent_replies.py</code>, SQLite WAL</td>
+<td>Deduplication, claim/generate/air timestamps, bounded queue and multi-segment replies</td>
+</tr>
+<tr>
+<td>Production scene state</td>
+<td><code>avatar_behavior.py</code> scene ledger</td>
+<td>Intended scene and generated/playback receipts; not automatic visual recognition</td>
+</tr>
+<tr>
+<td>Extended interaction research</td>
+<td><code>avatar_world/*</code>, separate <code>interaction_lab</code> profile</td>
+<td>Object occupancy, action prerequisites, cancellation and wardrobe/scenery versions; not all publicly deployed</td>
+</tr>
+<tr>
+<td>Short-window producer</td>
+<td><code>generate_short_avatar.py</code></td>
+<td>Select the next turn/idle action, call H3, publish atomically and follow relay progress</td>
+</tr>
+<tr>
+<td>Continuous camera controller</td>
+<td><code>avatar_continuous.py</code></td>
+<td>Save accepted latent tails, validate prefix identity, screen seams, restore same parent for one retry</td>
+</tr>
+<tr>
+<td>Model API</td>
+<td>vLLM-Omni local diffusion endpoint</td>
+<td>Keep expensive weights and communicators resident across requests</td>
+</tr>
+<tr>
+<td>H3 semantic encoder</td>
+<td>Qwen3-VL-derived H3 conditioning encoder, TP8</td>
+<td>Model conditioning; distinct from the 4B conversational planner</td>
+</tr>
+<tr>
+<td>H3 generator</td>
+<td>Ref2VA partition plus fused four-step Turbo adapter</td>
+<td>Jointly generate speech, face/body motion and scene evolution</td>
+</tr>
+<tr>
+<td>Tensor kernels</td>
+<td>PyTorch/Triton, FlashInfer/CAKE, CUTLASS SM120 block-scaled GEMMs</td>
+<td>Attention, projection, fusion and communication execution</td>
+</tr>
+<tr>
+<td>DiT communication</td>
+<td>FlashInfer PCIe/RDMA Ulysses, TP1/SP8, BF16 transport</td>
+<td>Split the token sequence across eight GPUs while preserving communication precision</td>
+</tr>
+<tr>
+<td>Video reconstruction</td>
+<td>Native tiled video VAE, PP8; NVFP4 decoder linear projections</td>
+<td>Reconstruct all frames with parallel tile scheduling</td>
+</tr>
+<tr>
+<td>Audio reconstruction</td>
+<td>Native audio VAE, FP32; float PCM sidecars</td>
+<td>Keep original generated waveform available through validation and relay</td>
+</tr>
+<tr>
+<td>Packaging</td>
+<td>GPU RGB byte conversion; pinned host transfer; chunked CPU/PyAV output</td>
+<td>Overlap output handling with upstream reconstruction</td>
+</tr>
+<tr>
+<td>Broadcast</td>
+<td><code>twitch_fresh_queue.py</code>, persistent FFmpeg, RTMP/HLS</td>
+<td>Continuous audiovisual clock and fresh clips; no prerecorded loop</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td><code>avatar_metrics.py</code>, Prometheus, Grafana, receipt/log analysis</td>
+<td>Current-session generation, queue, playback, failures and hardware status</td>
+</tr>
+<tr>
+<td>GPU diagnostics</td>
+<td>Nsight Systems CUDA/NVTX/selected hardware captures</td>
+<td>Locate compute, transfers, synchronization and host-submission gaps</td>
+</tr>
+<tr>
+<td>Reproducibility</td>
+<td>Runtime lock, source manifest, selected environment, media/checkpoint hashes</td>
+<td>Bind performance observations to an actual execution path</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="4-3-locked-production-choices">4.3 Locked production choices</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>Selected value</th>
+<th>Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hardware</td>
+<td>Eight GB202 GPUs, SM120; roughly 71.1 GiB exposed device memory each in the retained trace</td>
+<td>PCIe/RDMA system, not an NVLink B200/H200 result</td>
+</tr>
+<tr>
+<td>DiT / encoder / video VAE</td>
+<td>TP1/SP8 / TP8 / PP8</td>
+<td>Different components use different parallel decomposition</td>
+</tr>
+<tr>
+<td>Canvas and video rate</td>
+<td>960×544 at 24 fps</td>
+<td>Selected live budget, not a resolution enhancement claim</td>
+</tr>
+<tr>
+<td>Diffusion evaluations</td>
+<td>Four</td>
+<td>Distilled Ref2VA adapter; not original dense H3's long schedule</td>
+</tr>
+<tr>
+<td>Video/audio scheduler shifts</td>
+<td>12 / 3.0</td>
+<td>Two noise schedules inside joint AV generation</td>
+</tr>
+<tr>
+<td>Window / overlap</td>
+<td>124 / 5 frames</td>
+<td>119 new frames after opening</td>
+</tr>
+<tr>
+<td>RoPE position mode</td>
+<td>Window-relative</td>
+<td>Keeps the local temporal coordinate bounded while the media clock continues</td>
+</tr>
+<tr>
+<td>Main projections</td>
+<td>GPU-resident MXFP8; four low-precision steps</td>
+<td>A8W8 block scaling; original BF16 preservation remains available for experiments</td>
+</tr>
+<tr>
+<td>Attention</td>
+<td>Dense Sage in every step</td>
+<td>Low-precision attention, but no FastH3 VSA pruning in the current Ref2VA path</td>
+</tr>
+<tr>
+<td>Wire precision</td>
+<td>BF16</td>
+<td>E4M3 QKV transport is disabled</td>
+</tr>
+<tr>
+<td>Video / audio VAE</td>
+<td>NVFP4 / FP32</td>
+<td>Video-only decoder approximation; audio decoder not quantized to NVFP4</td>
+</tr>
+<tr>
+<td>Clean reference blocks</td>
+<td>Two copies of the same reference</td>
+<td>Retains the tested conditioning arrangement; cache avoids redundant encoding rather than removing a block</td>
+</tr>
+<tr>
+<td>Reference guide parameter</td>
+<td>0.8</td>
+<td>Conditioning choice, not a free infrastructure optimization</td>
+</tr>
+<tr>
+<td>Target-prefix preservation</td>
+<td>Video prefix enabled</td>
+<td>Exact accepted video prefix plus raw AV continuation state</td>
+</tr>
+<tr>
+<td>External audio reference</td>
+<td>None in prompt-only mode</td>
+<td>Voice is described in the prompt; H3 generates the audio</td>
+</tr>
+<tr>
+<td>Future footage</td>
+<td>One-clip lookahead</td>
+<td>Lower ready-to-play delay, less retry reserve</td>
+</tr>
+<tr>
+<td>Broadcast format</td>
+<td>H.264, 960×544, 24 fps; AAC stereo 48 kHz</td>
+<td>Source audio is 32 kHz PCM and resampled for transport</td>
+</tr>
+<tr>
+<td>Relay target bitrate</td>
+<td>Video 5000 kb/s, audio 192 kb/s</td>
+<td>Encoding target, not guaranteed instantaneous measured bitrate</td>
+</tr>
+</tbody>
+</table></div>
+<p>The configuration field <code>quality=&quot;lossless&quot;</code> refers to the runtime's approximate-cache policy. It does <strong>not</strong> turn MXFP8, Sage, NVFP4 or four-step distillation into lossless computation. Likewise, <code>--cache-backend none</code> does not mean AdaLN and exact input caches are absent: they are separate mechanisms.</p>
+<p>The backend environment reports Python 3.12.13, PyTorch 2.13.0+cu132, Triton 3.7.1, vLLM 0.28.0, vLLM-Omni 0.28.0rc2.dev62+gad1bb0f97, FlashInfer 0.6.16.post3, Transformers 5.14.1, Diffusers 0.40.0 and PyAV 18.1.0. These are installed distribution versions; local native and FlashInfer overlays are also active. The selected backend source-manifest SHA256 is <code>a53e5edb008f3b0b2ffe39feafd6706121e7a8ac0b86f3bd1837c4e40b2c6873</code>, which is more specific than a package version. <a href="evidence/software-versions.json">Version metadata</a></p>
+<p><a href="evidence/measurements.json">Selected configuration and measurements</a> · <a href="evidence/backend-dispatch-snapshot.json">Actual accumulated backend projection counters</a></p>
+<h2 id="5-what-carries-over-and-what-does-not">5. What carries over, and what does not</h2>
+<h3 id="5-1-exact-adaln-caching">5.1 Exact AdaLN caching</h3>
+<p>H3's modulation tables depend on model weights, the exact timestep schedule and modality/time mapping, rather than the evolving video hidden state. Repeatedly evaluating the large per-block modulation projections is unnecessary when those dependencies are fixed. The native path loads validated precomputed tables and removes the online modulation projections. This is useful for original H3 as well as distilled schedules; the cache contents are still model- and schedule-specific.</p>
+<p>The current Ref2VA admission checks require a loaded exact AdaLN cache and cached final modulation. A valid cache must match the fused adapter, task partition, video/audio schedules, dtype and indexing contract. A FastH3 table cannot be assumed valid for Ref2VA just because both use four evaluations. Changing scheduler guidance inputs without regenerating or validating the cache would violate that contract.</p>
+<p>This is an exact reuse optimization, distinct from approximate reuse of a denoising block across different steps. The latter is not part of the selected live baseline. The current local optimized kernel admission is SM120/TP1/SP8-specific; that implementation restriction should not be confused with the broader semantic applicability of AdaLN caching.</p>
+<h3 id="5-2-adapter-fusion-and-persistent-model-state">5.2 Adapter fusion and persistent model state</h3>
+<p>The Ref2VA Turbo factors are merged into native projection weights before steady-state generation. The loader validates the full target set, adapter rank/scale, native per-head QKV layout, and gate/value ordering of FC1. Quantization is applied to the fused original weights, not to an unadapted base and not by reconstructing a supposed BF16 reference from quantized values.</p>
+<p>The current integration validates 208 fused native parameters, including the two context-refiner blocks. Its main-stack MXFP8 path covers 200 projection modules across 50 blocks: packed QKV, attention output, gate/up and down projections. Main-step dispatch counters verify each real projection and the fused FC2 calls. Counters accumulated over many requests demonstrate execution; they are not a fresh per-request latency experiment.</p>
+<p>Weights, communication registration and reusable buffers stay alive between clips. Model load time is outside the warm serving numbers. The historical VDN loading phase took about 1,181 seconds on shared storage, illustrating why repeatedly starting a model is unsuitable for interactive serving. This is not a claim that the current warm request includes that delay.</p>
+<h3 id="5-3-mxfp8-distinguish-weights-from-activations">5.3 MXFP8: distinguish weights from activations</h3>
+<p>In the selected path, fused BF16 weights are quantized to MXFP8 <strong>at initialization</strong> and the packed payload/scales remain on the GPU. Input activations are quantized during each projection. “Online quantization” is ambiguous unless these two operations are distinguished.</p>
+<p>MXFP8 here uses E4M3 payload values with block-shared E8M0 scales over 32 elements. The GEMM path is approximate relative to the original BF16 model. Eliminating repeated weight packing while retaining the same packed values is an exact scheduling/storage improvement relative to that MXFP8 baseline.</p>
+<p>The BF16-first experiment preserved original BF16 projections in pinned host memory with double-buffer GPU prefetch. Turning step one back to MXFP8 removes that step's BF16 projection work and staging from its execution path. The original-weight facility can remain initialized for other requests; its existence alone does not prove large H2D transfers occur in the current all-MXFP8 request.</p>
+<h3 id="5-4-fused-swiglu-and-activation-packing">5.4 Fused SwiGLU and activation packing</h3>
+<p>The historical fusion combines the SwiGLU producer with the MXFP8 activation packing consumed by FC2. It eliminates intermediate memory traffic and launches while preserving the installed activation implementation's rounding sequence. The accepted implementation explicitly preserves BF16 rounding after SiLU and after multiplication; replacing it with an algebraically similar sigmoid expression did not preserve quantized payload bytes.</p>
+<p>A real-shape microbenchmark reduced producer time from 1.4015 to 0.7981 ms, and producer plus the same FC2 GEMM from 5.9671 to 5.3568 ms. The complete model improvement was about 130 ms in that campaign, not the sum of arbitrary microbenchmark speedups. An alternate lookup-table implementation passed numerical checks but did not improve performance further.</p>
+<p>The current Ref2VA path retains this FC2 fusion. It does not enable VSA-only QK/V split schedules: the admission code explicitly rejects those flags for dense Ref2VA. A historical FastH3 optimization inventory is therefore not a list of switches that can all be turned on for the avatar.</p>
+<h3 id="5-5-attention-communication-and-producer-placement">5.5 Attention, communication and producer placement</h3>
+<p>Sage reduces attention arithmetic precision. It is a quality tradeoff. The FlashInfer/CAKE kernel name includes “block_sparse,” but the current Ref2VA adapter keeps the complete dense KV set. A sparse-sounding kernel symbol is not evidence of pruning.</p>
+<p>BF16 Ulysses exchange is retained. Persistent registered RDMA buffers avoid repeated registration/teardown; the historical matched comparison improved 17.9214 → 17.5780 s mean, while increasing retained memory. Q/K and output producer-direct paths reduce layout/materialization work around communication. QK norm/RoPE fusion preserves the intended normalization and positional transformation while reducing intermediate work.</p>
+<p>Earlier FastH3 VSA experiments also overlapped gate/coarse work and pipelined four output chunks. Some of these depend on VSA layout and gate semantics and are <strong>not</strong> current dense Ref2VA features. The report records their historical value without silently transferring their speedup to the new task.</p>
+<h2 id="6-the-weight-residency-decision-what-nsight-actually-showed">6. The weight-residency decision: what Nsight actually showed</h2>
+<p>A reasonable hypothesis was that keeping original BF16 weights on the GPU should eliminate a large transfer penalty. The experiment did eliminate the transfers. It did not reduce the complete request.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>1088×608, BF16-first four-step comparison</th>
+<th style="text-align:right">MXFP8 resident + BF16 prefetch</th>
+<th style="text-align:right">BF16 resident + online MXFP8 packing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Unprofiled HTTP→MP4 median, nine requests</td>
+<td style="text-align:right">5.610958 s</td>
+<td style="text-align:right">5.704375 s</td>
+</tr>
+<tr>
+<td>Unprofiled maximum</td>
+<td style="text-align:right">5.736889 s</td>
+<td style="text-align:right">5.814680 s</td>
+</tr>
+<tr>
+<td>Large original-weight H2D copies per rank</td>
+<td style="text-align:right">200</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>Original-weight bytes per rank/request</td>
+<td style="text-align:right">38,535,168,000</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>Sampled step-one CPU NVTX median across ranks</td>
+<td style="text-align:right">1544.952 ms</td>
+<td style="text-align:right">1464.517 ms</td>
+</tr>
+<tr>
+<td>Sampled step-two CPU NVTX median</td>
+<td style="text-align:right">913.879 ms</td>
+<td style="text-align:right">952.357 ms</td>
+</tr>
+<tr>
+<td>Sampled step-three CPU NVTX median</td>
+<td style="text-align:right">910.386 ms</td>
+<td style="text-align:right">950.036 ms</td>
+</tr>
+<tr>
+<td>Sampled step-four CPU NVTX median</td>
+<td style="text-align:right">911.156 ms</td>
+<td style="text-align:right">951.626 ms</td>
+</tr>
+<tr>
+<td>Sampled complete DiT CPU NVTX median</td>
+<td style="text-align:right">4312.628 ms</td>
+<td style="text-align:right">4349.858 ms</td>
+</tr>
+</tbody>
+</table></div>
+<p>All 13 compared MP4 hashes matched in the original residency experiment. The new candidate reduced step-one time by roughly 80 ms, while the next three steps gained about 119 ms of work from on-demand weight packing. Complete request median regressed by 93.4 ms, about 1.7%.</p>
+<figure class="figure"><svg role="img" aria-label="Weight residency: paired unprofiled requests and separate diagnostic NVTX scopes" xmlns:xlink="http://www.w3.org/1999/xlink" width="800.39952pt" height="332.39952pt" viewBox="0 0 800.39952 332.39952" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="weight-residency-figure_1">
+  <g id="weight-residency-patch_1">
+   <path d="M 0 332.39952 
+L 800.39952 332.39952 
+L 800.39952 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="weight-residency-axes_1">
+   <g id="weight-residency-patch_2">
+    <path d="M 50.466406 294.194051 
+L 325.811339 294.194051 
+L 325.811339 40.559777 
+L 50.466406 40.559777 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="weight-residency-PathCollection_1">
+    <defs>
+     <path id="weight-residency-m6b84e3761e" d="M 0 2.44949 
+C 0.649612 2.44949 1.272706 2.191396 1.732051 1.732051 
+C 2.191396 1.272706 2.44949 0.649612 2.44949 0 
+C 2.44949 -0.649612 2.191396 -1.272706 1.732051 -1.732051 
+C 1.272706 -2.191396 0.649612 -2.44949 0 -2.44949 
+C -0.649612 -2.44949 -1.272706 -2.191396 -1.732051 -1.732051 
+C -2.191396 -1.272706 -2.44949 -0.649612 -2.44949 0 
+C -2.44949 0.649612 -2.191396 1.272706 -1.732051 1.732051 
+C -1.272706 2.191396 -0.649612 2.44949 0 2.44949 
+z
+" style="stroke: #2563ad; stroke-opacity: 0.7"/>
+    </defs>
+    <g clip-path="url(#weight-residency-pb89f7d7d78)">
+     <use xlink:href="#weight-residency-m6b84e3761e" x="87.34594" y="156.668066" style="fill: #2563ad; fill-opacity: 0.7; stroke: #2563ad; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-m6b84e3761e" x="91.684708" y="250.659054" style="fill: #2563ad; fill-opacity: 0.7; stroke: #2563ad; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-m6b84e3761e" x="96.023477" y="248.583426" style="fill: #2563ad; fill-opacity: 0.7; stroke: #2563ad; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-m6b84e3761e" x="100.362246" y="244.385348" style="fill: #2563ad; fill-opacity: 0.7; stroke: #2563ad; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-m6b84e3761e" x="104.701014" y="229.539685" style="fill: #2563ad; fill-opacity: 0.7; stroke: #2563ad; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-m6b84e3761e" x="109.039783" y="239.074361" style="fill: #2563ad; fill-opacity: 0.7; stroke: #2563ad; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-m6b84e3761e" x="113.378552" y="235.58127" style="fill: #2563ad; fill-opacity: 0.7; stroke: #2563ad; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-m6b84e3761e" x="117.71732" y="236.518958" style="fill: #2563ad; fill-opacity: 0.7; stroke: #2563ad; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-m6b84e3761e" x="122.056089" y="229.098177" style="fill: #2563ad; fill-opacity: 0.7; stroke: #2563ad; stroke-opacity: 0.7"/>
+    </g>
+   </g>
+   <g id="weight-residency-PathCollection_2">
+    <defs>
+     <path id="weight-residency-ma7dee84de8" d="M 0 2.44949 
+C 0.649612 2.44949 1.272706 2.191396 1.732051 1.732051 
+C 2.191396 1.272706 2.44949 0.649612 2.44949 0 
+C 2.44949 -0.649612 2.191396 -1.272706 1.732051 -1.732051 
+C 1.272706 -2.191396 0.649612 -2.44949 0 -2.44949 
+C -0.649612 -2.44949 -1.272706 -2.191396 -1.732051 -1.732051 
+C -2.191396 -1.272706 -2.44949 -0.649612 -2.44949 0 
+C -2.44949 0.649612 -2.191396 1.272706 -1.732051 1.732051 
+C -1.272706 2.191396 -0.649612 2.44949 0 2.44949 
+z
+" style="stroke: #ba5b28; stroke-opacity: 0.7"/>
+    </defs>
+    <g clip-path="url(#weight-residency-pb89f7d7d78)">
+     <use xlink:href="#weight-residency-ma7dee84de8" x="254.221657" y="107.341696" style="fill: #ba5b28; fill-opacity: 0.7; stroke: #ba5b28; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-ma7dee84de8" x="258.560425" y="191.619064" style="fill: #ba5b28; fill-opacity: 0.7; stroke: #ba5b28; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-ma7dee84de8" x="262.899194" y="164.681734" style="fill: #ba5b28; fill-opacity: 0.7; stroke: #ba5b28; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-ma7dee84de8" x="267.237963" y="186.013602" style="fill: #ba5b28; fill-opacity: 0.7; stroke: #ba5b28; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-ma7dee84de8" x="271.576731" y="177.766046" style="fill: #ba5b28; fill-opacity: 0.7; stroke: #ba5b28; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-ma7dee84de8" x="275.9155" y="177.284701" style="fill: #ba5b28; fill-opacity: 0.7; stroke: #ba5b28; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-ma7dee84de8" x="280.254269" y="174.980092" style="fill: #ba5b28; fill-opacity: 0.7; stroke: #ba5b28; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-ma7dee84de8" x="284.593037" y="172.531585" style="fill: #ba5b28; fill-opacity: 0.7; stroke: #ba5b28; stroke-opacity: 0.7"/>
+     <use xlink:href="#weight-residency-ma7dee84de8" x="288.931806" y="209.824325" style="fill: #ba5b28; fill-opacity: 0.7; stroke: #ba5b28; stroke-opacity: 0.7"/>
+    </g>
+   </g>
+   <g id="weight-residency-matplotlib.axis_1">
+    <g id="weight-residency-xtick_1">
+     <g id="weight-residency-line2d_1">
+      <defs>
+       <path id="weight-residency-m358edcb054" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#weight-residency-m358edcb054" x="104.701014" y="294.194051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'" transform="translate(65.905702 309.793465)">MXFP8 resident</text>
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'" transform="translate(63.753358 321.7962)">+ BF16 prefetch</text>
+     </g>
+    </g>
+    <g id="weight-residency-xtick_2">
+     <g id="weight-residency-line2d_2">
+      <g>
+       <use xlink:href="#weight-residency-m358edcb054" x="271.576731" y="294.194051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'" transform="translate(236.923606 309.793465)">BF16 resident</text>
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'" transform="translate(229.342356 321.7962)">+ online packing</text>
+     </g>
+    </g>
+   </g>
+   <g id="weight-residency-matplotlib.axis_2">
+    <g id="weight-residency-ytick_1">
+     <g id="weight-residency-line2d_3">
+      <defs>
+       <path id="weight-residency-m4dc7bc7a45" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="50.466406" y="275.171481" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="43.466406" y="278.970309" transform="rotate(-0 43.466406 278.970309)">5.55</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_2">
+     <g id="weight-residency-line2d_4">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="50.466406" y="243.467196" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="43.466406" y="247.266025" transform="rotate(-0 43.466406 247.266025)">5.60</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_3">
+     <g id="weight-residency-line2d_5">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="50.466406" y="211.762912" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="43.466406" y="215.56174" transform="rotate(-0 43.466406 215.56174)">5.65</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_4">
+     <g id="weight-residency-line2d_6">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="50.466406" y="180.058628" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_6">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="43.466406" y="183.857456" transform="rotate(-0 43.466406 183.857456)">5.70</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_5">
+     <g id="weight-residency-line2d_7">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="50.466406" y="148.354343" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="43.466406" y="152.153172" transform="rotate(-0 43.466406 152.153172)">5.75</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_6">
+     <g id="weight-residency-line2d_8">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="50.466406" y="116.650059" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_8">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="43.466406" y="120.448887" transform="rotate(-0 43.466406 120.448887)">5.80</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_7">
+     <g id="weight-residency-line2d_9">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="50.466406" y="84.945775" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="43.466406" y="88.744603" transform="rotate(-0 43.466406 88.744603)">5.85</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_8">
+     <g id="weight-residency-line2d_10">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="50.466406" y="53.241491" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_10">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="43.466406" y="57.040319" transform="rotate(-0 43.466406 57.040319)">5.90</text>
+     </g>
+    </g>
+    <g id="weight-residency-text_11">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="14.798438" y="167.376914" transform="rotate(-90 14.798438 167.376914)">Unprofiled HTTP → MP4 seconds</text>
+    </g>
+   </g>
+   <g id="weight-residency-LineCollection_1">
+    <path d="M 62.982085 236.518958 
+L 146.419944 236.518958 
+" clip-path="url(#weight-residency-pb89f7d7d78)" style="fill: none; stroke: #2563ad; stroke-width: 3"/>
+   </g>
+   <g id="weight-residency-LineCollection_2">
+    <path d="M 229.857802 177.284701 
+L 313.29566 177.284701 
+" clip-path="url(#weight-residency-pb89f7d7d78)" style="fill: none; stroke: #ba5b28; stroke-width: 3"/>
+   </g>
+   <g id="weight-residency-patch_3">
+    <path d="M 50.466406 294.194051 
+L 50.466406 40.559777 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="weight-residency-patch_4">
+    <path d="M 50.466406 294.194051 
+L 325.811339 294.194051 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="weight-residency-text_12">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #2563ad" x="104.701014" y="78.604918" transform="rotate(-0 104.701014 78.604918)">5.611 s</text>
+   </g>
+   <g id="weight-residency-text_13">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ba5b28" x="271.576731" y="78.604918" transform="rotate(-0 271.576731 78.604918)">5.704 s</text>
+   </g>
+   <g id="weight-residency-text_14">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="50.466406" y="34.559777" transform="rotate(-0 50.466406 34.559777)">Nine requests per arm</text>
+   </g>
+  </g>
+  <g id="weight-residency-axes_2">
+   <g id="weight-residency-patch_5">
+    <path d="M 380.18212 294.194051 
+L 793.19952 294.194051 
+L 793.19952 40.559777 
+L 380.18212 40.559777 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="weight-residency-matplotlib.axis_3">
+    <g id="weight-residency-xtick_3">
+     <g id="weight-residency-line2d_11">
+      <g>
+       <use xlink:href="#weight-residency-m358edcb054" x="434.473105" y="294.194051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_15">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="434.473105" y="308.791707" transform="rotate(-0 434.473105 308.791707)">Step 1</text>
+     </g>
+    </g>
+    <g id="weight-residency-xtick_4">
+     <g id="weight-residency-line2d_12">
+      <g>
+       <use xlink:href="#weight-residency-m358edcb054" x="535.951582" y="294.194051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_16">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="535.951582" y="308.791707" transform="rotate(-0 535.951582 308.791707)">Step 2</text>
+     </g>
+    </g>
+    <g id="weight-residency-xtick_5">
+     <g id="weight-residency-line2d_13">
+      <g>
+       <use xlink:href="#weight-residency-m358edcb054" x="637.430059" y="294.194051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_17">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="637.430059" y="308.791707" transform="rotate(-0 637.430059 308.791707)">Step 3</text>
+     </g>
+    </g>
+    <g id="weight-residency-xtick_6">
+     <g id="weight-residency-line2d_14">
+      <g>
+       <use xlink:href="#weight-residency-m358edcb054" x="738.908535" y="294.194051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_18">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="738.908535" y="308.791707" transform="rotate(-0 738.908535 308.791707)">Step 4</text>
+     </g>
+    </g>
+   </g>
+   <g id="weight-residency-matplotlib.axis_4">
+    <g id="weight-residency-ytick_9">
+     <g id="weight-residency-line2d_15">
+      <path d="M 380.18212 294.194051 
+L 793.19952 294.194051 
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="weight-residency-line2d_16">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="380.18212" y="294.194051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_19">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="373.18212" y="297.992879" transform="rotate(-0 373.18212 297.992879)">0</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_10">
+     <g id="weight-residency-line2d_17">
+      <path d="M 380.18212 266.012465 
+L 793.19952 266.012465 
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="weight-residency-line2d_18">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="380.18212" y="266.012465" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_20">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="373.18212" y="269.811293" transform="rotate(-0 373.18212 269.811293)">200</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_11">
+     <g id="weight-residency-line2d_19">
+      <path d="M 380.18212 237.830879 
+L 793.19952 237.830879 
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="weight-residency-line2d_20">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="380.18212" y="237.830879" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_21">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="373.18212" y="241.629707" transform="rotate(-0 373.18212 241.629707)">400</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_12">
+     <g id="weight-residency-line2d_21">
+      <path d="M 380.18212 209.649293 
+L 793.19952 209.649293 
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="weight-residency-line2d_22">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="380.18212" y="209.649293" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_22">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="373.18212" y="213.448121" transform="rotate(-0 373.18212 213.448121)">600</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_13">
+     <g id="weight-residency-line2d_23">
+      <path d="M 380.18212 181.467707 
+L 793.19952 181.467707 
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="weight-residency-line2d_24">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="380.18212" y="181.467707" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_23">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="373.18212" y="185.266535" transform="rotate(-0 373.18212 185.266535)">800</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_14">
+     <g id="weight-residency-line2d_25">
+      <path d="M 380.18212 153.286121 
+L 793.19952 153.286121 
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="weight-residency-line2d_26">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="380.18212" y="153.286121" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_24">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="373.18212" y="157.084949" transform="rotate(-0 373.18212 157.084949)">1000</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_15">
+     <g id="weight-residency-line2d_27">
+      <path d="M 380.18212 125.104535 
+L 793.19952 125.104535 
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="weight-residency-line2d_28">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="380.18212" y="125.104535" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_25">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="373.18212" y="128.903363" transform="rotate(-0 373.18212 128.903363)">1200</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_16">
+     <g id="weight-residency-line2d_29">
+      <path d="M 380.18212 96.922949 
+L 793.19952 96.922949 
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="weight-residency-line2d_30">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="380.18212" y="96.922949" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_26">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="373.18212" y="100.721777" transform="rotate(-0 373.18212 100.721777)">1400</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_17">
+     <g id="weight-residency-line2d_31">
+      <path d="M 380.18212 68.741363 
+L 793.19952 68.741363 
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="weight-residency-line2d_32">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="380.18212" y="68.741363" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_27">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="373.18212" y="72.540191" transform="rotate(-0 373.18212 72.540191)">1600</text>
+     </g>
+    </g>
+    <g id="weight-residency-ytick_18">
+     <g id="weight-residency-line2d_33">
+      <path d="M 380.18212 40.559777 
+L 793.19952 40.559777 
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="weight-residency-line2d_34">
+      <g>
+       <use xlink:href="#weight-residency-m4dc7bc7a45" x="380.18212" y="40.559777" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="weight-residency-text_28">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="373.18212" y="44.358605" transform="rotate(-0 373.18212 44.358605)">1800</text>
+     </g>
+    </g>
+    <g id="weight-residency-text_29">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="341.329777" y="167.376914" transform="rotate(-90 341.329777 167.376914)">CPU NVTX range across-rank median (ms)</text>
+    </g>
+   </g>
+   <g id="weight-residency-patch_6">
+    <path d="M 398.955639 294.194051 
+L 433.458321 294.194051 
+L 433.458321 76.498069 
+L 398.955639 76.498069 
+z
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: #2563ad"/>
+   </g>
+   <g id="weight-residency-patch_7">
+    <path d="M 500.434115 294.194051 
+L 534.936797 294.194051 
+L 534.936797 165.421256 
+L 500.434115 165.421256 
+z
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: #2563ad"/>
+   </g>
+   <g id="weight-residency-patch_8">
+    <path d="M 601.912592 294.194051 
+L 636.415274 294.194051 
+L 636.415274 165.913383 
+L 601.912592 165.913383 
+z
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: #2563ad"/>
+   </g>
+   <g id="weight-residency-patch_9">
+    <path d="M 703.391068 294.194051 
+L 737.89375 294.194051 
+L 737.89375 165.80501 
+L 703.391068 165.80501 
+z
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: #2563ad"/>
+   </g>
+   <g id="weight-residency-patch_10">
+    <path d="M 435.48789 294.194051 
+L 469.990572 294.194051 
+L 469.990572 87.831999 
+L 435.48789 87.831999 
+z
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: #ba5b28"/>
+   </g>
+   <g id="weight-residency-patch_11">
+    <path d="M 536.966367 294.194051 
+L 571.469049 294.194051 
+L 571.469049 159.999394 
+L 536.966367 159.999394 
+z
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: #ba5b28"/>
+   </g>
+   <g id="weight-residency-patch_12">
+    <path d="M 638.444843 294.194051 
+L 672.947525 294.194051 
+L 672.947525 160.326466 
+L 638.444843 160.326466 
+z
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: #ba5b28"/>
+   </g>
+   <g id="weight-residency-patch_13">
+    <path d="M 739.92332 294.194051 
+L 774.426002 294.194051 
+L 774.426002 160.102364 
+L 739.92332 160.102364 
+z
+" clip-path="url(#weight-residency-p4d4e3aced4)" style="fill: #ba5b28"/>
+   </g>
+   <g id="weight-residency-patch_14">
+    <path d="M 380.18212 294.194051 
+L 380.18212 40.559777 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="weight-residency-patch_15">
+    <path d="M 380.18212 294.194051 
+L 793.19952 294.194051 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="weight-residency-text_30">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="380.18212" y="34.559777" transform="rotate(-0 380.18212 34.559777)">Separate diagnostic capture · scopes include waits</text>
+   </g>
+   <g id="weight-residency-legend_1">
+    <g id="weight-residency-patch_16">
+     <path d="M 694.69452 70.961027 
+L 787.59952 70.961027 
+Q 789.19952 70.961027 789.19952 69.361027 
+L 789.19952 46.159777 
+Q 789.19952 44.559777 787.59952 44.559777 
+L 694.69452 44.559777 
+Q 693.09452 44.559777 693.09452 46.159777 
+L 693.09452 69.361027 
+Q 693.09452 70.961027 694.69452 70.961027 
+z
+" style="fill: #ffffff; opacity: 0.8; stroke: #cccccc; stroke-linejoin: miter"/>
+    </g>
+    <g id="weight-residency-patch_17">
+     <path d="M 696.29452 53.838527 
+L 712.29452 53.838527 
+L 712.29452 48.238527 
+L 696.29452 48.238527 
+z
+" style="fill: #2563ad"/>
+    </g>
+    <g id="weight-residency-text_31">
+     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="718.69452" y="53.838527" transform="rotate(-0 718.69452 53.838527)">Original prefetch</text>
+    </g>
+    <g id="weight-residency-patch_18">
+     <path d="M 696.29452 65.839152 
+L 712.29452 65.839152 
+L 712.29452 60.239152 
+L 696.29452 60.239152 
+z
+" style="fill: #ba5b28"/>
+    </g>
+    <g id="weight-residency-text_32">
+     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="718.69452" y="65.839152" transform="rotate(-0 718.69452 65.839152)">BF16 resident</text>
+    </g>
+   </g>
+  </g>
+  <g id="weight-residency-text_33">
+   <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="400.19976" y="17.077969" transform="rotate(-0 400.19976 17.077969)">Removing weight copies did not make the complete request faster</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="weight-residency-pb89f7d7d78">
+   <rect x="50.466406" y="40.559777" width="275.344933" height="253.634274"/>
+  </clipPath>
+  <clipPath id="weight-residency-p4d4e3aced4">
+   <rect x="380.18212" y="40.559777" width="413.0174" height="253.634274"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>Weight residency: paired unprofiled requests and separate diagnostic NVTX scopes</figcaption></figure>
+<p>The original copies totaled roughly 1.42–1.44 GPU seconds <strong>per device</strong>, but prefetch already overlapped much of their execution with other work. Eight-device aggregate memcpy time is not a serial critical path. The resident candidate still had input transfers; for example, rank/device zero retained a roughly 11.54 MB large input transfer. “No weight staging” is accurate; “no H2D at all” is not.</p>
+<p>The follow-up all-BF16 tests also failed the live deadline:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Follow-up</th>
+<th style="text-align:right">Median HTTP→MP4</th>
+<th style="text-align:right">Formal requests beyond 4.958 s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1088, original prefetch baseline rerun</td>
+<td style="text-align:right">5.5833 s</td>
+<td style="text-align:right">9/9</td>
+</tr>
+<tr>
+<td>1088, BF16 resident + later online MXFP8</td>
+<td style="text-align:right">5.6996 s</td>
+<td style="text-align:right">9/9</td>
+</tr>
+<tr>
+<td>1088, all BF16 projections, mixed attention</td>
+<td style="text-align:right">6.5682 s</td>
+<td style="text-align:right">9/9</td>
+</tr>
+<tr>
+<td>1088, all BF16 projections and attention</td>
+<td style="text-align:right">7.3434 s</td>
+<td style="text-align:right">9/9</td>
+</tr>
+<tr>
+<td>960, all BF16 projections, mixed attention</td>
+<td style="text-align:right">5.0597 s</td>
+<td style="text-align:right">9/9</td>
+</tr>
+<tr>
+<td>960, BF16 resident + later online MXFP8</td>
+<td style="text-align:right">4.4268 s</td>
+<td style="text-align:right">0/9</td>
+</tr>
+</tbody>
+</table></div>
+<p>These controls justify retaining resident MXFP8 in the demo. They do not prove that every future kernel or memory placement will favor the same choice. <a href="evidence/nsys-reanalysis.json">Recomputed Nsight results</a> · <a href="evidence/measurements.json">Unprofiled samples</a></p>
+<h2 id="7-video-reconstruction-and-output-exact-improvements-around-a-lossy-decoder">7. Video reconstruction and output: exact improvements around a lossy decoder</h2>
+<p>The selected native video decoder uses NVFP4 linear projections. That precision choice is approximate; it must be separated from the exact scheduling work around it.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Mechanism</th>
+<th>What it removes or overlaps</th>
+<th>Evidence and present interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PP8 tiled VAE</td>
+<td>Distributes reconstruction across devices</td>
+<td>Retained; actual geometry and call-count audits matter</td>
+</tr>
+<tr>
+<td>Pair/mixed/batch4 scheduling</td>
+<td>Groups compatible temporal/tile work without changing the accepted ordering contract</td>
+<td>Retained where current shapes are admitted; bigger batches were not automatically faster</td>
+</tr>
+<tr>
+<td>Video/audio decode overlap</td>
+<td>Independent decoders can execute after joint denoising</td>
+<td>Retained; separate CUDA streams do not remove all CPU launch serialization</td>
+</tr>
+<tr>
+<td>Early/asynchronous tile gather</td>
+<td>Transfer completed tiles while later tiles decode</td>
+<td>Retained; early-gather-only benefit was small and not stable in every test</td>
+</tr>
+<tr>
+<td>Cached normalization constants</td>
+<td>Avoid repeated construction/transfer of identical constants</td>
+<td>Byte-equivalent qualified paths; retained</td>
+</tr>
+<tr>
+<td>GPU blend/RGB packing</td>
+<td>Fuse spatial blending and compact byte output; reduce FP32 intermediate traffic</td>
+<td>Historical full-model MP4s matched; retained</td>
+</tr>
+<tr>
+<td>Pinned double-buffer output</td>
+<td>D2H and CPU video encoding run as a bounded pipeline</td>
+<td>Retained; event/lifetime/backpressure handling remains required</td>
+</tr>
+<tr>
+<td>Early AAC</td>
+<td>Encode native audio while the video decoder is still running</td>
+<td>Historical matched 15-second campaign: 13.551 → 13.304 s median with cached constants</td>
+</tr>
+<tr>
+<td>Shared decode for checks</td>
+<td>One complete AV decode also supplies quality samples and endpoint frames</td>
+<td>Matched short-clip campaign: 5.044 → 4.774 s median, unchanged request and MP4 hashes</td>
+</tr>
+</tbody>
+</table></div>
+<p>The historical GPU RGB postprocess benchmark improved 2.84225 → 0.19347 ms per representative frame block. The full 15-second request comparison improved only 13.334 → 13.261 s median. The component gain is real, but upstream overlap and other work constrain end-to-end benefit.</p>
+<figure class="figure"><svg role="img" aria-label="Independent matched long-clip optimization campaigns; gains are not cumulative" xmlns:xlink="http://www.w3.org/1999/xlink" width="728.39952pt" height="317.99952pt" viewBox="0 0 728.39952 317.99952" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="matched-campaigns-figure_1">
+  <g id="matched-campaigns-patch_1">
+   <path d="M 0 317.99952 
+L 728.39952 317.99952 
+L 728.39952 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="matched-campaigns-axes_1">
+   <g id="matched-campaigns-patch_2">
+    <path d="M 167.603125 279.798739 
+L 721.19952 279.798739 
+L 721.19952 22.318125 
+L 167.603125 22.318125 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matched-campaigns-matplotlib.axis_1">
+    <g id="matched-campaigns-xtick_1">
+     <g id="matched-campaigns-line2d_1">
+      <path d="M 191.672533 279.798739 
+L 191.672533 22.318125 
+" clip-path="url(#matched-campaigns-p4dc7d585d7)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="matched-campaigns-line2d_2">
+      <defs>
+       <path id="matched-campaigns-m358edcb054" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#matched-campaigns-m358edcb054" x="191.672533" y="279.798739" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="matched-campaigns-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="191.672533" y="294.396395" transform="rotate(-0 191.672533 294.396395)">13.2</text>
+     </g>
+    </g>
+    <g id="matched-campaigns-xtick_2">
+     <g id="matched-campaigns-line2d_3">
+      <path d="M 312.019576 279.798739 
+L 312.019576 22.318125 
+" clip-path="url(#matched-campaigns-p4dc7d585d7)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="matched-campaigns-line2d_4">
+      <g>
+       <use xlink:href="#matched-campaigns-m358edcb054" x="312.019576" y="279.798739" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="matched-campaigns-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="312.019576" y="294.396395" transform="rotate(-0 312.019576 294.396395)">13.3</text>
+     </g>
+    </g>
+    <g id="matched-campaigns-xtick_3">
+     <g id="matched-campaigns-line2d_5">
+      <path d="M 432.366618 279.798739 
+L 432.366618 22.318125 
+" clip-path="url(#matched-campaigns-p4dc7d585d7)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="matched-campaigns-line2d_6">
+      <g>
+       <use xlink:href="#matched-campaigns-m358edcb054" x="432.366618" y="279.798739" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="matched-campaigns-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="432.366618" y="294.396395" transform="rotate(-0 432.366618 294.396395)">13.4</text>
+     </g>
+    </g>
+    <g id="matched-campaigns-xtick_4">
+     <g id="matched-campaigns-line2d_7">
+      <path d="M 552.713661 279.798739 
+L 552.713661 22.318125 
+" clip-path="url(#matched-campaigns-p4dc7d585d7)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="matched-campaigns-line2d_8">
+      <g>
+       <use xlink:href="#matched-campaigns-m358edcb054" x="552.713661" y="279.798739" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="matched-campaigns-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="552.713661" y="294.396395" transform="rotate(-0 552.713661 294.396395)">13.5</text>
+     </g>
+    </g>
+    <g id="matched-campaigns-xtick_5">
+     <g id="matched-campaigns-line2d_9">
+      <path d="M 673.060703 279.798739 
+L 673.060703 22.318125 
+" clip-path="url(#matched-campaigns-p4dc7d585d7)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="matched-campaigns-line2d_10">
+      <g>
+       <use xlink:href="#matched-campaigns-m358edcb054" x="673.060703" y="279.798739" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="matched-campaigns-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="673.060703" y="294.396395" transform="rotate(-0 673.060703 294.396395)">13.6</text>
+     </g>
+    </g>
+    <g id="matched-campaigns-text_6">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="444.401322" y="308.397176" transform="rotate(-0 444.401322 308.397176)">Complete HTTP → MP4 seconds (truncated comparison axis)</text>
+    </g>
+   </g>
+   <g id="matched-campaigns-matplotlib.axis_2">
+    <g id="matched-campaigns-ytick_1">
+     <g id="matched-campaigns-line2d_11">
+      <defs>
+       <path id="matched-campaigns-m4dc7bc7a45" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#matched-campaigns-m4dc7bc7a45" x="167.603125" y="68.749055" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="matched-campaigns-text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="160.603125" y="72.548274" transform="rotate(-0 160.603125 72.548274)">Cached constants + early AAC</text>
+     </g>
+    </g>
+    <g id="matched-campaigns-ytick_2">
+     <g id="matched-campaigns-line2d_12">
+      <g>
+       <use xlink:href="#matched-campaigns-m4dc7bc7a45" x="167.603125" y="153.168929" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="matched-campaigns-text_8">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="160.603125" y="156.968147" transform="rotate(-0 160.603125 156.968147)">GPU blend / RGB fusion</text>
+     </g>
+    </g>
+    <g id="matched-campaigns-ytick_3">
+     <g id="matched-campaigns-line2d_13">
+      <g>
+       <use xlink:href="#matched-campaigns-m4dc7bc7a45" x="167.603125" y="237.588802" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="matched-campaigns-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="160.603125" y="241.388021" transform="rotate(-0 160.603125 241.388021)">Encoder GPU-output residency</text>
+     </g>
+    </g>
+   </g>
+   <g id="matched-campaigns-line2d_14">
+    <path d="M 614.090652 68.749055 
+L 316.833458 68.749055 
+" clip-path="url(#matched-campaigns-p4dc7d585d7)" style="fill: none; stroke: #7790a2; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="matched-campaigns-PathCollection_1">
+    <defs>
+     <path id="matched-campaigns-ma9dffb99c4" d="M 0 3 
+L 0 -3 
+" style="stroke: #2563ad; stroke-opacity: 0.5; stroke-width: 1.5"/>
+    </defs>
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-ma9dffb99c4" x="561.137954" y="63.261764" style="fill: #2563ad; fill-opacity: 0.5; stroke: #2563ad; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-ma9dffb99c4" x="614.090652" y="63.261764" style="fill: #2563ad; fill-opacity: 0.5; stroke: #2563ad; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-ma9dffb99c4" x="646.584354" y="63.261764" style="fill: #2563ad; fill-opacity: 0.5; stroke: #2563ad; stroke-opacity: 0.5; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-PathCollection_2">
+    <defs>
+     <path id="matched-campaigns-m8ef174ab2f" d="M 0 3 
+L 0 -3 
+" style="stroke: #087f75; stroke-opacity: 0.5; stroke-width: 1.5"/>
+    </defs>
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-m8ef174ab2f" x="289.153638" y="74.236347" style="fill: #087f75; fill-opacity: 0.5; stroke: #087f75; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-m8ef174ab2f" x="316.833458" y="74.236347" style="fill: #087f75; fill-opacity: 0.5; stroke: #087f75; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-m8ef174ab2f" x="369.786156" y="74.236347" style="fill: #087f75; fill-opacity: 0.5; stroke: #087f75; stroke-opacity: 0.5; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-line2d_15">
+    <path d="M 352.93757 153.168929 
+L 265.084229 153.168929 
+" clip-path="url(#matched-campaigns-p4dc7d585d7)" style="fill: none; stroke: #7790a2; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="matched-campaigns-PathCollection_3">
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-ma9dffb99c4" x="315.629987" y="147.681637" style="fill: #2563ad; fill-opacity: 0.5; stroke: #2563ad; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-ma9dffb99c4" x="352.93757" y="147.681637" style="fill: #2563ad; fill-opacity: 0.5; stroke: #2563ad; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-ma9dffb99c4" x="386.634742" y="147.681637" style="fill: #2563ad; fill-opacity: 0.5; stroke: #2563ad; stroke-opacity: 0.5; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-PathCollection_4">
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-m8ef174ab2f" x="206.114179" y="158.65622" style="fill: #087f75; fill-opacity: 0.5; stroke: #087f75; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-m8ef174ab2f" x="265.084229" y="158.65622" style="fill: #087f75; fill-opacity: 0.5; stroke: #087f75; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-m8ef174ab2f" x="355.344511" y="158.65622" style="fill: #087f75; fill-opacity: 0.5; stroke: #087f75; stroke-opacity: 0.5; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-line2d_16">
+    <path d="M 352.93757 237.588802 
+L 381.82086 237.588802 
+" clip-path="url(#matched-campaigns-p4dc7d585d7)" style="fill: none; stroke: #7790a2; stroke-width: 3; stroke-linecap: square"/>
+   </g>
+   <g id="matched-campaigns-PathCollection_5">
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-ma9dffb99c4" x="315.629987" y="232.10151" style="fill: #2563ad; fill-opacity: 0.5; stroke: #2563ad; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-ma9dffb99c4" x="352.93757" y="232.10151" style="fill: #2563ad; fill-opacity: 0.5; stroke: #2563ad; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-ma9dffb99c4" x="386.634742" y="232.10151" style="fill: #2563ad; fill-opacity: 0.5; stroke: #2563ad; stroke-opacity: 0.5; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-PathCollection_6">
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-m8ef174ab2f" x="337.292455" y="243.076094" style="fill: #087f75; fill-opacity: 0.5; stroke: #087f75; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-m8ef174ab2f" x="381.82086" y="243.076094" style="fill: #087f75; fill-opacity: 0.5; stroke: #087f75; stroke-opacity: 0.5; stroke-width: 1.5"/>
+     <use xlink:href="#matched-campaigns-m8ef174ab2f" x="404.686799" y="243.076094" style="fill: #087f75; fill-opacity: 0.5; stroke: #087f75; stroke-opacity: 0.5; stroke-width: 1.5"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-patch_3">
+    <path d="M 167.603125 279.798739 
+L 167.603125 22.318125 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="matched-campaigns-patch_4">
+    <path d="M 167.603125 279.798739 
+L 721.19952 279.798739 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="matched-campaigns-PathCollection_7">
+    <defs>
+     <path id="matched-campaigns-m7338d1de02" d="M 0 4.1833 
+C 1.109424 4.1833 2.173559 3.742521 2.95804 2.95804 
+C 3.742521 2.173559 4.1833 1.109424 4.1833 0 
+C 4.1833 -1.109424 3.742521 -2.173559 2.95804 -2.95804 
+C 2.173559 -3.742521 1.109424 -4.1833 0 -4.1833 
+C -1.109424 -4.1833 -2.173559 -3.742521 -2.95804 -2.95804 
+C -3.742521 -2.173559 -4.1833 -1.109424 -4.1833 0 
+C -4.1833 1.109424 -3.742521 2.173559 -2.95804 2.95804 
+C -2.173559 3.742521 -1.109424 4.1833 0 4.1833 
+z
+" style="stroke: #2563ad"/>
+    </defs>
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-m7338d1de02" x="614.090652" y="68.749055" style="fill: #2563ad; stroke: #2563ad"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-PathCollection_8">
+    <defs>
+     <path id="matched-campaigns-meb3ada8853" d="M 0 4.1833 
+C 1.109424 4.1833 2.173559 3.742521 2.95804 2.95804 
+C 3.742521 2.173559 4.1833 1.109424 4.1833 0 
+C 4.1833 -1.109424 3.742521 -2.173559 2.95804 -2.95804 
+C 2.173559 -3.742521 1.109424 -4.1833 0 -4.1833 
+C -1.109424 -4.1833 -2.173559 -3.742521 -2.95804 -2.95804 
+C -3.742521 -2.173559 -4.1833 -1.109424 -4.1833 0 
+C -4.1833 1.109424 -3.742521 2.173559 -2.95804 2.95804 
+C -2.173559 3.742521 -1.109424 4.1833 0 4.1833 
+z
+" style="stroke: #087f75"/>
+    </defs>
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-meb3ada8853" x="316.833458" y="68.749055" style="fill: #087f75; stroke: #087f75"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-text_10">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="179.637829" y="49.332484" transform="rotate(-0 179.637829 49.332484)">13.551 → 13.304 s; change -247 ms</text>
+   </g>
+   <g id="matched-campaigns-PathCollection_9">
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-m7338d1de02" x="352.93757" y="153.168929" style="fill: #2563ad; stroke: #2563ad"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-PathCollection_10">
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-meb3ada8853" x="265.084229" y="153.168929" style="fill: #087f75; stroke: #087f75"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-text_11">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="179.637829" y="133.752358" transform="rotate(-0 179.637829 133.752358)">13.334 → 13.261 s; change -73 ms</text>
+   </g>
+   <g id="matched-campaigns-PathCollection_11">
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-m7338d1de02" x="352.93757" y="237.588802" style="fill: #2563ad; stroke: #2563ad"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-PathCollection_12">
+    <g clip-path="url(#matched-campaigns-p4dc7d585d7)">
+     <use xlink:href="#matched-campaigns-meb3ada8853" x="381.82086" y="237.588802" style="fill: #087f75; stroke: #087f75"/>
+    </g>
+   </g>
+   <g id="matched-campaigns-text_12">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="179.637829" y="218.172231" transform="rotate(-0 179.637829 218.172231)">13.334 → 13.358 s; change +24 ms</text>
+   </g>
+   <g id="matched-campaigns-text_13">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="167.603125" y="16.318125" transform="rotate(-0 167.603125 16.318125)">Separate matched 15-second campaigns · three formal samples per arm</text>
+   </g>
+   <g id="matched-campaigns-legend_1">
+    <g id="matched-campaigns-patch_5">
+     <path d="M 603.489364 275.298739 
+L 714.89952 275.298739 
+Q 716.69952 275.298739 716.69952 273.498739 
+L 716.69952 247.397332 
+Q 716.69952 245.597332 714.89952 245.597332 
+L 603.489364 245.597332 
+Q 601.689364 245.597332 601.689364 247.397332 
+L 601.689364 273.498739 
+Q 601.689364 275.298739 603.489364 275.298739 
+z
+" style="fill: #ffffff; opacity: 0.8; stroke: #cccccc; stroke-linejoin: miter"/>
+    </g>
+    <g id="matched-campaigns-PathCollection_13">
+     <g>
+      <use xlink:href="#matched-campaigns-m7338d1de02" x="614.289364" y="253.673426" style="fill: #2563ad; stroke: #2563ad"/>
+     </g>
+    </g>
+    <g id="matched-campaigns-text_14">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="630.489364" y="256.035926" transform="rotate(-0 630.489364 256.035926)">Parent median</text>
+    </g>
+    <g id="matched-campaigns-PathCollection_14">
+     <g>
+      <use xlink:href="#matched-campaigns-meb3ada8853" x="614.289364" y="267.174129" style="fill: #087f75; stroke: #087f75"/>
+     </g>
+    </g>
+    <g id="matched-campaigns-text_15">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="630.489364" y="269.536629" transform="rotate(-0 630.489364 269.536629)">Candidate median</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="matched-campaigns-p4dc7d585d7">
+   <rect x="167.603125" y="22.318125" width="553.596395" height="257.480614"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>Independent matched long-clip optimization campaigns; gains are not cumulative</figcaption></figure>
+<p>In the Config-A hardware trace, AAC ran at approximately 12,948.7–13,123.1 ms from the trace request origin while video-VAE GPU work continued until about 15,417.8 ms. That establishes overlap. It does not establish that all AAC CPU time is additional serial savings. Output-submit ranges had no <code>cudaStreamSynchronize</code> calls in the audited trace.</p>
+<p>Changing video-VAE precision cannot repair a bad upstream video latent. In a later quality diagnosis, degraded generated latents remained visibly degraded under FP16 reconstruction. NVFP4 introduced measurable differences, but it was not the sole cause of long-run degradation. The audio VAE stayed FP32; attributing extra spoken words to the video decoder would be inconsistent with the pipeline.</p>
+<h2 id="8-exact-input-reuse-makes-the-five-second-workload-affordable">8. Exact input reuse makes the five-second workload affordable</h2>
+<p>The avatar repeatedly uses the same clean picture and often the same idle instruction. Encoding those identical inputs every five seconds is avoidable. At the same time, newly authored dialogue must remain fresh.</p>
+<p>The exact reference cache uses content/configuration identity, ordered RGB inputs, prompt/tag identity and component identity; distributed ranks agree on a hit. Returned tensors are isolated from mutation. It preserves the two reference blocks and their positional role, rather than deleting a block to save time. The reference-image latent cache can still hit for a new spoken line even when semantic text conditioning must be recomputed.</p>
+<h3 id="four-retained-profiles-one-instrumented-request-per-condition">Four retained profiles, one instrumented request per condition</h3>
+<p>These are <strong>rank-zero CPU NVTX durations</strong>, in seconds, from the BF16-first cache experiment. They are not a fresh trace of the current all-Sage production mode.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Range</th>
+<th style="text-align:right">One reference, cache off</th>
+<th style="text-align:right">Two references, off</th>
+<th style="text-align:right">Two references, hit</th>
+<th style="text-align:right">Two references, new speech</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Request preparation</td>
+<td style="text-align:right">0.562</td>
+<td style="text-align:right">0.876</td>
+<td style="text-align:right">0.117</td>
+<td style="text-align:right">0.476</td>
+</tr>
+<tr>
+<td>↳ semantic encoder</td>
+<td style="text-align:right">0.258</td>
+<td style="text-align:right">0.368</td>
+<td style="text-align:right">0.003</td>
+<td style="text-align:right">0.373</td>
+</tr>
+<tr>
+<td>Four-step DiT</td>
+<td style="text-align:right">3.639</td>
+<td style="text-align:right">3.803</td>
+<td style="text-align:right">3.658</td>
+<td style="text-align:right">3.946</td>
+</tr>
+<tr>
+<td>↳ first step</td>
+<td style="text-align:right">1.589</td>
+<td style="text-align:right">1.593</td>
+<td style="text-align:right">1.455</td>
+<td style="text-align:right">1.726</td>
+</tr>
+<tr>
+<td>Decode range</td>
+<td style="text-align:right">0.506</td>
+<td style="text-align:right">0.507</td>
+<td style="text-align:right">0.509</td>
+<td style="text-align:right">0.509</td>
+</tr>
+<tr>
+<td>↳ video VAE</td>
+<td style="text-align:right">0.461</td>
+<td style="text-align:right">0.466</td>
+<td style="text-align:right">0.468</td>
+<td style="text-align:right">0.469</td>
+</tr>
+<tr>
+<td>↳ audio VAE</td>
+<td style="text-align:right">0.026</td>
+<td style="text-align:right">0.024</td>
+<td style="text-align:right">0.024</td>
+<td style="text-align:right">0.024</td>
+</tr>
+</tbody>
+</table></div>
+<p>Nested rows must not be added twice. Differences in DiT timing across these single captures are not automatically a causal benefit of the input cache. Across-rank medians in the new SQLite reanalysis differ from the rank-zero values here because other ranks include different waiting intervals.</p>
+<p>The cache validation compared video latents, audio latents and complete MP4 hashes. Four reading pairs matched exactly; a subsequent OFF/ON/OFF experiment for reading, speaking and page turning also matched in all nine generated clips. This establishes tested-input equivalence, not a formal proof over all possible inputs.</p>
+<p>The historical unprofiled 60-clip cache run had 57 formal samples: median 4.554 s, mean 4.671 s, P95 5.336 s, eight deadline misses. Relative to a preceding two-reference run's 5.289 s median, the operational reduction was about 0.735 s. Because these were different runs, that complete difference is not a controlled single-factor speedup. The same candidate showed an unrequested drinking action and was not accepted merely because it was faster.</p>
+<h2 id="9-current-measured-latency-and-response-budget">9. Current measured latency and response budget</h2>
+<h3 id="9-1-fixed-production-snapshot">9.1 Fixed production snapshot</h3>
+<p>The new session began on 2026-09-22 at 11:57:03 UTC according to Twitch. The statistics below freeze the first 102 accepted continuations at 12:05:24 UTC, exclude the opening, and include any retries. No retries occurred in that snapshot. Percentiles use linear interpolation; the small sample is not a production SLO study.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Workload</th>
+<th style="text-align:right">Samples</th>
+<th style="text-align:right">Publication P50</th>
+<th style="text-align:right">P95</th>
+<th style="text-align:right">Maximum</th>
+<th style="text-align:right">Over playback budget</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All continuation actions</td>
+<td style="text-align:right">102</td>
+<td style="text-align:right">3.972 s</td>
+<td style="text-align:right">4.205 s</td>
+<td style="text-align:right">4.807 s</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>Quiet rest</td>
+<td style="text-align:right">46</td>
+<td style="text-align:right">3.667 s</td>
+<td style="text-align:right">4.267 s</td>
+<td style="text-align:right">4.807 s</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>Speaking</td>
+<td style="text-align:right">50</td>
+<td style="text-align:right">3.977 s</td>
+<td style="text-align:right">4.204 s</td>
+<td style="text-align:right">4.290 s</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>Page turn</td>
+<td style="text-align:right">5</td>
+<td style="text-align:right">3.703 s</td>
+<td style="text-align:right">4.066 s</td>
+<td style="text-align:right">4.067 s</td>
+<td style="text-align:right">0</td>
+</tr>
+<tr>
+<td>Wave</td>
+<td style="text-align:right">1</td>
+<td style="text-align:right">4.007 s</td>
+<td style="text-align:right">Not a distribution</td>
+<td style="text-align:right">4.007 s</td>
+<td style="text-align:right">0</td>
+</tr>
+</tbody>
+</table></div>
+<p>Mean producer time was 3.901 s, giving a producer ratio of approximately <strong>0.787</strong> and mean headroom of <strong>1.057 s</strong> per continuation. Maximum observed headroom was not the acceptance criterion; the slowest request had only about 0.152 s spare.</p>
+<figure class="figure"><svg role="img" aria-label="Current producer budget and observed latency by workload" xmlns:xlink="http://www.w3.org/1999/xlink" width="728.39952pt" height="469.19952pt" viewBox="0 0 728.39952 469.19952" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="current-latency-figure_1">
+  <g id="current-latency-patch_1">
+   <path d="M 0 469.19952 
+L 728.39952 469.19952 
+L 728.39952 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="current-latency-axes_1">
+   <g id="current-latency-patch_2">
+    <path d="M 63.6125 158.878906 
+L 721.19952 158.878906 
+L 721.19952 41.319621 
+L 63.6125 41.319621 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="current-latency-patch_3">
+    <path d="M 63.6125 124.345866 
+L 524.190775 124.345866 
+L 524.190775 90.547571 
+L 63.6125 90.547571 
+z
+" clip-path="url(#current-latency-pb5a97c4779)" style="fill: #2563ad"/>
+   </g>
+   <g id="current-latency-patch_4">
+    <path d="M 524.190775 124.345866 
+L 538.699688 124.345866 
+L 538.699688 90.547571 
+L 524.190775 90.547571 
+z
+" clip-path="url(#current-latency-pb5a97c4779)" style="fill: #ba5b28"/>
+   </g>
+   <g id="current-latency-patch_5">
+    <path d="M 538.699688 124.345866 
+L 667.415396 124.345866 
+L 667.415396 90.547571 
+L 538.699688 90.547571 
+z
+" clip-path="url(#current-latency-pb5a97c4779)" style="fill: #dce9e5"/>
+   </g>
+   <g id="current-latency-matplotlib.axis_1">
+    <g id="current-latency-xtick_1">
+     <g id="current-latency-line2d_1">
+      <defs>
+       <path id="current-latency-m358edcb054" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="63.6125" y="158.878906" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="63.6125" y="173.476562" transform="rotate(-0 63.6125 173.476562)">0</text>
+     </g>
+    </g>
+    <g id="current-latency-xtick_2">
+     <g id="current-latency-line2d_2">
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="185.387874" y="158.878906" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="185.387874" y="173.476562" transform="rotate(-0 185.387874 173.476562)">1</text>
+     </g>
+    </g>
+    <g id="current-latency-xtick_3">
+     <g id="current-latency-line2d_3">
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="307.163248" y="158.878906" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="307.163248" y="173.476562" transform="rotate(-0 307.163248 173.476562)">2</text>
+     </g>
+    </g>
+    <g id="current-latency-xtick_4">
+     <g id="current-latency-line2d_4">
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="428.938622" y="158.878906" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="428.938622" y="173.476562" transform="rotate(-0 428.938622 173.476562)">3</text>
+     </g>
+    </g>
+    <g id="current-latency-xtick_5">
+     <g id="current-latency-line2d_5">
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="550.713996" y="158.878906" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="550.713996" y="173.476562" transform="rotate(-0 550.713996 173.476562)">4</text>
+     </g>
+    </g>
+    <g id="current-latency-xtick_6">
+     <g id="current-latency-line2d_6">
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="672.48937" y="158.878906" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_6">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="672.48937" y="173.476562" transform="rotate(-0 672.48937 173.476562)">5</text>
+     </g>
+    </g>
+    <g id="current-latency-text_7">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="392.40601" y="187.477344" transform="rotate(-0 392.40601 187.477344)">Seconds per newly published continuation</text>
+    </g>
+   </g>
+   <g id="current-latency-matplotlib.axis_2"/>
+   <g id="current-latency-patch_6">
+    <path d="M 63.6125 158.878906 
+L 63.6125 41.319621 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="current-latency-patch_7">
+    <path d="M 63.6125 158.878906 
+L 721.19952 158.878906 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="current-latency-text_8">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="293.901638" y="110.044766" transform="rotate(-0 293.901638 110.044766)">Backend 3.782 s</text>
+   </g>
+   <g id="current-latency-text_9">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="603.057542" y="109.784609" transform="rotate(-0 603.057542 109.784609)">1.057 s spare</text>
+   </g>
+   <g id="current-latency-patch_8">
+    <path d="M 513.711558 66.206955 
+Q 521.988499 77.567593 530.26544 88.928231 
+" style="fill: none; stroke: #ba5b28; stroke-linecap: round"/>
+   </g>
+   <g id="current-latency-text_10">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="459.382466" y="60.423005" transform="rotate(-0 459.382466 60.423005)">Outside HTTP 0.119 s</text>
+   </g>
+   <g id="current-latency-text_11">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="63.6125" y="35.319621" transform="rotate(-0 63.6125 35.319621)">Current mean producer budget · 102 accepted continuations</text>
+   </g>
+  </g>
+  <g id="current-latency-axes_2">
+   <g id="current-latency-patch_9">
+    <path d="M 63.6125 430.998739 
+L 721.19952 430.998739 
+L 721.19952 195.880167 
+L 63.6125 195.880167 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="current-latency-matplotlib.axis_3">
+    <g id="current-latency-xtick_7">
+     <g id="current-latency-line2d_7">
+      <path d="M 63.6125 430.998739 
+L 63.6125 195.880167 
+" clip-path="url(#current-latency-pc607e6d842)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="current-latency-line2d_8">
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="63.6125" y="430.998739" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_12">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="63.6125" y="445.596395" transform="rotate(-0 63.6125 445.596395)">0</text>
+     </g>
+    </g>
+    <g id="current-latency-xtick_8">
+     <g id="current-latency-line2d_9">
+      <path d="M 185.387874 430.998739 
+L 185.387874 195.880167 
+" clip-path="url(#current-latency-pc607e6d842)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="current-latency-line2d_10">
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="185.387874" y="430.998739" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_13">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="185.387874" y="445.596395" transform="rotate(-0 185.387874 445.596395)">1</text>
+     </g>
+    </g>
+    <g id="current-latency-xtick_9">
+     <g id="current-latency-line2d_11">
+      <path d="M 307.163248 430.998739 
+L 307.163248 195.880167 
+" clip-path="url(#current-latency-pc607e6d842)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="current-latency-line2d_12">
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="307.163248" y="430.998739" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_14">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="307.163248" y="445.596395" transform="rotate(-0 307.163248 445.596395)">2</text>
+     </g>
+    </g>
+    <g id="current-latency-xtick_10">
+     <g id="current-latency-line2d_13">
+      <path d="M 428.938622 430.998739 
+L 428.938622 195.880167 
+" clip-path="url(#current-latency-pc607e6d842)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="current-latency-line2d_14">
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="428.938622" y="430.998739" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_15">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="428.938622" y="445.596395" transform="rotate(-0 428.938622 445.596395)">3</text>
+     </g>
+    </g>
+    <g id="current-latency-xtick_11">
+     <g id="current-latency-line2d_15">
+      <path d="M 550.713996 430.998739 
+L 550.713996 195.880167 
+" clip-path="url(#current-latency-pc607e6d842)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="current-latency-line2d_16">
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="550.713996" y="430.998739" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_16">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="550.713996" y="445.596395" transform="rotate(-0 550.713996 445.596395)">4</text>
+     </g>
+    </g>
+    <g id="current-latency-xtick_12">
+     <g id="current-latency-line2d_17">
+      <path d="M 672.48937 430.998739 
+L 672.48937 195.880167 
+" clip-path="url(#current-latency-pc607e6d842)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="current-latency-line2d_18">
+      <g>
+       <use xlink:href="#current-latency-m358edcb054" x="672.48937" y="430.998739" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_17">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle" x="672.48937" y="445.596395" transform="rotate(-0 672.48937 445.596395)">5</text>
+     </g>
+    </g>
+    <g id="current-latency-text_18">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="392.40601" y="459.597176" transform="rotate(-0 392.40601 459.597176)">Seconds to accepted media publication</text>
+    </g>
+   </g>
+   <g id="current-latency-matplotlib.axis_4">
+    <g id="current-latency-ytick_1">
+     <g id="current-latency-line2d_19">
+      <defs>
+       <path id="current-latency-m4dc7bc7a45" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#current-latency-m4dc7bc7a45" x="63.6125" y="221.834815" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_19">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="56.6125" y="225.634034" transform="rotate(-0 56.6125 225.634034)">All</text>
+     </g>
+    </g>
+    <g id="current-latency-ytick_2">
+     <g id="current-latency-line2d_20">
+      <g>
+       <use xlink:href="#current-latency-m4dc7bc7a45" x="63.6125" y="282.904574" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_20">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="56.6125" y="286.703792" transform="rotate(-0 56.6125 286.703792)">Quiet rest</text>
+     </g>
+    </g>
+    <g id="current-latency-ytick_3">
+     <g id="current-latency-line2d_21">
+      <g>
+       <use xlink:href="#current-latency-m4dc7bc7a45" x="63.6125" y="343.974333" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_21">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="56.6125" y="347.773551" transform="rotate(-0 56.6125 347.773551)">Speaking</text>
+     </g>
+    </g>
+    <g id="current-latency-ytick_4">
+     <g id="current-latency-line2d_22">
+      <g>
+       <use xlink:href="#current-latency-m4dc7bc7a45" x="63.6125" y="405.044091" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="current-latency-text_22">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="56.6125" y="408.842919" transform="rotate(-0 56.6125 408.842919)">Page turn</text>
+     </g>
+    </g>
+   </g>
+   <g id="current-latency-patch_10">
+    <path d="M 63.6125 206.567375 
+L 547.321505 206.567375 
+L 547.321505 237.102255 
+L 63.6125 237.102255 
+z
+" clip-path="url(#current-latency-pc607e6d842)" style="fill: #2563ad"/>
+   </g>
+   <g id="current-latency-patch_11">
+    <path d="M 63.6125 267.637134 
+L 510.149642 267.637134 
+L 510.149642 298.172013 
+L 63.6125 298.172013 
+z
+" clip-path="url(#current-latency-pc607e6d842)" style="fill: #2563ad"/>
+   </g>
+   <g id="current-latency-patch_12">
+    <path d="M 63.6125 328.706893 
+L 547.920212 328.706893 
+L 547.920212 359.241772 
+L 63.6125 359.241772 
+z
+" clip-path="url(#current-latency-pc607e6d842)" style="fill: #2563ad"/>
+   </g>
+   <g id="current-latency-patch_13">
+    <path d="M 63.6125 389.776652 
+L 514.503635 389.776652 
+L 514.503635 420.311531 
+L 63.6125 420.311531 
+z
+" clip-path="url(#current-latency-pc607e6d842)" style="fill: #2563ad"/>
+   </g>
+   <g id="current-latency-line2d_23">
+    <path d="M 667.415396 430.998739 
+L 667.415396 195.880167 
+" clip-path="url(#current-latency-pc607e6d842)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #087f75; stroke-width: 1.5"/>
+   </g>
+   <g id="current-latency-patch_14">
+    <path d="M 63.6125 430.998739 
+L 63.6125 195.880167 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="current-latency-patch_15">
+    <path d="M 63.6125 430.998739 
+L 721.19952 430.998739 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="current-latency-PathCollection_1">
+    <defs>
+     <path id="current-latency-m8ef6e67e21" d="M -0 4.242641 
+L 4.242641 0 
+L 0 -4.242641 
+L -4.242641 -0 
+z
+" style="stroke: #ba5b28"/>
+    </defs>
+    <g clip-path="url(#current-latency-pc607e6d842)">
+     <use xlink:href="#current-latency-m8ef6e67e21" x="575.723746" y="221.834815" style="fill: #ba5b28; stroke: #ba5b28"/>
+     <use xlink:href="#current-latency-m8ef6e67e21" x="583.222063" y="282.904574" style="fill: #ba5b28; stroke: #ba5b28"/>
+     <use xlink:href="#current-latency-m8ef6e67e21" x="575.614995" y="343.974333" style="fill: #ba5b28; stroke: #ba5b28"/>
+     <use xlink:href="#current-latency-m8ef6e67e21" x="558.764559" y="405.044091" style="fill: #ba5b28; stroke: #ba5b28"/>
+    </g>
+   </g>
+   <g id="current-latency-text_23">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #ffffff" x="75.790037" y="224.192745" transform="rotate(-0 75.790037 224.192745)">n=102  |  P50 3.972 s</text>
+   </g>
+   <g id="current-latency-text_24">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #ffffff" x="75.790037" y="285.262503" transform="rotate(-0 75.790037 285.262503)">n=46  |  P50 3.667 s</text>
+   </g>
+   <g id="current-latency-text_25">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #ffffff" x="75.790037" y="346.332262" transform="rotate(-0 75.790037 346.332262)">n=50  |  P50 3.977 s</text>
+   </g>
+   <g id="current-latency-text_26">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #ffffff" x="75.790037" y="407.402021" transform="rotate(-0 75.790037 407.402021)">n=5  |  P50 3.703 s</text>
+   </g>
+   <g id="current-latency-legend_1">
+    <g id="current-latency-patch_16">
+     <path d="M 591.24077 426.998739 
+L 715.59952 426.998739 
+Q 717.19952 426.998739 717.19952 425.398739 
+L 717.19952 390.196864 
+Q 717.19952 388.596864 715.59952 388.596864 
+L 591.24077 388.596864 
+Q 589.64077 388.596864 589.64077 390.196864 
+L 589.64077 425.398739 
+Q 589.64077 426.998739 591.24077 426.998739 
+z
+" style="fill: #ffffff; opacity: 0.8; stroke: #cccccc; stroke-linejoin: miter"/>
+    </g>
+    <g id="current-latency-PathCollection_2">
+     <g>
+      <use xlink:href="#current-latency-m8ef6e67e21" x="600.84077" y="395.775614" style="fill: #ba5b28; stroke: #ba5b28"/>
+     </g>
+    </g>
+    <g id="current-latency-text_27">
+     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="615.24077" y="397.875614" transform="rotate(-0 615.24077 397.875614)">P95 publication</text>
+    </g>
+    <g id="current-latency-line2d_24">
+     <path d="M 592.84077 407.076239 
+L 600.84077 407.076239 
+L 608.84077 407.076239 
+" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #087f75; stroke-width: 1.5"/>
+    </g>
+    <g id="current-latency-text_28">
+     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="615.24077" y="409.876239" transform="rotate(-0 615.24077 409.876239)">Playback budget 4.958 s</text>
+    </g>
+    <g id="current-latency-patch_17">
+     <path d="M 592.84077 421.876864 
+L 608.84077 421.876864 
+L 608.84077 416.276864 
+L 592.84077 416.276864 
+z
+" style="fill: #2563ad"/>
+    </g>
+    <g id="current-latency-text_29">
+     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="615.24077" y="421.876864" transform="rotate(-0 615.24077 421.876864)">P50 publication</text>
+    </g>
+   </g>
+  </g>
+  <g id="current-latency-text_30">
+   <text style="font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="364.19976" y="17.077969" transform="rotate(-0 364.19976 17.077969)">A bounded live observation, not a viewer-response SLO</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="current-latency-pb5a97c4779">
+   <rect x="63.6125" y="41.319621" width="657.58702" height="117.559286"/>
+  </clipPath>
+  <clipPath id="current-latency-pc607e6d842">
+   <rect x="63.6125" y="195.880167" width="657.58702" height="235.118571"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>Current producer budget and observed latency by workload</figcaption></figure>
+<h3 id="9-2-a-measured-boundary-breakdown-not-an-invented-gpu-waterfall">9.2 A measured boundary breakdown, not an invented GPU waterfall</h3>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Measured boundary</th>
+<th style="text-align:right">Mean</th>
+<th style="text-align:right">P50</th>
+<th style="text-align:right">P95</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTTP request</td>
+<td style="text-align:right">3.782 s</td>
+<td style="text-align:right">3.852 s</td>
+<td style="text-align:right">4.083 s</td>
+<td>Backend request, including its preparation, model, reconstruction and response work</td>
+</tr>
+<tr>
+<td>Everything outside HTTP inside producer step</td>
+<td style="text-align:right">0.119 s</td>
+<td style="text-align:right">0.120 s</td>
+<td style="text-align:right">0.126 s</td>
+<td>App preparation, complete decode/checks, checkpoint/receipt/publication work</td>
+</tr>
+<tr>
+<td>Total producer publication</td>
+<td style="text-align:right">3.901 s</td>
+<td style="text-align:right">3.972 s</td>
+<td style="text-align:right">4.205 s</td>
+<td>Accepted continuation ready for the relay</td>
+</tr>
+</tbody>
+</table></div>
+<p>Means of these complementary boundaries add by construction. Their independently computed medians and percentiles do not necessarily add. The backend's aggregate field named <code>denoise_step_latency_ms</code> is not a substitute for a measured DiT-only trace.</p>
+<p>Eliminating all 0.119 s of outside-HTTP work would be an impossible zero-cost-check idealization and would save only about 3% of current mean producer time. The main compute opportunities remain inside the backend. Conversely, reducing future footage can improve perceived response more than a small kernel improvement without changing model throughput at all.</p>
+<h3 id="9-3-viewer-response-is-a-different-clock">9.3 Viewer response is a different clock</h3>
+<p>The local ledger records message arrival, text/reply readiness, selection, generated media and local relay start. A historical 30-clip one-lookahead sample measured a 1.242 s median from ready media to local playback. That excludes the text call, time waiting for a generation slot, earlier queued turns, within-clip first syllable and Twitch/player buffering.</p>
+<p>Direct actions bypass the text model when routing is unambiguous. New dialogue uses the local 4B planner. Nine private action-planning inputs took 0.265–0.744 s in one small test, but that does not imply the avatar visibly acts within a second. A request arriving just after a window has started still waits for the next available generation decision.</p>
+<p>There is no measured universal viewer-end response number in this report. A proper test must correlate one actual viewer message with the first meaningful visual/audio response in captured playback. A generic idle blink is not a response to the question.</p>
+<h3 id="9-4-extended-observation-during-report-assembly">9.4 Extended observation during report assembly</h3>
+<p>At 12:34:41 UTC, the same session contained 456 accepted continuations: overall publication mean 3.841 s, median 3.672 s, P95 4.115 s, maximum 5.895 s. Speaking alone remained at 3.976 s median and 4.193 s P95 over 163 clips. The lower overall median primarily reflects the larger quiet-reading share; it is not a newly deployed optimization.</p>
+<p>Two accepted quiet clips exceeded the 4.958 s deadline, at 5.895 and 5.622 s. The relay reported two waiting intervals totaling 1.833 s, with 455 clips and 2,256.25 seconds of generated media transmitted. Its sampled AV clock difference was 8.333 ms. Those are clock/queue observations, not a perceptual lip-sync assessment. No cause for the two backend spikes is assigned without a matching trace. The live service remained active at this checkpoint. <a href="evidence/extended-live-observation.json">Extended observation</a></p>
+<h2 id="10-why-five-seconds-remains-the-live-choice">10. Why five seconds remains the live choice</h2>
+<p>The project implemented shorter shapes rather than assuming duration could be changed with one API parameter. It adapted temporal geometry, raw-tail metadata, AV clocks, decoder dispatch audits, prompt timing and speech capacity in an isolated backend.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Candidate</th>
+<th style="text-align:right">New media</th>
+<th style="text-align:right">Formal mixed-workload clips</th>
+<th style="text-align:right">Ready median</th>
+<th style="text-align:right">Mean</th>
+<th style="text-align:right">P95</th>
+<th style="text-align:right">Deadline misses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>56-frame window</td>
+<td style="text-align:right">2.125 s</td>
+<td style="text-align:right">17</td>
+<td style="text-align:right">2.289 s</td>
+<td style="text-align:right">2.204 s</td>
+<td style="text-align:right">2.486 s</td>
+<td style="text-align:right">10/17</td>
+</tr>
+<tr>
+<td>73-frame window</td>
+<td style="text-align:right">2.833 s</td>
+<td style="text-align:right">14</td>
+<td style="text-align:right">2.425 s</td>
+<td style="text-align:right">2.553 s</td>
+<td style="text-align:right">2.856 s</td>
+<td style="text-align:right">4/14</td>
+</tr>
+<tr>
+<td>124-frame window</td>
+<td style="text-align:right">4.958 s</td>
+<td style="text-align:right">13</td>
+<td style="text-align:right">3.706 s</td>
+<td style="text-align:right">3.837 s</td>
+<td style="text-align:right">4.129 s</td>
+<td style="text-align:right">0/13</td>
+</tr>
+</tbody>
+</table></div>
+<p>The 56-frame reading median was only 1.925 s, but new dialogue took about 2.28–2.48 s. A demo spends real time speaking, so selecting only idle performance would conceal an unsustainable workload. The 73-frame mean had margin, but all four speech windows were slightly slower than their playback budget. Neither short candidate completed the longer playback and quality qualification needed for production.</p>
+<figure class="figure"><svg role="img" aria-label="Short-window experiments normalized to their own playback deadline" xmlns:xlink="http://www.w3.org/1999/xlink" width="728.39952pt" height="332.39952pt" viewBox="0 0 728.39952 332.39952" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="window-budgets-figure_1">
+  <g id="window-budgets-patch_1">
+   <path d="M 0 332.39952 
+L 728.39952 332.39952 
+L 728.39952 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="window-budgets-axes_1">
+   <g id="window-budgets-patch_2">
+    <path d="M 44.103906 294.194051 
+L 721.19952 294.194051 
+L 721.19952 22.318125 
+L 44.103906 22.318125 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="window-budgets-matplotlib.axis_1">
+    <g id="window-budgets-xtick_1">
+     <g id="window-budgets-line2d_1">
+      <defs>
+       <path id="window-budgets-m358edcb054" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#window-budgets-m358edcb054" x="151.245147" y="294.194051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="window-budgets-text_1">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'" transform="translate(125.862334 309.793465)">56 frames</text>
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'" transform="translate(103.650615 321.7962)">2.125 s new media</text>
+     </g>
+    </g>
+    <g id="window-budgets-xtick_2">
+     <g id="window-budgets-line2d_2">
+      <g>
+       <use xlink:href="#window-budgets-m358edcb054" x="382.651713" y="294.194051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="window-budgets-text_2">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'" transform="translate(357.268901 309.793465)">73 frames</text>
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'" transform="translate(335.057182 321.7962)">2.833 s new media</text>
+     </g>
+    </g>
+    <g id="window-budgets-xtick_3">
+     <g id="window-budgets-line2d_3">
+      <g>
+       <use xlink:href="#window-budgets-m358edcb054" x="614.05828" y="294.194051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="window-budgets-text_3">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'" transform="translate(585.494217 309.793465)">124 frames</text>
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'" transform="translate(566.463748 321.7962)">4.958 s new media</text>
+     </g>
+    </g>
+   </g>
+   <g id="window-budgets-matplotlib.axis_2">
+    <g id="window-budgets-ytick_1">
+     <g id="window-budgets-line2d_4">
+      <path d="M 44.103906 294.194051 
+L 721.19952 294.194051 
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="window-budgets-line2d_5">
+      <defs>
+       <path id="window-budgets-m4dc7bc7a45" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#window-budgets-m4dc7bc7a45" x="44.103906" y="294.194051" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="window-budgets-text_4">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="37.103906" y="297.992879" transform="rotate(-0 37.103906 297.992879)">0.0</text>
+     </g>
+    </g>
+    <g id="window-budgets-ytick_2">
+     <g id="window-budgets-line2d_6">
+      <path d="M 44.103906 254.791743 
+L 721.19952 254.791743 
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="window-budgets-line2d_7">
+      <g>
+       <use xlink:href="#window-budgets-m4dc7bc7a45" x="44.103906" y="254.791743" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="window-budgets-text_5">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="37.103906" y="258.590571" transform="rotate(-0 37.103906 258.590571)">0.2</text>
+     </g>
+    </g>
+    <g id="window-budgets-ytick_3">
+     <g id="window-budgets-line2d_8">
+      <path d="M 44.103906 215.389435 
+L 721.19952 215.389435 
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="window-budgets-line2d_9">
+      <g>
+       <use xlink:href="#window-budgets-m4dc7bc7a45" x="44.103906" y="215.389435" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="window-budgets-text_6">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="37.103906" y="219.188263" transform="rotate(-0 37.103906 219.188263)">0.4</text>
+     </g>
+    </g>
+    <g id="window-budgets-ytick_4">
+     <g id="window-budgets-line2d_10">
+      <path d="M 44.103906 175.987127 
+L 721.19952 175.987127 
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="window-budgets-line2d_11">
+      <g>
+       <use xlink:href="#window-budgets-m4dc7bc7a45" x="44.103906" y="175.987127" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="window-budgets-text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="37.103906" y="179.785955" transform="rotate(-0 37.103906 179.785955)">0.6</text>
+     </g>
+    </g>
+    <g id="window-budgets-ytick_5">
+     <g id="window-budgets-line2d_12">
+      <path d="M 44.103906 136.584819 
+L 721.19952 136.584819 
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="window-budgets-line2d_13">
+      <g>
+       <use xlink:href="#window-budgets-m4dc7bc7a45" x="44.103906" y="136.584819" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="window-budgets-text_8">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="37.103906" y="140.383647" transform="rotate(-0 37.103906 140.383647)">0.8</text>
+     </g>
+    </g>
+    <g id="window-budgets-ytick_6">
+     <g id="window-budgets-line2d_14">
+      <path d="M 44.103906 97.18251 
+L 721.19952 97.18251 
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="window-budgets-line2d_15">
+      <g>
+       <use xlink:href="#window-budgets-m4dc7bc7a45" x="44.103906" y="97.18251" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="window-budgets-text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="37.103906" y="100.981339" transform="rotate(-0 37.103906 100.981339)">1.0</text>
+     </g>
+    </g>
+    <g id="window-budgets-ytick_7">
+     <g id="window-budgets-line2d_16">
+      <path d="M 44.103906 57.780202 
+L 721.19952 57.780202 
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: none; stroke: #dde5eb; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="window-budgets-line2d_17">
+      <g>
+       <use xlink:href="#window-budgets-m4dc7bc7a45" x="44.103906" y="57.780202" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="window-budgets-text_10">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end" x="37.103906" y="61.57903" transform="rotate(-0 37.103906 61.57903)">1.2</text>
+     </g>
+    </g>
+    <g id="window-budgets-text_11">
+     <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="14.798438" y="158.256088" transform="rotate(-90 14.798438 158.256088)">Normalized generation cost (lower is better)</text>
+    </g>
+   </g>
+   <g id="window-budgets-patch_3">
+    <path d="M 74.88098 294.194051 
+L 148.931081 294.194051 
+L 148.931081 89.860874 
+L 74.88098 89.860874 
+z
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: #2563ad"/>
+   </g>
+   <g id="window-budgets-patch_4">
+    <path d="M 306.287546 294.194051 
+L 380.337647 294.194051 
+L 380.337647 116.70388 
+L 306.287546 116.70388 
+z
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: #2563ad"/>
+   </g>
+   <g id="window-budgets-patch_5">
+    <path d="M 537.694113 294.194051 
+L 611.744214 294.194051 
+L 611.744214 141.756407 
+L 537.694113 141.756407 
+z
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: #2563ad"/>
+   </g>
+   <g id="window-budgets-patch_6">
+    <path d="M 153.559212 294.194051 
+L 227.609314 294.194051 
+L 227.609314 63.734236 
+L 153.559212 63.734236 
+z
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: #ba5b28"/>
+   </g>
+   <g id="window-budgets-patch_7">
+    <path d="M 384.965779 294.194051 
+L 459.01588 294.194051 
+L 459.01588 95.614047 
+L 384.965779 95.614047 
+z
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: #ba5b28"/>
+   </g>
+   <g id="window-budgets-patch_8">
+    <path d="M 616.372345 294.194051 
+L 690.422447 294.194051 
+L 690.422447 130.147467 
+L 616.372345 130.147467 
+z
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: #ba5b28"/>
+   </g>
+   <g id="window-budgets-line2d_18">
+    <path d="M 44.103906 97.18251 
+L 721.19952 97.18251 
+" clip-path="url(#window-budgets-pf8a319132e)" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #087f75; stroke-width: 1.5"/>
+   </g>
+   <g id="window-budgets-patch_9">
+    <path d="M 44.103906 294.194051 
+L 44.103906 22.318125 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="window-budgets-patch_10">
+    <path d="M 44.103906 294.194051 
+L 721.19952 294.194051 
+" style="fill: none; stroke: #b5c2cc; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="window-budgets-text_12">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="151.245147" y="56.838832" transform="rotate(-0 151.245147 56.838832)">10/17 misses</text>
+   </g>
+   <g id="window-budgets-text_13">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="382.651713" y="88.718643" transform="rotate(-0 382.651713 88.718643)">4/14 misses</text>
+   </g>
+   <g id="window-budgets-text_14">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #172c3a" x="614.05828" y="123.252063" transform="rotate(-0 614.05828 123.252063)">0/13 misses</text>
+   </g>
+   <g id="window-budgets-text_15">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="44.103906" y="16.318125" transform="rotate(-0 44.103906 16.318125)">Short windows reduce wait but also shrink the compute budget</text>
+   </g>
+   <g id="window-budgets-legend_1">
+    <g id="window-budgets-patch_11">
+     <path d="M 50.403906 289.694051 
+L 183.698125 289.694051 
+Q 185.498125 289.694051 185.498125 287.894051 
+L 185.498125 248.291942 
+Q 185.498125 246.491942 183.698125 246.491942 
+L 50.403906 246.491942 
+Q 48.603906 246.491942 48.603906 248.291942 
+L 48.603906 287.894051 
+Q 48.603906 289.694051 50.403906 289.694051 
+z
+" style="fill: #ffffff; opacity: 0.8; stroke: #cccccc; stroke-linejoin: miter"/>
+    </g>
+    <g id="window-budgets-line2d_19">
+     <path d="M 52.203906 253.780536 
+L 61.203906 253.780536 
+L 70.203906 253.780536 
+" style="fill: none; stroke-dasharray: 5.55,2.4; stroke-dashoffset: 0; stroke: #087f75; stroke-width: 1.5"/>
+    </g>
+    <g id="window-budgets-text_16">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="77.403906" y="256.930536" transform="rotate(-0 77.403906 256.930536)">Playback deadline</text>
+    </g>
+    <g id="window-budgets-patch_12">
+     <path d="M 52.203906 270.431239 
+L 70.203906 270.431239 
+L 70.203906 264.131239 
+L 52.203906 264.131239 
+z
+" style="fill: #2563ad"/>
+    </g>
+    <g id="window-budgets-text_17">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="77.403906" y="270.431239" transform="rotate(-0 77.403906 270.431239)">Mean producer / media</text>
+    </g>
+    <g id="window-budgets-patch_13">
+     <path d="M 52.203906 283.931942 
+L 70.203906 283.931942 
+L 70.203906 277.631942 
+L 52.203906 277.631942 
+z
+" style="fill: #ba5b28"/>
+    </g>
+    <g id="window-budgets-text_18">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #172c3a" x="77.403906" y="283.931942" transform="rotate(-0 77.403906 283.931942)">P95 producer / media</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="window-budgets-pf8a319132e">
+   <rect x="44.103906" y="22.318125" width="677.095614" height="271.875926"/>
+  </clipPath>
+ </defs>
+</svg>
+<figcaption>Short-window experiments normalized to their own playback deadline</figcaption></figure>
+<p>The shorter text budget also split one tea name across two clips; an energy-based boundary proxy measured a roughly 1.385 s gap. One inspected 56-frame speech frame contained unwanted subtitles despite passing coarse quality checks. These failures explain why a shorter generation window is not automatically a better conversational experience.</p>
+<p>The geometry is quantized: the supported experimental windows follow <code>17n+5</code>, with latent temporal extent <code>5n+2</code>. An exact two-second crop is not equivalent to a valid shorter continuation unless the latent and audio clocks are advanced consistently. The current service keeps a fixed window length within a logical session.</p>
+<h2 id="11-audio-fidelity-continuity-and-removal-of-unnecessary-dependencies">11. Audio fidelity, continuity and removal of unnecessary dependencies</h2>
+<h3 id="11-1-what-the-audio-investigation-ruled-out">11.1 What the audio investigation ruled out</h3>
+<p>Extra speech appeared in original FP32 PCM before broadcast AAC. Seven recorded failures were replayed with the same prompt, seed, reference and preceding accepted raw AV tail; baseline PCM matched the live PCM bit for bit. Replacing quantized projections and Sage with original BF16 did not remove the three larger reproduced errors.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Paired audio diagnosis</th>
+<th style="text-align:right">Median HTTP generation</th>
+<th>Main extra-speech failures</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BF16 first step, then MXFP8; BF16 first attention, then Sage</td>
+<td style="text-align:right">4.677 s</td>
+<td>Four identified cases remained</td>
+</tr>
+<tr>
+<td>All BF16 projections, mixed attention</td>
+<td style="text-align:right">6.529 s</td>
+<td>Three larger cases remained</td>
+</tr>
+<tr>
+<td>Mixed projections, all BF16 attention</td>
+<td style="text-align:right">4.872 s</td>
+<td>Three larger cases remained</td>
+</tr>
+<tr>
+<td>All BF16 projections and attention</td>
+<td style="text-align:right">6.541 s</td>
+<td>Three larger cases remained</td>
+</tr>
+</tbody>
+</table></div>
+<p>This justified investigating conditioning and prompt leakage instead of removing every performance optimization as an audio fix. It did not rule out all effects of distillation or precision on voice quality.</p>
+<h3 id="11-2-why-per-line-tts-references-were-not-kept-as-a-requirement">11.2 Why per-line TTS references were not kept as a requirement</h3>
+<p>Matched reference waveforms helped selected failure cases, and removing one leaked instruction helped a causal replay. A wider 50-spoken-clip regression found no comparable extra utterance under that experiment's combined reference/prompt policy. But a later online mixed run required 176.539 s of producer work for 158.875 s of media, a ratio of 1.111. Prefetch reduced direct waiting while synthesis could still contend for GPU execution.</p>
+<p>The operator then requested trying voice description alone and preferred the observed result. In the selected prompt-only mode, there is no reference synthesis, manifest lookup or external audio block on the per-answer path. The native joint model still generates speech and lip motion together. This simplifies scheduling and avoids reference-content leakage, while transferring responsibility for stable timbre and delivery back to model conditioning.</p>
+<p>The initial three-clip prompt-only sample had no recognized extra spoken material, but ASR, pitch and energy proxies did not establish stable speaker identity or perfect pronunciation. This is an accepted demo direction with known limits, not a proof of voice consistency over hours.</p>
+<h3 id="11-3-what-is-currently-done-to-preserve-the-waveform">11.3 What is currently done to preserve the waveform</h3>
+<ul>
+<li>Keep the audio VAE in FP32 and preserve the generated float PCM sidecar.</li>
+<li>Feed original PCM to the relay instead of decoding and re-encoding the backend AAC as the source.</li>
+<li>Use one final broadcast AAC encode at 192 kb/s after resampling for the 48 kHz relay clock.</li>
+<li>Keep video and audio on an accumulated sample/frame clock; do not add an assumed five seconds at every boundary.</li>
+<li>Preserve native ambient/action sound in quiet segments; these are generated sounds, not microphone recordings.</li>
+<li>Maintain the same answer and voice instructions across speech segments, with phrase-aware text budgets and no forced conversational ending at every five-second boundary.</li>
+<li>Treat singing as a distinct delivery mode with melodic instructions and native accompaniment only when requested.</li>
+</ul>
+<p>The backend can still emit an AAC-bearing MP4 for request compatibility and preview. The relay's fidelity improvement is that it consumes verified original PCM, not that no AAC file exists anywhere in the system. Audibility checks detect missing/near-silent speech; they do not prove intelligibility, correct lyrics, singing quality or lip sync.</p>
+<h2 id="12-continuity-and-the-quality-reliability-cost-of-the-demo">12. Continuity and the quality/reliability cost of the demo</h2>
+<p>Motion context is raw generated audiovisual state, not repeated MP4 decoding and re-encoding. The controller saves accepted video/audio tails, checks their shape, clock and hashes, and restores a new backend branch from the accepted tail when needed. The next video prefix is checked for exact equality with the expected retained latent prefix. A decoded-frame seam check catches gross boundary discontinuity.</p>
+<p>Window-relative position encoding bounds the local content-time coordinate. The absolute media clock still advances to support correct playback and audio alignment. Rotary position is not a frequency that must numerically explode with the number of broadcast hours; however, bounded coordinates do not solve error accumulation in the generated content.</p>
+<p>The live screen checks full decode validity and samples first/middle/last-frame luminance, chroma, saturation, texture and growing black bands against a reviewed anchor. It permits at most one same-parent retry. Rejected output is not published or adopted as accepted context. If both attempts fail, production stops. The old session's clip-872 brightness rejection demonstrates this policy in actual operation.</p>
+<p>This is a conservative screening layer, not a face or world-state verifier. It can miss incorrect subtitles, repeated actions, impossible mirror reflections or a disappearing prop. It can also reject an intentional change in clothing/background because global color statistics changed. Private scene diagnostics retain those warnings and are not a license to weaken the production gate.</p>
+<p>Two identical clean reference blocks improved one sampled long chain's appearance/continuity but increased compute. Exact caching was selected to reduce that cost while retaining the conditioning. Periodic hard resets were not used as a hidden cure because the operator explicitly required one camera and continuous movement.</p>
+<p>A one-clip buffer also makes quality retries more visible. A historical 7.352 s retried request caused a 2.458 s waiting interval. The current zero-underrun snapshot does not erase that failure mode.</p>
+<h2 id="13-recorded-optimization-history-ledger">13. Recorded optimization-history ledger</h2>
+<p>The ledger groups related work so that repeated campaigns are not counted as independent additive improvements. Dates identify the retained experiment families. The <a href="history.html">full historical appendix</a> includes the early 653.838-second dense-H3 baseline, every stage of that historical trajectory, and all indexed native experiment families and avatar documents. A separate machine-readable inventory records documentation hashes and evidence status. This is all locatable history in the stated workspace scope, not a claim to recover deleted runs. “Retained” means the relevant current mechanism is present; VSA-specific details may not transfer to Ref2VA.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Period / family</th>
+<th>Change and measured outcome</th>
+<th>Final interpretation for the current demo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Early dense H3 serving</td>
+<td>AdaLN reuse, sequence parallelism, explicit RDMA, direct layout, GPU byte packing and chunked output</td>
+<td>Architectural foundation; the old 49-forward schedule is not the current four-step task</td>
+</tr>
+<tr>
+<td>FastH3 model change</td>
+<td>Four-step student and VSA replace the base trajectory/attention work</td>
+<td>Historical long-clip route; model/attention changes are not lossless serving gains</td>
+</tr>
+<tr>
+<td>Sep 10–11 communication overlap</td>
+<td>QK/V overlap, O pipeline, gate overlap, view cleanup, early-Q/coarse work</td>
+<td>Matched means 25.761→25.135; 25.118→24.340; 24.365→24.012 s in separate rounds; no single newly measured combined curve</td>
+</tr>
+<tr>
+<td>Historical E4M3 wire + TAEH3 branch</td>
+<td>Reached a historical 14.561 s endpoint</td>
+<td>Excluded from the accepted baseline after quality rejection; BF16 wire and native video VAE retained later</td>
+</tr>
+<tr>
+<td>Sep 14 MXFP8 projection path</td>
+<td>Compare blockwise FP8 and MXFP8; preserve original non-target precision and BF16 wire</td>
+<td>Approximate arithmetic choice; do not attribute changed surrounding schedules to quantization alone</td>
+</tr>
+<tr>
+<td>Persistent RDMA</td>
+<td>17.9214→17.5780 s mean, five requests/arm</td>
+<td>Exact relative to the selected MXFP8 baseline; retained registration trades memory for lower setup work</td>
+</tr>
+<tr>
+<td>SwiGLU/FC2 packing fusion</td>
+<td>About 130 ms complete-request reduction; payload/scale/output byte checks</td>
+<td>Retained for current MXFP8 FC2; LUT variant gave no extra benefit</td>
+</tr>
+<tr>
+<td>VAE gather overlap</td>
+<td>17.4510→17.4168 s historical means</td>
+<td>Small observed change; later isolated early-gather comparisons did not establish a universal gain</td>
+</tr>
+<tr>
+<td>VAE INT8 / MXFP8 experiments</td>
+<td>INT8 ConvRot candidate 17.4168→16.0726 s; later MXFP8 VAE base 15.8322 s</td>
+<td>Historical quality/performance candidates; current video decoder uses NVFP4</td>
+</tr>
+<tr>
+<td>CAKE descriptor specialization</td>
+<td>15.8322→15.6370 s in the audited long-clip progression</td>
+<td>Grid-constant/TMA optimization; exactness relative to its parent checked</td>
+</tr>
+<tr>
+<td>Combined QK/V split + VAE batching + AV overlap</td>
+<td>Qualified complete-request mean 15.1336 s</td>
+<td>Combined gain, not separately attributable; VSA split flags are off in current Ref2VA</td>
+</tr>
+<tr>
+<td>O producer lookahead</td>
+<td>15.1336→14.9692 s, five formal requests all below 15 s</td>
+<td>Qualified real-time long-clip milestone; retains output precision</td>
+</tr>
+<tr>
+<td>NVFP4 video VAE</td>
+<td>Single-request 14.973→14.444 s combined result; native audio PCM unchanged</td>
+<td>Deliberate video approximation; early gather alone contributed only a small observed difference</td>
+</tr>
+<tr>
+<td>Eager DiT scaling</td>
+<td>1/2/4/8 GPU means 89.629/58.249/28.321/16.072 s; matching final latents</td>
+<td>DiT-only synthetic conditioning; communication routes also differ; not the fully optimized serving path</td>
+</tr>
+<tr>
+<td>Tile-aware lowp QKV communication</td>
+<td>Real-layer module improvement about 11%, full request 14.442→14.869 s</td>
+<td>Rejected: slower complete request and changed video/audio; keep BF16 wire</td>
+</tr>
+<tr>
+<td>V/QKV host-gap experiments</td>
+<td>V-barrier-to-pack median 177.185→19.584 µs; full request 13.688→13.710 s</td>
+<td>Local scheduling improvement did not establish E2E benefit; not credited as a speedup</td>
+</tr>
+<tr>
+<td>Native O consumer Graph microbenchmark</td>
+<td>Four O chunks 4.801→4.710 ms in a synthetic eight-rank test</td>
+<td>Mechanism evidence; full-model qualification handled separately</td>
+</tr>
+<tr>
+<td>First-step quality protection</td>
+<td>Long clip 13.545 s fast vs 15.255 s BF16-first; O-only BF16 13.934 s</td>
+<td>Quality frontier, not a free optimization; full first-step protection crossed the 15 s deadline</td>
+</tr>
+<tr>
+<td>Exact VAE constant cache + early AAC</td>
+<td>Config A 15.240→15.044 s; fast path 13.551→13.304 s</td>
+<td>Byte-equivalent output in tested pairs; overlapping output costs became worth optimizing</td>
+</tr>
+<tr>
+<td>GPU blend/RGB fusion</td>
+<td>13.334→13.261 s median; matched MP4/PCM</td>
+<td>Retained; component speedup much larger than request speedup</td>
+</tr>
+<tr>
+<td>Encoder GPU-output residency</td>
+<td>13.334→13.358 s median in the same campaign</td>
+<td>Removed redundant transfers but no demonstrated request acceleration</td>
+</tr>
+<tr>
+<td>Tiled O producer / full consumer Graph</td>
+<td>13.253→13.120→13.094 s long-clip medians</td>
+<td>Producer gain supported; 26 ms extra Graph difference not independently stable; VSA-dependent integration</td>
+</tr>
+<tr>
+<td>Chunked post-attention residual/norm</td>
+<td>13.117→13.103/13.102 s medians</td>
+<td>Kept off: overlapping ranges, about 0.11% difference, no robust gain</td>
+</tr>
+<tr>
+<td>Prepared norm submission</td>
+<td>13.115→13.079/13.090 s medians; CPU enqueue also reduced</td>
+<td>Disabled: three-sample ranges overlap; no stable full-request gain established</td>
+</tr>
+<tr>
+<td>Split Q/K with original first step</td>
+<td>15.255→15.303 s with copy, 15.253 s without copy; byte-equivalent</td>
+<td>57.04% K-GEMM overlap did not establish E2E acceleration; candidate only</td>
+</tr>
+<tr>
+<td>Offline 2× reconstruction research</td>
+<td>H3 latent-only 18.20–20.61 s; refine about 1850 s; SeedVR2 INT8 233.56–242.23 s</td>
+<td>Two scenes and different GPU counts/boundaries; none qualifies as current live postprocessing</td>
+</tr>
+<tr>
+<td>OpenVDN eight-step continuation</td>
+<td>5/22-frame context medians 23.219/25.208 s for roughly 15 s windows</td>
+<td>Did not meet real time; not the selected demo model</td>
+</tr>
+<tr>
+<td>VDN gather/scan/factor work</td>
+<td>Exact window gather and scan Graph microbenchmarks; one faster solve failed numerical limits</td>
+<td>Research evidence only; cannot be counted as current H3 speedup</td>
+</tr>
+<tr>
+<td>Ref2VA five-second motion-context comparison</td>
+<td>Five-frame context reduced work relative to 22-frame trials; warm finite measurements retained</td>
+<td>Selected shorter context; stability must be checked separately from latency</td>
+</tr>
+<tr>
+<td>First-step BF16 long-run test</td>
+<td>3.888→4.492 s medians; degradation appeared later but returned</td>
+<td>Useful mitigation, not a long-run quality solution</td>
+</tr>
+<tr>
+<td>1088 weight residency and BF16 rollback</td>
+<td>Transfers removed but 5.611→5.704 s; all-BF16 variants slower</td>
+<td>Reverted to resident MXFP8; larger-resolution target not achieved by this change</td>
+</tr>
+<tr>
+<td>Raw video prefix and accepted-tail rollback</td>
+<td>Exact prefix/seam checks and same-parent retry</td>
+<td>Retained; prevents bad candidate adoption and discontinuous retry resets</td>
+</tr>
+<tr>
+<td>Original PCM relay</td>
+<td>Avoid AAC-generation loss on the relay input</td>
+<td>Retained; does not cure extra words already generated in PCM</td>
+</tr>
+<tr>
+<td>Shared output validation decode</td>
+<td>5.044→4.774 s matched short-clip median</td>
+<td>Exact application work reduction; retained</td>
+</tr>
+<tr>
+<td>Exact reference/conditioning reuse</td>
+<td>Four pairs and three-action OFF/ON/OFF equality; lower preparation scopes</td>
+<td>Retained with bounded cache and distributed agreement</td>
+</tr>
+<tr>
+<td>Local small text model / direct actions</td>
+<td>Subsecond planning in small tests; supported commands bypass model</td>
+<td>Retained; generation and queueing still dominate response onset</td>
+</tr>
+<tr>
+<td>All-step Sage/MXFP8 live switch</td>
+<td>Historical idle 4.575→3.857 s</td>
+<td>Explicit temporary lossy choice to regain headroom</td>
+</tr>
+<tr>
+<td>Prompt-only voice</td>
+<td>Remove per-line reference synthesis and reference blocks</td>
+<td>Selected after demo review; voice consistency still needs continued validation</td>
+</tr>
+<tr>
+<td>One-clip lookahead</td>
+<td>Historical ready-to-local-playback median 1.242 s</td>
+<td>Retained; lower delay with less retry reserve</td>
+</tr>
+<tr>
+<td>56/73-frame trials</td>
+<td>Mixed speech deadlines and quality issues</td>
+<td>Implemented experimentally; 124-frame production default retained</td>
+</tr>
+<tr>
+<td>Action-specific prompts and shared world harness</td>
+<td>One-cycle gestures; book/food/cloth/water/mirror/window/wardrobe state research</td>
+<td>Simple public gestures enabled; complex recipes remain selectively unqualified</td>
+</tr>
+<tr>
+<td>Fresh-session recovery</td>
+<td>New opening after terminal drift failure</td>
+<td>Explicit operator restart; not evidence of seamless autonomous recovery</td>
+</tr>
+</tbody>
+</table></div>
+<p>These rows should not be summed. Some are overlapping implementations, some change arithmetic, some are different prompts/resolutions, and some deliberately record regressions. The historical 653.838 s dense-H3 baseline and rejected approximate branches are preserved in the source inventory rather than presented as a “current 160× speedup” claim.</p>
+<h2 id="14-nsight-analysis-reproducible-scope-and-interpretation">14. Nsight analysis: reproducible scope and interpretation</h2>
+<p>This report <strong>re-analyzes eight preserved SQLite trace exports on CPU</strong>. It did not interrupt the restarted broadcast to claim a new same-configuration CUDA capture. The current production timing table comes from current receipts; the detailed internal GPU/CPU mechanisms below come from explicitly identified historical captures.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Capture family</th>
+<th style="text-align:right">Captures</th>
+<th>Configuration distinction</th>
+<th>Main question answered</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>15-second Config A</td>
+<td style="text-align:right">1</td>
+<td>First BF16 step, later MXFP8/Sage; VSA; 1280×704</td>
+<td>Where the long-clip pipeline spent time; decoder/output overlap</td>
+</tr>
+<tr>
+<td>1088 projection residency</td>
+<td style="text-align:right">2</td>
+<td>BF16-first, old staging versus resident BF16 plus online packing</td>
+<td>Did removing weight H2D shorten the critical path?</td>
+</tr>
+<tr>
+<td>1088 all-BF16 projection diagnostic</td>
+<td style="text-align:right">1</td>
+<td>Resident BF16 projections</td>
+<td>What compute cost replaces the eliminated quantized path?</td>
+</tr>
+<tr>
+<td>Five-second reference-cache comparison</td>
+<td style="text-align:right">4</td>
+<td>One/two reference blocks, hit/miss; BF16-first</td>
+<td>Which preparation work can be reused for idle and fresh dialogue?</td>
+</tr>
+</tbody>
+</table></div>
+<p>The included analyzer extracts CPU NVTX range distributions, per-device kernel spans, merged kernel interval coverage, top kernel work and copy bytes/counts. Each SQLite export has a file hash. It uses only read-only SQLite connections and can be rerun while the service stays live. <a href="analyze_traces.py">Analyzer</a> · <a href="evidence/nsys-reanalysis.json">JSON</a> · <a href="evidence/nsys-reanalysis.csv">CSV</a></p>
+<p>Important interpretation rules:</p>
+<ol>
+<li><strong>Do not sum the eight GPUs' simultaneous work as request latency.</strong> Kernel sums and memcpy sums are useful workload measurements, not a serial wall clock.</li>
+<li><strong>Do not add parent and child NVTX ranges.</strong> DiT contains its four steps; decode contains video/audio/output work that can overlap.</li>
+<li><strong>A long NCCL or RDMA barrier can be a wait for a late rank.</strong> It is not necessarily slow wire transmission. The historical video-VAE entry showed other ranks waiting roughly 59 ms while rank zero submitted audio decode.</li>
+<li><strong>A GPU timeline gap is not proof that the NIC is idle.</strong> RDMA progress can occur outside CUDA kernel intervals.</li>
+<li><strong>Kernel-interval union is not SM utilization.</strong> A communication kernel may occupy a timeline while waiting rather than performing tensor work.</li>
+<li><strong>Profiled request duration is not the unprofiled benchmark.</strong> Profiler startup, event recording and instrumentation can alter scheduling.</li>
+<li><strong>Short microbenchmarks do not certify end-to-end benefit.</strong> The V-pack host-gap example is a concrete negative result.</li>
+<li><strong>Check capture completeness and configuration.</strong> A VSA trace cannot be relabeled as current dense Ref2VA just because some kernel names match.</li>
+</ol>
+<p>A prior cache capture also left profiler injection variables in subprocess environments; a later ffprobe failed with a missing profiler session despite valid audio. That failure was resolved with an unprofiled backend and preserved as a failed experiment, not discarded as a slow sample.</p>
+<h3 id="reading-the-current-bottleneck-responsibly">Reading the current bottleneck responsibly</h3>
+<p>Current receipts place about 97% of mean producer time inside the backend request. Historical five-second traces identify DiT as the dominant range, with preparation significant on new text/reference conditions and video reconstruction the next material stage. Audio VAE is about 24 ms in the cited cache capture. This supports prioritizing current dense DiT and conditioning work over an audio-decoder precision rollback for speed.</p>
+<p>It does <strong>not</strong> provide an exact current all-step-fast DiT/attention/GEMM/communication percentage. A fresh current-configuration profile is the next measurement needed before promising a further kernel-level gain. The report avoids repurposing a BF16-first 1088 profile as the current 960 all-fast breakdown.</p>
+<h2 id="15-remaining-work-ordered-by-value-to-this-demo">15. Remaining work, ordered by value to this demo</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Work</th>
+<th>Why this follows from evidence</th>
+<th>Acceptance requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Long-run quality and explicit recovery policy</td>
+<td>The last stream stopped on brightness drift despite sufficient throughput</td>
+<td>Longer continuous reading/dialogue runs; retain failures; review face, lighting, props and raw AV; no hidden hard reset</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Measure actual first-response onset</td>
+<td>Ready time is not viewer experience; queueing and in-clip gaze/speech onset remain material</td>
+<td>Correlate received messages with local and viewer-recorded first meaningful response</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Current dense Ref2VA DiT profile</td>
+<td>Historical VSA opportunities do not automatically apply; backend dominates</td>
+<td>Fresh isolated capture and matching unprofiled requests; same prompt, tail, precision and geometry</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Keep reducing exact conditioning and data handling work</td>
+<td>New speech still misses text conditioning; unchanged image work can be reused</td>
+<td>Exact cache keys/invalidation, distributed agreement, latent and full-output comparisons</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Adaptive buffering with an explicit latency budget</td>
+<td>One clip lowers delay but retries can exhaust it</td>
+<td>Measure underruns and response distribution together; no hidden growing queue</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Better speech continuity evaluation</td>
+<td>ASR can miss unnatural prosody and clipped phonemes</td>
+<td>Listening, boundary alignment, timbre, extra/missing speech and lip-sync review</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Capability-specific visual qualification</td>
+<td>State prediction does not guarantee action execution</td>
+<td>Repeated requests, cancellation, interruption and persistent object state; retain negative examples</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Revisit 73/56 frames only after backend headroom improves</td>
+<td>56-frame mixed workload currently loses throughput; 73-frame speech has little reserve</td>
+<td>Sustained mixed speech/action run with comfortable P95 margin and no phrase fragmentation</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Higher resolution after deadline/quality stability</td>
+<td>1088 residency alone failed; frame count and image area both cost compute</td>
+<td>Unchanged-policy resolution comparison, paired quality review and full producer deadline statistics</td>
+</tr>
+</tbody>
+</table></div>
+<p>The credible demo claim is that an open H3-based audiovisual generator can sustain interactive, bounded-window live production on this eight-GPU system under the measured conditions, with a stateful application and explicit quality gates. The evidence does not yet support uninterrupted 24-hour coherence, unrestricted reliable object manipulation, or a universal low-latency viewer SLO.</p>
+<h2 id="16-evidence-package-and-reproducibility">16. Evidence package and reproducibility</h2>
+<ul>
+<li><a href="evidence/current-live-observation.json">Current live production observation</a>: aggregate timing only; no viewer identities or message text.</li>
+<li><a href="evidence/extended-live-observation.json">Extended production observation</a>: 456 accepted continuations, including later deadline misses and relay waits.</li>
+<li><a href="evidence/measurements.json">Measurements and selected runtime configuration</a>: unprofiled samples, residency comparisons, cache profile ranges, short-window results.</li>
+<li><a href="evidence/nsys-reanalysis.json">Nsight SQLite reanalysis</a> and <a href="evidence/nsys-reanalysis.csv">CSV ranges</a>: eight retained captures; exact hashes and per-device detail.</li>
+<li><a href="evidence/source-manifest.json">Source manifest</a>: local experiment documents and measurement files, with hashes and portable workspace placeholders.</li>
+<li><a href="evidence/history-inventory.json">Optimization history inventory</a>: discovered experiment families and their retained records.</li>
+<li><a href="evidence/backend-dispatch-snapshot.json">Backend execution counters</a>: accumulated eight-rank projection/fusion dispatch, explicitly not an isolated request benchmark.</li>
+<li><a href="history.html">Historical appendix</a>: early stages, rollbacks, negative results and every indexed experiment family.</li>
+<li><a href="evidence/software-versions.json">Software versions</a>: environment metadata, with source-overlay caveats.</li>
+<li><a href="evidence/implementation-manifest.json">Selected implementation hashes</a>: application control, model fusion and projection paths.</li>
+<li><a href="analyze_traces.py">Trace analyzer</a>, <a href="build_report.py">report builder</a>, and <a href="build_history.py">history indexer</a>: CPU-only reproducibility tools.</li>
+</ul>
+<pre><code class="language-bash"># Read preserved SQLite exports; does not start a GPU request.
+python analyze_traces.py --workspace /path/to/workspace \
+  --temporary-root /path/to/retained-tmp --output evidence/nsys-reanalysis.json
+
+# Rebuild charts and self-contained HTML from the bundled evidence.
+python build_report.py
+
+# When a new offline capture is explicitly scheduled, keep its timing separate.
+# Export a recorded report (command shown for reproduction, not run on live):
+nsys export --type sqlite --output request.sqlite request.nsys-rep
+nsys stats --report nvtx_sum,cuda_gpu_kern_sum,cuda_gpu_mem_time_sum request.nsys-rep
+</code></pre>
+<p>The local analyzer uses the retained paths recorded in its trace catalog. To reproduce on another machine, supply the corresponding artifacts at updated paths and verify their hashes. Raw traces and model weights are not embedded in this lightweight report bundle. A directory named “prepared,” a configuration flag, or a successful HTTP response alone is never used as proof that a proposed optimization ran or that an action succeeded.</p>
+<div class="footer">Generated from preserved local measurements. No external fonts, scripts, analytics or GPU work are required to open this report. <button onclick="window.print()">Print / save PDF</button></div></main></div><script>
+const query=document.getElementById('toc-search');query.addEventListener('input',()=>{for(const a of document.querySelectorAll('nav a'))a.hidden=!a.textContent.toLowerCase().includes(query.value.toLowerCase());});
+const observer=new IntersectionObserver(entries=>{for(const e of entries)if(e.isIntersecting){for(const a of document.querySelectorAll('nav a'))a.classList.toggle('active',a.hash==='#'+e.target.id)}},{rootMargin:'-10% 0px -75% 0px'});document.querySelectorAll('main h2').forEach(h=>observer.observe(h));
+</script></body></html>

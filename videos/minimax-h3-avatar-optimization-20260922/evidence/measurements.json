@@ -1,0 +1,1399 @@
+{
+  "scope": "Evidence for the avatar-demo engineering report, not one controlled cumulative benchmark.",
+  "long_form_aac": {
+    "baseline_seconds": [
+      13.507,
+      13.551,
+      13.578
+    ],
+    "candidate_seconds": [
+      13.281,
+      13.304,
+      13.348
+    ],
+    "mp4_byteexact": true
+  },
+  "long_form_output": [
+    {
+      "name": "baseline",
+      "samples_seconds": [
+        13.303,
+        13.334,
+        13.362
+      ],
+      "median_seconds": 13.334,
+      "all_four_mp4_byteexact_to_contemporary_baseline": true
+    },
+    {
+      "name": "encoder_resident",
+      "samples_seconds": [
+        13.321,
+        13.358,
+        13.377
+      ],
+      "median_seconds": 13.358,
+      "all_four_mp4_byteexact_to_contemporary_baseline": true
+    },
+    {
+      "name": "output_fused",
+      "samples_seconds": [
+        13.212,
+        13.261,
+        13.336
+      ],
+      "median_seconds": 13.261,
+      "all_four_mp4_byteexact_to_contemporary_baseline": true
+    }
+  ],
+  "weight_residency": {
+    "baseline": {
+      "samples_seconds": [
+        5.736888644983992,
+        5.588657909072936,
+        5.591931327944621,
+        5.598552006995305,
+        5.6219647149555385,
+        5.606927826069295,
+        5.612436688970774,
+        5.610957886092365,
+        5.622661005007103
+      ],
+      "median_seconds": 5.610957886092365,
+      "nvtx_cpu_phases": {
+        "h3.profile.encoder": {
+          "median_cpu_ms": 279.2926895,
+          "min_cpu_ms": 263.316208,
+          "max_cpu_ms": 281.461678,
+          "count": 8
+        },
+        "h3.profile.dit": {
+          "median_cpu_ms": 4312.6284350000005,
+          "min_cpu_ms": 4312.278954,
+          "max_cpu_ms": 4312.872926,
+          "count": 8
+        },
+        "h3.profile.dit.step_01": {
+          "median_cpu_ms": 1544.9519540000001,
+          "min_cpu_ms": 1541.071575,
+          "max_cpu_ms": 1546.857495,
+          "count": 8
+        },
+        "h3.profile.dit.step_02": {
+          "median_cpu_ms": 913.8789804999999,
+          "min_cpu_ms": 913.693777,
+          "max_cpu_ms": 913.944505,
+          "count": 8
+        },
+        "h3.profile.dit.step_03": {
+          "median_cpu_ms": 910.3864375,
+          "min_cpu_ms": 910.23536,
+          "max_cpu_ms": 910.420827,
+          "count": 8
+        },
+        "h3.profile.dit.step_04": {
+          "median_cpu_ms": 911.1555430000001,
+          "min_cpu_ms": 911.02082,
+          "max_cpu_ms": 911.282727,
+          "count": 8
+        },
+        "h3.profile.decode": {
+          "median_cpu_ms": 623.323627,
+          "min_cpu_ms": 623.214668,
+          "max_cpu_ms": 644.200945,
+          "count": 8
+        },
+        "h3.profile.video_vae": {
+          "median_cpu_ms": 623.257623,
+          "min_cpu_ms": 600.630871,
+          "max_cpu_ms": 623.476165,
+          "count": 8
+        }
+      },
+      "H2D": [
+        {
+          "device": 0,
+          "calls": 299,
+          "bytes": 38576943506,
+          "gpu_ms": 1415.800726
+        },
+        {
+          "device": 1,
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_ms": 1433.157179
+        },
+        {
+          "device": 2,
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_ms": 1422.089677
+        },
+        {
+          "device": 3,
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_ms": 1421.023559
+        },
+        {
+          "device": 4,
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_ms": 1429.256407
+        },
+        {
+          "device": 5,
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_ms": 1427.903887
+        },
+        {
+          "device": 6,
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_ms": 1435.909997
+        },
+        {
+          "device": 7,
+          "calls": 266,
+          "bytes": 38547681074,
+          "gpu_ms": 1428.365368
+        }
+      ]
+    },
+    "resident": {
+      "samples_seconds": [
+        5.814679977018386,
+        5.681768337963149,
+        5.724250498926267,
+        5.690608564997092,
+        5.70361557113938,
+        5.704374687047675,
+        5.70800922694616,
+        5.711870703147724,
+        5.653057295130566
+      ],
+      "median_seconds": 5.704374687047675,
+      "nvtx_cpu_phases": {
+        "h3.profile.encoder": {
+          "median_cpu_ms": 277.1916125,
+          "min_cpu_ms": 259.752471,
+          "max_cpu_ms": 280.44441,
+          "count": 8
+        },
+        "h3.profile.dit": {
+          "median_cpu_ms": 4349.857703,
+          "min_cpu_ms": 4349.722989,
+          "max_cpu_ms": 4350.079545,
+          "count": 8
+        },
+        "h3.profile.dit.step_01": {
+          "median_cpu_ms": 1464.5169525000001,
+          "min_cpu_ms": 1459.567703,
+          "max_cpu_ms": 1468.643153,
+          "count": 8
+        },
+        "h3.profile.dit.step_02": {
+          "median_cpu_ms": 952.3570275,
+          "min_cpu_ms": 952.311178,
+          "max_cpu_ms": 952.441336,
+          "count": 8
+        },
+        "h3.profile.dit.step_03": {
+          "median_cpu_ms": 950.035848,
+          "min_cpu_ms": 949.988529,
+          "max_cpu_ms": 950.123606,
+          "count": 8
+        },
+        "h3.profile.dit.step_04": {
+          "median_cpu_ms": 951.626262,
+          "min_cpu_ms": 951.519948,
+          "max_cpu_ms": 951.819915,
+          "count": 8
+        },
+        "h3.profile.decode": {
+          "median_cpu_ms": 615.5652895,
+          "min_cpu_ms": 615.469761,
+          "max_cpu_ms": 635.380139,
+          "count": 8
+        },
+        "h3.profile.video_vae": {
+          "median_cpu_ms": 615.5015605,
+          "min_cpu_ms": 593.608289,
+          "max_cpu_ms": 615.626379,
+          "count": 8
+        }
+      },
+      "H2D": [
+        {
+          "device": 0,
+          "calls": 99,
+          "bytes": 41775506,
+          "gpu_ms": 1.149318
+        },
+        {
+          "device": 1,
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_ms": 0.532194
+        },
+        {
+          "device": 2,
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_ms": 0.513345
+        },
+        {
+          "device": 3,
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_ms": 0.450625
+        },
+        {
+          "device": 4,
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_ms": 0.31133
+        },
+        {
+          "device": 5,
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_ms": 0.486016
+        },
+        {
+          "device": 6,
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_ms": 0.379682
+        },
+        {
+          "device": 7,
+          "calls": 66,
+          "bytes": 12513074,
+          "gpu_ms": 0.408929
+        }
+      ]
+    }
+  },
+  "weight_residency_equal_mp4": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "short_windows": {
+    "scope": "Private serial generation probes; no Twitch response-latency measurement",
+    "geometry": "960x544, 24fps, overlap=5, four Sage/MXFP8 steps, prompt-only native audio",
+    "warmup": "First three clips per candidate excluded from formal summaries, retained below",
+    "cpu_tests": {
+      "application": 86,
+      "native": 15
+    },
+    "limitations": [
+      "Small samples with different numbers of speech windows for the same answer",
+      "Repeated reading prompts benefit from cache; dialogue prompts are mostly new",
+      "No ten-minute short-window playback or human listening qualification",
+      "ASR and waveform energy do not establish naturalness, identity, or lip sync"
+    ],
+    "candidates": [
+      {
+        "window_frames": 56,
+        "content_seconds": 2.125,
+        "timing": {
+          "count": 17,
+          "median": 2.288542144931853,
+          "mean": 2.203972421682385,
+          "p95": 2.4857787841930987,
+          "p99": 2.49874197203666,
+          "maximum": 2.50198276899755,
+          "over_playback_budget": 10,
+          "total_published_seconds": 42.708333333333336,
+          "quality_retries": 0,
+          "failed_generation_in_summary": false
+        },
+        "warmup_seconds": [
+          15.095993892056867,
+          2.6944360248744488,
+          1.8995190518908203
+        ],
+        "phases": {
+          "extended_answer": {
+            "count": 5,
+            "ready_median": 2.29468726599589,
+            "http_median": 2.2106963549740613,
+            "outside_http_median": 0.08346820995211601,
+            "maximum": 2.4614395280368626
+          },
+          "page_turn": {
+            "count": 1,
+            "ready_median": 2.50198276899755,
+            "http_median": 2.4216086140368134,
+            "outside_http_median": 0.08037415496073663,
+            "maximum": 2.50198276899755
+          },
+          "reading": {
+            "count": 7,
+            "ready_median": 1.925298386020586,
+            "http_median": 1.8477452220395207,
+            "outside_http_median": 0.07744796597398818,
+            "maximum": 2.3502505999058485
+          },
+          "return_to_reading": {
+            "count": 2,
+            "ready_median": 2.210240878048353,
+            "http_median": 2.130704353447072,
+            "outside_http_median": 0.07953652460128069,
+            "maximum": 2.481667809188366
+          },
+          "short_answer": {
+            "count": 2,
+            "ready_median": 2.466502517927438,
+            "http_median": 2.381228634971194,
+            "outside_http_median": 0.08527388295624405,
+            "maximum": 2.4817277879919857
+          }
+        },
+        "source_manifest_sha256": "a53e5edb008f3b0b2ffe39feafd6706121e7a8ac0b86f3bd1837c4e40b2c6873",
+        "audio_review": {
+          "scope": "Complete-turn original PCM, CPU Whisper small; not a human listening or speaker-identity verdict",
+          "groups": [
+            {
+              "phase": "short_answer",
+              "expected": "我在读《聊斋志异》。",
+              "recognized": "我在读 潦齋至义",
+              "segments": [
+                {
+                  "index": 9,
+                  "line": "我在读《",
+                  "media_seconds": 2.125,
+                  "signal_start": 1.0,
+                  "signal_end": 1.84,
+                  "clipped_samples": 0,
+                  "next_signal_gap_seconds": 1.165
+                },
+                {
+                  "index": 10,
+                  "line": "聊斋志异》。",
+                  "media_seconds": 2.125,
+                  "signal_start": 0.88,
+                  "signal_end": 1.94,
+                  "clipped_samples": 0,
+                  "boundary": {
+                    "sample_jump_dbfs": -69.22185300535772,
+                    "left_edge_rms_dbfs": -68.96735559984683,
+                    "right_edge_rms_dbfs": -63.29047239605611,
+                    "meaning": "Waveform discontinuity diagnostic; not an audible-click classifier"
+                  }
+                }
+              ],
+              "cer": {
+                "errors": 3,
+                "reference_characters": 7,
+                "cer": 0.42857142857142855,
+                "normalized_expected": "我在读聊斋志异",
+                "normalized_recognized": "我在读潦斋至义",
+                "meaning": "ASR-based content proxy; recognition errors are included"
+              },
+              "phonetic": {
+                "errors": 1,
+                "reference_syllables": 7,
+                "error_rate": 0.14285714285714285,
+                "expected_pinyin": [
+                  "wo3",
+                  "zai4",
+                  "du2",
+                  "liao2",
+                  "zhai1",
+                  "zhi4",
+                  "yi4"
+                ],
+                "recognized_pinyin": [
+                  "wo3",
+                  "zai4",
+                  "du2",
+                  "lao3",
+                  "zhai1",
+                  "zhi4",
+                  "yi4"
+                ],
+                "meaning": "ASR and dictionary pinyin with lexical tones; not direct acoustic pronunciation accuracy"
+              }
+            },
+            {
+              "phase": "extended_answer",
+              "expected": "这壶是桂花乌龙。读书的时候，我喜欢慢慢看，不急着把故事翻完。",
+              "recognized": "这壶是桂花乌龙读书的时候我喜欢慢慢看不急着把故事翻完",
+              "segments": [
+                {
+                  "index": 13,
+                  "line": "这壶是桂花",
+                  "media_seconds": 2.125,
+                  "signal_start": 0.78,
+                  "signal_end": 2.12,
+                  "clipped_samples": 0,
+                  "next_signal_gap_seconds": 1.385
+                },
+                {
+                  "index": 14,
+                  "line": "乌龙。",
+                  "media_seconds": 2.125,
+                  "signal_start": 1.3800000000000001,
+                  "signal_end": 1.9000000000000001,
+                  "clipped_samples": 0,
+                  "boundary": {
+                    "sample_jump_dbfs": -56.33421673699873,
+                    "left_edge_rms_dbfs": -49.20236033830244,
+                    "right_edge_rms_dbfs": -58.042658356111914,
+                    "meaning": "Waveform discontinuity diagnostic; not an audible-click classifier"
+                  },
+                  "next_signal_gap_seconds": 1.145
+                },
+                {
+                  "index": 15,
+                  "line": "读书的时候，",
+                  "media_seconds": 2.125,
+                  "signal_start": 0.92,
+                  "signal_end": 1.96,
+                  "clipped_samples": 0,
+                  "boundary": {
+                    "sample_jump_dbfs": -74.3727109906372,
+                    "left_edge_rms_dbfs": -73.97709498912499,
+                    "right_edge_rms_dbfs": -74.00342299222248,
+                    "meaning": "Waveform discontinuity diagnostic; not an audible-click classifier"
+                  },
+                  "next_signal_gap_seconds": 0.34500000000000003
+                },
+                {
+                  "index": 16,
+                  "line": "我喜欢慢慢看，不",
+                  "media_seconds": 2.125,
+                  "signal_start": 0.18,
+                  "signal_end": 2.12,
+                  "clipped_samples": 0,
+                  "boundary": {
+                    "sample_jump_dbfs": -74.7155809513293,
+                    "left_edge_rms_dbfs": -81.83630771983431,
+                    "right_edge_rms_dbfs": -78.05915575370261,
+                    "meaning": "Waveform discontinuity diagnostic; not an audible-click classifier"
+                  },
+                  "next_signal_gap_seconds": 0.004999999999999893
+                },
+                {
+                  "index": 17,
+                  "line": "急着把故事翻完。",
+                  "media_seconds": 2.125,
+                  "signal_start": 0.0,
+                  "signal_end": 1.1,
+                  "clipped_samples": 0,
+                  "boundary": {
+                    "sample_jump_dbfs": -19.779725136475616,
+                    "left_edge_rms_dbfs": -17.608363378248736,
+                    "right_edge_rms_dbfs": -16.497566888049107,
+                    "meaning": "Waveform discontinuity diagnostic; not an audible-click classifier"
+                  }
+                }
+              ],
+              "cer": {
+                "errors": 0,
+                "reference_characters": 26,
+                "cer": 0.0,
+                "normalized_expected": "这壶是桂花乌龙读书的时候我喜欢慢慢看不急着把故事翻完",
+                "normalized_recognized": "这壶是桂花乌龙读书的时候我喜欢慢慢看不急着把故事翻完",
+                "meaning": "ASR-based content proxy; recognition errors are included"
+              },
+              "phonetic": {
+                "errors": 0,
+                "reference_syllables": 26,
+                "error_rate": 0.0,
+                "expected_pinyin": [
+                  "zhe4",
+                  "hu2",
+                  "shi4",
+                  "gui4",
+                  "hua1",
+                  "wu1",
+                  "long2",
+                  "du2",
+                  "shu1",
+                  "de5",
+                  "shi2",
+                  "hou4",
+                  "wo3",
+                  "xi3",
+                  "huan1",
+                  "man4",
+                  "man4",
+                  "kan4",
+                  "bu4",
+                  "ji2",
+                  "zhe5",
+                  "ba3",
+                  "gu4",
+                  "shi4",
+                  "fan1",
+                  "wan2"
+                ],
+                "recognized_pinyin": [
+                  "zhe4",
+                  "hu2",
+                  "shi4",
+                  "gui4",
+                  "hua1",
+                  "wu1",
+                  "long2",
+                  "du2",
+                  "shu1",
+                  "de5",
+                  "shi2",
+                  "hou4",
+                  "wo3",
+                  "xi3",
+                  "huan1",
+                  "man4",
+                  "man4",
+                  "kan4",
+                  "bu4",
+                  "ji2",
+                  "zhe5",
+                  "ba3",
+                  "gu4",
+                  "shi4",
+                  "fan1",
+                  "wan2"
+                ],
+                "meaning": "ASR and dictionary pinyin with lexical tones; not direct acoustic pronunciation accuracy"
+              }
+            }
+          ]
+        },
+        "qualification": "not_qualified_for_live",
+        "sample_frame_observation": "Unrequested subtitles visible in last speech sample; visual quality gate did not detect them"
+      },
+      {
+        "window_frames": 73,
+        "content_seconds": 2.8333333333333335,
+        "timing": {
+          "count": 14,
+          "median": 2.425279252580367,
+          "mean": 2.552585584793373,
+          "p95": 2.855890286178328,
+          "p99": 2.8580368971498684,
+          "maximum": 2.8585735498927534,
+          "over_playback_budget": 4,
+          "total_published_seconds": 48.375,
+          "quality_retries": 0,
+          "failed_generation_in_summary": false
+        },
+        "warmup_seconds": [
+          2.7623069249093533,
+          2.7448882639873773,
+          2.296427726978436
+        ],
+        "phases": {
+          "extended_answer": {
+            "count": 3,
+            "ready_median": 2.8494863309897482,
+            "http_median": 2.7577397271525115,
+            "outside_http_median": 0.09074886119924486,
+            "maximum": 2.8585735498927534
+          },
+          "page_turn": {
+            "count": 1,
+            "ready_median": 2.78024605801329,
+            "http_median": 2.691408774117008,
+            "outside_http_median": 0.08883728389628232,
+            "maximum": 2.78024605801329
+          },
+          "reading": {
+            "count": 7,
+            "ready_median": 2.3342999659944326,
+            "http_median": 2.2460868989583105,
+            "outside_http_median": 0.08717417507432401,
+            "maximum": 2.4707014760933816
+          },
+          "return_to_reading": {
+            "count": 2,
+            "ready_median": 2.523684878484346,
+            "http_median": 2.4360987015534192,
+            "outside_http_median": 0.08758617693092674,
+            "maximum": 2.7127288260962814
+          },
+          "short_answer": {
+            "count": 1,
+            "ready_median": 2.8544454518705606,
+            "http_median": 2.7582894479855895,
+            "outside_http_median": 0.09615600388497114,
+            "maximum": 2.8544454518705606
+          }
+        },
+        "source_manifest_sha256": "a53e5edb008f3b0b2ffe39feafd6706121e7a8ac0b86f3bd1837c4e40b2c6873",
+        "audio_review": {
+          "scope": "Complete-turn original PCM, CPU Whisper small; not a human listening or speaker-identity verdict",
+          "groups": [
+            {
+              "phase": "short_answer",
+              "expected": "我在读《聊斋志异》。",
+              "recognized": "我在读 聊摘至义",
+              "segments": [
+                {
+                  "index": 9,
+                  "line": "我在读《聊斋志异》。",
+                  "media_seconds": 2.8333333333333335,
+                  "signal_start": 0.26,
+                  "signal_end": 2.68,
+                  "clipped_samples": 0
+                }
+              ],
+              "cer": {
+                "errors": 3,
+                "reference_characters": 7,
+                "cer": 0.42857142857142855,
+                "normalized_expected": "我在读聊斋志异",
+                "normalized_recognized": "我在读聊摘至义",
+                "meaning": "ASR-based content proxy; recognition errors are included"
+              },
+              "phonetic": {
+                "errors": 0,
+                "reference_syllables": 7,
+                "error_rate": 0.0,
+                "expected_pinyin": [
+                  "wo3",
+                  "zai4",
+                  "du2",
+                  "liao2",
+                  "zhai1",
+                  "zhi4",
+                  "yi4"
+                ],
+                "recognized_pinyin": [
+                  "wo3",
+                  "zai4",
+                  "du2",
+                  "liao2",
+                  "zhai1",
+                  "zhi4",
+                  "yi4"
+                ],
+                "meaning": "ASR and dictionary pinyin with lexical tones; not direct acoustic pronunciation accuracy"
+              }
+            },
+            {
+              "phase": "extended_answer",
+              "expected": "这壶是桂花乌龙。读书的时候，我喜欢慢慢看，不急着把故事翻完。",
+              "recognized": "这壶是桂花乌龙读书的时候我喜欢慢慢看不急着把故事翻完",
+              "segments": [
+                {
+                  "index": 12,
+                  "line": "这壶是桂花乌龙。",
+                  "media_seconds": 2.8333333333333335,
+                  "signal_start": 0.32,
+                  "signal_end": 2.68,
+                  "clipped_samples": 0,
+                  "next_signal_gap_seconds": 0.43333333333333335
+                },
+                {
+                  "index": 13,
+                  "line": "读书的时候，我喜欢慢慢",
+                  "media_seconds": 2.8333333333333335,
+                  "signal_start": 0.28,
+                  "signal_end": 2.84,
+                  "clipped_samples": 0,
+                  "boundary": {
+                    "sample_jump_dbfs": -67.47091562359428,
+                    "left_edge_rms_dbfs": -74.7842472205087,
+                    "right_edge_rms_dbfs": -71.88493768691134,
+                    "meaning": "Waveform discontinuity diagnostic; not an audible-click classifier"
+                  },
+                  "next_signal_gap_seconds": -0.0066666666666663765
+                },
+                {
+                  "index": 14,
+                  "line": "看，不急着把故事翻完。",
+                  "media_seconds": 2.8333333333333335,
+                  "signal_start": 0.0,
+                  "signal_end": 2.42,
+                  "clipped_samples": 0,
+                  "boundary": {
+                    "sample_jump_dbfs": -9.39186332039159,
+                    "left_edge_rms_dbfs": -6.833055088522096,
+                    "right_edge_rms_dbfs": -7.8154947922443085,
+                    "meaning": "Waveform discontinuity diagnostic; not an audible-click classifier"
+                  }
+                }
+              ],
+              "cer": {
+                "errors": 0,
+                "reference_characters": 26,
+                "cer": 0.0,
+                "normalized_expected": "这壶是桂花乌龙读书的时候我喜欢慢慢看不急着把故事翻完",
+                "normalized_recognized": "这壶是桂花乌龙读书的时候我喜欢慢慢看不急着把故事翻完",
+                "meaning": "ASR-based content proxy; recognition errors are included"
+              },
+              "phonetic": {
+                "errors": 0,
+                "reference_syllables": 26,
+                "error_rate": 0.0,
+                "expected_pinyin": [
+                  "zhe4",
+                  "hu2",
+                  "shi4",
+                  "gui4",
+                  "hua1",
+                  "wu1",
+                  "long2",
+                  "du2",
+                  "shu1",
+                  "de5",
+                  "shi2",
+                  "hou4",
+                  "wo3",
+                  "xi3",
+                  "huan1",
+                  "man4",
+                  "man4",
+                  "kan4",
+                  "bu4",
+                  "ji2",
+                  "zhe5",
+                  "ba3",
+                  "gu4",
+                  "shi4",
+                  "fan1",
+                  "wan2"
+                ],
+                "recognized_pinyin": [
+                  "zhe4",
+                  "hu2",
+                  "shi4",
+                  "gui4",
+                  "hua1",
+                  "wu1",
+                  "long2",
+                  "du2",
+                  "shu1",
+                  "de5",
+                  "shi2",
+                  "hou4",
+                  "wo3",
+                  "xi3",
+                  "huan1",
+                  "man4",
+                  "man4",
+                  "kan4",
+                  "bu4",
+                  "ji2",
+                  "zhe5",
+                  "ba3",
+                  "gu4",
+                  "shi4",
+                  "fan1",
+                  "wan2"
+                ],
+                "meaning": "ASR and dictionary pinyin with lexical tones; not direct acoustic pronunciation accuracy"
+              }
+            }
+          ]
+        },
+        "qualification": "not_qualified_for_live",
+        "sample_frame_observation": "No subtitle in the inspected last-speech sample; not a whole-video verdict"
+      },
+      {
+        "window_frames": 124,
+        "content_seconds": 4.958333333333333,
+        "timing": {
+          "count": 13,
+          "median": 3.7062881940510124,
+          "mean": 3.8365095172507258,
+          "p95": 4.128680195659399,
+          "p99": 4.167425891198218,
+          "maximum": 4.177112315082923,
+          "over_playback_budget": 0,
+          "total_published_seconds": 79.54166666666666,
+          "quality_retries": 0,
+          "failed_generation_in_summary": false
+        },
+        "warmup_seconds": [
+          4.12205924699083,
+          4.075688830111176,
+          3.668491831049323
+        ],
+        "phases": {
+          "extended_answer": {
+            "count": 2,
+            "ready_median": 4.103354422491975,
+            "http_median": 3.9806318590417504,
+            "outside_http_median": 0.1227225634502247,
+            "maximum": 4.177112315082923
+          },
+          "page_turn": {
+            "count": 1,
+            "ready_median": 4.096392116043717,
+            "http_median": 3.9779565557837486,
+            "outside_http_median": 0.11843556025996804,
+            "maximum": 4.096392116043717
+          },
+          "reading": {
+            "count": 7,
+            "ready_median": 3.6664876979775727,
+            "http_median": 3.547505117021501,
+            "outside_http_median": 0.11650925409048796,
+            "maximum": 3.719565568957478
+          },
+          "return_to_reading": {
+            "count": 2,
+            "ready_median": 3.89582212199457,
+            "http_median": 3.7777102619875222,
+            "outside_http_median": 0.11811186000704765,
+            "maximum": 4.093477816786617
+          },
+          "short_answer": {
+            "count": 1,
+            "ready_median": 4.028935521142557,
+            "http_median": 3.8996319340076298,
+            "outside_http_median": 0.1293035871349275,
+            "maximum": 4.028935521142557
+          }
+        },
+        "source_manifest_sha256": "a53e5edb008f3b0b2ffe39feafd6706121e7a8ac0b86f3bd1837c4e40b2c6873",
+        "audio_review": {
+          "scope": "Complete-turn original PCM, CPU Whisper small; not a human listening or speaker-identity verdict",
+          "groups": [
+            {
+              "phase": "short_answer",
+              "expected": "我在读《聊斋志异》。",
+              "recognized": "我在读 聊差志义",
+              "segments": [
+                {
+                  "index": 9,
+                  "line": "我在读《聊斋志异》。",
+                  "media_seconds": 4.958333333333333,
+                  "signal_start": 2.5,
+                  "signal_end": 4.64,
+                  "clipped_samples": 0
+                }
+              ],
+              "cer": {
+                "errors": 2,
+                "reference_characters": 7,
+                "cer": 0.2857142857142857,
+                "normalized_expected": "我在读聊斋志异",
+                "normalized_recognized": "我在读聊差志义",
+                "meaning": "ASR-based content proxy; recognition errors are included"
+              },
+              "phonetic": {
+                "errors": 1,
+                "reference_syllables": 7,
+                "error_rate": 0.14285714285714285,
+                "expected_pinyin": [
+                  "wo3",
+                  "zai4",
+                  "du2",
+                  "liao2",
+                  "zhai1",
+                  "zhi4",
+                  "yi4"
+                ],
+                "recognized_pinyin": [
+                  "wo3",
+                  "zai4",
+                  "du2",
+                  "liao2",
+                  "cha4",
+                  "zhi4",
+                  "yi4"
+                ],
+                "meaning": "ASR and dictionary pinyin with lexical tones; not direct acoustic pronunciation accuracy"
+              }
+            },
+            {
+              "phase": "extended_answer",
+              "expected": "这壶是桂花乌龙。读书的时候，我喜欢慢慢看，不急着把故事翻完。",
+              "recognized": "这湖是桂花乌龙读书的时候我喜欢慢慢看不急着把故事翻完",
+              "segments": [
+                {
+                  "index": 12,
+                  "line": "这壶是桂花乌龙。读书的时候，",
+                  "media_seconds": 4.958333333333333,
+                  "signal_start": 1.26,
+                  "signal_end": 4.86,
+                  "clipped_samples": 0,
+                  "next_signal_gap_seconds": 0.8583333333333327
+                },
+                {
+                  "index": 13,
+                  "line": "我喜欢慢慢看，不急着把故事翻完。",
+                  "media_seconds": 4.958333333333333,
+                  "signal_start": 0.76,
+                  "signal_end": 3.66,
+                  "clipped_samples": 0,
+                  "boundary": {
+                    "sample_jump_dbfs": -60.02458430513165,
+                    "left_edge_rms_dbfs": -61.31587417777222,
+                    "right_edge_rms_dbfs": -61.31592129089092,
+                    "meaning": "Waveform discontinuity diagnostic; not an audible-click classifier"
+                  }
+                }
+              ],
+              "cer": {
+                "errors": 1,
+                "reference_characters": 26,
+                "cer": 0.038461538461538464,
+                "normalized_expected": "这壶是桂花乌龙读书的时候我喜欢慢慢看不急着把故事翻完",
+                "normalized_recognized": "这湖是桂花乌龙读书的时候我喜欢慢慢看不急着把故事翻完",
+                "meaning": "ASR-based content proxy; recognition errors are included"
+              },
+              "phonetic": {
+                "errors": 0,
+                "reference_syllables": 26,
+                "error_rate": 0.0,
+                "expected_pinyin": [
+                  "zhe4",
+                  "hu2",
+                  "shi4",
+                  "gui4",
+                  "hua1",
+                  "wu1",
+                  "long2",
+                  "du2",
+                  "shu1",
+                  "de5",
+                  "shi2",
+                  "hou4",
+                  "wo3",
+                  "xi3",
+                  "huan1",
+                  "man4",
+                  "man4",
+                  "kan4",
+                  "bu4",
+                  "ji2",
+                  "zhe5",
+                  "ba3",
+                  "gu4",
+                  "shi4",
+                  "fan1",
+                  "wan2"
+                ],
+                "recognized_pinyin": [
+                  "zhe4",
+                  "hu2",
+                  "shi4",
+                  "gui4",
+                  "hua1",
+                  "wu1",
+                  "long2",
+                  "du2",
+                  "shu1",
+                  "de5",
+                  "shi2",
+                  "hou4",
+                  "wo3",
+                  "xi3",
+                  "huan1",
+                  "man4",
+                  "man4",
+                  "kan4",
+                  "bu4",
+                  "ji2",
+                  "zhe5",
+                  "ba3",
+                  "gu4",
+                  "shi4",
+                  "fan1",
+                  "wan2"
+                ],
+                "meaning": "ASR and dictionary pinyin with lexical tones; not direct acoustic pronunciation accuracy"
+              }
+            }
+          ]
+        },
+        "qualification": "baseline_retained",
+        "sample_frame_observation": "No subtitle in the inspected last-speech sample; not a whole-video verdict"
+      }
+    ],
+    "decision": "Keep 124 frames live; 56 fails mixed-workload throughput and has observed subtitle/pause issues; 73 has inadequate speech-time margin and lacks long-run validation"
+  },
+  "cache_rank0_profile_ranges": [
+    {
+      "capture": 1,
+      "rank0_cpu_nvtx": {
+        "h3.profile:h3.profile.prepare_request": {
+          "count": 1,
+          "total_ms": 562.477
+        },
+        "h3.profile:h3.profile.encoder": {
+          "count": 1,
+          "total_ms": 258.304
+        },
+        "h3.profile:h3.profile.dit": {
+          "count": 1,
+          "total_ms": 3639.305
+        },
+        "h3.profile:h3.profile.dit.step_01": {
+          "count": 1,
+          "total_ms": 1588.986
+        },
+        "h3.profile:h3.profile.dit.step_02": {
+          "count": 1,
+          "total_ms": 674.778
+        },
+        "h3.profile:h3.profile.dit.step_03": {
+          "count": 1,
+          "total_ms": 674.647
+        },
+        "h3.profile:h3.profile.dit.step_04": {
+          "count": 1,
+          "total_ms": 673.372
+        },
+        "h3.profile:h3.profile.decode": {
+          "count": 1,
+          "total_ms": 506.164
+        },
+        "h3.profile:h3.profile.rdma.release": {
+          "count": 1,
+          "total_ms": 0.01
+        },
+        "h3.profile:h3.profile.audio_vae": {
+          "count": 1,
+          "total_ms": 26.355
+        },
+        "h3.profile:h3.profile.video_vae": {
+          "count": 1,
+          "total_ms": 461.053
+        },
+        "h3.profile:h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "total_ms": 116.027
+        },
+        "h3.profile:h3.profile.output.submit_u8_d2h": {
+          "count": 8,
+          "total_ms": 1.415
+        },
+        "h3.profile:h3.profile.output.d2h_wait": {
+          "count": 8,
+          "total_ms": 200.184
+        },
+        "h3.profile:h3.profile.output.video_encode_mux": {
+          "count": 8,
+          "total_ms": 93.152
+        },
+        "h3.profile:h3.profile.output.finish": {
+          "count": 1,
+          "total_ms": 16.381
+        },
+        "h3.profile:h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "total_ms": 1.591
+        }
+      }
+    },
+    {
+      "capture": 2,
+      "rank0_cpu_nvtx": {
+        "h3.profile:h3.profile.prepare_request": {
+          "count": 1,
+          "total_ms": 876.388
+        },
+        "h3.profile:h3.profile.encoder": {
+          "count": 1,
+          "total_ms": 368.474
+        },
+        "h3.profile:h3.profile.dit": {
+          "count": 1,
+          "total_ms": 3802.929
+        },
+        "h3.profile:h3.profile.dit.step_01": {
+          "count": 1,
+          "total_ms": 1593.024
+        },
+        "h3.profile:h3.profile.dit.step_02": {
+          "count": 1,
+          "total_ms": 726.11
+        },
+        "h3.profile:h3.profile.dit.step_03": {
+          "count": 1,
+          "total_ms": 724.583
+        },
+        "h3.profile:h3.profile.dit.step_04": {
+          "count": 1,
+          "total_ms": 722.167
+        },
+        "h3.profile:h3.profile.decode": {
+          "count": 1,
+          "total_ms": 507.155
+        },
+        "h3.profile:h3.profile.rdma.release": {
+          "count": 1,
+          "total_ms": 0.01
+        },
+        "h3.profile:h3.profile.audio_vae": {
+          "count": 1,
+          "total_ms": 23.838
+        },
+        "h3.profile:h3.profile.video_vae": {
+          "count": 1,
+          "total_ms": 465.503
+        },
+        "h3.profile:h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "total_ms": 107.878
+        },
+        "h3.profile:h3.profile.output.submit_u8_d2h": {
+          "count": 8,
+          "total_ms": 0.534
+        },
+        "h3.profile:h3.profile.output.d2h_wait": {
+          "count": 8,
+          "total_ms": 202.043
+        },
+        "h3.profile:h3.profile.output.video_encode_mux": {
+          "count": 8,
+          "total_ms": 89.726
+        },
+        "h3.profile:h3.profile.output.finish": {
+          "count": 1,
+          "total_ms": 15.424
+        },
+        "h3.profile:h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "total_ms": 1.412
+        }
+      }
+    },
+    {
+      "capture": 3,
+      "rank0_cpu_nvtx": {
+        "h3.profile:h3.profile.prepare_request": {
+          "count": 1,
+          "total_ms": 117.124
+        },
+        "h3.profile:h3.profile.encoder": {
+          "count": 1,
+          "total_ms": 3.215
+        },
+        "h3.profile:h3.profile.dit": {
+          "count": 1,
+          "total_ms": 3657.788
+        },
+        "h3.profile:h3.profile.dit.step_01": {
+          "count": 1,
+          "total_ms": 1454.708
+        },
+        "h3.profile:h3.profile.dit.step_02": {
+          "count": 1,
+          "total_ms": 725.544
+        },
+        "h3.profile:h3.profile.dit.step_03": {
+          "count": 1,
+          "total_ms": 724.151
+        },
+        "h3.profile:h3.profile.dit.step_04": {
+          "count": 1,
+          "total_ms": 724.404
+        },
+        "h3.profile:h3.profile.decode": {
+          "count": 1,
+          "total_ms": 508.6
+        },
+        "h3.profile:h3.profile.rdma.release": {
+          "count": 1,
+          "total_ms": 0.009
+        },
+        "h3.profile:h3.profile.audio_vae": {
+          "count": 1,
+          "total_ms": 23.603
+        },
+        "h3.profile:h3.profile.video_vae": {
+          "count": 1,
+          "total_ms": 467.715
+        },
+        "h3.profile:h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "total_ms": 111.58
+        },
+        "h3.profile:h3.profile.output.submit_u8_d2h": {
+          "count": 8,
+          "total_ms": 1.068
+        },
+        "h3.profile:h3.profile.output.d2h_wait": {
+          "count": 8,
+          "total_ms": 198.213
+        },
+        "h3.profile:h3.profile.output.video_encode_mux": {
+          "count": 8,
+          "total_ms": 90.202
+        },
+        "h3.profile:h3.profile.output.finish": {
+          "count": 1,
+          "total_ms": 15.967
+        },
+        "h3.profile:h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "total_ms": 1.909
+        }
+      }
+    },
+    {
+      "capture": 4,
+      "rank0_cpu_nvtx": {
+        "h3.profile:h3.profile.prepare_request": {
+          "count": 1,
+          "total_ms": 475.591
+        },
+        "h3.profile:h3.profile.encoder": {
+          "count": 1,
+          "total_ms": 373.17
+        },
+        "h3.profile:h3.profile.dit": {
+          "count": 1,
+          "total_ms": 3946.066
+        },
+        "h3.profile:h3.profile.dit.step_01": {
+          "count": 1,
+          "total_ms": 1725.876
+        },
+        "h3.profile:h3.profile.dit.step_02": {
+          "count": 1,
+          "total_ms": 729.232
+        },
+        "h3.profile:h3.profile.dit.step_03": {
+          "count": 1,
+          "total_ms": 728.842
+        },
+        "h3.profile:h3.profile.dit.step_04": {
+          "count": 1,
+          "total_ms": 727.426
+        },
+        "h3.profile:h3.profile.decode": {
+          "count": 1,
+          "total_ms": 509.445
+        },
+        "h3.profile:h3.profile.rdma.release": {
+          "count": 1,
+          "total_ms": 0.009
+        },
+        "h3.profile:h3.profile.audio_vae": {
+          "count": 1,
+          "total_ms": 23.638
+        },
+        "h3.profile:h3.profile.video_vae": {
+          "count": 1,
+          "total_ms": 468.631
+        },
+        "h3.profile:h3.profile.output.early_aac_encode": {
+          "count": 1,
+          "total_ms": 100.558
+        },
+        "h3.profile:h3.profile.output.submit_u8_d2h": {
+          "count": 8,
+          "total_ms": 0.529
+        },
+        "h3.profile:h3.profile.output.d2h_wait": {
+          "count": 8,
+          "total_ms": 202.454
+        },
+        "h3.profile:h3.profile.output.video_encode_mux": {
+          "count": 8,
+          "total_ms": 89.821
+        },
+        "h3.profile:h3.profile.output.finish": {
+          "count": 1,
+          "total_ms": 16.064
+        },
+        "h3.profile:h3.profile.output.audio_mux_finalize": {
+          "count": 1,
+          "total_ms": 1.784
+        }
+      }
+    }
+  ],
+  "runtime": {
+    "generation": {
+      "width": 960,
+      "height": 544,
+      "fps": 24,
+      "num_inference_steps": 4,
+      "flow_shift": 12,
+      "audio_flow_shift": 3.0,
+      "window_frames": 124,
+      "overlap_frames": 5,
+      "position_mode": "window",
+      "weight_precision": "mxfp8",
+      "attention_precision": "fast",
+      "video_guide_timestep": 0.8,
+      "quality": "lossless"
+    },
+    "precision": {
+      "video_vae": "nvfp4",
+      "audio_vae": "fp32"
+    },
+    "storage": {
+      "mxfp8_weights": "gpu_resident",
+      "original_bf16_weights": "pinned_cpu_two_gpu_block_prefetch",
+      "online_weight_requantization": false
+    },
+    "backend_source_manifest_sha256": "a53e5edb008f3b0b2ffe39feafd6706121e7a8ac0b86f3bd1837c4e40b2c6873",
+    "environment": {
+      "CUDA_VISIBLE_DEVICES": "0,4,1,5,2,6,3,7",
+      "FLASHINFER_ULYSSES_PCIE_ROUTE": "rdma",
+      "H3_OUTPUT_AUDIO_BITRATE": "192000",
+      "H3_OUTPUT_AUDIO_GAIN_DB": "-3.0",
+      "H3_PROFILE_NVTX": "1",
+      "H3_QUALITY_GUIDE_NOISE": "1",
+      "H3_REF2VA_BF16_WEIGHT_TEST": "1",
+      "H3_REF2VA_DENSE_SAGE": "1",
+      "H3_REF2VA_OPTIMIZED": "1",
+      "H3_REF2VA_REFERENCE_RESIZE": "match",
+      "H3_REF2VA_ROLLING_CONTINUATION": "1",
+      "MINIMAX_H3_VAE_DECODER_STREAM_TEMPORAL_CAT": "1",
+      "PYTORCH_ALLOC_CONF": "expandable_segments:False",
+      "VLLM_BATCH_INVARIANT": "0",
+      "VLLM_OMNI_FLASHINFER_ULYSSES_MAX_BYTES": "201326592",
+      "VLLM_OMNI_FLASHINFER_ULYSSES_O_PRODUCER_DIRECT": "1",
+      "VLLM_OMNI_FLASHINFER_ULYSSES_QKV_E4M3_TRANSPORT": "0",
+      "VLLM_OMNI_FLASHINFER_ULYSSES_QK_PRODUCER_DIRECT": "1",
+      "VLLM_OMNI_FLASHINFER_ULYSSES_RELEASE_AFTER_DENOISE": "0",
+      "VLLM_OMNI_FLASHINFER_ULYSSES_REQUIRE_RDMA": "1",
+      "VLLM_OMNI_H3_CAKE_TMA_GRID_CONSTANT": "1",
+      "VLLM_OMNI_H3_EXPERIMENT_OVERLAP": "0",
+      "VLLM_OMNI_H3_EXPERIMENT_QUANT_MODE": "mxfp8",
+      "VLLM_OMNI_H3_FULL_VAE_AUDIO_OVERLAP": "1",
+      "VLLM_OMNI_H3_FULL_VAE_EARLY_AAC": "1",
+      "VLLM_OMNI_H3_MXFP8_VSPLIT": "0",
+      "VLLM_OMNI_H3_NORM_FAST_SUBMIT": "0",
+      "VLLM_OMNI_H3_OUTPUT_FUSION": "1",
+      "VLLM_OMNI_H3_POST_ATTN_NORM": "off",
+      "VLLM_OMNI_H3_SWIGLU_MXFP8_FUSION": "1",
+      "VLLM_OMNI_H3_VAE_BATCH4": "1",
+      "VLLM_OMNI_H3_VAE_CACHED_NORMALIZE": "1",
+      "VLLM_OMNI_H3_VAE_EARLY_GATHER": "1",
+      "VLLM_OMNI_H3_VAE_GATHER_OVERLAP": "1",
+      "VLLM_OMNI_H3_VAE_MIXED_BATCH": "1",
+      "VLLM_OMNI_H3_VAE_MXFP8": "0",
+      "VLLM_OMNI_H3_VAE_NVFP4": "1",
+      "VLLM_OMNI_H3_VAE_PAIR_PIPELINE": "1",
+      "VLLM_OMNI_H3_VSPLIT": "0",
+      "VLLM_OMNI_MINIMAX_H3_CHUNKED_CPU_MP4_OUTPUT": "1",
+      "VLLM_OMNI_MINIMAX_H3_CHUNKED_CPU_MP4_SLOTS": "2",
+      "VLLM_OMNI_MINIMAX_H3_VAE_EXACT_OPS_SM120": "1",
+      "VLLM_OMNI_ULYSSES_A2A_BACKEND": "flashinfer-pcie",
+      "VLLM_OMNI_VIDEO_SYNC_TIMEOUT": "1800",
+      "VLLM_USE_DEEP_GEMM": "0",
+      "H3_QUALITY_TARGET_PREFIX": "1",
+      "H3_REF2VA_EXACT_REFERENCE_CACHE": "1",
+      "H3_EXPERIMENT_SHORT_WINDOWS": "1"
+    },
+    "task": "ref2va",
+    "parallelism": "DiT TP1/SP8, text encoder TP8, video VAE PP8"
+  },
+  "source_manifest": "source-manifest.json"
+}

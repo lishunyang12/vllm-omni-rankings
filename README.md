@@ -8,6 +8,12 @@ download counts.
 
 ## Research reports
 
+- **H3: from 15-second generation to a five-second interactive avatar (2026-09-22):**
+  [current stack and measured optimization report](https://lishunyang12.github.io/vllm-omni-rankings/videos/minimax-h3-avatar-optimization-20260922/) ·
+  [complete recorded history](https://lishunyang12.github.io/vllm-omni-rankings/videos/minimax-h3-avatar-optimization-20260922/history.html) ·
+  [English Markdown and evidence](videos/minimax-h3-avatar-optimization-20260922/report.md).
+  Includes eight historical Nsight reanalyses, 55 indexed native experiment families,
+  precision and residency rollbacks, and bounded live latency/continuity results.
 - **H3 narrated cartoon: complete 15-second request Nsight trace (2026-09-17):**
   [native trace and capture notes](scripts/h3-cartoon-full15s-nsys-20260917/README.md).
   Eight ranks, all four DiT forwards, full video/audio VAE and MP4 completion; the profiled request took 28.399s.

@@ -1,0 +1,117 @@
+{
+  "history": {
+    "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-cumulative-optimization-20260911/README.md",
+    "bytes": 9107,
+    "sha256": "ce02543d3932ed395f2bb169bb83ea0bcc4ad81c5ee8053d27c3ce10c5d94de6"
+  },
+  "rdma_retention": {
+    "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-mxfp8-retention-20260914/README.zh.md",
+    "bytes": 3879,
+    "sha256": "8393164c61e7dce56fb02f48af7b14fa85f19b3aa5d7d9415d784b0e71cb2c00"
+  },
+  "swiglu": {
+    "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-mxfp8-fusion-20260914/README.zh.md",
+    "bytes": 5599,
+    "sha256": "3e35cfc81b7b8d04294fb5c445fdc8eff074a44099c50c5b882e3ca6ca9251c1"
+  },
+  "lossless_inventory": {
+    "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-mxfp8-next-20260914/reports/lossless-inventory-20260914.zh.md",
+    "bytes": 5600,
+    "sha256": "ad05e3b1d7edf00cc61fb31f71c4a66cf78ad71769d0ce67823117a239e8a449"
+  },
+  "vae_nvfp4": {
+    "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-vae-nvfp4-pipeline-20260916/RESULTS.zh.md",
+    "bytes": 7220,
+    "sha256": "c269108a91e6343801f3c8918560bebbb9ba63ac913a4461d793b5164882af18"
+  },
+  "fast_realtime": {
+    "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-realtime-resume-20260918/RESULTS.zh.md",
+    "bytes": 1868,
+    "sha256": "226d8f721a73705e01eb731ddc4f74514c1095a5163e7c7accaee18d30f3aedc"
+  },
+  "precision_schedule": {
+    "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-precision-schedule-realtime-20260918/RESULTS.zh.md",
+    "bytes": 2655,
+    "sha256": "c360a394b33a4296fabd823fdc77eaa44f71a396dbe576cae01ae24689d178cc"
+  },
+  "aac": {
+    "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-fastest-plus-aac-20260918/validated-summary.json",
+    "bytes": 887,
+    "sha256": "0ad6502928448282c1fec1c8cba4263283810acd70713d19d3bac8eddcfe4793"
+  },
+  "output_fusion": {
+    "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-dit-comm-review-20260918/gpu-campaign-results.json",
+    "bytes": 13233,
+    "sha256": "71e8150f76dd54d32907f2e6005a961863b6a38347616383e1afcc1c608e7d24"
+  },
+  "vpack_negative": {
+    "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-qkv-transfer-gap-20260917/RESULTS.zh.md",
+    "bytes": 5880,
+    "sha256": "8d8da091c6fd9feb6c8f35cb4d43581ef745152f42fe0974487fa5647c5d7f76"
+  },
+  "vdn": {
+    "path": "${WORKSPACE}/minimax-h3-native/experiments/vdn-ref2va-allopt-v3-20260920/runs/motion5-motion22-r5/RESULTS.zh.md",
+    "bytes": 3020,
+    "sha256": "5ec343977f589f4d24d3b2b95c4761f45916dddc0ea4f0e11400119fa7998d18"
+  },
+  "weights": {
+    "path": "${WORKSPACE}/minimax-h3-interactive-avatar/evidence/infra-1088-resident.json",
+    "bytes": 6873,
+    "sha256": "eeb8120e2f77b0c2123c1ac348306a9164cd8c65ea74319b387a824fc20eab61"
+  },
+  "bf16": {
+    "path": "${WORKSPACE}/minimax-h3-interactive-avatar/evidence/bf16-resident-comparison.json",
+    "bytes": 11978,
+    "sha256": "e92ea026a1e3d240b89fd2641b66849b7af680db84d5b37b6db9265d90ae70fd"
+  },
+  "first_step": {
+    "path": "${WORKSPACE}/minimax-h3-interactive-avatar/evidence/quality-first-bf16.json",
+    "bytes": 6775,
+    "sha256": "3ead474b616211af20a84c36775812764d9ae2be63405e2ab18f396d03b9d0f9"
+  },
+  "reference_cache": {
+    "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_LATENCY_20260921.md",
+    "bytes": 6723,
+    "sha256": "b78c2c924acfe12e7c6b2eee950533c5d128c2d298903c8ec2999b5c816b315f"
+  },
+  "overhead": {
+    "path": "${WORKSPACE}/minimax-h3-interactive-avatar/evidence/live-overhead-20260922.json",
+    "bytes": 2526,
+    "sha256": "ededf046c9b1abd545792eba8ba144d7c9c54dc93286a62f21d88df2c4ce0066"
+  },
+  "short_windows": {
+    "path": "${WORKSPACE}/minimax-h3-interactive-avatar/evidence/short-window-gpu-20260922.json",
+    "bytes": 25577,
+    "sha256": "f4060c9a2b28d22c8b6b9fdd120d22fa25743e4e9a487688ac2d0e7c6387f149"
+  },
+  "lookahead": {
+    "path": "${WORKSPACE}/minimax-h3-interactive-avatar/evidence/one-clip-lookahead-20260922.json",
+    "bytes": 5815,
+    "sha256": "a926f5fd77319da0b27de39d26186be6929e692d08d49d3e46b65ca8e7c7d7e7"
+  },
+  "audio_ablation": {
+    "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/AUDIO_LOSSY_ABLATION_20260921.md",
+    "bytes": 10604,
+    "sha256": "29201c75ee676f6a1547f91c83a6e10257370f59922bc4ca6ed0ae29bc323132"
+  },
+  "prompt_voice": {
+    "path": "${WORKSPACE}/minimax-h3-interactive-avatar/evidence/prompt-only-voice-20260922.json",
+    "bytes": 4841,
+    "sha256": "3d23314a6a25b5636a373898a513c10ca9758e4edc566b70b68c6dd80c5b2c67"
+  },
+  "interaction_lab": {
+    "path": "${WORKSPACE}/minimax-h3-interactive-avatar/evidence/zhiwei-interaction-lab-20260922.json",
+    "bytes": 16362,
+    "sha256": "f01e4b4e8fcb34daef073ff1c9a35e4fb37da37082789049a90ef26075162a0c"
+  },
+  "runtime_lock": {
+    "path": "${TMP}/twitch-zhiwei-20260922-03/runtime-lock-fast.json",
+    "bytes": 6681,
+    "sha256": "3769b62290140b00b3e6fca302d138372cabc8eaebc91e8c30f2d7f984c49e93"
+  },
+  "cache_profiles": {
+    "path": "${TMP}/h3-lotus-20260921/profile-stage-summary.json",
+    "bytes": 25268,
+    "sha256": "e007578247bc24c531a743a44577a3c24580ae586fd3694119d91b6fc2423f46"
+  }
+}

@@ -1,0 +1,1831 @@
+{
+  "as_of": "2026-09-22",
+  "scope": "All matching top-level h3-/fasth3-/vdn- experiment families in the available workspace, plus avatar docs and experiment directories. This is a bounded retained-record inventory, not a claim to recover deleted history or every nested run. File existence is not qualification.",
+  "native_family_count": 55,
+  "native_families": [
+    {
+      "family": "h3-ulysses-overlap-20260910",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/LATEST_LOSSLESS_STATUS.md",
+          "bytes": 12931,
+          "sha256": "bdd8e94b96ecf6291eedc8073cc6f27db180a6b31172f83334b6aa3b3340af48"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/LOSSLESS_GOAL.md",
+          "bytes": 36393,
+          "sha256": "381b1072ebf3667a3728696f8b577bb053b5c8a6484a7548b84f7e0c52e0c3b5"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/RECOVERY_CONTEXT.md",
+          "bytes": 6425,
+          "sha256": "81bf124912bb0d00e5efd130e42f742f124893de5e4e8e657f6c111c74d2fa4d"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/WORK_STATE.md",
+          "bytes": 40545,
+          "sha256": "a494bcabae2eb05eccde0a7f507df35f68549e334606a00249465602af44b81b"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-ulysses-overlap-20260910/report-methodology.md",
+          "bytes": 10739,
+          "sha256": "4373c2f95d02a85ec7a0e287420a025dda3d3aa350985dace54c835c05f23a70"
+        }
+      ],
+      "top_level_json_record_names": [
+        "blockwise-smoke.json",
+        "compile-config-snapshot.json",
+        "continuation-validation.json",
+        "current-lossless.json",
+        "diagnostic.json",
+        "final-validation.json",
+        "full-campaign-status.json",
+        "hosted-download-verification.json",
+        "hosted-metadata-verification.json",
+        "idle-gpu-probe.json",
+        "model-integration-check.json",
+        "normal-measurements-check.json",
+        "normal-memory-review.json",
+        "postprocess-status.json",
+        "preliminary-bf16-vs-qualification-fp8-quality.json",
+        "priority.json",
+        "profile-results.json",
+        "prompt-contract.json",
+        "prompt-geometry.json",
+        "public-artifact-review.json",
+        "publication-deployment.json",
+        "publication-status.json",
+        "qualification-repeat-quality.json",
+        "scheduling.json",
+        "smoke.json",
+        "stage-video-identity-check.json",
+        "validated.json"
+      ],
+      "review_note": "Three matched scheduling rounds support exact improvements relative to their fixed precision baseline. Later v7 output/boundary fusion regressed; v9 remained a single-GPU prototype. See the branch tables below.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-vsa-preprocessing-investigation-20260910",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-vsa-preprocessing-investigation-20260910/README.md",
+          "bytes": 13868,
+          "sha256": "f40c3ec0d00797cc0be775a04ce93d2a6f60fd5143e2d85002a0c71153e365aa"
+        }
+      ],
+      "top_level_json_record_names": [
+        "artifact-manifest.json",
+        "bf16-step03-layer00-gpu7.json",
+        "candidate-dispatch-check.json",
+        "candidate-microbench.json",
+        "methodology.json",
+        "pr4691-step03-layer00-gpu7.json",
+        "pr4951-step03-layer00-gpu7.json"
+      ],
+      "review_note": "Analyzed 4,800 barrier-to-fine-attention intervals. On GPU 7, 5.574 of 5.877 ms was GPU activity. Local candidates saved 1.332 ms; the projected whole-model benefit was not a measured E2E result.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-vsa-sage-pr4691-20260910",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-vsa-sage-pr4691-20260910/WORK_STATE.md",
+          "bytes": 8978,
+          "sha256": "0eb30ddbe2ba857cf879cf10c731be700fc79326f989e11578d7fc4d86561e9d"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-vsa-sage-pr4691-20260910/pr4951-assessment.md",
+          "bytes": 2183,
+          "sha256": "b5645189a002b91b542d3f5d68703057055df7bc7a6e6c2de840411fdad3a5cc"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-vsa-sage-pr4691-20260910/report-methodology.md",
+          "bytes": 4476,
+          "sha256": "b95f2296c9a775df3b7913f7b101993db3d7321fbddb3e7d968d4faac84d3c09"
+        }
+      ],
+      "top_level_json_record_names": [
+        "benchmark-source.json",
+        "bf16-normal-summary.json",
+        "github-upload-receipt.json",
+        "h3-shape-qualification.json",
+        "nvml-sampler-stopped.json",
+        "pr4691-normal-summary.json",
+        "pr4691-source.json",
+        "pr4951-compatibility.json",
+        "pr4951-files.json",
+        "pr4951-source.json",
+        "pr4951.json",
+        "rdma-artifact.json",
+        "source-snapshot.json",
+        "stage-timing-results.json",
+        "video-identities-pre-nsys.json",
+        "warmup-first-frame-check.json"
+      ],
+      "review_note": "Sage attention integration, shape/dispatch qualification and BF16 comparison. This changes attention arithmetic; it is not lossless relative to BF16.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-vsa-sage-teahouse15s-20260910",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/WORK_STATE.md",
+          "bytes": 11961,
+          "sha256": "53b481e5e64eba24832de91bcdc6dd2cc7ca0d26cc8c86c4e9036e8de89ca338"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/pr4951-assessment.md",
+          "bytes": 2183,
+          "sha256": "b5645189a002b91b542d3f5d68703057055df7bc7a6e6c2de840411fdad3a5cc"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-vsa-sage-teahouse15s-20260910/report-methodology.md",
+          "bytes": 4476,
+          "sha256": "b95f2296c9a775df3b7913f7b101993db3d7321fbddb3e7d968d4faac84d3c09"
+        }
+      ],
+      "top_level_json_record_names": [
+        "benchmark-source.json",
+        "cake-adaptation.json",
+        "campaign-status.json",
+        "h3-three-way-qualification.json",
+        "nvml-sampler-stopped.json",
+        "postprocess-status.json",
+        "pr4691-source.json",
+        "pr4951-compatibility.json",
+        "pr4951-source.json",
+        "prompt-contract.json",
+        "prompt-geometry.json",
+        "publication.json",
+        "rdma-artifact.json",
+        "source-snapshot.json",
+        "three-way-source-snapshot.json"
+      ],
+      "review_note": "Three separate long-clip arms: BF16 VSA, Sage PR4691, and locally repaired CAKE PR4951. Their means were 27.494, 25.902 and 25.706 seconds; no composition with a different benchmark baseline.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-cumulative-optimization-20260911",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-cumulative-optimization-20260911/README.md",
+          "bytes": 9107,
+          "sha256": "ce02543d3932ed395f2bb169bb83ea0bcc4ad81c5ee8053d27c3ce10c5d94de6"
+        }
+      ],
+      "top_level_json_record_names": [
+        "data.json",
+        "early-history-audit.json",
+        "lossless-history-audit.json",
+        "sage-fp8-history-audit.json",
+        "validation.json"
+      ],
+      "review_note": "Audits the early dense-to-FastH3 path, three exact overlap rounds, later negative retests, and rejected E4M3/TAEH3 descendants. Historical stages are reproduced below with their original evidence scope.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-quality-comparison-20260913",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-quality-comparison-20260913/CAMPAIGN_STATUS.md",
+          "bytes": 4693,
+          "sha256": "4696f09f8c4988732b27efd6d7df72c0ec056821eb74e4594ad203fd5b19e4dd"
+        }
+      ],
+      "top_level_json_record_names": [
+        "ACTIVE_SCOPE.json",
+        "NEXT_GPU_RUNS.json",
+        "site-validation-r1.json",
+        "site-validation-r2.json"
+      ],
+      "review_note": "Quality comparison controllers, geometry/source guards and evolving campaign scope. Shared tooling used by later admitted measurements.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-mxfp8-fusion-20260914",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-mxfp8-fusion-20260914/LUT.README.zh.md",
+          "bytes": 2714,
+          "sha256": "8fdc33beb304be966dbfc82419b051497bbb7e4d8e6d0d65a55bb3719bd87058"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-mxfp8-fusion-20260914/README.zh.md",
+          "bytes": 5599,
+          "sha256": "3e35cfc81b7b8d04294fb5c445fdc8eff074a44099c50c5b882e3ca6ca9251c1"
+        }
+      ],
+      "top_level_json_record_names": [
+        "probe-default-clock-r1-spec.json",
+        "probe-lut-r1-spec.json",
+        "probe-r1-spec.json",
+        "probe-r2-spec.json"
+      ],
+      "review_note": "Fuse SwiGLU, BF16 rounding and MXFP8 FC2 input production: 17.5780 to 17.4478 s mean in the retained campaign. LUT alternative did not add a qualified gain.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-mxfp8-next-20260914",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-mxfp8-next-20260914/README.zh.md",
+          "bytes": 6474,
+          "sha256": "9376facfd46dfebf6fccc362af351272bbfae303b980ac6822f19fd357890a79"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-mxfp8-next-20260914/RESUME.zh.md",
+          "bytes": 6742,
+          "sha256": "3c08df4f70780ac2deeb3bd5d765b5fb9a83e436aced11baaf46c20496f23de5"
+        }
+      ],
+      "top_level_json_record_names": [],
+      "review_note": "Large optimization family: VAE precision/batching, CAKE descriptors, QKV split, AV overlap, O lookahead and shipping worktrees. Audited inventory reaches 14.9692 s mean for the qualified long-clip combination; individual effects are not all isolated.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-mxfp8-profile-20260914",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-mxfp8-profile-20260914/README.zh.md",
+          "bytes": 3681,
+          "sha256": "18849c37b4bd8de7c0a16336ee957c9df9b741e56410fd2300b8f058db96c15a"
+        }
+      ],
+      "top_level_json_record_names": [
+        "r1-retain-profile-plan.json",
+        "r1-retain-profile-spec.json"
+      ],
+      "review_note": "Prepared profiling/admission tools and CPU checks. Its README explicitly says the proposed GPU capture was not yet qualified; existence of the plan is not a successful trace.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-mxfp8-retention-20260914",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-mxfp8-retention-20260914/README.zh.md",
+          "bytes": 3879,
+          "sha256": "8393164c61e7dce56fb02f48af7b14fa85f19b3aa5d7d9415d784b0e71cb2c00"
+        }
+      ],
+      "top_level_json_record_names": [
+        "r1-release-spec.json",
+        "r1-retain-spec.json",
+        "study-plan.json"
+      ],
+      "review_note": "Retain RDMA registrations across denoising requests: 17.9214 to 17.5780 s mean, five requests per arm, matching media bytes. More memory remains resident.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-mxfp8-vs-blockwise-20260914",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-mxfp8-vs-blockwise-20260914/README.zh.md",
+          "bytes": 3271,
+          "sha256": "cf26a018b29a3aaedfb273cd9ef44bd9156dd6eee52905b28e10ea97161dff74"
+        }
+      ],
+      "top_level_json_record_names": [
+        "probe-r1-spec.json",
+        "probe-r2-spec.json",
+        "r1-blockwise-spec.json",
+        "r1-mxfp8-spec.json",
+        "study-plan.json"
+      ],
+      "review_note": "Separate projection-precision comparison family. Keep its model/dispatch qualification separate from later resident-buffer and fusion improvements.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-best-paths-20260914",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-best-paths-20260914/README.zh.md",
+          "bytes": 15694,
+          "sha256": "bfc94958e023d2f0f60f7ed921c40807456c191fbe14fc7401bd08f485394c30"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-best-paths-20260914/fast-version-index.zh.md",
+          "bytes": 28678,
+          "sha256": "bdca11c8e7939f7c0e0408e23158570df1608629aeeb7fcfe19e5f45696f7853"
+        }
+      ],
+      "top_level_json_record_names": [
+        "best-paths.json",
+        "evaluation-plan.json"
+      ],
+      "review_note": "Catalog and selection of candidate paths; use linked result campaigns for measurements.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-dit-vsa-scaling-20260914",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-dit-vsa-scaling-20260914/README.zh.md",
+          "bytes": 6181,
+          "sha256": "3c90d3ba95e86af141964bcbfa2b32997858b5f39414325aa5e25c7665af1734"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-dit-vsa-scaling-20260914/RESULTS.zh.md",
+          "bytes": 966,
+          "sha256": "44cd1011e46c960b07015e1abab451e61faad45d5cefe2cb635b58a0e7615504"
+        }
+      ],
+      "top_level_json_record_names": [
+        "PAUSED.json",
+        "latent-comparison.json",
+        "summary.json"
+      ],
+      "review_note": "Early one/two/four-GPU bring-up, single DiT-only samples with synthetic conditioning. Not the final scaling result and not complete video generation.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-e2e-cumulative-rerun-20260914",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-e2e-cumulative-rerun-20260914/PLAN.zh.md",
+          "bytes": 7577,
+          "sha256": "bb96585f55ca418b994c023b7704f44ca823838d2a621a32de340b50bbe08c93"
+        }
+      ],
+      "top_level_json_record_names": [],
+      "review_note": "Rerun plan indexed. No new successful E2E result inferred from the plan.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-dit-mxfp8-swiglu-nsys-20260915",
+      "retained_documents": [],
+      "top_level_json_record_names": [
+        "bf16-r1-spec.json",
+        "mxfp8-r1-spec.json",
+        "plan.json"
+      ],
+      "review_note": "Profiling plan/specs indexed. Read result admission before treating any nested capture as completed.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-dit-vsa-usp-scaling-20260915",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-dit-vsa-usp-scaling-20260915/README.zh.md",
+          "bytes": 8149,
+          "sha256": "6c105e868430acf86f12ee2f664b50b11e3392bb332f79c27fa49b52a61274d0"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-dit-vsa-usp-scaling-20260915/RESULTS.zh.md",
+          "bytes": 4576,
+          "sha256": "e80ffac6b4e597dbbc84121829c5c5d66ba24a43421157800ec7b3f84b0d84f0"
+        }
+      ],
+      "top_level_json_record_names": [
+        "authorized-job-cleanup-075427.json",
+        "authorized-job-cleanup-075745.json",
+        "authorized-job-cleanup-20260915T1048.json",
+        "authorized-job-cleanup-20260915T1051.json",
+        "authorized-job-cleanup-20260915T1126.json",
+        "authorized-job-cleanup.json",
+        "campaign-launch-r10-archived.json",
+        "campaign-launch-r11-archived.json",
+        "campaign-launch.json",
+        "campaign-status.json",
+        "cleanup-review-20260915T1053.json",
+        "cleanup-review-20260915T1123.json",
+        "completion-audit.json",
+        "confirmed-mega-runner-guard-launch.json",
+        "confirmed-mega-runner-r11-guard-launch.json",
+        "empty-context-check-20260915T104845.json",
+        "empty-context-check-20260915T112250.json",
+        "empty-context-check-20260915T113116.json",
+        "empty-context-check-20260915T141355.json",
+        "empty-context-check-20260915T142157.json",
+        "empty-context-check-20260915T142917.json",
+        "gpu0-context-check.json",
+        "guard-proposal-r11.json",
+        "guard-review-20260915T1130.json",
+        "latent-comparison.json",
+        "latest-occupancy-review.json",
+        "post-cleanup-cuda-check.json",
+        "resume-r10.json",
+        "summary.json"
+      ],
+      "review_note": "Qualified eager DiT-only scaling: 89.6286 / 58.2486 / 28.3212 / 16.0722 s on 1/2/4/8 GPUs. Final latents match. Communication routes also change; excludes encoder/VAE/MP4 and is not the optimized live DiT.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-fasth3-vs-best-video-20260915",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-fasth3-vs-best-video-20260915/README.zh.md",
+          "bytes": 964,
+          "sha256": "27d4413c83792be86cb84d7b4cbab1ccb825092a026e4fc73dd5e45d997fc5c9"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-fasth3-vs-best-video-20260915/RESULTS.zh.md",
+          "bytes": 2863,
+          "sha256": "316109a3630d3e347d9e2ed718540c08fcc9142a486011d91a32fae5cf5ad826"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-fasth3-vs-best-video-20260915/RESUME.zh.md",
+          "bytes": 4283,
+          "sha256": "c16053dcc2b438d92abea0ece8a2bb84c65380c42e60ac9f49cf718ee89fedbf"
+        }
+      ],
+      "top_level_json_record_names": [
+        "bf16-validator-restoration.json",
+        "campaign-status.json",
+        "completion-audit.json",
+        "finalization-status.json",
+        "page-build.json",
+        "page-publication.json",
+        "publication-validation.json",
+        "video-validation.json",
+        "workflow-launch-archived-20260915T144200.json",
+        "workflow-launch-archived-20260915T144405.json",
+        "workflow-launch.json",
+        "workflow-status-archived-20260915T144200.json",
+        "workflow-status-archived-20260915T144405.json",
+        "workflow-status.json"
+      ],
+      "review_note": "Published synchronized original/FastH3/best-path sample comparison and media audits. Different trajectories cannot be labeled one lossless speedup.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-original-history-best-video-20260915",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-original-history-best-video-20260915/RESULTS.zh.md",
+          "bytes": 3064,
+          "sha256": "96dd9e2b6f669ec236fc5ce438767807cc760c72611d972a3ace548735b88793"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-original-history-best-video-20260915/RESUME.zh.md",
+          "bytes": 21609,
+          "sha256": "d63bdcfd4197adeec851a7258d99a5e5645b85862522d43328aad73cc8063099"
+        }
+      ],
+      "top_level_json_record_names": [
+        "final-runs-status.json",
+        "finalization-status-before-font.json",
+        "finalization-status-font-fallback.json",
+        "finalization-status.json",
+        "native-queue-status.json",
+        "page-build.json",
+        "page-publication-before-font.json",
+        "page-publication-font-fallback.json",
+        "page-publication.json",
+        "plan.json",
+        "publication-validation.json",
+        "remaining-queue-status.json",
+        "selected-runs.json",
+        "video-validation.json"
+      ],
+      "review_note": "Historical-path media replays and side-by-side delivery. Preserve their original shapes, frame counts and trajectory differences.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-postrollback-nsys-20260915",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-postrollback-nsys-20260915/README.md",
+          "bytes": 4730,
+          "sha256": "613ada9b4dbe6d39493fdd138ca360016a6b702088e31f0e44d1acd041b78485"
+        }
+      ],
+      "top_level_json_record_names": [
+        "campaign-status.json",
+        "campaign.json",
+        "download-publication.json"
+      ],
+      "review_note": "Published before/after diagnostic campaign combining multiple precision and scheduling changes. Preserve the disclosed teardown exception; not an unprofiled single-factor latency benchmark.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-best-latency-nsys-20260916",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-best-latency-nsys-20260916/README.md",
+          "bytes": 1957,
+          "sha256": "c046e5a35d6f313b35b7a4c4e2fb83673e0f47965047ae63cb5a29da426e9c54"
+        }
+      ],
+      "top_level_json_record_names": [
+        "request.json",
+        "status.json"
+      ],
+      "review_note": "Controller status is stopped after a failed prerequisite run. Do not count this directory as a successful final Nsight capture.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-infinite-cartoon-20260916",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-infinite-cartoon-20260916/README.zh.md",
+          "bytes": 6993,
+          "sha256": "40eb934966f0cc07cbe3cddfa681d5aadb6d13e9c1752165a28842ece595137e"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-infinite-cartoon-20260916/RESUME.zh.md",
+          "bytes": 3340,
+          "sha256": "4e7d411e3b592ea4c560162206f28a75812307428017cccd19a6b685d09fb888"
+        }
+      ],
+      "top_level_json_record_names": [],
+      "review_note": "Early long-form continuity research branch. Not the deployed Zhiwei profile and not an indefinite-stability result.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-ulysses-lowp-pr4924-review-20260916",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-ulysses-lowp-pr4924-review-20260916/README.zh.md",
+          "bytes": 14424,
+          "sha256": "195b0d2c4e8f4c304f67cbdd590a8b29043b3bb568e133b48aa560b4db0e9c8f"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-ulysses-lowp-pr4924-review-20260916/RESUME.zh.md",
+          "bytes": 1274,
+          "sha256": "53b06ddff36fb1213b18cd4959023ab74e86f5c5bae6c5fe8bd39657b9a9cd86"
+        }
+      ],
+      "top_level_json_record_names": [
+        "cleanup-audit.json",
+        "files.json",
+        "full-model-comparison.json",
+        "geometry-check.json",
+        "implementation-manifest.json",
+        "local-source-evidence.json",
+        "pr.json",
+        "real-layers-summary.json",
+        "source-downloads.json"
+      ],
+      "review_note": "Tile-aware low-precision QKV communication saved about 11% in isolated real-layer modules, but the full matched request regressed 14.442 to 14.869 s and changed both picture and audio. Not adopted.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-vae-nvfp4-pipeline-20260916",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-vae-nvfp4-pipeline-20260916/RESULTS.zh.md",
+          "bytes": 7220,
+          "sha256": "c269108a91e6343801f3c8918560bebbb9ba63ac913a4461d793b5164882af18"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-vae-nvfp4-pipeline-20260916/RESUME.zh.md",
+          "bytes": 4064,
+          "sha256": "ba05693242402eca860c344673b2f916814dc36139b76e637372b24e6b433de1"
+        }
+      ],
+      "top_level_json_record_names": [
+        "finalization-status.json",
+        "local-validated-build.json",
+        "page-build.json",
+        "page-publication.json",
+        "publication-validation.json",
+        "remaining-status.json",
+        "selection.json",
+        "user-quality-acceptance.json",
+        "video-validation.json"
+      ],
+      "review_note": "Native NVFP4 video decode plus early gather: matched family 14.973 to 14.444 s in a single-request comparison. Video approximation is explicit; generated native audio PCM matched.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-o-consumer-full-20260917",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-o-consumer-full-20260917/BUBBLE_AUDIT.zh.md",
+          "bytes": 6426,
+          "sha256": "af8c4f4e3fc3f567b8e75951313690f5a704f3e5f48867fcf47bb33233dc37ae"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-o-consumer-full-20260917/DIAGNOSTIC_RESULTS.zh.md",
+          "bytes": 4035,
+          "sha256": "21bd17c5958cbbe230fa8d2276b8a5b871da92326348a6907d1024bf1e20388d"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-o-consumer-full-20260917/FA4_AND_PRODUCER.zh.md",
+          "bytes": 3723,
+          "sha256": "b5fd4cccc2ce89e896336de24fd43ef9ef914a31aef60e01da5f7c953de7bb17"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-o-consumer-full-20260917/GREEN_CONTEXT_ASSESSMENT.zh.md",
+          "bytes": 3511,
+          "sha256": "21bbd4fbd6b657c6f1b80c3147f7e9edaa8c29fe063404e3e22bbaddd08899ea"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-o-consumer-full-20260917/SCHEDULING_RESULTS.zh.md",
+          "bytes": 5056,
+          "sha256": "d3d2155c11cba6f2e7e1f148b8e963c33e89ec4134ec1dbe18de4dda00bc35e2"
+        }
+      ],
+      "top_level_json_record_names": [
+        "bubbles-diagnostic-1-off.json",
+        "bubbles-diagnostic-1-scheduled.json",
+        "bubbles-preflight-indexed.json",
+        "bubbles-preflight-vpack.json",
+        "bubbles-vpack-baseline.json",
+        "cake-clock-analysis.json",
+        "green-context-capability.json",
+        "k-to-v-decomposition.json",
+        "nsys-launch-command.json",
+        "o-startup-analysis.json",
+        "pending-benchmark.json",
+        "producer-barrier-launch-analysis.json",
+        "producer-barrier-overlap.json",
+        "profiler-launcher.json",
+        "request.json",
+        "run-result.json",
+        "runtime-environment.json",
+        "server-command.json",
+        "source-manifest.json"
+      ],
+      "review_note": "Full output equality and contended scheduling traces validated dependencies. Local gaps shrank, but timing_valid=false because of external GPU load. Never use these timings as normal performance.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-o-mxfp8-pre-a2a-lossless-20260917",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-o-mxfp8-pre-a2a-lossless-20260917/CONSUMER_GRAPH_RESULTS.zh.md",
+          "bytes": 6362,
+          "sha256": "f710a800cb5d52014c3b763386ea67519ac36ba08a3ab4a4428a228e5b7e8240"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-o-mxfp8-pre-a2a-lossless-20260917/O_BF16_EVALUATION.zh.md",
+          "bytes": 2747,
+          "sha256": "bc651c1f39be4bf5f588508c34b7afb09d90417979b209de586cd96597adbf19"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-o-mxfp8-pre-a2a-lossless-20260917/O_STARTUP_PLAN.zh.md",
+          "bytes": 6041,
+          "sha256": "db8ab5811498d3fa3d8b400383abf46211df255373e5c3213d8d0fa5676c9429"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-o-mxfp8-pre-a2a-lossless-20260917/README.zh.md",
+          "bytes": 3554,
+          "sha256": "97493df8a1789eb98f9fbaf602a4ce700b21cfe0a8f1516baf8b19e84fcae3cf"
+        }
+      ],
+      "top_level_json_record_names": [
+        "consumer-graph-validation.json",
+        "gate-structure.json",
+        "o-bf16-microbenchmark.json",
+        "o-overlap-analysis.json",
+        "o-startup-analysis.json",
+        "validation.json"
+      ],
+      "review_note": "Eight-rank O producer/consumer prototypes, synthetic byte checks and Graph experiments. Four-chunk microbenchmark 4.801 to 4.710 ms; full-model evidence is a separate campaign.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-original-single-lossy-ablation-20260917",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-original-single-lossy-ablation-20260917/README.zh.md",
+          "bytes": 3245,
+          "sha256": "36a1ab89d0227ffaa85fe38220ee0047c18b9dd59e808c789891cad801ac5287"
+        }
+      ],
+      "top_level_json_record_names": [
+        "execution-manifest.json",
+        "first-video-validation.json",
+        "github-deployment.json",
+        "github-live-validation.json",
+        "github-publication-readiness.json",
+        "gpu-cleanup.json",
+        "manifest.json",
+        "media-validation-cache.json",
+        "prompt-token-counts.json",
+        "qualification.json",
+        "runtime-fingerprint.json",
+        "source-after.json",
+        "source-before.json",
+        "status.json",
+        "validation.json"
+      ],
+      "review_note": "Original H3 isolated lossy ablations with source/dispatch/media qualification. Quality evidence, not warmed production throughput.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-qkv-transfer-gap-20260917",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-qkv-transfer-gap-20260917/MICROBENCHMARK.zh.md",
+          "bytes": 3876,
+          "sha256": "08552a6b5eeade69101fca86ecaa1fbc6f99770c086177f73c584f0b7f7a068d"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-qkv-transfer-gap-20260917/RESULTS.zh.md",
+          "bytes": 5880,
+          "sha256": "8d8da091c6fd9feb6c8f35cb4d43581ef745152f42fe0974487fa5647c5d7f76"
+        }
+      ],
+      "top_level_json_record_names": [
+        "baseline-analysis.json",
+        "microbenchmark-summary.json",
+        "upload-result.json"
+      ],
+      "review_note": "V-barrier-to-pack median reduced 177.185 to 19.584 microseconds, but full request changed 13.688 to 13.710 s. No established E2E win.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "vdn-original-single-lossy-ablation-20260917",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/vdn-original-single-lossy-ablation-20260917/README.zh.md",
+          "bytes": 5411,
+          "sha256": "9d5a1a607f2367653ca9da2272efce3ee26c6aaac5d5ea8e345af230356b903e"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/vdn-original-single-lossy-ablation-20260917/results-summary.md",
+          "bytes": 3528,
+          "sha256": "adb2fbdcb43acbaf4e4f73893f5d9561b0da26daee1517e0568b98089a7e8c1f"
+        }
+      ],
+      "top_level_json_record_names": [
+        "completion.json",
+        "delivery-validation.json",
+        "first-pair-validation.json",
+        "frame-sum-repeatability.json",
+        "github-deployment.json",
+        "gpu-cleanup-20260917.json",
+        "hardware.json",
+        "manifest.json",
+        "media-validation.json",
+        "page-delivery.json",
+        "page-validation.json",
+        "qualification.json",
+        "quality-metrics.json",
+        "results-summary.json",
+        "resume-validation.json",
+        "runtime-recovery-validation.json",
+        "source-after.json",
+        "source-before.json",
+        "status.json"
+      ],
+      "review_note": "VDN precision quality ablations and repeatability diagnostics. Original repetitions also differed, preventing naive attribution of all pixel differences to precision.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-combined-first-step-original-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-combined-first-step-original-20260918/METRICS.zh.md",
+          "bytes": 1008,
+          "sha256": "40caf5718d8e64049622e123975e10e5f121f4e590c5ffafe2ab0f8139fbb2d2"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-combined-first-step-original-20260918/README.zh.md",
+          "bytes": 2034,
+          "sha256": "e1d6f2f604ef414fa489fc0c56a151270b324fb890cbe26af93ffa50d7fb47a2"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-combined-first-step-original-20260918/RESULTS.md",
+          "bytes": 1228,
+          "sha256": "b3cc3e87380e8e9233445da91e63b05077129e9058c424e880386593e02de5a9"
+        }
+      ],
+      "top_level_json_record_names": [
+        "combined-summary.json",
+        "execution-manifest.json",
+        "github-live-validation.json",
+        "manifest.json",
+        "media-publication.json",
+        "metrics-summary.json",
+        "original-source-preflight.json",
+        "prompt-token-counts.json",
+        "publication.json",
+        "qualification.json",
+        "site-size.json",
+        "spec.json",
+        "validation-new.json",
+        "validation.json"
+      ],
+      "review_note": "Combined first-step-quality experiment family. Later precision-schedule campaign supplies the qualified timing comparison.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-cpu-pipeline-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-cpu-pipeline-20260918/README.zh.md",
+          "bytes": 1151,
+          "sha256": "1f9b722d80fda758c4429472fda48783526114973d61e6da15297a2ed19ff964"
+        }
+      ],
+      "top_level_json_record_names": [
+        "preparation.json",
+        "spec-baseline-r1.json",
+        "spec-baseline-r2.json",
+        "spec-tuned-r1.json"
+      ],
+      "review_note": "CPU/output pipeline experiment family indexed; no independently requalified gain assigned in this report.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-dit-bubbles-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-dit-bubbles-20260918/REVIEW.zh.md",
+          "bytes": 8609,
+          "sha256": "a20fbc1bbdfaf48deb0124c5cd450e5fe0b01a4dc382154e104347674d8c6ef3"
+        }
+      ],
+      "top_level_json_record_names": [
+        "analysis-summary.json",
+        "bubble-analysis.json"
+      ],
+      "review_note": "Initial DiT bubble experiments. Use the separately qualified live family for complete-request timing.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-dit-bubbles-live-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-dit-bubbles-live-20260918/RESULTS.zh.md",
+          "bytes": 6641,
+          "sha256": "98db91fd27a717b002f3e52f8f32789d26366881ba97d93c08fc5fc72ac3b0f5"
+        }
+      ],
+      "top_level_json_record_names": [
+        "artifact-sha256.json",
+        "campaign-status.json",
+        "changes.json",
+        "completion.json",
+        "graph-campaign-status.json",
+        "graph-pool-result.json",
+        "micro-occupancy.json",
+        "remaining-status.json",
+        "results.json",
+        "shape-guard-fix.json",
+        "spec-baseline-r1.json",
+        "spec-graph-r1.json",
+        "spec-tiled-r1.json",
+        "spec-tiled-r2.json",
+        "summary.json",
+        "tiled-micro-result.json"
+      ],
+      "review_note": "Full request medians: baseline 13.253, tiled O producer 13.120, plus consumer Graph 13.094 s. Producer result supported; marginal Graph delta overlaps variability. VSA-dependent integration.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-dit-chunknorm-live-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-dit-chunknorm-live-20260918/RESULTS.zh.md",
+          "bytes": 5645,
+          "sha256": "b38eeca0dbd26d7c7423f54c0d46c80cfb8dab062e78d5b5f0dac7515515ade2"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-dit-chunknorm-live-20260918/WORK_STATE.md",
+          "bytes": 2051,
+          "sha256": "f9597b0406561858725b6178281e97d291d65bc0d5acdbd067907ae94b947959"
+        }
+      ],
+      "top_level_json_record_names": [
+        "artifact-sha256.json",
+        "block-fixture-r1-failed.json",
+        "block-result.json",
+        "campaign-status.json",
+        "changes.json",
+        "completion.json",
+        "final-gpu-check.json",
+        "historical-norm-trace.json",
+        "patch-validation.json",
+        "results.json",
+        "spec-consumer-r1.json",
+        "spec-off-r1.json",
+        "spec-side-r1.json",
+        "summary.json",
+        "ticket-result.json"
+      ],
+      "review_note": "Chunked residual/norm: 13.117 to 13.103/13.102 s medians; no robust improvement. Disabled in the current runtime.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-dit-comm-review-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-dit-comm-review-20260918/LIVE-RESULTS.zh.md",
+          "bytes": 5742,
+          "sha256": "c9972eea27da72340eade7431b563e4a83c4d86012506f3e226223b0901a0910"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-dit-comm-review-20260918/REVIEW.zh.md",
+          "bytes": 12428,
+          "sha256": "7bdaf4af79204e8ebea142c0947f1c3e33d36d7a11438fc2673ac32a4aac1244"
+        }
+      ],
+      "top_level_json_record_names": [
+        "artifact-sha256.json",
+        "authorized-stop-attempt.json",
+        "authorized-stop-result.json",
+        "completion.json",
+        "encoder-candidate.json",
+        "gpu-campaign-results.json",
+        "gpu-campaign-status.json",
+        "post-stop-cuda-health.json",
+        "trace-analysis.json"
+      ],
+      "review_note": "Encoder GPU-output candidate 13.334 to 13.358 s: no gain. GPU blend/RGB candidate 13.334 to 13.261 s: matched media and smaller complete-request benefit than its kernel microbenchmark.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-dit-norm-submit-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-dit-norm-submit-20260918/RESULTS.zh.md",
+          "bytes": 5944,
+          "sha256": "a70f0b7ff7cde2d9ba2b5cf97ae6e404c6decaa1601aa7c5f2a0506eb8d11bd5"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-dit-norm-submit-20260918/WORK_STATE.md",
+          "bytes": 2491,
+          "sha256": "d900d27b9520031e4cf9c9e80c081109b650833badc867d656ca1bf20cde3f99"
+        }
+      ],
+      "top_level_json_record_names": [
+        "artifact-sha256.json",
+        "block-result.json",
+        "campaign-status.json",
+        "changes.json",
+        "completion.json",
+        "final-gpu-check.json",
+        "original-cpu-profile.json",
+        "patch-validation.json",
+        "prepared-result.json",
+        "results.json",
+        "spec-consumer-r1.json",
+        "spec-off-r1.json",
+        "spec-side-r1.json",
+        "submission-dispatch.json",
+        "summary.json",
+        "ticket-result.json"
+      ],
+      "review_note": "Prepared CPU submission: 13.115 to 13.079/13.090 s medians. Three-sample ranges overlap; remains off. CPU enqueue reduction is not whole-model certification.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-early-step-original-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-early-step-original-20260918/METRICS.zh.md",
+          "bytes": 1249,
+          "sha256": "471cd2808ac3fce509af607c52c710b626429fbf6e566b899ce29d30f3ef869f"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-early-step-original-20260918/README.zh.md",
+          "bytes": 2270,
+          "sha256": "8a815bc7d5c5e963904697333181046ca8fc7a1d49e4b87648460b2130c2b6b1"
+        }
+      ],
+      "top_level_json_record_names": [
+        "execution-manifest.json",
+        "github-live-validation.json",
+        "manifest.json",
+        "metrics-preview-dit_mxfp8_first_step_original.json",
+        "metrics-summary.json",
+        "original-source-preflight.json",
+        "prompt-token-counts.json",
+        "publication.json",
+        "qualification.json",
+        "site-size.json",
+        "spec-dit_mxfp8_first_step_original.json",
+        "spec-sage_first_step_original.json",
+        "validation-new.json",
+        "validation.json"
+      ],
+      "review_note": "Quality study of original first-step projection/attention restoration. Keep this multi-scene study distinct from the subsequent warmed latency campaign.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-encoder-resident-20260918",
+      "retained_documents": [],
+      "top_level_json_record_names": [
+        "preparation.json",
+        "spec-encoder-r1.json"
+      ],
+      "review_note": "Preparation directory. Completed encoder-residency comparison is recorded in fasth3-dit-comm-review; do not double-count.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-fastest-plus-aac-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-fastest-plus-aac-20260918/README.zh.md",
+          "bytes": 1306,
+          "sha256": "9c635a318f00f8e428207a9ba9d6a49db915abd45d960cf0421ae81d586f2bc0"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-fastest-plus-aac-20260918/RESULTS.zh.md",
+          "bytes": 1962,
+          "sha256": "af6b478aaaa2fa9324f68ec1becb1887332678c7caf4c007f843a1553511867e"
+        }
+      ],
+      "top_level_json_record_names": [
+        "config-a-snapshot.json",
+        "port-verification.json",
+        "preparation.json",
+        "spec-aac-r1.json",
+        "spec-baseline-r1.json",
+        "validated-summary.json"
+      ],
+      "review_note": "Fast path plus exact constant reuse/early AAC: 13.551 to 13.304 s median; tested complete MP4 bytes match.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-nvenc-vs-cpu-20260918",
+      "retained_documents": [],
+      "top_level_json_record_names": [
+        "parent-spec.json",
+        "tune-balanced-plan.json",
+        "tune-final-plan.json",
+        "tune-grid-plan.json",
+        "tune-init-plan.json",
+        "tune-quality-final-plan.json",
+        "tune-refine-plan.json",
+        "tune-replay-plan.json",
+        "tune-rgb-plan.json"
+      ],
+      "review_note": "Encoder tuning plans retained. No qualified adoption inferred from plans; current request packaging remains CPU/PyAV.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-oproj-bf16-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-oproj-bf16-20260918/METRICS.zh.md",
+          "bytes": 1586,
+          "sha256": "2e9e4d20fe1f4355117978440b7176864f6703c78fef51a70ede03c2203b392c"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-oproj-bf16-20260918/README.zh.md",
+          "bytes": 1635,
+          "sha256": "92022349410be4ad8ae79e422131caa6e6207b082febff17e0ed80ddc1399e99"
+        }
+      ],
+      "top_level_json_record_names": [
+        "execution-manifest.json",
+        "geometry.json",
+        "github-live-validation.json",
+        "manifest.json",
+        "metrics-summary.json",
+        "original-source-preflight.json",
+        "prompt-token-counts.json",
+        "publication.json",
+        "qualification.json",
+        "single-preflight.json",
+        "spec-single-r1.json",
+        "validation-new.json",
+        "validation.json"
+      ],
+      "review_note": "Seven-scene quality ablation restoring original BF16 O weights only. All 42 accumulated videos decoded. Includes first compilation; not a live throughput benchmark.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-output-fusion-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-output-fusion-20260918/README.zh.md",
+          "bytes": 5019,
+          "sha256": "e8707aa2c5b4f4d5b2ab5eea380e78c80af9a1bfb523880809a9fa3dfbf3e56c"
+        }
+      ],
+      "top_level_json_record_names": [
+        "audit.json"
+      ],
+      "review_note": "Implementation/audit family for blend and RGB output fusion. Full-request results are in fasth3-dit-comm-review.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-output-fusion-live-20260918",
+      "retained_documents": [],
+      "top_level_json_record_names": [
+        "preparation.json",
+        "spec-fused-r1.json"
+      ],
+      "review_note": "Launch preparation for output fusion. Completed measurement is cross-referenced to fasth3-dit-comm-review rather than counted twice.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-precision-schedule-realtime-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-precision-schedule-realtime-20260918/README.md",
+          "bytes": 2895,
+          "sha256": "18874c677a825b6fc70d1720280ea544246ac4d99b2263ccefe20ade57a3eea1"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-precision-schedule-realtime-20260918/RESULTS.zh.md",
+          "bytes": 2655,
+          "sha256": "c360a394b33a4296fabd823fdc77eaa44f71a396dbe576cae01ae24689d178cc"
+        }
+      ],
+      "top_level_json_record_names": [
+        "nsys-a-download-publication.json",
+        "nsys-a-hwmetrics-download-publication.json",
+        "nsys-a-publication-status.json",
+        "spec-baseline-r1.json",
+        "spec-first-step-bf16-r1.json",
+        "spec-first-step-bf16-r2.json",
+        "spec-nsys-config-a-hwmetrics-r1.json",
+        "spec-nsys-config-a-r1.json",
+        "spec-o-only-bf16-r1.json",
+        "spec-o-only-bf16-r2.json",
+        "validated-summary.json"
+      ],
+      "review_note": "Fast baseline 13.545 s median; first-step original 15.255 s; O-only BF16 13.934 s. Exposes a quality/latency frontier rather than a free improvement.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-qk-split-overlap-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-qk-split-overlap-20260918/README.md",
+          "bytes": 2385,
+          "sha256": "baf572020ed8be6f9d95f7a15ad1119e39e803713026526c8cef3c2d4da19310"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-qk-split-overlap-20260918/REMAINING-LOSSLESS-OPPORTUNITIES.zh.md",
+          "bytes": 7249,
+          "sha256": "aaa59cdcf66d1cf67d2d4754962e20b60eb325d2864a58fbcb4a0d40f1f49cbe"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-qk-split-overlap-20260918/RESULTS.zh.md",
+          "bytes": 3476,
+          "sha256": "e6e7904294a6263538c4b2b71089a442b7e20bb6522805187aaab9da0567d18d"
+        }
+      ],
+      "top_level_json_record_names": [
+        "baseline-phase-analysis.json",
+        "micro-gemm-result.json",
+        "qk-overlap-trace-analysis.json",
+        "qk-trace-publication-status.json",
+        "remaining-overlap-analysis.json",
+        "spec-micro-gemm-r1.json",
+        "spec-micro-gemm-r2.json",
+        "spec-qk-split-hwmetrics-r1.json",
+        "spec-qk-split-hwmetrics-r2.json",
+        "spec-qk-split-hwmetrics-r3.json",
+        "spec-qk-split-no-copy-r2.json",
+        "spec-qk-split-vfirst-r1.json",
+        "validated-summary.json",
+        "wrapped-log-pristine-regression.json",
+        "wrapped-log-regression.json"
+      ],
+      "review_note": "First-step-original Q/K split: 15.255 s baseline, 15.303 s with a Q copy, 15.253 s without it. Bytes match; 57.04% K-GEMM overlap does not prove request speedup. Experimental.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-qkvo-bf16-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-qkvo-bf16-20260918/METRICS.zh.md",
+          "bytes": 1424,
+          "sha256": "c3963f38f3fa3a9d34995a6ebfe0a8f0de48ff43bd53f7a2fe9c84dab1f3c6ad"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-qkvo-bf16-20260918/README.zh.md",
+          "bytes": 1673,
+          "sha256": "d5b875eeb6b495a39fdcc271e19a4f49046ad8b3093061beab74d514e78b369b"
+        }
+      ],
+      "top_level_json_record_names": [
+        "execution-manifest.json",
+        "github-live-validation.json",
+        "manifest.json",
+        "metrics-summary.json",
+        "original-source-preflight.json",
+        "prompt-token-counts.json",
+        "publication.json",
+        "qualification.json",
+        "runtime-preflight.json",
+        "spec-single-r1.json",
+        "validation-new.json",
+        "validation.json"
+      ],
+      "review_note": "Seven-scene quality ablation restoring original Q/K/V/O, leaving FFN MXFP8. All 49 accumulated videos decoded; pixel differences are not subjective quality scores.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-realtime-resume-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-realtime-resume-20260918/README.zh.md",
+          "bytes": 1625,
+          "sha256": "86eca176a96cbec469c367b0a12f8789ee9d37f660957476f37835988d87c57a"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-realtime-resume-20260918/RESULTS.zh.md",
+          "bytes": 1868,
+          "sha256": "226d8f721a73705e01eb731ddc4f74514c1095a5163e7c7accaee18d30f3aedc"
+        }
+      ],
+      "top_level_json_record_names": [
+        "preflight.json",
+        "spec.json",
+        "validated-summary.json"
+      ],
+      "review_note": "Three warm long-clip complete requests: 13.525 / 13.549 / 13.624 s, with the existing accepted native-decoder stack. Finite real-time demonstration.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "fasth3-vae-lossless-overlap-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-vae-lossless-overlap-20260918/README.md",
+          "bytes": 3036,
+          "sha256": "ffff9eac5b7c4b450517e30388d82676059e7d898afcc22b22d6cf9feb102aa8"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/fasth3-vae-lossless-overlap-20260918/RESULTS.zh.md",
+          "bytes": 4015,
+          "sha256": "f25d7b5370312278af48e2ca89fbffcc7dc1b3665e97316365168d14aaf70a21"
+        }
+      ],
+      "top_level_json_record_names": [
+        "aac-packet-validation.json",
+        "cached-normalize-validation.json",
+        "final-trace-manifest.json",
+        "profile-runtime-identity.json",
+        "profile-selection.json",
+        "remaining-overlap-analysis.json",
+        "spec-aac-r1.json",
+        "spec-baseline-r1.json",
+        "spec-cache-micro-r1.json",
+        "spec-cache-r1.json",
+        "spec-combined-r1.json",
+        "spec-first-window-r1.json",
+        "spec-vae-lossless-hwmetrics-r1.json",
+        "spec-vae-lossless-hwmetrics-r2.json",
+        "vae-overlap-trace-analysis.json",
+        "validated-summary.json"
+      ],
+      "review_note": "Exact decoder constants, first-window scheduling, early AAC and hardware traces. Config A baseline 15.240 s median, cached constants plus AAC 15.044 s; compatible overlap effects are not additive.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-interactive-infinite-live-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-interactive-infinite-live-20260918/DIRECTOR.zh.md",
+          "bytes": 5097,
+          "sha256": "f9321dcdf713f131e1e2a1b39f3fb79a427d8286091750c7875924eee39e3a87"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-interactive-infinite-live-20260918/DRY_RUN.zh.md",
+          "bytes": 4088,
+          "sha256": "f14478d7427c3e3d4e6dace51419060728b4f1e0112fb11104833df91ebc76f0"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-interactive-infinite-live-20260918/EPISODE-02.zh.md",
+          "bytes": 15423,
+          "sha256": "a3c6f0e7e90ed8f533f1728641a7fe50f0bf9368aadb5b4d7f8da451b63d1ac1"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-interactive-infinite-live-20260918/EPISODE-03.zh.md",
+          "bytes": 15735,
+          "sha256": "27b0ed5dc57f026f71a718bb57477c6c664116da94cab6d19ed3b75756de2d0d"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-interactive-infinite-live-20260918/HARNESS-REVIEW.zh.md",
+          "bytes": 11686,
+          "sha256": "4219baf4abf4a6445d97be1706ca4bd8b365cbbb66b727af7f875d1c5542d9a7"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-interactive-infinite-live-20260918/OBSERVABILITY.zh.md",
+          "bytes": 7941,
+          "sha256": "57ebeccd4c03f6bb069daf9045e818e2d261e09813bce63740d802c84ef788be"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-interactive-infinite-live-20260918/PLAN.zh.md",
+          "bytes": 14661,
+          "sha256": "bf8745d42cd4d2f9f62340631ac8a542ccf1667c8a00e9fc81fae43967a3b572"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-interactive-infinite-live-20260918/SERVE.zh.md",
+          "bytes": 3582,
+          "sha256": "8b26c5dd2d9273bf7d6be50b10a7c58bd51e7cfd50ff9bc7c006ecee90b58d57"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-interactive-infinite-live-20260918/STORY.zh.md",
+          "bytes": 18023,
+          "sha256": "e5f5520e2d36480980f8231b8f69e75c251451a279422baab8589e2b080fac3c"
+        }
+      ],
+      "top_level_json_record_names": [
+        "live-check.json"
+      ],
+      "review_note": "Early live harness: director, story, serving and observability. Later avatar application replaces the selected production integration.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "h3-upscaler-vs-seedvr2-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-upscaler-vs-seedvr2-20260918/COMPUTE.zh.md",
+          "bytes": 5714,
+          "sha256": "b878124cb750e0ddfa874ad521b6c1285b4eb2ae54536236cbe9de1c18b4c4ad"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-upscaler-vs-seedvr2-20260918/METHODOLOGY.zh.md",
+          "bytes": 6180,
+          "sha256": "1bf0c0fe55df0a13d51407586439f03933d0f51f6c641908187f36469f354a6a"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-upscaler-vs-seedvr2-20260918/REPORT.zh.md",
+          "bytes": 6277,
+          "sha256": "bd77eb99bc7583fca1610aedf642ccf8283c16b56d223d9fc57ab385613aa70a"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/h3-upscaler-vs-seedvr2-20260918/VAE-COMPUTE.zh.md",
+          "bytes": 9086,
+          "sha256": "ea63156fe57082993c5c292b1e08a0abda0e6c5fe54afe23711d3b5f37e1b8bd"
+        }
+      ],
+      "top_level_json_record_names": [
+        "artifact-manifest.json",
+        "artifact-validation.json",
+        "base-latent-cache.json",
+        "cleanup.json",
+        "comfy-commit.json",
+        "comparison-plan.json",
+        "dependency-versions.json",
+        "h3-upscaler-model.json",
+        "h3-vae-compute.json",
+        "instrumentation.json",
+        "issue7723.json",
+        "media-validation.json",
+        "model-manifest.json",
+        "pr7568-files.json",
+        "pr7568.json",
+        "progress.json",
+        "results.json",
+        "seedvr2-comfy-model.json",
+        "seedvr2-model.json",
+        "seedvr2-vae-compute.json",
+        "visual-review.json"
+      ],
+      "review_note": "Two-scene offline 2x study: H3 latent-only 18.20\u201320.61 s on four GPUs, refine about 1,850 s, SeedVR2 INT8 233.56\u2013242.23 s on one GPU. Different boundaries/hardware; none is a qualified live postprocess.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "vdn-combined-realtime-20260918",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/vdn-combined-realtime-20260918/README.zh.md",
+          "bytes": 2927,
+          "sha256": "86d3cac7904e11652275557060459acc8c4bbfbab98c2a2ce87f9b400d621b2a"
+        },
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/vdn-combined-realtime-20260918/RESULTS.zh.md",
+          "bytes": 1589,
+          "sha256": "68cb1e53e6b02c606ecd0918bde46aa833bcee890fe96278945b00017953f3fa"
+        }
+      ],
+      "top_level_json_record_names": [
+        "config-1280.json",
+        "config-1344.json",
+        "cpu-check.json",
+        "current-status.json",
+        "derived-sources.json",
+        "spec-combo-1280-r1.json",
+        "spec-combo-1280-r2.json",
+        "spec-combo-1280-r3.json",
+        "spec-combo-1280-r4.json",
+        "spec-combo-1280-r5.json",
+        "spec-combo-1344-r1.json",
+        "validated-summary.json"
+      ],
+      "review_note": "Eight-step VDN full requests: 39.875 s median at 1280x704, 45.408 s at 1344x768. Both fail the 15-second budget; not the production model.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "vdn-factor-fusion-20260920",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/vdn-factor-fusion-20260920/RESULTS.zh.md",
+          "bytes": 1762,
+          "sha256": "c216b8d0033591d63bcd7045f455a535ea965a11267773df5d6ad87e8277da21"
+        }
+      ],
+      "top_level_json_record_names": [
+        "cholesky-ex-result.json",
+        "gather-result.json",
+        "result.json",
+        "scan-result.json"
+      ],
+      "review_note": "Exact gather microbenchmark 17.311 to 14.008 ms; scan Graph 2.166 to 1.831 ms. Faster Gauss-Jordan solve failed numerical limits. No current-H3 speedup credit.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "vdn-ref2va-allopt-20260920",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/vdn-ref2va-allopt-20260920/INNOVATION.zh.md",
+          "bytes": 8116,
+          "sha256": "3a4fdb868b7477d464645fb89bfd316c419f240fe936dfb12c87d28d03dc2df8"
+        }
+      ],
+      "top_level_json_record_names": [
+        "config-960.json",
+        "context-cost.json",
+        "cpu-motion-check.json",
+        "derived-sources.json"
+      ],
+      "review_note": "Initial combined VDN continuation branch; context-cost and CPU/source checks retained. Do not infer a completed warm generation from those checks.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "vdn-ref2va-allopt-v2-20260920",
+      "retained_documents": [],
+      "top_level_json_record_names": [
+        "config-960.json",
+        "context-cost.json",
+        "cpu-check.json",
+        "cpu-motion-check.json",
+        "derived-sources.json",
+        "sage-batch-probe.json",
+        "source-manifest.json"
+      ],
+      "review_note": "Second VDN integration, Sage batch probe and context checks. Superseded experiment, not the selected four-step Ref2VA runtime.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "vdn-ref2va-allopt-v3-20260920",
+      "retained_documents": [],
+      "top_level_json_record_names": [
+        "bridge-source-parity.json",
+        "config-960.json",
+        "cpu-check.json",
+        "cpu-motion-check.json",
+        "derived-sources.json",
+        "parent-source-manifest.json",
+        "source-manifest.json",
+        "spec-motion5-motion22-r1.json",
+        "spec-motion5-motion22-r2.json",
+        "spec-motion5-motion22-r3.json",
+        "spec-motion5-motion22-r4.json",
+        "spec-motion5-motion22-r5.json"
+      ],
+      "review_note": "Completed VDN 960x544 continuation: five-frame context 23.219 s median, 22-frame context 25.208 s for roughly 15-second windows. Not real time; not a visual-quality acceptance.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    },
+    {
+      "family": "vdn-ref2va-gather-20260920",
+      "retained_documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-native/experiments/vdn-ref2va-gather-20260920/RESUME.zh.md",
+          "bytes": 2477,
+          "sha256": "4a27de174bb69f8d9ec03ff8e8d524bcbc778fec62a3710b1981956be6f0ae78"
+        }
+      ],
+      "top_level_json_record_names": [
+        "config-960.json",
+        "cpu-check.json",
+        "cpu-motion-check.json",
+        "derived-sources.json",
+        "gather-validation.json",
+        "parent-source-manifest.json",
+        "source-manifest.json",
+        "validation-summary.json"
+      ],
+      "review_note": "Exact gather integration and standalone checks. Follow-up complete-model continuation measurements belong to the v3 family.",
+      "scope": "Historical record review, not a new GPU test. Nested evidence is indexed only when referenced by the reviewed source manifest."
+    }
+  ],
+  "avatar_document_count": 49,
+  "avatar_documents": [
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/AUDIO_LOSSY_ABLATION_20260921.md",
+      "bytes": 10604,
+      "sha256": "29201c75ee676f6a1547f91c83a6e10257370f59922bc4ca6ed0ae29bc323132"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/AUDIO_QUALITY.md",
+      "bytes": 10831,
+      "sha256": "3b04cb628d9effbb262229d84b86eb8b2a85ceb5afb451303bd96f5aaab834e4"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/H3_FIVE_SECOND_LIVE_SYSTEM.md",
+      "bytes": 14984,
+      "sha256": "2faa0ae0a7acffaedf5f98e1e19fa99d09655c4ce9b2f71e858de9970a290ef5"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/H3_TWO_SECOND_FEASIBILITY_20260922.md",
+      "bytes": 14093,
+      "sha256": "7fac9a6b1b672ff706e11ae2ef877a17599b9bb1fa2cc623843e56a470bf5f33"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/HARNESS_REVIEW_20260921.md",
+      "bytes": 8807,
+      "sha256": "00a0c389280763ae8bb9cf979fbb7ce5dfedaccec384f0e85cc1c5904942eff2"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/INFRA_1088.md",
+      "bytes": 8380,
+      "sha256": "ba064f5fc4d6732debe337df064105e70872ce7ad6264de34764f9c44d054812"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/LINA_CAMERA.md",
+      "bytes": 2992,
+      "sha256": "350d7c831355760562875253234ac68234ecf3639e8bce10beb17afa1e816c70"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/LINA_DESIGN.md",
+      "bytes": 2749,
+      "sha256": "54bc121c487a724aae4f6aae66d22bb8701bae09f7eda80f0623c16a420e594e"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/LINA_HARNESS.md",
+      "bytes": 5063,
+      "sha256": "fe5db2c2f5a08a441ef98ef9eba73a47115b30d5475057742b1bd76a73a01c27"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/LIVE_OVERHEAD_20260922.md",
+      "bytes": 5481,
+      "sha256": "098aaf7cc7803c2ba3938ea1c010e50661ce6a58f007740ac8e9569244e8df2b"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/LOCAL_INTERACTION.md",
+      "bytes": 6571,
+      "sha256": "d3e69d0cf5ea66db6f4acae256ec80fb35e9840ccd6d83f0f9044a9caef53aab"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/MULTIREF_DEGRADATION_REVIEW.md",
+      "bytes": 13676,
+      "sha256": "b2d98ce247424af9a6a0c7ca4ccd2e15decff5ca2f026101523175202054a07d"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/OBSERVABILITY.md",
+      "bytes": 2080,
+      "sha256": "ff2406934561d87ccd71468c85c48479bb74873d58223f9ed19682bdc1f6d219"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/PERSONA.md",
+      "bytes": 3353,
+      "sha256": "2539a1d869ee4a084ed443c53d58a2fa1cc3606a70bd688e779e405dc4dd363b"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/PROMPT_ONLY_VOICE_20260922.md",
+      "bytes": 5129,
+      "sha256": "92e226e918be95e1e09d78b33a1fdad3ea0399f48621746906216543f08de30f"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/QUALITY.md",
+      "bytes": 10854,
+      "sha256": "b99a157d9b8df88d3cf79cce19eac05261a69c11d4b78255395e8b0aaa4072e4"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/SETUP.md",
+      "bytes": 10599,
+      "sha256": "7c4b0dd823ffd2e24d0d9e12d2ee97a00ca59c1e9f97e907d671d18befdefb6d"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/SPEECH_FIDELITY_20260921.md",
+      "bytes": 6891,
+      "sha256": "20e7de1b7f95a1a9f69279e8796a9341f56aaf76308d1b892d06f8007417e0cb"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/STATUS.md",
+      "bytes": 24630,
+      "sha256": "cc91ead1cfb9f0822ba757017383c1b99e886a26c2f69c5b235df7939d24cef4"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/STREAMING_PROJECT_REVIEW.md",
+      "bytes": 5917,
+      "sha256": "3272a53865c3518050479f5d5d725345c5c52d4f49ae5ab1700ca935181e8ba2"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/THIRD_PARTY.md",
+      "bytes": 4000,
+      "sha256": "217735cf2c83292e83813f8ab2072db5cdca97cd4beac22062408baa0c0be45a"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/TIMELINE_DIRECTOR_REVIEW.md",
+      "bytes": 4866,
+      "sha256": "9c4f2f22b9607bc7a82410bb1b9016f44efcec8bd21b7010f4e4f6ebee29a6eb"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_ASSET_AUDIT.md",
+      "bytes": 5965,
+      "sha256": "2d7fc63c290a511d0f9868bfb69db91ff8f68e58a558ccba891fef947673c8ed"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_CAUSAL_INTERACTION.md",
+      "bytes": 7595,
+      "sha256": "fb0413991670774b71d65f24720834a71c75dd5a15a25a108ef935722e1af243"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_CLARITY.md",
+      "bytes": 3402,
+      "sha256": "6e330b949c42407dc77c0cee291eefcf4ef78afc6e3b4905dc8802a00b1fa62c"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_CONTINUITY.md",
+      "bytes": 4472,
+      "sha256": "25e1fe78da969cc1c83eae062908356ec9895b483125a2102caadb8745421c05"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_CREATIVE_BRIEF.md",
+      "bytes": 8563,
+      "sha256": "14c2dc86aba9ba428ba60d5d3931c035ad2e6894e3f521ec705ecbeefaa61801"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_DIALOGUE_GROUNDING.md",
+      "bytes": 7289,
+      "sha256": "00029c6f6f43b5133a048aa84817c77e6b3baecb7c208f801f338257a07923f2"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_FACE_REVIEW.md",
+      "bytes": 5405,
+      "sha256": "8ff9aa02ebdb835631b9a3665a58d95ac66280ea922fd12c3425e1c37177939f"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_GAMEPLAY.md",
+      "bytes": 7060,
+      "sha256": "a57904ad97a169cbba89805667a4e557f4f398f71a138c0c3cddf6c2567e11e7"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_HARNESS.md",
+      "bytes": 10626,
+      "sha256": "64785c104c2d4083f1993ed1869528f981155dc12f7909a934086fa9b7c520ac"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_HARNESS_EVAL.md",
+      "bytes": 7303,
+      "sha256": "dad3bebb0f9dcd7151423dc1b898f6ec085a0c9e80feda43e465ad9bf58c0d48"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_HARNESS_EVAL_V2.md",
+      "bytes": 4946,
+      "sha256": "cd033161731e808a479766b37f2499b34283b40b9eca4fe41d5e1f7d6e1e328b"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_INTERACTIONS.md",
+      "bytes": 3022,
+      "sha256": "ecf96fbe8806a754b0844a10d850336d48282338561c28a72dc484a4ab9ac102"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_INTERACTION_LAB_20260922.md",
+      "bytes": 9601,
+      "sha256": "faa75c103afc47fee85744f3d008ba12fb3d5d849fb713785cec2ff0d9efa8f2"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_LATENCY_20260921.md",
+      "bytes": 6723,
+      "sha256": "b78c2c924acfe12e7c6b2eee950533c5d128c2d298903c8ec2999b5c816b315f"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_LIVE_20260921.md",
+      "bytes": 3911,
+      "sha256": "a17129288ad91af0df663183560837f4b8f91a51dd9e3c4ae0c544f25ae9197c"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_LOTUS_SCENE.md",
+      "bytes": 6986,
+      "sha256": "5b9e0e7ecc34e2996bedfaba9a8a11e5e4722bec59a1e521c28e5204cfaed30c"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_OPEN_INTERACTION.md",
+      "bytes": 18922,
+      "sha256": "bc82f58767d3ba244dc8df4492ea41a0aa2ee83a3b52fd48e6c52c0c2ef82819"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_RUNTIME.md",
+      "bytes": 6969,
+      "sha256": "121944eef8a0d541a5d968a5ac736f8367f390aec251b2adfed4a08fd5506ff0"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_RUNTIME_LOCK.md",
+      "bytes": 1565,
+      "sha256": "8f3f4c38e057a40a8d3e4d2a6f29db5a444bba1419a477edbe7e5f70732f9725"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_SCENE_ACTION_CATALOG.md",
+      "bytes": 11109,
+      "sha256": "f9bddd510b1f6e0d9d74ad9b81adb93c57dba5e13e94fc64f6ff9ed0558df433"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_SHOW_BIBLE_V1.md",
+      "bytes": 12732,
+      "sha256": "abd4b4f6bbc678b44328c3002ca6bbc77281118538988a860a70de72b3a4b564"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_SINGING_NOD_FIX_20260922.md",
+      "bytes": 4962,
+      "sha256": "79fd88b17ee9fb19fcd75c80bccaaaee4c3672a054b163f1335ca9124743f97a"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_TEXT_REVIEW_20260921.md",
+      "bytes": 6339,
+      "sha256": "6321fdc0146e982d1a45ba0de9fee0bd4c783c2331cb9bcfbd28bc6258ff9a6b"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_VIEWER_QUEUE.md",
+      "bytes": 7989,
+      "sha256": "83b56be6c032355d6014c3e2ef35fed351070759e876b48b097b45294213c37e"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_VOICE_PERSONA.md",
+      "bytes": 4131,
+      "sha256": "35e6957e7cfc4bac084dbfeceb81df1218431e3406efbe7100a45edb90e52dfc"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_WINDOW_POC.md",
+      "bytes": 7049,
+      "sha256": "0412c3dcf30bce3cbcfc461b3770c87ea27e8017735725a13f1497bf3a5f22b4"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_WORLD_INTERACTION.md",
+      "bytes": 9784,
+      "sha256": "82711218a51fbb935a493db3b5b0e4531e380ee8780c2b519b03389e8cdba8f4"
+    }
+  ],
+  "avatar_experiment_families": [
+    {
+      "family": "bf16-resident-comparison",
+      "documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-interactive-avatar/experiments/bf16-resident-comparison/README.md",
+          "bytes": 2777,
+          "sha256": "125d80e0a38f514cefd5afd6f214c5ae872d353809db64435e9fb6c686801eff"
+        }
+      ],
+      "scope": "Application experiment directory indexed; no success inferred from existence."
+    },
+    {
+      "family": "candy-bite-plan-20260922",
+      "documents": [],
+      "scope": "Application experiment directory indexed; no success inferred from existence."
+    },
+    {
+      "family": "continuity-prefix",
+      "documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-interactive-avatar/experiments/continuity-prefix/README.md",
+          "bytes": 2176,
+          "sha256": "0b318f7c4d393ad197c395efaba78e45059e5200acf331b85fa42d2cb09c483a"
+        }
+      ],
+      "scope": "Application experiment directory indexed; no success inferred from existence."
+    },
+    {
+      "family": "infra-1088-20260921",
+      "documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-interactive-avatar/experiments/infra-1088-20260921/README.md",
+          "bytes": 2218,
+          "sha256": "d0c69bbdddbbbbe092d6e4d6e0dc97afd1b0a29b75db70ba495e4960a308856f"
+        }
+      ],
+      "scope": "Application experiment directory indexed; no success inferred from existence."
+    },
+    {
+      "family": "live-restart-report-20260922",
+      "documents": [],
+      "scope": "Application experiment directory indexed; no success inferred from existence."
+    },
+    {
+      "family": "lotus-continuity",
+      "documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-interactive-avatar/experiments/lotus-continuity/README.md",
+          "bytes": 4008,
+          "sha256": "45e6c053a0edf14f631a6bec5e57159f5b30c70000534fb237cef25bee4b8578"
+        }
+      ],
+      "scope": "Application experiment directory indexed; no success inferred from existence."
+    },
+    {
+      "family": "rolling-quality",
+      "documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-interactive-avatar/experiments/rolling-quality/README.md",
+          "bytes": 4044,
+          "sha256": "aa086191000fbd5c3ef36a886c87a4f4813fb6654b744aa42ba2efaf4e5a61ab"
+        }
+      ],
+      "scope": "Application experiment directory indexed; no success inferred from existence."
+    },
+    {
+      "family": "short-window-20260922",
+      "documents": [],
+      "scope": "Application experiment directory indexed; no success inferred from existence."
+    },
+    {
+      "family": "tts-reference",
+      "documents": [
+        {
+          "path": "${WORKSPACE}/minimax-h3-interactive-avatar/experiments/tts-reference/README.md",
+          "bytes": 4949,
+          "sha256": "dea7c59a5ec52f38c127992c58378b8599060cbcc9222774f0948895938ac891"
+        }
+      ],
+      "scope": "Application experiment directory indexed; no success inferred from existence."
+    },
+    {
+      "family": "zhiwei-singing-nod-20260922",
+      "documents": [],
+      "scope": "Application experiment directory indexed; no success inferred from existence."
+    }
+  ]
+}

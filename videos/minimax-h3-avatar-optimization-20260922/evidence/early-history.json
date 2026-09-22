@@ -1,0 +1,431 @@
+{
+  "scope": "Imported historical audit; heterogeneous stages, not a fresh cumulative benchmark or current quality qualification. Exact labels are relative to their immediate arithmetic/output contract. Rejected descendants remain excluded.",
+  "stages": [
+    {
+      "id": "S0",
+      "name": "Original H3 control",
+      "e2e": 653.838,
+      "fidelity": "Original",
+      "principle": "49 diffusion forwards with the original decoder and communication path.",
+      "evidence": "Formal E2E artifact; DiT 633.058 s.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "S1",
+      "name": "AdaLN TP1 / SP8",
+      "e2e": 605.348,
+      "fidelity": "Exact",
+      "principle": "Replicate small AdaLN tensors and spend all eight ranks on sequence parallelism.",
+      "evidence": "DiT 584.707 s; -48.490 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "S2",
+      "name": "Explicit RDMA Ulysses exchange",
+      "e2e": 592.079,
+      "fidelity": "Exact",
+      "principle": "Move the large sequence exchange through the topology-aware RDMA path.",
+      "evidence": "DiT 571.264 s; -13.269 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "S3",
+      "name": "Direct Q/K layout",
+      "e2e": 590.562,
+      "fidelity": "Exact",
+      "principle": "Produce the attention layout directly and delete redundant transposes/copies.",
+      "evidence": "DiT 569.830 s; -1.517 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "F0",
+      "name": "Dense FastH3, four forwards",
+      "e2e": 66.785,
+      "fidelity": "Lossy",
+      "principle": "Use the distilled four-step sigma schedule [0.999, 0.749, 0.5, 0.25, 0].",
+      "evidence": "DiT 46.988 s; -523.777 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "P0",
+      "name": "FastH3 + VSA + FlashInfer",
+      "e2e": 43.42,
+      "fidelity": "Lossy",
+      "principle": "Apply visual sparse attention with exact FlashInfer sparse-kernel execution inside the distilled trajectory.",
+      "evidence": "DiT 22.704 s; -23.365 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "P1",
+      "name": "GPU FP32-to-uint8 video pack",
+      "e2e": 36.568,
+      "fidelity": "Exact",
+      "principle": "Quantize display pixels on GPU and copy uint8 instead of float frames.",
+      "evidence": "-6.852 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "P2",
+      "name": "Chunked pinned D2H + background mux",
+      "e2e": 31.399,
+      "fidelity": "Exact",
+      "principle": "Overlap pinned host copies and CPU PyAV encode/mux with remaining device work.",
+      "evidence": "-5.169 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "P3",
+      "name": "Persistent RDMA communication",
+      "e2e": 30.534,
+      "fidelity": "Exact",
+      "principle": "Reuse communication resources across layer iterations instead of reinitializing them.",
+      "evidence": "-0.865 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "P4a",
+      "name": "Fused VSA tile packing",
+      "e2e": 30.013,
+      "fidelity": "Exact",
+      "principle": "Fuse tile selection and packing while preserving selected values and order.",
+      "evidence": "Approximately -0.490 s in matched trials.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "P4c",
+      "name": "Compact VSA untile",
+      "e2e": 29.88,
+      "fidelity": "Exact",
+      "principle": "Write only the compact valid output domain during sparse-attention reconstruction.",
+      "evidence": "-0.133 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "P4d",
+      "name": "Direct attention O path",
+      "e2e": 29.873,
+      "fidelity": "Exact / noise-sized",
+      "principle": "Route attention output directly into its consumer.",
+      "evidence": "-0.007 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "P5",
+      "name": "Exact VAE/direct Q-to-K cleanup",
+      "e2e": 28.236,
+      "fidelity": "Exact",
+      "principle": "Consolidate exact decoder and Q-to-K dataflow cleanups.",
+      "evidence": "Q0 control: DiT 21.347 s.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "Q1",
+      "name": "Online FP8 MLP",
+      "e2e": 25.172,
+      "fidelity": "Lossy",
+      "principle": "Use online FP8 for MLP GEMMs while retaining wider precision where sensitivity is higher.",
+      "evidence": "DiT 18.522 s; -3.064 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "Q2",
+      "name": "MLP + output FP8",
+      "e2e": 24.887,
+      "fidelity": "Lossy",
+      "principle": "Extend FP8 to output projections with calibrated scaling.",
+      "evidence": "DiT 18.124 s; -0.285 s E2E.",
+      "current_quality_status": "historical_not_requalified"
+    },
+    {
+      "id": "Q5",
+      "name": "QKV E4M3 wire + O bundle",
+      "e2e": 21.649,
+      "fidelity": "Lossy",
+      "principle": "Transmit QKV in E4M3 and bundle output communication to reduce bytes and launch count.",
+      "evidence": "DiT 14.994 s; -3.238 s E2E.",
+      "current_quality_status": "rejected_e4m3_ancestry"
+    },
+    {
+      "id": "D1",
+      "name": "TAEH3 decoder, FP32",
+      "e2e": 16.738,
+      "fidelity": "Lossy",
+      "principle": "Replace the full patch-parallel video VAE with the rank-local temporal autoencoder decoder.",
+      "evidence": "Decode 1.554 s; -4.911 s E2E.",
+      "current_quality_status": "rejected_e4m3_ancestry"
+    },
+    {
+      "id": "D2",
+      "name": "TAEH3 decoder, FP16",
+      "e2e": 16.289,
+      "fidelity": "Lossy",
+      "principle": "Run TAEH3 convolution weights and activations in FP16.",
+      "evidence": "Mean E2E 16.289 s; decode 1.050 s.",
+      "current_quality_status": "rejected_e4m3_ancestry"
+    },
+    {
+      "id": "D3",
+      "name": "All-main FP8 coverage",
+      "e2e": 15.634,
+      "fidelity": "Lossy",
+      "principle": "Extend calibrated FP8 coverage across the remaining main DiT GEMM path.",
+      "evidence": "DiT 14.443 s; decode 1.003 s.",
+      "current_quality_status": "rejected_e4m3_ancestry"
+    },
+    {
+      "id": "D4",
+      "name": "Persistent RDMA steady state",
+      "e2e": 15.165,
+      "fidelity": "Exact",
+      "principle": "Keep the optimized communication path persistent through the formal repeated run.",
+      "evidence": "15.146/15.178/15.170 s; mean 15.165 s.",
+      "current_quality_status": "rejected_e4m3_ancestry"
+    },
+    {
+      "id": "D5",
+      "name": "OMP=28 CPU orchestration",
+      "e2e": 14.671,
+      "fidelity": "Exact",
+      "principle": "Right-size host parallelism for decode/encode orchestration on this node.",
+      "evidence": "14.680/14.672/14.660 s; mean 14.671 s.",
+      "current_quality_status": "rejected_e4m3_ancestry"
+    },
+    {
+      "id": "D6",
+      "name": "Cross-rank Audio VAE",
+      "e2e": 14.561,
+      "fidelity": "Exact",
+      "principle": "Decode video with TAEH3 on rank 0 while rank 1 independently runs Audio VAE.",
+      "evidence": "14.576/14.555/14.551 s; mean 14.561 s.",
+      "current_quality_status": "rejected_e4m3_ancestry"
+    }
+  ],
+  "lossless_pairs": [
+    {
+      "version": "v1",
+      "label": "QK/V overlap + four-chunk reverse O",
+      "before_samples_s": [
+        25.684,
+        25.853,
+        25.747
+      ],
+      "after_samples_s": [
+        25.17,
+        25.047,
+        25.189
+      ],
+      "before_mean_s": 25.761333333333333,
+      "after_mean_s": 25.135333333333335,
+      "saved_s": 0.6259999999999977,
+      "reduction_percent": 2.429998447285328,
+      "repeats": 3,
+      "source": "summary/report-data.json",
+      "bundled": [
+        "QK prepare during V",
+        "four-chunk O exchange/project pipeline"
+      ],
+      "status": "measured",
+      "composed_speedup_estimate": 1.0249051799591544,
+      "composed_latency_reduction_estimate_pct": 2.429998447285331,
+      "historical_endpoint_speedup": 1.0249051799591544,
+      "historical_endpoint_reduction_pct": 2.429998447285331
+    },
+    {
+      "version": "v2",
+      "label": "Gate GEMM during QKV exchanges",
+      "before_samples_s": [
+        25.141,
+        25.082,
+        25.13
+      ],
+      "after_samples_s": [
+        24.408,
+        24.272,
+        24.341
+      ],
+      "before_mean_s": 25.117666666666665,
+      "after_mean_s": 24.340333333333334,
+      "saved_s": 0.7773333333333312,
+      "reduction_percent": 3.0947672952636176,
+      "repeats": 3,
+      "source": "lossless-v2/report/data.json",
+      "bundled": [
+        "gate GEMM scheduling"
+      ],
+      "status": "measured",
+      "composed_speedup_estimate": 1.0576365706503905,
+      "composed_latency_reduction_estimate_pct": 5.449562945326969,
+      "historical_endpoint_speedup": 1.058380465893373,
+      "historical_endpoint_reduction_pct": 5.516018839604575
+    },
+    {
+      "version": "v3",
+      "label": "Layout views + early Q + coarse overlap",
+      "before_samples_s": [
+        24.302,
+        24.365,
+        24.427
+      ],
+      "after_samples_s": [
+        23.855,
+        24.031,
+        24.149
+      ],
+      "before_mean_s": 24.364666666666665,
+      "after_mean_s": 24.011666666666667,
+      "saved_s": 0.352999999999998,
+      "reduction_percent": 1.4488193285358497,
+      "repeats": 3,
+      "source": "lossless-v3/normal-comparison.json",
+      "bundled": [
+        "three input copies removed",
+        "early Q",
+        "coarse overlap"
+      ],
+      "status": "measured",
+      "composed_speedup_estimate": 1.0731850835721473,
+      "composed_latency_reduction_estimate_pct": 6.819427952590173,
+      "historical_endpoint_speedup": 1.0728673561463178,
+      "historical_endpoint_reduction_pct": 6.791832720873659
+    },
+    {
+      "version": "v4",
+      "label": "Early coarse softmax (exploratory)",
+      "before_samples_s": [
+        24.039,
+        23.961,
+        23.928,
+        24.149,
+        24.187
+      ],
+      "after_samples_s": [
+        24.222,
+        23.79,
+        23.863,
+        23.853,
+        23.973
+      ],
+      "before_mean_s": 24.0528,
+      "after_mean_s": 23.9402,
+      "saved_s": 0.11260000000000048,
+      "reduction_percent": 0.46813676578194835,
+      "repeats": 5,
+      "source": "lossless-v4/normal-comparison.json",
+      "bundled": [
+        "early coarse softmax"
+      ],
+      "status": "observed_only_no_established_stable_gain"
+    }
+  ],
+  "independent_branches": {
+    "sage_teahouse15s": [
+      {
+        "id": "bf16",
+        "label": "BF16 VSA",
+        "mean_s": 27.493666666666666,
+        "samples_s": [
+          27.645,
+          27.471,
+          27.365
+        ],
+        "video_sha256s": [
+          "d70399e115ed143eec370f81cc71946b29245d3cb73536b2f16e6739360ff305"
+        ],
+        "speedup_vs_own_baseline": 1.0,
+        "reduction_vs_own_baseline_pct": 0.0
+      },
+      {
+        "id": "pr4691",
+        "label": "PR4691 Sage",
+        "mean_s": 25.90233333333333,
+        "samples_s": [
+          25.987,
+          25.807,
+          25.913
+        ],
+        "video_sha256s": [
+          "f517715d4af55ff15bd5a48211266ca623434aa4db6942a6e3948489e4fe5f0d"
+        ],
+        "speedup_vs_own_baseline": 1.0614359066750745,
+        "reduction_vs_own_baseline_pct": 5.787999660527888
+      },
+      {
+        "id": "pr4951",
+        "label": "PR4951 Cake + ragged fix",
+        "mean_s": 25.706333333333333,
+        "samples_s": [
+          25.793,
+          25.554,
+          25.772
+        ],
+        "video_sha256s": [
+          "af4edbfa994307a9553f19d614115a9d43e0aff322b0fdd394f31e3f6490d921"
+        ],
+        "speedup_vs_own_baseline": 1.06952890986657,
+        "reduction_vs_own_baseline_pct": 6.5008911143172305
+      }
+    ],
+    "ulysses_four_way": [
+      {
+        "id": "bf16-base",
+        "label": "BF16 \u00b7 \u539f\u8c03\u5ea6",
+        "mean_s": 25.761333333333333,
+        "samples_s": [
+          25.684,
+          25.853,
+          25.747
+        ],
+        "video_sha256s": [
+          "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        ],
+        "speedup_vs_own_baseline": 1.0,
+        "reduction_vs_own_baseline_pct": 0.0
+      },
+      {
+        "id": "bf16-overlap",
+        "label": "BF16 \u00b7 \u91cd\u53e0\u8c03\u5ea6",
+        "mean_s": 25.135333333333335,
+        "samples_s": [
+          25.17,
+          25.047,
+          25.189
+        ],
+        "video_sha256s": [
+          "aa55fa19de94066e999f04275362f5477b3d74eb925d45fece8918d1cc8f596a"
+        ],
+        "speedup_vs_own_baseline": 1.0249051799591544,
+        "reduction_vs_own_baseline_pct": 2.429998447285331
+      },
+      {
+        "id": "fp8-base",
+        "label": "FP8 blockwise \u00b7 \u539f\u8c03\u5ea6",
+        "mean_s": 20.984666666666666,
+        "samples_s": [
+          21.027,
+          20.9,
+          21.027
+        ],
+        "video_sha256s": [
+          "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e"
+        ],
+        "speedup_vs_own_baseline": 1.227626520951806,
+        "reduction_vs_own_baseline_pct": 18.5420009316288
+      },
+      {
+        "id": "fp8-overlap",
+        "label": "FP8 blockwise \u00b7 \u91cd\u53e0\u8c03\u5ea6",
+        "mean_s": 20.586333333333332,
+        "samples_s": [
+          20.502,
+          20.561,
+          20.696
+        ],
+        "video_sha256s": [
+          "a4e70c9dcd2bedcf700916b3c6bc3c7d8d11dbf68f195eca695e25cac186f96e"
+        ],
+        "speedup_vs_own_baseline": 1.2513803656147282,
+        "reduction_vs_own_baseline_pct": 20.08824595000259
+      }
+    ]
+  }
+}

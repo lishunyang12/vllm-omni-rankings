@@ -1,0 +1,93 @@
+{
+  "scope": "Cumulative actual backend projection counters, includes earlier private and production requests; not per-current-request A/B.",
+  "ranks": [
+    {
+      "rank": 0,
+      "forwards": 3756,
+      "modules": 200,
+      "calls": 751200,
+      "bf16_projection_calls": 0,
+      "mxfp8_projection_calls": 751200,
+      "fused_fc2_calls": 187800,
+      "dense_attention": true,
+      "fallback": 0
+    },
+    {
+      "rank": 1,
+      "forwards": 3756,
+      "modules": 200,
+      "calls": 751200,
+      "bf16_projection_calls": 0,
+      "mxfp8_projection_calls": 751200,
+      "fused_fc2_calls": 187800,
+      "dense_attention": true,
+      "fallback": 0
+    },
+    {
+      "rank": 2,
+      "forwards": 3756,
+      "modules": 200,
+      "calls": 751200,
+      "bf16_projection_calls": 0,
+      "mxfp8_projection_calls": 751200,
+      "fused_fc2_calls": 187800,
+      "dense_attention": true,
+      "fallback": 0
+    },
+    {
+      "rank": 3,
+      "forwards": 3756,
+      "modules": 200,
+      "calls": 751200,
+      "bf16_projection_calls": 0,
+      "mxfp8_projection_calls": 751200,
+      "fused_fc2_calls": 187800,
+      "dense_attention": true,
+      "fallback": 0
+    },
+    {
+      "rank": 4,
+      "forwards": 3756,
+      "modules": 200,
+      "calls": 751200,
+      "bf16_projection_calls": 0,
+      "mxfp8_projection_calls": 751200,
+      "fused_fc2_calls": 187800,
+      "dense_attention": true,
+      "fallback": 0
+    },
+    {
+      "rank": 5,
+      "forwards": 3756,
+      "modules": 200,
+      "calls": 751200,
+      "bf16_projection_calls": 0,
+      "mxfp8_projection_calls": 751200,
+      "fused_fc2_calls": 187800,
+      "dense_attention": true,
+      "fallback": 0
+    },
+    {
+      "rank": 6,
+      "forwards": 3756,
+      "modules": 200,
+      "calls": 751200,
+      "bf16_projection_calls": 0,
+      "mxfp8_projection_calls": 751200,
+      "fused_fc2_calls": 187800,
+      "dense_attention": true,
+      "fallback": 0
+    },
+    {
+      "rank": 7,
+      "forwards": 3756,
+      "modules": 200,
+      "calls": 751200,
+      "bf16_projection_calls": 0,
+      "mxfp8_projection_calls": 751200,
+      "fused_fc2_calls": 187800,
+      "dense_attention": true,
+      "fallback": 0
+    }
+  ]
+}
