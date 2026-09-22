@@ -1,0 +1,164 @@
+{
+  "scope": "Architecture of the September 22 report snapshot, read-only audit; older docs are treated as historical evidence, not current startup instructions.",
+  "model": {
+    "base_task": "MiniMax-H3 Ref2VA",
+    "adapter": "minimax_h3_ref2v_turbo_4step_v0.1_bf16.safetensors",
+    "base_source": "MiniMaxAI/MiniMax-H3",
+    "base_revision_recorded_in_setup": "73372e6cf53e414edd3ab03e357717fb0602e758",
+    "turbo_source": "lightx2v/Minimax-h3-Turbo",
+    "turbo_revision_recorded_in_setup": "3ec17a324ced54151364f24f8b5fb6bf7e26414f",
+    "earlier_route": "FastH3 T2VA with VSA; a different adapter/task path",
+    "current_attention_coverage": "dense; no VSA gate"
+  },
+  "reference": {
+    "file": "reference-interior-side-liaozhai-tea-v1.png",
+    "sha256": "41f1f15af74b88d9b11117bc73b0af560f9128aeb32c0093f0b92e019e826376",
+    "original_dimensions": [
+      1672,
+      941
+    ],
+    "copies_per_request": 2,
+    "distinct_images_per_request": 1,
+    "reference_resize": "match: area-based downscale, 32-pixel grid; no upscaling small inputs",
+    "external_audio_references": 0,
+    "role": "Appearance/scene conditioning, not a forced output keyframe"
+  },
+  "quality_anchor": {
+    "file": "tea-quality-anchor.png",
+    "sha256": "ff42b6528572103725dd6b48bde282ca16298f0aea33f0e0a1ec5bd535cc47ce",
+    "dimensions": [
+      960,
+      544
+    ],
+    "role": "CPU comparison image only; separate from model input reference"
+  },
+  "continuation": {
+    "fps": 24,
+    "window_frames": 124,
+    "overlap_frames": 5,
+    "stride_frames": 119,
+    "saved_video_temporal_tokens": 7,
+    "used_video_guide_temporal_tokens": 2,
+    "saved_audio_latent_ticks_per_channel": 37,
+    "audio_latent_hz": 40,
+    "overlap_audio_ticks_formula": "round(end_frame*5/3)-round((end_frame-5)*5/3)",
+    "target_prefix": "video",
+    "visual_guide_tau": 0.8,
+    "position_mode": "window",
+    "max_same_parent_retries": 1,
+    "periodic_reset": false,
+    "state_verification": "Exact video latent prefix plus heuristic decoded-frame checks; semantic object state is not visually verified."
+  },
+  "sources": [
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/app/benchmark_short_ref2va.py",
+      "bytes": 14140,
+      "sha256": "35fb62be418749e454a450b4f7e0fd109875d00970825637d84984c34e984d01"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/app/avatar_continuous.py",
+      "bytes": 11740,
+      "sha256": "05f344deb28a8a47df8fff4e8a32f4af93c8391d4767e166ef7bfc73ed88d7dc"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/app/avatar_continuity_quality.py",
+      "bytes": 5169,
+      "sha256": "ad996e876e08250817b999c834f5d041361ccb1eab26de765f960d74a6abbd62"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/app/avatar_zhiwei.py",
+      "bytes": 42373,
+      "sha256": "30000f1ba0f18a6cbeb716ef09eeed4d9dbcb2b2d83d6ed9b1178b29b9e311b8"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/app/avatar_behavior.py",
+      "bytes": 14050,
+      "sha256": "5340d841ae55a709bc66c3d95e59f42b656d92da9d035ed334c78a81e991abf9"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/SETUP.md",
+      "bytes": 10599,
+      "sha256": "7c4b0dd823ffd2e24d0d9e12d2ee97a00ca59c1e9f97e907d671d18befdefb6d"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/QUALITY.md",
+      "bytes": 10854,
+      "sha256": "b99a157d9b8df88d3cf79cce19eac05261a69c11d4b78255395e8b0aaa4072e4"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_LATENCY_20260921.md",
+      "bytes": 6723,
+      "sha256": "b78c2c924acfe12e7c6b2eee950533c5d128c2d298903c8ec2999b5c816b315f"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_CONTINUITY.md",
+      "bytes": 4472,
+      "sha256": "25e1fe78da969cc1c83eae062908356ec9895b483125a2102caadb8745421c05"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/STATUS.md",
+      "bytes": 24630,
+      "sha256": "cc91ead1cfb9f0822ba757017383c1b99e886a26c2f69c5b235df7939d24cef4"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/experiments/rolling-quality/README.md",
+      "bytes": 4044,
+      "sha256": "aa086191000fbd5c3ef36a886c87a4f4813fb6654b744aa42ba2efaf4e5a61ab"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/evidence/quality-tail-causality.json",
+      "bytes": 9461,
+      "sha256": "5f27607fcf72ce65bf8f8b85ae2fa1a456b30193b7e43703532467639523b151"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/evidence/quality-guide-noise-probe.json",
+      "bytes": 21257,
+      "sha256": "4af55695e186cb81f86bf9f4631d56631bf54bc3a91cee7c703f536a27e18cb9"
+    },
+    {
+      "path": "${TMP}/h3-short-window-20260922/native-v3/vllm_omni/diffusion/models/minimax_h3/rolling_continuation.py",
+      "bytes": 9165,
+      "sha256": "1e390a1d9bb705ee833839fd2f6405967b29be33392ee2e38296a014d6fe8d80"
+    },
+    {
+      "path": "${TMP}/h3-short-window-20260922/native-v3/vllm_omni/diffusion/models/minimax_h3/quality_target_prefix.py",
+      "bytes": 2410,
+      "sha256": "76a8b815047fca5f49112d05e6e2df1329ea225b47f1ab78c0aadb451ca5fa8c"
+    },
+    {
+      "path": "${TMP}/h3-short-window-20260922/native-v3/vllm_omni/diffusion/models/minimax_h3/quality_guide_noise.py",
+      "bytes": 2546,
+      "sha256": "b2ec584c5ed1342f11ff1bfe0cffa4a14ef205368325b94df41628e630b7e76d"
+    },
+    {
+      "path": "${TMP}/h3-short-window-20260922/native-v3/vllm_omni/diffusion/models/minimax_h3/denoise_loop.py",
+      "bytes": 18050,
+      "sha256": "f8edbbf174cff323c89cfcc9c0b89e7efb9cff273170ff661bf2d319b44f8143"
+    },
+    {
+      "path": "${TMP}/h3-short-window-20260922/native-v3/vllm_omni/diffusion/models/minimax_h3/ref2va_turbo_fusion.py",
+      "bytes": 4436,
+      "sha256": "74e67f8230be3eaeea0c5e1af37a0cad028296379aee7fb9d667c96d40c16228"
+    },
+    {
+      "path": "${TMP}/h3-short-window-20260922/native-v3/vllm_omni/diffusion/models/minimax_h3/ref2va_mxfp8.py",
+      "bytes": 4173,
+      "sha256": "49324ed23bb6e9f8d5d9353777bba8d48a122d20df5b23c815453afe3cd5ee19"
+    },
+    {
+      "path": "${TMP}/h3-short-window-20260922/native-v3/vllm_omni/diffusion/models/minimax_h3/pipeline_minimax_h3.py",
+      "bytes": 207371,
+      "sha256": "4047e189d3003c2f58631f7293effce6e17fdc08f0fedde6ed23ba9cfe43b716"
+    },
+    {
+      "path": "${TMP}/h3-zhiwei-quality-20260921-02/replay_baseline.py",
+      "bytes": 3829,
+      "sha256": "4e3e0a0d558bda9f443efe05d23bb9852f77338fb6e247f778b3a35642356644"
+    },
+    {
+      "path": "${TMP}/h3-zhiwei-quality-20260921-02/replay_candidates.py",
+      "bytes": 7623,
+      "sha256": "ffe1ca44b7fe4b0831e8f08e6901469c2309f1eb5b28d91b6e2dbef99ca1f8a9"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="880" viewBox="0 0 1200 880">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#617283"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="30" y="36" fill="#202c38" font-family="Georgia,serif" font-size="24" text-anchor="start" font-weight="bold">Appearance reference, motion context and exact boundary</text>
+<text x="30" y="65" fill="#586674" font-family="Arial,sans-serif" font-size="14" text-anchor="start" font-weight="normal">Three input roles plus an independent quality anchor; reference conditioning is not pixel replacement.</text>
+<rect x="25" y="105" width="345" height="105" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="197.5" y="134" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Clean scene reference R</text>
+<text x="197.5" y="161" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">One distinct image, supplied twice</text>
+<text x="197.5" y="184" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Identity · composition · canonical props</text>
+<rect x="435" y="105" width="330" height="105" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="600.0" y="134" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Segment instruction P</text>
+<text x="600.0" y="161" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Current reply span or action phase</text>
+<text x="600.0" y="184" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Persona + intended scene facts</text>
+<rect x="830" y="105" width="345" height="105" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="1002.5" y="134" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Accepted raw AV tail T</text>
+<text x="1002.5" y="161" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Recent pose, motion and sound</text>
+<text x="1002.5" y="184" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Can also carry inherited errors</text>
+<rect x="830" y="265" width="345" height="115" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="1002.5" y="294" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Two uses of the visual suffix</text>
+<text x="1002.5" y="321" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Noised guide: τT + (1 − τ)ε, τ = 0.8</text>
+<text x="1002.5" y="344" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Exact target overlap: unmodified T</text>
+<text x="1002.5" y="367" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Audio tail supplies recent context</text>
+<polyline points="1000,210 1000,265" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="435" y="280" width="330" height="100" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="600.0" y="309" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">H3 Ref2VA Turbo</text>
+<text x="600.0" y="336" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Joint audiovisual generation</text>
+<text x="600.0" y="359" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Video prefix held at every update</text>
+<polyline points="197,210 197,330 435,330" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="600,210 600,280" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="830,325 765,325" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="435" y="445" width="330" height="115" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="600.0" y="474" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Candidate admission</text>
+<text x="600.0" y="501" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Raw AV shape + exact video prefix</text>
+<text x="600.0" y="524" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Decoded seam + sampled drift</text>
+<text x="600.0" y="547" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Expected speech audibility</text>
+<polyline points="600,380 600,445" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="25" y="450" width="345" height="110" rx="7" fill="#f2f4f6" stroke="#b7c4cf"/>
+<text x="197.5" y="479" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Separate RGB quality anchor</text>
+<text x="197.5" y="506" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Reviewed fixed comparison frame</text>
+<text x="197.5" y="529" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">CPU screen only; not a model input</text>
+<polyline points="370,505 435,505" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="830" y="450" width="345" height="110" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="1002.5" y="479" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Rejected candidate</text>
+<text x="1002.5" y="506" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Discard its backend branch</text>
+<text x="1002.5" y="529" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Restore the same accepted parent</text>
+<polyline points="765,505 830,505" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="798" y="483" fill="#4b5c6d" font-family="Arial,sans-serif" font-size="14" text-anchor="middle" font-weight="normal">Fail</text>
+<polyline points="1000,450 1000,404 1185,404 1185,88 1000,88 1000,105" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<rect x="435" y="640" width="330" height="110" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="600.0" y="669" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Accepted candidate</text>
+<text x="600.0" y="696" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Publish the new 119 frames</text>
+<text x="600.0" y="719" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Save bounded raw AV tail</text>
+<polyline points="600,560 600,640" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="640" y="605" fill="#4b5c6d" font-family="Arial,sans-serif" font-size="14" text-anchor="middle" font-weight="normal">Pass</text>
+<rect x="830" y="640" width="345" height="110" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="1002.5" y="669" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Second rejection</text>
+<text x="1002.5" y="696" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Stop publication</text>
+<text x="1002.5" y="719" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Continuous recovery remains open</text>
+<polyline points="1000,560 1000,640" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="1080" y="605" fill="#4b5c6d" font-family="Arial,sans-serif" font-size="14" text-anchor="middle" font-weight="normal">Retry also fails</text>
+<polyline points="435,695 400,695 400,88 1000,88 1000,105" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<text x="600" y="807" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Exact latent-prefix equality constrains the boundary; it does not guarantee long-run identity or object fidelity.</text>
+</svg>

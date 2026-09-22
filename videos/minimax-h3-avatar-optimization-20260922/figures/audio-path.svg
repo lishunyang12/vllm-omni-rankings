@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#617283"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="30" y="36" fill="#202c38" font-family="Georgia,serif" font-size="24" text-anchor="start" font-weight="bold">Native audiovisual generation and the broadcast audio path</text>
+<text x="30" y="65" fill="#586674" font-family="Arial,sans-serif" font-size="14" text-anchor="start" font-weight="normal">Ordinary dialogue uses prompt-defined voice and generated audio context; no per-line TTS stage is required.</text>
+<rect x="30" y="105" width="300" height="100" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="180.0" y="134" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Joint H3 audiovisual DiT</text>
+<text x="180.0" y="161" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Four-step Ref2VA Turbo</text>
+<text x="180.0" y="184" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Shared speech / motion generation</text>
+<rect x="445" y="105" width="315" height="100" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="602.5" y="134" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Video reconstruction</text>
+<text x="602.5" y="161" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Native video VAE · NVFP4</text>
+<text x="602.5" y="184" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Frames → persistent H.264 encoding</text>
+<rect x="865" y="105" width="305" height="100" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="1017.5" y="134" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Broadcast mux / transport</text>
+<text x="1017.5" y="161" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Continuous frame/sample timestamps</text>
+<text x="1017.5" y="184" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Twitch ingest → viewer</text>
+<polyline points="330,155 445,155" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="760,155 865,155" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="30" y="290" width="300" height="100" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="180.0" y="319" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Native audio VAE</text>
+<text x="180.0" y="346" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">FP32 decoder</text>
+<text x="180.0" y="369" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Generated 32 kHz float PCM</text>
+<polyline points="180,205 180,290" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="435" y="290" width="335" height="100" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="602.5" y="319" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Preserve and inspect PCM</text>
+<text x="602.5" y="346" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Keep original waveform sidecar</text>
+<text x="602.5" y="369" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Audibility / media validity checks</text>
+<polyline points="330,340 435,340" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="865" y="290" width="305" height="100" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="1017.5" y="319" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Relay audio processing</text>
+<text x="1017.5" y="346" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Resample to 48 kHz stereo</text>
+<text x="1017.5" y="369" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">One final AAC encode · 192 kb/s</text>
+<polyline points="770,340 865,340" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="1017,290 1017,205" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="120" y="485" width="960" height="107" rx="7" fill="#f2f4f6" stroke="#b7c4cf"/>
+<text x="600.0" y="514" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Three distinct fidelity questions</text>
+<text x="600.0" y="541" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Content and prosody: already determined in the generated waveform</text>
+<text x="600.0" y="564" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Boundary continuity: raw audio context and sample alignment   |   Transport fidelity: resampling and final codec</text>
+<text x="600" y="638" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Preserving PCM avoids an extra lossy relay input; it cannot remove words already generated by the model.</text>
+</svg>

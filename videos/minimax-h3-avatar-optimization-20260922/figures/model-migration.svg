@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="670" viewBox="0 0 1200 670">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#617283"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="30" y="36" fill="#202c38" font-family="Georgia,serif" font-size="24" text-anchor="start" font-weight="bold">Model migration and workload selection</text>
+<text x="30" y="65" fill="#586674" font-family="Arial,sans-serif" font-size="14" text-anchor="start" font-weight="normal">Separate the change in generation task from the serving optimizations inherited by the new task.</text>
+<rect x="35" y="105" width="470" height="300" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="270.0" y="134" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Earlier: FastH3 T2VA</text>
+<text x="270.0" y="161" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Four-step FastH3 student / adapter</text>
+<text x="270.0" y="184" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">VSA attention in the selected benchmark</text>
+<text x="270.0" y="207" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">1280 × 704 · 362 frames · 24 fps</text>
+<text x="270.0" y="230" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">15.083 s of completed media</text>
+<text x="270.0" y="253" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Objective: complete a finite clip in real time</text>
+<text x="270.0" y="276" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">No claim of a persistent interactive world</text>
+<rect x="695" y="105" width="470" height="300" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="930.0" y="134" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Selected: H3 Ref2VA + Turbo</text>
+<text x="930.0" y="161" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">LightX2V four-step Ref2VA adapter</text>
+<text x="930.0" y="184" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Dense Sage · fixed reference + raw AV tail</text>
+<text x="930.0" y="207" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">960 × 544 · 124 generated frames · 24 fps</text>
+<text x="930.0" y="230" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">119 new frames = 4.958 s per continuation</text>
+<text x="930.0" y="253" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Objective: accept the next instruction sooner</text>
+<text x="930.0" y="276" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">State and quality checked across segments</text>
+<polyline points="520,240 680,240" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="600" y="215" fill="#4b5c6d" font-family="Arial,sans-serif" font-size="14" text-anchor="middle" font-weight="normal">Task migration</text>
+<rect x="175" y="460" width="850" height="115" rx="7" fill="#f2f4f6" stroke="#b7c4cf"/>
+<text x="600.0" y="489" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Inherited runtime mechanisms</text>
+<text x="600.0" y="516" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Persistent service · exact AdaLN · BF16 RDMA · MXFP8 packing fusion · native AV decode</text>
+<text x="600.0" y="539" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">VSA-specific schedules require separate admission; they do not transfer automatically</text>
+<polyline points="270,405 270,445" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="930,405 930,445" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="600" y="620" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Different task, geometry and conditioning: the timing ratio is not an isolated infrastructure speedup.</text>
+</svg>

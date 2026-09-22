@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="710" viewBox="0 0 1200 710">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#617283"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="30" y="36" fill="#202c38" font-family="Georgia,serif" font-size="24" text-anchor="start" font-weight="bold">Response latency spans several independent clocks</text>
+<text x="30" y="65" fill="#586674" font-family="Arial,sans-serif" font-size="14" text-anchor="start" font-weight="normal">Schematic event order only: horizontal distances are not measured durations.</text>
+<text x="25" y="140" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="start" font-weight="bold">Input / text</text>
+<polyline points="175,165 1170,165" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="25" y="250" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="start" font-weight="bold">GPU producer</text>
+<polyline points="175,275 1170,275" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="25" y="350" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="start" font-weight="bold">Media ready</text>
+<polyline points="175,375 1170,375" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="25" y="460" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="start" font-weight="bold">Local playback</text>
+<polyline points="175,485 1170,485" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="25" y="570" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="start" font-weight="bold">Viewer</text>
+<polyline points="175,595 1170,595" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="220" y="97" width="215" height="64" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="327.5" y="126" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Prepare reply</text>
+<text x="220" y="85" fill="#202c38" font-family="Arial,sans-serif" font-size="13" text-anchor="start" font-weight="normal">Message received</text>
+<rect x="185" y="207" width="270" height="64" rx="7" fill="#f2f4f6" stroke="#b7c4cf"/>
+<text x="320.0" y="236" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="bold">Current window already running</text>
+<rect x="490" y="207" width="180" height="64" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="580.0" y="236" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="bold">Generate reply A</text>
+<rect x="790" y="207" width="215" height="64" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="897.5" y="236" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="bold">Generate reply B</text>
+<rect x="690" y="307" width="100" height="64" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="740.0" y="336" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="bold">Check A</text>
+<rect x="1035" y="307" width="100" height="64" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="1085.0" y="336" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="bold">Check B</text>
+<rect x="185" y="417" width="605" height="64" rx="7" fill="#f2f4f6" stroke="#b7c4cf"/>
+<text x="487.5" y="446" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="bold">Earlier accepted footage is playing</text>
+<rect x="790" y="417" width="345" height="64" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="962.5" y="446" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="bold">Answer A: remain engaged</text>
+<rect x="1135" y="417" width="50" height="64" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="1160.0" y="446" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="bold">B</text>
+<polyline points="435,140 470,140 470,200" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<polyline points="670,250 680,250 680,290 730,290 730,307" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<polyline points="790,350 790,417" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<polyline points="845,485 925,530" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<text x="970" y="515" fill="#4b5c6d" font-family="Arial,sans-serif" font-size="14" text-anchor="middle" font-weight="normal">Twitch / player delay</text>
+<rect x="925" y="537" width="240" height="64" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="1045.0" y="566" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="bold">Meaningful response visible</text>
+<text x="845" y="502" fill="#202c38" font-family="Arial,sans-serif" font-size="12" text-anchor="middle" font-weight="normal">First response within A</text>
+<text x="600" y="646" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">A reply can span A → B without an idle reading reset; new messages wait for an eligible decision.</text>
+<text x="600" y="679" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="bold">Production &lt; playback budget does not imply message-to-viewer latency &lt; one window.</text>
+</svg>

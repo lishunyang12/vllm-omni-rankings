@@ -1,0 +1,49 @@
+{
+  "scope": "Source audit for the selected Zhiwei streaming profile; no live-service change or new GPU experiment",
+  "page_turn": "Eligible at each crossed 1190-new-frame threshold when idle; can be superseded by queued work",
+  "reply_priority": "Continuing segmented reply, then oldest queued reply, then idle",
+  "same_viewer_context": "Up to two completed replies in ten minutes; recent host lines for repetition control",
+  "world_state": "Intended/generated/playback receipts, not general visual verification",
+  "sources": [
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/app/generate_short_avatar.py",
+      "bytes": 19809,
+      "sha256": "4fc8bc4106de887d5ea1440b3f406ebc208100f8476eadb78546c6d42c0ba557"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/app/avatar_agent_replies.py",
+      "bytes": 22578,
+      "sha256": "38e16d401c0f99dc666455fc1fe819ddabf437a6a3e1883782a610c5ba48b56d"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/app/avatar_text_worker.py",
+      "bytes": 4987,
+      "sha256": "b0cfdd192954f46f4e0060b9c97eef80196731d38a57aaae31eca939f3c574de"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/app/avatar_text.py",
+      "bytes": 18777,
+      "sha256": "6c58c76bb580f658c4d1e89271a5beddc3aad55ec21588931561f88ef97ac132"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/app/avatar_zhiwei.py",
+      "bytes": 42373,
+      "sha256": "30000f1ba0f18a6cbeb716ef09eeed4d9dbcb2b2d83d6ed9b1178b29b9e311b8"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/app/twitch_fresh_queue.py",
+      "bytes": 18469,
+      "sha256": "a09da309384020021b46e2c8cd6d4ed5bff43210d18db5054f21667121aa6872"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_SHOW_BIBLE_V1.md",
+      "bytes": 12732,
+      "sha256": "abd4b4f6bbc678b44328c3002ca6bbc77281118538988a860a70de72b3a4b564"
+    },
+    {
+      "path": "${WORKSPACE}/minimax-h3-interactive-avatar/docs/ZHIWEI_SCENE_ACTION_CATALOG.md",
+      "bytes": 11109,
+      "sha256": "f9bddd510b1f6e0d9d74ad9b81adb93c57dba5e13e94fc64f6ff9ed0558df433"
+    }
+  ]
+}

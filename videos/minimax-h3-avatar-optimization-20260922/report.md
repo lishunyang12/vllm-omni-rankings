@@ -159,7 +159,7 @@ Twitch ingest → HLS/player → viewer
 | Wire precision | BF16 | E4M3 QKV transport is disabled |
 | Video / audio VAE | NVFP4 / FP32 | Video-only decoder approximation; audio decoder not quantized to NVFP4 |
 | Clean reference blocks | Two copies of the same reference | Retains the tested conditioning arrangement; cache avoids redundant encoding rather than removing a block |
-| Reference guide parameter | 0.8 | Conditioning choice, not a free infrastructure optimization |
+| Visual-tail guide timestep τ | 0.8 | Applies to the generated visual guide; distinct from the clean image references |
 | Target-prefix preservation | Video prefix enabled | Exact accepted video prefix plus raw AV continuation state |
 | External audio reference | None in prompt-only mode | Voice is described in the prompt; H3 generates the audio |
 | Future footage | One-clip lookahead | Lower ready-to-play delay, less retry reserve |

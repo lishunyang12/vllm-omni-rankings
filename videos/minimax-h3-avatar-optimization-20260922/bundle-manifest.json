@@ -3,17 +3,41 @@
     "bytes": 4710,
     "sha256": "10c77c5021234b82b7e61b46c99da732b5336df163a89d7e0e8fa02af3c8ea11"
   },
+  "build_continuity.py": {
+    "bytes": 3841,
+    "sha256": "57594bdbbd935aeaab12e6a3d2c32a99bf5105f71994216b714b21f7cf7a5577"
+  },
+  "build_diagrams.py": {
+    "bytes": 12990,
+    "sha256": "9ee6936873be0333940b23171bcdd5b4f3a9faa88bd12ca404e3d83275f0fe43"
+  },
   "build_history.py": {
     "bytes": 20975,
     "sha256": "e69176366e77d6910b5a952e63ac3d86c92aeaf2c75fef4c4f2cbe7cc9f607a5"
   },
+  "build_paper.py": {
+    "bytes": 26218,
+    "sha256": "a5905562a50bcd26fc9f6104c2125aa0e5a772bdd768a9ff0b170ba40a3d774f"
+  },
   "build_report.py": {
-    "bytes": 19161,
-    "sha256": "9132c986a0d2d83406fd034b04b1c5e03dc57a35fa8f8d2994ce61d24b6fd089"
+    "bytes": 19338,
+    "sha256": "a66080b4fc460cf1366e1db312e47de43dd1ed0055991fe281a7aaf44cc8af34"
+  },
+  "continuity.md": {
+    "bytes": 24997,
+    "sha256": "b281b5ee1f3cec759f39b55ae1a22e9cd0cecf2a1319f78cc38714eb1c9a7f52"
   },
   "evidence/backend-dispatch-snapshot.json": {
     "bytes": 2216,
     "sha256": "9d0a013c370c127bbe63a218c7ad7887e483a9566e82b5cb9ba4142f67f963cf"
+  },
+  "evidence/continuity-ablation.json": {
+    "bytes": 32649,
+    "sha256": "9d984d488635b609d5f4aea617430316a43b40ffc9372626b23e6d384a3f95c8"
+  },
+  "evidence/continuity-design.json": {
+    "bytes": 6807,
+    "sha256": "1457d8124ba5d6f6478dd1629dd307a75f66a3e6b63354dc8bac892197d8d311"
   },
   "evidence/current-live-observation.json": {
     "bytes": 5610,
@@ -27,6 +51,10 @@
     "bytes": 2156,
     "sha256": "e300f484c477d6000539f572a0f5a5c5c8fa9c47463ca46737e467847faf82b1"
   },
+  "evidence/grafana-screenshot.json": {
+    "bytes": 514,
+    "sha256": "93146afe79d20af1926765d00bdc2808cb8d70d58be557c19548e60ae67a5746"
+  },
   "evidence/history-inventory.json": {
     "bytes": 81565,
     "sha256": "0290b388a2434b733953b25ce01a7d8636f27bbe430c7edd1963bccdc1b7debe"
@@ -34,6 +62,14 @@
   "evidence/implementation-manifest.json": {
     "bytes": 2907,
     "sha256": "04912934a0d23bdc83f8705a7888675639a2beaeba5d470844cc026f4d18db33"
+  },
+  "evidence/live-logic.json": {
+    "bytes": 2176,
+    "sha256": "c6551913a04b2c1622c692b965bf926c1b9d486b17d78076058c484078471b65"
+  },
+  "evidence/live-screenshot.json": {
+    "bytes": 518,
+    "sha256": "334ac06634f6581b1d71861826fa4d344152e00118b4301681c1186afa05c712"
   },
   "evidence/measurements.json": {
     "bytes": 45046,
@@ -63,6 +99,26 @@
     "bytes": 13796,
     "sha256": "2d7ba96e6ee7f57cd58b439cf20e3ae0c296cc3c6cde01b0a42918093d38ff8d"
   },
+  "figures/audio-path.svg": {
+    "bytes": 5755,
+    "sha256": "eec14e5d4bea8d6643f264725ae4edd929f4e887025d33790b2391b92bc66224"
+  },
+  "figures/continuity-black-bands.png": {
+    "bytes": 95507,
+    "sha256": "6404c44a7033f5c1f5aa0e37b32c586b2b215d1cc4541e47c74b83f20c93dd8b"
+  },
+  "figures/continuity-black-bands.svg": {
+    "bytes": 42773,
+    "sha256": "771f1c2cb2d23169b4c2ff536d96556544478f4dd6b1233b101781a33d41bdcd"
+  },
+  "figures/continuity-seams.png": {
+    "bytes": 137202,
+    "sha256": "dd0129df1834e95ef010466fb72d9fd3ef1a4a8794019dba3d60e0d20931a3a8"
+  },
+  "figures/continuity-seams.svg": {
+    "bytes": 62419,
+    "sha256": "7ff85e9c4438f740a756084c6c6577725191a9ac7e67da7a97081678d25396d2"
+  },
   "figures/current-latency.png": {
     "bytes": 109062,
     "sha256": "6149a2942c4b83bc908c9918ba828b12cee78f55f7479fe45f7eea840c96ae4b"
@@ -71,6 +127,22 @@
     "bytes": 17289,
     "sha256": "0c8211d6435796865f5d8fa176fd8abe5c8b493d5a7aadc86ff399dc08a7d4f7"
   },
+  "figures/fidelity-contracts.svg": {
+    "bytes": 6105,
+    "sha256": "ce5c3b7535f0d303a800e7b7850ee99986b9d46e3f5352ee5e26cbb4031f0e20"
+  },
+  "figures/grafana-screenshot.png": {
+    "bytes": 599303,
+    "sha256": "6778375cf81bc71d02857e63c33027eb4ee609b8d4e94e88cf90a05c13406d0c"
+  },
+  "figures/live-control.svg": {
+    "bytes": 7653,
+    "sha256": "cbbdd8bde709ed714878cf123d308d1eee2ee5e46d153c8de579c91afbd290c7"
+  },
+  "figures/live-screenshot.png": {
+    "bytes": 4890200,
+    "sha256": "b0ce422a05b442ee0ea068660611d3068705d81b1525a0c2226feb11e8dcf22b"
+  },
   "figures/matched-campaigns.png": {
     "bytes": 82067,
     "sha256": "c709e656a64077eb907701f6ac313f6f3d95b77f19d24de5a63b13515aa7adfa"
@@ -78,6 +150,18 @@
   "figures/matched-campaigns.svg": {
     "bytes": 15571,
     "sha256": "5245ccb25768f8d4e92bf3976785b0f31cc5f35be7ea9a4ed30641227792aa45"
+  },
+  "figures/model-migration.svg": {
+    "bytes": 4700,
+    "sha256": "fa0f6fb1024d7da982274c500c0368f6a722e7b144f7c3f8771373cb0471ae92"
+  },
+  "figures/reference-continuation.svg": {
+    "bytes": 8799,
+    "sha256": "650d5d0c8a2a9981d40be5a5c55bb510a4bc9ede77ccef547cb95cdf6546d7a3"
+  },
+  "figures/response-clocks.svg": {
+    "bytes": 5802,
+    "sha256": "489b74d14b3eec125915248945453ea502b67e8bf59fc9bd0401a3b23f1b4daa"
   },
   "figures/weight-residency.png": {
     "bytes": 120973,
@@ -96,19 +180,27 @@
     "sha256": "554112d1c3a8a1347ce109d13f0ba45c1a34ffb11eaa6d22f840c31cc9d03be7"
   },
   "history.html": {
-    "bytes": 39446,
-    "sha256": "2cf47110b12165120e33bf40c9f22fdf782365cc3dbaab0b841d18ca9f6de56d"
+    "bytes": 316,
+    "sha256": "68dde77ddc6e20b1e9cc0a148a3714d91b409b3814803b20daf59ca264841c95"
   },
   "history.md": {
     "bytes": 24196,
     "sha256": "08afdcd3b595e404e09133b60b493b2188c2754e993313a148c285861dde496b"
   },
   "index.html": {
-    "bytes": 177201,
-    "sha256": "e823933768364b700f827587294bdff6be999b19ffdc0c01d3e545e59652a719"
+    "bytes": 8596182,
+    "sha256": "45fb03af7c3ca6e10b7cf0eb449ed427216df8d18d3af123c3c123a6c1e765ef"
+  },
+  "live-logic.md": {
+    "bytes": 6397,
+    "sha256": "58d13d1fe09d5de8c3b141990b4cf4970e0781467e8418a83a4ab2c5aec85631"
+  },
+  "paper.md": {
+    "bytes": 96909,
+    "sha256": "cd0730c7efaf7d61bc3f29cdb22e814b90a46c6e584fd0cf025e34c522c52746"
   },
   "report.md": {
-    "bytes": 61639,
-    "sha256": "b2528fba163bd7205e0004018a05c220fe8a0301ec4818f8723eff924b2a57f5"
+    "bytes": 61663,
+    "sha256": "983eddeb794bb6c6edba98a29f7efb3c42acde28f05d1b18e9f7c9b3943eaec6"
   }
 }

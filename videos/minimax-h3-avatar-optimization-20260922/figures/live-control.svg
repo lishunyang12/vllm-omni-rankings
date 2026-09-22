@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#617283"/></marker></defs>
+<rect width="100%" height="100%" fill="white"/>
+<text x="30" y="36" fill="#202c38" font-family="Georgia,serif" font-size="24" text-anchor="start" font-weight="bold">Live interaction and scheduling</text>
+<text x="30" y="65" fill="#586674" font-family="Arial,sans-serif" font-size="14" text-anchor="start" font-weight="normal">Control flow for the selected reading profile; a completed request does not prove visual action success.</text>
+<rect x="35" y="105" width="305" height="112" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="187.5" y="134" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Real viewer message</text>
+<text x="187.5" y="161" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Timestamp · deduplicate · expire</text>
+<text x="187.5" y="184" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Conversation or supported action</text>
+<rect x="395" y="105" width="345" height="112" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="567.5" y="134" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Prepare next response</text>
+<text x="567.5" y="161" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Direct action OR local text model</text>
+<text x="567.5" y="184" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Persona + scene + recent dialogue</text>
+<rect x="795" y="105" width="370" height="112" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="980.0" y="134" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Durable reply queue</text>
+<text x="980.0" y="161" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Reply identity · ordered segments</text>
+<text x="980.0" y="184" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Small amount of prepared work</text>
+<polyline points="340,161 395,161" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="740,161 795,161" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="795" y="283" width="370" height="165" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="980.0" y="312" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Next eligible generation slot</text>
+<text x="980.0" y="339" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">1  Continue an active segmented turn</text>
+<text x="980.0" y="362" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">2  Select the oldest queued reply</text>
+<text x="980.0" y="385" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">3  Otherwise: read / occasional page turn</text>
+<polyline points="980,217 980,283" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="395" y="300" width="345" height="128" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="567.5" y="329" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Compile one segment</text>
+<text x="567.5" y="356" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Current words or remaining action</text>
+<text x="567.5" y="379" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Keep attention across reply segments</text>
+<text x="567.5" y="402" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Reference + accepted AV context</text>
+<polyline points="795,365 740,365" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="35" y="300" width="305" height="128" rx="7" fill="#fff2e5" stroke="#b7c4cf"/>
+<text x="187.5" y="329" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Generate and validate</text>
+<text x="187.5" y="356" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">H3 Turbo → admission checks</text>
+<text x="187.5" y="379" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Retry from accepted parent once</text>
+<text x="187.5" y="402" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">See continuation protocol</text>
+<polyline points="395,365 340,365" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="35" y="520" width="305" height="115" rx="7" fill="#eaf5ef" stroke="#b7c4cf"/>
+<text x="187.5" y="549" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Accepted publication</text>
+<text x="187.5" y="576" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">New media + original PCM</text>
+<text x="187.5" y="599" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Raw-tail checkpoint + receipt</text>
+<polyline points="185,428 185,520" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="395" y="520" width="345" height="115" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="567.5" y="549" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Persistent relay</text>
+<text x="567.5" y="576" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Each fresh clip once · frame/sample clock</text>
+<text x="567.5" y="599" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Start / finish receipts → dialogue state</text>
+<polyline points="340,577 395,577" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="795" y="520" width="370" height="115" rx="7" fill="#eaf2fa" stroke="#b7c4cf"/>
+<text x="980.0" y="549" fill="#202c38" font-family="Arial,sans-serif" font-size="17" text-anchor="middle" font-weight="bold">Twitch and viewer</text>
+<text x="980.0" y="576" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Transport + player buffering</text>
+<text x="980.0" y="599" fill="#202c38" font-family="Arial,sans-serif" font-size="16" text-anchor="middle" font-weight="normal">Viewer response occurs after local play</text>
+<polyline points="740,577 795,577" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)"/>
+<polyline points="570,635 570,682 1180,682 1180,365 1165,365" fill="none" stroke="#617283" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="7 5"/>
+<text x="850" y="712" fill="#202c38" font-family="Arial,sans-serif" font-size="15" text-anchor="middle" font-weight="normal">Relay progress permits the next slot; one-clip lookahead limits future footage.</text>
+</svg>

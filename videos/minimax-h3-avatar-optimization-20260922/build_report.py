@@ -173,10 +173,16 @@ const observer=new IntersectionObserver(entries=>{for(const e of entries)if(e.is
 
 def main():
     charts()
-    render('report.md','index.html','From 15-second generation to a five-second interactive avatar','The current technology stack, the optimization decisions that shaped the demo, and the evidence behind both retained changes and rollbacks.',True)
-    render('history.md','history.html','Every retained step of the optimization history','Dense H3, FastH3, VSA, MXFP8, native VAE, OpenVDN, five-second continuation and the live application: successful changes, rejected branches and unfinished experiments.')
+    from build_continuity import main as continuity_charts
+    from build_diagrams import main as diagrams
+    from build_paper import main as paper
+    continuity_charts()
+    diagrams()
+    paper()
+    # Keep the previously published URL working without maintaining a second report.
+    (ROOT/'history.html').write_text('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=index.html#appendix-a-historical-record"><title>Historical record</title></head><body><p>The history is now part of the <a href="index.html#appendix-a-historical-record">single systems report</a>.</p></body></html>\n')
     manifest={str(p.relative_to(ROOT)):{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted(ROOT.rglob('*')) if p.is_file() and p.name!='bundle-manifest.json' and '__pycache__' not in p.parts}
     (ROOT/'bundle-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
-    print(json.dumps({'html':['index.html','history.html'],'figures':5,'files':len(manifest)}))
+    print(json.dumps({'html':['index.html'],'legacy_redirect':'history.html','vector_figures':13,'screenshots':2,'files':len(manifest)}))
 
 if __name__=='__main__':main()
