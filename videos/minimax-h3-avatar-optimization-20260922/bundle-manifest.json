@@ -20,8 +20,8 @@
     "sha256": "e69176366e77d6910b5a952e63ac3d86c92aeaf2c75fef4c4f2cbe7cc9f607a5"
   },
   "build_paper.py": {
-    "bytes": 29678,
-    "sha256": "0539dda6d098c9a9b7d6e9249d3df5ef9c67238dc559fc1998abcbd810665bd8"
+    "bytes": 29578,
+    "sha256": "a9da807542cf7a8c7069bedf74d11e27bd23d25e03975933d56d1469623478a4"
   },
   "build_report.py": {
     "bytes": 19338,
@@ -30,10 +30,6 @@
   "continuity.md": {
     "bytes": 26474,
     "sha256": "e9a13fba422da7ce3866aa85d003fc8b2c5fd179feee3728add301549ef71e21"
-  },
-  "editorial-scope.md": {
-    "bytes": 9994,
-    "sha256": "ca6ed8d2480810515b2e38ea230fbef7dfdf6a9563ff0cf47d38cffafb854e54"
   },
   "evidence/backend-dispatch-snapshot.json": {
     "bytes": 2216,
@@ -70,10 +66,6 @@
   "evidence/history-inventory.json": {
     "bytes": 81565,
     "sha256": "0290b388a2434b733953b25ce01a7d8636f27bbe430c7edd1963bccdc1b7debe"
-  },
-  "evidence/icml-writing-catalog.json": {
-    "bytes": 6724,
-    "sha256": "18960cd9f1c0e3899b1309219446840c7e784c18c71aff4032109de197e5aaf2"
   },
   "evidence/implementation-manifest.json": {
     "bytes": 2907,
@@ -236,16 +228,16 @@
     "sha256": "08afdcd3b595e404e09133b60b493b2188c2754e993313a148c285861dde496b"
   },
   "index.html": {
-    "bytes": 14787201,
-    "sha256": "5a9a82e972cc209fd85ac31d5f4be42d82fe2290e74f91b6ad50c4bf27df3fec"
+    "bytes": 14739240,
+    "sha256": "21d98961787814bcb4dd36316f02ac56fe46e574278bd0b05910e1f4ad75a089"
   },
   "live-logic.md": {
     "bytes": 6397,
     "sha256": "58d13d1fe09d5de8c3b141990b4cf4970e0781467e8418a83a4ab2c5aec85631"
   },
   "paper.md": {
-    "bytes": 117245,
-    "sha256": "77375d9a2a5fffe925cc90c7ed6056adc9b1dfbaa50796c23faea0911bdc7922"
+    "bytes": 107250,
+    "sha256": "26f3cacbf8e05c9b13d13551339ec58d04e1841c9a8f551fb6a441c06397083a"
   },
   "report.md": {
     "bytes": 61663,

@@ -121,7 +121,7 @@ The gallery distinguishes source policy templates from exact H3 prompt strings s
 
 PROMPT_EXPLORER
 
-''' + (ROOT / 'editorial-scope.md').read_text()),
+'''),
     ]
     raw = '# ' + TITLE + '\n\n' + '\n\n'.join('## ' + title + '\n\n' + body for title, body in parts)
     raw = re.sub(r'\*\*Table \d+\. (.+?)\*\*', r'**TABLECAPTION: \1**', raw)
@@ -237,8 +237,8 @@ def main():
         attachments[href] = key
         return 'href="#' + key + '"'
     body = re.sub(r'href="([^"]+)"', local_link, body)
-    # Include source manuscript and all builders in the single-file artifact.
-    for name in ('paper.md', 'report.md', 'continuity.md', 'history.md', 'live-logic.md', 'harness.md', 'editorial-scope.md', 'build_harness.py', 'evidence/icml-writing-catalog.json', 'fonts/NotoSansCJK-LICENSE.txt'):
+    # Bundle the technical manuscript, harness builder and required font license.
+    for name in ('paper.md', 'report.md', 'continuity.md', 'history.md', 'live-logic.md', 'harness.md', 'build_harness.py', 'fonts/NotoSansCJK-LICENSE.txt'):
         attachments[name] = 'evidence-' + name.replace('.', '-')
     body += '<h2 id="appendix-c-embedded-evidence">Appendix C. Embedded evidence</h2><p>Each link downloads a byte-for-byte evidence or source file embedded in this HTML. No network request is required. Hashes identify the bundled version, not a new experiment.</p><ul class="attachment-list">'
     for name, key in sorted(attachments.items()):
