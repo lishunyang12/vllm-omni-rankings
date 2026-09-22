@@ -1,0 +1,1900 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MiniMax H3 and FastH3: Video Generation, Model Design, and Production Optimization</title>
+  <style>
+    :root {
+      --ink: #152230;
+      --muted: #566574;
+      --navy: #102a43;
+      --blue: #2367a8;
+      --teal: #0b7a75;
+      --orange: #d56a2c;
+      --gold: #d5a928;
+      --red: #ad3d4a;
+      --line: #d8e0e7;
+      --paper: #ffffff;
+      --wash: #f3f7fa;
+      --soft-blue: #eaf3fb;
+      --soft-teal: #e8f5f3;
+      --soft-orange: #fff1e8;
+      --soft-red: #faeaed;
+      --mono: "DejaVu Sans Mono", ui-monospace, monospace;
+      --sans: "Lato", "DejaVu Sans", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #e9eef2;
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 24px auto 60px;
+      background: var(--paper);
+      box-shadow: 0 14px 40px rgba(18, 42, 64, .12);
+    }
+    article { padding: 54px 64px 68px; }
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+    h1, h2, h3, h4 { color: var(--navy); line-height: 1.16; margin-top: 0; }
+    h1 { font-size: 44px; letter-spacing: -.035em; margin-bottom: 16px; }
+    h2 {
+      font-size: 28px;
+      letter-spacing: -.02em;
+      margin: 54px 0 18px;
+      padding-bottom: 9px;
+      border-bottom: 2px solid var(--line);
+    }
+    h3 { font-size: 20px; margin: 32px 0 12px; }
+    h4 { font-size: 16px; margin: 23px 0 8px; }
+    p { margin: 0 0 13px; }
+    ul, ol { margin: 8px 0 16px; padding-left: 24px; }
+    li { margin: 5px 0; }
+    strong { color: #102a43; }
+    code, .mono {
+      font-family: var(--mono);
+      font-size: .92em;
+      background: #eef3f6;
+      border-radius: 4px;
+      padding: 1px 4px;
+    }
+    .cover {
+      min-height: 720px;
+      padding: 68px 64px 56px;
+      color: white;
+      background:
+        radial-gradient(circle at 88% 10%, rgba(61, 189, 181, .42), transparent 31%),
+        radial-gradient(circle at 16% 92%, rgba(231, 137, 62, .35), transparent 34%),
+        linear-gradient(135deg, #0e2538 0%, #123d59 55%, #0b6a69 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .cover h1 { color: white; font-size: 54px; max-width: 850px; }
+    .cover .kicker {
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: 12px;
+      font-weight: 700;
+      color: #8fe1db;
+      margin-bottom: 24px;
+    }
+    .cover .subtitle {
+      max-width: 780px;
+      font-size: 22px;
+      line-height: 1.4;
+      color: #dbeaf2;
+    }
+    .cover .rule { width: 90px; height: 5px; background: #ef9a55; margin: 30px 0; }
+    .cover-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      border-top: 1px solid rgba(255,255,255,.25);
+      padding-top: 24px;
+      color: #cddde6;
+      font-size: 13px;
+    }
+    .cover-meta strong { color: white; }
+    .lede {
+      font-size: 18px;
+      line-height: 1.62;
+      color: #30495f;
+      max-width: 920px;
+    }
+    .callout {
+      border-left: 5px solid var(--teal);
+      background: var(--soft-teal);
+      padding: 18px 20px;
+      margin: 22px 0;
+      break-inside: avoid;
+    }
+    .callout.orange { border-color: var(--orange); background: var(--soft-orange); }
+    .callout.red { border-color: var(--red); background: var(--soft-red); }
+    .callout h3, .callout h4 { margin-top: 0; }
+    .callout p:last-child { margin-bottom: 0; }
+    .grid-2, .grid-3, .grid-4 {
+      display: grid;
+      gap: 16px;
+      margin: 18px 0;
+    }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 17px 18px;
+      background: white;
+      break-inside: avoid;
+    }
+    .card h3, .card h4 { margin-top: 0; }
+    .card p:last-child { margin-bottom: 0; }
+    .metric {
+      font-size: 31px;
+      line-height: 1;
+      color: var(--teal);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      margin-bottom: 8px;
+    }
+    .metric.orange { color: var(--orange); }
+    .metric.blue { color: var(--blue); }
+    .metric.red { color: var(--red); }
+    .small { color: var(--muted); font-size: 12.5px; line-height: 1.45; }
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      margin: 0 4px 4px 0;
+      border-radius: 999px;
+      background: var(--soft-blue);
+      color: #1f5f94;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .02em;
+    }
+    .tag.lossy { background: var(--soft-orange); color: #975020; }
+    .tag.memory { background: var(--soft-teal); color: #08645f; }
+    .tag.model { background: #f0ebfa; color: #604393; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 13px;
+      break-inside: auto;
+    }
+    th {
+      text-align: left;
+      vertical-align: bottom;
+      color: white;
+      background: var(--navy);
+      padding: 9px 10px;
+      font-weight: 700;
+    }
+    td {
+      vertical-align: top;
+      padding: 9px 10px;
+      border-bottom: 1px solid var(--line);
+    }
+    tr:nth-child(even) td { background: #f7f9fb; }
+    tr { break-inside: avoid; }
+    thead { display: table-header-group; }
+    .table-note { margin-top: -16px; color: var(--muted); font-size: 12px; }
+    .toc {
+      columns: 2;
+      column-gap: 44px;
+      list-style: none;
+      padding: 0;
+      margin: 18px 0 4px;
+    }
+    .toc li { border-bottom: 1px dotted #bdc9d3; padding: 7px 0; break-inside: avoid; }
+    .toc a { text-decoration: none; font-weight: 700; }
+    .toc a:hover, .toc a:focus-visible { text-decoration: underline; }
+    .detailed-toc {
+      margin: 18px 0 8px;
+      padding: 14px 16px 16px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #f8fbfd;
+    }
+    .detailed-toc summary {
+      cursor: pointer;
+      color: var(--navy);
+      font-weight: 800;
+    }
+    .toc-tree {
+      columns: 2;
+      column-gap: 36px;
+      list-style: none;
+      padding: 0;
+      margin: 14px 0 0;
+      font-size: 13px;
+    }
+    .toc-tree > li {
+      margin: 0 0 13px;
+      break-inside: avoid-column;
+    }
+    .toc-tree ol {
+      list-style: none;
+      padding-left: 15px;
+      margin: 5px 0 0;
+      border-left: 2px solid #d7e2ea;
+    }
+    .toc-tree li { margin: 4px 0; line-height: 1.35; }
+    .toc-tree > li > a { color: var(--navy); font-weight: 800; }
+    .toc-tree ol a { font-weight: 600; text-decoration: none; }
+    .toc-tree ol ol { font-size: 11.5px; border-left-color: #e6edf2; }
+    .toc-tree ol ol a { color: var(--muted); font-weight: 600; }
+    .back-to-contents {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 20;
+      padding: 8px 12px;
+      border: 1px solid #b7c8d5;
+      border-radius: 999px;
+      background: rgba(255,255,255,.94);
+      box-shadow: 0 4px 16px rgba(18,42,64,.14);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+    h2[id], h3[id], h4[id] { scroll-margin-top: 20px; }
+    h2[id]:target, h3[id]:target, h4[id]:target {
+      animation: target-flash 1.4s ease-out;
+    }
+    @keyframes target-flash {
+      0% { background: #fff0b8; }
+      100% { background: transparent; }
+    }
+    .figure {
+      margin: 24px 0 28px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fbfdfe;
+      break-inside: avoid;
+    }
+    .figure svg { width: 100%; height: auto; display: block; }
+    .caption { color: var(--muted); font-size: 12px; margin: 10px 2px 0; }
+    .equation {
+      margin: 17px 0;
+      padding: 14px 18px;
+      background: #122b3f;
+      color: #eaf6f7;
+      border-radius: 8px;
+      font-family: var(--mono);
+      font-size: 14px;
+      overflow-wrap: anywhere;
+      break-inside: avoid;
+    }
+    .codeblock {
+      margin: 14px 0;
+      padding: 15px 17px;
+      border-radius: 8px;
+      background: #122b3f;
+      color: #eaf6f7;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      line-height: 1.48;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      break-inside: avoid;
+    }
+    .compare-flow {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 22px;
+      align-items: start;
+    }
+    .flow-lane {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      background: white;
+      break-inside: avoid;
+    }
+    .flow-title {
+      margin: 0 0 10px;
+      color: var(--navy);
+      font-size: 15px;
+      font-weight: 800;
+      text-align: center;
+    }
+    .flow-node {
+      padding: 8px 10px;
+      border: 1.5px solid #6d8394;
+      border-radius: 7px;
+      background: #f3f7fa;
+      color: #183247;
+      font-size: 11.5px;
+      line-height: 1.35;
+      text-align: center;
+    }
+    .flow-node.fused { border-color: var(--orange); background: var(--soft-orange); }
+    .flow-node.gemm { border-color: var(--blue); background: var(--soft-blue); }
+    .flow-node.state { border-color: var(--teal); background: var(--soft-teal); }
+    .flow-arrow {
+      height: 17px;
+      color: #496579;
+      font-size: 17px;
+      line-height: 17px;
+      text-align: center;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      margin: 15px 0;
+      break-inside: avoid;
+    }
+    .step .num {
+      width: 36px; height: 36px;
+      display: grid; place-items: center;
+      border-radius: 50%;
+      color: white;
+      background: var(--teal);
+      font-weight: 800;
+    }
+    .step h4 { margin: 3px 0 4px; }
+    .bar {
+      display: flex;
+      height: 28px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin: 8px 0 5px;
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .bar span { display: flex; align-items: center; justify-content: center; min-width: 2px; }
+    .b-dit { background: var(--blue); }
+    .b-vae { background: var(--teal); }
+    .b-transport { background: var(--orange); }
+    .b-mp4 { background: var(--red); }
+    .b-encoder { background: var(--gold); color: #172536; }
+    .b-other { background: #718096; }
+    .decision {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--blue);
+      padding: 14px 16px;
+      margin: 12px 0;
+      break-inside: avoid;
+    }
+    .decision strong { display: block; margin-bottom: 3px; }
+    .source-list { font-size: 12.5px; overflow-wrap: anywhere; }
+    .source-list li { margin: 9px 0; }
+    .foot {
+      margin-top: 16px;
+      padding-top: 9px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      break-inside: avoid;
+      break-before: avoid;
+    }
+    .page-break { break-before: page; }
+    .avoid { break-inside: avoid; }
+    .screen-only { display: block; }
+
+    @media (max-width: 780px) {
+      main { width: 100%; margin: 0; }
+      article, .cover { padding: 34px 24px; }
+      .cover h1 { font-size: 38px; }
+      .cover-meta, .grid-2, .grid-3, .grid-4, .compare-flow { grid-template-columns: 1fr; }
+      .toc { columns: 1; }
+      .toc-tree { columns: 1; }
+      table { font-size: 12px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      h2[id]:target, h3[id]:target, h4[id]:target { animation: none; }
+    }
+
+    @page {
+      size: A4;
+      margin: 15mm 14mm 17mm;
+      @bottom-left {
+        content: "MiniMax H3 · Video Generation and FastH3 Analysis";
+        color: #6b7885;
+        font: 8pt "Lato";
+      }
+      @bottom-right {
+        content: "Page " counter(page) " of " counter(pages);
+        color: #6b7885;
+        font: 8pt "Lato";
+      }
+    }
+    @media print {
+      body { background: white; font-size: 10.2pt; }
+      main { width: auto; margin: 0; box-shadow: none; }
+      article { padding: 0; }
+      .cover {
+        min-height: 257mm;
+        margin: -15mm -14mm -17mm;
+        padding: 30mm 24mm 24mm;
+        break-after: page;
+      }
+      .cover h1 { font-size: 39pt; }
+      .cover .subtitle { font-size: 16pt; }
+      h2 { font-size: 21pt; break-after: avoid; margin-top: 10mm; }
+      h3 { font-size: 15pt; break-after: avoid; }
+      h4 { break-after: avoid; }
+      a { color: #174f7b; }
+      .screen-only { display: none !important; }
+      .page-break { break-before: page; }
+      .figure, .card, .callout, .decision, .equation, .codeblock, .compare-flow { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <section class="cover">
+    <div>
+      <div class="kicker">Technical analysis · 4 September 2026</div>
+      <h1>MiniMax H3</h1>
+      <div class="rule"></div>
+      <p class="subtitle">A video-generation deep dive: latent construction, joint audio–video denoising, and the optimization stack from dense H3 serving to four-step sparse FastH3.</p>
+    </div>
+    <div class="cover-meta">
+      <div><strong>Primary analyses</strong><br>vLLM-Omni / B300<br>SGLang Diffusion / H200<br>FastVideo FastH3 / B200</div>
+      <div><strong>Model basis</strong><br>MiniMaxAI/MiniMax-H3<br>Checkpoint commit <span class="mono">42ed227e</span><br>Local configuration cross-checked</div>
+    </div>
+  </section>
+
+  <article>
+    <p class="lede"><strong>Executive finding.</strong> MiniMax H3 generates a video by iteratively refining a compressed three-dimensional video volume together with a synchronized stereo-audio latent. At 1344×768 and 124 frames, the target video alone becomes 37,296 transformer rows; the released base schedule sends the packed multimodal sequence through a 33B transformer 49 times. FastH3 changes both dominant multipliers: DMD2 post-training reduces the denoising trajectory to four transformer calls, while its recommended VSA checkpoint computes fine attention for only about 10% of eligible video-to-video tiles. Dense serving optimizations still matter, and after denoising is shortened the VAE, transfer, codec, and mux stages become first-order latency costs.</p>
+
+    <div class="grid-3">
+      <div class="card">
+        <span class="tag">Lossless runtime</span>
+        <div class="metric blue">1.445×</div>
+        <p>vLLM-Omni complete-MP4 speedup over its matched Diffusers B300 baseline, preserving the released BF16, dense, 49-forward schedule.</p>
+      </div>
+      <div class="card">
+        <span class="tag lossy">Runtime approximation</span>
+        <div class="metric orange">up to 6.24×</div>
+        <p>SGLang H200 speedup over matched Diffusers by stacking fused kernels, step reuse, and training-free sparse attention; quality varies by workload.</p>
+      </div>
+      <div class="card">
+        <span class="tag model">Post-trained student</span>
+        <div class="metric">49 → 4</div>
+        <p>FastH3 transformer evaluations through DMD2 distillation; the recommended FastVideo path also retains only about 10% of eligible video-attention tiles.</p>
+      </div>
+    </div>
+
+    <div class="callout orange">
+      <h3 id="headline-speedup-warning">Do not multiply the headline speedups</h3>
+      <p>The posts use different GPUs, software, prompts, frame alignment, timing boundaries, attention policies, and artifacts. vLLM’s base result times a complete returned MP4; SGLang reports generation-side inference and excludes MP4 download; FastVideo uses a distilled student and its own end-to-end path. Their results reveal mechanisms and feasible operating points, not one composable benchmark.</p>
+    </div>
+
+    <h2 id="contents">Contents</h2>
+    <nav aria-labelledby="contents">
+      <ol class="toc">
+        <li><a href="#scope">1. Scope and evidence discipline</a></li>
+        <li><a href="#design">2. Core model design</a></li>
+        <li><a href="#dit-anatomy">2.4–2.8 Exact video-DiT anatomy</a></li>
+        <li><a href="#inference">3. Inference process</a></li>
+        <li><a href="#cost">4. Why H3 is difficult to serve</a></li>
+        <li><a href="#optimizations">5. Core optimizations</a></li>
+        <li><a href="#fasth3">5.3 FastH3 video-generation deep dive</a></li>
+        <li><a href="#new-bottleneck">5.5 Four-step critical-path migration</a></li>
+        <li><a href="#evidence">6. Benchmark evidence</a></li>
+        <li><a href="#guidance">7. Deployment guidance</a></li>
+        <li><a href="#limits">8. Limitations and open questions</a></li>
+        <li><a href="#sources">Sources</a></li>
+      </ol>
+
+      <details class="detailed-toc screen-only" open>
+        <summary>Detailed subsection index</summary>
+        <ol class="toc-tree">
+          <li><a href="#scope">1. Scope and evidence discipline</a></li>
+          <li><a href="#design">2. Core model design</a>
+            <ol>
+              <li><a href="#product-stages">2.1 Three-stage product system</a>
+                <ol>
+                  <li><a href="#stage-context-ir">H3-Context-IR</a></li>
+                  <li><a href="#stage-h3-base">H3-Base</a></li>
+                  <li><a href="#stage-regenerate-2k">H3-Regenerate-2K</a></li>
+                </ol>
+              </li>
+              <li><a href="#joint-av-diffusion">2.2 Joint audio–video diffusion</a></li>
+              <li><a href="#single-stream">2.3 Why the single stream matters</a></li>
+              <li><a href="#dit-anatomy">2.4 Exact video-DiT anatomy</a></li>
+              <li><a href="#pre-block-row-packing">2.5 Refine, then row-pack</a></li>
+              <li><a href="#dit-main-block">2.6 One main DiT block</a>
+                <ol>
+                  <li><a href="#dit-tokenwise-gates">2.6.1 Token-wise MSA/MLP gates</a></li>
+                  <li><a href="#dit-gated-branch-shapes">2.6.2 Gated-branch shape changes</a></li>
+                  <li><a href="#residual-vs-swiglu-gates">Residual gate versus SwiGLU gate</a></li>
+                </ol>
+              </li>
+              <li><a href="#attention-scope">2.7 Attention scope</a>
+                <ol>
+                  <li><a href="#checkpoint-runtime-layout">Checkpoint versus runtime layout</a></li>
+                  <li><a href="#clip-wide-dense-attention">Clip-wide dense attention</a></li>
+                </ol>
+              </li>
+              <li><a href="#parameter-layout-video-head">2.8 Parameter layout and video head</a>
+                <ol>
+                  <li><a href="#adaln-cacheability">AdaLN cacheability</a></li>
+                  <li><a href="#mixed-precision-architecture">Released mixed-precision architecture</a></li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+          <li><a href="#inference">3. Core inference process</a>
+            <ol>
+              <li><a href="#inference-workflow">3.0 End-to-end request workflow</a>
+                <ol>
+                  <li><a href="#inference-request-normalization">Normalize the request</a></li>
+                  <li><a href="#inference-conditioning">Build conditioning</a></li>
+                  <li><a href="#inference-noise-and-metadata">Allocate noise and metadata</a></li>
+                  <li><a href="#inference-joint-denoising">Joint denoising</a></li>
+                  <li><a href="#inference-latent-update">Update latent states</a></li>
+                  <li><a href="#inference-av-decode">Decode video and audio</a></li>
+                  <li><a href="#inference-encode-and-mux">Encode and mux</a></li>
+                  <li><a href="#inference-regenerate-2k">Optional 2K regeneration</a></li>
+                </ol>
+              </li>
+              <li><a href="#dual-noise-schedules">3.1 Two schedules in one call</a>
+                <ol><li><a href="#noise-clocks-content-timeline">Two noise clocks, one timeline</a></li></ol>
+              </li>
+              <li><a href="#vae-geometry">3.2 VAE-quantized geometry</a></li>
+              <li><a href="#video-token-volume">3.3 Video token volume</a>
+                <ol>
+                  <li><a href="#duration-resolution-cost">Duration and resolution cost</a></li>
+                  <li><a href="#temporal-length-rule">The 17n + 5 temporal rule</a></li>
+                </ol>
+              </li>
+              <li><a href="#denoising-evaluation">3.4 One denoising evaluation</a></li>
+              <li><a href="#prompt-av-timeline">3.5 Prompt to audiovisual timeline</a></li>
+            </ol>
+          </li>
+          <li><a href="#cost">4. Why H3 is difficult to serve</a></li>
+          <li><a href="#optimizations">5. Core optimizations</a>
+            <ol>
+              <li><a href="#lossless-dense-execution">5.1 Lossless dense execution</a>
+                <ol>
+                  <li><a href="#layer-kernel-map">5.1.1 Layer-to-kernel map</a></li>
+                  <li><a href="#vllm-sglang-gated-branches">5.1.2 vLLM versus SGLang gated branches</a>
+                    <ol>
+                      <li><a href="#vllm-gated-pseudocode">vLLM pseudocode</a></li>
+                      <li><a href="#sglang-gated-pseudocode">SGLang pseudocode</a></li>
+                      <li><a href="#fused-swiglu-meaning">Meaning of fused SwiGLU</a></li>
+                    </ol>
+                  </li>
+                  <li><a href="#h200-kernel-evidence">5.1.3 H200 kernel evidence</a></li>
+                  <li><a href="#denoising-loop-invariants">5.1.4 Denoising-loop invariants</a>
+                    <ol><li><a href="#fastvideo-fusion-contract">FastVideo fusion contract</a></li></ol>
+                  </li>
+                </ol>
+              </li>
+              <li><a href="#training-free-approximation">5.2 Training-free approximation</a>
+                <ol>
+                  <li><a href="#cache-dit">Cache-DiT</a></li>
+                  <li><a href="#subblock-sparse-attention">SubBlock sparse attention</a></li>
+                  <li><a href="#quality-first-interpretation">Quality-first interpretation</a></li>
+                </ol>
+              </li>
+              <li><a href="#fasth3">5.3 FastH3 video-generation deep dive</a>
+                <ol>
+                  <li><a href="#fasth3-two-accelerators">5.3.1 DMD2 and VSA</a>
+                    <ol>
+                      <li><a href="#fasth3-dmd2">Lever A: DMD2</a></li>
+                      <li><a href="#fasth3-vsa">Lever B: VSA-H3</a></li>
+                    </ol>
+                  </li>
+                  <li><a href="#fasth3-step-skipping">5.3.2 Why step skipping is insufficient</a></li>
+                  <li><a href="#fasth3-backward-simulation">5.3.3 Backward simulation</a></li>
+                  <li><a href="#fasth3-four-call-inference">5.3.4 Four-call inference</a></li>
+                  <li><a href="#fasth3-vsa-region-selection">5.3.5 VSA region selection</a>
+                    <ol><li><a href="#fasth3-sparsity-vs-model-time">Sparsity versus model time</a></li></ol>
+                  </li>
+                  <li><a href="#fasth3-artifacts">5.3.6 FastH3 artifacts</a></li>
+                  <li><a href="#fasth3-load-time-fusion">5.3.7 Load-time fusion</a></li>
+                  <li><a href="#fasth3-runtime-stack">5.3.8 FastVideo runtime stack</a></li>
+                  <li><a href="#fasth3-video-quality-checks">5.3.9 Video quality checks</a></li>
+                </ol>
+              </li>
+              <li><a href="#capacity-and-placement">5.4 Capacity and placement</a></li>
+              <li><a href="#new-bottleneck">5.5 Four-step critical-path migration</a>
+                <ol>
+                  <li><a href="#critical-path-share">Meaning of the new bottleneck</a></li>
+                  <li><a href="#fasth3-10s-profile">Measured 10-second composition</a></li>
+                  <li><a href="#attention-vs-e2e">Attention versus E2E speed</a></li>
+                  <li><a href="#single-request-dependencies">Single-request dependency graph</a></li>
+                  <li><a href="#output-chunking-phases">Two chunking phases</a></li>
+                  <li><a href="#phase-a-ceiling">Phase A ceiling</a></li>
+                  <li><a href="#phase-b-ceiling">Phase B ceiling</a></li>
+                  <li><a href="#overlap-ceilings">Projected overlap ceilings</a></li>
+                  <li><a href="#chunking-correctness-contract">Chunking correctness contract</a></li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+          <li><a href="#evidence">6. Benchmark evidence</a>
+            <ol>
+              <li><a href="#study-contracts">6.1 Study contracts</a></li>
+              <li><a href="#h200-quality-speed-frontier">6.2 H200 quality–speed frontier</a></li>
+              <li><a href="#fastvideo-step-vsa-gains">6.3 Four-step and VSA gains</a>
+                <ol><li><a href="#fastvideo-multigpu-scaling">Multi-GPU scaling</a></li></ol>
+              </li>
+              <li><a href="#vllm-realtime">6.4 vLLM complete-response real time</a>
+                <ol>
+                  <li><a href="#fastvideo-evidence">FastVideo evidence lane</a></li>
+                  <li><a href="#vllm-evidence">vLLM evidence lane</a></li>
+                </ol>
+              </li>
+              <li><a href="#cross-study-interpretation">6.5 Cross-study interpretation</a></li>
+            </ol>
+          </li>
+          <li><a href="#guidance">7. Deployment guidance</a>
+            <ol>
+              <li><a href="#qualification-ladder">7.1 Qualification ladder</a></li>
+              <li><a href="#observability">7.2 Recommended observability</a></li>
+            </ol>
+          </li>
+          <li><a href="#limits">8. Limitations and open questions</a>
+            <ol><li><a href="#bottom-line">Bottom line</a></li></ol>
+          </li>
+          <li><a href="#sources">Sources</a></li>
+        </ol>
+      </details>
+    </nav>
+    <a class="back-to-contents screen-only" href="#contents" aria-label="Back to contents">↑ Contents</a>
+
+    <h2 id="scope">1. Scope and evidence discipline</h2>
+    <p>This report analyzes the requested <a href="https://vllm.ai/blog/2026-09-01-minimax-h3-production-serving">vLLM-Omni production-serving article</a>, <a href="https://www.lmsys.org/blog/2026-08-27-minimax-h3-h200/">LMSYS/SGLang H200 article</a>, and <a href="https://haoailab.com/blogs/fasth3-preview/">FastVideo FastH3 article</a>. Model facts are cross-checked against the <a href="https://huggingface.co/MiniMaxAI/MiniMax-H3">MiniMax model card</a>, <a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/minimax_h3">Diffusers H3 pipeline documentation</a>, scheduler documentation, reference source code, and the locally downloaded checkpoint at commit <span class="mono">42ed227ee7df40d41602854ae760620d6eb651fe</span>.</p>
+    <p>All three performance posts are first-party reports by the teams implementing the measured paths, not independent replication. Their controls are generally explicit, but the vLLM FastH3 article states that its publication-grade raw benchmark bundle was still pending. The correct confidence level is therefore: strong architectural evidence, useful implementation evidence, and provisional performance evidence until independently reproduced.</p>
+
+    <table>
+      <thead>
+        <tr><th>Evidence lane</th><th>What changes</th><th>Quality contract</th><th>Best use of the result</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Dense base H3 runtime</td><td>Kernels, packing, communication, VAE, transport, muxing</td><td>Same released BF16 weights and dense schedule; not necessarily bit-identical floating-point output</td><td>Production baseline and low-risk first optimization</td></tr>
+        <tr><td>Base H3 runtime approximation</td><td>Step reuse, sparse or quantized attention, optional quantization</td><td>Explicit quality trade-off; qualify per workload</td><td>A controllable speed–quality frontier without retraining the whole model</td></tr>
+        <tr><td>FastH3 student</td><td>Post-trained transformer, four evaluations; optional trainable VSA</td><td>New model artifact; base parity is not established by latency alone</td><td>Dedicated low-latency T2VA endpoint</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="design" class="page-break">2. Core model design</h2>
+
+    <h3 id="product-stages">2.1 The complete product is a three-stage system</h3>
+    <div class="grid-3">
+      <div class="card">
+        <h4 id="stage-context-ir">H3-Context-IR</h4>
+        <p>Hosted multimodal instruction understanding and prompt structuring. It resolves references, temporal intent, speech, soundscape, and underspecified details into a Context Intermediate Representation. It is not in the open checkpoint.</p>
+      </div>
+      <div class="card">
+        <h4 id="stage-h3-base">H3-Base</h4>
+        <p>The open 768p generator. It encodes context, jointly denoises video and stereo-audio latents, decodes both modalities, and supports T2VA, FL2VA, and Ref2VA through two task-specific transformer partitions.</p>
+      </div>
+      <div class="card">
+        <h4 id="stage-regenerate-2k">H3-Regenerate-2K</h4>
+        <p>A hosted in-context regeneration stage: H3 receives its own 768p result plus the original context and generates a 2K result. It is generative regeneration, not a conventional stand-alone super-resolution network.</p>
+      </div>
+    </div>
+    <p>The serving articles primarily benchmark <strong>H3-Base</strong>. Their numbers do not include the full hosted Context-IR plus Regenerate-2K product workflow unless explicitly stated.</p>
+
+    <h3 id="joint-av-diffusion">2.2 H3-Base is one joint audio–video diffusion model</h3>
+    <div class="figure">
+      <svg viewBox="0 0 1000 430" role="img" aria-label="MiniMax H3 architecture overview">
+        <defs>
+          <marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#496579"/></marker>
+          <style>
+            .bx{rx:12;stroke-width:2}
+            .t{font-family:Lato,Arial,sans-serif;font-size:17px;font-weight:700;fill:#102a43}
+            .s{font-family:Lato,Arial,sans-serif;font-size:13px;font-weight:400;fill:#40576a}
+            .w{font-family:Lato,Arial,sans-serif;font-size:17px;font-weight:700;fill:#ffffff}
+            .ws{font-family:Lato,Arial,sans-serif;font-size:13px;font-weight:400;fill:#dceaf2}
+            .a{stroke:#496579;stroke-width:2;fill:none;marker-end:url(#arrow)}
+          </style>
+        </defs>
+        <rect class="bx" x="24" y="34" width="190" height="86" fill="#eaf3fb" stroke="#2367a8"/>
+        <text class="t" x="119" y="67" text-anchor="middle">Text + visual semantics</text>
+        <text class="s" x="119" y="92" text-anchor="middle">Qwen3-VL-32B</text>
+        <text class="s" x="119" y="111" text-anchor="middle">layer-50 hidden state</text>
+
+        <rect class="bx" x="24" y="171" width="190" height="86" fill="#e8f5f3" stroke="#0b7a75"/>
+        <text class="t" x="119" y="204" text-anchor="middle">Visual conditions</text>
+        <text class="s" x="119" y="229" text-anchor="middle">causal 3D-CNN encoder</text>
+        <text class="s" x="119" y="248" text-anchor="middle">f16 · t4 · d24</text>
+
+        <rect class="bx" x="24" y="308" width="190" height="86" fill="#fff1e8" stroke="#d56a2c"/>
+        <text class="t" x="119" y="341" text-anchor="middle">Audio conditions</text>
+        <text class="s" x="119" y="366" text-anchor="middle">AudioVAE · 32 channels</text>
+        <text class="s" x="119" y="385" text-anchor="middle">40 Hz latent rate</text>
+
+        <rect class="bx" x="304" y="104" width="205" height="220" fill="#f3f7fa" stroke="#6d8394"/>
+        <text class="t" x="406" y="139" text-anchor="middle">Unified packed sequence</text>
+        <rect x="329" y="162" width="155" height="32" rx="6" fill="#d8e9f7"/><text class="s" x="406" y="183" text-anchor="middle">text / reference rows</text>
+        <rect x="329" y="204" width="155" height="32" rx="6" fill="#d7eeeb"/><text class="s" x="406" y="225" text-anchor="middle">video latent rows</text>
+        <rect x="329" y="246" width="155" height="32" rx="6" fill="#f8dfcf"/><text class="s" x="406" y="267" text-anchor="middle">audio latent rows</text>
+        <text class="s" x="406" y="305" text-anchor="middle">tags + 3D MM-RoPE</text>
+
+        <rect class="bx" x="590" y="83" width="235" height="264" fill="#123d59" stroke="#102a43"/>
+        <text class="w" x="708" y="119" text-anchor="middle">H3 Omni Transformer</text>
+        <text class="ws" x="708" y="148" text-anchor="middle">33B dense · single stream</text>
+        <text class="ws" x="708" y="174" text-anchor="middle">50 layers · hidden 5,376</text>
+        <text class="ws" x="708" y="200" text-anchor="middle">56 heads × 128</text>
+        <text class="ws" x="708" y="226" text-anchor="middle">FFN 14,336</text>
+        <text class="ws" x="708" y="263" text-anchor="middle">shared attention + FFN</text>
+        <text class="ws" x="708" y="289" text-anchor="middle">modality-specific I/O + AdaLN</text>
+        <text class="ws" x="708" y="321" text-anchor="middle">joint video/audio prediction</text>
+
+        <rect class="bx" x="884" y="107" width="92" height="89" fill="#e8f5f3" stroke="#0b7a75"/>
+        <text class="t" x="930" y="139" text-anchor="middle">Video</text>
+        <text class="s" x="930" y="163" text-anchor="middle">ViT VAE</text>
+        <text class="s" x="930" y="182" text-anchor="middle">24 fps</text>
+        <rect class="bx" x="884" y="235" width="92" height="89" fill="#fff1e8" stroke="#d56a2c"/>
+        <text class="t" x="930" y="267" text-anchor="middle">Audio</text>
+        <text class="s" x="930" y="291" text-anchor="middle">VAE</text>
+        <text class="s" x="930" y="310" text-anchor="middle">32 kHz</text>
+
+        <path class="a" d="M214 77 H276 V161 H304"/>
+        <path class="a" d="M214 214 H304"/>
+        <path class="a" d="M214 351 H276 V270 H304"/>
+        <path class="a" d="M509 214 H590"/>
+        <path class="a" d="M825 151 H884"/>
+        <path class="a" d="M825 279 H884"/>
+      </svg>
+      <p class="caption"><strong>Figure 1.</strong> H3 combines conditioning and noisy target latents into one row-packed sequence. The same transformer jointly predicts video and audio updates; only the input/output projections and AdaLN conditioning are modality-specific.</p>
+    </div>
+
+    <table>
+      <thead><tr><th>Component</th><th>Released design</th><th>Serving consequence</th></tr></thead>
+      <tbody>
+        <tr><td>H3 Encoder</td><td>Full Qwen3-VL-32B; unnormalized hidden state after decoder layer 50; 5,120-dimensional text output</td><td>The local BF16 text-encoder files occupy roughly 62.1 GB, while vLLM reports about 51.5 GB of retained inference weights. It runs once per request and is a target for tensor parallelism, disaggregation, prefix caching, quantization, or offload.</td></tr>
+        <tr><td>Visual VAE</td><td>Temporally causal 3D-CNN encoder; 16× spatial and 4× temporal compression; 24 latent channels; additional <span class="mono">1×2×2</span> patchification; non-causal 36-layer ViT decoder</td><td>Transformer sees an effective 32× spatial reduction; tiled, overlapping decode is still material once denoising becomes short</td></tr>
+        <tr><td>Audio VAE</td><td>Shared encoder/decoder weights applied independently to left and right channels; 32 kHz stereo; 40 latent steps/s; 32 latent channels</td><td>Audio stays synchronized in the same denoising loop while retaining a separate latent schedule and decoder</td></tr>
+        <tr><td>Omni Transformer</td><td>33B dense single-stream model; 50 blocks plus 2 refiner layers; hidden 5,376; 56 heads × 128; FFN 14,336</td><td>Long-sequence attention, repeated 49 times in the base benchmark schedule, dominates runtime</td></tr>
+        <tr><td>AdaLN branches</td><td>About 13B of the 33B parameters are associated with modality/time modulation; modality identity is otherwise absent from attention and FFN structure</td><td>Modulation outputs can be precomputed/cached; optimized inference need not repeatedly execute the large modulation branches</td></tr>
+        <tr><td>Task partitions</td><td><span class="mono">transformer/</span> serves T2VA + FL2VA; <span class="mono">transformer_ref/</span> serves Ref2VA; encoders, VAEs, tokenizer, and schedulers are shared</td><td>Load only the partition a service needs; keeping both transformer partitions resident is a capacity choice, not a requirement</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="single-stream">2.3 Why the single stream matters</h3>
+    <ul>
+      <li><strong>Synchronization is learned jointly.</strong> Video and soundtrack are not generated by separate models and aligned afterward. Their latents can exchange information through the same attention/FFN stack at every denoising evaluation. This enables learned event and lip synchronization; it does not guarantee perfect sync.</li>
+      <li><strong>Attention sees heterogeneous rows.</strong> Text, image/video references, audio references, target-video tokens, and target-audio tokens share a packed layout. Per-row tags select modality-specific AdaLN parameters.</li>
+      <li><strong>Position is multimodal.</strong> Three-dimensional MM-RoPE encodes temporal and two spatial coordinates. In Ref2VA, input order also advances a shared rotary timeline; reordering references is semantically different.</li>
+      <li><strong>One optimization can affect both outputs.</strong> Step caching or a block-stack approximation reuses the joint audio–video result, not an independent cache for each modality.</li>
+    </ul>
+
+    <h3 id="dit-anatomy">2.4 Exact video-DiT anatomy: dimensions and module order</h3>
+    <p>The released transformer is unusually easy to describe precisely because its main body is a uniform stack. The video path is <strong>not</strong> a 3D convolutional U-Net, and the DiT itself does not contain a learned Conv3D patch embed. H3’s video state uses the VisualVAE’s 24-channel latent geometry: conditions are VAE-encoded, while the target begins as random latent noise with the same geometry. A deterministic <span class="mono">1×2×2</span> rearrangement groups four neighboring latent sites into a 96-value row, and a dense input projection maps that row to the 5,376-wide residual stream.</p>
+
+    <div class="equation">video latent [B, 24, T<sub>z</sub>, H/16, W/16] → patchify(1×2×2) → [B, N<sub>v</sub>, 96] → Linear(96, 5,376) → [B, N<sub>v</sub>, 5,376]</div>
+
+    <table>
+      <thead><tr><th>Stage, in execution order</th><th>Exact released structure</th><th>What it does for video generation</th></tr></thead>
+      <tbody>
+        <tr><td>Video input stem</td><td><span class="mono">proj_in: 96 → 5,376</span>, with bias, FP32 weights</td><td>Turns each four-site VisualVAE patch into one DiT row. This is a linear layer, not a convolution.</td></tr>
+        <tr><td>Context input stem</td><td><span class="mono">context_embedder: 5,120 → 5,376</span>, with bias, BF16</td><td>Aligns Qwen3-VL layer-50 presentation rows with the video residual width.</td></tr>
+        <tr><td>Text/presentation refiner</td><td>2 pre-norm transformer blocks, then final RMSNorm</td><td>Refines the short Qwen presentation before it is mixed with the much larger video lattice. It has self-attention and SwiGLU, but no H3 AdaLN and no H3 RoPE.</td></tr>
+        <tr><td>Timestep stem</td><td>256-dimensional sinusoidal embedding (128 sine/cosine pairs) → MLP <span class="mono">256 → 5,376 → 2,688</span>, FP32</td><td>Encodes diffusion noise level. It is separate from the content-time coordinate used by 3D RoPE.</td></tr>
+        <tr><td>Omni backbone</td><td>50 identical blocks; hidden 5,376; full MHA 56×128; SwiGLU width 14,336; RMSNorm ε=10<sup>−5</sup></td><td>Performs all clip-wide and cross-modal reasoning. There is no cross-attention sublayer: conditioning and video rows meet through ordinary full self-attention.</td></tr>
+        <tr><td>Video output head</td><td>Final RMSNorm + timestep-indexed scale/shift → <span class="mono">Linear(5,376, 96)</span>, with bias, FP32</td><td>Predicts 96 flow values per video patch; unpatchification restores four 24-channel latent sites. The VisualVAE converts the final latent volume to RGB only after denoising ends.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid-4">
+      <div class="card"><div class="metric blue">50</div><p>main DiT blocks<br><span class="small">plus 2 presentation-refiner blocks</span></p></div>
+      <div class="card"><div class="metric">5,376</div><p>residual width<br><span class="small">shared by every packed row</span></p></div>
+      <div class="card"><div class="metric orange">7,168</div><p>attention inner width<br><span class="small">56 heads × 128; wider than residual</span></p></div>
+      <div class="card"><div class="metric red">14,336</div><p>SwiGLU branch width<br><span class="small">8/3 × residual width</span></p></div>
+    </div>
+
+    <h3 id="pre-block-row-packing">2.5 Before block 1: refine first, then row-pack</h3>
+    <p>The public <span class="mono">forward</span> interface does not receive one already-packed tensor. It receives video patches, audio latents, and Qwen presentation states separately, projects them independently, runs only the Qwen presentation through the two-layer token refiner, and then scatters all rows into a newly allocated <span class="mono">[B, S, 5,376]</span> buffer. This order matters for both correctness and sequence parallelism.</p>
+
+    <table>
+      <thead><tr><th>Row type relevant to the video path</th><th>Stem / refiner</th><th>Main-stack tag and position</th><th>After the 50 blocks</th></tr></thead>
+      <tbody>
+        <tr><td>Prompt and timing text</td><td><span class="mono">5,120 → 5,376</span>; yes, 2-layer token refiner</td><td>Text tag. Position is presentation order <span class="mono">(i,0,0)</span>; its diffusion timestep inherits the current target-video timestep.</td><td>Remains context. It is not selected by the video output index.</td></tr>
+        <tr><td>Qwen vision-block presentation rows</td><td>Uses the same context projection and refiner as text</td><td><strong>Video AdaLN tag</strong>, although it came through the context path. Its H3 position remains presentation order, not a VisualVAE grid coordinate.</td><td>Remains semantic context and is not returned as video flow.</td></tr>
+        <tr><td>VisualVAE condition or target patch</td><td><span class="mono">96 → 5,376</span>; no token refiner</td><td>Video tag. Position carries shared content time plus latent-grid height and width.</td><td>The video index selects its 96-value prediction. The scheduler updates target rows; predictions for clean condition rows are discarded.</td></tr>
+        <tr><td>AudioVAE row</td><td><span class="mono">32 → 5,376</span>; no token refiner</td><td>Audio tag on the same content timeline</td><td>Selected by the separate audio head. It is mentioned here only because every video row can attend to it.</td></tr>
+      </tbody>
+    </table>
+    <p class="small">A subtle but important implementation point: “context row” and “AdaLN modality tag” are not identical concepts. Qwen vision placeholder rows use the context projection/refiner but select the video modulation branch in the Omni backbone. The H3 3D position coordinate is also not the scheduler timestep: one says where content belongs; the other says how noisy a latent is.</p>
+
+    <h3 id="dit-main-block">2.6 One of the 50 main blocks, line by line</h3>
+    <div class="figure">
+      <svg viewBox="0 0 1000 585" role="img" aria-label="Exact computation graph of one MiniMax H3 transformer block">
+        <defs>
+          <marker id="ditarrow" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#496579"/></marker>
+          <style>
+            .db{rx:10;stroke-width:2}.dt{font-family:Lato,Arial,sans-serif;font-size:15px;font-weight:700;fill:#102a43}.ds{font-family:Lato,Arial,sans-serif;font-size:12px;fill:#40576a}.dw{font-family:Lato,Arial,sans-serif;font-size:14px;font-weight:700;fill:#fff}.da{stroke:#496579;stroke-width:2;fill:none;marker-end:url(#ditarrow)}
+          </style>
+        </defs>
+        <rect class="db" x="22" y="30" width="155" height="58" fill="#eaf3fb" stroke="#2367a8"/><text class="dt" x="100" y="56" text-anchor="middle">packed xℓ</text><text class="ds" x="100" y="76" text-anchor="middle">S × 5,376</text>
+        <rect class="db" x="215" y="24" width="160" height="72" fill="#f3f7fa" stroke="#6d8394"/><text class="dt" x="295" y="52" text-anchor="middle">RMSNorm</text><text class="ds" x="295" y="74" text-anchor="middle">then indexed scale + shift</text>
+        <rect class="db" x="410" y="18" width="174" height="84" fill="#eaf3fb" stroke="#2367a8"/><text class="dt" x="497" y="46" text-anchor="middle">Q / K / V GEMMs</text><text class="ds" x="497" y="68" text-anchor="middle">3 × (5,376 → 7,168)</text><text class="ds" x="497" y="88" text-anchor="middle">reshape 56 × 128</text>
+        <rect class="db" x="620" y="18" width="174" height="84" fill="#e8f5f3" stroke="#0b7a75"/><text class="dt" x="707" y="46" text-anchor="middle">QK norm + RoPE</text><text class="ds" x="707" y="68" text-anchor="middle">RMSNorm per 128-d head</text><text class="ds" x="707" y="88" text-anchor="middle">rotate t / h / w</text>
+        <rect class="db" x="830" y="18" width="146" height="84" fill="#d8e9f7" stroke="#102a43"/><text class="dt" x="903" y="47" text-anchor="middle">full attention</text><text class="ds" x="903" y="69" text-anchor="middle">non-causal, all S rows</text><text class="ds" x="903" y="89" text-anchor="middle">QKᵀ → softmax → PV</text>
+
+        <path class="da" d="M177 59 H215"/><path class="da" d="M375 59 H410"/><path class="da" d="M584 59 H620"/><path class="da" d="M794 59 H830"/>
+        <path class="da" d="M903 102 V130"/>
+        <rect class="db" x="790" y="130" width="160" height="62" fill="#eaf3fb" stroke="#2367a8"/><text class="dt" x="870" y="156" text-anchor="middle">attention out GEMM</text><text class="ds" x="870" y="178" text-anchor="middle">7,168 → 5,376</text>
+        <path class="da" d="M790 161 H750"/>
+        <rect class="db" x="570" y="130" width="180" height="62" fill="#fff1e8" stroke="#d56a2c"/><text class="dt" x="660" y="156" text-anchor="middle">gated residual</text><text class="ds" x="660" y="178" text-anchor="middle">x′ = xℓ + gate_msa ⊙ a</text>
+        <path class="da" d="M570 161 H482"/>
+        <path class="da" d="M100 88 V113 H660 V130"/>
+
+        <rect class="db" x="305" y="130" width="177" height="62" fill="#f3f7fa" stroke="#6d8394"/><text class="dt" x="394" y="156" text-anchor="middle">RMSNorm</text><text class="ds" x="394" y="178" text-anchor="middle">then indexed scale + shift</text>
+        <path class="da" d="M305 161 H220"/>
+        <rect class="db" x="28" y="121" width="192" height="80" fill="#eaf3fb" stroke="#2367a8"/><text class="dt" x="124" y="149" text-anchor="middle">gate/up GEMM</text><text class="ds" x="124" y="171" text-anchor="middle">5,376 → 28,672</text><text class="ds" x="124" y="190" text-anchor="middle">split into 2 × 14,336</text>
+
+        <path class="da" d="M124 201 V247"/>
+        <rect class="db" x="28" y="247" width="170" height="76" fill="#e8f5f3" stroke="#0b7a75"/><text class="dt" x="113" y="275" text-anchor="middle">SwiGLU</text><text class="ds" x="113" y="299" text-anchor="middle">value ⊙ SiLU(gate)</text>
+        <path class="da" d="M198 285 H230"/>
+        <rect class="db" x="230" y="252" width="170" height="66" fill="#eaf3fb" stroke="#2367a8"/><text class="dt" x="315" y="278" text-anchor="middle">down GEMM</text><text class="ds" x="315" y="300" text-anchor="middle">14,336 → 5,376</text>
+        <path class="da" d="M400 285 H440"/>
+        <rect class="db" x="440" y="252" width="205" height="66" fill="#fff1e8" stroke="#d56a2c"/><text class="dt" x="543" y="278" text-anchor="middle">gated residual</text><text class="ds" x="543" y="300" text-anchor="middle">xℓ₊₁ = x′ + gate_mlp ⊙ f</text>
+        <path class="da" d="M645 285 H770"/>
+        <rect class="db" x="770" y="252" width="172" height="66" fill="#d8e9f7" stroke="#102a43"/><text class="dt" x="856" y="279" text-anchor="middle">next block</text><text class="ds" x="856" y="301" text-anchor="middle">repeat ×50 total</text>
+        <path d="M660 192 V225 H543 V252" stroke="#496579" stroke-width="2" fill="none" marker-end="url(#ditarrow)"/>
+
+        <rect class="db" x="244" y="382" width="512" height="142" fill="#f0ebfa" stroke="#7153a6"/>
+        <text class="dt" x="500" y="410" text-anchor="middle">one block-level AdaLN projection</text>
+        <text class="ds" x="500" y="435" text-anchor="middle">SiLU(time embedding 2,688) → Linear(2,688, 96,768)</text>
+        <text class="ds" x="500" y="460" text-anchor="middle">6 controls × 5,376 channels × 3 modalities</text>
+        <text class="ds" x="500" y="485" text-anchor="middle">shift_msa, scale_msa, gate_msa · shift_mlp, scale_mlp, gate_mlp</text>
+        <text class="ds" x="500" y="510" text-anchor="middle">row index = timestep_index × 3 + modality_tag</text>
+        <path class="da" d="M370 382 V347 H295 V96"/><path class="da" d="M630 382 V347 H394 V192"/>
+        <text class="ds" x="500" y="560" text-anchor="middle">GEMMs carry most arithmetic; the colored norm / RoPE / activation / residual sites are the main fusion targets.</text>
+      </svg>
+      <p class="caption"><strong>Figure 2.</strong> Exact high-level dataflow of one released H3 main block. Both sublayers have explicit output projections: attention uses <span class="mono">7,168→5,376</span>, and the FFN uses a separate down GEMM <span class="mono">14,336→5,376</span>. Each block invokes one AdaLN projection over the vector of distinct timestep embeddings; it emits three modality rows per timestep and then indexes them for every packed row.</p>
+    </div>
+
+    <p><strong>So the FFN is not missing its down layer.</strong> The 28,672-wide gate/up result is split into two 14,336-wide halves; SwiGLU reduces them to one 14,336-wide activation, and <span class="mono">W<sub>down</sub></span> projects it back to the 5,376-wide residual stream. For packed row <span class="mono">i</span>, let <span class="mono">m(i) = 3·timestep_index(i) + modality_tag(i)</span>. One block computes:</p>
+    <div class="equation">u<sub>a</sub> = RMSNorm(x) ⊙ (1 + scale<sub>msa</sub>[m]) + shift<sub>msa</sub>[m]<br>
+q, k, v = W<sub>q</sub>u<sub>a</sub>, W<sub>k</sub>u<sub>a</sub>, W<sub>v</sub>u<sub>a</sub><br>
+x′ = x + gate<sub>msa</sub>[m] ⊙ W<sub>o</sub> Attention(RoPE(RMSNorm(q)), RoPE(RMSNorm(k)), v)<br>
+u<sub>f</sub> = RMSNorm(x′) ⊙ (1 + scale<sub>mlp</sub>[m]) + shift<sub>mlp</sub>[m]<br>
+packed = W<sub>gate/up</sub>u<sub>f</sub> ; &nbsp; (value, gate) = DecodeRuntimeLayout(packed)<br>
+f = W<sub>down</sub>(value ⊙ SiLU(gate))<br>
+x<sub>next</sub> = x′ + gate<sub>mlp</sub>[m] ⊙ f</div>
+
+    <p>The ordering is consequential. H3 first performs RMSNorm, then applies row-indexed scale and shift; it does not use a conventional LayerNorm with learned bias. The attention and FFN outputs are each multiplied by a separate row-indexed gate before entering the residual stream. In the released variable names, <span class="mono">MSA</span> means multi-head self-attention. Neither residual gate uses a sigmoid: it is a learned 5,376-channel vector that can suppress, amplify, or reverse individual channels. Those indexed reads are why generic eager PyTorch emits several memory-bound kernels—and why H3-specific fused modulation and gated-residual kernels are effective.</p>
+
+    <h4 id="dit-tokenwise-gates">2.6.1 From distinct timesteps to token-wise <span class="mono">gate_msa</span> and <span class="mono">gate_mlp</span></h4>
+    <p>Let <span class="mono">M</span> be the number of distinct timestep entries in one packed forward, <span class="mono">T<sub>r</sub></span> the packed rows resident on the current sequence-parallel rank, and <span class="mono">P</span> the tensor-parallel degree. Every main block owns a separate AdaLN linear. The linear is evaluated over the small <span class="mono">M</span>-row condition tensor, not independently over every video token:</p>
+    <pre class="codeblock"># H = 5,376; D_t = 2,688; modalities = 3
+t_emb                                      # [M, 2,688], FP32
+z = AdaLNLinear(SiLU(t_emb).to(BF16))      # [M, 18H] = [M, 96,768]
+z = z.view(M * 3, 6 * H)                   # [3M, 32,256]
+
+(shift_msa, scale_msa, gate_msa,
+ shift_mlp, scale_mlp, gate_mlp) = chunk6(z)
+# every base-checkpoint table: [3M, H] = [3M, 5,376], BF16
+
+idx[r] = 3 * inverse_timestep_idx[r] + max(modality_tag[r], 0)  # [T_r]
+# modality_tag: 0 visual/video, 1 text, 2 audio</pre>
+
+    <p>The table order is <span class="mono">t0/video, t0/text, t0/audio, t1/video, …</span>. For example, a row mapped to timestep 1 and audio uses table row <span class="mono">3×1+2=5</span>. Tokens sharing the same timestep and modality share one gate vector inside a block, while different blocks have different projection weights and therefore different vectors.</p>
+
+    <table>
+      <thead><tr><th>Tensor / stage</th><th>Logical shape</th><th>Shape materialized on each TP rank</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>AdaLN projection before TP gather</td><td><span class="mono">[M, 96,768]</span></td><td><span class="mono">[M, 96,768/P]</span></td><td>Column-parallel part of one block’s timestep/modality projection.</td></tr>
+        <tr><td>Each modulation table after gather/chunk</td><td><span class="mono">[3M, 5,376]</span></td><td><span class="mono">[3M, 5,376]</span>, replicated</td><td>The base-checkpoint tables are BF16: <span class="mono">shift_msa</span>, <span class="mono">scale_msa</span>, <span class="mono">gate_msa</span>, <span class="mono">shift_mlp</span>, <span class="mono">scale_mlp</span>, and <span class="mono">gate_mlp</span>.</td></tr>
+        <tr><td>Conceptual per-token gate selection</td><td><span class="mono">[T<sub>r</sub>, 5,376]</span></td><td>Not materialized by the optimized kernels</td><td>Each kernel loads <span class="mono">gate[idx[row], column]</span> directly, eliminating a full indexed temporary.</td></tr>
+        <tr><td>Residual / attention branch / MLP branch</td><td><span class="mono">[T<sub>r</sub>, 5,376]</span></td><td><span class="mono">[T<sub>r</sub>, 5,376]</span></td><td>Both gates are applied only after the corresponding output projection returns to residual width.</td></tr>
+      </tbody>
+    </table>
+
+    <h4 id="dit-gated-branch-shapes">2.6.2 Shape changes through the two gated branches</h4>
+    <table>
+      <thead><tr><th>Stage</th><th>Logical width</th><th>TP-local activation at degree <span class="mono">P</span></th></tr></thead>
+      <tbody>
+        <tr><td>Block input and pre-attention modulation</td><td><span class="mono">[T<sub>r</sub>, 5,376]</span></td><td><span class="mono">[T<sub>r</sub>, 5,376]</span></td></tr>
+        <tr><td>Q, K, or V</td><td><span class="mono">[T<sub>r</sub>, 56, 128]</span> = width 7,168</td><td><span class="mono">[T<sub>r</sub>, 56/P, 128]</span> immediately after TP projection and before any Ulysses all-to-all</td></tr>
+        <tr><td>Attention context before output projection</td><td><span class="mono">[T<sub>r</sub>, 7,168]</span></td><td><span class="mono">[T<sub>r</sub>, 7,168/P]</span></td></tr>
+        <tr><td>Attention output and <span class="mono">gate_msa</span> residual</td><td><span class="mono">[T<sub>r</sub>, 5,376]</span></td><td><span class="mono">[T<sub>r</sub>, 5,376]</span> after row-parallel reduction</td></tr>
+        <tr><td>FFN packed gate/up GEMM</td><td><span class="mono">[T<sub>r</sub>, 28,672]</span></td><td><span class="mono">[T<sub>r</sub>, 28,672/P]</span></td></tr>
+        <tr><td>SwiGLU result</td><td><span class="mono">[T<sub>r</sub>, 14,336]</span></td><td><span class="mono">[T<sub>r</sub>, 14,336/P]</span></td></tr>
+        <tr><td>Down projection and <span class="mono">gate_mlp</span> residual</td><td><span class="mono">[T<sub>r</sub>, 5,376]</span></td><td><span class="mono">[T<sub>r</sub>, 5,376]</span> after row-parallel reduction</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <h4 id="residual-vs-swiglu-gates">Residual gate versus the SwiGLU gate</h4>
+      <p><span class="mono">gate_msa</span> and <span class="mono">gate_mlp</span> come from timestep conditioning, have residual width 5,376, and operate after the attention/output or FFN/down projection. The SwiGLU gate comes from the current token hidden state, has FFN width 14,336 before TP sharding, passes through SiLU, and operates inside the MLP. They share a name but have different producers, widths, nonlinearities, and locations.</p>
+    </div>
+
+    <h3 id="attention-scope">2.7 What the attention layer actually attends to</h3>
+    <table>
+      <thead><tr><th>Operation</th><th>Exact shape / policy</th><th>Video implication</th></tr></thead>
+      <tbody>
+        <tr><td>Q, K, V projections</td><td>Three bias-free GEMMs, each <span class="mono">5,376 → 7,168</span></td><td>The attention space is 4/3 the residual width. Q, K, and V each have 56 heads, so this is full multi-head attention—not GQA or MQA.</td></tr>
+        <tr><td>Q/K normalization</td><td>RMSNorm over each 128-channel head, ε=10<sup>−5</sup></td><td>Stabilizes long packed-sequence dot products; V is not normalized at this site.</td></tr>
+        <tr><td>3D MM-RoPE</td><td>16 frequencies for each of <span class="mono">t,h,w</span>; concatenation and duplication rotate 96 of 128 head channels; 32 channels pass through</td><td>Every video query/key carries time and 2D latent-grid location while retaining a non-rotary subspace.</td></tr>
+        <tr><td>Attention core</td><td>Scaled dot-product, dropout 0, <span class="mono">is_causal=False</span>; one request is one attention document and uses no causal mask</td><td>A target patch can consult earlier and later frames, distant spatial regions, prompt rows, visual conditions, and audio rows in the same layer.</td></tr>
+        <tr><td>Output projection</td><td>Bias-free GEMM <span class="mono">7,168 → 5,376</span></td><td>Returns the globally mixed result to the residual width before the gated residual.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <h4 id="checkpoint-runtime-layout">Checkpoint layout versus runtime layer layout</h4>
+      <p>The original MiniMax shards store one <span class="mono">qkv_proj.weight [21,504, 5,376]</span>, ordered as Q/K/V within each of the 56 heads. The official Diffusers converter reorders that tensor to all-Q/all-K/all-V and exposes three logical <span class="mono">[7,168, 5,376]</span> projections; native vLLM-Omni and SGLang execute the logical projections through one packed QKV linear. Likewise, the original FFN first weight stores <span class="mono">[gate; value]</span>. Current vLLM-Omni and SGLang consume a physical <span class="mono">[gate, up]</span> buffer, while Diffusers converts to <span class="mono">[value, gate]</span> for its SwiGLU convention. These are serialization/runtime-layout choices, not different model mathematics, but an optimized QKV or SwiGLU kernel must use the layout produced by its loader.</p>
+    </div>
+
+    <div class="callout orange">
+      <h4 id="clip-wide-dense-attention">Dense attention is clip-wide, not frame-by-frame</h4>
+      <p>For <span class="mono">S</span> packed rows, QKV/output projections scale linearly with <span class="mono">S</span>, but the QK and probability–V portions scale approximately with <span class="mono">S²</span>. At 37,296 target-video rows, video-to-video attention alone exposes about 1.39 billion query/key locations per head in every main block. FlashAttention or TRTLLM attention avoids materializing the entire score matrix in HBM, but dense math still covers it. FastH3 VSA changes this exact inner site: only eligible <strong>video-query → video-key</strong> fine blocks use top-k sparsity and retain roughly 10% of 64×64 tiles; under FastVideo’s default <span class="mono">exempt</span> policy, non-video queries attend all keys and prefix/non-video keys remain available to video queries.</p>
+    </div>
+
+    <h3 id="parameter-layout-video-head">2.8 Where the 33B parameters live—and what the video head returns</h3>
+    <p>The main block is parameter-heavy in a non-obvious place. Counts below are derived directly from the pinned module definition and released dimensions; they include weights and declared biases.</p>
+    <table>
+      <thead><tr><th>One main block</th><th>Parameter count</th><th>Share of block</th><th>Runtime interpretation</th></tr></thead>
+      <tbody>
+        <tr><td>Q/K/V + attention output projections</td><td>154,140,672</td><td>23.88%</td><td>Large token-wise GEMMs plus the quadratic attention kernel.</td></tr>
+        <tr><td>SwiGLU gate/up + down projections</td><td>231,211,008</td><td>35.82%</td><td>Large token-wise GEMMs. The SiLU-and-multiply between them is a small, memory-bound fusion site.</td></tr>
+        <tr><td>AdaLN timestep/modality projection</td><td>260,209,152</td><td>40.31%</td><td>The largest parameter group, but it is evaluated for the small set of distinct timestep embeddings—not as a 2,688→96,768 GEMM independently for every video token. Its outputs are broadcast by row indices.</td></tr>
+        <tr><td>Two pre-RMSNorm + Q/K RMSNorm weights</td><td>11,008</td><td>&lt;0.01%</td><td>Tiny in parameter count, frequent and bandwidth-sensitive in execution.</td></tr>
+        <tr><td><strong>Total per block</strong></td><td><strong>645,571,840</strong></td><td>100%</td><td>Repeated 50 times: about 32.279B parameters before refiners, stems, timestep path, and output heads.</td></tr>
+      </tbody>
+    </table>
+    <p>The two presentation-refiner blocks add about 0.771B parameters; the stems, timestep path, final AdaLN, and output heads add about 0.074B, yielding exactly <strong>33,122,992,896 trainable transformer parameters</strong> (33.123B) from the released tensor schema. Roughly 13.01B parameters are the 50 main-block AdaLN projections. That explains the model’s capacity cost, but parameter share must not be confused with per-token FLOP share: attention and FFN matrices run over every packed row, whereas the AdaLN projection runs over a handful of timestep entries and its six tables are then indexed.</p>
+
+    <div class="callout orange">
+      <h4 id="adaln-cacheability">The 13B AdaLN branch is unusually cacheable</h4>
+      <p>Every main-block AdaLN projection depends only on the sampling timestep, not on the video hidden state. The MiniMax release therefore notes that a serving system can precompute the tables for a known scheduler and unload roughly <strong>13.010B parameters</strong>—about 26.0 decimal GB or 24.2 GiB in BF16. For one evaluated set of <span class="mono">K</span> distinct timesteps, all 50 block tables occupy only about <span class="mono">9.68 MB × K</span> in BF16, plus the small final modulation. This is especially attractive for FastH3’s fixed four-call contract, but the cache must be generated from the fused student weights and exact schedule. The reference Diffusers forward still executes every block’s AdaLN projection online; precompute-and-unload is a serving optimization, not automatic checkpoint behavior.</p>
+    </div>
+
+    <p>After block 50, a final RMSNorm is modulated by a smaller timestep projection <span class="mono">2,688 → 10,752</span>, producing one 5,376-wide shift and scale per diffusion timestep. The FP32 video head maps every packed row to 96 values, after which <span class="mono">video_indices</span> selects only VisualVAE-patch rows. For target rows, those 96 values are unpatchified into four 24-channel flow vectors and passed to the rectified-flow Euler update. Clean condition rows stay fixed even though they participated in attention; their predicted outputs are ignored.</p>
+
+    <div class="callout">
+      <h4 id="mixed-precision-architecture">Mixed precision is part of the released architecture</h4>
+      <p>The checkpoint keeps video/audio input projections, timestep MLP, and video/audio output heads in FP32; the context projection, main stack, and block AdaLN projections are BF16; RoPE inverse frequencies are FP32. An optimized implementation must preserve these boundaries or explicitly re-qualify quality. “BF16 H3” therefore does not mean every parameter and intermediate uses one dtype.</p>
+    </div>
+
+    <h2 id="inference">3. Core inference process</h2>
+    <h3 id="inference-workflow">3.0 End-to-end request workflow</h3>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div><h4 id="inference-request-normalization">Interpret and normalize the request</h4><p>The production workflow first turns free-form text and optional media into structured Context-IR. A local-only deployment can instead supply a carefully structured prompt. Media rates are normalized to H3’s 24 fps video clock and 32 kHz audio clock; the chosen task selects the FL2VA/T2VA or Ref2VA transformer partition.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <div><h4 id="inference-conditioning">Build semantic and latent conditioning</h4><p>The open reference path tokenizes the prompt verbatim—without a chat template—and takes Qwen3-VL’s unnormalized 5,120-dimensional hidden state after layer 50; its language-model head is unused. Keyframes and reference video also pass through the VisualVAE as geometric anchors, while reference audio enters through the AudioVAE. Visual conditions therefore contribute both semantic Qwen features and VAE geometry.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <div><h4 id="inference-noise-and-metadata">Allocate target noise and packed row metadata</h4><p>The reference pipeline draws conditioning, target-video, and target-audio noise from the request generator in a defined order. It constructs modality tags, three-dimensional position IDs, and row indices, and concatenates conditioning with target video/audio rows into one compact sequence. The canonical vLLM profile contains 58,758 valid rows in a 58,816-row aligned buffer.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <div><h4 id="inference-joint-denoising">Joint rectified-flow denoising</h4><p>Video and audio use separate rectified-flow Euler sigma schedules but enter a single transformer evaluation per grid interval. Released defaults apply exponential shift 12.0 to video and 3.0 to audio. The base benchmark uses 50 sigma points including terminal zero, hence 49 transformer evaluations. Because the checkpoint is CFG-distilled, there is no negative-prompt branch or second classifier-free-guidance forward.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">5</div>
+      <div><h4 id="inference-latent-update">Unpack and update both latent states</h4><p>The transformer’s modality-specific output heads produce joint video and audio flow predictions. Each scheduler applies its Euler update to its own latent tensor. Conditioning rows remain anchors; updated target rows are repacked for the next interval.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">6</div>
+      <div><h4 id="inference-av-decode">Decode video and stereo audio</h4><p>After the final interval, video and audio latents are separated. The VisualVAE reconstructs frames; the AudioVAE decodes each channel with shared weights and recombines them as stereo. These two decoders are independent after denoising and can run concurrently.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">7</div>
+      <div><h4 id="inference-encode-and-mux">Prepare, transfer, encode, and mux</h4><p>Production serving converts frames to compact byte layout on GPU, transfers them through pinned host memory or IPC, encodes H.264 and AAC, and returns a complete MP4. A Diffusers call may instead return separate frame and waveform arrays and leave muxing to the caller.</p></div>
+    </div>
+    <div class="step">
+      <div class="num">8</div>
+      <div><h4 id="inference-regenerate-2k">Optionally regenerate at 2K</h4><p>The closed H3-Regenerate-2K stage feeds the 768p result and original context back into H3. This is a second conditional generation pass designed to recover semantically grounded fine detail.</p></div>
+    </div>
+
+    <h3 id="dual-noise-schedules">3.1 The two schedules inside one model call</h3>
+    <div class="equation">sigma′ = s · sigma / (1 + (s − 1) · sigma) &nbsp;&nbsp; with s_video = 12 and s_audio = 3</div>
+    <p>Here <span class="mono">sigma</span> measures remaining noise. H3 exposes the opposite-facing time coordinate <span class="mono">t = 1 − sigma</span>, so <span class="mono">t = 0</span> is noise and <span class="mono">t = 1</span> is clean. Its transformer predicts a <em>data-ward</em> velocity <span class="mono">v</span>; the scheduler forms a clean estimate and blends toward it:</p>
+    <div class="equation">x₀_est = x_sigma + sigma · v &nbsp;&nbsp; ; &nbsp;&nbsp; r = sigma_next / sigma &nbsp;&nbsp; ; &nbsp;&nbsp; x_next = r · x_sigma + (1 − r) · x₀_est</div>
+    <p>This is deterministic rectified-flow Euler integration (<span class="mono">eta = 0</span>): no fresh noise is injected between calls. Video and audio occupy different points on differently shifted schedules, but the transformer receives both timestep conditions in the same forward. Joint attention therefore remains possible while each modality follows its own noise dynamics.</p>
+
+    <table>
+      <thead><tr><th>Five-point four-call schedule</th><th>Start</th><th>After call 1</th><th>After call 2</th><th>After call 3</th><th>Terminal</th></tr></thead>
+      <tbody>
+        <tr><td>Unshifted sigma</td><td>1.000</td><td>.750</td><td>.500</td><td>.250</td><td>0</td></tr>
+        <tr><td>Video sigma, shift 12</td><td>1.000</td><td>.973</td><td>.923</td><td>.800</td><td>0</td></tr>
+        <tr><td>Audio sigma, shift 3</td><td>1.000</td><td>.900</td><td>.750</td><td>.500</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <p class="table-note">Calculated from the released scheduler’s five-point linear base grid and exponential shifts. The terminal zero has no transformer evaluation. Custom explicit sigma lists can define a different grid.</p>
+
+    <div class="callout">
+      <h4 id="noise-clocks-content-timeline">Two noise clocks, one content timeline</h4>
+      <p>The shifted sigmas above tell each modality <em>how noisy it is</em>. A separate MM-RoPE time coordinate tells attention <em>when an event occurs</em>. Audio advances on its 40 Hz latent clock; video positions are mapped onto that same timeline using the 40/24 rate relationship and the VAE’s repeating 17-output-frame/5-latent-position pattern. This gives a video event and its nearby sound comparable positional time even though their token rates and denoising schedules differ. It is a learned alignment mechanism, not a guarantee that every generated sound lands perfectly.</p>
+    </div>
+
+    <h3 id="vae-geometry">3.2 Geometry is quantized by the VAE</h3>
+    <ul>
+      <li>Output dimensions must be multiples of 32: 16× VAE spatial compression × 2× transformer patching.</li>
+      <li>Frame counts are rounded upward to <span class="mono">17n + 5</span>; the corresponding VAE latent length is <span class="mono">5n + 2</span>.</li>
+      <li>Audio latent length is approximately <span class="mono">round(frames / 24 × 40)</span> per channel.</li>
+      <li>At 1344×768 and 124 frames, the target video alone contains 37 latent frames × 42 × 24 spatial patches = 37,296 transformer rows; stereo audio adds 2 × 207 temporal rows before text and other conditioning.</li>
+    </ul>
+    <p class="small">The final bullet is a report calculation from the released geometry. Actual packed length also depends on prompt and conditioning rows, alignment, and task.</p>
+
+    <h3 id="video-token-volume">3.3 From a requested clip to the video token volume</h3>
+    <p>H3 does not run the 33B transformer directly over RGB pixels. It first moves the clip into a much smaller latent space, then patchifies that latent into a three-dimensional token lattice. The following worked example shows why this compression is essential—and why video attention is still expensive after compression.</p>
+
+    <table>
+      <thead><tr><th>Representation</th><th>124-frame, 1344×768 example</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td>Decoded video</td><td>124 × 768 × 1344 RGB frames at 24 fps</td><td>The returned media lasts about 5.17 seconds. All frames are produced together as one clip, not one autoregressive frame at a time.</td></tr>
+        <tr><td>VisualVAE latent</td><td>37 temporal positions × 48 × 84 spatial positions × 24 channels</td><td>The causal VAE reduces space by 16× on each axis and maps the aligned frame count to 37 latent time positions.</td></tr>
+        <tr><td>Transformer video lattice</td><td>37 × 24 × 42 = <strong>37,296 video rows</strong></td><td>A <span class="mono">1×2×2</span> patch groups four neighboring 24-channel VAE sites into 96 values before projection, giving an effective 32× spatial reduction from output pixels to transformer rows.</td></tr>
+        <tr><td>Transformer audio rows</td><td>207 time positions per channel × 2 = <strong>414 audio rows</strong></td><td>The AudioVAE clock is 40 latent positions/s. Left and right channels are distinct rows but use shared VAE weights.</td></tr>
+        <tr><td>Full packed sequence</td><td>Video + audio + text/reference/anchor rows + alignment</td><td>Plain T2VA begins at <span class="mono">T_text + 37,710</span> rows; the vLLM canonical controlled profile reports 58,758 valid rows in a 58,816-row aligned buffer.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout orange">
+      <h4 id="duration-resolution-cost">Why duration and resolution are so costly</h4>
+      <p>Dense self-attention scales approximately with the square of sequence length. The 37,296 target-video rows in this small worked example already imply about <strong>1.39 billion query–key positions per head, per transformer block</strong> before text, audio, or reference rows are included. FlashAttention avoids storing a full matrix, but it does not remove that scaling law. Longer clips add temporal rows; larger frames add spatial rows; both make every one of the 49 base-model evaluations more expensive. This is the precise workload that FastH3’s VSA path targets.</p>
+    </div>
+
+    <h4 id="temporal-length-rule">Why <span class="mono">17n + 5</span> is more than “divide time by four”</h4>
+    <p>The reference VisualVAE decoder reconstructs time in overlapping chunks. An aligned <span class="mono">17n + 5</span>-frame clip has <span class="mono">5n + 2</span> latent frames. Each temporal decode window consumes seven latent positions, advances by five, and contributes a 17-frame main segment plus a five-frame overlap that is linearly cross-faded with its neighbor. The final overlap supplies the trailing five frames. This overlap contract—not simple rounding by four—produces H3’s unusual legal frame counts.</p>
+    <p>Spatial reconstruction is tiled too. The Diffusers reference defaults to 256×256 output-space tiles with at least 64 pixels of overlap and blends neighboring results. For 1344×768, this resolves to 7×4 = 28 spatial tiles; the 124-frame example has seven temporal windows, or 196 spatial/temporal decode jobs before batching and distribution. That decomposition explains why compilation, tile parallelism, and cross-rank VAE decode remain valuable even after FastH3 removes 45 transformer calls.</p>
+
+    <h3 id="denoising-evaluation">3.4 What happens inside one denoising evaluation</h3>
+    <p>The transformer predicts a <em>flow field</em>: a direction telling each noisy video and audio latent how to move toward a clean sample. It does not decode pixels during the loop. One evaluation can be read as five operations:</p>
+    <ol>
+      <li><strong>Project and tag rows.</strong> Modality-specific input projections map text/reference context, noisy video patches, and noisy audio positions into the shared 5,376-wide hidden space. Row tags select the correct modality/time conditioning.</li>
+      <li><strong>Apply the two noise clocks.</strong> Video and audio receive their own shifted timestep embeddings. AdaLN uses those conditions to scale, shift, and gate the shared computation, allowing one block stack to process two latent states at different effective noise levels.</li>
+      <li><strong>Exchange global context.</strong> Bidirectional attention lets a video location consult distant frames, prompt rows, and audio rows, while 3D MM-RoPE identifies time, height, and width. This is how a visible impact can be coordinated with a sound event and how a subject can remain coherent across a camera move.</li>
+      <li><strong>Transform every row.</strong> The shared attention and SwiGLU feed-forward layers repeat through the 50-block backbone; two refiner layers handle contextual refinement around the main stack. This repeated dense block work dominates base-H3 inference.</li>
+      <li><strong>Predict and update separately.</strong> Modality-specific output projections extract video and audio flow predictions. Two Euler schedulers then update their respective target latents and repack them for the next joint call.</li>
+    </ol>
+    <p><strong>Important distinction:</strong> “temporally causal” describes the VisualVAE’s 3D-CNN <em>encoder</em>; its 36-layer ViT decoder is non-causal. The diffusion transformer also reasons over the clip-wide latent volume with bidirectional attention. H3 therefore generates a globally coordinated sequence, rather than decoding frame 1, then frame 2, and so on.</p>
+
+    <h3 id="prompt-av-timeline">3.5 How the prompt becomes an audiovisual timeline</h3>
+    <p>The FastH3 validation gallery illustrates the structured form expected by H3’s open generation path. Its prompts separate the visible sequence, the environmental soundtrack, and optional music. Within the visual description, shot boundaries and timestamps turn a prose idea into an explicit timeline.</p>
+    <table>
+      <thead><tr><th>Prompt element</th><th>What it controls</th><th>Useful level of specificity</th></tr></thead>
+      <tbody>
+        <tr><td><span class="mono">integrated_multimodal_description</span></td><td>Subjects, actions, visual style, shot order, camera path, spoken lines, and when transitions happen</td><td>Stable subject labels, explicit shot timestamps, camera speed/amplitude, continuity constraints, and quoted speech with language</td></tr>
+        <tr><td><span class="mono">overall_soundscape</span></td><td>Diegetic ambience, Foley, voices, impacts, and their relation to visible motion</td><td>Name the event that produces each important sound and state whether ambience continues across cuts</td></tr>
+        <tr><td><span class="mono">non_diegetic_music</span></td><td>Music that belongs to the presentation rather than the depicted world</td><td>Instrumentation, tempo, dynamics, and timing—or explicitly <span class="mono">N/A</span></td></tr>
+      </tbody>
+    </table>
+    <p>For conditional Base-H3 workflows, visual media travels through two complementary paths: Qwen3-VL features express semantic “what,” while VisualVAE latents preserve appearance and geometry for first/last-frame or reference anchors. Reference audio enters through the AudioVAE rather than Qwen. FastH3 Preview v1 is T2VA-only, so its public student consumes text semantics but was not post-trained to honor those image/reference anchors.</p>
+    <p>Prompt structure is not an inference speed optimization, but it is central to useful video generation. A four-step student has fewer opportunities to correct an ambiguous trajectory, so stable identities, timed actions, and explicit audio causality are especially valuable when qualifying FastH3.</p>
+
+    <h2 id="cost">4. Why H3 is difficult to serve</h2>
+    <div class="equation">T_E2E ≈ T_encode + N_executed · (T_attention + T_MLP + T_comm + T_misc) + T_VAE + T_transport + T_mux</div>
+    <p>This decomposition explains the articles. Base H3 has a large <span class="mono">N_executed = 49</span>, and every evaluation attends over tens of thousands of packed rows. Sequence parallelism introduces all-to-all communication, while non-GEMM normalization, positional encoding, modulation, residual, and activation kernels repeat in every block and every step. The local checkpoint’s BF16 H3 transformer is roughly 62 GB; the vLLM article reports about 51.5 GB of retained Qwen3-VL inference weights. Placement and capacity are therefore first-order production concerns even before activations.</p>
+
+    <div class="figure">
+      <svg viewBox="0 0 1000 360" role="img" aria-label="Optimization levers mapped to the H3 latency equation">
+        <defs>
+          <marker id="arr2" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#506a7e"/></marker>
+          <style>
+            .f{font-family:Lato,Arial,sans-serif;font-size:16px;font-weight:700;fill:#102a43}
+            .g{font-family:Lato,Arial,sans-serif;font-size:12px;font-weight:400;fill:#40576a}
+            .ln{stroke:#506a7e;stroke-width:2;marker-end:url(#arr2)}
+          </style>
+        </defs>
+        <rect x="28" y="32" width="944" height="64" rx="12" fill="#123d59"/>
+        <text x="500" y="59" text-anchor="middle" style="font-family:Lato,Arial,sans-serif;font-size:18px;font-weight:700;fill:#ffffff">End-to-end request latency</text>
+        <text x="500" y="82" text-anchor="middle" style="font-family:'DejaVu Sans Mono',monospace;font-size:13px;font-weight:400;fill:#dceaf2">encode + evaluations × per-evaluation cost + decode + media output</text>
+
+        <rect x="35" y="149" width="205" height="112" rx="10" fill="#eaf3fb" stroke="#2367a8"/>
+        <text class="f" x="138" y="178" text-anchor="middle">Reduce evaluations</text>
+        <text class="g" x="138" y="204" text-anchor="middle">Cache-DiT step reuse</text>
+        <text class="g" x="138" y="226" text-anchor="middle">DMD2: 49 → 4</text>
+        <text class="g" x="138" y="248" text-anchor="middle">largest multiplicative lever</text>
+
+        <rect x="278" y="149" width="205" height="112" rx="10" fill="#e8f5f3" stroke="#0b7a75"/>
+        <text class="f" x="380" y="178" text-anchor="middle">Cheapen each call</text>
+        <text class="g" x="380" y="204" text-anchor="middle">fused operators + compile</text>
+        <text class="g" x="380" y="226" text-anchor="middle">Ulysses communication</text>
+        <text class="g" x="380" y="248" text-anchor="middle">sparse / quantized attention</text>
+
+        <rect x="521" y="149" width="205" height="112" rx="10" fill="#fff1e8" stroke="#d56a2c"/>
+        <text class="f" x="624" y="178" text-anchor="middle">Reduce fixed stages</text>
+        <text class="g" x="624" y="204" text-anchor="middle">encoder placement/cache</text>
+        <text class="g" x="624" y="226" text-anchor="middle">parallel compiled VAEs</text>
+        <text class="g" x="624" y="248" text-anchor="middle">compact transport + mux</text>
+
+        <rect x="764" y="149" width="205" height="112" rx="10" fill="#f0ebfa" stroke="#7656a5"/>
+        <text class="f" x="867" y="178" text-anchor="middle">Fit and scale</text>
+        <text class="g" x="867" y="204" text-anchor="middle">task-specific residency</text>
+        <text class="g" x="867" y="226" text-anchor="middle">DLO / disaggregation</text>
+        <text class="g" x="867" y="248" text-anchor="middle">FP8 / NVFP4 paths</text>
+
+        <line class="ln" x1="138" y1="149" x2="263" y2="98"/>
+        <line class="ln" x1="380" y1="149" x2="431" y2="98"/>
+        <line class="ln" x1="624" y1="149" x2="645" y2="98"/>
+        <line class="ln" x1="867" y1="149" x2="788" y2="98"/>
+        <text class="g" x="500" y="318" text-anchor="middle">Once denoising shrinks, the fixed VAE → transfer → codec tail becomes the next bottleneck.</text>
+      </svg>
+      <p class="caption"><strong>Figure 3.</strong> Each optimization attacks a different term. Step reduction and per-step acceleration multiply; tail optimization becomes more important as that product shrinks.</p>
+    </div>
+
+    <h2 id="optimizations" class="page-break">5. Core optimizations</h2>
+
+    <h3 id="lossless-dense-execution">5.1 Lossless dense execution: make the reference path efficient</h3>
+    <p><span class="tag">Same BF16 weights</span><span class="tag">Same dense attention</span><span class="tag">Same 49 forwards</span></p>
+    <table>
+      <thead><tr><th>Boundary</th><th>Optimization</th><th>Why it helps H3 specifically</th></tr></thead>
+      <tbody>
+        <tr><td>Packed attention</td><td>Pass valid sequence lengths and remove structural suffix padding</td><td>Prevents attention kernels from spending work on aligned-but-invalid rows in a sequence already tens of thousands of tokens long</td></tr>
+        <tr><td>Sequence parallelism</td><td>Ulysses/SP shards the long row dimension across GPUs; vLLM Fast Ulysses uses PyTorch SymmetricMemory with the NCCL backend plus a JIT CUDA/NCCL LSA kernel, exchanging shards in attention-ready layout</td><td>Distributes the dominant long-sequence attention and removes a separate all-to-all relayout</td></tr>
+        <tr><td>Position construction</td><td>Build rank-local embedding and RoPE rows; gather the compact 128-channel projection rather than the 5,376-channel hidden state</td><td>Reduces replicated position work and communication volume</td></tr>
+        <tr><td>Transformer operators</td><td>Fuse indexed AdaLN scale/shift, gated residual, Q/K RMSNorm + 3D RoPE, and SwiGLU; compile repeated regions</td><td>Eliminates launches, temporary tensors, and memory traffic repeated across 50 blocks × 49 evaluations</td></tr>
+        <tr><td>Video VAE</td><td>Tile/patch parallel decode across GPUs, compiled decoder regions, fused normalization/RoPE/SwiGLU/residual paths</td><td>Turns a formerly serial postprocess into distributed work and limits the tail after a short denoise schedule</td></tr>
+        <tr><td>Video/audio overlap</td><td>Decode independent video and audio latent outputs concurrently</td><td>Uses the branch point after joint denoising instead of serializing two decoders</td></tr>
+        <tr><td>GPU output</td><td>Convert FP32 BCTHW to contiguous uint8 BTHWC once on GPU</td><td>Shrinks the video payload by 75% before device-to-host and IPC transfer</td></tr>
+        <tr><td>Codec path</td><td>Pinned transfers, direct planar conversion, persistent parallel conversion workers, strided RGB-plane support</td><td>Avoids reconstructing another full interleaved frame buffer before H.264/AAC muxing</td></tr>
+      </tbody>
+    </table>
+
+    <h4 id="layer-kernel-map">5.1.1 Layer-to-kernel map: what is fused, and what remains a GEMM</h4>
+    <p>“Fused H3 kernels” should not be read as one monolithic implementation. A transformer block still contains large matrix multiplications, an attention core, communication when sequence parallelism is enabled, and several small pointwise/indexed sites. FastVideo’s current native H3 implementation exposes exactly three independently switchable fusion groups—<span class="mono">modulate</span>, <span class="mono">qknorm_rope</span>, and <span class="mono">swiglu</span>—while vLLM-Omni and SGLang implement related patterns in their own runtimes.</p>
+
+    <table>
+      <thead><tr><th>Exact block site</th><th>Unfused operations</th><th>Optimized kernel / backend</th><th>Boundary that must not be overstated</th></tr></thead>
+      <tbody>
+        <tr><td>AdaLN parameter projection</td><td>SiLU on 2,688-wide time vectors, then <span class="mono">2,688 → 96,768</span> linear</td><td>Ordinary large GEMM over only the distinct timesteps; runtimes can precompute/reuse the resulting tables where valid</td><td>This is not the indexed modulation kernel. The projection is parameter-heavy but does not run once per video row.</td></tr>
+        <tr><td>Attention pre-norm + modulation</td><td>RMSNorm, two <span class="mono">index_select</span>s, multiply, add</td><td>FastVideo <span class="mono">fused_rmsnorm_modulate</span> → Triton <span class="mono">_rmsnorm_modulate_kernel</span> / custom op <span class="mono">fastvideo::_minimax_h3_rmsnorm_modulate</span></td><td>Fuses one bandwidth-bound pass over <span class="mono">S×5,376</span>; it does not include the following QKV GEMMs.</td></tr>
+        <tr><td>Q/K/V construction</td><td>Three logical projections <span class="mono">5,376 → 7,168</span>; native vLLM-Omni/SGLang pack them into one QKV linear</td><td>GEMM implementation selected by the runtime/precision path</td><td>This remains matrix multiplication. Packing Q/K/V into one GEMM is distinct from the later QK-normalization/RoPE pointwise fusion.</td></tr>
+        <tr><td>Q and K preparation</td><td>Per-head RMSNorm, slice/rotate/concatenate for 3D RoPE</td><td>FastVideo <span class="mono">fused_qknorm_rope</span> → Triton <span class="mono">_qknorm_partial_rope_kernel</span>; launched once for Q and once for K</td><td>It rotates only 96/128 channels and preserves 32. It does not include QK<sup>T</sup>, softmax, or P×V.</td></tr>
+        <tr><td>Attention core</td><td>QK<sup>T</sup>, scaling, softmax, P×V</td><td>Dense FlashAttention/FA4, cuDNN or TRTLLM attention; alternatively a separately qualified sparse backend such as VSA or SubBlock</td><td>This is the quadratic kernel and a distinct optimization choice. Norm/RoPE fusion alone does not make attention sparse.</td></tr>
+        <tr><td>Attention output projection</td><td><span class="mono">7,168 → 5,376</span> linear</td><td>GEMM</td><td>Not part of the gated-residual fusion.</td></tr>
+        <tr><td>Bridge from attention to FFN</td><td>Indexed attention gate, residual add, second RMSNorm, indexed FFN scale/shift</td><td>FastVideo <span class="mono">fused_residual_gate_rmsnorm_modulate</span> and vLLM-Omni <span class="mono">indexed_gate_rms_norm_scale_shift</span> each implement this cross-sublayer boundary</td><td>The fusion begins after the attention output GEMM and stops before the FFN gate/up GEMM.</td></tr>
+        <tr><td>FFN gate/up</td><td><span class="mono">5,376 → 28,672</span> linear</td><td>GEMM producing one packed <span class="mono">gate_up</span> buffer</td><td>The two 14,336-wide halves are still produced by the linear.</td></tr>
+        <tr><td>SwiGLU activation</td><td>Split, SiLU on gate half, elementwise multiply</td><td>FastVideo <span class="mono">minimax_h3_swiglu</span> → Triton <span class="mono">_minimax_h3_swiglu_kernel</span>; fused in-place variant in SGLang</td><td>This small kernel does <strong>not</strong> include either FFN GEMM.</td></tr>
+        <tr><td>FFN down + final block residual</td><td><span class="mono">14,336 → 5,376</span> GEMM, indexed FFN gate, multiply, add</td><td>Down projection remains a GEMM. vLLM-Omni and SGLang use explicit indexed gated-residual kernels after it.</td><td>In the current FastVideo block, the final <span class="mono">x + gate_mlp[index]·ff</span> remains an ordinary indexed expression; only the earlier attention-to-FFN bridge uses its combined modulation kernel.</td></tr>
+      </tbody>
+    </table>
+
+    <h4 id="vllm-sglang-gated-branches">5.1.2 vLLM-Omni versus SGLang: exact gated-branch execution</h4>
+    <p>The two runtimes implement the same H3 equations and use the same full-width <span class="mono">gate_msa/gate_mlp [3M,5,376]</span> tables. Their difference is the chosen kernel boundary. vLLM-Omni crosses the attention-to-MLP sublayer boundary to reduce launches and avoid rereading the new residual. SGLang keeps a smaller reusable indexed-gate kernel and emphasizes in-place buffer reuse. The SGLang performance numbers in this report belong to the article-pinned <span class="mono">d90318b3</span> implementation; the pinned <span class="mono">12735c2d</span> source links below are a current-code confirmation of the same gate policy, not a retroactive benchmark claim.</p>
+
+    <div class="figure">
+      <div class="compare-flow" role="img" aria-label="Comparison of vLLM-Omni and SGLang gated branch kernel boundaries">
+        <div class="flow-lane">
+          <div class="flow-title">vLLM-Omni</div>
+          <div class="flow-node state">x<sub>0</sub> · <span class="mono">[T<sub>r</sub>,5,376]</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fused">V0 · fused RMSNorm + indexed MSA scale/shift</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node gemm">QKV → attention → output GEMM</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fused">V1 · <span class="mono">gate_msa</span> residual + next RMSNorm + indexed MLP scale/shift<br>returns x<sub>1</sub> and h<sub>mlp</sub></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node gemm">gate/up GEMM → SwiGLU kernel → down GEMM</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fused">V2 · indexed <span class="mono">gate_mlp</span> residual</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node state">x<sub>2</sub> · <span class="mono">[T<sub>r</sub>,5,376]</span></div>
+        </div>
+        <div class="flow-lane">
+          <div class="flow-title">SGLang</div>
+          <div class="flow-node state">x<sub>0</sub> · <span class="mono">[T<sub>r</sub>,5,376]</span></div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node">RMSNorm</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fused">S0 · indexed MSA scale/shift, in place</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node gemm">QKV → attention → output GEMM</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fused">S1 · indexed <span class="mono">gate_msa</span> residual, normally in place</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node">RMSNorm</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fused">S2 · indexed MLP scale/shift, in place</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node gemm">gate/up GEMM → in-place SwiGLU kernel → down GEMM</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node fused">S3 · indexed <span class="mono">gate_mlp</span> residual, in place</div>
+          <div class="flow-arrow">↓</div>
+          <div class="flow-node state">x<sub>2</sub> · <span class="mono">[T<sub>r</sub>,5,376]</span></div>
+        </div>
+      </div>
+      <p class="caption"><strong>Figure 2B.</strong> Explicit production kernel boundaries at the pinned implementations. Orange boxes are hand-written pointwise/indexed fusions; blue boxes retain distinct GEMM or attention launches. Neither runtime folds a residual gate into the attention core or a row-parallel output GEMM.</p>
+    </div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4 id="vllm-gated-pseudocode">vLLM-Omni pseudocode</h4>
+        <pre class="codeblock">h_attn = V0_rmsnorm_scale_shift(
+    x0, shift_msa, scale_msa, idx)
+
+a = attention_through_out_proj(h_attn)
+
+x1, h_mlp = V1_gate_norm_modulate(
+    x0, gate_msa, a,
+    norm2, shift_mlp, scale_mlp, idx)
+
+m = down(swiglu(gate_up(h_mlp)))
+x2 = V2_indexed_gate(x1, gate_mlp, m, idx)</pre>
+      </div>
+      <div class="card">
+        <h4 id="sglang-gated-pseudocode">SGLang pseudocode</h4>
+        <pre class="codeblock">h_attn = rmsnorm(x0)
+h_attn = S0_scale_shift_(
+    h_attn, shift_msa, scale_msa, idx)
+
+a = attention_through_out_proj(h_attn)
+x1 = S1_indexed_gate(
+    x0, gate_msa, a, idx,
+    allow_inplace=not cache_dit_preserves_x0)
+
+h_mlp = rmsnorm(x1)
+h_mlp = S2_scale_shift_(
+    h_mlp, shift_mlp, scale_mlp, idx)
+
+m = down(swiglu(
+    gate_up(h_mlp), reuse_input=eligible_cuda_bf16_path))
+x2 = S3_indexed_gate_(x1, gate_mlp, m, idx)</pre>
+      </div>
+    </div>
+
+    <table>
+      <thead><tr><th>Implementation detail</th><th>vLLM-Omni</th><th>SGLang</th></tr></thead>
+      <tbody>
+        <tr><td>Attention gated-residual boundary</td><td><span class="mono">residual + gate_msa[idx]·attn_out</span>, followed in the same Triton kernel by the next RMSNorm and MLP scale/shift</td><td>A standalone Triton kernel for indexed lookup, multiply, and residual add</td></tr>
+        <tr><td>MLP gated-residual boundary</td><td>Standalone <span class="mono">indexed_gate</span> Triton kernel after the down GEMM</td><td>The same small indexed-gate kernel used after attention, normally writing in place</td></tr>
+        <tr><td>Buffer policy</td><td>The combined attention bridge allocates and returns both <span class="mono">x1</span> and the modulated <span class="mono">h_mlp</span>; final MLP gate output is out of place</td><td>Modulation overwrites disposable norm outputs; gated residual normally overwrites its residual buffer</td></tr>
+        <tr><td>Cache-DiT interaction</td><td>The reviewed gate wrappers are out of place</td><td>The first gate becomes out of place when Cache-DiT must preserve the block input; the final MLP gate remains in place on the block-local buffer</td></tr>
+        <tr><td>BF16 residual boundary</td><td>The combined kernel performs gate arithmetic in FP32, rounds the updated residual to BF16, then makes the following RMSNorm consume that rounded value</td><td>The indexed-gate kernel explicitly rounds the product to BF16 before residual addition, then stores the sum in BF16</td></tr>
+        <tr><td>AdaLN preparation</td><td>Each block’s projection performs its SiLU and gathers the column-parallel output</td><td>The base path computes the shared post-SiLU input once; it can batch the 50 local projections into one TP all-gather or consume precomputed AdaLN tables</td></tr>
+      </tbody>
+    </table>
+
+    <p>At the gate site, both branches have already returned to the full residual width. Under TP, the attention output projection and FFN down projection first reduce their row-parallel partials to <span class="mono">[T<sub>r</sub>,5,376]</span>; only then does the gate kernel execute. This is why the gate tables are replicated over TP ranks even though Q/K/V heads and the FFN intermediate are sharded.</p>
+
+    <div class="callout orange">
+      <h4 id="fused-swiglu-meaning">What “fused SwiGLU” means in both runtimes</h4>
+      <p>The gate and up projections are packed into one model-level linear that produces <span class="mono">[T<sub>r</sub>,28,672/P]</span> per TP rank. A separate activation kernel then computes <span class="mono">SiLU(gate)·up</span>, followed by the separate down GEMM. On its eligible unquantized-or-GGUF CUDA BF16 contiguous path, SGLang reuses the front half of the packed input buffer for the activation output; other layouts or quantization paths fall back to an out-of-place expression. vLLM allocates the 14,336-wide activation output. Neither implementation provides a gate/up GEMM epilogue that performs SwiGLU inside the GEMM kernel.</p>
+    </div>
+
+    <h4 id="h200-kernel-evidence">5.1.3 Isolated H200 kernel evidence</h4>
+    <p>The SGLang study measures the non-GEMM sites at the real per-rank shape of its five-second, 1344×768 T2VA workload: 4,722 rows after SP8 padding, hidden size 5,376, 56 heads, head dimension 128, 96 rotary channels, and BF16 inputs.</p>
+    <table>
+      <thead><tr><th>Measured site</th><th>Eager composition</th><th>Fused kernel</th><th>Reported per-call speedup</th></tr></thead>
+      <tbody>
+        <tr><td>Indexed AdaLN scale/shift<br><span class="mono">indexed_scale_shift_bf16_</span></td><td>136.7 μs</td><td>38.2 μs</td><td>3.58×</td></tr>
+        <tr><td>Indexed gated residual<br><span class="mono">indexed_gate_bf16[_]</span></td><td>93.2 μs</td><td>46.6 μs</td><td>2.00×</td></tr>
+        <tr><td>In-place SwiGLU activation<br><span class="mono">silu_and_mul_with_activation_rounding_</span></td><td>364.5 μs</td><td>105.2 μs</td><td>3.46×</td></tr>
+        <tr><td>QK RMSNorm<br><span class="mono">fused_inplace_qknorm</span></td><td>334.0 μs</td><td>76.9 μs</td><td>4.35×</td></tr>
+        <tr><td>QK RMSNorm + 3D RoPE<br><span class="mono">fused_inplace_qknorm_rope</span></td><td>1,335.6 μs</td><td>109.8 μs</td><td>12.16×</td></tr>
+      </tbody>
+    </table>
+    <p class="table-note">CUDA-event medians over 10 rounds of 20 calls, as reported by the H200 article. These are isolated microbenchmarks and cannot be added or multiplied into an end-to-end speedup. The 12.16× row uses the exact-rounding <span class="mono">round_norm_before_rope=True</span> path. SGLang’s indexed-gate kernel is a smaller boundary than FastVideo’s combined attention-residual + next-RMSNorm + modulation kernel, so their labels are related but not interchangeable.</p>
+
+    <h4 id="denoising-loop-invariants">5.1.4 Remove denoising-loop invariants before optimizing their kernels</h4>
+    <ul>
+      <li><strong>Refine context once.</strong> The two presentation-refiner blocks are timestep-free and the Qwen states do not change during sampling. FastVideo caches their output per generation instead of rerunning two attention/FFN blocks at every denoising call; under sequence parallelism its source notes four avoided collectives per subsequent call.</li>
+      <li><strong>Build 3D RoPE once per packed layout.</strong> Position IDs stay fixed while only latent values and noise levels change. FastVideo caches cosine/sine tensors already cast to the required dtype rather than rebuilding and recasting them in every call and block.</li>
+      <li><strong>Pack without cloning full buffers.</strong> An allocated <span class="mono">[B,S,5,376]</span> buffer is filled with in-place <span class="mono">index_copy_</span> for context, video, and audio, avoiding three out-of-place full-buffer copies.</li>
+      <li><strong>Communicate narrow outputs.</strong> With sequence parallelism, apply the 5,376→96 video head on local rows first, gather the compact 96-value predictions, and then select video indices. Gathering the residual stream would move 56× more values.</li>
+    </ul>
+
+    <div class="callout">
+      <h4 id="fastvideo-fusion-contract">FastVideo fusion execution contract</h4>
+      <p>The Triton fusions are inference-only and expose opaque custom operators so regional <span class="mono">torch.compile</span> can retain them rather than tracing through their launchers. Grad-enabled runs and unsupported environments fall back to eager operations. This is an implementation optimization, not a claim of bitwise parity; strict fidelity testing should retain an eager comparison and the runtime’s option to disable individual fusion groups.</p>
+    </div>
+
+    <div class="grid-4">
+      <div class="card"><div class="metric blue">82.239 s</div><p>Diffusers complete-MP4 baseline<br><span class="small">8× B300, 10 s, 1344×768</span></p></div>
+      <div class="card"><div class="metric">56.917 s</div><p>vLLM-Omni complete-MP4<br><span class="small">matched base-H3 controls</span></p></div>
+      <div class="card"><div class="metric orange">51.800 s</div><p>DiT time inside vLLM<br><span class="small">1.057 s per forward</span></p></div>
+      <div class="card"><div class="metric red">95.5%</div><p>DiT share of reported model execution<br><span class="small">51.800 / 54.246</span></p></div>
+    </div>
+    <p>The result is a 30.8% complete-response latency reduction, or 1.445× speedup, without step reduction, sparse attention, cache reuse, or weight quantization. It also establishes what remains: the DiT still dominates, so a model-level reduction in evaluations has much more headroom.</p>
+
+    <h3 id="training-free-approximation">5.2 Training-free approximation: reuse steps and sparsify attention</h3>
+    <p>The SGLang study keeps the 49-forward base model and composes two runtime approximations on top of fused dense execution.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4 id="cache-dit">Cache-DiT: skip block-stack work across steps</h4>
+        <p>After four warmup steps, one shared DBCache context evaluates boundary blocks and measures normalized residual change against the prior state. If the change is below a threshold and a consecutive-hit limit permits it, the middle blocks reuse their cached output.</p>
+        <ul>
+          <li><strong>Conservative:</strong> RDT 0.04; at most 1 consecutive cached step.</li>
+          <li><strong>Stride:</strong> RDT 0.08; at most 3 consecutive cached steps.</li>
+        </ul>
+        <p class="small">Because H3 has one packed audio–video block stack, the decision reuses the combined output. There is no independent audio/video cache decision.</p>
+      </div>
+      <div class="card">
+        <h4 id="subblock-sparse-attention">SubBlock: skip low-mass attention tiles within a step</h4>
+        <p>A training-free router partitions 64-token query/key blocks into four 16-token sub-blocks. Pooling plus log-sum-exp estimates each key block’s softmax mass for every query block and head; the kernel computes only the highest-scoring blocks.</p>
+        <ul>
+          <li><span class="mono">sparsity=0.75</span> keeps roughly 25% of key blocks.</li>
+          <li><span class="mono">sparsity=0.80</span> keeps roughly 20%.</li>
+          <li>First ten denoising steps and unsupported/short calls stay dense.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>The composition is powerful because Cache-DiT reduces <em>how many</em> expensive block stacks execute while SubBlock reduces attention work <em>inside</em> the steps that remain. It is also explicitly lossy. On the H200 study, the aggressive combined profile reaches 5.06–5.72× over Diffusers for T2VA with mean SSIM 0.758–0.777, while FL2VA reaches 5.86–6.24× with higher mean SSIM 0.850–0.914. The workload-dependent gap is a warning against a single global “quality-safe” threshold.</p>
+
+    <div class="callout">
+      <h4 id="quality-first-interpretation">Recommended quality-first interpretation</h4>
+      <p>Dense fused execution is the default. If approximation is acceptable, qualify conservative Cache-DiT first: the H200 article reports up to 2.99× over Diffusers with mean SSIM about 0.90–0.98 across its tested T2VA/FL2VA cases. Add sparse attention only after task-specific perceptual, synchronization, text, identity, and motion evaluation—not SSIM alone.</p>
+    </div>
+
+    <h3 id="fasth3">5.3 FastH3 video-generation deep dive</h3>
+    <p><span class="tag model">New student weights</span><span class="tag lossy">Four evaluations</span><span class="tag lossy">Optional trainable sparsity</span><span class="tag">T2VA preview</span></p>
+    <p>FastH3 is a post-trained H3 transformer specialized for four-call text-to-video-and-audio generation. It retains H3’s audiovisual representation and most of the request pipeline, but learns a much shorter route from initial noise to the final video/audio latent. The recommended FastVideo artifact adds a second change—trainable Video Sparse Attention—so it reduces both the number of calls and the cost of attention within each call.</p>
+
+    <table>
+      <thead><tr><th>Retained from H3-Base</th><th>Changed by FastH3</th><th>Operational consequence</th></tr></thead>
+      <tbody>
+        <tr><td>Qwen3-VL encoder, tokenizer, video VAE, audio VAE, scheduler classes, packed joint audio–video representation</td><td>Transformer weights are post-trained as a few-step student</td><td>The encoder and decode/output tail do not disappear; Base H3 must be available when loading the distributed adapter form</td></tr>
+        <tr><td>One joint call predicts video and audio flows; CFG-distilled inference contract</td><td>Five prescribed scheduler positions produce exactly four DiT evaluations; FastVideo uses guidance 1.0</td><td>Do not run the student with the base 49-call grid or tune its schedule as though it were the base checkpoint</td></tr>
+        <tr><td>Variable 768p shapes and durations aligned to H3 geometry</td><td>The recommended checkpoint replaces eligible video-to-video full attention with VSA-H3 at 90% tile sparsity</td><td>The VSA checkpoint and matching sparse kernel are one serving artifact; dense attention is not a compatible performance fallback</td></tr>
+        <tr><td>Base transformer family and latent semantics</td><td>Preview v1 training covers T2VA only</td><td>FL2VA and Ref2VA need conditioning-aware students; Base H3 remains the general task endpoint</td></tr>
+      </tbody>
+    </table>
+
+    <div class="figure">
+      <svg viewBox="0 0 1000 340" role="img" aria-label="Base H3 and FastH3 denoising comparison">
+        <style>
+          .hh{font-family:Lato,Arial,sans-serif;font-size:17px;font-weight:700;fill:#102a43}
+          .ss{font-family:Lato,Arial,sans-serif;font-size:12px;font-weight:400;fill:#40576a}
+        </style>
+        <text class="hh" x="35" y="48">Base H3</text>
+        <text class="ss" x="35" y="71">50 sigma points → 49 transformer evaluations</text>
+        <line x1="40" y1="117" x2="960" y2="117" stroke="#9bacb8" stroke-width="3"/>
+        <g fill="#2367a8">
+          <circle cx="45" cy="117" r="6"/><circle cx="64" cy="117" r="6"/><circle cx="83" cy="117" r="6"/><circle cx="102" cy="117" r="6"/>
+          <circle cx="121" cy="117" r="6"/><circle cx="140" cy="117" r="6"/><circle cx="159" cy="117" r="6"/><circle cx="178" cy="117" r="6"/>
+          <circle cx="197" cy="117" r="6"/><circle cx="216" cy="117" r="6"/><circle cx="235" cy="117" r="6"/><circle cx="254" cy="117" r="6"/>
+          <circle cx="273" cy="117" r="6"/><circle cx="292" cy="117" r="6"/><circle cx="311" cy="117" r="6"/><circle cx="330" cy="117" r="6"/>
+          <circle cx="349" cy="117" r="6"/><circle cx="368" cy="117" r="6"/><circle cx="387" cy="117" r="6"/><circle cx="406" cy="117" r="6"/>
+          <circle cx="425" cy="117" r="6"/><circle cx="444" cy="117" r="6"/><circle cx="463" cy="117" r="6"/><circle cx="482" cy="117" r="6"/>
+          <circle cx="501" cy="117" r="6"/><circle cx="520" cy="117" r="6"/><circle cx="539" cy="117" r="6"/><circle cx="558" cy="117" r="6"/>
+          <circle cx="577" cy="117" r="6"/><circle cx="596" cy="117" r="6"/><circle cx="615" cy="117" r="6"/><circle cx="634" cy="117" r="6"/>
+          <circle cx="653" cy="117" r="6"/><circle cx="672" cy="117" r="6"/><circle cx="691" cy="117" r="6"/><circle cx="710" cy="117" r="6"/>
+          <circle cx="729" cy="117" r="6"/><circle cx="748" cy="117" r="6"/><circle cx="767" cy="117" r="6"/><circle cx="786" cy="117" r="6"/>
+          <circle cx="805" cy="117" r="6"/><circle cx="824" cy="117" r="6"/><circle cx="843" cy="117" r="6"/><circle cx="862" cy="117" r="6"/>
+          <circle cx="881" cy="117" r="6"/><circle cx="900" cy="117" r="6"/><circle cx="919" cy="117" r="6"/><circle cx="938" cy="117" r="6"/>
+          <circle cx="957" cy="117" r="6"/>
+        </g>
+        <text class="hh" x="35" y="203">FastH3</text>
+        <text class="ss" x="35" y="226">5 sigma points → 4 transformer evaluations</text>
+        <line x1="80" y1="275" x2="920" y2="275" stroke="#9bacb8" stroke-width="3"/>
+        <g fill="#d56a2c"><circle cx="85" cy="275" r="13"/><circle cx="292" cy="275" r="13"/><circle cx="500" cy="275" r="13"/><circle cx="708" cy="275" r="13"/><circle cx="915" cy="275" r="13"/></g>
+        <text class="ss" x="500" y="317" text-anchor="middle">DMD2 trains the student for the few-step state distribution it will encounter at inference.</text>
+      </svg>
+      <p class="caption"><strong>Figure 4.</strong> FastH3 attacks the dominant multiplier. Dots are scheduler positions; the intervals between them are transformer evaluations. Horizontal spacing is schematic, not proportional to shifted sigma. The student is a distinct artifact whose quality and compatibility must be evaluated separately from Base H3.</p>
+    </div>
+
+    <h4 id="fasth3-two-accelerators">5.3.1 Two orthogonal accelerators: fewer calls and cheaper attention</h4>
+    <div class="equation">Base dense DiT ≈ 49 × C_dense &nbsp;&nbsp; | &nbsp;&nbsp; FastH3 dense ≈ 4 × C_student,dense &nbsp;&nbsp; | &nbsp;&nbsp; FastH3 VSA ≈ 4 × C_student,sparse</div>
+    <p>Schedule distillation alone removes 45 of 49 transformer evaluations, a <span class="mono">49 / 4 = 12.25×</span> reduction in call count. That is not automatically a 12.25× end-to-end speedup: the encoder, VAE decode, transfer, codec, and mux costs do not scale with call count, and a four-step student’s individual calls need not cost exactly the same as Base H3’s. Conversely, VSA can make each remaining call cheaper, so a DiT-only speedup may exceed the call-count ratio. FastVideo’s observed 14.38× <em>end-to-end</em> result for its longest 1× B200 case reflects the combined student, sparse attention, kernels, compilation, and workload—not DMD2 in isolation.</p>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4 id="fasth3-dmd2">Lever A · DMD2</h4>
+        <p>Changes the <strong>trajectory</strong>. The student learns to traverse the noisy-to-clean distribution in four large transitions rather than the teacher’s 49 smaller ones.</p>
+      </div>
+      <div class="card">
+        <h4 id="fasth3-vsa">Lever B · VSA-H3</h4>
+        <p>Changes the <strong>work per transition</strong>. It preserves dense text/audio paths but skips most low-value fine-grained video-to-video tiles.</p>
+      </div>
+    </div>
+
+    <h4 id="fasth3-step-skipping">5.3.2 Why ordinary step skipping is insufficient</h4>
+    <p>A 49-call flow model is trained around a fine trajectory. If a runtime simply chooses four widely spaced points, every prediction is asked to correct a much larger error than it was trained for; early mistakes also become the next call’s input. The resulting latent can lose fine structure, motion continuity, or audiovisual timing. FastH3 instead changes the transformer weights so that four large transitions are the model’s learned operating regime.</p>
+    <p><a href="https://arxiv.org/abs/2405.14867">DMD2</a> supplies a distribution-level objective. A frozen Base-H3 teacher estimates how a noisy sample should move toward the teacher distribution. An online “fake-score” critic estimates the score of the student’s current output distribution. Their difference tells the student how its generated distribution must move toward the teacher’s:</p>
+    <div class="equation">conceptual student signal ∝ score_teacher(noisy student sample) − score_student-distribution(noisy student sample)</div>
+    <p>This is not pixel-by-pixel regression to one teacher video. It lets many plausible videos satisfy a prompt while steering the student population toward the teacher population. DMD2’s two-timescale idea lets the online fake-score estimator track a changing generator. The available FastVideo implementation updates the critic every iteration and updates the student according to a configurable <span class="mono">generator_update_interval</span>; generic training documentation illustrates five, but the FastH3 preview does not publish its run-specific interval. That implementation also does <strong>not</strong> include the optional real-media GAN branch from the general image-domain DMD2 paper. Because the preview omits some training coefficients, this report limits its description to the evidenced teacher-versus-critic distribution matching, critic flow matching, and few-step rollout simulation.</p>
+
+    <h4 id="fasth3-backward-simulation">5.3.3 Backward simulation closes the four-step train/inference gap</h4>
+    <p>The hardest states in a few-step generator are not clean teacher latents with artificial noise added; they are imperfect intermediate states produced by the student’s own earlier large jumps. Backward simulation trains on that reality:</p>
+    <ol>
+      <li>Sample a prompt and the initial audiovisual noise state.</li>
+      <li>Use the student’s prescribed few-step process to reach an intermediate state—the same kind of state it will see in production.</li>
+      <li>Add the training noise/score query at the appropriate clock and compare teacher and fake-score estimates there.</li>
+      <li>Update the student so the next large transition corrects the distribution it actually creates, including its accumulated errors.</li>
+    </ol>
+    <p>In the recommended <strong>Data-Free</strong> run, “data-free” means no target-video dataset: training starts from prompts and simulated student states. In the synthetic variants, FastVideo instead forward-noises video and audio latents generated by Base H3. It does <em>not</em> mean the process is teacher-free, prompt-free, or free of generated data during optimization.</p>
+
+    <div class="figure">
+      <svg viewBox="0 0 1000 500" role="img" aria-label="FastH3 DMD2 post-training compared with inference">
+        <defs>
+          <marker id="arr5" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#506a7e"/></marker>
+          <style>
+            .dh{font-family:Lato,Arial,sans-serif;font-size:18px;font-weight:700;fill:#102a43}
+            .dt{font-family:Lato,Arial,sans-serif;font-size:14px;font-weight:700;fill:#102a43}
+            .ds{font-family:Lato,Arial,sans-serif;font-size:11.5px;font-weight:400;fill:#40576a}
+            .da{stroke:#506a7e;stroke-width:2;fill:none;marker-end:url(#arr5)}
+          </style>
+        </defs>
+        <text class="dh" x="26" y="32">Post-training only</text>
+        <rect x="25" y="55" width="150" height="88" rx="10" fill="#eaf3fb" stroke="#2367a8"/>
+        <text class="dt" x="100" y="84" text-anchor="middle">Prompt + noise</text>
+        <text class="ds" x="100" y="107" text-anchor="middle">mixed shapes</text>
+        <text class="ds" x="100" y="125" text-anchor="middle">joint A/V state</text>
+        <rect x="221" y="55" width="174" height="88" rx="10" fill="#fff1e8" stroke="#d56a2c"/>
+        <text class="dt" x="308" y="84" text-anchor="middle">4-step student rollout</text>
+        <text class="ds" x="308" y="107" text-anchor="middle">construct its own</text>
+        <text class="ds" x="308" y="125" text-anchor="middle">intermediate states</text>
+        <rect x="441" y="55" width="166" height="88" rx="10" fill="#f3f7fa" stroke="#6d8394"/>
+        <text class="dt" x="524" y="84" text-anchor="middle">Noisy student state</text>
+        <text class="ds" x="524" y="107" text-anchor="middle">sample a score time</text>
+        <text class="ds" x="524" y="125" text-anchor="middle">on its true rollout</text>
+        <path class="da" d="M175 99 H221"/><path class="da" d="M395 99 H441"/>
+
+        <rect x="661" y="45" width="150" height="78" rx="10" fill="#e8f5f3" stroke="#0b7a75"/>
+        <text class="dt" x="736" y="75" text-anchor="middle">Frozen teacher</text>
+        <text class="ds" x="736" y="99" text-anchor="middle">Base-H3 target score</text>
+        <rect x="661" y="143" width="150" height="78" rx="10" fill="#faeaed" stroke="#ad3d4a"/>
+        <text class="dt" x="736" y="173" text-anchor="middle">Learned critic</text>
+        <text class="ds" x="736" y="197" text-anchor="middle">student-distribution score</text>
+        <path class="da" d="M607 88 H661"/><path class="da" d="M607 112 C630 112 630 182 661 182"/>
+        <rect x="852" y="84" width="123" height="100" rx="10" fill="#123d59"/>
+        <text x="913" y="115" text-anchor="middle" style="font-family:Lato,Arial,sans-serif;font-size:14px;font-weight:700;fill:#ffffff">Score difference</text>
+        <text x="913" y="140" text-anchor="middle" style="font-family:Lato,Arial,sans-serif;font-size:11.5px;font-weight:400;fill:#dceaf2">updates student</text>
+        <text x="913" y="159" text-anchor="middle" style="font-family:Lato,Arial,sans-serif;font-size:11.5px;font-weight:400;fill:#dceaf2">distribution</text>
+        <path class="da" d="M811 84 H833 V113 H852"/><path class="da" d="M811 182 H833 V155 H852"/>
+        <path d="M914 184 C914 249 308 226 308 150" stroke="#d56a2c" stroke-width="2" fill="none" marker-end="url(#arr5)"/>
+
+        <line x1="25" y1="267" x2="975" y2="267" stroke="#cbd6de" stroke-width="2" stroke-dasharray="7 7"/>
+        <text class="dh" x="26" y="306">Inference</text>
+        <rect x="25" y="333" width="176" height="88" rx="10" fill="#eaf3fb" stroke="#2367a8"/>
+        <text class="dt" x="113" y="362" text-anchor="middle">Qwen + initial noise</text>
+        <text class="ds" x="113" y="386" text-anchor="middle">same H3 latent geometry</text>
+        <rect x="269" y="333" width="208" height="88" rx="10" fill="#fff1e8" stroke="#d56a2c" stroke-width="2"/>
+        <text class="dt" x="373" y="362" text-anchor="middle">Fused FastH3 student</text>
+        <text class="ds" x="373" y="386" text-anchor="middle">four joint A/V calls only</text>
+        <rect x="545" y="333" width="176" height="88" rx="10" fill="#e8f5f3" stroke="#0b7a75"/>
+        <text class="dt" x="633" y="362" text-anchor="middle">Video + Audio VAEs</text>
+        <text class="ds" x="633" y="386" text-anchor="middle">frames + stereo waveform</text>
+        <rect x="789" y="333" width="186" height="88" rx="10" fill="#f0ebfa" stroke="#7656a5"/>
+        <text class="dt" x="882" y="362" text-anchor="middle">Encode + mux MP4</text>
+        <text class="ds" x="882" y="386" text-anchor="middle">complete media response</text>
+        <path class="da" d="M201 377 H269"/><path class="da" d="M477 377 H545"/><path class="da" d="M721 377 H789"/>
+        <text class="ds" x="500" y="466" text-anchor="middle">Teacher and critic are discarded after post-training; they add no request-time inference cost.</text>
+      </svg>
+      <p class="caption"><strong>Figure 5.</strong> DMD2 training and FastH3 inference are different graphs. Backward simulation puts the student on its own four-step state distribution during training. Production retains only the fused student and the normal H3 encoder/decoder path.</p>
+    </div>
+
+    <h4 id="fasth3-four-call-inference">5.3.4 Four-call inference, end to end</h4>
+    <table>
+      <thead><tr><th>Phase</th><th>Video-generation behavior</th><th>What FastH3 changes</th></tr></thead>
+      <tbody>
+        <tr><td>Encode once</td><td>Qwen3-VL embeds the structured prompt; the runtime creates initial video and stereo-audio noise and packed coordinates</td><td>Nothing fundamental—the same large conditioner and latent geometry remain</td></tr>
+        <tr><td>Call 1</td><td>Make the largest global move from noise toward scene layout, timing, motion, and sound organization</td><td>Student weights are trained for this large transition</td></tr>
+        <tr><td>Calls 2–3</td><td>Refine subjects, camera motion, temporal events, texture, speech/Foley/music, and their cross-modal alignment</td><td>The student operates on its own backward-simulated state distribution; VSA optionally reduces video attention work</td></tr>
+        <tr><td>Call 4</td><td>Predict the final video/audio flow update before terminal zero</td><td>Completes the prescribed five-position schedule; no extra negative-prompt CFG pass</td></tr>
+        <tr><td>Decode and package</td><td>VisualVAE reconstructs frames while AudioVAE reconstructs stereo audio; runtime converts, transfers, encodes H.264/AAC, and muxes MP4</td><td>Unchanged conceptually, so these stages become a much larger fraction of E2E latency</td></tr>
+      </tbody>
+    </table>
+    <p class="small">The descriptions of what each call resolves are an explanatory mental model, not a claim that particular semantic features occur exclusively at one step. Attention remains global and both modalities are updated jointly in every call.</p>
+
+    <h4 id="fasth3-vsa-region-selection">5.3.5 How VSA-H3 finds the video regions worth computing</h4>
+    <p>Full video attention compares every query token with every key token, even though the softmax mass is often concentrated on a much smaller set of relevant locations. Arbitrary element-wise sparsity does not map efficiently to GPUs, so <a href="https://arxiv.org/abs/2505.13389">VSA</a> uses structured, trainable blocks. Its coarse stage cheaply discovers the important blocks; its fine stage performs dense math only within the selected blocks.</p>
+
+    <div class="figure">
+      <svg viewBox="0 0 1000 410" role="img" aria-label="Video Sparse Attention coarse and fine stages in FastH3">
+        <defs>
+          <marker id="arr4" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#506a7e"/></marker>
+          <style>
+            .vh{font-family:Lato,Arial,sans-serif;font-size:17px;font-weight:700;fill:#102a43}
+            .vs{font-family:Lato,Arial,sans-serif;font-size:12px;font-weight:400;fill:#40576a}
+            .va{stroke:#506a7e;stroke-width:2;fill:none;marker-end:url(#arr4)}
+          </style>
+        </defs>
+        <rect x="25" y="70" width="172" height="220" rx="12" fill="#eaf3fb" stroke="#2367a8" stroke-width="2"/>
+        <text class="vh" x="111" y="103" text-anchor="middle">3D video tokens</text>
+        <text class="vs" x="111" y="127" text-anchor="middle">time × height × width</text>
+        <g fill="#8bbbe1" stroke="#ffffff">
+          <rect x="54" y="157" width="46" height="38"/><rect x="101" y="157" width="46" height="38"/>
+          <rect x="54" y="196" width="46" height="38"/><rect x="101" y="196" width="46" height="38"/>
+          <rect x="66" y="145" width="46" height="38" fill="none" stroke="#2367a8"/><rect x="113" y="145" width="46" height="38" fill="none" stroke="#2367a8"/>
+        </g>
+        <text class="vs" x="111" y="266" text-anchor="middle">tile 64 = 4×4×4 cube</text>
+
+        <rect x="269" y="70" width="190" height="220" rx="12" fill="#e8f5f3" stroke="#0b7a75" stroke-width="2"/>
+        <text class="vh" x="364" y="103" text-anchor="middle">Coarse stage</text>
+        <text class="vs" x="364" y="131" text-anchor="middle">mean-pool each cube</text>
+        <text class="vs" x="364" y="153" text-anchor="middle">dense cube-level attention</text>
+        <rect x="306" y="181" width="116" height="58" rx="7" fill="#bee3df"/>
+        <text class="vs" x="364" y="207" text-anchor="middle">global summary</text>
+        <text class="vs" x="364" y="227" text-anchor="middle">+ importance scores</text>
+        <text class="vs" x="364" y="266" text-anchor="middle">select high-mass tiles</text>
+
+        <rect x="532" y="70" width="190" height="220" rx="12" fill="#fff1e8" stroke="#d56a2c" stroke-width="2"/>
+        <text class="vh" x="627" y="103" text-anchor="middle">Fine stage</text>
+        <text class="vs" x="627" y="131" text-anchor="middle">block-sparse token attention</text>
+        <g stroke="#ffffff">
+          <rect x="568" y="167" width="34" height="34" fill="#d56a2c"/><rect x="603" y="167" width="34" height="34" fill="#f4d7c6"/>
+          <rect x="638" y="167" width="34" height="34" fill="#d56a2c"/><rect x="568" y="202" width="34" height="34" fill="#f4d7c6"/>
+          <rect x="603" y="202" width="34" height="34" fill="#d56a2c"/><rect x="638" y="202" width="34" height="34" fill="#f4d7c6"/>
+        </g>
+        <text class="vs" x="627" y="266" text-anchor="middle">compute selected blocks only</text>
+
+        <rect x="795" y="70" width="180" height="220" rx="12" fill="#f0ebfa" stroke="#7656a5" stroke-width="2"/>
+        <text class="vh" x="885" y="103" text-anchor="middle">Combined output</text>
+        <text class="vs" x="885" y="139" text-anchor="middle">gated coarse context</text>
+        <text class="vs" x="885" y="163" text-anchor="middle">+</text>
+        <text class="vs" x="885" y="187" text-anchor="middle">selected fine detail</text>
+        <text class="vs" x="885" y="229" text-anchor="middle">learned end to end</text>
+        <text class="vs" x="885" y="253" text-anchor="middle">with sparse student</text>
+
+        <path class="va" d="M197 180 H269"/><path class="va" d="M459 180 H532"/><path class="va" d="M722 180 H795"/>
+        <rect x="150" y="334" width="700" height="48" rx="9" fill="#123d59"/>
+        <text x="500" y="355" text-anchor="middle" style="font-family:Lato,Arial,sans-serif;font-size:13px;font-weight:700;fill:#ffffff">FastH3 specialization: ~10% of eligible video→video tiles retained</text>
+        <text x="500" y="374" text-anchor="middle" style="font-family:Lato,Arial,sans-serif;font-size:12px;font-weight:400;fill:#dceaf2">text and audio attention stay dense · teacher and critic stay dense during post-training</text>
+      </svg>
+      <p class="caption"><strong>Figure 6.</strong> VSA’s two-stage mechanism. The general VSA paper uses contiguous 4×4×4 token cubes (64 tokens), a pooled global stage, and selected fine blocks. FastH3 applies the tile-64 sparse path only to eligible video-to-video attention.</p>
+    </div>
+
+    <ol>
+      <li><strong>Cube the video lattice.</strong> Contiguous groups of 4×4×4 video tokens map to hardware-friendly 64-token tiles.</li>
+      <li><strong>Estimate relevance cheaply.</strong> Mean-pooled cube representations participate in a much smaller dense attention. The coarse result preserves global context and produces block-importance scores.</li>
+      <li><strong>Select a structured pattern.</strong> Top-scoring cube pairs become a block mask. Whole 64×64 attention tiles are computed or skipped, which is far more GPU-efficient than scattered scalar zeros.</li>
+      <li><strong>Compute fine detail only where selected.</strong> A block-sparse kernel runs token-level attention on the retained pairs; learned gates combine coarse global context with fine sparse output.</li>
+      <li><strong>Train the sparse behavior.</strong> Routing itself is deterministic top-k over pooled Q/K scores; post-training teaches representations and learned compression gates that work under that fixed routing rule, with dense teacher/critic supervision. This is why VSA behavior is part of the checkpoint/runtime contract rather than a post-hoc switch.</li>
+    </ol>
+
+    <div class="callout red">
+      <h4 id="fasth3-sparsity-vs-model-time">“90% sparse” does not mean 90% less model time</h4>
+      <p>The number refers to eligible <strong>video-to-video fine-attention tiles</strong>. Text, audio, coarse routing, selected fine tiles, QKV projections, output projections, FFNs, AdaLN, communication, four whole transformer passes, VAE decode, and MP4 work remain. The retained 10% also changes dynamically by query/head. Use measured E2E latency—not <span class="mono">0.1×</span> arithmetic—to size a service.</p>
+    </div>
+
+    <h4 id="fasth3-artifacts">5.3.6 FastH3 artifacts answer different questions</h4>
+    <table>
+      <thead><tr><th>Preview v1 artifact</th><th>Training source</th><th>Attention</th><th>Published role</th></tr></thead>
+      <tbody>
+        <tr><td><strong>VSA / Data-Free · step 1300</strong></td><td>Prompts only, mixed shapes</td><td>VSA-H3, 90% sparse, tile 64</td><td>Recommended release; validation gallery and headline VSA performance path</td></tr>
+        <tr><td>VSA / Synthetic · step 1300</td><td>Synthetic Base-H3 videos</td><td>VSA-H3, 90% sparse, tile 64</td><td>Matched-step training-source ablation</td></tr>
+        <tr><td>VSA / Synthetic · step 1900</td><td>Synthetic Base-H3 videos</td><td>VSA-H3, 90% sparse, tile 64</td><td>Longer-training ablation</td></tr>
+        <tr><td>Dense / Data-Free · step 1000</td><td>Prompts only, mixed shapes</td><td>Dense attention</td><td>Full-attention four-step reference; used by the analyzed vLLM FastH3 serving lane</td></tr>
+      </tbody>
+    </table>
+    <p>All four are T2VA-only, all make four DiT calls, and all are distinct from released Base H3. The dense student isolates schedule distillation from VSA; the VSA/data-source variants probe the interaction between sparse post-training and supervision source. FastVideo provides full weights and pre-extracted adapter forms for the recommended release.</p>
+
+    <h4 id="fasth3-load-time-fusion">5.3.7 Load-time fusion, not request-time LoRA switching</h4>
+    <p>The vLLM integration treats FastH3 as a dedicated student. Its artifact contains rank-64 low-rank factors <em>plus</em> full-rank deltas and replacement weights. The loader streams Base-H3 weights, applies the appropriate low-rank/full-rank/replacement update, then shards the fused student across ranks. An ordinary LoRA layer can represent only the sidecar-style low-rank portion, so FastH3 cannot be assumed request-switchable, combined with another request-time LoRA, or compatible with DLO/VSA without a new qualification. In FastVideo, adapter strength zero removes weight deltas but leaves the selected VSA backend sparse; it is not a dense Base-H3 control.</p>
+    <p><strong>Compute sparsity is not model compression.</strong> The VSA adapter adds one learned compression-gate projection to each of the 50 main transformer blocks—about 1.93B additional parameters, or roughly 3.85 GB in BF16, from the published manifest. The hybrid VSA adapter is therefore substantially larger than the dense adapter even though it executes fewer attention tiles. Plan weight residency and attention FLOPs as separate budgets.</p>
+
+    <h4 id="fasth3-runtime-stack">5.3.8 FastVideo’s runtime stack around the student</h4>
+    <p>The checkpoint explains only part of the published B200 latency. The recommended path is co-designed with an execution stack that removes overhead around each of the four student calls and around video decoding:</p>
+    <table>
+      <thead><tr><th>Runtime optimization</th><th>Mechanism</th><th>Why it matters</th></tr></thead>
+      <tbody>
+        <tr><td>B200 VSA CUDA kernel</td><td>A tile-64 <span class="mono">sm100a</span> block-sparse kernel executes the checkpoint’s learned attention pattern; FastVideo documents a Triton fallback for other supported CUDA systems</td><td>Turns learned sparsity into skipped hardware work. A checkpoint with a sparse mask but no efficient block kernel would not realize the same latency.</td></tr>
+        <tr><td>Regional DiT compilation</td><td>Compiles each repeated H3 block region with a stable full graph; custom fusion operators remain opaque nodes rather than being expanded back into launcher internals</td><td>Reuses one compiled block pattern across the 50-layer stack after warmup while retaining the hand-written Triton kernels.</td></tr>
+        <tr><td>H3 <span class="mono">modulate</span> fusions</td><td><span class="mono">fused_rmsnorm_modulate</span> combines pre-norm with indexed scale/shift; <span class="mono">fused_residual_gate_rmsnorm_modulate</span> combines the attention gate/residual with the next RMSNorm and FFN modulation</td><td>Removes multiple reads/writes of the 5,376-wide row tensor. The current FastVideo code does not include the final FFN gated residual in this combined kernel.</td></tr>
+        <tr><td>H3 <span class="mono">qknorm_rope</span> fusion</td><td>Runs <span class="mono">fused_qknorm_rope</span> separately for Q and K: per-head RMSNorm plus partial 3D RoPE in FP32 registers before one final write</td><td>Avoids norm and rotary temporaries while preserving H3’s exact 96-rotary/32-pass-through layout; attention itself remains a separate dense or VSA kernel.</td></tr>
+        <tr><td>H3 <span class="mono">swiglu</span> fusion</td><td><span class="mono">minimax_h3_swiglu</span> consumes the packed gate/up GEMM output and performs split + SiLU + multiply in one Triton kernel</td><td>Eliminates activation intermediates, but neither the 5,376→28,672 nor 14,336→5,376 GEMM is part of this kernel.</td></tr>
+        <tr><td>Loop-invariant caches</td><td>Reuse the timestep-free two-layer context refiner result and prebuilt/cast 3D RoPE cos/sin for the fixed packed layout</td><td>Removes whole refiner blocks, collectives, and position construction from later denoising calls rather than merely making those operations faster.</td></tr>
+        <tr><td>Compiled, sequence-parallel video VAE</td><td>Compiles the ViT decoder and distributes tiled decode; the published 8× B200 lane uses SP8 parallel VAE decoding</td><td>Prevents decode from serializing the now-short denoising loop; overlapping output-space tiles are merged into the final frames.</td></tr>
+        <tr><td>Sequence parallelism</td><td>Partitions long token work across ranks; FastVideo requires the GPU count to divide H3’s 56 attention heads</td><td>Longer clips amortize collective communication better than short clips. The published FastVideo launcher disables its optional specialized Ulysses all-to-all path, so its B200 numbers should not be credited to vLLM’s separate “Fast Ulysses” implementation.</td></tr>
+        <tr><td>Replicated DiT weights</td><td>The controlled launcher defaults to replicated weights where the target B200 memory budget permits it; a non-replicated option is documented for other systems</td><td>Trades additional HBM residency for the launcher's optimized latency path; capacity planning must include the chosen placement mode.</td></tr>
+        <tr><td>Pinned CPU offload/output path</td><td>Uses pinned host storage in the launcher and retains the optimized H3 media path</td><td>Reduces transfer friction, but host/device movement and MP4 output remain visible fixed costs.</td></tr>
+      </tbody>
+    </table>
+    <p>Compilation changes benchmark methodology: the first process run downloads/loads and compiles the path; reported warm latency reuses it. Production SLOs should therefore separate cold start, compile warmup, and steady-state request time.</p>
+
+    <h4 id="fasth3-video-quality-checks">5.3.9 What to examine in generated video</h4>
+    <p>Latency proves that the system is fast; it does not prove that four large denoising transitions preserve every behavior of the 49-call teacher. A FastH3 evaluation should stress the temporal and cross-modal phenomena most likely to expose accumulated error:</p>
+    <table>
+      <thead><tr><th>Test family</th><th>Failure to look for</th><th>Why it stresses FastH3</th></tr></thead>
+      <tbody>
+        <tr><td>Fast articulated motion</td><td>Broken limbs, duplicated objects, discontinuous trajectories, implausible impacts</td><td>Large state jumps must preserve fine temporal geometry</td></tr>
+        <tr><td>Long identity continuity</td><td>Face/clothing drift, subject swaps, changing object count across cuts</td><td>Errors can compound across the clip-wide latent volume</td></tr>
+        <tr><td>Multi-shot camera language</td><td>Missed timestamps, unintended cuts, camera motion that conflicts with subject motion</td><td>Prompt timeline and global video structure must be established in only four corrections</td></tr>
+        <tr><td>Speech and visible events</td><td>Lip-sync drift, impact sounds before/after contact, wrong speaker or voice continuity</td><td>Video and audio use different noise clocks but share every transformer call</td></tr>
+        <tr><td>Typography and small detail</td><td>Malformed letters, flicker, texture boiling, lost edge detail</td><td>Fine corrections have fewer iterative opportunities; VSA also prunes eligible fine attention pairs</td></tr>
+        <tr><td>Shape generalization</td><td>Portrait/square/ultrawide framing errors or duration-dependent degradation</td><td>The checkpoint claims mixed-shape support; sequence geometry and parallel efficiency change materially by shape</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="capacity-and-placement">5.4 Capacity and placement optimizations</h3>
+    <table>
+      <thead><tr><th>Technique</th><th>Mechanism</th><th>Observed or expected trade-off</th></tr></thead>
+      <tbody>
+        <tr><td>Task-specific loading</td><td>Load only <span class="mono">transformer/</span> or <span class="mono">transformer_ref/</span></td><td>Avoids resident memory for an unused ~61.7 GB BF16 partition</td></tr>
+        <tr><td>Distributed Layerwise Offload (DLO)</td><td>Keep a configurable window of DiT blocks in HBM; prefetch/stream remaining host shards while the current layer computes</td><td>vLLM reports 37.5% lower HBM at 35 resident layers for 5.1% latency cost in one B300 FL2VA profile; depends heavily on interconnect and host bandwidth</td></tr>
+        <tr><td>Disaggregated encoder</td><td>Move one-shot Qwen3-VL encoding into an independently scaled service with its own TP, replicas, queue, kernels, and prefix cache</td><td>Frees diffusion capacity and scales encode separately; adds orchestration/transport and was not used in the reported FastH3 result</td></tr>
+        <tr><td>Online FP8</td><td>Quantize eligible DiT and Qwen text-decoder linears at load time; keep sensitive modules in declared precision</td><td>On 8× B300: 38.9% lower peak HBM and 5.3% lower diffusion-stage time; output shape was validated, not BF16 perceptual equivalence</td></tr>
+        <tr><td>SVDQuant NVFP4 W4A4</td><td>NVFP4 base GEMM plus BF16 low-rank correction</td><td>Compatibility is shown, but loader correctness is not yet evidence of an end-to-end fused-kernel speedup</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="new-bottleneck">5.5 The new bottleneck after four-step denoising</h3>
+    <div class="callout">
+      <h4 id="critical-path-share">“New bottleneck” means a change in critical-path share</h4>
+      <p>It does <strong>not</strong> mean that VAE decode suddenly became slower or that it replaced the DiT as the largest component. The four-call DiT is still the largest single stage at 64.1%. The change is that shortening the denoising trajectory exposes an almost 3-second output tail—VAE, preparation and transport, video encoding, audio handling, and MP4 finalization—that was previously hidden beneath repeated DiT work.</p>
+    </div>
+
+    <p>The base H3 schedule executes 49 dependent DiT forwards, and the DiT accounts for 51.800 / 54.246 s, or 95.5%, of the reported base-model execution profile. FastH3 reduces the denoising trajectory to four dependent forwards. Output work does not shrink by the same 49-to-4 ratio, so the optimization target changes from “make the transformer faster” to “shorten the complete critical path.”</p>
+
+    <h4 id="fasth3-10s-profile">Measured composition of the requested-10-second FastH3 profile</h4>
+    <p>This is the dense/Data-Free FastH3 path on 8× B300 for 243 frames, corresponding to 10.125 s of validated media. The complete workload contract and clean duration sweep appear in <a href="#vllm-realtime">Section 6.4</a>.</p>
+    <table>
+      <thead><tr><th>Profiled boundary</th><th>Time</th><th>Share of 8.629 s</th><th>Interpretation and dependency</th></tr></thead>
+      <tbody>
+        <tr><td>Prompt encoding</td><td>0.052 s</td><td>0.6%</td><td>Produces the request conditioning consumed by the DiT; it is a prerequisite for this request’s denoising.</td></tr>
+        <tr><td>Four DiT forwards</td><td>5.532 s</td><td>64.1%</td><td>Still the largest stage. Each scheduler update produces the latent consumed by the next forward, so the four calls are serial for one request.</td></tr>
+        <tr><td>Combined VAE decode</td><td>1.247 s</td><td>14.5%</td><td>An aggregate video-plus-audio VAE timer. The published profile does not split the two branches or prove how much of them already overlaps.</td></tr>
+        <tr><td>Derived transport</td><td>0.881 s</td><td>10.2%</td><td>A residual boundary covering preparation/transfer/orchestration; it is not a directly isolated PCIe D2H measurement and cannot all be assumed hideable.</td></tr>
+        <tr><td>CPU MP4 path</td><td>0.868 s</td><td>10.1%</td><td>A broad media bucket that includes frame conversion, H.264 work, audio/container handling, and finalization—not pure mux and not pure codec time.</td></tr>
+        <tr><td>Uninstrumented boundary remainder</td><td>0.049 s</td><td>0.6%</td><td>The five named millisecond-resolution stages sum to 8.580 s; most of the 49 ms gap should be treated as unassigned boundary overhead rather than rounding.</td></tr>
+        <tr><td><strong>Profiled path total</strong></td><td><strong>8.629 s</strong></td><td><strong>100%</strong></td><td>One diagnostic instrumented request; it is not one of the two clean timing samples.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="avoid">
+      <div class="bar" aria-label="FastH3 profiled E2E composition">
+        <span class="b-encoder" style="width:.603%"></span>
+        <span class="b-dit" style="width:64.109%">DiT 64.1%</span>
+        <span class="b-vae" style="width:14.451%">VAE 14.5%</span>
+        <span class="b-transport" style="width:10.210%">Transport 10.2%</span>
+        <span class="b-mp4" style="width:10.059%">MP4 10.1%</span>
+        <span class="b-other" style="width:.568%"></span>
+      </div>
+      <p class="small"><span style="color:#997a16">■</span> encoder 0.6% &nbsp; <span style="color:#2367a8">■</span> DiT 64.1% &nbsp; <span style="color:#0b7a75">■</span> VAE 14.5% &nbsp; <span style="color:#d56a2c">■</span> derived transport 10.2% &nbsp; <span style="color:#ad3d4a">■</span> CPU MP4 path 10.1% &nbsp; <span style="color:#718096">■</span> unassigned 0.6%. Percentages use the separate 8.629 s instrumented request and round independently. The two clean complete-response measurements—8.678 and 8.710 s—carry the B300 latency claim; profiler sub-times must not be presented as the exact decomposition of either clean sample.</p>
+    </div>
+
+    <div class="equation">Named post-DiT tail = 1.247 + 0.881 + 0.868 = 2.996 s = 34.7% of the profiled path<br>All non-DiT time = 8.629 − 5.532 = 3.097 s = 35.9%</div>
+
+    <h4 id="attention-vs-e2e">Why attention-only work no longer maps proportionally to E2E speed</h4>
+    <p>Amdahl’s law now matters at request scope. Cutting the <em>entire</em> DiT time by 10% saves only 0.553 s, or 6.4% of the profiled path. Even a 2× speedup of the entire DiT produces <span class="mono">3.097 + 5.532 / 2 = 5.863 s</span>, only a 1.47× E2E speedup. With all non-DiT work held constant, infinitely fast DiT execution has a theoretical ceiling of <span class="mono">8.629 / 3.097 = 2.79×</span>. Attention is only a subset of DiT time, so an attention-only ceiling is lower; no attention share is isolated in this profile.</p>
+
+    <h4 id="single-request-dependencies">The single-request dependency graph</h4>
+    <div class="codeblock">prompt / references
+        │
+        ▼
+Qwen3-VL conditioning (0.052 s)
+        │
+        ▼
+DiT₁ ──► scheduler update ──► DiT₂ ──► update ──► DiT₃ ──► update ──► DiT₄
+        four recurrent forwards; 5.532 s total                       │
+                                                                    ▼
+                                                   final video/audio latents
+                                                                    │
+                                                                    ▼
+                                                   combined VAE decode (1.247 s)
+                                                                    │
+                                                                    ▼
+                                              prepare / transfer / IPC (derived 0.881 s)
+                                                                    │
+                                                                    ▼
+                                      frame conversion / H.264 / audio / MP4 (0.868 s)
+                                                                    │
+                                                                    ▼
+                                                       return complete MP4</div>
+    <p>The graph contains hard barriers. Conditioning must exist before its DiT request can run; denoising step <span class="mono">i+1</span> consumes the latent updated at step <span class="mono">i</span>; and conventional VAE decode waits for the final latent. Video and audio decode are logically separable after denoising, but the combined timer and the shared eight-GPU resource group do not justify assuming free concurrency. The synchronous latency endpoint also waits for ordered audio/video packets, codec flush, A/V synchronization, and the MP4 trailer. Cross-request overlap can improve throughput without necessarily reducing the first request’s latency.</p>
+
+    <h4 id="output-chunking-phases">Two different chunking phases</h4>
+    <table>
+      <thead><tr><th>Proposal</th><th>Barrier retained</th><th>Pipeline action</th><th>Optimistic arithmetic ceiling</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Phase A: post-VAE chunk pipeline</strong></td><td>The complete VAE decode still finishes first.</td><td>Split already decoded video along time into ordered frame chunks. Prepare/copy chunk <span class="mono">n+1</span> while the CPU converts and encodes chunk <span class="mono">n</span>.</td><td>Transport + MP4 falls from <span class="mono">0.881 + 0.868</span> toward <span class="mono">max(0.881, 0.868)</span>: at most 0.868 s saved, about 0.87 s or 9.97–10.00% of clean E2E.</td></tr>
+        <tr><td><strong>Phase B: incremental temporal video-VAE</strong></td><td>The final DiT latent is still a global barrier, but full-video VAE completion is removed.</td><td>Decode a temporal frame chunk, complete any halo/crop/assembly work, then hand complete ordered frames to transfer and encode while later temporal chunks decode.</td><td>The 2.996 s tail approaches its longest stage, 1.247 s: at most <span class="mono">2.996 − 1.247 = 1.749 s</span> saved, about 1.75 s or 20.08–20.15% of clean E2E.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="codeblock">Phase A — full VAE barrier remains
+VAE:       [               decode whole clip               ]
+transfer:                                                   [C0][C1][C2][C3]
+CPU media:                                                      [E0][E1][E2][E3][finalize]
+
+Phase B — temporal video-VAE joins the pipeline
+VAE:       [D0][D1][D2][D3]
+transfer:      [C0][C1][C2][C3]
+CPU media:         [E0][E1][E2][E3][finalize]
+
+D = decode a temporal frame chunk; C = prepare/copy/IPC; E = convert/encode/mux packets.
+Horizontal widths are conceptual, not a measured execution trace.</div>
+
+    <div class="grid-2">
+      <div class="card">
+        <h4 id="phase-a-ceiling">Phase A ceiling</h4>
+        <div class="equation">saving ≤ (0.881 + 0.868) − max(0.881, 0.868)<br>= min(0.881, 0.868) = 0.868 s ≈ 0.87 s</div>
+        <p>The VAE is unchanged. Only the smaller of the two downstream stages can be hidden behind the larger one.</p>
+      </div>
+      <div class="card">
+        <h4 id="phase-b-ceiling">Phase B ceiling</h4>
+        <div class="equation">saving ≤ 2.996 − max(1.247, 0.881, 0.868)<br>= 2.996 − 1.247 = 1.749 s ≈ 1.75 s</div>
+        <p>The 1.75 s includes the Phase A opportunity; it must not be added to 0.87 s again, and it does not mean that VAE computation itself disappeared.</p>
+      </div>
+    </div>
+
+    <div class="callout orange">
+      <h4 id="overlap-ceilings">Projected overlap ceilings, not measured B300 gains</h4>
+      <p>The estimates assume ideal overlap and are upper bounds for the profiled dependency graph. Finite chunk fill/drain, temporal causal state or halo, spatial-tile assembly, collectives, copy-engine contention, CPU backpressure, audio availability, and final mux work all reduce realizable savings. The 1.247 s timer also combines video and audio VAE work, whereas incremental decoding targets the video path. The chunkwise-output RFC therefore uses both E2E and tail criteria: Phase A targets at least 5% E2E and 30% post-VAE-tail reduction; Phase B targets at least 10% E2E and 30% VAE-to-MP4-tail reduction. The 0.87/1.75 s values are proposals, not results from the clean B300 benchmark.</p>
+    </div>
+
+    <h4 id="chunking-correctness-contract">What an implementation must preserve</h4>
+    <ul>
+      <li><strong>Temporal chunks, not raw spatial tiles:</strong> the existing VAE PP8 tile mode partitions spatial work. A codec needs complete ordered RGB frames or legal slices, so ranks must finish the spatial assembly and overlap blending for each temporal output unit before handoff.</li>
+      <li><strong>VAE equivalence at chunk boundaries:</strong> incremental decode must carry causal state or retain the required temporal halo, crop duplicate boundaries, and match full-decode results within an explicit tolerance.</li>
+      <li><strong>Real asynchronous movement:</strong> pinned buffers, separate streams/copy engines, bounded double or triple buffering, and nonblocking IPC are needed; merely placing operations in different functions does not create overlap.</li>
+      <li><strong>Backpressure and ordering:</strong> a slow codec cannot be allowed to grow an unbounded frame queue, and frames, timestamps, audio packets, and final MP4 metadata must remain deterministic.</li>
+      <li><strong>Media-stage attribution:</strong> directly time video VAE, audio VAE, GPU format conversion, D2H, IPC, CPU conversion, H.264, AAC, mux/finalize, and queue waits before choosing GPU video encoding. Hardware encode can reduce only part of the broad 0.868 s bucket and does not remove audio or container finalization.</li>
+    </ul>
+
+    <p>If the full optimistic 1.749 s were hidden, the profiled path would fall to about 6.880 s and DiT would again occupy <span class="mono">5.532 / 6.880 = 80.4%</span>. That is the operational meaning of bottleneck migration: first pipeline the newly visible output tail, then remeasure and balance the critical path rather than optimizing a component in isolation.</p>
+
+    <h2 id="evidence" class="page-break">6. Benchmark evidence and what it means</h2>
+
+    <h3 id="study-contracts">6.1 Study contracts</h3>
+    <table>
+      <thead><tr><th>Study</th><th>Hardware and workload</th><th>Timing boundary</th><th>Primary conclusion</th></tr></thead>
+      <tbody>
+        <tr><td>vLLM-Omni base</td><td>8× B300; 1344×768, 24 fps, ~10 s; dense BF16; 50 sigma points / 49 calls</td><td>Synchronous request through complete returned H.264 + stereo AAC MP4; startup/compile/warmup excluded</td><td>Whole-stack lossless engineering reduces 82.239 s to 56.917 s (1.445×)</td></tr>
+        <tr><td>SGLang Diffusion</td><td>8× H200; T2VA and FL2VA; 5 s and 10 s; 1344×768, 24 fps, 50 denoising points</td><td>Generation-side inference; startup, warmup, HTTP polling, and MP4 download excluded; three prompts</td><td>Dense path gives 1.85–1.95×; caching + training-free sparse attention reaches 6.24× at measured SSIM cost</td></tr>
+        <tr><td>FastVideo FastH3</td><td>1×/4×/8× B200; T2VA; 5/10/15 s shapes; 1344×768, 24 fps; 4 calls; recommended path uses 90% VSA</td><td>Warm E2E including encode, denoise, decode, audio, mux, and file output; median of three after warmup</td><td>On one B200, up to 14.38× over matched base; 8× produces the 14.4 s media shape in 12.88 s</td></tr>
+        <tr><td>vLLM-Omni FastH3</td><td>8× B300; dense/data-free FastH3; 5/10/15 s; dense TRTLLM attention</td><td>Complete returned MP4; two clean interleaved runs after feasibility warmup</td><td>All six runs are faster than playback; 10.125 s MP4 completes in 8.678–8.710 s</td></tr>
+      </tbody>
+    </table>
+
+    <h3 id="h200-quality-speed-frontier">6.2 Base-H3 H200 quality–speed frontier</h3>
+    <table>
+      <thead><tr><th>Profile</th><th>T2VA 5 s<br>latency / speedup / SSIM</th><th>T2VA 10 s<br>latency / speedup / SSIM</th><th>FL2VA 5 s<br>latency / speedup / SSIM</th><th>FL2VA 10 s<br>latency / speedup / SSIM</th></tr></thead>
+      <tbody>
+        <tr><td>Diffusers</td><td>74.34 s / 1.00× / —</td><td>207.71 s / 1.00× / —</td><td>80.44 s / 1.00× / —</td><td>217.31 s / 1.00× / —</td></tr>
+        <tr><td>SGLang dense</td><td>39.67 s / 1.87× / 1.000</td><td>112.44 s / 1.85× / 1.000</td><td>41.31 s / 1.95× / 1.000</td><td>114.02 s / 1.91× / 1.000</td></tr>
+        <tr><td>Cache-DiT conservative</td><td>28.02 s / 2.65× / .899</td><td>78.28 s / 2.65× / .918</td><td>26.90 s / 2.99× / .939</td><td>78.24 s / 2.78× / .977</td></tr>
+        <tr><td>SubBlock .75 + stride cache</td><td>15.16 s / 4.90× / .771</td><td>38.21 s / 5.44× / .783</td><td>14.27 s / 5.64× / .863</td><td>36.62 s / 5.93× / .920</td></tr>
+        <tr><td>SubBlock .80 + stride cache</td><td>14.68 s / 5.06× / .758</td><td>36.29 s / 5.72× / .777</td><td>13.73 s / 5.86× / .850</td><td>34.80 s / 6.24× / .914</td></tr>
+      </tbody>
+    </table>
+    <p class="table-note">SSIM is measured against the matched SGLang dense output, over YUV420 frames. It does not directly score prompt adherence, lip synchronization, semantic identity, text rendering, audio fidelity, or human preference.</p>
+
+    <h3 id="fastvideo-step-vsa-gains">6.3 FastVideo: separate four-step and VSA gains</h3>
+    <table>
+      <thead><tr><th>FastVideo shape<br>and video rows</th><th>Base H3<br>dense</th><th>4-step FastH3<br>dense</th><th>4-step FastH3<br>VSA</th><th>Incremental VSA gain<br>over dense student</th></tr></thead>
+      <tbody>
+        <tr><td>5 s / 124 frames<br>37,296 rows</td><td>132.5 s</td><td>18.3 s<br><strong>7.24×</strong> vs base</td><td>16.2 s<br><strong>8.16×</strong> vs base</td><td>1.13×</td></tr>
+        <tr><td>10 s / 243 frames<br>72,576 rows</td><td>377.4 s</td><td>50.2 s<br><strong>7.52×</strong> vs base</td><td>31.1 s<br><strong>12.13×</strong> vs base</td><td>1.61×</td></tr>
+        <tr><td>15 s / 345 frames<br>102,816 rows</td><td>678.7 s</td><td>91.3 s<br><strong>7.43×</strong> vs base</td><td>47.2 s<br><strong>14.38×</strong> vs base</td><td>1.93×</td></tr>
+      </tbody>
+    </table>
+    <p class="table-note">Warm 1× B200 E2E values reported by FastVideo. The video-row counts are derived from released H3 geometry. Dense/Data-Free is step 1000 and VSA/Data-Free is step 1300, so the final column is a system-level checkpoint/runtime comparison—not a pure kernel A/B.</p>
+    <p>This table makes the division of labor concrete. Four-step dense FastH3 provides the largest gain, about 7.2–7.5× E2E here. VSA contributes little on the shortest sequence but progressively more as the video lattice grows and dense attention’s quadratic term dominates. For the longest shape, the combined 14.38× result exceeds the 12.25× call-count ratio because each of the four VSA calls is also cheaper; for short clips, fixed encode/decode/output costs keep the result below that ratio.</p>
+
+    <h4 id="fastvideo-multigpu-scaling">Multi-GPU scaling of the recommended VSA/Data-Free path</h4>
+    <table>
+      <thead><tr><th>Media shape</th><th>1× B200</th><th>4× B200</th><th>8× B200</th><th>Matched speedup over base<br>1× / 4×</th></tr></thead>
+      <tbody>
+        <tr><td>5 s / 124 frames</td><td>16.2 s</td><td>6.1 s</td><td>6.84 s</td><td>8.16× / 6.65×</td></tr>
+        <tr><td>10 s / 243 frames</td><td>31.1 s</td><td>12.0 s</td><td>11.66 s</td><td>12.13× / 9.03×</td></tr>
+        <tr><td>15 s / 345 frames (14.4 s media)</td><td>47.2 s</td><td>15.5 s</td><td>12.88 s</td><td>14.38× / 12.48×</td></tr>
+      </tbody>
+    </table>
+    <p>The scaling curve exposes fixed overhead and communication: eight GPUs are slower than four for the 5-second case, roughly tied at 10 seconds, and clearly beneficial at 15 seconds. More GPUs improve latency only once the sequence is large enough to amortize distribution costs. FastVideo makes no 8× speedup claim because it did not report a matched 8× base-H3 row. Its “15 s” shape is exactly 345 / 24 = 14.375 seconds; vLLM’s separate 362-frame sweep is 15.083 seconds and must not be compared as the same tensor shape.</p>
+
+    <h3 id="vllm-realtime">6.4 vLLM FastH3 complete-response real time</h3>
+    <div class="grid-2">
+      <div class="card">
+        <h4 id="fastvideo-evidence">FastVideo evidence lane</h4>
+        <p><strong>VSA/Data-Free step 1300</strong><br>B200 · VSA-H3 tile-64 kernel · sparse student · validation gallery + matched Base-H3 latency rows.</p>
+      </div>
+      <div class="card">
+        <h4 id="vllm-evidence">vLLM evidence lane</h4>
+        <p><strong>Dense/Data-Free step 1000</strong><br>B300 · dense TRTLLM attention · load-time fusion · complete-response real-time validation, without a matched base/student A/B.</p>
+      </div>
+    </div>
+    <table>
+      <thead><tr><th>Requested / aligned</th><th>Validated media duration</th><th>DiT total (4 calls)</th><th>Clean complete-MP4 E2E</th><th>Client RTF</th></tr></thead>
+      <tbody>
+        <tr><td>5 s / 124 frames</td><td>5.175 s</td><td>2.806 s</td><td>4.602 / 4.396 s</td><td>0.889 / 0.849</td></tr>
+        <tr><td>10 s / 243 frames</td><td>10.125 s</td><td>5.532 s</td><td>8.678 / 8.710 s</td><td>0.857 / 0.860</td></tr>
+        <tr><td>15 s / 362 frames</td><td>15.083 s</td><td>9.517 s</td><td>14.177 / 14.059 s</td><td>0.940 / 0.932</td></tr>
+      </tbody>
+    </table>
+    <p>Here “real time” means the complete MP4 is ready before its playback duration (<span class="mono">RTF ≤ 1</span>), not streaming delivery or time to first frame. The current vLLM integration rejects VSA and DLO for this measured FastH3 profile; that is a constraint of its dense integration, not a claim that the FastVideo VSA checkpoint lacks support in FastVideo. The separate instrumented composition and chunk-overlap ceilings are explained in <a href="#new-bottleneck">Section 5.5</a>.</p>
+
+    <h3 id="cross-study-interpretation">6.5 Cross-study interpretation</h3>
+    <ul>
+      <li><strong>Lossless runtime engineering is already worth 1.4–2×</strong> against each study’s own Diffusers baseline.</li>
+      <li><strong>Fewer transformer evaluations are the biggest lever.</strong> Reducing 49 calls to four changes the dominant term by more than an order of magnitude before per-call changes.</li>
+      <li><strong>Sparsity is not one mechanism.</strong> SubBlock is a training-free dynamic router for the base model; FastVideo VSA is trainable sparse attention baked into a distilled student; vLLM’s SAGE/Skip-Softmax path is another optional approximation.</li>
+      <li><strong>Quality cannot be inferred from schedule count or SSIM alone.</strong> Four-step FastH3 needs matched multi-seed base comparisons, and audio/video joint quality requires synchronization and sound metrics in addition to frame similarity.</li>
+      <li><strong>End-to-end accounting changes priorities.</strong> When the DiT is shortened, VAE, transfer, and MP4 work become about one-third of the instrumented 10-second FastH3 path.</li>
+    </ul>
+
+    <h2 id="guidance" class="page-break">7. Deployment guidance</h2>
+
+    <div class="decision">
+      <strong>Need T2VA + FL2VA + Ref2VA and the safest fidelity contract?</strong>
+      Use base H3 with dense BF16 execution, optimized kernels, Ulysses sequence parallelism, task-aware model loading, parallel VAE decode, and compact media transport. Establish this as the golden baseline.
+    </div>
+    <div class="decision">
+      <strong>Need lower memory more than minimum latency?</strong>
+      Choose task-specific residency first, then DLO or component offload. Disaggregate Qwen3-VL when encoder capacity or queueing differs from diffusion capacity. Treat online FP8 as a separately qualified profile.
+    </div>
+    <div class="decision">
+      <strong>Need a tunable speed–quality frontier without a new student?</strong>
+      Add conservative Cache-DiT and evaluate. Only then introduce SubBlock, SAGE, or Skip-Softmax with a multi-metric quality gate and workload-specific thresholds.
+    </div>
+    <div class="decision">
+      <strong>Need the lowest validated T2VA latency?</strong>
+      Run FastH3 as a dedicated endpoint with its required four-call schedule and pinned adapter/full-weight revision. Choose the dense or VSA artifact together with its matching runtime; do not silently swap attention backends.
+    </div>
+
+    <h3 id="qualification-ladder">7.1 A practical qualification ladder</h3>
+    <ol>
+      <li><strong>Freeze the request contract:</strong> exact prompt, references and order, seed, width, height, aligned frame count, fps, schedule, flow shifts, checkpoint revision, and output codec.</li>
+      <li><strong>Measure the complete boundary:</strong> client submission through validated H.264/AAC receipt, alongside internal stage timers. Report warmup and compilation separately.</li>
+      <li><strong>Validate media structure:</strong> expected frame count and fps, 32 kHz stereo audio, decodable streams, nonzero video variance and audio RMS, correct duration.</li>
+      <li><strong>Establish dense BF16 quality:</strong> retain same-seed outputs and human review as the reference, accepting that lossless kernels need not be bit-identical.</li>
+      <li><strong>Add one approximation at a time:</strong> caching, sparsity, quantization, or a distilled student. Record latency, peak HBM, host RAM, and startup cost.</li>
+      <li><strong>Use multimodal quality gates:</strong> prompt adherence, identity/reference fidelity, temporal consistency, motion, lip-sync/event-sync, speech intelligibility, stereo/audio quality, plus a visual metric such as LPIPS/SSIM.</li>
+      <li><strong>Test composition explicitly:</strong> feature compatibility is not transitive. FastH3 + DLO + VSA + quantization is a new system, not the sum of four independently valid flags.</li>
+    </ol>
+
+    <h3 id="observability">7.2 Recommended observability</h3>
+    <table>
+      <thead><tr><th>Layer</th><th>Minimum measurements</th></tr></thead>
+      <tbody>
+        <tr><td>Request</td><td>Queue time, cold/warm flag, exact media duration, complete-response latency, RTF, success/failure reason</td></tr>
+        <tr><td>Encoder</td><td>Token/media counts, prefix-cache hits, encoder TP, wall time, placement/offload bytes</td></tr>
+        <tr><td>DiT</td><td>Executed calls, per-call time, valid/aligned rows, attention backend, cache hit list, sparsity retained, communication time</td></tr>
+        <tr><td>Memory</td><td>Peak HBM/rank, reserved vs allocated, host RAM, resident DLO layers, transfer bandwidth</td></tr>
+        <tr><td>Decode/output</td><td>Video VAE, audio VAE, overlap, GPU conversion, D2H/IPC, codec, mux, output bytes</td></tr>
+        <tr><td>Quality</td><td>Artifact/revision, seed, structural validation, automated metrics, human-review result, representative output hash</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="limits">8. Limitations and open questions</h2>
+    <ul>
+      <li><strong>FastH3 v1 task scope is narrow.</strong> The analyzed preview is T2VA-only. FL2VA and Ref2VA require their own conditioning-aware distilled students; Ref2VA already uses a separate base transformer.</li>
+      <li><strong>Base-to-FastH3 quality parity is unresolved.</strong> The recommended model card warns that difficult motion, fine detail, and some audio may remain below Base H3. FastVideo provides a useful gallery, and vLLM validates media structure, determinism, and representative outputs, but neither supplies a matched multi-seed Base-versus-FastH3 human/VBench/FVD-style parity study.</li>
+      <li><strong>SSIM is incomplete for H3.</strong> It can miss prompt meaning, speaking correctness, event timing, audio quality, and audiovisual synchronization; high SSIM can coexist with task failure and lower SSIM can reflect benign stochastic variation.</li>
+      <li><strong>Reported sparse paths are not interchangeable.</strong> SubBlock, VSA, SAGE, and Skip-Softmax have different training assumptions, kernel constraints, quality behavior, and hardware coverage. MiniMax’s announced native sparse attention is not present in the initial open release and must not be conflated with FastH3’s separately trained VSA student.</li>
+      <li><strong>Feature combinations have sharp compatibility boundaries.</strong> The reported vLLM FastH3 path rejects DLO and VSA variants, was not qualified with encoder disaggregation, and cannot take an additional request-time LoRA.</li>
+      <li><strong>Duration contracts differ by framework.</strong> The model card describes 4–15 seconds; current Diffusers enforces 5–15 seconds and legal aligned counts of 124–345 frames (about 5.17–14.38 s). vLLM’s 362-frame/15.083-second result is framework-specific.</li>
+      <li><strong>Raw reproducibility differs.</strong> The articles pin many commits and controls, but vLLM flags its FastH3 raw bundle as pending; FastVideo’s exact “15 s” frame alignment differs from vLLM’s duration sweep.</li>
+      <li><strong>VSA saves compute, not necessarily capacity.</strong> The learned compression gates increase the VSA student’s parameter residency. A sparse kernel speedup should not be presented as lower model-weight memory.</li>
+      <li><strong>Licensing is part of production design.</strong> Operators must review the current MiniMax H3 Community License, including commercial, hosted-service, territorial, attribution, safeguard, and acceptable-use provisions.</li>
+    </ul>
+
+    <div class="callout orange">
+      <h3 id="bottom-line">Bottom line</h3>
+      <p>H3’s core innovation is not “video plus an audio model.” It is one dense multimodal transformer that jointly evolves video and stereo-audio latents in a shared spatial–temporal token stream. That design enables learned cross-modal coherence but creates a long-sequence, repeated-attention serving problem. The winning optimization sequence is: <strong>(1)</strong> eliminate runtime waste while preserving the dense schedule, <strong>(2)</strong> reduce executed steps or attention work under an explicit quality contract, <strong>(3)</strong> use a four-step distilled student when a dedicated T2VA service is acceptable, and <strong>(4)</strong> pipeline VAE, transport, and codec work once denoising is no longer the only bottleneck.</p>
+    </div>
+
+    <h2 id="sources" class="page-break">Sources</h2>
+    <ol class="source-list">
+      <li><strong>vLLM-Omni Team.</strong> “MiniMax H3 on vLLM-Omni: From System-Wide Optimization to Real-Time Serving with FastVideo’s FastH3,” 1 Sep 2026. <a href="https://vllm.ai/blog/2026-09-01-minimax-h3-production-serving">https://vllm.ai/blog/2026-09-01-minimax-h3-production-serving</a></li>
+      <li><strong>vLLM-Omni.</strong> Chunkwise output-pipeline design RFC, issue #6872. <a href="https://github.com/vllm-project/vllm-omni/issues/6872">https://github.com/vllm-project/vllm-omni/issues/6872</a></li>
+      <li><strong>SGLang Diffusion Team, Cache-DiT Team, NVIDIA, Ant Group.</strong> “MiniMax-H3 on 8×H200: 1.95× Lossless, Up to 6.24× at 0.76–0.91 SSIM,” 27 Aug 2026. <a href="https://www.lmsys.org/blog/2026-08-27-minimax-h3-h200/">https://www.lmsys.org/blog/2026-08-27-minimax-h3-h200/</a></li>
+      <li><strong>FastVideo Team, Hao AI Lab.</strong> “FastH3 V1: Open-Weight 4-Step Sparse Distilled MiniMax H3 for 14× Speedup on NVIDIA Blackwell GPU,” 27 Aug 2026. <a href="https://haoailab.com/blogs/fasth3-preview/">https://haoailab.com/blogs/fasth3-preview/</a></li>
+      <li><strong>MiniMax.</strong> MiniMax H3 model card and architecture. <a href="https://huggingface.co/MiniMaxAI/MiniMax-H3">https://huggingface.co/MiniMaxAI/MiniMax-H3</a></li>
+      <li><strong>Hugging Face Diffusers.</strong> MiniMax-H3 modular pipeline documentation. <a href="https://huggingface.co/docs/diffusers/main/en/api/pipelines/minimax_h3">https://huggingface.co/docs/diffusers/main/en/api/pipelines/minimax_h3</a></li>
+      <li><strong>Hugging Face Diffusers.</strong> MiniMaxH3 rectified-flow Euler scheduler documentation. <a href="https://huggingface.co/docs/diffusers/main/en/api/schedulers/minimax_h3">https://huggingface.co/docs/diffusers/main/en/api/schedulers/minimax_h3</a></li>
+      <li><strong>Hugging Face Diffusers.</strong> Reference MiniMax-H3 modular pipeline source. <a href="https://github.com/huggingface/diffusers/blob/main/src/diffusers/modular_pipelines/minimax_h3/modular_pipeline.py">https://github.com/huggingface/diffusers/blob/main/src/diffusers/modular_pipelines/minimax_h3/modular_pipeline.py</a></li>
+      <li><strong>vLLM-Omni.</strong> Maintained MiniMax-H3 serving recipe. <a href="https://github.com/vllm-project/vllm-omni/blob/main/recipes/MiniMaxAI/MiniMax-H3.md">https://github.com/vllm-project/vllm-omni/blob/main/recipes/MiniMaxAI/MiniMax-H3.md</a></li>
+      <li><strong>Yin et al.</strong> “Improved Distribution Matching Distillation for Fast Image Synthesis” (DMD2), arXiv:2405.14867. <a href="https://arxiv.org/html/2405.14867v2">https://arxiv.org/html/2405.14867v2</a></li>
+      <li><strong>Zhang et al.</strong> “Faster Video Diffusion with Trainable Sparse Attention” (VSA), arXiv:2505.13389. <a href="https://arxiv.org/html/2505.13389v5">https://arxiv.org/html/2505.13389v5</a></li>
+      <li><strong>FastVideo.</strong> Recommended FastH3 VSA/Data-Free model card and Preview v1 hybrid-adapter manifest. <a href="https://huggingface.co/FastVideo/FastVideo-FastH3-4-step-Preview-v1-VSA-DataFree">checkpoint</a>; <a href="https://huggingface.co/FastVideo/FastVideo-FastH3-4-step-Preview-v1-LoRA/blob/main/adapter_manifest.json">adapter manifest</a>.</li>
+      <li><strong>FastVideo.</strong> DMD2 training implementation used to cross-check teacher/critic and rollout behavior. <a href="https://github.com/hao-ai-lab/FastVideo/blob/main/fastvideo/train/methods/distribution_matching/dmd2.py">https://github.com/hao-ai-lab/FastVideo/blob/main/fastvideo/train/methods/distribution_matching/dmd2.py</a></li>
+      <li><strong>Hugging Face Diffusers, pinned H3 implementation.</strong> <a href="https://github.com/huggingface/diffusers/blob/09e4f5e4950c4eb156c8b9e5486176c431d53be5/src/diffusers/models/transformers/transformer_minimax_h3.py">transformer layers and forward</a>, <a href="https://github.com/huggingface/diffusers/blob/09e4f5e4950c4eb156c8b9e5486176c431d53be5/scripts/convert_minimax_h3_to_diffusers.py">checkpoint-layout converter</a>, <a href="https://github.com/huggingface/diffusers/blob/09e4f5e4950c4eb156c8b9e5486176c431d53be5/src/diffusers/schedulers/scheduling_minimax_h3.py">scheduler</a>, <a href="https://github.com/huggingface/diffusers/blob/09e4f5e4950c4eb156c8b9e5486176c431d53be5/src/diffusers/modular_pipelines/minimax_h3/before_denoise.py">packing/MM-RoPE</a>, <a href="https://github.com/huggingface/diffusers/blob/09e4f5e4950c4eb156c8b9e5486176c431d53be5/src/diffusers/modular_pipelines/minimax_h3/denoise.py">denoising loop</a>, and <a href="https://github.com/huggingface/diffusers/blob/09e4f5e4950c4eb156c8b9e5486176c431d53be5/src/diffusers/models/autoencoders/autoencoder_kl_minimax_h3.py">VisualVAE</a>.</li>
+      <li><strong>vLLM-Omni, native MiniMax-H3 implementation, pinned at <span class="mono">10701e18</span>.</strong> <a href="https://github.com/vllm-project/vllm-omni/blob/10701e18389fe282ca8c2510cd2022a76a9dad2a/vllm_omni/diffusion/models/minimax_h3/minimax_h3_transformer.py">block, AdaLN, attention, and MLP integration</a>; <a href="https://github.com/vllm-project/vllm-omni/blob/10701e18389fe282ca8c2510cd2022a76a9dad2a/vllm_omni/diffusion/attention/ops/minimax_h3_modulation.py">Triton indexed modulation and gated-residual kernels</a>; <a href="https://github.com/vllm-project/vllm-omni/blob/10701e18389fe282ca8c2510cd2022a76a9dad2a/vllm_omni/diffusion/layers/activation.py">standalone SwiGLU activation dispatch</a>. The BF16 residual-to-RMSNorm boundary is fixed by <a href="https://github.com/vllm-project/vllm-omni/pull/6878">PR #6878</a>.</li>
+      <li><strong>SGLang, native MiniMax-H3 implementation.</strong> The H200 article pins <span class="mono">d90318b3e20fce682a74cbd2c9d6294b364b4eb9</span>; current behavior was rechecked at <span class="mono">12735c2d</span>: <a href="https://github.com/sgl-project/sglang/blob/12735c2d7684647454efb033a143cad92bfd305a/python/sglang/multimodal_gen/runtime/models/dits/minimax_h3.py">block, TP/SP shapes, AdaLN preparation, and Cache-DiT alias policy</a>; <a href="https://github.com/sgl-project/sglang/blob/12735c2d7684647454efb033a143cad92bfd305a/python/sglang/kernels/ops/diffusion/modulate/indexed_modulation_triton.py">indexed scale/shift and gated-residual Triton kernels</a>; <a href="https://github.com/sgl-project/sglang/blob/12735c2d7684647454efb033a143cad92bfd305a/python/sglang/kernels/jit/csrc/elementwise/activation.cuh">conditional in-place SwiGLU CUDA kernel</a>.</li>
+      <li><strong>FastVideo, native MiniMax-H3 implementation, pinned at <span class="mono">7bb76b5e</span>.</strong> <a href="https://github.com/hao-ai-lab/FastVideo/blob/7bb76b5ec99807a66aa3047b901f15019abe0f00/fastvideo/models/dits/minimax_h3.py">block integration, packing, invariant caches, and compilation hooks</a>; inference-only Triton fusion sources for <a href="https://github.com/hao-ai-lab/FastVideo/blob/7bb76b5ec99807a66aa3047b901f15019abe0f00/fastvideo/models/dits/minimax_h3_fusions/modulation.py">indexed modulation/residual</a>, <a href="https://github.com/hao-ai-lab/FastVideo/blob/7bb76b5ec99807a66aa3047b901f15019abe0f00/fastvideo/models/dits/minimax_h3_fusions/qknorm_rope.py">QK RMSNorm + partial RoPE</a>, and <a href="https://github.com/hao-ai-lab/FastVideo/blob/7bb76b5ec99807a66aa3047b901f15019abe0f00/fastvideo/models/dits/minimax_h3_fusions/swiglu.py">SwiGLU</a>.</li>
+      <li><strong>Local checkpoint configuration.</strong> MiniMaxAI/MiniMax-H3, commit <span class="mono">42ed227ee7df40d41602854ae760620d6eb651fe</span>: <a href="https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/42ed227ee7df40d41602854ae760620d6eb651fe/transformer/config.json">transformer config</a>, <a href="https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/42ed227ee7df40d41602854ae760620d6eb651fe/vae/config.json">visual VAE config</a>, <a href="https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/42ed227ee7df40d41602854ae760620d6eb651fe/audio_vae/config.json">audio VAE config</a>, and <a href="https://huggingface.co/MiniMaxAI/MiniMax-H3/blob/42ed227ee7df40d41602854ae760620d6eb651fe/text_encoder/config.json">Qwen3-VL config</a>.</li>
+    </ol>
+
+    <p class="foot">Prepared 4 September 2026. Benchmark figures are reproduced as reported by their respective authors; calculations and cross-study interpretations are identified in the surrounding text. No independent benchmark was run for this report.</p>
+  </article>
+</main>
+</body>
+</html>
