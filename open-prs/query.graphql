@@ -1,0 +1,13 @@
+query($cursor: String) {
+ repository(owner: "vllm-project", name: "vllm-omni") {
+  pullRequests(states: OPEN, first: 100, after: $cursor, orderBy: {field: CREATED_AT, direction: DESC}) {
+   totalCount
+   pageInfo { hasNextPage endCursor }
+   nodes {
+    number title url isDraft createdAt updatedAt
+    author { login avatarUrl url __typename }
+   }
+  }
+ }
+ rateLimit { remaining cost }
+}
