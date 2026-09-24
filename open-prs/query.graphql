@@ -6,6 +6,7 @@ query($cursor: String) {
    nodes {
     number title url isDraft createdAt updatedAt
     author { login avatarUrl url __typename }
+    labels(first: 100) { nodes { name } pageInfo { hasNextPage } }
    }
   }
  }

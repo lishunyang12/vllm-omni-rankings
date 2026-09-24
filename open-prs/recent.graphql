@@ -1,0 +1,8 @@
+query($cursor: String) {
+ repository(owner: "vllm-project", name: "vllm-omni") {
+  pullRequests(first: 100, after: $cursor, orderBy: {field: CREATED_AT, direction: DESC}) {
+   pageInfo { hasNextPage endCursor }
+   nodes { number createdAt author { login } }
+  }
+ }
+}

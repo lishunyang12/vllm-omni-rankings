@@ -1,0 +1,27 @@
+.topic-workspace{display:grid;grid-template-columns:315px minmax(0,1fr);gap:22px;align-items:start}
+.topic-controls{padding:0 22px 12px}.topic-controls .search{margin-top:15px}
+.group-tabs{justify-content:space-between}.group-tabs button{flex:1;padding:8px 7px;font-size:11px}
+.small-note{font-size:11px;line-height:1.65;color:#85899e;margin:10px 0}
+.topic-list{max-height:655px;overflow:auto;scrollbar-width:thin;scrollbar-color:#e1e3ed transparent;border-top:1px solid var(--line)}
+.topic-row{border:0;border-bottom:1px solid #f1f2f7;background:white;display:grid;grid-template-columns:1fr 43px;gap:9px;width:100%;padding:15px 22px;align-items:center;text-align:left;color:#51566e}
+.topic-row:hover{background:#fafaff}.topic-row[aria-pressed=true]{background:var(--brand-soft);color:var(--brand)}
+.topic-name{font-size:12px;font-weight:550}.topic-number{font-variant-numeric:tabular-nums;text-align:right;font-size:15px;font-weight:600}
+.topic-bar{height:3px;background:#f0eff8;border-radius:5px;margin-top:8px;display:block;overflow:hidden}.topic-bar span{height:100%;display:block;background:#a7a1e8;border-radius:5px}
+.topic-row[aria-pressed=true] .topic-bar span{background:var(--brand)}
+.topic-footnote{font-size:10px;color:#9296aa;line-height:1.7;padding:17px 22px;border-top:1px solid var(--line)}
+.result-controls{padding:0 24px 18px}.result-filter-row{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.checkboxes{justify-content:flex-start;gap:20px;font-size:11px;color:#777d93}.checkboxes label{display:flex;gap:6px;align-items:center;cursor:pointer}.checkboxes input{accent-color:var(--brand)}
+.selection-bar{border-top:1px solid var(--line);margin-top:18px;padding-top:15px;display:flex;gap:14px;flex-direction:column}
+#selected-topics{display:flex;flex-wrap:wrap;gap:7px;align-items:center;min-height:30px}.selected-chip{border:1px solid #d8d5f8;background:var(--brand-soft);border-radius:6px;padding:6px 9px;color:var(--brand);font-size:11px}
+.selection-actions{display:flex;align-items:center;gap:18px}.selection-actions select{font-size:11px}
+.result-summary{padding:12px 24px;background:#fafbfe;border-block:1px solid var(--line);font-size:11px;color:#81859c}
+.topic-pr-list{min-height:250px}.topic-pr-card{padding:22px 24px;border-bottom:1px solid #f1f2f7}.topic-pr-card:last-child{border-bottom:0}
+.topic-pr-card .pr-title{font-size:14px;line-height:1.7}.topic-pr-card .pr-meta{font-size:10px;margin-bottom:9px}
+.pr-author{color:#656a85;font-weight:550}.pr-author:hover{color:var(--brand)}.topic-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}
+.topic-tag{font-size:10px;background:#f4f5f9;color:#7a7f93;border:1px solid transparent;border-radius:5px;padding:5px 7px}
+.topic-tag.model{background:#f0effc;color:#7468b1}.topic-tag.hardware{background:#edf6f2;color:#518c75}.topic-tag.area{background:#f4f5f9;color:#7a7f93}
+.topic-tag:hover{border-color:#c9c5ec}.committer-tag{font-size:9px;color:#89819d;background:#f4f1f8;padding:3px 5px;border-radius:4px}
+.evidence{margin-top:13px;font-size:10px;color:#9599ac;line-height:1.8}.evidence summary{cursor:pointer}.evidence ul{padding-left:16px;margin:8px 0 0}.evidence strong{font-weight:550;color:#7d8298}
+.topic-results .list-footer{height:55px}.topic-results .subtle-button{font-size:11px}.topic-results .empty-state{padding:80px 24px}
+@media(max-width:1080px){.topic-workspace{grid-template-columns:270px minmax(0,1fr);gap:16px}.topic-controls,.topic-row,.topic-footnote{padding-left:18px;padding-right:18px}.result-controls,.topic-pr-card,.result-summary{padding-left:19px;padding-right:19px}}
+@media(max-width:760px){.topic-workspace{grid-template-columns:1fr}.topic-list{max-height:290px}.topic-row{padding:12px 20px}.topic-controls{padding-bottom:9px}.topic-footnote{padding-block:12px}.topic-pr-card .pr-title{font-size:13px}.topic-pr-card .pr-meta{row-gap:8px}.topic-pr-card .pr-meta time{width:100%;margin:0}.result-controls .search input{font-size:11px}.result-filter-row{gap:9px}.topic-results .panel-heading{padding:21px 19px}.topic-workspace .panel h2{font-size:18px}}
