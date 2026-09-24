@@ -2,69 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore every open vLLM-Omni PR by model, hardware, and technical area.">
-  <meta name="theme-color" content="#f7f8fc">
-  <title>PR Topics · vLLM-Omni</title>
-  <link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="../style.css?v=2">
-  <link rel="stylesheet" href="style.css?v=2">
-  <script defer src="rules.js"></script>
-  <script defer src="app.js?v=2"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>vLLM-Omni PR Dashboard</title>
+  <link rel="canonical" href="https://lishunyang12.github.io/vllm-omni-pr-dashboard/topics/">
+  <link rel="icon" href="../assets/favicon.ico">
+  <noscript><meta http-equiv="refresh" content="0; url=https://lishunyang12.github.io/vllm-omni-pr-dashboard/topics/"></noscript>
+  <style>body{margin:0;background:#f7f8fc;color:#202337;font:16px/1.7 system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}main{max-width:580px;padding:32px}img{width:210px;max-width:100%;height:auto}h1{font-size:28px}a{color:#5755db;overflow-wrap:anywhere}</style>
 </head>
 <body>
-  <div class="page-shell">
-    <header class="topbar">
-      <a class="brand" href="../" aria-label="vLLM Omni leaderboard home"><img class="official-logo" src="../assets/vllm-omni-logo.png" alt="vLLM Omni"><small>CONTRIBUTOR OBSERVATORY</small></a>
-      <a class="repo-link" href="https://github.com/vllm-project/vllm-omni/pulls" target="_blank" rel="noopener noreferrer">vllm-project / vllm-omni ↗</a>
-    </header>
-    <nav class="section-nav" aria-label="PR views"><a href="../">Contributors</a><a href="./" aria-current="page">Topics</a></nav>
-    <main>
-      <section class="hero">
-        <div><div class="eyebrow"><span class="dot"></span> EXPLORE WORK IN PROGRESS</div><h1>Open PR <span>Topics</span></h1><p>Find work across models, hardware, and technical areas.</p><p class="hero-note">Classified from PR titles and labels. Topics can overlap.</p></div>
-        <div class="snapshot"><div class="sync-state"><span class="dot"></span><span id="sync-label">Loading snapshot</span></div><time id="snapshot-time">—</time><div class="snapshot-actions"><button id="refresh" class="button"><span aria-hidden="true">↻</span> Refresh data</button><a href="../data.json" class="subtle-link" download>Download JSON ↓</a></div></div>
-      </section>
-      <p id="notice" class="notice" role="status" hidden></p>
-      <section class="stats" aria-label="PR coverage and current selection">
-        <article class="stat"><div class="stat-label">All open PRs <span class="stat-icon">↗</span></div><div id="stat-total" class="stat-number">—</div><div class="stat-bottom">Entire repository · includes drafts</div></article>
-        <article class="stat"><div class="stat-label">Matching PRs <span class="stat-icon purple">◎</span></div><div id="stat-matched" class="stat-number">—</div><div class="stat-bottom">Unique PRs in your current selection</div></article>
-        <article class="stat"><div class="stat-label">Contributors <span class="stat-icon green">◈</span></div><div id="stat-authors" class="stat-number">—</div><div class="stat-bottom">Authors of matching PRs</div></article>
-        <article class="stat"><div class="stat-label">Unclassified <span class="stat-icon orange">?</span></div><div id="stat-unclassified" class="stat-number">—</div><button id="view-unclassified" class="subtle-button">Explore unmatched PRs →</button></article>
-      </section>
-      <div class="topic-workspace">
-        <aside class="panel topic-sidebar" aria-label="Topic filters">
-          <div class="panel-heading"><div><div class="overline">BROWSE TOPICS</div><h2>Find your focus</h2></div><span id="topic-total" class="count-pill">—</span></div>
-          <div class="topic-controls">
-            <div class="segmented group-tabs" aria-label="Topic group"><button class="active" data-group="model" aria-pressed="true">Models</button><button data-group="hardware" aria-pressed="false">Hardware</button><button data-group="area" aria-pressed="false">Areas</button></div>
-            <label class="search"><input id="topic-search" type="search" placeholder="Find a topic…" aria-label="Search topics"></label>
-            <p id="group-hint" class="small-note">Models mentioned in titles or labels</p>
-          </div>
-          <div id="topic-list" class="topic-list"><div class="empty-state">Loading topics…</div></div>
-          <div class="topic-footnote">Counts follow search, status, and author filters, before topic selection. Topics overlap; totals are not additive.</div>
-        </aside>
-        <section class="panel topic-results" aria-label="Matching pull requests">
-          <div class="panel-heading"><div><div class="overline">PULL REQUESTS</div><h2 id="results-heading">All open PRs</h2></div><button id="export" class="icon-button">↓ CSV</button></div>
-          <div class="result-controls">
-            <label class="search"><input id="pr-search" type="search" placeholder="Search title, PR number, author, or label…" aria-label="Search pull requests"></label>
-            <div class="result-filter-row"><div class="segmented" aria-label="PR status"><button class="active" data-status="all" aria-pressed="true">All</button><button data-status="ready" aria-pressed="false">Non-draft</button><button data-status="draft" aria-pressed="false">Draft</button></div><label><span class="sr-only">Sort PRs</span><select id="sort"><option value="updated">Recently updated</option><option value="created">Newest PRs</option><option value="oldest">Oldest PRs</option></select></label></div>
-            <div class="result-filter-row checkboxes"><label><input id="exclude-committers" type="checkbox"> Exclude committers</label><label><input id="bots" type="checkbox" checked> Include bots</label></div>
-            <div class="selection-bar"><div id="selected-topics"><span class="small-note">Select topics to narrow the list.</span></div><div class="selection-actions"><label><span class="sr-only">Combine selected topics</span><select id="match"><option value="all">Match all</option><option value="any">Match any</option></select></label><button id="clear" class="subtle-button">Clear topics</button></div></div>
-          </div>
-          <div id="result-summary" class="result-summary" role="status">Loading…</div>
-          <div id="pr-list" class="topic-pr-list"></div>
-          <div class="list-footer"><span id="list-info">—</span><button id="load-more" class="subtle-button" hidden>Load more ↓</button></div>
-        </section>
-      </div>
-      <details class="method"><summary>Classification &amp; methodology <span>How this works</span><span class="expand">＋</span></summary><div class="method-content">
-        <p><strong>Rules, not a code review.</strong> Topics come from keyword rules applied to PR titles and GitHub labels. No PR bodies or diffs are analyzed. Open “Why these topics?” on a PR to inspect the evidence. Unmatched PRs remain under Unclassified.</p>
-        <p><strong>Multiple topics.</strong> One PR can mention a model, hardware, and several technical areas. Match all finds intersections; Match any finds the union. PR totals and CSV exports always count each PR once.</p>
-        <p><strong>Hardware mentions.</strong> A hardware topic means the title or label mentions that platform. It does not establish compatibility or test success. Tests / build identifies the subject of a PR; CI results and reviews are not collected.</p>
-        <p><strong>Committers.</strong> Exclusion uses Active Committers and Lead Maintainers in the <a href="https://github.com/vllm-project/vllm-omni/blob/main/docs/community/governance.md" target="_blank" rel="noopener noreferrer">public governance roster</a>, refreshed with each snapshot.</p>
-        <p><strong>Coverage.</strong> This view shares the complete open PR snapshot with the contributor leaderboard. Closed and merged PRs are excluded here. Unknown future model names may need new rules.</p>
-        <p><strong>Updates.</strong> Collected hourly; publication may be delayed. Refresh data reads the latest published snapshot. Your topic selection is saved in the URL for sharing. <a href="rules.js">Inspect classification rules ↗</a></p>
-      </div></details>
-    </main>
-    <footer><span>Built for the vLLM-Omni community</span><div><span id="coverage">GitHub public data</span><a href="https://github.com/lishunyang12/vllm-omni-rankings/commits/main/open-prs/data.json" target="_blank" rel="noopener noreferrer">Update history ↗</a></div></footer>
-  </div>
+  <main><img src="../assets/vllm-omni-logo.png" alt="vLLM Omni"><h1>The PR dashboard has moved.</h1><p>Continue to the <a id="destination" href="https://lishunyang12.github.io/vllm-omni-pr-dashboard/topics/">vLLM-Omni PR Dashboard</a>.</p></main>
+  <script>
+    const destination = 'https://lishunyang12.github.io/vllm-omni-pr-dashboard/topics/' + window.location.search + window.location.hash;
+    document.getElementById('destination').href = destination;
+    window.location.replace(destination);
+  </script>
 </body>
 </html>

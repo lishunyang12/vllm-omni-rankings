@@ -2,61 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Explore all open vLLM-Omni PRs by contributor, 14-day submissions, and topic. Updated hourly.">
-  <meta name="theme-color" content="#f7f8fc">
-  <title>Open PR Leaderboard · vLLM-Omni</title>
-  <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="style.css?v=2">
-  <script defer src="app.js?v=2"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>vLLM-Omni PR Dashboard</title>
+  <link rel="canonical" href="https://lishunyang12.github.io/vllm-omni-pr-dashboard/">
+  <link rel="icon" href="assets/favicon.ico">
+  <noscript><meta http-equiv="refresh" content="0; url=https://lishunyang12.github.io/vllm-omni-pr-dashboard/"></noscript>
+  <style>body{margin:0;background:#f7f8fc;color:#202337;font:16px/1.7 system-ui,sans-serif;display:grid;min-height:100vh;place-items:center}main{max-width:580px;padding:32px}img{width:210px;max-width:100%;height:auto}h1{font-size:28px}a{color:#5755db;overflow-wrap:anywhere}</style>
 </head>
 <body>
-  <div class="page-shell">
-    <header class="topbar">
-      <a class="brand" href="./" aria-label="vLLM Omni leaderboard home"><img class="official-logo" src="assets/vllm-omni-logo.png" alt="vLLM Omni"><small>CONTRIBUTOR OBSERVATORY</small></a>
-      <a class="repo-link" href="https://github.com/vllm-project/vllm-omni/pulls" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M8 3v12m0 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6ZM8 3a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 18V10a5 5 0 0 0-5-5m2-3-3 3 3 3" stroke="currentColor" stroke-width="1.6"/></svg><span>vllm-project / vllm-omni</span><span aria-hidden="true">↗</span></a>
-    </header>
-    <nav class="section-nav" aria-label="PR views"><a href="./" aria-current="page">Contributors</a><a href="topics/">Topics ↗</a></nav>
-    <main>
-      <section class="hero">
-        <div><div class="eyebrow"><span class="dot"></span> OPEN SOURCE, IN PROGRESS</div><h1>Open PR <span>Leaderboard</span></h1><p>See who is contributing and what is in progress.</p><p class="hero-note">Ranked by open PRs, including drafts. Counts measure activity, not quality.</p></div>
-        <div class="snapshot"><div class="sync-state"><span class="dot"></span><span id="sync-label">Loading snapshot</span></div><time id="snapshot-time">—</time><div class="snapshot-actions"><button id="refresh" class="button" type="button"><span aria-hidden="true">↻</span> Refresh data</button><a href="data.json" class="subtle-link" download>Download JSON ↓</a></div></div>
-      </section>
-      <p id="notice" class="notice" role="status" hidden></p>
-      <section class="stats" aria-label="Repository-wide statistics">
-        <article class="stat"><div class="stat-label"><span>Open PR</span><span class="stat-icon">↗</span></div><div id="stat-total" class="stat-number">—</div><div class="stat-bottom">Entire repository · all contributors</div></article>
-        <article class="stat"><div class="stat-label"><span>Contributors</span><span class="stat-icon purple">◎</span></div><div id="stat-authors" class="stat-number">—</div><div class="stat-bottom" id="stat-humans">Includes bot accounts</div></article>
-        <article class="stat"><div class="stat-label"><span>Non-draft / Draft</span><span class="stat-icon green">◈</span></div><div class="stat-number"><span id="stat-ready">—</span><span class="stat-divider">/</span><span id="stat-draft" class="muted-number">—</span></div><div class="split-bar" aria-hidden="true"><span id="ready-bar"></span></div><div class="stat-bottom">Current open PR breakdown</div></article>
-        <article class="stat"><div class="stat-label"><span>Updated in 7 days</span><span class="stat-icon orange">↻</span></div><div id="stat-active" class="stat-number">—</div><div class="stat-bottom">Based on last PR update</div></article>
-      </section>
-      <section class="workspace" aria-label="Contributor rankings and PR details">
-        <div class="leaderboard panel">
-          <div class="panel-heading"><div><div class="overline">LEADERBOARD</div><h2>Contributor ranking <span id="author-count" class="count-pill">—</span></h2></div><button id="export" class="icon-button" title="Export current ranking as CSV" aria-label="Export current ranking as CSV">↓ CSV</button></div>
-          <div class="filters"><label class="search"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="1.7"/></svg><input id="author-search" type="search" placeholder="Search GitHub username" aria-label="Search GitHub username" autocomplete="off"><kbd>/</kbd></label>
-            <div class="filter-line"><div class="segmented" aria-label="PR status"><button class="active" data-filter="all" aria-pressed="true">All</button><button data-filter="ready" aria-pressed="false">Non-draft</button><button data-filter="draft" aria-pressed="false">Draft</button></div><label class="sort-label"><span class="sr-only">Sort ranking</span><select id="sort"><option value="open">Most open PRs</option><option value="recent">Most submitted in 14d</option><option value="updated">Recently active</option></select></label></div>
-            <div class="scope-line"><span id="scope">Loading…</span><span class="scope-options"><label><input id="exclude-committers" type="checkbox"> Exclude committers</label><label><input id="bots" type="checkbox" checked> Include bots</label></span></div>
-          </div>
-          <div class="table-heading"><span>#</span><span>Contributors</span><span>Open PR</span><span title="PRs created in the last 14 days, including merged and closed">New · 14d</span><span class="draft-column">Draft</span></div>
-          <div id="author-list" class="author-list" aria-label="Contributor list"><div class="empty-state">Loading contributors from the complete snapshot…</div></div>
-          <div class="list-footer"><span id="list-info">—</span><button id="load-more" class="subtle-button" hidden>Load more ↓</button></div>
-        </div>
-        <aside class="detail panel" id="detail" aria-label="Selected contributor PRs">
-          <div id="detail-heading" class="detail-heading"><div class="overline">PULL REQUESTS</div><h2>Select a contributor</h2><p class="muted">Explore work in progress</p></div>
-          <div class="detail-controls"><label class="search compact"><input id="pr-search" type="search" placeholder="Search PR title or number" aria-label="Search this contributor’s PRs" autocomplete="off"></label></div>
-          <div id="pr-list" class="pr-list"><div class="empty-state">This contributor’s open PRs will appear here</div></div>
-          <div class="detail-footer"><span id="pr-info">—</span><a id="author-github" href="https://github.com/vllm-project/vllm-omni/pulls" target="_blank" rel="noopener noreferrer">View on GitHub ↗</a></div>
-        </aside>
-      </section>
-      <details class="method"><summary>Ranking &amp; methodology <span>How this works</span><span class="expand">＋</span></summary><div class="method-content">
-<p><strong>Coverage.</strong> Every open PR in vllm-project/vllm-omni, including drafts and bots. Cursor pagination avoids the 1,000-result search limit. The contributor list includes accounts with at least one current open PR.</p>
-<p><strong>Ranking.</strong> Open PR count is the default. Equal values share a rank. Status, bot, and committer filters recompute ranks; username search preserves them. You can also sort by 14-day submissions or recent activity. Counts are not a quality score.</p>
-<p><strong>New · 14d.</strong> All PRs created by that author in a rolling 14-day window, including open, merged, and closed PRs. This column is unaffected by the Draft filter. Window: <span id="recent-window">Loading…</span>.</p>
-<p><strong>Exclude committers.</strong> Filters Active Committers and Lead Maintainers from the <a href="https://github.com/vllm-project/vllm-omni/blob/main/docs/community/governance.md" target="_blank" rel="noopener noreferrer">official governance roster</a> (<span id="committer-roster-count">—</span> people). The roster refreshes with the data. CODEOWNERS and organization membership are not used as proxies.</p>
-<p><strong>PR details.</strong> The right panel contains current open PRs only. Open a title or number to see the original PR. CI results and reviews are not collected.</p>
-<p><strong>Refresh.</strong> Automatic collection runs hourly; publishing can be delayed. Refresh data loads the latest published snapshot. Failed collections preserve the last complete snapshot. Times use your local timezone.</p>
-</div></details>
-    </main>
-    <footer><span> Built for the vLLM-Omni community</span><div><span id="coverage">GitHub public data</span><a href="https://github.com/lishunyang12/vllm-omni-rankings/commits/main/open-prs/data.json" target="_blank" rel="noopener noreferrer">Update history ↗</a></div></footer>
-  </div>
+  <main><img src="assets/vllm-omni-logo.png" alt="vLLM Omni"><h1>The PR dashboard has moved.</h1><p>Continue to the <a id="destination" href="https://lishunyang12.github.io/vllm-omni-pr-dashboard/">vLLM-Omni PR Dashboard</a>.</p></main>
+  <script>
+    const destination = 'https://lishunyang12.github.io/vllm-omni-pr-dashboard/' + window.location.search + window.location.hash;
+    document.getElementById('destination').href = destination;
+    window.location.replace(destination);
+  </script>
 </body>
 </html>
